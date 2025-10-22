@@ -1,0 +1,14 @@
+{
+    "name": "node-red-project",
+    "description": "A Node-RED Project",
+    "version": "0.0.1",
+    "private": true,
+    "dependencies": {
+        "@node-red-contrib-themes/theme-collection": "~4.1.0",
+        "@prisma/client": "^6.17.1",
+        "node-red-contrib-modbus": "~5.44.1"
+    },
+    "devDependencies": {
+        "prisma": "^6.17.1"
+    }
+}

@@ -1,0 +1,323 @@
+[
+    {
+        "id": "a7c135e772de0725",
+        "type": "tab",
+        "label": "eta-sewage-pump-monitor",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "e8c1afd9a301aa03",
+        "type": "modbus-client",
+        "name": "",
+        "clienttype": "tcp",
+        "bufferCommands": true,
+        "stateLogEnabled": false,
+        "queueLogEnabled": false,
+        "failureLogEnabled": true,
+        "tcpHost": "192.168.0.200",
+        "tcpPort": 502,
+        "tcpType": "DEFAULT",
+        "serialPort": "/dev/ttyUSB",
+        "serialType": "RTU-BUFFERD",
+        "serialBaudrate": 9600,
+        "serialDatabits": 8,
+        "serialStopbits": 1,
+        "serialParity": "none",
+        "serialConnectionDelay": 100,
+        "serialAsciiResponseStartDelimiter": "0x3A",
+        "unit_id": 1,
+        "commandDelay": 1,
+        "clientTimeout": 1000,
+        "reconnectOnTimeout": true,
+        "reconnectTimeout": 2000,
+        "parallelUnitIdsAllowed": true,
+        "showErrors": false,
+        "showWarnings": true,
+        "showLogs": true
+    },
+    {
+        "id": "871b5166b87ad5cb",
+        "type": "modbus-read",
+        "z": "a7c135e772de0725",
+        "name": "getRemoteCoils",
+        "topic": "coils",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "Coil",
+        "adr": "0",
+        "quantity": "13",
+        "rate": "5",
+        "rateUnit": "s",
+        "delayOnStart": false,
+        "enableDeformedMessages": false,
+        "startDelayTime": "",
+        "server": "e8c1afd9a301aa03",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "x": 120,
+        "y": 320,
+        "wires": [
+            [
+                "0c53aec893182901"
+            ],
+            [
+                "ed6b2e8b91938bbc"
+            ]
+        ]
+    },
+    {
+        "id": "74479dcb06e8145c",
+        "type": "http in",
+        "z": "a7c135e772de0725",
+        "name": "",
+        "url": "/api/get-state",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 130,
+        "y": 620,
+        "wires": [
+            [
+                "be8e1b2521c879ee"
+            ]
+        ]
+    },
+    {
+        "id": "be8e1b2521c879ee",
+        "type": "function",
+        "z": "a7c135e772de0725",
+        "name": "getStateFromFlow",
+        "func": "const state = flow.get(\"state\");\nmsg.payload = { values: state };\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 620,
+        "wires": [
+            [
+                "e207d1a66a7650b9",
+                "3858125dbf3d0092"
+            ]
+        ]
+    },
+    {
+        "id": "e207d1a66a7650b9",
+        "type": "http response",
+        "z": "a7c135e772de0725",
+        "name": "http-get-state-response",
+        "statusCode": "",
+        "headers": {
+            "content-type": "application/json"
+        },
+        "x": 610,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "89aeb1c780746b48",
+        "type": "debug",
+        "z": "a7c135e772de0725",
+        "name": "debug 3",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 660,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "0c53aec893182901",
+        "type": "function",
+        "z": "a7c135e772de0725",
+        "name": "setStateToFlow",
+        "func": "let state = flow.get(\"state\");\n\nconst updateState = (params) => {\n    params.forEach((p, i) => {\n        const v = {};\n        v[p] = msg.payload[i];\n        state = { ...state, ...v };\n    });\n}\n\nif (msg.topic) {\n    const params = flow.get(`${msg.topic}Params`);\n    updateState(params);\n}\n\nflow.set(\"state\", state);\n\n\nreturn state;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 360,
+        "wires": [
+            [
+                "89aeb1c780746b48"
+            ]
+        ]
+    },
+    {
+        "id": "7ced4a30730f3c7b",
+        "type": "modbus-read",
+        "z": "a7c135e772de0725",
+        "name": "getRemoteHoldings",
+        "topic": "holdings",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "HoldingRegister",
+        "adr": "0",
+        "quantity": "2",
+        "rate": "5",
+        "rateUnit": "s",
+        "delayOnStart": false,
+        "enableDeformedMessages": false,
+        "startDelayTime": "",
+        "server": "e8c1afd9a301aa03",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "x": 130,
+        "y": 380,
+        "wires": [
+            [
+                "0c53aec893182901"
+            ],
+            [
+                "e7d02e95be2e3b8e"
+            ]
+        ]
+    },
+    {
+        "id": "e7d02e95be2e3b8e",
+        "type": "debug",
+        "z": "a7c135e772de0725",
+        "name": "debug 1",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 360,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "ed6b2e8b91938bbc",
+        "type": "debug",
+        "z": "a7c135e772de0725",
+        "name": "debug 2",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 360,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "3858125dbf3d0092",
+        "type": "debug",
+        "z": "a7c135e772de0725",
+        "name": "debug 4",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 560,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "3254130808eb2f14",
+        "type": "inject",
+        "z": "a7c135e772de0725",
+        "name": "onInit",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.01",
+        "topic": "",
+        "x": 90,
+        "y": 60,
+        "wires": [
+            [
+                "a01bf9c6243144ca",
+                "6dfda03895256766"
+            ]
+        ]
+    },
+    {
+        "id": "a01bf9c6243144ca",
+        "type": "function",
+        "z": "a7c135e772de0725",
+        "name": "initState",
+        "func": "const params = [\n    [\n        \"startStop\", \"lowLevel\", \"midLevel\",\n        \"hiLevel\", \"emergencyLevel\", \"statePump1\",\n        \"statePump2\", \"resetFaultPump1\", \"resetFaultPump2\",\n        \"resetOperatingTimePump1\", \"resetOperatingTimePump2\",\n        \"faultPump1\", \"faultPump2\"\n    ],\n    [\n        \"timePump1\",\n        \"timePump2\"\n    ]\n];\nconst initialState = {};\n\nflow.set([\"coilsParams\", \"holdingsParams\"], params);\n\n\nparams.forEach(params => {\n    params.forEach((p, i) => {\n        initialState[p] = undefined;\n    });\n});\n\n\nflow.set(\"state\", initialState);\nnode.warn(initialState);\n\n\nmsg.payload = { message: \"OnInit was completed.\" }\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 60,
+        "wires": [
+            [
+                "755eb2f380e6d505"
+            ]
+        ]
+    },
+    {
+        "id": "755eb2f380e6d505",
+        "type": "debug",
+        "z": "a7c135e772de0725",
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 500,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "6dfda03895256766",
+        "type": "function",
+        "z": "a7c135e772de0725",
+        "name": "initDatabaseContext",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    }
+]
