@@ -540,8 +540,9 @@ module.exports = {
      *    global.get("os")
      */
     functionGlobalContext: {
-        // os:require('os'),
+        sequelize: require('sequelize')
     },
+
 
     /** The maximum number of messages nodes will buffer internally as part of their
      * operation. This applies across a range of nodes that operate on message sequences.

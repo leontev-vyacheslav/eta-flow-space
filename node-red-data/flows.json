@@ -137,8 +137,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 660,
-        "y": 360,
+        "x": 780,
+        "y": 280,
         "wires": []
     },
     {
@@ -157,7 +157,8 @@
         "y": 360,
         "wires": [
             [
-                "89aeb1c780746b48"
+                "89aeb1c780746b48",
+                "ce5bd73cf8b377b4"
             ]
         ]
     },
@@ -290,7 +291,7 @@
         "type": "debug",
         "z": "a7c135e772de0725",
         "name": "debug 5",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -307,7 +308,7 @@
         "type": "function",
         "z": "a7c135e772de0725",
         "name": "initDatabaseContext",
-        "func": "\nreturn msg;",
+        "func": "const { Sequelize, DataTypes } = global.get('sequelize');\n\nlet sequelize = flow.get('sequelize');\nif (!sequelize) {\n    sequelize = new Sequelize('postgres://postgres:0987654321@node-red-database:5432/eta_nodered_db');\n    flow.set('sequelize', sequelize);\n}\n\nconst SewageStateDataModel = sequelize.define('SewageState', {\n    state: DataTypes.STRING,\n    createdAt: DataTypes.DATE,\n    updatedAt: DataTypes.DATE,\n}, {\n    tableName: 'sewage_state',\n},);\n\nflow.set(\"SewageStateDataModel\", SewageStateDataModel)\n\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -316,6 +317,24 @@
         "libs": [],
         "x": 340,
         "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ce5bd73cf8b377b4",
+        "type": "function",
+        "z": "a7c135e772de0725",
+        "name": "postStateToDatabase",
+        "func": "const SewageStateDataModel = flow.get(\"SewageStateDataModel\");\n\ndelete msg[\"_msgid\"]\n\nawait SewageStateDataModel.create(\n    { state: JSON.stringify(msg) }\n);\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 740,
+        "y": 420,
         "wires": [
             []
         ]

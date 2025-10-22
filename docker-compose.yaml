@@ -5,7 +5,7 @@ services:
     ports:
       - "1880:1880"
     volumes:
-      - ./data:/data
+      - ./node-red-data:/data
     restart: unless-stopped
     environment:
       - TZ=Russia/Moscow
@@ -15,14 +15,17 @@ services:
   node-red-database:
     image: postgres:latest
     container_name: node-red-database
+    ports:
+      - "35432:5432"
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=0987654321
       - POSTGRES_DB=eta_nodered_db
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - ./database-data:/var/lib/postgresql/data
     restart: unless-stopped
-
+    networks:
+        - node-red-network
 
 networks:
   node-red-network:
