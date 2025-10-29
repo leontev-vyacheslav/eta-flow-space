@@ -1,1 +1,13 @@
-GET http://127.0.0.1:1880/api/get-state
+GET http://127.0.0.1:1880/api/get-state/2
+
+###
+GET http://127.0.0.1:1880/api/get-states-by-dates/1?beginDate=2025-10-01&endDate=2025-10-30
+
+###
+POST http://127.0.0.1:1880/api/set-state/3  HTTP/1.1
+content-type: application/json
+
+{
+    "address": 7,
+    "value": true
+}

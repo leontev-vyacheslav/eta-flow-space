@@ -3,10 +3,19 @@
     "description": "A Node-RED Project",
     "version": "0.0.1",
     "private": true,
+    "scripts": {
+        "migrate": "npx sequelize-cli db:migrate",
+        "migrate-undo": "npx sequelize-cli db:migrate:undo:all",
+        "seed": "npx sequelize-cli db:seed:all",
+        "seed-undo": "npx sequelize-cli db:seed:undo:all"
+    },
     "dependencies": {
         "@node-red-contrib-themes/theme-collection": "~4.1.0",
         "node-red-contrib-modbus": "~5.44.1",
         "pg": "^8.16.3",
         "sequelize": "^6.37.7"
+    },
+    "devDependencies": {
+        "sequelize-cli": "^6.6.3"
     }
 }

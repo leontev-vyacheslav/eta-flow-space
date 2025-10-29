@@ -8,12 +8,102 @@
         "env": []
     },
     {
+        "id": "3824f75aea35a698",
+        "type": "group",
+        "z": "a7c135e772de0725",
+        "name": "web-api",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "74479dcb06e8145c",
+            "be8e1b2521c879ee",
+            "e207d1a66a7650b9",
+            "3858125dbf3d0092",
+            "f89e2f3dce998039",
+            "197bb63a4e854458",
+            "fd86f761136a6f0c",
+            "d246a8475b5673ea",
+            "54190ad994db7851",
+            "912ffc3a037d746c",
+            "b9800d78b27085a5",
+            "4bd9a2b7d2c29a19",
+            "6af9f793cbe7d0bf"
+        ],
+        "x": 34,
+        "y": 739,
+        "w": 812,
+        "h": 342
+    },
+    {
+        "id": "32c193548f01777e",
+        "type": "group",
+        "z": "a7c135e772de0725",
+        "name": "activator",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "3254130808eb2f14",
+            "a01bf9c6243144ca",
+            "755eb2f380e6d505"
+        ],
+        "x": 34,
+        "y": 19,
+        "w": 612,
+        "h": 82
+    },
+    {
+        "id": "ebdda297932f3f07",
+        "type": "group",
+        "z": "a7c135e772de0725",
+        "name": "remote-device-mediator",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "a59a21eb6b6471bc",
+            "f6dc65181c21674e",
+            "c30487f20a1f7fc4",
+            "762ef4d95887673c",
+            "03e587130931a889",
+            "2db1e19264fd6a1a",
+            "f641c61327d806f0",
+            "bfb3e9ec73ddd77c",
+            "810cdb0a6cb7cff6",
+            "b0025aba6923fd52",
+            "30f6276f9e368846",
+            "04a22057bd75906f"
+        ],
+        "x": 34,
+        "y": 179,
+        "w": 1012,
+        "h": 242
+    },
+    {
+        "id": "b74b1a6d538c13c2",
+        "type": "group",
+        "z": "a7c135e772de0725",
+        "name": "persistent-storage-manager",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "443b413283d10c89",
+            "abf540bef0e1bad8"
+        ],
+        "x": 34,
+        "y": 579,
+        "w": 472,
+        "h": 82
+    },
+    {
         "id": "e8c1afd9a301aa03",
         "type": "modbus-client",
         "name": "",
         "clienttype": "tcp",
         "bufferCommands": true,
-        "stateLogEnabled": false,
+        "stateLogEnabled": true,
         "queueLogEnabled": false,
         "failureLogEnabled": true,
         "tcpHost": "192.168.0.200",
@@ -33,57 +123,23 @@
         "reconnectOnTimeout": true,
         "reconnectTimeout": 2000,
         "parallelUnitIdsAllowed": true,
-        "showErrors": false,
+        "showErrors": true,
         "showWarnings": true,
         "showLogs": true
-    },
-    {
-        "id": "871b5166b87ad5cb",
-        "type": "modbus-read",
-        "z": "a7c135e772de0725",
-        "name": "getRemoteCoils",
-        "topic": "coils",
-        "showStatusActivities": false,
-        "logIOActivities": false,
-        "showErrors": false,
-        "showWarnings": true,
-        "unitid": "",
-        "dataType": "Coil",
-        "adr": "0",
-        "quantity": "13",
-        "rate": "5",
-        "rateUnit": "s",
-        "delayOnStart": false,
-        "enableDeformedMessages": false,
-        "startDelayTime": "",
-        "server": "e8c1afd9a301aa03",
-        "useIOFile": false,
-        "ioFile": "",
-        "useIOForPayload": false,
-        "emptyMsgOnFail": false,
-        "x": 120,
-        "y": 320,
-        "wires": [
-            [
-                "0c53aec893182901"
-            ],
-            [
-                "ed6b2e8b91938bbc"
-            ]
-        ]
     },
     {
         "id": "74479dcb06e8145c",
         "type": "http in",
         "z": "a7c135e772de0725",
+        "g": "3824f75aea35a698",
         "name": "",
-        "url": "/api/get-state",
+        "url": "/api/get-state/:deviceId",
         "method": "get",
         "upload": false,
         "skipBodyParsing": false,
         "swaggerDoc": "",
-        "x": 130,
-        "y": 620,
+        "x": 180,
+        "y": 820,
         "wires": [
             [
                 "be8e1b2521c879ee"
@@ -94,16 +150,17 @@
         "id": "be8e1b2521c879ee",
         "type": "function",
         "z": "a7c135e772de0725",
-        "name": "getStateFromFlow",
-        "func": "const state = flow.get(\"state\");\nmsg.payload = { values: state };\n\nreturn msg;\n",
+        "g": "3824f75aea35a698",
+        "name": "getStates",
+        "func": "const deviceId = msg.req.params.deviceId;\nnode.warn(deviceId);\nconst state = flow.get(`state${deviceId}`);\nmsg.payload = { values: state };\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 350,
-        "y": 620,
+        "x": 400,
+        "y": 820,
         "wires": [
             [
                 "e207d1a66a7650b9",
@@ -115,141 +172,39 @@
         "id": "e207d1a66a7650b9",
         "type": "http response",
         "z": "a7c135e772de0725",
-        "name": "http-get-state-response",
+        "g": "3824f75aea35a698",
+        "name": "http-get-states-response",
         "statusCode": "",
         "headers": {
             "content-type": "application/json"
         },
-        "x": 610,
-        "y": 620,
-        "wires": []
-    },
-    {
-        "id": "89aeb1c780746b48",
-        "type": "debug",
-        "z": "a7c135e772de0725",
-        "name": "debug 3",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 780,
-        "y": 280,
-        "wires": []
-    },
-    {
-        "id": "0c53aec893182901",
-        "type": "function",
-        "z": "a7c135e772de0725",
-        "name": "setStateToFlow",
-        "func": "let state = flow.get(\"state\");\n\nconst updateState = (params) => {\n    params.forEach((p, i) => {\n        const v = {};\n        v[p] = msg.payload[i];\n        state = { ...state, ...v };\n    });\n}\n\nif (msg.topic) {\n    const params = flow.get(`${msg.topic}Params`);\n    updateState(params);\n}\n\nflow.set(\"state\", state);\n\n\nreturn state;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 460,
-        "y": 360,
-        "wires": [
-            [
-                "89aeb1c780746b48",
-                "ce5bd73cf8b377b4"
-            ]
-        ]
-    },
-    {
-        "id": "7ced4a30730f3c7b",
-        "type": "modbus-read",
-        "z": "a7c135e772de0725",
-        "name": "getRemoteHoldings",
-        "topic": "holdings",
-        "showStatusActivities": false,
-        "logIOActivities": false,
-        "showErrors": false,
-        "showWarnings": true,
-        "unitid": "",
-        "dataType": "HoldingRegister",
-        "adr": "0",
-        "quantity": "2",
-        "rate": "5",
-        "rateUnit": "s",
-        "delayOnStart": false,
-        "enableDeformedMessages": false,
-        "startDelayTime": "",
-        "server": "e8c1afd9a301aa03",
-        "useIOFile": false,
-        "ioFile": "",
-        "useIOForPayload": false,
-        "emptyMsgOnFail": false,
-        "x": 130,
-        "y": 380,
-        "wires": [
-            [
-                "0c53aec893182901"
-            ],
-            [
-                "e7d02e95be2e3b8e"
-            ]
-        ]
-    },
-    {
-        "id": "e7d02e95be2e3b8e",
-        "type": "debug",
-        "z": "a7c135e772de0725",
-        "name": "debug 1",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 360,
-        "y": 480,
-        "wires": []
-    },
-    {
-        "id": "ed6b2e8b91938bbc",
-        "type": "debug",
-        "z": "a7c135e772de0725",
-        "name": "debug 2",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 360,
-        "y": 420,
+        "x": 710,
+        "y": 820,
         "wires": []
     },
     {
         "id": "3858125dbf3d0092",
         "type": "debug",
         "z": "a7c135e772de0725",
-        "name": "debug 4",
+        "g": "3824f75aea35a698",
+        "name": "debug 3",
         "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "payload",
+        "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 560,
-        "y": 680,
+        "x": 660,
+        "y": 780,
         "wires": []
     },
     {
         "id": "3254130808eb2f14",
         "type": "inject",
         "z": "a7c135e772de0725",
+        "g": "32c193548f01777e",
         "name": "onInit",
         "props": [],
         "repeat": "",
@@ -257,12 +212,11 @@
         "once": true,
         "onceDelay": "0.01",
         "topic": "",
-        "x": 90,
+        "x": 130,
         "y": 60,
         "wires": [
             [
-                "a01bf9c6243144ca",
-                "6dfda03895256766"
+                "a01bf9c6243144ca"
             ]
         ]
     },
@@ -270,15 +224,16 @@
         "id": "a01bf9c6243144ca",
         "type": "function",
         "z": "a7c135e772de0725",
+        "g": "32c193548f01777e",
         "name": "initState",
-        "func": "const params = [\n    [\n        \"startStop\", \"lowLevel\", \"midLevel\",\n        \"hiLevel\", \"emergencyLevel\", \"statePump1\",\n        \"statePump2\", \"resetFaultPump1\", \"resetFaultPump2\",\n        \"resetOperatingTimePump1\", \"resetOperatingTimePump2\",\n        \"faultPump1\", \"faultPump2\"\n    ],\n    [\n        \"timePump1\",\n        \"timePump2\"\n    ]\n];\nconst initialState = {};\n\nflow.set([\"coilsParams\", \"holdingsParams\"], params);\n\n\nparams.forEach(params => {\n    params.forEach((p, i) => {\n        initialState[p] = undefined;\n    });\n});\n\n\nflow.set(\"state\", initialState);\nnode.warn(initialState);\n\n\nmsg.payload = { message: \"OnInit was completed.\" }\n\nreturn msg;",
+        "func": "const { Sequelize, DataTypes } = global.get('sequelize');\n\nlet sequelize = flow.get('sequelize');\nif (!sequelize) {\n    sequelize = new Sequelize('postgres://postgres:0987654321@node-red-database:5432/eta_nodered_db');\n    flow.set('sequelize', sequelize);\n}\n\n\n\nconst DeviceDataModel = sequelize.define('Device', {\n    name: DataTypes.STRING(32),\n    flowId: DataTypes.INTEGER,\n    settings: DataTypes.JSON,\n    createdAt: DataTypes.DATE,\n    updatedAt: DataTypes.DATE,\n}, {\n    tableName: 'device',\n});\n\nconst DeviceStateDataModel = sequelize.define('DeviceState', {\n    deviceId: DataTypes.INTEGER,\n    state: DataTypes.STRING,\n    createdAt: DataTypes.DATE,\n    updatedAt: DataTypes.DATE,\n}, {\n    tableName: 'device_state',\n});\nflow.set([\"DeviceDataModel\", \"DeviceStateDataModel\"], [DeviceDataModel, DeviceStateDataModel]);\n\nconst params = [\n    [\n        \"startStop\", \"lowLevel\", \"midLevel\",\n        \"hiLevel\", \"emergencyLevel\", \"statePump1\",\n        \"statePump2\", \"resetFaultPump1\", \"resetFaultPump2\",\n        \"resetOperatingTimePump1\", \"resetOperatingTimePump2\",\n        \"faultPump1\", \"faultPump2\"\n    ],\n    [\n        \"timePump1\",\n        \"timePump2\"\n    ]\n];\nconst initialState = {};\n\nflow.set([\"coilsParams\", \"holdingsParams\"], params);\n\nconst devices = await DeviceDataModel.findAll();\n\ndevices.forEach(d => {\n    \n    params.forEach(params => {\n        params.forEach((p, i) => {\n            initialState[p] = undefined;\n        });\n    });\n\n    // initialState[\"deviceId\"] = d.id;\n    \n    flow.set(`state${d.id}`, initialState);\n    node.warn(initialState);\n});\n\n\n\nmsg.payload = { message: \"OnInit was completed.\" }\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 300,
+        "x": 340,
         "y": 60,
         "wires": [
             [
@@ -290,7 +245,8 @@
         "id": "755eb2f380e6d505",
         "type": "debug",
         "z": "a7c135e772de0725",
-        "name": "debug 5",
+        "g": "32c193548f01777e",
+        "name": "debug 1",
         "active": false,
         "tosidebar": true,
         "console": false,
@@ -299,44 +255,474 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 500,
+        "x": 540,
         "y": 60,
         "wires": []
     },
     {
-        "id": "6dfda03895256766",
+        "id": "f89e2f3dce998039",
+        "type": "http in",
+        "z": "a7c135e772de0725",
+        "g": "3824f75aea35a698",
+        "name": "",
+        "url": "/api/get-states-by-dates/:deviceId",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 210,
+        "y": 940,
+        "wires": [
+            [
+                "197bb63a4e854458"
+            ]
+        ]
+    },
+    {
+        "id": "197bb63a4e854458",
         "type": "function",
         "z": "a7c135e772de0725",
-        "name": "initDatabaseContext",
-        "func": "const { Sequelize, DataTypes } = global.get('sequelize');\n\nlet sequelize = flow.get('sequelize');\nif (!sequelize) {\n    sequelize = new Sequelize('postgres://postgres:0987654321@node-red-database:5432/eta_nodered_db');\n    flow.set('sequelize', sequelize);\n}\n\nconst SewageStateDataModel = sequelize.define('SewageState', {\n    state: DataTypes.STRING,\n    createdAt: DataTypes.DATE,\n    updatedAt: DataTypes.DATE,\n}, {\n    tableName: 'sewage_state',\n},);\n\nflow.set(\"SewageStateDataModel\", SewageStateDataModel)\n\n\nreturn msg;",
+        "g": "3824f75aea35a698",
+        "name": "getStatesByDates",
+        "func": "const { Op } = global.get(\"sequelize\");\n\nconst beginDateStr = msg.req.query.beginDate;\nconst endDateStr = msg.req.query.endDate;\nconst deviceId = msg.req.params.deviceId;\n\nconst beginDate = new Date(beginDateStr);\nconst endDate = new Date(endDateStr);\n\nconst DeviceStateDataModel = flow.get(\"DeviceStateDataModel\");\n\n\nconst states = await DeviceStateDataModel.findAll({\n    where: {\n        deviceId: deviceId,\n        createdAt: {\n            [Op.between]: [beginDate, endDate]\n        },\n    },\n});\n\n\nmsg.payload = { values: states };\n\nreturn msg;\n\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 340,
-        "y": 140,
+        "x": 470,
+        "y": 940,
+        "wires": [
+            [
+                "fd86f761136a6f0c",
+                "d246a8475b5673ea"
+            ]
+        ]
+    },
+    {
+        "id": "fd86f761136a6f0c",
+        "type": "debug",
+        "z": "a7c135e772de0725",
+        "g": "3824f75aea35a698",
+        "name": "debug 4",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 660,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "d246a8475b5673ea",
+        "type": "http response",
+        "z": "a7c135e772de0725",
+        "g": "3824f75aea35a698",
+        "name": "http-get-states-response",
+        "statusCode": "",
+        "headers": {},
+        "x": 710,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "a59a21eb6b6471bc",
+        "type": "function",
+        "z": "a7c135e772de0725",
+        "g": "ebdda297932f3f07",
+        "name": "buildStatePayload",
+        "func": "\nflow.set(\"res\", msg.res);\n\nmsg.payload = {\n    ...msg.payload, fc: 5, quantity: 1\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 380,
+        "wires": [
+            [
+                "762ef4d95887673c"
+            ]
+        ]
+    },
+    {
+        "id": "54190ad994db7851",
+        "type": "http in",
+        "z": "a7c135e772de0725",
+        "g": "3824f75aea35a698",
+        "name": "",
+        "url": "/api/set-state/:deviceId",
+        "method": "post",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 180,
+        "y": 1040,
+        "wires": [
+            [
+                "912ffc3a037d746c"
+            ]
+        ]
+    },
+    {
+        "id": "f6dc65181c21674e",
+        "type": "link in",
+        "z": "a7c135e772de0725",
+        "g": "ebdda297932f3f07",
+        "name": "link in 1",
+        "links": [
+            "912ffc3a037d746c"
+        ],
+        "x": 95,
+        "y": 380,
+        "wires": [
+            [
+                "a59a21eb6b6471bc"
+            ]
+        ]
+    },
+    {
+        "id": "912ffc3a037d746c",
+        "type": "link out",
+        "z": "a7c135e772de0725",
+        "g": "3824f75aea35a698",
+        "name": "link out 1",
+        "mode": "link",
+        "links": [
+            "f6dc65181c21674e"
+        ],
+        "x": 345,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "c30487f20a1f7fc4",
+        "type": "link out",
+        "z": "a7c135e772de0725",
+        "g": "ebdda297932f3f07",
+        "name": "link out 2",
+        "mode": "link",
+        "links": [
+            "4bd9a2b7d2c29a19"
+        ],
+        "x": 845,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "b9800d78b27085a5",
+        "type": "http response",
+        "z": "a7c135e772de0725",
+        "g": "3824f75aea35a698",
+        "name": "http-set-state-response",
+        "statusCode": "",
+        "headers": {},
+        "x": 710,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "4bd9a2b7d2c29a19",
+        "type": "link in",
+        "z": "a7c135e772de0725",
+        "g": "3824f75aea35a698",
+        "name": "link in 2",
+        "links": [
+            "c30487f20a1f7fc4"
+        ],
+        "x": 415,
+        "y": 1040,
+        "wires": [
+            [
+                "6af9f793cbe7d0bf"
+            ]
+        ]
+    },
+    {
+        "id": "762ef4d95887673c",
+        "type": "modbus-flex-write",
+        "z": "a7c135e772de0725",
+        "g": "ebdda297932f3f07",
+        "name": "",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "server": "e8c1afd9a301aa03",
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 670,
+        "y": 380,
+        "wires": [
+            [
+                "c30487f20a1f7fc4"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "6af9f793cbe7d0bf",
+        "type": "function",
+        "z": "a7c135e772de0725",
+        "g": "3824f75aea35a698",
+        "name": "getState",
+        "func": "\nmsg.res = flow.get(\"res\");\n\nmsg.payload = {\n    status: \"ok\",\n    values: msg.payload.value\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 1040,
+        "wires": [
+            [
+                "b9800d78b27085a5"
+            ]
+        ]
+    },
+    {
+        "id": "03e587130931a889",
+        "type": "inject",
+        "z": "a7c135e772de0725",
+        "g": "ebdda297932f3f07",
+        "name": "setInterval10sec",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "10",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 220,
+        "wires": [
+            [
+                "2db1e19264fd6a1a"
+            ]
+        ]
+    },
+    {
+        "id": "2db1e19264fd6a1a",
+        "type": "function",
+        "z": "a7c135e772de0725",
+        "g": "ebdda297932f3f07",
+        "name": "switchDeviceConnection",
+        "func": "\nconst DeviceDataModel = flow.get(\"DeviceDataModel\");\nconst devices = await DeviceDataModel.findAll();\nlet deviceIndex = flow.get(\"deviceIndex\") || 0;\n\nif (deviceIndex >= devices.length) {\n    deviceIndex = 0;\n};\n\n\nconst device = devices[deviceIndex];\n\n\nmsg.payload = {\n    connectorType: 'TCP',\n    tcpHost: device.settings.ip,\n    tcpPort: device.settings.port,\n    unitId: 1,\n};\nmsg.deviceId = device.id;\n\nflow.set(\"deviceIndex\", deviceIndex + 1);\nflow.set(\"deviceId\", device.id);\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 220,
+        "wires": [
+            [
+                "b0025aba6923fd52"
+            ]
+        ]
+    },
+    {
+        "id": "f641c61327d806f0",
+        "type": "modbus-flex-getter",
+        "z": "a7c135e772de0725",
+        "g": "ebdda297932f3f07",
+        "name": "",
+        "showStatusActivities": true,
+        "showErrors": true,
+        "showWarnings": true,
+        "logIOActivities": false,
+        "server": "e8c1afd9a301aa03",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": true,
+        "delayOnStart": false,
+        "enableDeformedMessages": false,
+        "startDelayTime": "",
+        "x": 630,
+        "y": 300,
+        "wires": [
+            [
+                "bfb3e9ec73ddd77c"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "bfb3e9ec73ddd77c",
+        "type": "function",
+        "z": "a7c135e772de0725",
+        "g": "ebdda297932f3f07",
+        "name": "collectDeviceState",
+        "func": "\nconst deviceId = flow.get(\"deviceId\");\n\nif (!deviceId) {\n    return;\n}\n\nlet state = flow.get(`state${deviceId}`);\n\nconst updateState = (params) => {\n    params.forEach((p, i) => {\n        const v = {};\n        v[p] = msg.payload[i];\n        state = { ...state, ...v };\n    });\n}\n\nif (msg.topic) {\n    const params = flow.get(`${msg.topic}Params`);\n    updateState(params);\n}\n// state[\"deviceId\"] = deviceId;\nflow.set(`state${deviceId}`, state);\n\n\n\nreturn state;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 850,
+        "y": 300,
+        "wires": [
+            [
+                "810cdb0a6cb7cff6"
+            ]
+        ]
+    },
+    {
+        "id": "443b413283d10c89",
+        "type": "function",
+        "z": "a7c135e772de0725",
+        "g": "b74b1a6d538c13c2",
+        "name": "postDeviceState",
+        "func": "const DeviceStateDataModel = flow.get(\"DeviceStateDataModel\");\nconst DeviceDataModel = flow.get(\"DeviceDataModel\");\n\nconst devices = await DeviceDataModel.findAll();\n\n\ndevices.forEach(async (d) => {\n    const state = flow.get(`state${d.id}`);\n    \n    await DeviceStateDataModel.create({\n        deviceId: d.id,\n        state: JSON.stringify(state)\n    });\n});\n\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 620,
         "wires": [
             []
         ]
     },
     {
-        "id": "ce5bd73cf8b377b4",
+        "id": "abf540bef0e1bad8",
+        "type": "inject",
+        "z": "a7c135e772de0725",
+        "g": "b74b1a6d538c13c2",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 620,
+        "wires": [
+            [
+                "443b413283d10c89"
+            ]
+        ]
+    },
+    {
+        "id": "810cdb0a6cb7cff6",
+        "type": "debug",
+        "z": "a7c135e772de0725",
+        "g": "ebdda297932f3f07",
+        "name": "debug 2",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 940,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "b0025aba6923fd52",
+        "type": "modbus-flex-connector",
+        "z": "a7c135e772de0725",
+        "g": "ebdda297932f3f07",
+        "name": "",
+        "maxReconnectsPerMinute": 4,
+        "emptyQueue": false,
+        "showStatusActivities": true,
+        "showErrors": true,
+        "server": "e8c1afd9a301aa03",
+        "emptyMsgOnFail": true,
+        "configMsgOnChange": false,
+        "x": 670,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "30f6276f9e368846",
         "type": "function",
         "z": "a7c135e772de0725",
-        "name": "postStateToDatabase",
-        "func": "const SewageStateDataModel = flow.get(\"SewageStateDataModel\");\n\ndelete msg[\"_msgid\"]\n\nawait SewageStateDataModel.create(\n    { state: JSON.stringify(msg) }\n);\n\nreturn msg;",
+        "g": "ebdda297932f3f07",
+        "name": "switchReadingRegisters",
+        "func": "\nconst registers = [\n    { name: \"coils\", address: 0, fc: 1, quantity: 13 },\n    { name: \"holdings\", address: 0, fc: 3, quantity: 2 },\n];\n\nlet registerIndex = flow.get(\"registerIndex\") || 0;\n\nif (registerIndex >= registers.length) {\n    registerIndex = 0;\n}\n\nconst register = registers[registerIndex];\n\n\nmsg.payload = {\n    fc: register.fc,\n    address: register.address,\n    quantity: register.quantity,\n};\n\nmsg.topic = register.name;\n\nflow.set(\"registerIndex\", registerIndex + 1);\n\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 740,
-        "y": 420,
+        "x": 390,
+        "y": 300,
         "wires": [
-            []
+            [
+                "f641c61327d806f0"
+            ]
+        ]
+    },
+    {
+        "id": "04a22057bd75906f",
+        "type": "inject",
+        "z": "a7c135e772de0725",
+        "g": "ebdda297932f3f07",
+        "name": "setInterval2sec",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 300,
+        "wires": [
+            [
+                "30f6276f9e368846"
+            ]
         ]
     }
 ]
