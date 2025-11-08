@@ -1,5 +1,5 @@
 const jsonwebtoken = require('jsonwebtoken');
-const { HttpStatusCodes } = require('../constants/http-constants');
+const { HttpStatusCodes } = require('../constants/http');
 
 function authorize(req, res, next) {
     if (!req.path.startsWith('/api/')) {
@@ -9,7 +9,6 @@ function authorize(req, res, next) {
     }
 
     const token = req.headers.authorization?.replace('Bearer ', '');
-
     if (!token) {
         return res
             .status(HttpStatusCodes.Unauthorized)

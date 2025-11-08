@@ -7,8 +7,8 @@ const process = require('process');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 
-const config = require(__dirname + '/../config/database.json')[env];
-const db = {};
+const config = require(__dirname + '/../database.config.json')[env];
+const orm = {};
 
 const kebabToPascal = (str) =>
   str ? str
@@ -37,16 +37,16 @@ fs
   .forEach(file => {
     const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
     const modelName = kebabToPascal(model.name);
-    db[modelName] = model;
+    orm[modelName] = model;
   });
 
-Object.keys(db).forEach(modelName => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
+Object.keys(orm).forEach(modelName => {
+  if (orm[modelName].associate) {
+    orm[modelName].associate(orm);
   }
 });
 
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
+orm.sequelize = sequelize;
+orm.Sequelize = Sequelize;
 
-module.exports = db;
+module.exports = orm;

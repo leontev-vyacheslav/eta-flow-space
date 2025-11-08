@@ -1,4 +1,4 @@
-const { HttpStatusCodes } = require('./http-constants');
+const { HttpStatusCodes } = require('./http');
 
 module.exports = {
     HttpStatusCodes

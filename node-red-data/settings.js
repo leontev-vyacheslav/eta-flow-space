@@ -239,11 +239,9 @@ module.exports = {
      *  Resource Sharing rules for the source. `httpStaticCors` can be used to
      *  set a default cors policy across all static routes.
      */
-    //httpStatic: [
-    //    {path: '/home/nol/pics/',    root: "/img/"},
-    //    {path: '/home/nol/reports/', root: "/doc/"},
-    //    {path: '/home/nol/videos/',  root: "/vid/", options: {maxAge: '1d'}}
-    //],
+    httpStatic: [
+        { path: '/data/static/mnemoschemas/', root: "/mnemoschemas/" },
+    ],
 
     /**
      * All static routes will be appended to httpStaticRoot
@@ -253,17 +251,17 @@ module.exports = {
      *      and httpStaticRoot = "/static/"
      *      then "/home/nol/pics/" will be served at "/static/img/"
      */
-    //httpStaticRoot: '/static/',
+    httpStaticRoot: '/static/',
 
     /** The following property can be used to configure cross-origin resource sharing
      * in the http static routes.
      * See https://github.com/troygoode/node-cors#configuration-options for
      * details on its contents. The following is a basic permissive set of options:
      */
-    //httpStaticCors: {
-    //    origin: "*",
-    //    methods: "GET,PUT,POST,DELETE"
-    //},
+    httpStaticCors: {
+        origin: "*",
+        methods: "GET"
+    },
 
     /** The following property can be used to modify proxy options */
     // proxyOptions: {
@@ -545,7 +543,7 @@ module.exports = {
         crypto: require('crypto'),
         jsonwebtoken: require('jsonwebtoken'),
 
-        constants: require('./src/constants'),
+        'app-consts': require('./src/constants'),
         orm: require('./src/orm/models'),
         'date-fns': require('date-fns'),
     },
