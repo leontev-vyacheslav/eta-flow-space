@@ -1,0 +1,30 @@
+.quick-help-reference-container {
+    padding: 10px;
+    padding-top: 0;
+    line-height: 22px;
+
+    ul {
+        padding-left: 30px;
+    }
+    h1 {
+        font-size: 2em;
+        font-weight: 500;
+        color: rgba(0, 0, 0, 0.7);
+    }
+
+    h2 {
+        font-size: 1.8em;
+        font-weight: 500;
+        color: rgba(0, 0, 0, 0.7);
+
+    }
+
+    h3 {
+        font-size: 1.6em;
+        font-weight: 500;
+        color: rgba(0, 0, 0, 0.7);
+    }
+    strong {
+        color: rgba(0, 0, 0, 0.7);
+    }
+}

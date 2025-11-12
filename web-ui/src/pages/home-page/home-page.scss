@@ -1,0 +1,23 @@
+.heating-circuit-info-form {
+  padding-bottom: 10px;
+  padding-top: 10px;
+
+  .dx-field {
+    margin: 0 0 0px;
+  }
+
+  .dx-layout-manager .dx-field-item {
+    padding-bottom: 0px;
+    padding-top: 0px;
+    font-size: 12px;
+  }
+
+  .dx-layout-manager.dx-layout-manager-one-col .dx-box-item:not(:first-child) .dx-single-column-item-content>.dx-field-item {
+    padding-top: 0px;
+  }
+
+  .dx-field-item-label-location-top {
+    display: block;
+    padding: 10px 16px 3px;
+  }
+}

@@ -1,0 +1,9 @@
+@use "sass:color";
+@use "../../themes/generated/variables.base.scss" as *;
+
+.footer {
+  display: block;
+  color: rgba($base-text-color, color.alpha($base-text-color) );
+  padding-top: 10px;
+  padding-bottom: 30px;
+}

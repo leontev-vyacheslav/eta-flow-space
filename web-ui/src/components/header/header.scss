@@ -1,0 +1,94 @@
+@use "../../themes/generated/variables.base.scss" as *;
+@use "../../themes/variables" as my;
+
+.header-component {
+  flex: 0 0 auto;
+  z-index: 1;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+
+  .dx-toolbar-items-container {
+    height: 76px;
+    overflow: visible;
+  }
+
+  .dx-icon-menu {
+    color: my.$base-company-color;
+    width: 36px;
+    height: 36px;
+    margin-top: 5px;
+  }
+
+  .dx-icon-menu {
+    font-size: 2.2em;
+  }
+
+  .dx-button.dx-button-has-icon:not(.dx-button-has-text):not(.dx-shape-standard) {
+    border-radius: 50%;
+    box-shadow: none;
+    width: 44px;
+    height: 44px;
+  }
+
+  .dx-toolbar-after .dx-toolbar-menu-container  {
+    display: none;
+  }
+
+
+  .dx-icon-overflow {
+    font-size: 24px;
+    color: rgba(0,0,0,0);
+  }
+  .dx-icon-overflow::before {
+    content: "\f01d";
+  }
+}
+
+.dx-toolbar.header-toolbar .dx-toolbar-items-container .dx-toolbar-after {
+  padding: 0 40px;
+
+  .screen-x-small & {
+    padding: 0 20px;
+  }
+}
+
+.dx-toolbar .dx-toolbar-item.dx-toolbar-button.menu-button {
+  width: my.$side-panel-min-width;
+  text-align: center;
+  padding: 0;
+}
+
+.header-title .dx-item-content {
+  padding: 0;
+  margin: 0;
+}
+
+.header-title-logo-container {
+  display: flex;
+  align-items: center;
+
+  svg {
+    margin-right: 10px;
+  }
+}
+
+.dx-theme-generic {
+  .dx-toolbar {
+    padding: 10px 0;
+  }
+
+  .user-button > .dx-button-content {
+    padding: 3px;
+    border-radius: 50%;
+  }
+}
+
+.app.screen-x-small .header-title {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.user-button{
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+}

@@ -1,0 +1,30 @@
+.dx-overlay-wrapper.dx-loadpanel-wrapper {
+  display: none;
+}
+
+.dx-loadpanel-content {
+  z-index: 15002;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  border-radius: inherit;
+  border: #d5d5d5 solid 1px;
+
+  .dx-loadpanel-content-wrapper {
+    display: none;
+  }
+
+  svg {
+    width: 55px;
+    height: 55px;
+    fill: #666666;
+    justify-items: flex-start;
+  }
+
+  span {
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #666666;
+  }
+}

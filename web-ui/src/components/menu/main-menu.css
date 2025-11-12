@@ -1,0 +1,11 @@
+.main-menu {
+  -webkit-app-region: no-drag;
+}
+
+.main-menu .dx-item-content.dx-menu-item-content:first-child {
+  padding: 10px 10px;
+}
+
+.main-menu .dx-item.dx-menu-item:first-child {
+  border-radius: 50%;
+}

@@ -15,12 +15,13 @@ export default defineConfig([
       reactHooks.configs['recommended-latest'],
       reactRefresh.configs.vite,
     ],
-     rules: {
+    rules: {
       '@typescript-eslint/no-explicit-any': 'off',
       // '@typescript-eslint/no-unsafe-assignment': 'off',
       // '@typescript-eslint/no-unsafe-call': 'off',
       // '@typescript-eslint/no-unsafe-member-access': 'off',
       // '@typescript-eslint/no-unsafe-return': 'off'
+      'react-refresh/only-export-components': 'off',
     },
     languageOptions: {
       ecmaVersion: 2020,

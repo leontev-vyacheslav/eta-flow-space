@@ -1,0 +1,24 @@
+@use "../../themes/generated/variables.base.scss" as *;
+@use "../../themes/variables" as my;
+
+.about-app-info {
+  display: flex;
+  border-bottom: gray solid 4px;
+  width: 400px;
+
+  svg {
+    height: 100px;
+    width: 100px;
+    align-self: center;
+    fill: my.$base-company-color;
+    justify-self: left;
+  }
+}
+
+.about-app-title, .about-app-company {
+  font-weight: bold;
+}
+
+.screen-x-small .about-app-info {
+  width: 100%;
+}
