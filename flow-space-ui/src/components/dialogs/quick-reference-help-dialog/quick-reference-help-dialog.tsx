@@ -9,6 +9,7 @@ import { useAppData } from '../../../contexts/app-data/app-data';
 import type { QuickHelpReferenceModel } from '../../../models/quick-help-reference-model';
 import { formatMessage } from 'devextreme/localization';
 import { useScreenSize } from '../../../utils/media-query';
+
 import './quick-reference-help-dialog.scss'
 
 export type QuickReferenceHelpDialogProps = React.PropsWithChildren<IPopupOptions> & AppModalPopupProps & {
@@ -34,7 +35,7 @@ export const QuickReferenceHelpDialog = (props: QuickReferenceHelpDialogProps) =
         popup.style.zIndex = (parseInt(popup.style.zIndex) + 1).toString();
     }, []);
 
-    return (
+    return (quickHelpReference ?
         <AppModalPopup
             title='Краткая справка'
             width={ isXSmall || isSmall ? '95%' : '60%' }
@@ -56,6 +57,6 @@ export const QuickReferenceHelpDialog = (props: QuickReferenceHelpDialogProps) =
                     </div>
                     : <div className='dx-datagrid-nodata'>{ formatMessage('dxDataGrid-noDataText') }</div>
             } }
-        />
+        /> : null
     );
 }

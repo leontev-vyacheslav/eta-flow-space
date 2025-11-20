@@ -2,7 +2,7 @@
     {
         "id": "2dca6eed12b296f5",
         "type": "tab",
-        "label": "eta-flow-dispatcher",
+        "label": "flows-dispatcher",
         "disabled": false,
         "info": "",
         "env": []
@@ -10,7 +10,7 @@
     {
         "id": "a7c135e772de0725",
         "type": "tab",
-        "label": "eta-sewage-pump-monitor",
+        "label": "sewage-pump-monitor",
         "disabled": false,
         "info": "",
         "env": []
@@ -97,6 +97,40 @@
         "h": 82
     },
     {
+        "id": "b74b1a6d538c13c2",
+        "type": "group",
+        "z": "2dca6eed12b296f5",
+        "name": "persistent-storage",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "443b413283d10c89",
+            "abf540bef0e1bad8"
+        ],
+        "x": 34,
+        "y": 759,
+        "w": 632,
+        "h": 82
+    },
+    {
+        "id": "cbcfb9f537c21426",
+        "type": "group",
+        "z": "2dca6eed12b296f5",
+        "name": "web",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "41c82c569adc9a0c",
+            "d4fc72a987396215"
+        ],
+        "x": 28,
+        "y": 33,
+        "w": 1064,
+        "h": 634
+    },
+    {
         "id": "41c82c569adc9a0c",
         "type": "group",
         "z": "2dca6eed12b296f5",
@@ -121,12 +155,15 @@
             "87a20acffb88c509",
             "a2eba094e5646ec9",
             "887420d8a5fb0d1d",
-            "fafd204ba26a1f01"
+            "fafd204ba26a1f01",
+            "43c3767d3d434ea5",
+            "5bc46af389db248b",
+            "0eef86469c73bd2e"
         ],
         "x": 54,
         "y": 239,
         "w": 1012,
-        "h": 322
+        "h": 402
     },
     {
         "id": "d4fc72a987396215",
@@ -150,40 +187,6 @@
         "y": 59,
         "w": 852,
         "h": 142
-    },
-    {
-        "id": "b74b1a6d538c13c2",
-        "type": "group",
-        "z": "2dca6eed12b296f5",
-        "name": "persistent-storage",
-        "style": {
-            "label": true
-        },
-        "nodes": [
-            "443b413283d10c89",
-            "abf540bef0e1bad8"
-        ],
-        "x": 34,
-        "y": 659,
-        "w": 632,
-        "h": 82
-    },
-    {
-        "id": "cbcfb9f537c21426",
-        "type": "group",
-        "z": "2dca6eed12b296f5",
-        "name": "web",
-        "style": {
-            "label": true
-        },
-        "nodes": [
-            "41c82c569adc9a0c",
-            "d4fc72a987396215"
-        ],
-        "x": 28,
-        "y": 33,
-        "w": 1064,
-        "h": 554
     },
     {
         "id": "e8c1afd9a301aa03",
@@ -246,7 +249,7 @@
         "z": "2dca6eed12b296f5",
         "g": "d4fc72a987396215",
         "name": "sign-in",
-        "func": "const [jwt, { createHash }, { UserDataModel }, { HttpStatusCodes }] = global.get(['jsonwebtoken', 'crypto', 'orm', 'app-consts']);\nconst { login, password } = msg.payload;\n\nconst hashedPassword = createHash('sha256').update(password).digest('base64');\n\nconst user = await UserDataModel.findOne({\n    where: {\n        name: login,\n        password: hashedPassword\n    }\n});\n\nif (!user) {\n    msg.statusCode = HttpStatusCodes.Unauthorized;\n    msg.payload = { error: 'The user wasn\\'t found or the password was wrong.' }\n\n    return msg;\n}\n\nconst JWT_SECRET = env.get('JWT_SECRET');\nif (!JWT_SECRET) {\n    msg.statusCode = HttpStatusCodes.Forbiden;\n    msg.payload = { error: 'JWT_SECRET wasn\\'t found.' }\n\n    return msg;\n}\n\nconst token = jwt.sign(\n    { userId: user.id, roleId: user.roleId },\n    JWT_SECRET,\n    { expiresIn: '24h' }\n);\n\nmsg.statusCode = HttpStatusCodes.OK;\nmsg.payload = {\n    token,\n    login: user.name,\n    role: user.roleId\n    \n};\n\nreturn msg;",
+        "func": "const [jwt, { createHash }, { UserDataModel }, { HttpStatusCodes }] = global.get(['jsonwebtoken', 'crypto', 'orm', 'app-consts']);\nconst { login, password } = msg.payload;\n\nconst hashedPassword = createHash('sha256').update(password).digest('base64');\n\nconst user = await UserDataModel.findOne({\n    where: {\n        name: login,\n        password: hashedPassword\n    }\n});\n\nif (!user) {\n    msg.statusCode = HttpStatusCodes.Unauthorized;\n    msg.payload = { message: 'Пользователь не найден или указан невеный пароль.' }\n\n    return msg;\n}\n\nconst JWT_SECRET = env.get('JWT_SECRET');\nif (!JWT_SECRET) {\n    msg.statusCode = HttpStatusCodes.Forbiden;\n    msg.payload = { message: 'JWT_SECRET wasn\\'t found.' }\n\n    return msg;\n}\n\nconst token = jwt.sign(\n    { userId: user.id, roleId: user.roleId },\n    JWT_SECRET,\n    { expiresIn: '24h' }\n);\n\nmsg.statusCode = HttpStatusCodes.OK;\nmsg.payload = {\n    token,\n    login: user.name,\n    role: user.roleId\n    \n};\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -350,7 +353,7 @@
         "z": "2dca6eed12b296f5",
         "g": "41c82c569adc9a0c",
         "name": "get-device-state",
-        "func": "const { userId } = msg.req.user;\nconst deviceId = parseInt(msg.req.params.deviceId);\nconst [{ UserDeviceLinkDataModel }, { HttpStatusCodes }] = global.get(['orm', 'app-consts']);\n\nconst userDeviceLink = await UserDeviceLinkDataModel.findOne({\n    where: {\n        userId,\n        deviceId\n    }\n});\n\nif (!userDeviceLink) {\n    msg.statusCode = HttpStatusCodes.Forbiden;\n    msg.payload = { error: `The requested device doesn\\'t belong to user with ID ${userId}` }\n\n    return msg;\n}\n\nconst state = global.get(`state${deviceId}`);\nif (!state) {\n    msg.statusCode = HttpStatusCodes.InternalServerError;\n    msg.payload = { error: `The device state for the device with ID: ${deviceId} was'n found` }\n\n    return msg;\n}\n\nmsg.payload = { values: state };\n\nreturn msg;\n",
+        "func": "const { userId } = msg.req.user;\nconst deviceId = parseInt(msg.req.params.deviceId);\nconst [{ UserDeviceLinkDataModel }, { HttpStatusCodes }] = global.get(['orm', 'app-consts']);\n\nconst userDeviceLink = await UserDeviceLinkDataModel.findOne({\n    where: {\n        userId,\n        deviceId\n    }\n});\n\nif (!userDeviceLink) {\n    msg.statusCode = HttpStatusCodes.Forbiden;\n    msg.payload = { message: `Запрашиваемое устройство не принадлежит пользователю с ID ${userId}.` }\n\n    return msg;\n}\n\nconst state = global.get(`deviceState${deviceId}`);\nif (!state) {\n    msg.statusCode = HttpStatusCodes.InternalServerError;\n    msg.payload = { message: `Состояние устройства с ID: ${deviceId} не существует.` }\n\n    return msg;\n}\n\nmsg.payload = {\n    values: {\n        id: 0,\n        deviceId: deviceId,\n        state: state,\n        createdAt: new Date(),\n        updatedAt: new Date()\n    }\n};\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -445,7 +448,7 @@
         "finalize": "",
         "libs": [],
         "x": 510,
-        "y": 700,
+        "y": 800,
         "wires": [
             []
         ]
@@ -473,7 +476,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 170,
-        "y": 700,
+        "y": 800,
         "wires": [
             [
                 "443b413283d10c89"
@@ -634,6 +637,58 @@
         "headers": {},
         "x": 830,
         "y": 280,
+        "wires": []
+    },
+    {
+        "id": "43c3767d3d434ea5",
+        "type": "http in",
+        "z": "2dca6eed12b296f5",
+        "g": "41c82c569adc9a0c",
+        "name": "",
+        "url": "/api/quick-helps/:referenceKey",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 220,
+        "y": 600,
+        "wires": [
+            [
+                "5bc46af389db248b"
+            ]
+        ]
+    },
+    {
+        "id": "5bc46af389db248b",
+        "type": "function",
+        "z": "2dca6eed12b296f5",
+        "g": "41c82c569adc9a0c",
+        "name": "get-quick-helps",
+        "func": "const [{ promises: fs, existsSync }, path] = global.get(['fs', 'path']);\nconst [{ HttpStatusCodes }] = global.get(['app-consts']);\nconst referenceKeyEncoded = msg.req.params.referenceKey;\n\nconst referenceKey = Buffer.from(referenceKeyEncoded, 'base64').toString('utf8');\n\n\nconst quickHelpPath = `${path.join('/data/static', '/quick-help/content', referenceKey)}.md`;\n\nconsole.log(quickHelpPath)\nif (!existsSync(quickHelpPath)) {\n    msg.statusCode = HttpStatusCodes.InternalServerError;\n    msg.payload = { message: `Элемент справочной системы ${referenceKey} не найден.` }\n\n    return msg;\n}\n\n\nlet quickHelpContent;\ntry {\n    quickHelpContent = await fs.readFile(quickHelpPath, 'utf8');\n} catch (error) {\n    msg.statusCode = HttpStatusCodes.InternalServerError;\n    msg.payload = { message: error }\n\n    return msg;\n}\n\n\nmsg.payload = {\n    key: referenceKey,\n    content: quickHelpContent,\n};\n\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 600,
+        "wires": [
+            [
+                "0eef86469c73bd2e"
+            ]
+        ]
+    },
+    {
+        "id": "0eef86469c73bd2e",
+        "type": "http response",
+        "z": "2dca6eed12b296f5",
+        "g": "41c82c569adc9a0c",
+        "name": "http-get-quick-helps-response",
+        "statusCode": "",
+        "headers": {},
+        "x": 850,
+        "y": 600,
         "wires": []
     },
     {

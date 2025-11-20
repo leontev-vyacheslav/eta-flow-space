@@ -6,9 +6,9 @@ export default {
 
     healthCheck: '/health-check',
 
-    quickHelpReference: '/api/quick-help-references',
+    quickHelpReference: '/api/quick-helps',
     flows: '/api/flows',
     devices: '/api/devices',
-    states: '/api/states',
-    mnemoschemas: '/api/mnemoschemas'
+    states: '/api/states/device',
+    mnemoschemas: '/api/mnemoschemas/device'
 };

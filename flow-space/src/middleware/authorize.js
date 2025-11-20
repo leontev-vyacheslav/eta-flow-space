@@ -2,7 +2,7 @@ const jsonwebtoken = require('jsonwebtoken');
 const { HttpStatusCodes } = require('../constants/http');
 
 function authorize(req, res, next) {
-    if (!req.path.startsWith('/api/') && !req.path === '/health-check') {
+    if (!req.path.startsWith('/api/') || !req.path === '/health-check') {
         next();
 
         return;
@@ -12,7 +12,7 @@ function authorize(req, res, next) {
     if (!token) {
         return res
             .status(HttpStatusCodes.Unauthorized)
-            .json({ error: 'The authorization token wasn\'t found.' });
+            .json({ message: 'Токен авторизации не указа в запросе.' });
     }
 
     try {
@@ -23,7 +23,7 @@ function authorize(req, res, next) {
     } catch (err) {
         return res
             .status(HttpStatusCodes.Unauthorized)
-            .json({ error: 'The authorization token is invalid.' });
+            .json({ message: 'Токен авторизации неверный.' });
     }
 }
 

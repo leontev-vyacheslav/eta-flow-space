@@ -85,9 +85,15 @@ export { IoEyeOutline as ViewIcon } from 'react-icons/io5';
 export { IoCheckmark as CheckIcon } from 'react-icons/io5';
 
 
-export { IoAppsSharp as FlowIcon } from 'react-icons/io5';
+export { MdOutlineDashboard as FlowIcon } from 'react-icons/md';
+export { VscDashboard as DeviceIcon } from 'react-icons/vsc';
+export { IoOptionsOutline as ParamsIcon } from 'react-icons/io5';
+export { VscDashboard as DashboardIcon } from 'react-icons/vsc';
+export { IoMapOutline as MapIcon } from 'react-icons/io5';
 
 
 
 import { MdMoreVert } from 'react-icons/md';
 export const GridAdditionalMenuIcon = () => <MdMoreVert style={ { cursor: 'pointer' } } size={ 18 } />
+
+

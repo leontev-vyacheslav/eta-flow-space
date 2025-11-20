@@ -48,3 +48,18 @@ Authorization: Bearer {{authToken}}
 # @name getMnemoschema
 GET {{baseUrl}}/api/mnemoschemas/device/1
 Authorization: Bearer {{authToken}}
+
+
+###
+# @name getQuickHelp1
+GET {{baseUrl}}/api/quick-helps/L2NvbW1vbi9pbnRyb2R1Y3Rpb24ubWQ=
+Authorization: Bearer {{authToken}}
+
+###
+# @name getQuickHelp2
+GET {{baseUrl}}/api/quick-helps/Y29tbW9uL2ludHJvZHVjdGlvbg==
+Authorization: Bearer {{authToken}}
+
+###
+GET {{baseUrl}}/api/states/device/1
+Authorization: Bearer {{authToken}}

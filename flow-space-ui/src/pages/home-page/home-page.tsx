@@ -3,18 +3,16 @@ import AppConstants from '../../constants/app-constants';
 import {  HomeIcon, AdditionalMenuIcon, RefreshIcon, HelpIcon } from '../../constants/app-icons';
 import PageHeader from '../../components/page-header/page-header';
 import { TabPanel } from 'devextreme-react/tab-panel'
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { formatMessage } from 'devextreme/localization';
 import type { MenuItemModel } from '../../models/menu-item-model';
 
 import { getQuickGuid } from '../../utils/uuid';
 import { HomePageContextProvider, useHomePage } from './home-page-context';
-import { useAppData } from '../../contexts/app-data/app-data';
-// import { quickHelpReferenceService } from '../../services/quick-help-reference-service';
+import { quickHelpReferenceService } from '../../services/quick-help-reference-service';
 
 export const HomePageInternal = () => {
     const { setUpdateSharedRegulatorStateRefreshToken } = useHomePage();
-    const { getFlowListAsync } = useAppData();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [activeTabIndex, setActiveTabIndex] = useState<number>(0);
     const tabPanelRef = useRef<TabPanel>(null);
@@ -36,7 +34,7 @@ export const HomePageInternal = () => {
                         icon: () => <HelpIcon size={20} />,
                         text: 'Справка...',
                         onClick: () => {
-                            // quickHelpReferenceService.show('home/mnemoschema');
+                            quickHelpReferenceService.show('home/mnemoschema');
                         }
                     },
                 ]
@@ -44,12 +42,7 @@ export const HomePageInternal = () => {
         ] as MenuItemModel[];
     }, [setUpdateSharedRegulatorStateRefreshToken]);
 
-    useEffect(() => {
-        (async () => {
-            const flows = await getFlowListAsync();
-            console.log(flows);
-        })();
-    }, [getFlowListAsync]);
+
 
     return (
         <>

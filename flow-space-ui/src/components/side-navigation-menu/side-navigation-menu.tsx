@@ -8,9 +8,9 @@ import { useSharedArea } from '../../contexts/shared-area';
 import type { TreeViewItemModel } from '../../models/tree-view-item';
 import type { SideNavigationMenuProps } from '../../models/side-navigation-menu-props';
 import { useWorkdatePicker } from '../../contexts/workdate-context';
+import { quickHelpReferenceService } from '../../services/quick-help-reference-service';
 
 import './side-navigation-menu.scss';
-// import { quickHelpReferenceService } from '../../services/quick-help-reference-service';
 
 export function SideNavigationMenu(props: SideNavigationMenuProps) {
     const {
@@ -25,10 +25,8 @@ export function SideNavigationMenu(props: SideNavigationMenuProps) {
     const { signOutWithConfirm, treeViewRef } = useSharedArea();
     const { showWorkDatePicker } = useWorkdatePicker();
     const { navigationData: { currentPath } } = useNavigation();
-
-    const wrapperRef = useRef();
+    const wrapperRef = useRef<Element | Element[]>(null);
     const sideNavigationMenuItems = useSideNavigationMenuItems();
-
 
     const items: TreeViewItemModel[] = useMemo<TreeViewItemModel[]>(
         () => {
@@ -46,7 +44,7 @@ export function SideNavigationMenu(props: SideNavigationMenuProps) {
         [isLarge, sideNavigationMenuItems]
     );
 
-    const getWrapperRef = useCallback((element) => {
+    const getWrapperRef = useCallback((element: any) => {
         const prevElement = wrapperRef.current;
         if (prevElement) {
             events.off(prevElement, 'dxclick');
@@ -65,7 +63,7 @@ export function SideNavigationMenu(props: SideNavigationMenuProps) {
                     treeView.selectItem(currentPath as any);
                     try {
                         await treeView.expandItem(currentPath as any);
-                    } catch (ex) {
+                    } catch {
                         //
                     }
                 }
