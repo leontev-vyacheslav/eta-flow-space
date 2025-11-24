@@ -1,16 +1,11 @@
 import { withNavigationWatcher } from '../contexts/navigation';
-import { HomePage, AboutPage, SignOutPage, DashboardPage} from '../pages';
+import {  AboutPage, SignOutPage, DashboardPage, HomePage} from '../pages';
 
 const routes = [
     {
         path: '/',
         component: HomePage,
     },
-    {
-        path: '/home',
-        component: HomePage,
-    },
-
     {
         path: '/about',
         component: AboutPage,
@@ -20,7 +15,7 @@ const routes = [
         component: SignOutPage,
     },
     {
-        path: '/:flowUid/device/:deviceId',
+        path: '/:flowCode/device/:deviceId',
         component: DashboardPage,
     }
 ];

@@ -56,7 +56,9 @@ function App() {
             'app-measurement-time': 'Время измерения',
             'app-temperatures': 'Температуры, °C',
 
-            'app-remote-connector-settings-applying': 'Изменения будут применены после перезапуска системы!'
+            'app-remote-connector-settings-applying': 'Изменения будут применены после перезапуска системы!',
+            'confirm-dialog-system-start-stop': 'Внимание! Действительно хотите выполнить {0} устройства!',
+            'noDataText': 'Нет данных для отображения',
         }
     });
     locale('ru-RU');

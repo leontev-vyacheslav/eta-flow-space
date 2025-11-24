@@ -1,77 +1,43 @@
-import './home-page.scss';
-import AppConstants from '../../constants/app-constants';
-import {  HomeIcon, AdditionalMenuIcon, RefreshIcon, HelpIcon } from '../../constants/app-icons';
-import PageHeader from '../../components/page-header/page-header';
-import { TabPanel } from 'devextreme-react/tab-panel'
-import { useMemo, useRef, useState } from 'react';
+import { useEffect } from 'react';
 import { formatMessage } from 'devextreme/localization';
-import type { MenuItemModel } from '../../models/menu-item-model';
+import { useAppData } from '../../contexts/app-data/app-data';
+import { useNavigate } from 'react-router';
+import { useSharedArea } from '../../contexts/shared-area';
 
-import { getQuickGuid } from '../../utils/uuid';
-import { HomePageContextProvider, useHomePage } from './home-page-context';
-import { quickHelpReferenceService } from '../../services/quick-help-reference-service';
-
-export const HomePageInternal = () => {
-    const { setUpdateSharedRegulatorStateRefreshToken } = useHomePage();
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [activeTabIndex, setActiveTabIndex] = useState<number>(0);
-    const tabPanelRef = useRef<TabPanel>(null);
-
-    const menuItems = useMemo(() => {
-        return [
-            {
-                icon: () => <AdditionalMenuIcon size={20} color='black' />,
-                items: [
-                    {
-                        icon: () => <RefreshIcon size={20} />,
-                        text: 'Обновить...',
-                        onClick: () => {
-                            setUpdateSharedRegulatorStateRefreshToken(getQuickGuid());
-                        }
-                    },
-
-                    {
-                        icon: () => <HelpIcon size={20} />,
-                        text: 'Справка...',
-                        onClick: () => {
-                            quickHelpReferenceService.show('home/mnemoschema');
-                        }
-                    },
-                ]
-            }
-        ] as MenuItemModel[];
-    }, [setUpdateSharedRegulatorStateRefreshToken]);
-
-
-
-    return (
-        <>
-            <PageHeader caption={'Главная'} menuItems={menuItems}>
-                <HomeIcon size={AppConstants.headerIconSize} />
-            </PageHeader>
-            <div className={'content-block'}>
-                <div className={'dx-card responsive-paddings home-page-content'}>
-                    <TabPanel ref={tabPanelRef}
-                        swipeEnabled={false}
-                        animationEnabled
-                        width={'100%'}
-                        height={AppConstants.pageHeight}
-                        loop
-                        onSelectedIndexChange={(value: number) => {
-                            setActiveTabIndex(value);
-                        }}>
-                    </TabPanel>
-                    : <div className='dx-empty-message' style={{ height: AppConstants.pageHeight, }}>{formatMessage('dxCollectionWidget-noDataText')}</div>
-                </div>
-            </div>
-        </>
-    );
-};
 
 export const HomePage = () => {
-    return (
-        <HomePageContextProvider>
-            <HomePageInternal />
-        </HomePageContextProvider>
-    )
-}
+    const { getFlowListAsync } = useAppData();
+    const navigate = useNavigate();
+    const { treeViewRef } = useSharedArea();
+
+    useEffect(() => {
+        (async () => {
+            const flows = await getFlowListAsync();
+            if (flows) {
+                const flow = flows.find(() => true)
+                if (flow) {
+                    const device = flow.devices.find(() => true);
+                    if (device) {
+                        const path = `/${flow.code}/device/${device.id}`;
+                        navigate(path, { replace: true });
+                        let counter = 1;
+                        const timer = setInterval(() => {
+                            const navigationItem = document.querySelector(`li[data-item-id="${path}"]`);
+                            if (navigationItem) {
+                                const selectionResult = treeViewRef.current?.instance.selectItem(navigationItem);
+                                if (selectionResult === true || counter > 50) {
+                                    clearInterval(timer);
+                                    console.log('clearInterval', counter);
+
+                                }
+                            }
+                            counter += 1;
+                        }, 100);
+                    }
+                }
+            }
+        })();
+    }, [getFlowListAsync, navigate, treeViewRef]);
+
+    return <div className='dx-nodata'><div>{formatMessage('noDataText')}</div></div>;
+};

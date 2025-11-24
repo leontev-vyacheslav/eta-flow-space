@@ -4,5 +4,5 @@ import type { TimestampBaseModel } from "../abstractions/timestamp-base-model";
 export interface DeviceStateModel extends EntityModel, TimestampBaseModel {
     deviceId: number;
 
-    state: object;
+    state: any;
 }

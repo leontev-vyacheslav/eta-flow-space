@@ -1,0 +1,37 @@
+.control-form {
+
+  .form-check-box.dx-field-item.dx-flex-layout {
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .form-check-box {
+    .dx-field-item-content {
+      margin-left: auto;
+      width: initial;
+      /* This pushes the checkbox to the right */
+      display: flex;
+      justify-content: end;
+      display: initial !important;
+      flex-grow: initial !important;
+    }
+
+    label {
+      padding-left: 15px;
+    }
+  }
+
+  .screen-large & {
+    .form-input-box {
+      width: 450px;
+    }
+  }
+
+  .screen-x-small & {
+    .form-input-box {
+      width: 100%;
+    }
+  }
+}

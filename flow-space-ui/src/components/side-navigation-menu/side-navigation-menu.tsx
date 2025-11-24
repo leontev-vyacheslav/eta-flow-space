@@ -84,18 +84,18 @@ export function SideNavigationMenu(props: SideNavigationMenuProps) {
     }
 
     return (
-        <div className={ 'dx-swatch-additional side-navigation-menu' } ref={ getWrapperRef }>
+        <div className={'dx-swatch-additional side-navigation-menu'} ref={getWrapperRef}>
             {children}
-            <div className={ 'menu-container' }>
+            <div className={'menu-container'}>
                 <TreeView
-                    ref={ treeViewRef }
-                    items={ items as TreeViewItemModel[] }
-                    keyExpr={ 'path' }
-                    selectionMode={ 'single' }
-                    itemRender={ TreeViewItemContent }
-                    focusStateEnabled={ true }
-                    expandEvent={ 'click' }
-                    onItemClick={ async event => {
+                    ref={treeViewRef}
+                    items={items as TreeViewItemModel[]}
+                    keyExpr={'path'}
+                    selectionMode={'single'}
+                    itemRender={TreeViewItemContent}
+                    focusStateEnabled={true}
+                    expandEvent={'click'}
+                    onItemClick={async event => {
                         if (!event.itemData) {
 
                             return;
@@ -138,11 +138,11 @@ export function SideNavigationMenu(props: SideNavigationMenuProps) {
                                 treeViewRef.current!.instance.selectItem(event.itemData!);
                             }, 100)
                         }
-                    } }
-                    onContentReady={ () => {
+                    }}
+                    onContentReady={() => {
                         onMenuReady();
-                    } }
-                    width={ '100%' }
+                    }}
+                    width={'100%'}
                 />
             </div>
         </div>

@@ -13,7 +13,7 @@ import type { DeviceStateModel } from '../../models/flows/device-state-model';
 export const DashboardPage = () => {
     const { getDeviceStateAsync, getMnemoschemaAsync } = useAppData();
     const tabPanelRef = useRef<TabPanel>(null);
-    const { deviceId, flowUid } = useParams();
+    const { deviceId, flowCode } = useParams();
     const [ControlTabContent, setControlTabContent] = useState<ComponentType<any> | null>(null);
     const [MnemoschemaTabContent, setMnemoschemaTabContent] = useState<ComponentType<any> | null>(null);
     const [MapTabContent, setMapTabContent] = useState<ComponentType<any> | null>(null);
@@ -48,9 +48,9 @@ export const DashboardPage = () => {
     useEffect(() => {
         (async () => {
             const [controlModule, mnemoschemaModule, mapModule] = await Promise.all([
-                import(/* @vite-ignore */`./tab-contents/${flowUid}/control-tab-content.tsx`),
-                import(/* @vite-ignore */`./tab-contents/${flowUid}/mnemoschema-tab-content.tsx`),
-                import(/* @vite-ignore */`./tab-contents/${flowUid}/map-tab-content.tsx`)
+                import(/* @vite-ignore */`./flows-tab-contents/${flowCode}/control-tab-content.tsx`),
+                import(/* @vite-ignore */`./flows-tab-contents/${flowCode}/mnemoschema-tab-content.tsx`),
+                import(/* @vite-ignore */`./flows-tab-contents/${flowCode}/map-tab-content.tsx`)
             ]);
 
             setControlTabContent(() => controlModule.default);
@@ -70,7 +70,24 @@ export const DashboardPage = () => {
                 }
             }
         })();
-    }, [deviceId, flowUid, getDeviceStateAsync, getMnemoschemaAsync]);
+    }, [deviceId, flowCode, getDeviceStateAsync, getMnemoschemaAsync]);
+
+    useEffect(() => {
+        const timer = setInterval(async () => {
+            if (deviceId) {
+                const deviceState = await getDeviceStateAsync(parseInt(deviceId));
+                if (deviceState) {
+                    setDeviceState(deviceState);
+                }
+            }
+        }, 60000);
+
+        return () => {
+            if (timer) {
+                clearInterval(timer);
+            }
+        }
+    }, [deviceId, getDeviceStateAsync]);
 
     return (
         <>
@@ -88,15 +105,20 @@ export const DashboardPage = () => {
                         onSelectedIndexChange={(value: number) => {
                             console.log(value);
                         }}>
-                        <TabPanelItem title='Мнемосхема' tabRender={(e) => <IconTab tab={e} icon={<CircuitIcon size={18} />} />}>
-                            {MnemoschemaTabContent ? <MnemoschemaTabContent flowUid={flowUid} deviceState={deviceState} mnemoschema={mnemoschema} /> : null}
+                        <TabPanelItem title='Мнемосхема' tabRender={(e) => <IconTab tab={e} icon={<CircuitIcon size={18} />}  />}>
+                            {
+                                MnemoschemaTabContent ? <MnemoschemaTabContent deviceState={deviceState} mnemoschema={mnemoschema} /> : null
+                            }
                         </TabPanelItem>
                         <TabPanelItem title='Управление' tabRender={(e) => <IconTab tab={e} icon={<ParamsIcon size={18} />} />}>
-                            {ControlTabContent ? <ControlTabContent flowUid={flowUid} deviceState={deviceState} /> : null}
+                            {
+                                ControlTabContent ? <ControlTabContent deviceState={deviceState} /> : null
+                            }
                         </TabPanelItem>
-
                         <TabPanelItem title='Карта' tabRender={(e) => <IconTab tab={e} icon={<MapIcon size={18} />} />}>
-                            {MapTabContent ? <MapTabContent flowUid={flowUid} deviceState={deviceState} /> : null}
+                            {
+                                MapTabContent ? <MapTabContent deviceState={deviceState} /> : null
+                            }
                         </TabPanelItem>
                     </TabPanel>
                 </div>

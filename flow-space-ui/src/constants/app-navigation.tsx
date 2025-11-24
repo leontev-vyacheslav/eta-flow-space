@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from 'react';
 import {
     AboutIcon,
     ExitIcon,
-    HomeIcon,
     HelpIcon,
     FlowIcon,
     DeviceIcon
@@ -27,12 +26,6 @@ export const useSideNavigationMenuItems = () => {
 
     return useMemo<TreeViewItemModel[]>(() => {
         return [
-            {
-                id: 'home',
-                text: 'Главная',
-                iconRender: (props: IconBaseProps) => <HomeIcon size={22} {...props} />,
-                path: '/',
-            },
             ...(flows?.map(f => ({
                 id: f.code,
                 text: f.name,
@@ -41,7 +34,7 @@ export const useSideNavigationMenuItems = () => {
                     id: d.code,
                     text: d.name,
                     iconRender: (props: IconBaseProps) =>  <DeviceIcon size={22} {...props}/>,
-                    path: `/${f.uid}/device/${d.id}`,
+                    path: `/${f.code}/device/${d.id}`,
                 }))
             })) || []),
             {

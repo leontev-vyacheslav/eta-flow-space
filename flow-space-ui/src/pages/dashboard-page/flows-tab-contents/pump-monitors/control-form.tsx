@@ -2,29 +2,28 @@ import 'devextreme-react/switch';
 import Form, { GroupItem, SimpleItem } from 'devextreme-react/form';
 import type { FieldDataChangedEvent } from 'devextreme/ui/form';
 import AppConstants from '../../../../constants/app-constants';
-// import { usePumpingStationPage } from '../pumping-station-page-context';
 import { formatMessage } from 'devextreme/localization';
 import { showConfirmDialogEx } from '../../../../utils/dialogs';
 import { useAuth } from '../../../../contexts/auth';
-import type { PumpingMonitorStateModel } from './models/pumping-monitor-state-model';
+import type { StateModel } from './models/state-model';
 import { useRef } from 'react';
 
+import './control-form.scss';
 
-export const PumpingStationStateForm = ({ state }: { state: PumpingMonitorStateModel }) => {
-
+export const ControlForm = ({ state }: { state: StateModel }) => {
     // const { pumpingStationObjectState, dxPumpingStationStateFormRef, pumpingStationObject, timerLockRef, updatePumpingStationObjectStateAsync } = usePumpingStationPage();
     // const { postPumpingStationStateValue } = usePumpingStationsData();
     const { isOperator } = useAuth();
-    const dxPumpingStationStateFormRef = useRef<Form>(null);
+    const dxControlFormRef = useRef<Form>(null);
     return (state ?
 
         <Form
-            className='app-form setting-form pumping-station-state-form'
+            className='app-form control-form'
             height={AppConstants.formHeight}
             scrollingEnabled={true}
             colCount={1}
             formData={state}
-            ref={dxPumpingStationStateFormRef}
+            ref={dxControlFormRef}
 
             onFieldDataChanged={async (e: FieldDataChangedEvent) => {
                 if (!e.dataField /*|| !pumpingStationObject */) {
@@ -105,7 +104,7 @@ export const PumpingStationStateForm = ({ state }: { state: PumpingMonitorStateM
                     label={{ location: 'left', showColon: true, text: 'Нижний уровень' }}
                     editorType='dxCheckBox'
                     editorOptions={{ readOnly: true }}
-                    cssClass='pumping-station-state-form-check-box'
+                    cssClass='form-check-box'
                 />
 
                 <SimpleItem
@@ -113,7 +112,7 @@ export const PumpingStationStateForm = ({ state }: { state: PumpingMonitorStateM
                     label={{ location: 'left', showColon: true, text: 'Средний уровень' }}
                     editorType='dxCheckBox'
                     editorOptions={{ readOnly: true }}
-                    cssClass='pumping-station-state-form-check-box'
+                    cssClass='form-check-box'
                 />
 
                 <SimpleItem
@@ -121,7 +120,7 @@ export const PumpingStationStateForm = ({ state }: { state: PumpingMonitorStateM
                     label={{ location: 'left', showColon: true, text: 'Верхний уровень' }}
                     editorType='dxCheckBox'
                     editorOptions={{ readOnly: true }}
-                    cssClass='pumping-station-state-form-check-box'
+                    cssClass='form-check-box'
                 />
 
                 <SimpleItem
@@ -129,7 +128,7 @@ export const PumpingStationStateForm = ({ state }: { state: PumpingMonitorStateM
                     label={{ location: 'left', showColon: true, text: 'Аварийный уровень' }}
                     editorType='dxCheckBox'
                     editorOptions={{ readOnly: true }}
-                    cssClass='pumping-station-state-form-check-box'
+                    cssClass='form-check-box'
                 />
 
                 <SimpleItem
@@ -137,7 +136,7 @@ export const PumpingStationStateForm = ({ state }: { state: PumpingMonitorStateM
                     label={{ location: 'left', showColon: true, text: 'Состояние насоса 1' }}
                     editorType='dxCheckBox'
                     editorOptions={{ readOnly: true }}
-                    cssClass='pumping-station-state-form-check-box'
+                    cssClass='form-check-box'
                 />
 
                 <SimpleItem
@@ -145,7 +144,7 @@ export const PumpingStationStateForm = ({ state }: { state: PumpingMonitorStateM
                     label={{ location: 'left', showColon: true, text: 'Состояние насоса 2' }}
                     editorType='dxCheckBox'
                     editorOptions={{ readOnly: true }}
-                    cssClass='pumping-station-state-form-check-box'
+                    cssClass="form-check-box"
                 />
 
                 <SimpleItem
@@ -153,7 +152,7 @@ export const PumpingStationStateForm = ({ state }: { state: PumpingMonitorStateM
                     label={{ location: 'left', showColon: true, text: 'Ошибка насоса 1' }}
                     editorType='dxCheckBox'
                     editorOptions={{ readOnly: true }}
-                    cssClass='pumping-station-state-form-check-box'
+                    cssClass='form-check-box'
                 />
 
                 <SimpleItem
@@ -161,7 +160,7 @@ export const PumpingStationStateForm = ({ state }: { state: PumpingMonitorStateM
                     label={{ location: 'left', showColon: true, text: 'Ошибка насоса 2' }}
                     editorType='dxCheckBox'
                     editorOptions={{ readOnly: true }}
-                    cssClass='pumping-station-state-form-check-box'
+                    cssClass='form-check-box'
                 />
 
                 <SimpleItem
@@ -169,6 +168,7 @@ export const PumpingStationStateForm = ({ state }: { state: PumpingMonitorStateM
                     label={{ location: 'top', showColon: true, text: 'Время наработки насоса 1, час' }}
                     editorType='dxNumberBox'
                     editorOptions={{ readOnly: true }}
+                    cssClass='form-input-box'
                 />
 
                 <SimpleItem
@@ -176,6 +176,7 @@ export const PumpingStationStateForm = ({ state }: { state: PumpingMonitorStateM
                     label={{ location: 'top', showColon: true, text: 'Время наработки насоса 2, час' }}
                     editorType='dxNumberBox'
                     editorOptions={{ readOnly: true }}
+                    cssClass='form-input-box'
                 />
             </GroupItem>
         </Form>

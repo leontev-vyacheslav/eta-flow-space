@@ -7,7 +7,7 @@ module.exports = {
       "device",
       [
         {
-          code: "pumping-monitor-1",
+          code: "pump-monitor-1",
           name: 'ГИМС',
           description: 'Общественное пространство ГИМС',
           flowId: 1,
@@ -18,7 +18,7 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          code: "pumping-monitor-2",
+          code: "pump-monitor-2",
           name: 'КНС-1',
           description: 'Кремлевская набережная, КНС-1',
           flowId: 1,
@@ -29,7 +29,7 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          code: "pumping-monitor-3",
+          code: "pump-monitor-3",
           name: 'КНС-2',
           description: 'Кремлевская набережная, КНС-2',
           flowId: 1,

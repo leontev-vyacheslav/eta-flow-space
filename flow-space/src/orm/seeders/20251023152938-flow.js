@@ -5,7 +5,7 @@ module.exports = {
       "flow",
       [
         {
-          code: "sewage-pump-monitor",
+          code: "pump-monitors",
           name: 'Насосные стации',
           description: "Система мониторинга и управления насосных станций",
           uid: "a7c135e772de0725",

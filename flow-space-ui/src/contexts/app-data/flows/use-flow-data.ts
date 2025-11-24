@@ -50,7 +50,7 @@ export const useFlowData = () => {
          const response = await authHttpRequest({
             url: `${routes.host}${routes.states}/${deviceId}`,
             method: HttpConstants.Methods.Get as Method,
-        });
+        }, true);
 
         if (response && response.status === HttpConstants.StatusCodes.Ok) {
             return response.data.values as DeviceStateModel;

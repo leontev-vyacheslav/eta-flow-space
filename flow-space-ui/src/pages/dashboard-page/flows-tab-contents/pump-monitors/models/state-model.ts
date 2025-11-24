@@ -1,4 +1,4 @@
-export type PumpingMonitorStateModel = {
+export type StateModel = {
     startStop: boolean;
 
     lowLevel: boolean;

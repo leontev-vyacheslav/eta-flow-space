@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 379 638.04" xmlns:xlink="http://www.w3.org/1999/xlink">
     <defs>
-        <pattern id="d" data-name="10 lpi 10%" x="0" y="0" width="72" height="72"
+        <pattern id="hatching" data-name="10 lpi 10%" x="0" y="0" width="72" height="72"
             patternTransform="translate(3206.15 -7921.49) rotate(-45)" patternUnits="userSpaceOnUse"
             viewBox="0 0 72 72">
             <g>
@@ -43,25 +43,18 @@
                 </g>
             </g>
         </pattern>
-        <pattern id="e" data-name="10 lpi 10%" patternTransform="translate(3179.01 -7944.82) rotate(-45)"
-            xlinkHref="#d" />
-        <pattern id="f" data-name="10 lpi 10%" patternTransform="translate(-7791.26 3203.45) rotate(45)"
-            xlinkHref="#d" />
-        <pattern id="g" data-name="10 lpi 10%" patternTransform="translate(-7817.48 3175.69) rotate(45)"
-            xlinkHref="#d" />
-        <pattern id="h" data-name="10 lpi 10%" patternTransform="translate(-7803.23 3183.46) rotate(45)"
-            xlinkHref="#d" />
+
 
     </defs>
     <rect x="80" y="7.04" width="218.65" height="594.5" fill="#d1d3d4" filter="url(#b)" />
-    <rect x="44.5" y="26.54" width="35" height="576" fill="url(#d)" stroke="#231f20" stroke-miterlimit="10" />
-    <rect x="299.5" y="26.54" width="35" height="576" fill="url(#e)" stroke="#231f20" stroke-miterlimit="10" />
+    <rect x="44.5" y="26.54" width="35" height="576" fill="url(#hatching)" stroke="#231f20" stroke-miterlimit="10" />
+    <rect x="299.5" y="26.54" width="35" height="576" fill="url(#hatching)" stroke="#231f20" stroke-miterlimit="10" />
 
-    <rect id="dump-bottom" x="44.5" height="35" stroke="#231f20" stroke-miterlimit="10" y="602.54" fill="url(#g)"
+    <rect id="dump-bottom" x="44.5" height="35" stroke="#231f20" stroke-miterlimit="10" y="602.54" fill="url(#hatching)"
         width="290" />
 
-    <rect x="299.5" y="7.54" width="79" height="19" fill="url(#g)" stroke="#231f20" stroke-miterlimit="10" />
-    <rect x=".5" y="7.54" width="79" height="19" fill="url(#h)" stroke="#231f20" stroke-miterlimit="10" />
+    <rect x="299.5" y="7.54" width="79" height="19" fill="url(#hatching)" stroke="#231f20" stroke-miterlimit="10" />
+    <rect x=".5" y="7.54" width="79" height="19" fill="url(#hatching)" stroke="#231f20" stroke-miterlimit="10" />
     <rect id="dump-water" x="80.25" y="555.04" width="218.65" height="46.01" fill="#808080" filter="url(#i)" />
 
     <g id="pump-1">
