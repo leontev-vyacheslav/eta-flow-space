@@ -1,4 +1,4 @@
-const jsonwebtoken = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 const { HttpStatusCodes } = require('../constants/http');
 
 function authorize(req, res, next) {
@@ -16,7 +16,7 @@ function authorize(req, res, next) {
     }
 
     try {
-        const decoded = jsonwebtoken.verify(token, process.env.JWT_SECRET);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
         req.user = decoded;
 
         return next();

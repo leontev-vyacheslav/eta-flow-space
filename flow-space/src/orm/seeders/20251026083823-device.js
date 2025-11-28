@@ -11,6 +11,7 @@ module.exports = {
           name: 'ГИМС',
           description: 'Общественное пространство ГИМС',
           flowId: 1,
+          objectLocationId: 1,
           settings: JSON.stringify({ ip: "192.168.0.200", port: 502 }),
           updateStateInterval: 1,
           lastStateUpdate: null,

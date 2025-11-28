@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
   class DeviceDataModel extends Model {
     static associate(models) {
       DeviceDataModel.belongsTo(models.FlowDataModel, { foreignKey: 'flowId', as: 'flow' });
+      DeviceDataModel.belongsTo(models.ObjectLocationDataModel, { foreignKey: 'objectLocationId', as: 'objectLocation' });
       DeviceDataModel.hasMany(models.DeviceStateDataModel, { foreignKey: 'deviceId', as: 'states' });
       DeviceDataModel.hasMany(models.UserDeviceLinkDataModel, { foreignKey: 'deviceId', as: 'userDeviceLinks' });
     }

@@ -20,8 +20,19 @@ module.exports = {
       },
       flowId: {
         type: Sequelize.INTEGER,
+        allowNull: true,
         references: {
           model: "flow", // name of the target table
+          key: "id",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "SET NULL",
+      },
+      objectLocationId: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: "object_location", // name of the target table
           key: "id",
         },
         onUpdate: "CASCADE",

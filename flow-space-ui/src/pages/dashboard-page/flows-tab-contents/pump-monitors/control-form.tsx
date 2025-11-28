@@ -10,7 +10,7 @@ import { useRef } from 'react';
 
 import './control-form.scss';
 
-export const ControlForm = ({ state }: { state: StateModel }) => {
+export const ControlForm = ({ state }: { state?: StateModel }) => {
     // const { pumpingStationObjectState, dxPumpingStationStateFormRef, pumpingStationObject, timerLockRef, updatePumpingStationObjectStateAsync } = usePumpingStationPage();
     // const { postPumpingStationStateValue } = usePumpingStationsData();
     const { isOperator } = useAuth();

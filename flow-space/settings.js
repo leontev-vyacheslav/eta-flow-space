@@ -539,15 +539,11 @@ module.exports = {
      *    global.get("os")
      */
     functionGlobalContext: {
-        fs: require('fs'),
-        path: require('path'),
         sequelize: require('sequelize'),
-        crypto: require('crypto'),
-        jsonwebtoken: require('jsonwebtoken'),
-
-        'app-consts': require('./src/constants'),
-        'date-fns': require('date-fns'),
         orm: require('./src/orm/models'),
+
+        routes: require('./src/routes'),
+        services: require('./src/services'),
     },
 
     /** The maximum number of messages nodes will buffer internally as part of their

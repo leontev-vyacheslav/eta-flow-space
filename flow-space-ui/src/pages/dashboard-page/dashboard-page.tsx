@@ -8,17 +8,15 @@ import { quickHelpReferenceService } from "../../services/quick-help-reference-s
 import { IconTab } from '../../components/tab-utils/icon-tab';
 import { useParams } from 'react-router';
 import { useAppData } from '../../contexts/app-data/app-data';
-import type { DeviceStateModel } from '../../models/flows/device-state-model';
+import { DashboardPageContextProvider } from './dashboard-page-context';
 
-export const DashboardPage = () => {
-    const { getDeviceStateAsync, getMnemoschemaAsync } = useAppData();
+const DashboardPageInner = () => {
+    const { getDeviceAsync, getDeviceStateAsync, getMnemoschemaAsync } = useAppData();
     const tabPanelRef = useRef<TabPanel>(null);
     const { deviceId, flowCode } = useParams();
     const [ControlTabContent, setControlTabContent] = useState<ComponentType<any> | null>(null);
     const [MnemoschemaTabContent, setMnemoschemaTabContent] = useState<ComponentType<any> | null>(null);
     const [MapTabContent, setMapTabContent] = useState<ComponentType<any> | null>(null);
-    const [deviceState, setDeviceState] = useState<DeviceStateModel | undefined>();
-    const [mnemoschema, setMnemoschema] = useState<string | undefined>();
 
     const menuItems = useMemo(() => {
         return [
@@ -37,7 +35,7 @@ export const DashboardPage = () => {
                         icon: () => <HelpIcon size={20} />,
                         text: 'Справка...',
                         onClick: () => {
-                            quickHelpReferenceService.show('home/mnemoschema');
+                            quickHelpReferenceService.show('common/dashboard');
                         }
                     },
                 ]
@@ -56,38 +54,8 @@ export const DashboardPage = () => {
             setControlTabContent(() => controlModule.default);
             setMnemoschemaTabContent(() => mnemoschemaModule.default);
             setMapTabContent(() => mapModule.default);
-
-            if (deviceId) {
-                const [deviceState, mnemoschema] = await Promise.all([
-                    getDeviceStateAsync(parseInt(deviceId)),
-                    getMnemoschemaAsync(parseInt(deviceId))
-                ])
-                if (deviceState) {
-                    setDeviceState(deviceState);
-                }
-                if (mnemoschema) {
-                    setMnemoschema(mnemoschema);
-                }
-            }
         })();
-    }, [deviceId, flowCode, getDeviceStateAsync, getMnemoschemaAsync]);
-
-    useEffect(() => {
-        const timer = setInterval(async () => {
-            if (deviceId) {
-                const deviceState = await getDeviceStateAsync(parseInt(deviceId));
-                if (deviceState) {
-                    setDeviceState(deviceState);
-                }
-            }
-        }, 60000);
-
-        return () => {
-            if (timer) {
-                clearInterval(timer);
-            }
-        }
-    }, [deviceId, getDeviceStateAsync]);
+    }, [deviceId, flowCode, getDeviceAsync, getDeviceStateAsync, getMnemoschemaAsync]);
 
     return (
         <>
@@ -95,7 +63,7 @@ export const DashboardPage = () => {
                 <DashboardIcon size={AppConstants.headerIconSize} />
             </PageHeader>
             <div className={'content-block'}>
-                <div className={'dx-card responsive-paddings home-page-content'}>
+                <div className={'dx-card responsive-paddings daghboard-page-content'}>
                     <TabPanel ref={tabPanelRef}
                         swipeEnabled={false}
                         animationEnabled
@@ -105,19 +73,19 @@ export const DashboardPage = () => {
                         onSelectedIndexChange={(value: number) => {
                             console.log(value);
                         }}>
-                        <TabPanelItem title='Мнемосхема' tabRender={(e) => <IconTab tab={e} icon={<CircuitIcon size={18} />}  />}>
+                        <TabPanelItem title='Мнемосхема' tabRender={(e) => <IconTab tab={e} icon={<CircuitIcon size={18} />} />}>
                             {
-                                MnemoschemaTabContent ? <MnemoschemaTabContent deviceState={deviceState} mnemoschema={mnemoschema} /> : null
+                                MnemoschemaTabContent ? <MnemoschemaTabContent /> : null
                             }
                         </TabPanelItem>
                         <TabPanelItem title='Управление' tabRender={(e) => <IconTab tab={e} icon={<ParamsIcon size={18} />} />}>
                             {
-                                ControlTabContent ? <ControlTabContent deviceState={deviceState} /> : null
+                                ControlTabContent ? <ControlTabContent /> : null
                             }
                         </TabPanelItem>
                         <TabPanelItem title='Карта' tabRender={(e) => <IconTab tab={e} icon={<MapIcon size={18} />} />}>
                             {
-                                MapTabContent ? <MapTabContent deviceState={deviceState} /> : null
+                                MapTabContent ? <MapTabContent /> : null
                             }
                         </TabPanelItem>
                     </TabPanel>
@@ -127,3 +95,10 @@ export const DashboardPage = () => {
     );
 }
 
+export const DashboardPage = () => {
+    return (
+        <DashboardPageContextProvider>
+            <DashboardPageInner />
+        </DashboardPageContextProvider>
+    );
+}

@@ -5,7 +5,8 @@
     "database": "eta_flow_space_database",
     "host": "localhost",
     "port": 35432,
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "logging": true
   },
   "production": {
     "username": "postgres",
@@ -13,6 +14,7 @@
     "database": "eta_flow_space_database",
     "host": "eta-flow-space-database",
     "port": 5432,
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "logging": true
   }
 }

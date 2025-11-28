@@ -1,16 +1,53 @@
-import type { DeviceStateModel } from "../../../../models/flows/device-state-model";
+import { useDashboardPage } from "../../dashboard-page-context";
+import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from 'react-leaflet'
+import type { LeafletMouseEvent } from "leaflet";
 
-const MapTabContent = ({ deviceState }: { deviceState: DeviceStateModel }) => {
-    console.log(deviceState);
+import 'leaflet/dist/leaflet.css';
+
+
+function MapController() {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const map = useMapEvents({
+        dblclick: (event: LeafletMouseEvent) => {
+            console.log(event);
+        }
+    });
+
+    return null;
+}
+
+const MapTabContent = () => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { device, deviceState } = useDashboardPage();
+    // console.log(device, deviceState);
+
+    const position = device && device.objectLocation ? { lat: device.objectLocation.latitude, lng: device.objectLocation.longitude } : undefined;
+
 
     return (
-        <>
-            <h3>Map</h3>
-            {deviceState
-                ? <>Device={deviceState.deviceId} DeviceState=${JSON.stringify(deviceState.state)}</>
-                : null
-            }
-        </>
+
+        <div style={{ height: '100%', width: '100%' }}>
+            <MapContainer
+                center={position}
+                zoom={13}
+                style={{ height: '100%', width: '100%' }} // Important!
+            >
+                <TileLayer
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+                {
+                    position
+                        ? <Marker position={position}>
+                            <Popup>
+                                A pretty CSS3 popup. <br /> Easily customizable.
+                            </Popup>
+                        </Marker>
+                        : null
+                }
+                <MapController />
+            </MapContainer>
+        </div>
     );
 }
 

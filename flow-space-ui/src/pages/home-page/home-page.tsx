@@ -13,29 +13,32 @@ export const HomePage = () => {
     useEffect(() => {
         (async () => {
             const flows = await getFlowListAsync();
-            if (flows) {
-                const flow = flows.find(() => true)
-                if (flow) {
-                    const device = flow.devices.find(() => true);
-                    if (device) {
-                        const path = `/${flow.code}/device/${device.id}`;
-                        navigate(path, { replace: true });
-                        let counter = 1;
-                        const timer = setInterval(() => {
-                            const navigationItem = document.querySelector(`li[data-item-id="${path}"]`);
-                            if (navigationItem) {
-                                const selectionResult = treeViewRef.current?.instance.selectItem(navigationItem);
-                                if (selectionResult === true || counter > 50) {
-                                    clearInterval(timer);
-                                    console.log('clearInterval', counter);
+            if (!flows) {
+                return;
+            }
+            const flow = flows.find(() => true)
+            if (!flow) {
+                return;
+            }
 
-                                }
-                            }
-                            counter += 1;
-                        }, 100);
+            const device = flow.devices.find(() => true);
+            if (!device) {
+                return;
+            }
+
+            const path = `/${flow.code}/device/${device.id}`;
+            navigate(path, { replace: true });
+            let counter = 1;
+            const timer = setInterval(() => {
+                const navigationItem = document.querySelector(`li[data-item-id="${path}"]`);
+                if (navigationItem) {
+                    const selectionResult = treeViewRef.current?.instance.selectItem(navigationItem);
+                    if (selectionResult === true || counter > 50) {
+                        clearInterval(timer);
                     }
                 }
-            }
+                counter += 1;
+            }, 100);
         })();
     }, [getFlowListAsync, navigate, treeViewRef]);
 

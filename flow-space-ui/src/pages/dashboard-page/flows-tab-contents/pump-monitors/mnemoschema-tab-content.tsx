@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useRef } from "react";
-import type { DeviceStateModel } from "../../../../models/flows/device-state-model";
 import { useScreenSize } from "../../../../utils/media-query";
 import { EmergencyLevel, PumpingStationIcon, StopIcon } from "./icons";
+import { useDashboardPage } from "../../dashboard-page-context";
 
-const MnemoschemaTabContent = ({ deviceState, mnemoschema }: { deviceState: DeviceStateModel, mnemoschema: string }) => {
+const MnemoschemaTabContent = () => {
+    const {deviceState, mnemoschema} = useDashboardPage();
     const mnemoschemaContainerRef = useRef<HTMLDivElement>(null);
     const { isSmall, isXSmall, isLarge } = useScreenSize();
 

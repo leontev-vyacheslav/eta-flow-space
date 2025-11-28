@@ -11,12 +11,14 @@ export type GetFlowListAsyncFunc = () => Promise<FlowModel[] | undefined>;
 export type GetDeviceListAsyncFunc = () => Promise<DeviceModel[] | undefined>;
 export type GetDeviceStateAsyncFunc = (deviceId: number) => Promise<DeviceStateModel | undefined>;
 export type GetMnemoschemaAsyncFunc = (deviceId: number) => Promise<string | undefined>;
+export type GetDeviceAsyncFunc = (deviceId: number) => Promise<DeviceModel | undefined>;
 
 export type AppDataContextFlowEndpointsModel = {
     getFlowListAsync: GetFlowListAsyncFunc;
     getDeviceListAsync: GetDeviceListAsyncFunc;
     getDeviceStateAsync: GetDeviceStateAsyncFunc;
     getMnemoschemaAsync: GetMnemoschemaAsyncFunc;
+    getDeviceAsync: GetDeviceAsyncFunc;
 };
 
 export const useFlowData = () => {
@@ -47,7 +49,7 @@ export const useFlowData = () => {
     }, [authHttpRequest]);
 
     const getDeviceStateAsync = useCallback<GetDeviceStateAsyncFunc>(async (deviceId: number) => {
-         const response = await authHttpRequest({
+        const response = await authHttpRequest({
             url: `${routes.host}${routes.states}/${deviceId}`,
             method: HttpConstants.Methods.Get as Method,
         }, true);
@@ -58,7 +60,7 @@ export const useFlowData = () => {
     }, [authHttpRequest]);
 
     const getMnemoschemaAsync = useCallback<GetMnemoschemaAsyncFunc>(async (deviceId: number) => {
-         const response = await authHttpRequest({
+        const response = await authHttpRequest({
             url: `${routes.host}${routes.mnemoschemas}/${deviceId}`,
             method: HttpConstants.Methods.Get as Method,
         });
@@ -68,11 +70,23 @@ export const useFlowData = () => {
         }
     }, [authHttpRequest]);
 
+    const getDeviceAsync = useCallback(async (deviceId: number) => {
+        const response = await authHttpRequest({
+            url: `${routes.host}${routes.devices}/${deviceId}`,
+            method: HttpConstants.Methods.Get as Method,
+        });
+
+        if (response && response.status === HttpConstants.StatusCodes.Ok) {
+            return response.data.values as DeviceModel;
+        }
+    }, [authHttpRequest]);
+
     return {
         getFlowListAsync,
         getDeviceListAsync,
         getDeviceStateAsync,
-        getMnemoschemaAsync
+        getMnemoschemaAsync,
+        getDeviceAsync
     };
 }
 
