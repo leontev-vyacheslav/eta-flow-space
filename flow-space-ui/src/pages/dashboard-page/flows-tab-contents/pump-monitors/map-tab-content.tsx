@@ -3,6 +3,7 @@ import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from 'react-leaf
 import type { LeafletMouseEvent } from "leaflet";
 
 import 'leaflet/dist/leaflet.css';
+import { useEffect, useRef } from "react";
 
 
 function MapController() {
@@ -16,20 +17,29 @@ function MapController() {
     return null;
 }
 
+
 const MapTabContent = () => {
+    const markerRef = useRef<L.Marker>(null);
+    useEffect(() => {
+        if (markerRef) {
+            const timer = setTimeout(() => {
+                markerRef.current?.openPopup();
+            }, 100);
+
+            return () => clearTimeout(timer);
+        }
+    }, []);
+
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { device, deviceState } = useDashboardPage();
-    // console.log(device, deviceState);
-
     const position = device && device.objectLocation ? { lat: device.objectLocation.latitude, lng: device.objectLocation.longitude } : undefined;
-
 
     return (
 
         <div style={{ height: '100%', width: '100%' }}>
             <MapContainer
                 center={position}
-                zoom={13}
+                zoom={16}
                 style={{ height: '100%', width: '100%' }} // Important!
             >
                 <TileLayer
@@ -38,8 +48,8 @@ const MapTabContent = () => {
                 />
                 {
                     position
-                        ? <Marker position={position}>
-                            <Popup>
+                        ? <Marker position={position} ref={markerRef}>
+                            <Popup closeButton >
                                 A pretty CSS3 popup. <br /> Easily customizable.
                             </Popup>
                         </Marker>

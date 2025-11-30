@@ -9,6 +9,7 @@ module.exports = {
     ...require('./get-device-state'),
     ...require('./get-device-mnemoschema'),
     ...require('./get-device-states-by-dates'),
+    ...require('./get-device-state-data-schema'),
 
     ...require('./get-quick-helps'),
 };

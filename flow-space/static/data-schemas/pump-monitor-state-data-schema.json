@@ -1,0 +1,72 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Pump Control System Data",
+  "type": "object",
+  "properties": {
+    "startStop": {
+      "type": "boolean",
+      "description": "Включение/выключение работы станции"
+    },
+    "lowLevel": {
+      "type": "boolean",
+      "description": "Нижний уровень"
+    },
+    "midLevel": {
+      "type": "boolean",
+      "description": "Средний уровень"
+    },
+    "hiLevel": {
+      "type": "boolean",
+      "description": "Верхний уровень"
+    },
+    "emergencyLevel": {
+      "type": "boolean",
+      "description": "Аварийный уровень"
+    },
+    "statePump1": {
+      "type": "boolean",
+      "description": "Состояние насоса 1"
+    },
+    "statePump2": {
+      "type": "boolean",
+      "description": "Состояние насоса 2"
+    },
+    "resetFaultPump1": {
+      "type": "boolean",
+      "description": "Сброс ошибки насоса 1"
+    },
+    "resetFaultPump2": {
+      "type": "boolean",
+      "description": "Сброс ошибки насоса 2"
+    },
+    "faultPump1": {
+      "type": "boolean",
+      "description": "Ошибка насоса 1"
+    },
+    "faultPump2": {
+      "type": "boolean",
+      "description": "Ошибка насоса 2"
+    },
+    "timePump1": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Время наработки насоса 1"
+    },
+    "timePump2": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Время наработки насоса 2"
+    },
+    "_msgid": {
+      "type": "string",
+      "description": "Message identifier"
+    }
+  },
+  "required": [
+    "startStop", "lowLevel", "midLevel", "hiLevel", "emergencyLevel",
+    "statePump1", "statePump2", "resetFaultPump1", "resetFaultPump2",
+    "resetOperatingTimePump1", "resetOperatingTimePump2", "faultPump1",
+    "faultPump2", "timePump1", "timePump2", "_msgid"
+  ],
+  "additionalProperties": false
+}

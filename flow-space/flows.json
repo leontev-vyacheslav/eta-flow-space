@@ -88,8 +88,8 @@
         ],
         "x": 28,
         "y": 33,
-        "w": 1064,
-        "h": 814
+        "w": 1084,
+        "h": 834
     },
     {
         "id": "41c82c569adc9a0c",
@@ -126,12 +126,15 @@
             "40214b7ade58103d",
             "8dfd0c2c64939220",
             "6b6d605b33ba622a",
-            "8e7193e6b1cfc533"
+            "8e7193e6b1cfc533",
+            "cfd3bfec49dd036d",
+            "6d432d77ac870b96",
+            "599dd7db8ee5cbb5"
         ],
         "x": 54,
         "y": 239,
-        "w": 1012,
-        "h": 582
+        "w": 1032,
+        "h": 602
     },
     {
         "id": "d4fc72a987396215",
@@ -613,7 +616,7 @@
         "skipBodyParsing": false,
         "swaggerDoc": "",
         "x": 220,
-        "y": 600,
+        "y": 640,
         "wires": [
             [
                 "5bc46af389db248b"
@@ -634,7 +637,7 @@
         "finalize": "",
         "libs": [],
         "x": 500,
-        "y": 600,
+        "y": 640,
         "wires": [
             [
                 "0eef86469c73bd2e"
@@ -650,7 +653,7 @@
         "statusCode": "",
         "headers": {},
         "x": 850,
-        "y": 600,
+        "y": 640,
         "wires": []
     },
     {
@@ -665,7 +668,7 @@
         "skipBodyParsing": false,
         "swaggerDoc": "",
         "x": 210,
-        "y": 660,
+        "y": 700,
         "wires": [
             [
                 "42be60bdf4323128",
@@ -682,7 +685,7 @@
         "statusCode": "",
         "headers": {},
         "x": 850,
-        "y": 660,
+        "y": 700,
         "wires": []
     },
     {
@@ -695,8 +698,8 @@
         "links": [
             "f6dc65181c21674e"
         ],
-        "x": 405,
-        "y": 720,
+        "x": 425,
+        "y": 760,
         "wires": []
     },
     {
@@ -713,7 +716,7 @@
         "finalize": "",
         "libs": [],
         "x": 520,
-        "y": 660,
+        "y": 700,
         "wires": [
             [
                 "6e554427850e7e1a"
@@ -731,8 +734,8 @@
         "upload": false,
         "skipBodyParsing": false,
         "swaggerDoc": "",
-        "x": 210,
-        "y": 780,
+        "x": 190,
+        "y": 800,
         "wires": [
             [
                 "6b6d605b33ba622a"
@@ -752,8 +755,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 440,
-        "y": 780,
+        "x": 490,
+        "y": 800,
         "wires": [
             [
                 "8e7193e6b1cfc533"
@@ -768,8 +771,60 @@
         "name": "http-get-device-response",
         "statusCode": "",
         "headers": {},
-        "x": 680,
-        "y": 780,
+        "x": 830,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "cfd3bfec49dd036d",
+        "type": "http in",
+        "z": "2dca6eed12b296f5",
+        "g": "41c82c569adc9a0c",
+        "name": "",
+        "url": "/api/data-schemas/device/:deviceId",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 230,
+        "y": 580,
+        "wires": [
+            [
+                "6d432d77ac870b96"
+            ]
+        ]
+    },
+    {
+        "id": "6d432d77ac870b96",
+        "type": "function",
+        "z": "2dca6eed12b296f5",
+        "g": "41c82c569adc9a0c",
+        "name": "get-device-state-data-schema",
+        "func": "const { getDeviceStateDataschema } = global.get('routes');\n\nreturn await getDeviceStateDataschema(msg);",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 580,
+        "wires": [
+            [
+                "599dd7db8ee5cbb5"
+            ]
+        ]
+    },
+    {
+        "id": "599dd7db8ee5cbb5",
+        "type": "http response",
+        "z": "2dca6eed12b296f5",
+        "g": "41c82c569adc9a0c",
+        "name": "http-get-device-state-data-schema-response",
+        "statusCode": "",
+        "headers": {},
+        "x": 890,
+        "y": 580,
         "wires": []
     },
     {

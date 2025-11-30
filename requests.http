@@ -56,6 +56,11 @@ Authorization: Bearer {{authToken}}
 
 
 ###
+# @name getDataschema
+GET {{baseUrl}}/api/data-schemas/device/1
+Authorization: Bearer {{authToken}}
+
+###
 # @name getQuickHelp1
 GET {{baseUrl}}/api/quick-helps/L2NvbW1vbi9pbnRyb2R1Y3Rpb24ubWQ=
 Authorization: Bearer {{authToken}}
