@@ -9,27 +9,29 @@ export type DashboardPageContextModel = {
     device?: DeviceModel;
     deviceState?: DeviceStateModel;
     mnemoschema?: string;
-    // setIsShowMnemoschema: Dispatch<React.SetStateAction<boolean>>;
+    dataschema?: any;
 };
 
 const DashboardPageContext = createContext({} as DashboardPageContextModel);
 
 function DashboardPageContextProvider(props: any) {
-    const { getDeviceAsync, getDeviceStateAsync, getMnemoschemaAsync } = useAppData();
+    const { getDeviceAsync, getDeviceStateAsync, getMnemoschemaAsync, getDeviceStateDataschemaAsync } = useAppData();
     const { deviceId, flowCode } = useParams();
 
     const [device, setDevice] = useState<DeviceModel | undefined>();
     const [deviceState, setDeviceState] = useState<DeviceStateModel | undefined>();
     const [mnemoschema, setMnemoschema] = useState<string | undefined>();
+    const [dataschema, setDataschema] = useState<any | undefined>();
 
     useEffect(() => {
         (async () => {
 
             if (deviceId) {
-                const [device, deviceState, mnemoschema] = await Promise.all([
+                const [device, deviceState, mnemoschema, dataschema] = await Promise.all([
                     getDeviceAsync(parseInt(deviceId)),
                     getDeviceStateAsync(parseInt(deviceId)),
-                    getMnemoschemaAsync(parseInt(deviceId))
+                    getMnemoschemaAsync(parseInt(deviceId)),
+                    getDeviceStateDataschemaAsync(parseInt(deviceId)),
                 ])
                 if (device) {
                     setDevice(device);
@@ -40,9 +42,12 @@ function DashboardPageContextProvider(props: any) {
                 if (mnemoschema) {
                     setMnemoschema(mnemoschema);
                 }
+                 if (dataschema) {
+                    setDataschema(dataschema);
+                }
             }
         })();
-    }, [deviceId, flowCode, getDeviceAsync, getDeviceStateAsync, getMnemoschemaAsync]);
+    }, [deviceId, flowCode, getDeviceAsync, getDeviceStateAsync, getDeviceStateDataschemaAsync, getMnemoschemaAsync]);
 
     useEffect(() => {
         const timer = setInterval(async () => {
@@ -66,7 +71,8 @@ function DashboardPageContextProvider(props: any) {
         <DashboardPageContext.Provider value={{
             device,
             deviceState,
-            mnemoschema
+            mnemoschema,
+            dataschema
         }} {...props} />
     );
 }

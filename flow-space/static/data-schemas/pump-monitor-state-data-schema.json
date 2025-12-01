@@ -5,7 +5,7 @@
   "properties": {
     "startStop": {
       "type": "boolean",
-      "description": "Включение/выключение работы станции"
+      "description": "Включение/выключение работы"
     },
     "lowLevel": {
       "type": "boolean",

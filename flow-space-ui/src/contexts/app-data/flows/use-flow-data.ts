@@ -12,6 +12,7 @@ export type GetDeviceListAsyncFunc = () => Promise<DeviceModel[] | undefined>;
 export type GetDeviceStateAsyncFunc = (deviceId: number) => Promise<DeviceStateModel | undefined>;
 export type GetMnemoschemaAsyncFunc = (deviceId: number) => Promise<string | undefined>;
 export type GetDeviceAsyncFunc = (deviceId: number) => Promise<DeviceModel | undefined>;
+export type GetDeviceStateDataschemaAsyncFunc = (deviceId: number) => Promise<any | undefined>;
 
 export type AppDataContextFlowEndpointsModel = {
     getFlowListAsync: GetFlowListAsyncFunc;
@@ -19,6 +20,7 @@ export type AppDataContextFlowEndpointsModel = {
     getDeviceStateAsync: GetDeviceStateAsyncFunc;
     getMnemoschemaAsync: GetMnemoschemaAsyncFunc;
     getDeviceAsync: GetDeviceAsyncFunc;
+    getDeviceStateDataschemaAsync: GetDeviceStateDataschemaAsyncFunc;
 };
 
 export const useFlowData = () => {
@@ -81,12 +83,24 @@ export const useFlowData = () => {
         }
     }, [authHttpRequest]);
 
+    const getDeviceStateDataschemaAsync = useCallback(async (deviceId: number) => {
+        const response = await authHttpRequest({
+            url: `${routes.host}${routes.dataschema}/${deviceId}`,
+            method: HttpConstants.Methods.Get as Method,
+        });
+
+        if (response && response.status === HttpConstants.StatusCodes.Ok) {
+            return response.data as any;
+        }
+    }, [authHttpRequest]);
+
     return {
         getFlowListAsync,
         getDeviceListAsync,
         getDeviceStateAsync,
         getMnemoschemaAsync,
-        getDeviceAsync
+        getDeviceAsync,
+        getDeviceStateDataschemaAsync
     };
 }
 

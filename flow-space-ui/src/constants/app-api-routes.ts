@@ -10,5 +10,6 @@ export default {
     flows: '/api/flows',
     devices: '/api/devices',
     states: '/api/states/device',
+    dataschema: '/api/data-schemas/device',
     mnemoschemas: '/api/mnemoschemas/device'
 };
