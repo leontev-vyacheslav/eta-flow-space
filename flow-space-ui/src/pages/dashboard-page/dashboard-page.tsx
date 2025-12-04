@@ -7,13 +7,11 @@ import type { MenuItemModel } from "../../models/menu-item-model";
 import { quickHelpReferenceService } from "../../services/quick-help-reference-service";
 import { IconTab } from '../../components/tab-utils/icon-tab';
 import { useParams } from 'react-router';
-import { useAppData } from '../../contexts/app-data/app-data';
 import { DashboardPageContextProvider } from './dashboard-page-context';
 
 const DashboardPageInner = () => {
-    const { getDeviceAsync, getDeviceStateAsync, getMnemoschemaAsync } = useAppData();
     const tabPanelRef = useRef<TabPanel>(null);
-    const { deviceId, flowCode } = useParams();
+    const {  flowCode } = useParams();
     const [ControlTabContent, setControlTabContent] = useState<ComponentType<any> | null>(null);
     const [MnemoschemaTabContent, setMnemoschemaTabContent] = useState<ComponentType<any> | null>(null);
     const [MapTabContent, setMapTabContent] = useState<ComponentType<any> | null>(null);
@@ -57,7 +55,7 @@ const DashboardPageInner = () => {
             setMnemoschemaTabContent(() => mnemoschemaModule.default);
             setMapTabContent(() => mapModule.default);
         })();
-    }, [deviceId, flowCode, getDeviceAsync, getDeviceStateAsync, getMnemoschemaAsync]);
+    }, [flowCode]);
 
     return (
         <>

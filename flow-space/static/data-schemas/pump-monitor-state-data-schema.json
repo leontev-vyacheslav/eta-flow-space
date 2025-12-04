@@ -5,57 +5,125 @@
   "properties": {
     "startStop": {
       "type": "boolean",
-      "description": "Включение/выключение работы"
+      "description": "Включение/выключение работы",
+      "ui": {
+        "widget": "dxSwitch",
+        "group": "Управление"
+      }
     },
     "lowLevel": {
       "type": "boolean",
-      "description": "Нижний уровень"
+      "description": "Нижний уровень",
+      "ui": {
+        "widget": "dxCheckBox",
+        "group": "Состояние"
+      }
     },
     "midLevel": {
       "type": "boolean",
-      "description": "Средний уровень"
+      "description": "Средний уровень",
+      "ui": {
+        "widget": "dxCheckBox",
+        "group": "Состояние"
+      }
     },
     "hiLevel": {
       "type": "boolean",
-      "description": "Верхний уровень"
+      "description": "Верхний уровень",
+      "ui": {
+        "widget": "dxCheckBox",
+        "group": "Состояние"
+      }
     },
     "emergencyLevel": {
       "type": "boolean",
-      "description": "Аварийный уровень"
+      "description": "Аварийный уровень",
+      "ui": {
+        "widget": "dxCheckBox",
+        "group": "Состояние"
+      }
     },
     "statePump1": {
       "type": "boolean",
-      "description": "Состояние насоса 1"
+      "description": "Состояние насоса 1",
+      "ui": {
+        "widget": "dxCheckBox",
+        "group": "Состояние"
+      }
     },
     "statePump2": {
       "type": "boolean",
-      "description": "Состояние насоса 2"
+      "description": "Состояние насоса 2",
+      "ui": {
+        "widget": "dxCheckBox",
+        "group": "Состояние"
+      }
     },
     "resetFaultPump1": {
       "type": "boolean",
-      "description": "Сброс ошибки насоса 1"
+      "description": "Сброс ошибки насоса 1",
+      "ui": {
+        "widget": "dxSwitch",
+        "group": "Управление"
+      }
     },
     "resetFaultPump2": {
       "type": "boolean",
-      "description": "Сброс ошибки насоса 2"
+      "description": "Сброс ошибки насоса 2",
+      "ui": {
+        "widget": "dxSwitch",
+        "group": "Управление"
+      }
+    },
+    "resetOperatingTimePump1": {
+      "type": "boolean",
+      "description": "Сброс времени наработки насоса 1",
+      "ui": {
+        "widget": "dxSwitch",
+        "group": "Управление"
+      }
+    },
+    "resetOperatingTimePump2": {
+      "type": "boolean",
+      "description": "Сброс времени наработки насоса 2",
+      "ui": {
+        "widget": "dxSwitch",
+        "group": "Управление"
+      }
     },
     "faultPump1": {
       "type": "boolean",
-      "description": "Ошибка насоса 1"
+      "description": "Ошибка насоса 1",
+      "ui": {
+        "widget": "dxCheckBox",
+        "group": "Состояние"
+      }
     },
     "faultPump2": {
       "type": "boolean",
-      "description": "Ошибка насоса 2"
+      "description": "Ошибка насоса 2",
+      "ui": {
+        "widget": "dxCheckBox",
+        "group": "Состояние"
+      }
     },
     "timePump1": {
       "type": "integer",
       "minimum": 0,
-      "description": "Время наработки насоса 1"
+      "description": "Время наработки насоса 1",
+      "ui": {
+        "widget": "dxCheckBox",
+        "group": "Состояние"
+      }
     },
     "timePump2": {
       "type": "integer",
       "minimum": 0,
-      "description": "Время наработки насоса 2"
+      "description": "Время наработки насоса 2",
+      "ui": {
+        "widget": "dxCheckBox",
+        "group": "Состояние"
+      }
     },
     "_msgid": {
       "type": "string",
@@ -63,10 +131,22 @@
     }
   },
   "required": [
-    "startStop", "lowLevel", "midLevel", "hiLevel", "emergencyLevel",
-    "statePump1", "statePump2", "resetFaultPump1", "resetFaultPump2",
-    "resetOperatingTimePump1", "resetOperatingTimePump2", "faultPump1",
-    "faultPump2", "timePump1", "timePump2", "_msgid"
+    "startStop",
+    "lowLevel",
+    "midLevel",
+    "hiLevel",
+    "emergencyLevel",
+    "statePump1",
+    "statePump2",
+    "resetFaultPump1",
+    "resetFaultPump2",
+    "resetOperatingTimePump1",
+    "resetOperatingTimePump2",
+    "faultPump1",
+    "faultPump2",
+    "timePump1",
+    "timePump2",
+    "_msgid"
   ],
   "additionalProperties": false
 }

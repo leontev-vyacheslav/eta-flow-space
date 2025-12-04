@@ -64,3 +64,18 @@ table.simple-grid thead th {
 .screen-x-small .map-pop-content-wrapper {
     height: 210px;
 }
+
+.map-no-data {
+    height: 50vh;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+// .leaflet-container {
+//     .disabled {
+//         opacity: 0.4;
+//         transition: opacity 0.3s ease;
+//     }
+// }

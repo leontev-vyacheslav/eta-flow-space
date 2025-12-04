@@ -5,18 +5,46 @@ import AppConstants from '../../../../constants/app-constants';
 import { formatMessage } from 'devextreme/localization';
 import { showConfirmDialogEx } from '../../../../utils/dialogs';
 import { useAuth } from '../../../../contexts/auth';
-import type { StateModel } from './models/state-model';
-import { useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import Ajv from 'ajv';
 
 import './control-form.scss';
+import { useDashboardPage } from '../../dashboard-page-context';
+import { proclaim } from '../../../../utils/proclaim';
 
-export const ControlForm = ({ state }: { state?: StateModel }) => {
+export const ControlForm = () => {
+    const {device, deviceState, dataschema } = useDashboardPage();
+    const [isValidState, setIsValidState] = useState<boolean>(false);
+
+    const state = useMemo(() => {
+        return deviceState?.state;
+    }, [deviceState]);
+
+    useEffect(() => {
+        const ajv = new Ajv({
+            strict: false,
+        });
+        const validateFn = ajv.compile(dataschema);
+        if (deviceState) {
+            const isValid = validateFn(deviceState.state);
+            setIsValidState(() => {
+                if (!isValid) {
+                    proclaim({
+                        type: 'warning',
+                        message: `Не было получено валидное состояние устройства ${device?.name}.`,
+                    });
+                }
+                return isValid;
+            });
+        }
+
+    }, [dataschema, device, deviceState]);
+
     // const { pumpingStationObjectState, dxPumpingStationStateFormRef, pumpingStationObject, timerLockRef, updatePumpingStationObjectStateAsync } = usePumpingStationPage();
     // const { postPumpingStationStateValue } = usePumpingStationsData();
     const { isOperator } = useAuth();
     const dxControlFormRef = useRef<Form>(null);
     return (state ?
-
         <Form
             className='app-form control-form'
             height={AppConstants.formHeight}
@@ -24,6 +52,7 @@ export const ControlForm = ({ state }: { state?: StateModel }) => {
             colCount={1}
             formData={state}
             ref={dxControlFormRef}
+            disabled={!isValidState}
 
             onFieldDataChanged={async (e: FieldDataChangedEvent) => {
                 if (!e.dataField /*|| !pumpingStationObject */) {
@@ -31,7 +60,7 @@ export const ControlForm = ({ state }: { state?: StateModel }) => {
                 }
 
                 if (e.dataField === 'startStop') {
-                   // timerLockRef.current = true;
+                    // timerLockRef.current = true;
                     showConfirmDialogEx({
                         title: formatMessage('confirm-title'),
                         iconName: 'WarningIcon',
