@@ -1,27 +1,35 @@
 import { useDashboardPage } from "../../dashboard-page-context";
 import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from 'react-leaflet'
-import type { LeafletMouseEvent } from "leaflet";
-
-import 'leaflet/dist/leaflet.css';
-import './map-tab-content.scss';
-import { useEffect, useMemo, useRef, useState } from "react";
+import type { LatLngExpression, LeafletMouseEvent } from "leaflet";
+import { useEffect, useMemo, useRef, useState, type RefObject } from "react";
 import { useScreenSize } from "../../../../utils/media-query";
 import { IoLocationOutline } from "react-icons/io5";
 import { MdOutlineCheckBox, MdOutlineCheckBoxOutlineBlank } from "react-icons/md";
 
+import 'leaflet/dist/leaflet.css';
+import './map-tab-content.scss';
 
-const MapController = () => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+const MapEventController = ({ position, markerRef }: { position: LatLngExpression | undefined | null, markerRef: RefObject<L.Marker<any> | null> }) => {
     const map = useMapEvents({
-        dblclick: (event: LeafletMouseEvent) => {
-            console.log(event);
+        contextmenu: (event: LeafletMouseEvent) => {
+            event.originalEvent.preventDefault();
+            event.originalEvent.stopPropagation();
+        },
+        mousedown: (event: LeafletMouseEvent) => {
+            if (!position) {
+                return;
+            }
+            if (event.originalEvent.button === 2) {
+                map.setView(position, map.getZoom());
+                markerRef.current?.openPopup();
+            }
         }
     });
 
     return null;
 }
 
-const PopupContent = () => {
+const MapPopupContent = () => {
     const { isXSmall } = useScreenSize();
     const { deviceState, dataschema, device } = useDashboardPage();
 
@@ -90,7 +98,7 @@ const PopupContent = () => {
     );
 }
 
-const NoDataOverlay = () => {
+const MapNoDataOverlay = () => {
     return (
         <div className="leaflet-middle leaflet-center leaflet-control"
             style={{
@@ -110,10 +118,10 @@ const NoDataOverlay = () => {
 }
 
 const MapTabContent = () => {
-    const map = useRef<L.Map>(null);
-    const markerRef = useRef<L.Marker>(null);
     const { device } = useDashboardPage();
     const [isEnable, setIsEnable] = useState<boolean>(true);
+    const mapRef = useRef<L.Map>(null);
+    const markerRef = useRef<L.Marker>(null);
     const defaultCenter: [number, number] = [51.50853, -0.12574];
 
     const position = useMemo(() => {
@@ -121,42 +129,46 @@ const MapTabContent = () => {
     }, [device]);
 
     useEffect(() => {
-        if (markerRef && map) {
+        const hasValidPosition = position !== null;
+        setIsEnable(hasValidPosition);
+    }, [position]);
+
+    useEffect(() => {
+        if (markerRef && mapRef) {
             const timer = setTimeout(() => {
-                if (map && map.current && position) {
-                    map.current.setView(position, map.current.getZoom());
+                if (!mapRef || !mapRef.current) {
+                    return;
                 }
-                if (map && map.current) {
-                    if (isEnable) {
-                        map.current.dragging.enable();
-                        map.current.scrollWheelZoom.enable();
-                        map.current.doubleClickZoom.enable();
-                    }
-                    else {
-                        map.current.dragging.disable();
-                        map.current.scrollWheelZoom.disable();
-                        map.current.doubleClickZoom.disable();
-                    }
-                    const mapEl = map.current.getContainer();
-                    mapEl.style.opacity = isEnable ? "1" : "0.7";
+
+                if (position) {
+                    mapRef.current.setView(position, mapRef.current.getZoom());
                 }
+
+                if (isEnable) {
+                    mapRef.current.dragging.enable();
+                    mapRef.current.scrollWheelZoom.enable();
+                    mapRef.current.doubleClickZoom.enable();
+                }
+                else {
+                    mapRef.current.dragging.disable();
+                    mapRef.current.scrollWheelZoom.disable();
+                    mapRef.current.doubleClickZoom.disable();
+                }
+
+                const mapElement = mapRef.current.getContainer();
+                mapElement.style.opacity = isEnable ? "1" : "0.7";
 
                 markerRef.current?.openPopup();
             }, 100);
 
             return () => clearTimeout(timer);
         }
-    }, [position, map, isEnable]);
-
-    useEffect(() => {
-        const hasValidPosition = position !== null;
-        setIsEnable(hasValidPosition);
-    }, [position]);
+    }, [position, mapRef, isEnable]);
 
     return (
         <div style={{ height: '100%', width: '100%', }}>
             <MapContainer
-                ref={map}
+                ref={mapRef}
                 center={position ?? defaultCenter}
                 zoom={16}
                 style={{ height: '100%', width: '100%' }}
@@ -169,12 +181,12 @@ const MapTabContent = () => {
                     isEnable
                         ? <Marker position={position ?? defaultCenter} ref={markerRef}>
                             <Popup closeButton >
-                                <PopupContent />
+                                <MapPopupContent />
                             </Popup>
                         </Marker>
-                        : <NoDataOverlay />
+                        : <MapNoDataOverlay />
                 }
-                <MapController />
+                <MapEventController position={position} markerRef={markerRef} />
             </MapContainer>
         </div>
     );
