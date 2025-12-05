@@ -46,9 +46,9 @@ const DashboardPageInner = () => {
     useEffect(() => {
         (async () => {
             const [controlModule, mnemoschemaModule, mapModule] = await Promise.all([
-                import(/* @vite-ignore */`./flows-tab-contents/${flowCode}/control-tab-content.tsx`),
-                import(/* @vite-ignore */`./flows-tab-contents/${flowCode}/mnemoschema-tab-content.tsx`),
-                import(/* @vite-ignore */`./flows-tab-contents/${flowCode}/map-tab-content.tsx`)
+                import(/* @vite-ignore */`./flows-tab-contents/${flowCode}/control/control-tab-content.tsx`),
+                import(/* @vite-ignore */`./flows-tab-contents/${flowCode}/mnemoschema/mnemoschema-tab-content.tsx`),
+                import(/* @vite-ignore */`./flows-tab-contents/${flowCode}/map/map-tab-content.tsx`)
             ]);
 
             setControlTabContent(() => controlModule.default);
@@ -63,7 +63,7 @@ const DashboardPageInner = () => {
                 <DashboardIcon size={AppConstants.headerIconSize} />
             </PageHeader>
             <div className={'content-block'}>
-                <div className={'dx-card responsive-paddings daghboard-page-content'}>
+                <div className={'dx-card responsive-paddings dashboard-page-content'}>
                     <TabPanel ref={tabPanelRef}
                         swipeEnabled={false}
                         animationEnabled={false}

@@ -1,15 +1,19 @@
+import Ajv from 'ajv';
 import { createContext, useContext, useEffect, useState } from 'react';
 import type { DeviceModel } from '../../models/flows/device-model';
 import type { DeviceStateModel } from '../../models/flows/device-state-model';
 import { useAppData } from '../../contexts/app-data/app-data';
 import { useParams } from 'react-router';
-import './daghboard-page-content.scss';
+import { proclaim } from '../../utils/proclaim';
+
+import './dashboard-page-content.scss';
 
 export type DashboardPageContextModel = {
     device?: DeviceModel;
     deviceState?: DeviceStateModel;
     mnemoschema?: string;
     dataschema?: any;
+    isValidDeviceState: boolean;
 };
 
 const DashboardPageContext = createContext({} as DashboardPageContextModel);
@@ -22,6 +26,7 @@ function DashboardPageContextProvider(props: any) {
     const [deviceState, setDeviceState] = useState<DeviceStateModel | undefined>();
     const [mnemoschema, setMnemoschema] = useState<string | undefined>();
     const [dataschema, setDataschema] = useState<any | undefined>();
+    const [isValidDeviceState, setIsValidDeviceState] = useState<boolean>(false);
 
     useEffect(() => {
         (async () => {
@@ -42,7 +47,7 @@ function DashboardPageContextProvider(props: any) {
                 if (mnemoschema) {
                     setMnemoschema(mnemoschema);
                 }
-                 if (dataschema) {
+                if (dataschema) {
                     setDataschema(dataschema);
                 }
             }
@@ -50,12 +55,40 @@ function DashboardPageContextProvider(props: any) {
     }, [deviceId, flowCode, getDeviceAsync, getDeviceStateAsync, getDeviceStateDataschemaAsync, getMnemoschemaAsync]);
 
     useEffect(() => {
+        if (!dataschema) {
+            return;
+        }
+
+        const ajv = new Ajv({
+            strict: false,
+        });
+        const validateFn = ajv.compile(dataschema);
+
+        if (!deviceState) {
+            return;
+        }
+
+        const isValid = validateFn(deviceState.state);
+        setIsValidDeviceState(() => {
+            if (!isValid) {
+                proclaim({
+                    type: 'warning',
+                    message: `Не было получено валидное состояние устройства ${device?.name}.`,
+                });
+            }
+            return isValid;
+        });
+    }, [dataschema, device, deviceState]);
+
+    useEffect(() => {
         const timer = setInterval(async () => {
-            if (deviceId) {
-                const deviceState = await getDeviceStateAsync(parseInt(deviceId));
-                if (deviceState) {
-                    setDeviceState(deviceState);
-                }
+            if (!deviceId) {
+                return;
+            }
+
+            const deviceState = await getDeviceStateAsync(parseInt(deviceId));
+            if (deviceState) {
+                setDeviceState(deviceState);
             }
         }, 60000);
 
@@ -66,13 +99,13 @@ function DashboardPageContextProvider(props: any) {
         }
     }, [deviceId, getDeviceStateAsync]);
 
-
     return (
         <DashboardPageContext.Provider value={{
             device,
             deviceState,
             mnemoschema,
-            dataschema
+            dataschema,
+            isValidDeviceState
         }} {...props} />
     );
 }

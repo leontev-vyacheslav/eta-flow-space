@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useRef } from "react";
-import { useScreenSize } from "../../../../utils/media-query";
-import { EmergencyLevel, PumpingStationIcon, StopIcon } from "./icons";
-import { useDashboardPage } from "../../dashboard-page-context";
+import { useScreenSize } from "../../../../../utils/media-query";
+import { EmergencyLevel, PumpingStationIcon, StopIcon } from "../icons";
+import { useDashboardPage } from "../../../dashboard-page-context";
 
 const MnemoschemaTabContent = () => {
-    const {deviceState, mnemoschema} = useDashboardPage();
+    const {deviceState, mnemoschema, isValidDeviceState} = useDashboardPage();
     const mnemoschemaContainerRef = useRef<HTMLDivElement>(null);
     const { isSmall, isXSmall, isLarge } = useScreenSize();
 
@@ -162,7 +162,7 @@ const MnemoschemaTabContent = () => {
                 : null
             }
             {mnemoschema
-                ? <div style={{ display: 'flex', alignItems: 'center', marginTop: '20px' }} ref={mnemoschemaContainerRef} />
+                ? <div style={{ display: 'flex', alignItems: 'center', marginTop: '20px', opacity: (isValidDeviceState ? 1 : 0.5) }} ref={mnemoschemaContainerRef} />
                 : null
             }
         </>

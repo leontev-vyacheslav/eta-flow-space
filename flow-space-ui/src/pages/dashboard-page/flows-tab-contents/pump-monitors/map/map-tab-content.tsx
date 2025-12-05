@@ -1,8 +1,8 @@
-import { useDashboardPage } from "../../dashboard-page-context";
+import { useDashboardPage } from "../../../dashboard-page-context";
 import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from 'react-leaflet'
 import type { LatLngExpression, LeafletMouseEvent } from "leaflet";
 import { useEffect, useMemo, useRef, useState, type RefObject } from "react";
-import { useScreenSize } from "../../../../utils/media-query";
+import { useScreenSize } from "../../../../../utils/media-query";
 import { IoLocationOutline } from "react-icons/io5";
 import { MdOutlineCheckBox, MdOutlineCheckBoxOutlineBlank } from "react-icons/md";
 
@@ -118,7 +118,7 @@ const MapNoDataOverlay = () => {
 }
 
 const MapTabContent = () => {
-    const { device } = useDashboardPage();
+    const { device, isValidDeviceState } = useDashboardPage();
     const [isEnable, setIsEnable] = useState<boolean>(true);
     const mapRef = useRef<L.Map>(null);
     const markerRef = useRef<L.Marker>(null);
@@ -129,9 +129,9 @@ const MapTabContent = () => {
     }, [device]);
 
     useEffect(() => {
-        const hasValidPosition = position !== null;
+        const hasValidPosition = position !== null && isValidDeviceState;
         setIsEnable(hasValidPosition);
-    }, [position]);
+    }, [isValidDeviceState, position]);
 
     useEffect(() => {
         if (markerRef && mapRef) {
@@ -156,7 +156,7 @@ const MapTabContent = () => {
                 }
 
                 const mapElement = mapRef.current.getContainer();
-                mapElement.style.opacity = isEnable ? "1" : "0.7";
+                mapElement.style.opacity = isEnable ? "1" : "0.5";
 
                 markerRef.current?.openPopup();
             }, 100);

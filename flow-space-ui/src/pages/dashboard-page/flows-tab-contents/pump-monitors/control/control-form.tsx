@@ -1,44 +1,22 @@
 import 'devextreme-react/switch';
 import Form, { GroupItem, SimpleItem } from 'devextreme-react/form';
 import type { FieldDataChangedEvent } from 'devextreme/ui/form';
-import AppConstants from '../../../../constants/app-constants';
+import AppConstants from '../../../../../constants/app-constants';
 import { formatMessage } from 'devextreme/localization';
-import { showConfirmDialogEx } from '../../../../utils/dialogs';
-import { useAuth } from '../../../../contexts/auth';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import Ajv from 'ajv';
+import { showConfirmDialogEx } from '../../../../../utils/dialogs';
+import { useAuth } from '../../../../../contexts/auth';
+import { useMemo, useRef } from 'react';
 
 import './control-form.scss';
-import { useDashboardPage } from '../../dashboard-page-context';
-import { proclaim } from '../../../../utils/proclaim';
+import { useDashboardPage } from '../../../dashboard-page-context';
 
 export const ControlForm = () => {
-    const {device, deviceState, dataschema } = useDashboardPage();
-    const [isValidState, setIsValidState] = useState<boolean>(false);
+    const {deviceState, isValidDeviceState } = useDashboardPage();
 
     const state = useMemo(() => {
         return deviceState?.state;
     }, [deviceState]);
 
-    useEffect(() => {
-        const ajv = new Ajv({
-            strict: false,
-        });
-        const validateFn = ajv.compile(dataschema);
-        if (deviceState) {
-            const isValid = validateFn(deviceState.state);
-            setIsValidState(() => {
-                if (!isValid) {
-                    proclaim({
-                        type: 'warning',
-                        message: `Не было получено валидное состояние устройства ${device?.name}.`,
-                    });
-                }
-                return isValid;
-            });
-        }
-
-    }, [dataschema, device, deviceState]);
 
     // const { pumpingStationObjectState, dxPumpingStationStateFormRef, pumpingStationObject, timerLockRef, updatePumpingStationObjectStateAsync } = usePumpingStationPage();
     // const { postPumpingStationStateValue } = usePumpingStationsData();
@@ -52,7 +30,7 @@ export const ControlForm = () => {
             colCount={1}
             formData={state}
             ref={dxControlFormRef}
-            disabled={!isValidState}
+            disabled={!isValidDeviceState}
 
             onFieldDataChanged={async (e: FieldDataChangedEvent) => {
                 if (!e.dataField /*|| !pumpingStationObject */) {
