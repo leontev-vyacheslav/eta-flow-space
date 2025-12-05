@@ -17,7 +17,7 @@ async function getDeviceStatesByDates(msg) {
     });
 
     if (!userDeviceLink) {
-        msg.statusCode = HttpStatusCodes.Forbiden;
+        msg.statusCode = HttpStatusCodes.Forbidden;
         msg.payload = { message: `Запрашиваемое устройство не принадлежит пользователю с ID ${userId}.` }
 
         return msg;

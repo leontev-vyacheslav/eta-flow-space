@@ -1,4 +1,4 @@
 
 module.exports = {
-    ...require('./persistance-storage-manager'),
+    ...require('./persistence-storage-manager'),
 };

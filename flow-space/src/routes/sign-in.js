@@ -16,14 +16,14 @@ const { HttpStatusCodes } = require('../constants/http');
 
     if (!user) {
         msg.statusCode = HttpStatusCodes.Unauthorized;
-        msg.payload = { message: 'Пользователь не найден или указан невеный пароль.' }
+        msg.payload = { message: 'Пользователь не найден или указан неверный пароль.' }
 
         return msg;
     }
 
     const JWT_SECRET = process.env.JWT_SECRET;
     if (!JWT_SECRET) {
-        msg.statusCode = HttpStatusCodes.Forbiden;
+        msg.statusCode = HttpStatusCodes.Forbidden;
         msg.payload = { message: 'JWT_SECRET не найден.' }
 
         return msg;
