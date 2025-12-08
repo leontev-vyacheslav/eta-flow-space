@@ -62,15 +62,28 @@ function DashboardPageContextProvider(props: any) {
         const ajv = new Ajv({
             strict: false,
         });
-        const validateFn = ajv.compile(dataschema);
+
+        let validateFn;
+        try {
+            validateFn = ajv.compile(dataschema);
+        } catch {
+            validateFn = null;
+        }
 
         if (!deviceState) {
             return;
         }
 
-        const isValid = validateFn(deviceState.state);
+        if (!validateFn) {
+            proclaim({
+                type: 'warning',
+                message: `Схема описания состояние устройства ${device?.name} не валидна.`,
+            });
+        }
+
+        const isValid = validateFn ? validateFn(deviceState.state) : false;
         setIsValidDeviceState(() => {
-            if (!isValid) {
+            if (!isValid && validateFn) {
                 proclaim({
                     type: 'warning',
                     message: `Не было получено валидное состояние устройства ${device?.name}.`,
@@ -113,4 +126,3 @@ function DashboardPageContextProvider(props: any) {
 const useDashboardPage = () => useContext(DashboardPageContext);
 
 export { DashboardPageContextProvider, useDashboardPage };
-

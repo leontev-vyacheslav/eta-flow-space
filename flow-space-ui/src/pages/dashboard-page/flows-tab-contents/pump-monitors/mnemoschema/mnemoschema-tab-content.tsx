@@ -1,12 +1,10 @@
-import { useCallback, useEffect, useRef } from "react";
-import { useScreenSize } from "../../../../../utils/media-query";
+import { useCallback, useEffect } from "react";
 import { EmergencyLevel, PumpingStationIcon, StopIcon } from "../icons";
 import { useDashboardPage } from "../../../dashboard-page-context";
+import { Mnemoschema } from "../../../components/mnemoschema/mnemoschema";
 
 const MnemoschemaTabContent = () => {
-    const {deviceState, mnemoschema, isValidDeviceState} = useDashboardPage();
-    const mnemoschemaContainerRef = useRef<HTMLDivElement>(null);
-    const { isSmall, isXSmall, isLarge } = useScreenSize();
+    const { deviceState } = useDashboardPage();
 
     const levelSensorsHandler = useCallback(() => {
         if (!deviceState) {
@@ -128,23 +126,6 @@ const MnemoschemaTabContent = () => {
     }, [deviceState]);
 
     useEffect(() => {
-        if (!mnemoschemaContainerRef.current || !mnemoschema) return;
-
-        try {
-            const parser = new DOMParser();
-            const mnemoschemaDoc = parser.parseFromString(mnemoschema, 'image/svg+xml');
-            mnemoschemaContainerRef.current.innerHTML = '';
-            const svgElement = mnemoschemaContainerRef.current.appendChild(mnemoschemaDoc.documentElement);
-            svgElement.setAttribute('height', isSmall || isXSmall ? '450px' : isLarge ? '520px' : '640px');
-            if (isSmall || isXSmall) {
-                svgElement.style.flex = '1';
-            }
-        } catch (error) {
-            console.error('Error parsing SVG:', error);
-        }
-    }, [isLarge, isSmall, isXSmall, mnemoschema]);
-
-    useEffect(() => {
         startStopPumpsHandler()
         levelSensorsHandler();
         faultPumpHandler();
@@ -161,10 +142,7 @@ const MnemoschemaTabContent = () => {
                 </div>
                 : null
             }
-            {mnemoschema
-                ? <div style={{ display: 'flex', alignItems: 'center', marginTop: '20px', opacity: (isValidDeviceState ? 1 : 0.5) }} ref={mnemoschemaContainerRef} />
-                : null
-            }
+            <Mnemoschema />
         </>
     );
 }
