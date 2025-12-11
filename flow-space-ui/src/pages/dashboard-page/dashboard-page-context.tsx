@@ -7,6 +7,7 @@ import { useParams } from 'react-router';
 import { proclaim } from '../../utils/proclaim';
 
 import './dashboard-page-content.scss';
+import { getQuickGuid } from '../../utils/uuid';
 
 export type DashboardPageContextModel = {
     device?: DeviceModel;
@@ -14,6 +15,8 @@ export type DashboardPageContextModel = {
     mnemoschema?: string;
     dataschema?: any;
     isValidDeviceState: boolean;
+    updateSharedStateRefreshToken: string;
+    setUpdateSharedStateRefreshToken: React.Dispatch<React.SetStateAction<string>>
 };
 
 const DashboardPageContext = createContext({} as DashboardPageContextModel);
@@ -27,6 +30,7 @@ function DashboardPageContextProvider(props: any) {
     const [mnemoschema, setMnemoschema] = useState<string | undefined>();
     const [dataschema, setDataschema] = useState<any | undefined>();
     const [isValidDeviceState, setIsValidDeviceState] = useState<boolean>(false);
+    const [updateSharedStateRefreshToken, setUpdateSharedStateRefreshToken] = useState<string>(getQuickGuid());
 
     useEffect(() => {
         (async () => {
@@ -52,7 +56,7 @@ function DashboardPageContextProvider(props: any) {
                 }
             }
         })();
-    }, [deviceId, flowCode, getDeviceAsync, getDeviceStateAsync, getDeviceStateDataschemaAsync, getMnemoschemaAsync]);
+    }, [deviceId, flowCode, getDeviceAsync, getDeviceStateAsync, getDeviceStateDataschemaAsync, getMnemoschemaAsync, updateSharedStateRefreshToken]);
 
     useEffect(() => {
         if (!dataschema) {
@@ -118,7 +122,9 @@ function DashboardPageContextProvider(props: any) {
             deviceState,
             mnemoschema,
             dataschema,
-            isValidDeviceState
+            isValidDeviceState,
+            updateSharedStateRefreshToken,
+            setUpdateSharedStateRefreshToken
         }} {...props} />
     );
 }

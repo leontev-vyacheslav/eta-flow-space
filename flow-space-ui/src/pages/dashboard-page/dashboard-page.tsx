@@ -7,10 +7,12 @@ import type { MenuItemModel } from "../../models/menu-item-model";
 import { quickHelpReferenceService } from "../../services/quick-help-reference-service";
 import { IconTab } from '../../components/tab-utils/icon-tab';
 import { useParams } from 'react-router';
-import { DashboardPageContextProvider } from './dashboard-page-context';
+import { DashboardPageContextProvider, useDashboardPage } from './dashboard-page-context';
+import { getQuickGuid } from '../../utils/uuid';
 
 const DashboardPageInner = () => {
     const tabPanelRef = useRef<TabPanel>(null);
+    const { setUpdateSharedStateRefreshToken } = useDashboardPage();
     const {  flowCode } = useParams();
     const [ControlTabContent, setControlTabContent] = useState<ComponentType<any> | null>(null);
     const [MnemoschemaTabContent, setMnemoschemaTabContent] = useState<ComponentType<any> | null>(null);
@@ -27,7 +29,7 @@ const DashboardPageInner = () => {
                         icon: () => <RefreshIcon size={20} />,
                         text: 'Обновить...',
                         onClick: () => {
-                            // setUpdateSharedRegulatorStateRefreshToken(getQuickGuid());
+                            setUpdateSharedStateRefreshToken(getQuickGuid());
                         }
                     },
 
@@ -41,7 +43,7 @@ const DashboardPageInner = () => {
                 ]
             }
         ] as MenuItemModel[];
-    }, []);
+    }, [setUpdateSharedStateRefreshToken]);
 
     useEffect(() => {
         (async () => {

@@ -1,16 +1,41 @@
-import { IoLocationOutline } from "react-icons/io5";
-import { MdOutlineCheckBox, MdOutlineCheckBoxOutlineBlank } from "react-icons/md";
+import { useCallback } from "react";
+
 import { useScreenSize } from "../../../../utils/media-query";
 import { useDashboardPage } from "../../dashboard-page-context";
+import { CheckedIcon, LocationIcon, UncheckedIcon } from "../../../../constants/app-icons";
 
 export const MapPopupContent = () => {
     const { isXSmall } = useScreenSize();
     const { deviceState, dataschema, device } = useDashboardPage();
 
+    const provideStateValue = useCallback((propertyInfo: any, value: any) => {
+        if (propertyInfo.type === 'boolean') {
+            if (value === true) {
+                return <CheckedIcon size={14} />
+            }
+            if (value === false) {
+                return <UncheckedIcon size={14} />
+            }
+        }
+
+        if (propertyInfo.format !== 'date-time' && (propertyInfo.type === 'integer' || propertyInfo.type === 'float') && value !== undefined) {
+            return value;
+        }
+
+        if (propertyInfo.format === 'date-time' && value !== undefined) {
+            if (propertyInfo.type === 'integer') {
+                return (new Date(value)).toLocaleString('ru-RU', {});
+            } else if (propertyInfo.type === 'string') {
+                return (new Date(Date.parse(value))).toLocaleString('ru-RU', {});
+            }
+        }
+        return null;
+    }, []);
+
     return (
         <>
             <div className="map-pop-content-location-wrapper" style={{}}>
-                <IoLocationOutline size={22} />
+                <LocationIcon size={22} />
                 <div className="map-pop-content-location">
                     <div>{device ? device.description : 'Нет данных'}</div>
                     <div>{device && device.objectLocation ? device.objectLocation.address : 'Нет данных'}</div>
@@ -34,24 +59,13 @@ export const MapPopupContent = () => {
                                 .map(p => {
                                     const propertyInfo = dataschema.properties[p];
                                     const value = (deviceState?.state as any)[p];
+                                    const valueContent = provideStateValue(propertyInfo, value);
 
-                                    let valueContent = null;
-                                    if (propertyInfo.type === 'boolean') {
-                                        if (value === true) {
-                                            valueContent = <MdOutlineCheckBox size={14} />
-                                        }
-                                        if (value === false) {
-                                            valueContent = <MdOutlineCheckBoxOutlineBlank size={14} />
-                                        }
-                                    }
-                                    if ((propertyInfo.type === 'integer' || propertyInfo.type === 'float') && value !== undefined) {
-                                        valueContent = value
-                                    }
                                     return (
                                         !isXSmall ?
                                             <tr key={p}>
                                                 <td style={{ width: '250px' }}>{propertyInfo.description}</td>
-                                                <td style={{ width: '100px', textAlign: 'center' }}>{valueContent ? valueContent : 'Нет данных'}</td>
+                                                <td style={{ width: '120px', textAlign: 'center' }}>{valueContent ? valueContent : 'Нет данных'}</td>
                                             </tr> :
                                             <>
                                                 <tr>

@@ -1,4 +1,4 @@
-const { differenceInMinutes } = require('date-fns');
+const { differenceInMinutes, differenceInSeconds } = require('date-fns');
 const { DeviceDataModel, DeviceStateDataModel, sequelize } = require('../orm/models');
 
 async function storeStates(msg, global) {
@@ -8,9 +8,16 @@ async function storeStates(msg, global) {
 
     devices.forEach(async (d) => {
         const now = new Date();
-        if (!d.lastStateUpdate || differenceInMinutes(now, d.lastStateUpdate) >= d.updateStateInterval) {
-            const deviceState = global.get(`deviceState${d.id}`);
+        const deviceState = global.get(`deviceState${d.id}`);
 
+        if (differenceInMinutes(now, deviceState.timestamp) > d.updateStateInterval * 2) {
+            Object.keys(deviceState).forEach(key => {
+                deviceState[key] = undefined;
+            });
+            global.set(`deviceState${d.id}`, deviceState);
+        }
+
+        if (!d.lastStateUpdate || differenceInMinutes(now, d.lastStateUpdate) >= d.updateStateInterval) {
             if (deviceState) {
                 try {
                     await sequelize.transaction(async t => {

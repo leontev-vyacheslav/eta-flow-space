@@ -7,7 +7,7 @@ export { RiCalendarCheckLine as RegistrationDateIcon } from 'react-icons/ri';
 export { AiOutlineAndroid as AndroidIcon } from 'react-icons/ai';
 export { SiIos as IosIcon } from 'react-icons/si';
 export { MdMoreVert as AdditionalMenuIcon } from 'react-icons/md';
-export { MdTimeline as TimelineIcon  } from 'react-icons/md';
+export { MdTimeline as TimelineIcon } from 'react-icons/md';
 export { RiCalendarLine as CurrentDateIcon } from 'react-icons/ri';
 export { RiCalendarEventLine as WorkDateIcon } from 'react-icons/ri';
 export { RiCalendarTodoLine as ScheduleIcon } from 'react-icons/ri';
@@ -26,7 +26,7 @@ export { CgAddR as AddIcon } from 'react-icons/cg';
 export { BiEdit as EditIcon } from 'react-icons/bi';
 export { IoWarningSharp as WarningIcon } from 'react-icons/io5';
 export { IoInformationCircleSharp as InformationIcon } from 'react-icons/io5';
-export { BsBoxArrowInLeft as  WorkDateBackwardIcon } from 'react-icons/bs';
+export { BsBoxArrowInLeft as WorkDateBackwardIcon } from 'react-icons/bs';
 export { BsBoxArrowInRight as WorkDateForwardIcon } from 'react-icons/bs';
 export { IoTodayOutline as WorkDateTodayIcon } from 'react-icons/io5';
 export { IoCloseOutline as CloseIcon } from 'react-icons/io5';
@@ -40,7 +40,7 @@ export { VscDebug as DebugIcon } from 'react-icons/vsc';
 export { IoEllipsisHorizontal as ExtensionIcon } from 'react-icons/io5';
 export { IoCloudDownloadOutline as DownloadIcon } from 'react-icons/io5';
 export { ImFileZip as PackageIcon } from 'react-icons/im';
-export { IoHardwareChipOutline as  GpioIcon } from 'react-icons/io5';
+export { IoHardwareChipOutline as GpioIcon } from 'react-icons/io5';
 export { VscTools as ServiceIcon } from 'react-icons/vsc';
 export { IoTodayOutline as DayOfWeekIcon } from 'react-icons/io5';
 
@@ -60,12 +60,12 @@ export { IoCalendarOutline as ScheduleIcon2 } from 'react-icons/io5';
 export { IoTimeOutline as RtcIcon } from 'react-icons/io5';
 export { LuSettings2 as RegulatorIcon } from 'react-icons/lu';
 export { MdOutlineManageHistory as ManageIcon } from 'react-icons/md';
-export { IoDownloadOutline  as DownloadIcon2 } from 'react-icons/io5';
-export { IoReloadSharp  as ResetIcon } from 'react-icons/io5';
+export { IoDownloadOutline as DownloadIcon2 } from 'react-icons/io5';
+export { IoReloadSharp as ResetIcon } from 'react-icons/io5';
 
-export { AiOutlineFire  as HeatSysIcon } from 'react-icons/ai';
-export { IoWaterOutline  as HotWaterIcon } from 'react-icons/io5';
-export { MdOutlineWindPower  as VentilationIcon } from 'react-icons/md';
+export { AiOutlineFire as HeatSysIcon } from 'react-icons/ai';
+export { IoWaterOutline as HotWaterIcon } from 'react-icons/io5';
+export { MdOutlineWindPower as VentilationIcon } from 'react-icons/md';
 export { AiOutlineAppstore as AppIcon } from 'react-icons/ai';
 export { IoSunnyOutline as OutdoorIcon } from 'react-icons/io5';
 export { IoMdLogIn as SupplyPipeIcon } from 'react-icons/io';
@@ -91,9 +91,12 @@ export { IoOptionsOutline as ParamsIcon } from 'react-icons/io5';
 export { VscDashboard as DashboardIcon } from 'react-icons/vsc';
 export { IoMapOutline as MapIcon } from 'react-icons/io5';
 
+export { MdOutlineCheckBox as CheckedIcon } from 'react-icons/md';
+export { MdOutlineCheckBoxOutlineBlank as UncheckedIcon } from 'react-icons/md';
+export { IoLocationOutline as LocationIcon } from "react-icons/io5";
 
 
 import { MdMoreVert } from 'react-icons/md';
-export const GridAdditionalMenuIcon = () => <MdMoreVert style={ { cursor: 'pointer' } } size={ 18 } />
+export const GridAdditionalMenuIcon = () => <MdMoreVert style={{ cursor: 'pointer' }} size={18} />
 
 

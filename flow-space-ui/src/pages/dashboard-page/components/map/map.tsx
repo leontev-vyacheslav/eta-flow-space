@@ -13,6 +13,7 @@ export const Map = () => {
     const [isEnable, setIsEnable] = useState<boolean>(true);
     const mapRef = useRef<L.Map>(null);
     const markerRef = useRef<L.Marker>(null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const defaultCenter: [number, number] = [51.50853, -0.12574];
 
     const position = useMemo(() => {
@@ -25,12 +26,12 @@ export const Map = () => {
     }, [isValidDeviceState, position]);
 
     useEffect(() => {
+
         if (markerRef && mapRef) {
             const timer = setTimeout(() => {
                 if (!mapRef || !mapRef.current) {
                     return;
                 }
-
                 if (position) {
                     mapRef.current.setView(position, mapRef.current.getZoom());
                 }
@@ -49,12 +50,19 @@ export const Map = () => {
                 const mapElement = mapRef.current.getContainer();
                 mapElement.style.opacity = isEnable ? "1" : "0.5";
 
+                // how to center popup
                 markerRef.current?.openPopup();
+
+                if (position) {
+                    mapRef.current.setView(position, mapRef.current.getZoom());
+                }
             }, 100);
 
-            return () => clearTimeout(timer);
+            return () => {
+                clearTimeout(timer)
+            };
         }
-    }, [position, mapRef, isEnable]);
+    }, [position, mapRef, isEnable, defaultCenter]);
 
     return (
         <div style={{ height: '100%', width: '100%', }}>

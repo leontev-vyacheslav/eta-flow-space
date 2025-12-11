@@ -27,7 +27,7 @@
             }
         },
         "debug": {
-            "filter": "filterAll"
+            "filter": "filterSelected"
         },
         "menu-menu-item-sidebar": true,
         "menu-menu-item-palette": true

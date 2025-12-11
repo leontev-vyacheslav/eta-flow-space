@@ -8,7 +8,7 @@
       "description": "Включение/выключение работы",
       "ui": {
         "widget": "dxSwitch",
-        "group": "Управление"
+        "group": 1
       }
     },
     "lowLevel": {
@@ -16,7 +16,7 @@
       "description": "Нижний уровень",
       "ui": {
         "widget": "dxCheckBox",
-        "group": "Состояние"
+        "group": 2
       }
     },
     "midLevel": {
@@ -24,7 +24,7 @@
       "description": "Средний уровень",
       "ui": {
         "widget": "dxCheckBox",
-        "group": "Состояние"
+        "group": 2
       }
     },
     "hiLevel": {
@@ -32,7 +32,7 @@
       "description": "Верхний уровень",
       "ui": {
         "widget": "dxCheckBox",
-        "group": "Состояние"
+        "group": 2
       }
     },
     "emergencyLevel": {
@@ -40,7 +40,7 @@
       "description": "Аварийный уровень",
       "ui": {
         "widget": "dxCheckBox",
-        "group": "Состояние"
+        "group": 2
       }
     },
     "statePump1": {
@@ -48,7 +48,7 @@
       "description": "Состояние насоса 1",
       "ui": {
         "widget": "dxCheckBox",
-        "group": "Состояние"
+        "group": 2
       }
     },
     "statePump2": {
@@ -56,7 +56,7 @@
       "description": "Состояние насоса 2",
       "ui": {
         "widget": "dxCheckBox",
-        "group": "Состояние"
+        "group": 2
       }
     },
     "resetFaultPump1": {
@@ -64,7 +64,7 @@
       "description": "Сброс ошибки насоса 1",
       "ui": {
         "widget": "dxSwitch",
-        "group": "Управление"
+        "group": 1
       }
     },
     "resetFaultPump2": {
@@ -72,7 +72,7 @@
       "description": "Сброс ошибки насоса 2",
       "ui": {
         "widget": "dxSwitch",
-        "group": "Управление"
+        "group": 1
       }
     },
     "resetOperatingTimePump1": {
@@ -80,7 +80,7 @@
       "description": "Сброс времени наработки насоса 1",
       "ui": {
         "widget": "dxSwitch",
-        "group": "Управление"
+        "group": 1
       }
     },
     "resetOperatingTimePump2": {
@@ -88,7 +88,7 @@
       "description": "Сброс времени наработки насоса 2",
       "ui": {
         "widget": "dxSwitch",
-        "group": "Управление"
+        "group": 1
       }
     },
     "faultPump1": {
@@ -96,7 +96,7 @@
       "description": "Ошибка насоса 1",
       "ui": {
         "widget": "dxCheckBox",
-        "group": "Состояние"
+        "group": 2
       }
     },
     "faultPump2": {
@@ -104,7 +104,7 @@
       "description": "Ошибка насоса 2",
       "ui": {
         "widget": "dxCheckBox",
-        "group": "Состояние"
+        "group": 2
       }
     },
     "timePump1": {
@@ -113,7 +113,7 @@
       "description": "Время наработки насоса 1",
       "ui": {
         "widget": "dxCheckBox",
-        "group": "Состояние"
+        "group": 2
       }
     },
     "timePump2": {
@@ -122,8 +122,13 @@
       "description": "Время наработки насоса 2",
       "ui": {
         "widget": "dxCheckBox",
-        "group": "Состояние"
+        "group": 2
       }
+    },
+    "timestamp": {
+      "type": "integer",
+      "format": "date-time",
+      "description": "Время опроса"
     },
     "_msgid": {
       "type": "string",
@@ -145,8 +150,21 @@
     "faultPump1",
     "faultPump2",
     "timePump1",
-    "timePump2",
-    "_msgid"
+    "timePump2"
   ],
-  "additionalProperties": false
+  "additionalProperties": true,
+  "ui": {
+    "groups": [
+      {
+        "id": 1,
+        "name": "control",
+        "description": "Управление"
+      },
+      {
+        "id": 2,
+        "name": "state",
+        "description": "Состояние"
+      }
+    ]
+  }
 }

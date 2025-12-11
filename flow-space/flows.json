@@ -16,46 +16,12 @@
         "env": []
     },
     {
-        "id": "32c193548f01777e",
-        "type": "group",
-        "z": "a7c135e772de0725",
-        "name": "activator",
-        "style": {
-            "label": true
-        },
-        "nodes": [
-            "3254130808eb2f14",
-            "a01bf9c6243144ca"
-        ],
-        "x": 34,
-        "y": 19,
-        "w": 452,
-        "h": 82
-    },
-    {
-        "id": "ebdda297932f3f07",
-        "type": "group",
-        "z": "a7c135e772de0725",
-        "name": "remote-device-mediator",
-        "style": {
-            "label": true
-        },
-        "nodes": [
-            "a59a21eb6b6471bc",
-            "f6dc65181c21674e",
-            "762ef4d95887673c",
-            "03e587130931a889",
-            "2db1e19264fd6a1a",
-            "f641c61327d806f0",
-            "bfb3e9ec73ddd77c",
-            "b0025aba6923fd52",
-            "30f6276f9e368846",
-            "04a22057bd75906f"
-        ],
-        "x": 34,
-        "y": 179,
-        "w": 952,
-        "h": 242
+        "id": "c975308c190de253",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
     },
     {
         "id": "b74b1a6d538c13c2",
@@ -168,7 +134,7 @@
         "stateLogEnabled": true,
         "queueLogEnabled": false,
         "failureLogEnabled": true,
-        "tcpHost": "192.168.0.200",
+        "tcpHost": "192.168.0.300",
         "tcpPort": 502,
         "tcpType": "DEFAULT",
         "serialPort": "/dev/ttyUSB",
@@ -182,7 +148,7 @@
         "unit_id": 1,
         "commandDelay": 1,
         "clientTimeout": 1000,
-        "reconnectOnTimeout": true,
+        "reconnectOnTimeout": false,
         "reconnectTimeout": 2000,
         "parallelUnitIdsAllowed": true,
         "showErrors": true,
@@ -525,7 +491,7 @@
         "z": "2dca6eed12b296f5",
         "g": "d4fc72a987396215",
         "name": "/health-check",
-        "func": "const { healthCheck } = global.get('healthCheck');\n\nreturn healthCheck(msg);",
+        "func": "const { healthCheck } = global.get('routes');\n\nreturn healthCheck(msg);",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -831,7 +797,6 @@
         "id": "3254130808eb2f14",
         "type": "inject",
         "z": "a7c135e772de0725",
-        "g": "32c193548f01777e",
         "name": "on-init",
         "props": [],
         "repeat": "",
@@ -851,7 +816,6 @@
         "id": "a01bf9c6243144ca",
         "type": "function",
         "z": "a7c135e772de0725",
-        "g": "32c193548f01777e",
         "name": "init-device-states",
         "func": "const [{ Op }, { FlowDataModel, DeviceDataModel } ] = global.get(['sequelize', 'orm']);\nconst flowUid = node.path.split('/').find(_=> true);\n\nconst params = [\n    [\n        \"startStop\", \"lowLevel\", \"midLevel\",\n        \"hiLevel\", \"emergencyLevel\", \"statePump1\",\n        \"statePump2\", \"resetFaultPump1\", \"resetFaultPump2\",\n        \"resetOperatingTimePump1\", \"resetOperatingTimePump2\",\n        \"faultPump1\", \"faultPump2\"\n    ],\n    [\n        \"timePump1\",\n        \"timePump2\"\n    ]\n];\nconst initialState = {};\n\nflow.set([\"coilsParams\", \"holdingsParams\"], params);\n\n\nconst devices = await DeviceDataModel.findAll({\n    attributes: ['id'],\n    include: [{\n        model: FlowDataModel,\n        as: 'flow',\n        attributes: [],\n        where: {\n            uid: flowUid\n        }\n    }]\n});\n\ndevices.forEach(d => {\n    params.forEach(params => {\n        params.forEach((p, i) => {\n            initialState[p] = undefined;\n        });\n    });\n    \n    global.set(`deviceState${d.id}`, initialState);\n});\n\nmsg.payload = { message: \"OnInit was completed.\" }\n\nreturn msg;",
         "outputs": 1,
@@ -870,7 +834,6 @@
         "id": "a59a21eb6b6471bc",
         "type": "function",
         "z": "a7c135e772de0725",
-        "g": "ebdda297932f3f07",
         "name": "build-state-payload",
         "func": "\nflow.set(\"res\", msg.res);\n\nmsg.payload = {\n    ...msg.payload, fc: 5, quantity: 1\n}\n\nreturn msg;",
         "outputs": 1,
@@ -880,7 +843,7 @@
         "finalize": "",
         "libs": [],
         "x": 370,
-        "y": 380,
+        "y": 420,
         "wires": [
             [
                 "762ef4d95887673c"
@@ -891,13 +854,12 @@
         "id": "f6dc65181c21674e",
         "type": "link in",
         "z": "a7c135e772de0725",
-        "g": "ebdda297932f3f07",
         "name": "link in 1",
         "links": [
             "42be60bdf4323128"
         ],
         "x": 75,
-        "y": 380,
+        "y": 420,
         "wires": [
             [
                 "a59a21eb6b6471bc"
@@ -908,7 +870,6 @@
         "id": "762ef4d95887673c",
         "type": "modbus-flex-write",
         "z": "a7c135e772de0725",
-        "g": "ebdda297932f3f07",
         "name": "",
         "showStatusActivities": false,
         "showErrors": false,
@@ -919,7 +880,7 @@
         "delayOnStart": false,
         "startDelayTime": "",
         "x": 650,
-        "y": 380,
+        "y": 420,
         "wires": [
             [],
             []
@@ -929,7 +890,6 @@
         "id": "03e587130931a889",
         "type": "inject",
         "z": "a7c135e772de0725",
-        "g": "ebdda297932f3f07",
         "name": "set-interval-10sec",
         "props": [
             {
@@ -948,7 +908,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 170,
-        "y": 220,
+        "y": 260,
         "wires": [
             [
                 "2db1e19264fd6a1a"
@@ -959,9 +919,8 @@
         "id": "2db1e19264fd6a1a",
         "type": "function",
         "z": "a7c135e772de0725",
-        "g": "ebdda297932f3f07",
         "name": "switch-device-connection",
-        "func": "const [{ Op }, { FlowDataModel, DeviceDataModel }] = global.get(['sequelize', 'orm']);\nconst flowUid = node.path.split('/').find(_=> true);\n\nconst devices = await DeviceDataModel.findAll({\n    attributes: ['id', 'settings'],\n    include: [{\n        model: FlowDataModel,\n        as: 'flow',\n        attributes: [],\n        where: {\n            uid: flowUid\n        }\n    }]\n});\n\nlet deviceIndex = flow.get(\"deviceIndex\") || 0;\n\nif (deviceIndex >= devices.length) {\n    deviceIndex = 0;\n};\n\n\nconst device = devices[deviceIndex];\n\nif (device) {\n    msg.payload = {\n        connectorType: 'TCP',\n        tcpHost: device.settings.ip,\n        tcpPort: device.settings.port,\n        unitId: 1,\n    };\n    msg.deviceId = device.id;\n\n\n    flow.set(\"deviceIndex\", deviceIndex + 1);\n    flow.set(\"deviceId\", device.id);\n}\n\nreturn msg;",
+        "func": "const [{ Op }, { FlowDataModel, DeviceDataModel }] = global.get(['sequelize', 'orm']);\nconst flowUid = node.path.split('/').find(_=> true);\n\nconst devices = await DeviceDataModel.findAll({\n    attributes: ['id', 'code', 'settings' ],\n    order: [[\"id\"]],\n    include: [{\n        model: FlowDataModel,\n        as: 'flow',\n        attributes: [],\n        where: {\n            uid: flowUid\n        },\n       \n    }]\n});\n\nlet deviceIndex = flow.get(\"deviceIndex\") || 0;\n\nif (deviceIndex >= devices.length) {\n    deviceIndex = 0;\n};\n\n\nconst device = devices[deviceIndex];\nif (device) {\n    msg.payload = {\n        connectorType: 'TCP',\n        tcpHost: device.settings.ip,\n        tcpPort: device.settings.port,\n        clientTimeout: 1000,\n        unitId: 1,\n    };\n    msg.deviceId = device.id;\n\n\n    flow.set(\"deviceIndex\", deviceIndex + 1);\n    flow.set(\"deviceId\", device.id);\n}\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -969,7 +928,7 @@
         "finalize": "",
         "libs": [],
         "x": 390,
-        "y": 220,
+        "y": 260,
         "wires": [
             [
                 "b0025aba6923fd52"
@@ -980,7 +939,6 @@
         "id": "f641c61327d806f0",
         "type": "modbus-flex-getter",
         "z": "a7c135e772de0725",
-        "g": "ebdda297932f3f07",
         "name": "",
         "showStatusActivities": true,
         "showErrors": true,
@@ -996,21 +954,22 @@
         "enableDeformedMessages": false,
         "startDelayTime": "",
         "x": 650,
-        "y": 300,
+        "y": 340,
         "wires": [
             [
                 "bfb3e9ec73ddd77c"
             ],
-            []
+            [
+                "0cde6358fb843fa9"
+            ]
         ]
     },
     {
         "id": "bfb3e9ec73ddd77c",
         "type": "function",
         "z": "a7c135e772de0725",
-        "g": "ebdda297932f3f07",
         "name": "collect-device-state",
-        "func": "\nconst deviceId = flow.get(\"deviceId\");\n\nif (!deviceId) {\n    return;\n}\n\nlet deviceState = global.get(`deviceState${deviceId}`);\n\nconst updateState = (params) => {\n    params.forEach((p, i) => {\n        const v = {};\n        v[p] = msg.payload[i];\n        deviceState = { ...deviceState, ...v };\n    });\n}\n\nif (msg.topic) {\n    const params = flow.get(`${msg.topic}Params`);\n    updateState(params);\n}\nglobal.set(`deviceState${deviceId}`, deviceState);\n\nreturn deviceState;",
+        "func": "\nconst deviceId = flow.get(\"deviceId\");\n// node.warn(deviceId);\nif (!deviceId) {\n    return;\n}\n\nlet deviceState = global.get(`deviceState${deviceId}`);\n\nconst updateState = (params) => {\n    params.forEach((p, i) => {\n        const v = {};\n        v[p] = msg.payload[i];\n        deviceState = { ...deviceState, ...v };\n    });\n}\n\nif (msg.topic) {\n    const params = flow.get(`${msg.topic}Params`);\n    updateState(params);\n}\nglobal.set(`deviceState${deviceId}`, {...deviceState, timestamp: Date.now()});\n\n\nreturn deviceState;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -1018,7 +977,7 @@
         "finalize": "",
         "libs": [],
         "x": 870,
-        "y": 300,
+        "y": 340,
         "wires": [
             []
         ]
@@ -1027,7 +986,6 @@
         "id": "b0025aba6923fd52",
         "type": "modbus-flex-connector",
         "z": "a7c135e772de0725",
-        "g": "ebdda297932f3f07",
         "name": "",
         "maxReconnectsPerMinute": 4,
         "emptyQueue": false,
@@ -1037,18 +995,19 @@
         "emptyMsgOnFail": true,
         "configMsgOnChange": false,
         "x": 670,
-        "y": 220,
+        "y": 260,
         "wires": [
-            []
+            [
+                "a11210cfe3903d4f"
+            ]
         ]
     },
     {
         "id": "30f6276f9e368846",
         "type": "function",
         "z": "a7c135e772de0725",
-        "g": "ebdda297932f3f07",
         "name": "switch-reading-registers",
-        "func": "\nconst registers = [\n    { name: \"coils\", address: 0, fc: 1, quantity: 13 },\n    { name: \"holdings\", address: 0, fc: 3, quantity: 2 },\n];\n\nlet registerIndex = flow.get(\"registerIndex\") || 0;\n\nif (registerIndex >= registers.length) {\n    registerIndex = 0;\n}\n\nconst register = registers[registerIndex];\n\nmsg.payload = {\n    fc: register.fc,\n    address: register.address,\n    quantity: register.quantity,\n};\n\nmsg.topic = register.name;\n\nflow.set(\"registerIndex\", registerIndex + 1);\n\n\nreturn msg;\n",
+        "func": "const registers = [\n    { name: \"coils\", address: 0, fc: 1, quantity: 13 },\n    { name: \"holdings\", address: 0, fc: 3, quantity: 2 },\n];\n\nlet registerIndex = flow.get(\"registerIndex\") || 0;\n\nif (registerIndex >= registers.length) {\n    registerIndex = 0;\n}\n\nconst register = registers[registerIndex];\n\nmsg.payload = {\n    fc: register.fc,\n    address: register.address,\n    quantity: register.quantity,\n};\n\nmsg.topic = register.name;\n\nflow.set(\"registerIndex\", registerIndex + 1);\n\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -1056,7 +1015,7 @@
         "finalize": "",
         "libs": [],
         "x": 390,
-        "y": 300,
+        "y": 340,
         "wires": [
             [
                 "f641c61327d806f0"
@@ -1067,7 +1026,6 @@
         "id": "04a22057bd75906f",
         "type": "inject",
         "z": "a7c135e772de0725",
-        "g": "ebdda297932f3f07",
         "name": "set-interval-2sec",
         "props": [
             {
@@ -1086,11 +1044,44 @@
         "payload": "",
         "payloadType": "date",
         "x": 170,
-        "y": 300,
+        "y": 340,
         "wires": [
             [
                 "30f6276f9e368846"
             ]
         ]
+    },
+    {
+        "id": "a11210cfe3903d4f",
+        "type": "debug",
+        "z": "a7c135e772de0725",
+        "name": "debug 2",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 910,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "0cde6358fb843fa9",
+        "type": "debug",
+        "z": "a7c135e772de0725",
+        "name": "debug 3",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 870,
+        "y": 400,
+        "wires": []
     }
 ]
