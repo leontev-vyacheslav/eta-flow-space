@@ -5,130 +5,224 @@
   "properties": {
     "startStop": {
       "type": "boolean",
-      "description": "Включение/выключение работы",
       "ui": {
-        "widget": "dxSwitch",
-        "group": 1
-      }
-    },
-    "lowLevel": {
-      "type": "boolean",
-      "description": "Нижний уровень",
-      "ui": {
-        "widget": "dxCheckBox",
-        "group": 2
-      }
-    },
-    "midLevel": {
-      "type": "boolean",
-      "description": "Средний уровень",
-      "ui": {
-        "widget": "dxCheckBox",
-        "group": 2
-      }
-    },
-    "hiLevel": {
-      "type": "boolean",
-      "description": "Верхний уровень",
-      "ui": {
-        "widget": "dxCheckBox",
-        "group": 2
-      }
-    },
-    "emergencyLevel": {
-      "type": "boolean",
-      "description": "Аварийный уровень",
-      "ui": {
-        "widget": "dxCheckBox",
-        "group": 2
-      }
-    },
-    "statePump1": {
-      "type": "boolean",
-      "description": "Состояние насоса 1",
-      "ui": {
-        "widget": "dxCheckBox",
-        "group": 2
-      }
-    },
-    "statePump2": {
-      "type": "boolean",
-      "description": "Состояние насоса 2",
-      "ui": {
-        "widget": "dxCheckBox",
-        "group": 2
+        "editorType": "dxSwitch",
+        "group": 1,
+        "label": {
+          "location": "top",
+          "showColon": true,
+          "text": "Включение/выключение работы"
+        }
       }
     },
     "resetFaultPump1": {
       "type": "boolean",
-      "description": "Сброс ошибки насоса 1",
       "ui": {
-        "widget": "dxSwitch",
-        "group": 1
+        "editorType": "dxSwitch",
+        "group": 1,
+        "label": {
+          "location": "top",
+          "showColon": true,
+          "text": "Сброс ошибки насоса 1"
+        }
       }
     },
     "resetFaultPump2": {
       "type": "boolean",
-      "description": "Сброс ошибки насоса 2",
       "ui": {
-        "widget": "dxSwitch",
-        "group": 1
+        "editorType": "dxSwitch",
+        "group": 1,
+        "label": {
+          "location": "top",
+          "showColon": true,
+          "text": "Сброс ошибки насоса 2"
+        }
       }
     },
     "resetOperatingTimePump1": {
       "type": "boolean",
-      "description": "Сброс времени наработки насоса 1",
       "ui": {
-        "widget": "dxSwitch",
-        "group": 1
+        "editorType": "dxSwitch",
+        "group": 1,
+        "label": {
+          "location": "top",
+          "showColon": true,
+          "text": "Сброс времени наработки насоса 1"
+        }
       }
     },
     "resetOperatingTimePump2": {
       "type": "boolean",
-      "description": "Сброс времени наработки насоса 2",
       "ui": {
-        "widget": "dxSwitch",
-        "group": 1
+        "editorType": "dxSwitch",
+        "group": 1,
+        "label": {
+          "location": "top",
+          "showColon": true,
+          "text": "Сброс времени наработки насоса 2"
+        }
+      }
+    },
+    "lowLevel": {
+      "type": "boolean",
+      "ui": {
+        "editorType": "dxCheckBox",
+        "group": 2,
+        "editorOptions": {"readOnly": true },
+        "cssClass": "form-check-box",
+        "label": {
+          "location": "left",
+          "showColon": true,
+          "text": "Нижний уровень"
+        }
+      }
+    },
+    "midLevel": {
+      "type": "boolean",
+      "ui": {
+        "editorType": "dxCheckBox",
+        "group": 2,
+        "editorOptions": {"readOnly": true },
+        "cssClass": "form-check-box",
+        "label": {
+          "location": "left",
+          "showColon": true,
+          "text": "Средний уровень"
+        }
+      }
+    },
+    "hiLevel": {
+      "type": "boolean",
+      "ui": {
+        "editorType": "dxCheckBox",
+        "group": 2,
+        "editorOptions": {"readOnly": true },
+        "cssClass": "form-check-box",
+        "label": {
+          "location": "left",
+          "showColon": true,
+          "text": "Верхний уровень"
+        }
+      }
+    },
+    "emergencyLevel": {
+      "type": "boolean",
+      "ui": {
+        "editorType": "dxCheckBox",
+        "group": 2,
+        "editorOptions": {"readOnly": true },
+        "cssClass": "form-check-box",
+        "label": {
+          "location": "left",
+          "showColon": true,
+          "text": "Аварийный уровень"
+        }
+      }
+    },
+    "statePump1": {
+      "type": "boolean",
+      "ui": {
+        "editorType": "dxCheckBox",
+        "group": 2,
+        "editorOptions": {"readOnly": true },
+        "cssClass": "form-check-box",
+        "label": {
+          "location": "left",
+          "showColon": true,
+          "text": "Состояние насоса 1"
+        }
+      }
+    },
+    "statePump2": {
+      "type": "boolean",
+      "ui": {
+        "editorType": "dxCheckBox",
+        "group": 2,
+        "editorOptions": {"readOnly": true },
+        "cssClass": "form-check-box",
+        "label": {
+          "location": "left",
+          "showColon": true,
+          "text": "Состояние насоса 2"
+        }
       }
     },
     "faultPump1": {
       "type": "boolean",
-      "description": "Ошибка насоса 1",
       "ui": {
-        "widget": "dxCheckBox",
-        "group": 2
+        "editorType": "dxCheckBox",
+        "group": 2,
+        "editorOptions": {"readOnly": true },
+        "cssClass": "form-check-box",
+        "label": {
+          "location": "left",
+          "showColon": true,
+          "text": "Ошибка насоса 1"
+        }
       }
     },
     "faultPump2": {
       "type": "boolean",
-      "description": "Ошибка насоса 2",
       "ui": {
-        "widget": "dxCheckBox",
-        "group": 2
+        "editorType": "dxCheckBox",
+        "group": 2,
+        "editorOptions": {"readOnly": true },
+        "cssClass": "form-check-box",
+        "label": {
+          "location": "left",
+          "showColon": true,
+          "text": "Ошибка насоса 2"
+        }
       }
     },
     "timePump1": {
       "type": "integer",
       "minimum": 0,
-      "description": "Время наработки насоса 1",
       "ui": {
-        "widget": "dxCheckBox",
-        "group": 2
+        "editorType": "dxNumberBox",
+        "group": 2,
+        "editorOptions": {"readOnly": true },
+        "cssClass": "form-input-box",
+        "label": {
+          "location": "top",
+          "showColon": true,
+          "text": "Время наработки насоса 1"
+        }
       }
     },
     "timePump2": {
       "type": "integer",
       "minimum": 0,
-      "description": "Время наработки насоса 2",
       "ui": {
-        "widget": "dxCheckBox",
-        "group": 2
+        "editorType": "dxNumberBox",
+        "group": 2,
+        "editorOptions": {"readOnly": true },
+        "cssClass": "form-input-box",
+        "label": {
+          "location": "top",
+          "showColon": true,
+          "text": "Время наработки насоса 2"
+        }
       }
     },
     "timestamp": {
       "type": "integer",
       "format": "date-time",
-      "description": "Время опроса"
+      "ui": {
+        "editorType": "dxDateBox",
+        "group": 2,
+        "editorOptions": {
+          "type": "datetime",
+          "displayFormat": "dd.MM.yyyy HH:mm:ss",
+          "readOnly": true
+        },
+        "cssClass": "form-input-box",
+        "label": {
+          "location": "top",
+          "showColon": true,
+          "text": "Время опроса"
+        }
+      }
     },
     "_msgid": {
       "type": "string",

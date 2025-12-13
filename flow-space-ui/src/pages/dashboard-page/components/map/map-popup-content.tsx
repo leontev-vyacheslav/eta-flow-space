@@ -64,12 +64,12 @@ export const MapPopupContent = () => {
                                     return (
                                         !isXSmall ?
                                             <tr key={p}>
-                                                <td style={{ width: '250px' }}>{propertyInfo.description}</td>
+                                                <td style={{ width: '250px' }}>{propertyInfo.ui.label.text}</td>
                                                 <td style={{ width: '120px', textAlign: 'center' }}>{valueContent ? valueContent : 'Нет данных'}</td>
                                             </tr> :
                                             <>
                                                 <tr>
-                                                    <td style={{ width: '250px', fontWeight: '600' }}>{propertyInfo.description}</td>
+                                                    <td style={{ width: '250px', fontWeight: '600' }}>{propertyInfo.ui.label.text}</td>
                                                 </tr>
                                                 <tr>
                                                     <td style={{ marginLeft: '10px' }}>{valueContent ? valueContent : 'Нет данных'}</td>
