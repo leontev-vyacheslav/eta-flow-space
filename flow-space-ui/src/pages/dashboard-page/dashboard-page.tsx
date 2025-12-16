@@ -48,9 +48,9 @@ const DashboardPageInner = () => {
     useEffect(() => {
         (async () => {
             const [controlModule, mnemoschemaModule, mapModule] = await Promise.all([
-                import(/* @vite-ignore */`./flows-tab-contents/${flowCode}/control/control-tab-content.tsx`),
-                import(/* @vite-ignore */`./flows-tab-contents/${flowCode}/mnemoschema/mnemoschema-tab-content.tsx`),
-                import(/* @vite-ignore */`./flows-tab-contents/${flowCode}/map/map-tab-content.tsx`)
+                import(/* @vite-ignore */`./flows/${flowCode}/control/control-tab-content.tsx`),
+                import(/* @vite-ignore */`./flows/${flowCode}/mnemoschema/mnemoschema-tab-content.tsx`),
+                import(/* @vite-ignore */`./flows/${flowCode}/map/map-tab-content.tsx`)
             ]);
 
             setControlTabContent(() => controlModule.default);
