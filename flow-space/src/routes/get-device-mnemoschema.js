@@ -21,8 +21,6 @@ async function getDeviceMnemoschema(msg) {
         return msg;
     }
 
-    const mnemoschemasPath = path.join('/data/static', 'mnemoschemas');
-    const files = await fs.readdir(mnemoschemasPath);
     const device = await DeviceDataModel.findOne({
         attributes: ["id"],
         where: {
@@ -31,33 +29,17 @@ async function getDeviceMnemoschema(msg) {
         include: [{
             model: FlowDataModel,
             as: 'flow',
-            attributes: ["uid"],
+            attributes: ["code"],
         }],
     });
 
-
-    const mnemoschemaPathInfo = files.map(file => {
-        const fileNameWithoutExt = path.basename(file, path.extname(file));
-        const flowUid = fileNameWithoutExt.split('-').pop();
-
-        return {
-            file,
-            flowUid
-        };
-    }).find(f => f.flowUid === device.flow.uid);
-
-    if (!mnemoschemaPathInfo) {
-        msg.statusCode = HttpStatusCodes.NotFound;
-        msg.payload = { error: `Мнемосхема не найдена для устройства с ID ${deviceId}` }
-
-        return msg;
-    }
-
-    console.log(mnemoschemaPathInfo);
+    const flowStaticPath = path.join('/data/static/flows', device.flow.code);
+    const files = await fs.readdir(flowStaticPath);
+    const mnemoschemaFileName = files.find((f) => f === `${device.flow.code}-mnemo-schema.svg`);
 
     let mnemoschemaSvgContent;
     try {
-        mnemoschemaSvgContent = await fs.readFile(path.join(mnemoschemasPath, mnemoschemaPathInfo.file), 'utf8');
+        mnemoschemaSvgContent = await fs.readFile(path.join(flowStaticPath, mnemoschemaFileName), 'utf8');
     } catch (error) {
         msg.statusCode = HttpStatusCodes.InternalServerError;
         msg.payload = { error }

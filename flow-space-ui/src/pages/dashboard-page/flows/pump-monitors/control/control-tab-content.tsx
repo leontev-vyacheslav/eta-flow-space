@@ -5,7 +5,7 @@ import { formatMessage } from "devextreme/localization";
 import type { FieldDataChangedEvent } from "devextreme/ui/form_types";
 
 const ControlTabContent = () => {
-    const handleFieldDataChanged = useCallback(async (e: FieldDataChangedEvent) => {
+    const fieldDataChangedHandler = useCallback(async (e: FieldDataChangedEvent) => {
         if (!e.dataField /*|| !pumpingStationObject */) {
             return;
         }
@@ -43,7 +43,7 @@ const ControlTabContent = () => {
     }, []);
 
     return (
-        <ControlForm onFieldDataChanged={handleFieldDataChanged} />
+        <ControlForm onFieldDataChanged={fieldDataChangedHandler} />
     );
 }
 

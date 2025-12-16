@@ -1,19 +1,13 @@
-
 import 'devextreme-react/switch';
 import Form, { GroupItem, SimpleItem } from 'devextreme-react/form';
-import type { FieldDataChangedEvent } from 'devextreme/ui/form';
 import AppConstants from '../../../../constants/app-constants';
 import { formatMessage } from 'devextreme/localization';
 import { useAuth } from '../../../../contexts/auth';
 import { useMemo, useRef } from 'react';
 import { useDashboardPage } from '../../dashboard-page-context';
+import type { ControlFormProps } from '../../models/control-form-props';
 
 import './control-form.scss';
-
-type EditorType = 'dxTextBox' | 'dxNumberBox' | 'dxSwitch' | 'dxCheckBox';
-type ControlFormProps = {
-    onFieldDataChanged?: ((e: FieldDataChangedEvent) => void) | undefined
-};
 
 export const ControlForm = ({ onFieldDataChanged }: ControlFormProps) => {
     const { deviceState, isValidDeviceState, dataschema } = useDashboardPage();
@@ -39,27 +33,23 @@ export const ControlForm = ({ onFieldDataChanged }: ControlFormProps) => {
 
                     return acc;
                 }, {} as Record<string, any[]>);
-            console.log(grouped);
 
             return grouped;
         }
     }, [dataschema]);
 
-    const state = useMemo(() => {
-        return deviceState?.state;
-    }, [deviceState]);
-
 
     /* eslint-disable @typescript-eslint/no-unused-vars */
     const { isOperator } = useAuth();
     const dxControlFormRef = useRef<Form>(null);
-    return (state ?
+    
+    return (deviceState?.state ?
         <Form
             className='app-form control-form'
             height={AppConstants.formHeight}
             scrollingEnabled={true}
             colCount={1}
-            formData={state}
+            formData={deviceState?.state}
             ref={dxControlFormRef}
             disabled={!isValidDeviceState}
             onFieldDataChanged={onFieldDataChanged}
@@ -75,9 +65,10 @@ export const ControlForm = ({ onFieldDataChanged }: ControlFormProps) => {
                                     key={item.id}
                                     dataField={item.dataField}
                                     label={item.ui.label}
-                                    editorType={item.ui.editorType as EditorType}
+                                    editorType={item.ui.editorType}
                                     editorOptions={item.ui.editorOptions ? { ...item.ui.editorOptions } : {}}
-                                    cssClass={item.ui.cssClass} />
+                                    cssClass={item.ui.cssClass}
+                                />
                             );
                         })}
                     </GroupItem>

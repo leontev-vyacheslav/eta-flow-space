@@ -1,6 +1,6 @@
 const { promises: fs } = require('fs');
 const path = require('path');
-const { UserDeviceLinkDataModel, DeviceDataModel } = require('../orm/models');
+const { UserDeviceLinkDataModel, DeviceDataModel, FlowDataModel } = require('../orm/models');
 const { HttpStatusCodes } = require('../constants');
 
 async function getDeviceStateDataschema(msg) {
@@ -21,21 +21,25 @@ async function getDeviceStateDataschema(msg) {
         return msg;
     }
 
-    const dataschemasPath = path.join('/data/static', 'data-schemas');
-    const files = await fs.readdir(dataschemasPath);
     const device = await DeviceDataModel.findOne({
         attributes: ['id', 'code'],
+        include: [ {
+            model: FlowDataModel,
+            as: 'flow',
+            attributes: ["code"],
+        }],
         where: {
             id: deviceId,
         },
     });
 
+    const flowStaticPath = path.join('/data/static/flows', device.flow.code);
+    const files = await fs.readdir(flowStaticPath);
+
     const deviceCodeItems = device.code.split('-');
     deviceCodeItems.pop();
     const deviceTypeCode = deviceCodeItems.join('-');
-
-    const dataschemaFileName = files.find((f) => f === `${deviceTypeCode}-state-data-schema.json`);
-
+    const dataschemaFileName = files.find((f) => f === `${deviceTypeCode}-data-schema.json`);
 
     if (!dataschemaFileName) {
         msg.statusCode = HttpStatusCodes.NotFound;
@@ -44,10 +48,9 @@ async function getDeviceStateDataschema(msg) {
         return msg;
     }
 
-
     let dataschemaContent;
     try {
-        dataschemaContent = await fs.readFile(path.join(dataschemasPath, dataschemaFileName), 'utf8');
+        dataschemaContent = await fs.readFile(path.join(flowStaticPath, dataschemaFileName), 'utf8');
     } catch (error) {
         msg.statusCode = HttpStatusCodes.InternalServerError;
         msg.payload = { error }
