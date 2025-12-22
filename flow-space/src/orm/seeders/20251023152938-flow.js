@@ -12,6 +12,14 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        {
+          code: "boiler-automation-1",
+          name: 'Котельная №1',
+          description: "Система мониторинга и управления котельной №1",
+          uid: "6b32023651261592",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       ],
       {}
     );

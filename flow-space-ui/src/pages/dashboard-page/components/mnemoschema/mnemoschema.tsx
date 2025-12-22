@@ -27,7 +27,7 @@ export const Mnemoschema = () => {
     return (
         <>
             {mnemoschema
-                ? <div style={{ display: 'flex', alignItems: 'center', marginTop: '20px', opacity: (isValidDeviceState ? 1 : 0.5) }} ref={mnemoschemaContainerRef} />
+                ? <div id="mnemo-schema-wrapper" style={{ display: 'flex', alignItems: 'center', marginTop: '20px', opacity: (isValidDeviceState ? 1 : 0.5) }} ref={mnemoschemaContainerRef} />
                 : null
             }
         </>

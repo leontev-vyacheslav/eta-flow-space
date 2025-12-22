@@ -10,6 +10,13 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
       },
+      {
+        name: "boiler-1-watcher",
+        password: createHash("sha256").update("0987654321").digest("base64"),
+        roleId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
     ]);
   },
   down: (queryInterface, Sequelize) => {

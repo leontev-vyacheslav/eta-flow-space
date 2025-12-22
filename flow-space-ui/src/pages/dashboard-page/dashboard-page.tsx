@@ -13,7 +13,7 @@ import { getQuickGuid } from '../../utils/uuid';
 const DashboardPageInner = () => {
     const tabPanelRef = useRef<TabPanel>(null);
     const { setUpdateSharedStateRefreshToken } = useDashboardPage();
-    const {  flowCode } = useParams();
+    const { flowCode } = useParams();
     const [ControlTabContent, setControlTabContent] = useState<ComponentType<any> | null>(null);
     const [MnemoschemaTabContent, setMnemoschemaTabContent] = useState<ComponentType<any> | null>(null);
     const [MapTabContent, setMapTabContent] = useState<ComponentType<any> | null>(null);
@@ -47,11 +47,22 @@ const DashboardPageInner = () => {
 
     useEffect(() => {
         (async () => {
-            const [controlModule, mnemoschemaModule, mapModule] = await Promise.all([
-                import(/* @vite-ignore */`./flows/${flowCode}/control/control-tab-content.tsx`),
-                import(/* @vite-ignore */`./flows/${flowCode}/mnemoschema/mnemoschema-tab-content.tsx`),
-                import(/* @vite-ignore */`./flows/${flowCode}/map/map-tab-content.tsx`)
+
+            const results = await Promise.allSettled([
+                import(`./flows/${flowCode}/control/control-tab-content.tsx`),
+                import(`./flows/${flowCode}/mnemoschema/mnemoschema-tab-content.tsx`),
+                import(`./flows/${flowCode}/map/map-tab-content.tsx`)
             ]);
+
+            const [controlModule, mnemoschemaModule, mapModule] = results.map(result =>
+                result.status === 'fulfilled' ? result.value : null
+            );
+
+            // const [controlModule, mnemoschemaModule, mapModule] = await Promise.all([
+            //     import(/* @vite-ignore */`./flows/${flowCode}/control/control-tab-content.tsx`),
+            //     import(/* @vite-ignore */`./flows/${flowCode}/mnemoschema/mnemoschema-tab-content.tsx`),
+            //     import(/* @vite-ignore */`./flows/${flowCode}/map/map-tab-content.tsx`)
+            // ]);
 
             setControlTabContent(() => controlModule.default);
             setMnemoschemaTabContent(() => mnemoschemaModule.default);
@@ -73,7 +84,6 @@ const DashboardPageInner = () => {
                         height={AppConstants.pageHeight}
                         loop
                         onSelectedIndexChange={(value: number) => {
-                            console.log(value);
                             setTabIndex(value);
                         }}>
                         <TabPanelItem title='Мнемосхема' tabRender={(e) => <IconTab tab={e} icon={<CircuitIcon size={18} />} />}>

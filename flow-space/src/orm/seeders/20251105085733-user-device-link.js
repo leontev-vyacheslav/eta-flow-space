@@ -1,6 +1,6 @@
 module.exports = {
-  up: (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert("user_device_link", [
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.bulkInsert("user_device_link", [
       {
         userId: 1,
         deviceId: 1,
@@ -19,9 +19,15 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
       },
+      {
+        userId: 2,
+        deviceId: 4,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
     ]);
   },
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete("user_device_link", null, {});
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.bulkDelete("user_device_link", null, {});
   },
 };
