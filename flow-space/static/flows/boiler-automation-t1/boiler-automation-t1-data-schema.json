@@ -1,0 +1,391 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "StateModel",
+  "description": "Complete system state model for boiler house equipment",
+  "type": "object",
+  "properties": {
+    "tempRoomAir": {
+      "type": "number",
+      "description": "Room air temperature"
+    },
+    "tempOutAir": {
+      "type": "number",
+      "description": "Outdoor air temperature"
+    },
+    "pressGas": {
+      "type": "number",
+      "description": "Gas pressure"
+    },
+    "levelDt1": {
+      "type": "number",
+      "description": "Level DT1"
+    },
+    "levelDt2": {
+      "type": "number",
+      "description": "Level DT2"
+    },
+    "pressOutNet": {
+      "type": "number",
+      "description": "Output network pressure"
+    },
+    "tempOutNet": {
+      "type": "number",
+      "description": "Output network temperature"
+    },
+    "pressInNet": {
+      "type": "number",
+      "description": "Input network pressure"
+    },
+    "tempInNet": {
+      "type": "number",
+      "description": "Input network temperature"
+    },
+    "pressOutSrcW": {
+      "type": "number",
+      "description": "Output source water pressure"
+    },
+    "boilers": {
+      "type": "array",
+      "description": "Boilers (4-fold)",
+      "items": {
+        "$ref": "#/$defs/BoilerModel"
+      },
+      "minItems": 4,
+      "maxItems": 4
+    },
+    "boilerValves": {
+      "type": "array",
+      "description": "Boiler valves (4-fold)",
+      "items": {
+        "$ref": "#/$defs/ValveModel"
+      },
+      "minItems": 4,
+      "maxItems": 4
+    },
+    "networkPumps": {
+      "type": "array",
+      "description": "Network pumps (4-fold)",
+      "items": {
+        "$ref": "#/$defs/NetworkPumpModel"
+      },
+      "minItems": 4,
+      "maxItems": 4
+    },
+    "sourceWaterPumps": {
+      "type": "array",
+      "description": "Source water pumps (2-fold)",
+      "items": {
+        "$ref": "#/$defs/NetworkPumpModel"
+      },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "supplyPumps": {
+      "type": "array",
+      "description": "Supply pumps (2-fold)",
+      "items": {
+        "$ref": "#/$defs/SupplyPumpModel"
+      },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "flapHt": {
+      "$ref": "#/$defs/FlapModel",
+      "description": "HT flap valve"
+    },
+    "flapHn": {
+      "$ref": "#/$defs/FlapModel",
+      "description": "HN flap valve"
+    },
+    "flapDt": {
+      "$ref": "#/$defs/FlapModel",
+      "description": "DT flap valve"
+    },
+    "flapDtFill": {
+      "$ref": "#/$defs/FlapModel",
+      "description": "DT fill flap valve"
+    }
+  },
+  "required": [
+    "tempRoomAir",
+    "tempOutAir",
+    "pressGas",
+    "levelDt1",
+    "levelDt2",
+    "pressOutNet",
+    "tempOutNet",
+    "pressInNet",
+    "tempInNet",
+    "pressOutSrcW",
+    "boilers",
+    "boilerValves",
+    "networkPumps",
+    "sourceWaterPumps",
+    "supplyPumps",
+    "flapHt",
+    "flapHn",
+    "flapDt",
+    "flapDtFill"
+  ],
+  "$defs": {
+    "BoilerModel": {
+      "type": "object",
+      "description": "Boiler model",
+      "properties": {
+        "powerBurner": {
+          "type": "number",
+          "description": "Burner power"
+        },
+        "mode": {
+          "$ref": "#/$defs/WorkMode",
+          "description": "Work mode"
+        },
+        "status": {
+          "$ref": "#/$defs/BoilerStatus",
+          "description": "Boiler status"
+        },
+        "alarm": {
+          "$ref": "#/$defs/BoilerAlarm",
+          "description": "Boiler alarm code"
+        }
+      },
+      "required": ["powerBurner", "mode", "status", "alarm"]
+    },
+    "BoilerStatus": {
+      "type": "integer",
+      "enum": [0, 1, 2, 3, 4, 5, 6, 8, 9, 10],
+      "description": "Boiler status enumeration",
+      "enumDescriptions": {
+        "0": "STOPPED - Остановлен",
+        "1": "OPENING_OUTLET_VALVE - Открытие задвижки на выходе котла",
+        "2": "BURNER_STARTUP - Запуск горелки",
+        "3": "OPERATION_LOW_BURN - Работа - малое горение",
+        "4": "OPERATION_REGULATION - Работа (регулирование)",
+        "5": "BURNER_STOP - Останов горелки",
+        "6": "ALARM - Авария",
+        "8": "HOT_RESERVE - Горячий резерв",
+        "9": "CLOSING_OUTLET_VALVE - Закрытие задвижки",
+        "10": "NOT_READY - Нет готовности"
+      }
+    },
+    "BoilerAlarm": {
+      "type": "integer",
+      "enum": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      "description": "Boiler alarm codes enumeration",
+      "enumDescriptions": {
+        "0": "TEMP_SENSOR_FAULT - Неисправность датчика температуры на выходе",
+        "1": "BURNER_ALARM - Авария горелки",
+        "2": "PRESSURE_SENSOR_FAULT - Неисправность датчика давления",
+        "3": "SAFETY_CIRCUIT - Цепь безопасности",
+        "4": "EMERGENCY_STOP - Аварийный останов",
+        "5": "HIGH_TEMP_THRESHOLD - Аварийно высокий порог температуры",
+        "6": "HIGH_PRESSURE_THRESHOLD - Аварийно высокий порог давления",
+        "7": "LOW_PRESSURE_THRESHOLD - Аварийно низкий порог давления",
+        "8": "NO_FLOW - Нет протока",
+        "9": "PUMPS_DISCONNECTED - Отключение насосов",
+        "10": "BURNER_IGNITION_TIMEOUT - Таймаут розжига горелки",
+        "11": "SPONTANEOUS_BURNER_SHUTDOWN - Самопроизвольное отключение горелки",
+        "12": "VALVE_ALARM - Авария задвижки"
+      }
+    },
+    "FlapModel": {
+      "type": "object",
+      "description": "Flap valve model",
+      "properties": {
+        "mode": {
+          "$ref": "#/$defs/FlapMode",
+          "description": "Flap mode"
+        }
+      },
+      "required": ["mode"]
+    },
+    "FlapMode": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Flap mode enumeration",
+      "enumDescriptions": {
+        "0": "AUTO - авто",
+        "1": "MANUAL - ручной"
+      }
+    },
+    "NetworkPumpModel": {
+      "type": "object",
+      "description": "Network pump model",
+      "properties": {
+        "setPower": {
+          "type": "number",
+          "description": "Set power"
+        },
+        "mode": {
+          "$ref": "#/$defs/WorkMode",
+          "description": "Work mode"
+        },
+        "status": {
+          "$ref": "#/$defs/NetworkPumpStatus",
+          "description": "Network pump status"
+        },
+        "alarm": {
+          "$ref": "#/$defs/NetworkPumpAlarm",
+          "description": "Network pump alarm"
+        },
+        "modeFc": {
+          "$ref": "#/$defs/WorkMode",
+          "description": "Variable frequency drive work mode"
+        },
+        "statusFc": {
+          "$ref": "#/$defs/VariableFrequencyDriveStatus",
+          "description": "Variable frequency drive status"
+        },
+        "alarmFc": {
+          "$ref": "#/$defs/VariableFrequencyDriveAlarm",
+          "description": "Variable frequency drive alarm"
+        }
+      },
+      "required": [
+        "setPower",
+        "mode",
+        "status",
+        "alarm",
+        "modeFc",
+        "statusFc",
+        "alarmFc"
+      ]
+    },
+    "NetworkPumpStatus": {
+      "type": "integer",
+      "enum": [0, 1, 5, 6, 7, 9, 11],
+      "description": "Network pump status enumeration",
+      "enumDescriptions": {
+        "0": "WAITING_FOR_READINESS - Ожидание готовности",
+        "1": "READINESS - Готовность",
+        "5": "START_FROM_VFD - Запуск от ЧРП",
+        "6": "OPERATING_FROM_VFD - В работе от ЧРП",
+        "7": "STOP_FROM_VFD - Останов от ЧРП",
+        "9": "ALARM - Авария",
+        "11": "STOPPED_VFD_READINESS - Остановлен, готовность элементов ЧРП"
+      }
+    },
+    "NetworkPumpAlarm": {
+      "type": "integer",
+      "enum": [0, 1, 2, 3, 4, 5, 6],
+      "description": "Network pump alarm enumeration",
+      "enumDescriptions": {
+        "0": "NOT_USED_0 - не используется",
+        "1": "NOT_USED_1 - не используется",
+        "2": "NOT_USED_2 - не используется",
+        "3": "VFD_ALARM - Авария ПЧ",
+        "4": "NOT_USED_4 - не используется",
+        "5": "NO_VFD_READINESS - Нет готовности ПЧ",
+        "6": "DRY_RUN - Сухой ход"
+      }
+    },
+    "VariableFrequencyDriveStatus": {
+      "type": "integer",
+      "enum": [0, 1, 2, 3, 4, 5, 7, 8, 9, 10],
+      "description": "Variable frequency drive status enumeration",
+      "enumDescriptions": {
+        "0": "NO_POWER - Нет питания",
+        "1": "STOPPED - Остановлен",
+        "2": "OPERATING - В работе",
+        "3": "ALARM - Авария",
+        "4": "STARTUP_ACCELERATION - Запуск (разгон)",
+        "5": "STOP - Останов",
+        "7": "REGULATION_MIN_FREQUENCY - Регулирование, мин. частота",
+        "8": "REGULATION_MAX_FREQUENCY - Регулирование, макс. частота",
+        "9": "WAITING_FOR_START - Ожидание включения",
+        "10": "WAITING_FOR_READINESS - Ожидание готовности"
+      }
+    },
+    "VariableFrequencyDriveAlarm": {
+      "type": "integer",
+      "enum": [0, 1, 2, 3, 4, 5, 6, 7],
+      "description": "Variable frequency drive alarm enumeration",
+      "enumDescriptions": {
+        "0": "EXCEEDED_STARTUP_TIME - Превышено время включения",
+        "1": "EXCEEDED_SHUTDOWN_TIME - Превышено время отключения",
+        "2": "SPONTANEOUS_SHUTDOWN - Самопроизвольное отключение",
+        "3": "SPONTANEOUS_STARTUP - Самопроизвольное включение",
+        "4": "VFD_ALARM - Авария ПЧ",
+        "5": "POWER_LOSS_DURING_OPERATION - Пропадание питания/связи во время работы",
+        "6": "MIN_CURRENT_AT_MAX_FREQUENCY - Минимальный ток при максимальной частоте",
+        "7": "MIN_FREQUENCY_NOT_REACHED - Не достигнута мин. частота"
+      }
+    },
+    "SupplyPumpModel": {
+      "type": "object",
+      "description": "Supply pump model",
+      "properties": {
+        "mode": {
+          "$ref": "#/$defs/WorkMode",
+          "description": "Work mode"
+        },
+        "status": {
+          "$ref": "#/$defs/SupplyPumpStatus",
+          "description": "Supply pump status"
+        },
+        "alarm": {
+          "$ref": "#/$defs/SupplyPumpAlarm",
+          "description": "Supply pump alarm"
+        }
+      },
+      "required": ["mode", "status", "alarm"]
+    },
+    "SupplyPumpStatus": {
+      "type": "integer",
+      "enum": [0, 1, 2, 3, 4, 5],
+      "description": "Supply pump status enumeration",
+      "enumDescriptions": {
+        "0": "NO_POWER - Нет питания",
+        "1": "STOPPED - Остановлен",
+        "2": "STARTING - Запускается",
+        "3": "OPERATING - Работа",
+        "4": "STOPPING - Останавливается",
+        "5": "ALARM - Авария"
+      }
+    },
+    "SupplyPumpAlarm": {
+      "type": "integer",
+      "enum": [0, 1, 2, 3, 4],
+      "description": "Supply pump alarm enumeration",
+      "enumDescriptions": {
+        "0": "EXCEEDED_STARTUP_TIME - Превышено время запуска",
+        "1": "EXCEEDED_SHUTDOWN_TIME - Превышено время останова",
+        "2": "SPONTANEOUS_STARTUP - Самопроизвольный запуск",
+        "3": "SPONTANEOUS_SHUTDOWN - Самопроизвольное отключение",
+        "4": "DRY_RUN - Сухой ход"
+      }
+    },
+    "ValveModel": {
+      "type": "object",
+      "description": "Valve model",
+      "properties": {
+        "status": {
+          "$ref": "#/$defs/ValveStatus",
+          "description": "Valve status"
+        }
+      },
+      "required": ["status"]
+    },
+    "ValveStatus": {
+      "type": "integer",
+      "enum": [0, 1, 2],
+      "description": "Valve status enumeration",
+      "enumDescriptions": {
+        "0": "INTERMEDIATE - Промежуточное",
+        "1": "CLOSED - Закрыта",
+        "2": "OPEN - Открыта"
+      }
+    },
+    "WorkMode": {
+      "type": "integer",
+      "enum": [0, 1, 2, 4],
+      "description": "Work mode enumeration",
+      "enumDescriptions": {
+        "0": "NOT_USED - не используется",
+        "1": "REPAIR - ремонт",
+        "2": "LOCAL - местный (ручное управление кнопками на шкафу)",
+        "4": "PANEL - панель (управление с панели шкафа управления)"
+      }
+    }
+  }
+}

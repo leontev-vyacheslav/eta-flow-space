@@ -58,15 +58,9 @@ const DashboardPageInner = () => {
                 result.status === 'fulfilled' ? result.value : null
             );
 
-            // const [controlModule, mnemoschemaModule, mapModule] = await Promise.all([
-            //     import(/* @vite-ignore */`./flows/${flowCode}/control/control-tab-content.tsx`),
-            //     import(/* @vite-ignore */`./flows/${flowCode}/mnemoschema/mnemoschema-tab-content.tsx`),
-            //     import(/* @vite-ignore */`./flows/${flowCode}/map/map-tab-content.tsx`)
-            // ]);
-
-            setControlTabContent(() => controlModule.default);
-            setMnemoschemaTabContent(() => mnemoschemaModule.default);
-            setMapTabContent(() => mapModule.default);
+            setControlTabContent(() => controlModule ? controlModule.default : null);
+            setMnemoschemaTabContent(() => mnemoschemaModule ? mnemoschemaModule.default : null);
+            setMapTabContent(() => mapModule ? mapModule.default : null);
         })();
     }, [flowCode]);
 
@@ -83,24 +77,32 @@ const DashboardPageInner = () => {
                         width={'100%'}
                         height={AppConstants.pageHeight}
                         loop
+                        className='dashboard-tabs'
                         onSelectedIndexChange={(value: number) => {
                             setTabIndex(value);
                         }}>
-                        <TabPanelItem title='Мнемосхема' tabRender={(e) => <IconTab tab={e} icon={<CircuitIcon size={18} />} />}>
+
+                        <TabPanelItem disabled={MnemoschemaTabContent === null} title='Мнемосхема' tabRender={(e) => <IconTab tab={e} icon={<CircuitIcon size={18} />} />}>
                             {
                                 MnemoschemaTabContent && tabIndex === 0 ? <MnemoschemaTabContent /> : null
                             }
                         </TabPanelItem>
-                        <TabPanelItem title='Управление' tabRender={(e) => <IconTab tab={e} icon={<ParamsIcon size={18} />} />}>
+
+
+
+                        <TabPanelItem disabled={ControlTabContent === null} title='Управление' tabRender={(e) => <IconTab tab={e} icon={<ParamsIcon size={18} />} />}>
                             {
                                 ControlTabContent && tabIndex === 1 ? <ControlTabContent /> : null
                             }
                         </TabPanelItem>
-                        <TabPanelItem title='Карта' tabRender={(e) => <IconTab tab={e} icon={<MapIcon size={18} />} />}>
+
+
+                        <TabPanelItem disabled={MapTabContent === null} title='Карта' tabRender={(e) => <IconTab tab={e} icon={<MapIcon size={18} />} />}>
                             {
                                 MapTabContent && tabIndex === 2 ? <MapTabContent /> : null
                             }
                         </TabPanelItem>
+
                     </TabPanel>
                 </div>
             </div>

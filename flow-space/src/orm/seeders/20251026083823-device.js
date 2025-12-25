@@ -43,7 +43,7 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          code: "boiler-automation-1",
+          code: "boiler-automation-t1-1",
           name: 'Котельная №1',
           description: 'Котельная №1',
           flowId: 2,

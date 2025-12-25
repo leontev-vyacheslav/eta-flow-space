@@ -8,6 +8,7 @@ async function getFlows(msg) {
         include: [{
             model: DeviceDataModel,
             as: 'devices',
+            required: true,
             include: [
                 {
                     model: UserDeviceLinkDataModel,
