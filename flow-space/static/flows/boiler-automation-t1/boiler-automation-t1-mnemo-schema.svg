@@ -904,10 +904,10 @@
 	<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M93.1,122.6H10.2c-3.1,0-5.7-2.5-5.7-5.7
 		V72.1c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v44.8C98.8,120,96.2,122.6,93.1,122.6z"/>
 	<text transform="matrix(1 0 0 1 31.3067 76.697)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Котел №1</text>
-	<text data-state="boilers[0].mode" data-type="WorkMode" transform="matrix(1 0 0 1 16.9818 88.4922)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeBoiler_1}}</text>
-	<text data-state="boilers[0].status" data-type="BoilerStatus" transform="matrix(1 0 0 1 16.8068 101.2963)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusBoiler_1}}</text>
+	<text data-state="boilers[0].mode" transform="matrix(1 0 0 1 16.9818 88.4922)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeBoiler_1}}</text>
+	<text data-state="boilers[0].status" transform="matrix(1 0 0 1 16.8068 101.2963)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusBoiler_1}}</text>
 	<text data-state="boilers[0].powerBurner" transform="matrix(1 0 0 1 15.6437 191.3998)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{powerBurner_1}} %</text>
-	<text data-state="boilers[0].alarm" data-type="BoilerAlarm" transform="matrix(1 0 0 1 17.0869 114.4408)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmBoiler_1}}</text>
+	<text data-state="boilers[0].alarm" transform="matrix(1 0 0 1 17.0869 114.4408)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmBoiler_1}}</text>
 	<g>
 
 			<linearGradient id="SVGID_00000044147159865473309760000014548854808333217155_" gradientUnits="userSpaceOnUse" x1="-90.0818" y1="181.4184" x2="-90.0818" y2="165.9781" gradientTransform="matrix(0 1 -1 0 381.1376 129.35)">
@@ -942,7 +942,7 @@
 	<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M335.2,63.3h-82.9c-3.1,0-5.7-2.5-5.7-5.7
 		V35.1c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v22.5C340.9,60.8,338.3,63.3,335.2,63.3z"/>
 	<text transform="matrix(1 0 0 1 252.7273 39.7241)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Задвижка котла №1</text>
-	<text data-state="boilerValves[0].status" data-type="ValveStatus" transform="matrix(1 0 0 1 260.7373 54.6985)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusValve_1}}</text>
+	<text data-state="boilerValves[0].status" transform="matrix(1 0 0 1 260.7373 54.6985)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusValve_1}}</text>
 
 		<linearGradient id="SVGID_00000134937162387679004110000005699637183612159658_" gradientUnits="userSpaceOnUse" x1="203.8741" y1="25.8264" x2="211.0045" y2="25.8264">
 		<stop  offset="5.586592e-03" style="stop-color:#2A97FF"/>
@@ -1079,10 +1079,10 @@
 	<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M92.6,307.3H9.7c-3.1,0-5.7-2.5-5.7-5.7
 		v-44.8c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v44.8C98.3,304.8,95.8,307.3,92.6,307.3z"/>
 	<text  transform="matrix(1 0 0 1 30.8458 261.4527)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Котел №2</text>
-	<text data-state="boilers[1].mode" data-type="WorkMode" transform="matrix(1 0 0 1 16.5209 273.2479)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeBoiler_2}}</text>
-	<text data-state="boilers[1].status" data-type="BoilerStatus" transform="matrix(1 0 0 1 16.3459 286.052)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusBoiler_2}}</text>
+	<text data-state="boilers[1].mode" transform="matrix(1 0 0 1 16.5209 273.2479)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeBoiler_2}}</text>
+	<text data-state="boilers[1].status" transform="matrix(1 0 0 1 16.3459 286.052)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusBoiler_2}}</text>
 	<text data-state="boilers[1].powerBurner" transform="matrix(1 0 0 1 16.9227 375.0345)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{powerBurner_2}} %</text>
-	<text data-state="boilers[1].alarm" data-type="BoilerAlarm" transform="matrix(1 0 0 1 16.6259 299.1965)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmBoiler_2}}</text>
+	<text data-state="boilers[1].alarm" transform="matrix(1 0 0 1 16.6259 299.1965)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmBoiler_2}}</text>
 	<g>
 
 			<linearGradient id="SVGID_00000090293874181604938700000017901629551166905783_" gradientUnits="userSpaceOnUse" x1="94.6739" y1="181.8793" x2="94.6739" y2="166.439" gradientTransform="matrix(0 1 -1 0 381.1376 129.35)">
@@ -1117,7 +1117,7 @@
 	<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M334.7,248.1h-82.9c-3.1,0-5.7-2.5-5.7-5.7
 		v-22.5c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v22.5C340.4,245.5,337.9,248.1,334.7,248.1z"/>
 	<text transform="matrix(1 0 0 1 252.2664 224.4798)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Задвижка котла №2</text>
-	<text data-state="boilerValves[1].status" data-type="ValveStatus" transform="matrix(1 0 0 1 260.2764 239.4542)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusValve_2}}</text>
+	<text data-state="boilerValves[1].status" transform="matrix(1 0 0 1 260.2764 239.4542)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusValve_2}}</text>
 
 		<linearGradient id="SVGID_00000087381517463672922280000012892793884056366765_" gradientUnits="userSpaceOnUse" x1="203.4132" y1="210.5821" x2="210.5435" y2="210.5821">
 		<stop  offset="5.586592e-03" style="stop-color:#2A97FF"/>
@@ -1222,10 +1222,10 @@
 	<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M92.4,492.4H9.5c-3.1,0-5.7-2.5-5.7-5.7
 		v-44.8c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v44.8C98.1,489.8,95.5,492.4,92.4,492.4z"/>
 	<text transform="matrix(1 0 0 1 30.6153 446.485)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Котел №3</text>
-	<text data-state="boilers[2].mode" data-type="WorkMode" transform="matrix(1 0 0 1 16.2904 458.2803)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeBoiler_3}}</text>
-	<text data-state="boilers[2].status" data-type="BoilerStatus" transform="matrix(1 0 0 1 16.1155 471.0844)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusBoiler_3}}</text>
+	<text data-state="boilers[2].mode" transform="matrix(1 0 0 1 16.2904 458.2803)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeBoiler_3}}</text>
+	<text data-state="boilers[2].status" transform="matrix(1 0 0 1 16.1155 471.0844)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusBoiler_3}}</text>
 	<text data-state="boilers[2].powerBurner" transform="matrix(1 0 0 1 15.8427 560.5082)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{powerBurner_3}} %</text>
-	<text data-state="boilers[2].alarm" data-type="BoilerAlarm" transform="matrix(1 0 0 1 16.3955 484.2289)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmBoiler_3}}</text>
+	<text data-state="boilers[2].alarm" transform="matrix(1 0 0 1 16.3955 484.2289)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmBoiler_3}}</text>
 	<g>
 
 			<linearGradient id="SVGID_00000117666915971975737180000017401807769203408287_" gradientUnits="userSpaceOnUse" x1="279.7063" y1="182.1098" x2="279.7063" y2="166.6695" gradientTransform="matrix(0 1 -1 0 381.1376 129.35)">
@@ -1260,7 +1260,7 @@
 	<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M334.5,433.1h-82.9c-3.1,0-5.7-2.5-5.7-5.7
 		v-22.5c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v22.5C340.2,430.6,337.6,433.1,334.5,433.1z"/>
 	<text transform="matrix(1 0 0 1 252.0359 409.5121)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Задвижка котла №3</text>
-	<text data-state="boilerValves[2].status" data-type="ValveStatus" transform="matrix(1 0 0 1 260.0459 424.4866)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusValve_3}}</text>
+	<text data-state="boilerValves[2].status" transform="matrix(1 0 0 1 260.0459 424.4866)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusValve_3}}</text>
 
 		<linearGradient id="SVGID_00000016783601886572885550000016225782024021560207_" gradientUnits="userSpaceOnUse" x1="203.1828" y1="395.6145" x2="210.3131" y2="395.6145">
 		<stop  offset="5.586592e-03" style="stop-color:#2A97FF"/>
@@ -1365,10 +1365,10 @@
 	<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M92,678.1H9c-3.1,0-5.7-2.5-5.7-5.7v-44.8
 		c0-3.1,2.5-5.7,5.7-5.7H92c3.1,0,5.7,2.5,5.7,5.7v44.8C97.6,675.6,95.1,678.1,92,678.1z"/>
 	<text transform="matrix(1 0 0 1 30.1544 632.2407)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Котел №4</text>
-	<text data-state="boilers[3].mode" data-type="WorkMode" transform="matrix(1 0 0 1 15.8295 644.036)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeBoiler_4}}</text>
-	<text data-state="boilers[3].status" data-type="BoilerStatus" transform="matrix(1 0 0 1 15.6546 656.8401)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusBoiler_4}}</text>
+	<text data-state="boilers[3].mode" transform="matrix(1 0 0 1 15.8295 644.036)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeBoiler_4}}</text>
+	<text data-state="boilers[3].status" transform="matrix(1 0 0 1 15.6546 656.8401)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusBoiler_4}}</text>
 	<text data-state="boilers[3].powerBurner" transform="matrix(1 0 0 1 15.8427 746.3589)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{powerBurner_4}} %</text>
-	<text data-state="boilers[3].alarm" data-type="BoilerAlarm" transform="matrix(1 0 0 1 15.9346 669.9846)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmBoiler_4}}</text>
+	<text data-state="boilers[3].alarm" transform="matrix(1 0 0 1 15.9346 669.9846)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmBoiler_4}}</text>
 	<g>
 
 			<linearGradient id="SVGID_00000044171087568500266650000005243289223554177200_" gradientUnits="userSpaceOnUse" x1="465.462" y1="182.5707" x2="465.462" y2="167.1304" gradientTransform="matrix(0 1 -1 0 381.1376 129.35)">
@@ -1403,7 +1403,7 @@
 	<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M334,618.8h-82.9c-3.1,0-5.7-2.5-5.7-5.7
 		v-22.5c0-3.1,2.5-5.7,5.7-5.7H334c3.1,0,5.7,2.5,5.7,5.7v22.5C339.7,616.3,337.2,618.8,334,618.8z"/>
 	<text transform="matrix(1 0 0 1 251.575 595.2678)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Задвижка котла №4</text>
-	<text data-state="boilerValves[3].status" data-type="ValveStatus" transform="matrix(1 0 0 1 259.585 610.2422)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusValve_4}}</text>
+	<text data-state="boilerValves[3].status" transform="matrix(1 0 0 1 259.585 610.2422)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusValve_4}}</text>
 
 		<linearGradient id="SVGID_00000176727719338081936910000017468764979644815508_" gradientUnits="userSpaceOnUse" x1="202.7219" y1="581.3702" x2="209.8522" y2="581.3702">
 		<stop  offset="5.586592e-03" style="stop-color:#2A97FF"/>
@@ -1729,13 +1729,13 @@
 	<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M542.6,335.8h-82.9c-3.1,0-5.7-2.5-5.7-5.7
 		V224.5c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v105.6C548.3,333.3,545.8,335.8,542.6,335.8z"/>
 	<text transform="matrix(1 0 0 1 487.5112 231.054)" style="font-family:'MyriadPro-Regular'; font-size:10px;">СН №1</text>
-	<text data-state="networkPumps[0].status" data-type="NetworkPumpStatus" transform="matrix(1 0 0 1 467 288.5998)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusNP_1}}</text>
-	<text data-state="networkPumps[0].statusFc" data-type="VariableFrequencyDriveStatus" transform="matrix(1 0 0 1 467 298.8698)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusFCNP_1}}</text>
-	<text data-state="networkPumps[0].alarmFc" data-type="VariableFrequencyDriveAlarm" transform="matrix(1 0 0 1 467 317.4982)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmFCNP_1}}</text>
-	<text data-state="networkPumps[0].mode" data-type="WorkMode" transform="matrix(1 0 0 1 467 272.2451)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeNP_1}}</text>
-	<text data-state="networkPumps[0].modeFc" data-type="WorkMode" transform="matrix(1 0 0 1 467 262.0408)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeFCNP_1}}</text>
+	<text data-state="networkPumps[0].status"  transform="matrix(1 0 0 1 467 288.5998)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusNP_1}}</text>
+	<text data-state="networkPumps[0].statusFc" transform="matrix(1 0 0 1 467 298.8698)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusFCNP_1}}</text>
+	<text data-state="networkPumps[0].alarmFc" transform="matrix(1 0 0 1 467 317.4982)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmFCNP_1}}</text>
+	<text data-state="networkPumps[0].mode" transform="matrix(1 0 0 1 467 272.2451)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeNP_1}}</text>
+	<text data-state="networkPumps[0].modeFc" transform="matrix(1 0 0 1 467 262.0408)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeFCNP_1}}</text>
 	<text data-state="networkPumps[0].setPower" transform="matrix(1 0 0 1 467 245.8851)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{setPowerNP_1}}</text>
-	<text data-state="networkPumps[0].alarm" data-type="NetworkPumpAlarm" transform="matrix(1 0 0 1 467 329.5436)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmNP_1}}</text>
+	<text data-state="networkPumps[0].alarm" transform="matrix(1 0 0 1 467 329.5436)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmNP_1}}</text>
 
 		<linearGradient id="SVGID_00000022538951116766006230000017838574046413611399_" gradientUnits="userSpaceOnUse" x1="242.4094" y1="-12.3937" x2="249.5397" y2="-12.3937" gradientTransform="matrix(1 0 0 1 188.2928 250.4688)">
 		<stop  offset="5.586592e-03" style="stop-color:#2A97FF"/>
@@ -1790,13 +1790,13 @@
 		V224.5c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v105.6C681.8,333.3,679.3,335.8,676.2,335.8z"/>
 
 	<text transform="matrix(1 0 0 1 621.0385 231.054)" style="font-family:'MyriadPro-Regular'; font-size:10px;">СН №2</text>
-	<text data-state="networkPumps[1].status" data-type="NetworkPumpStatus" transform="matrix(1 0 0 1 600 288.5998)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusNP_2}}</text>
-	<text data-state="networkPumps[1].statusFc" data-type="VariableFrequencyDriveStatus" transform="matrix(1 0 0 1 600 298.8698)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusFCNP_2}}</text>
-	<text data-state="networkPumps[1].alarmFc" data-type="VariableFrequencyDriveAlarm" transform="matrix(1 0 0 1 600 317.4982)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmFCNP_2}}</text>
-	<text data-state="networkPumps[1].mode" data-type="WorkMode" transform="matrix(1 0 0 1 600 272.2451)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeNP_2}}</text>
-	<text data-state="networkPumps[1].modeFc" data-type="WorkMode" transform="matrix(1 0 0 1 600 262.0408)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeFCNP_2}}</text>
+	<text data-state="networkPumps[1].status" transform="matrix(1 0 0 1 600 288.5998)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusNP_2}}</text>
+	<text data-state="networkPumps[1].statusFc" transform="matrix(1 0 0 1 600 298.8698)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusFCNP_2}}</text>
+	<text data-state="networkPumps[1].alarmFc" transform="matrix(1 0 0 1 600 317.4982)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmFCNP_2}}</text>
+	<text data-state="networkPumps[1].mode" transform="matrix(1 0 0 1 600 272.2451)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeNP_2}}</text>
+	<text data-state="networkPumps[1].modeFc" transform="matrix(1 0 0 1 600 262.0408)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeFCNP_2}}</text>
 	<text data-state="networkPumps[1].setPower" transform="matrix(1 0 0 1 599.553 245.8851)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{setPowerNP_2}}</text>
-	<text data-state="networkPumps[1].alarm" data-type="NetworkPumpAlarm" transform="matrix(1 0 0 1 600 329.5436)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmNP_2}}</text>
+	<text data-state="networkPumps[1].alarm" transform="matrix(1 0 0 1 600 329.5436)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmNP_2}}</text>
 
 		<linearGradient id="SVGID_00000051351124424122252340000016375909856861598137_" gradientUnits="userSpaceOnUse" x1="375.9367" y1="-12.3937" x2="383.067" y2="-12.3937" gradientTransform="matrix(1 0 0 1 188.2928 250.4688)">
 		<stop  offset="5.586592e-03" style="stop-color:#2A97FF"/>
@@ -1850,13 +1850,13 @@
 	<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M809.9,335.8H727c-3.1,0-5.7-2.5-5.7-5.7
 		V224.5c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v105.6C815.6,333.3,813,335.8,809.9,335.8z"/>
 	<text transform="matrix(1 0 0 1 754.7753 231.054)" style="font-family:'MyriadPro-Regular'; font-size:10px;">СН №3</text>
-	<text data-state="networkPumps[2].status" data-type="NetworkPumpStatus" transform="matrix(1 0 0 1 734 288.5998)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusNP_3}}</text>
-	<text data-state="networkPumps[2].statusFc" data-type="VariableFrequencyDriveStatus" transform="matrix(1 0 0 1 734 298.8698)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusFCNP_3}}</text>
-	<text data-state="networkPumps[2].alarmFc" data-type="VariableFrequencyDriveAlarm" transform="matrix(1 0 0 1 734 317.4982)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmFCNP_3}}</text>
-	<text data-state="networkPumps[2].mode" data-type="WorkMode" transform="matrix(1 0 0 1 734 272.2451)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeNP_3}}</text>
-	<text data-state="networkPumps[2].modeFc" data-type="WorkMode" transform="matrix(1 0 0 1 734 262.0408)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeFCNP_3}}</text>
+	<text data-state="networkPumps[2].status" transform="matrix(1 0 0 1 734 288.5998)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusNP_3}}</text>
+	<text data-state="networkPumps[2].statusFc" transform="matrix(1 0 0 1 734 298.8698)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusFCNP_3}}</text>
+	<text data-state="networkPumps[2].alarmFc" transform="matrix(1 0 0 1 734 317.4982)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmFCNP_3}}</text>
+	<text data-state="networkPumps[2].mode" transform="matrix(1 0 0 1 734 272.2451)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeNP_3}}</text>
+	<text data-state="networkPumps[2].modeFc" transform="matrix(1 0 0 1 734 262.0408)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeFCNP_3}}</text>
 	<text data-state="networkPumps[2].setPower" transform="matrix(1 0 0 1 733.29 245.8851)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{setPowerNP_3}}</text>
-	<text data-state="networkPumps[2].alarm" data-type="NetworkPumpAlarm" transform="matrix(1 0 0 1 734 329.5436)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmNP_3}}</text>
+	<text data-state="networkPumps[2].alarm" transform="matrix(1 0 0 1 734 329.5436)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmNP_3}}</text>
 
 		<linearGradient id="SVGID_00000126299408124272457220000011517154543920201122_" gradientUnits="userSpaceOnUse" x1="509.6736" y1="-12.3937" x2="516.8039" y2="-12.3937" gradientTransform="matrix(1 0 0 1 188.2928 250.4688)">
 		<stop  offset="5.586592e-03" style="stop-color:#2A97FF"/>
@@ -1910,13 +1910,13 @@
 	<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M943.4,335.8h-82.9c-3.1,0-5.7-2.5-5.7-5.7
 		V224.5c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v105.6C949.1,333.3,946.6,335.8,943.4,335.8z"/>
 	<text transform="matrix(1 0 0 1 888.3026 231.054)" style="font-family:'MyriadPro-Regular'; font-size:10px;">СН №4</text>
-	<text data-state="networkPumps[3].status" data-type="NetworkPumpStatus" transform="matrix(1 0 0 1 868 288.5998)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusNP_4}}</text>
-	<text data-state="networkPumps[3].statusFc" data-type="VariableFrequencyDriveStatus" transform="matrix(1 0 0 1 868 298.8698)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusFCNP_4}}</text>
-	<text data-state="networkPumps[3].alarmFc" data-type="VariableFrequencyDriveAlarm" transform="matrix(1 0 0 1 868 317.4982)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmFCNP_4}}</text>
-	<text data-state="networkPumps[3].mode" data-type="WorkMode" transform="matrix(1 0 0 1 868 272.2451)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeNP_4}}</text>
-	<text data-state="networkPumps[3].modeFc" data-type="WorkMode" transform="matrix(1 0 0 1 868 262.0408)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeFCNP_4}}</text>
+	<text data-state="networkPumps[3].status" transform="matrix(1 0 0 1 868 288.5998)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusNP_4}}</text>
+	<text data-state="networkPumps[3].statusFc" transform="matrix(1 0 0 1 868 298.8698)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusFCNP_4}}</text>
+	<text data-state="networkPumps[3].alarmFc" transform="matrix(1 0 0 1 868 317.4982)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmFCNP_4}}</text>
+	<text data-state="networkPumps[3].mode" transform="matrix(1 0 0 1 868 272.2451)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeNP_4}}</text>
+	<text data-state="networkPumps[3].modeFc" transform="matrix(1 0 0 1 868 262.0408)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeFCNP_4}}</text>
 	<text data-state="networkPumps[3].setPower" transform="matrix(1 0 0 1 866.8172 245.8851)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{setPowerNP_4}}</text>
-	<text data-state="networkPumps[3].alarm" data-type="NetworkPumpAlarm" transform="matrix(1 0 0 1 868 329.5436)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmNP_4}}</text>
+	<text data-state="networkPumps[3].alarm" transform="matrix(1 0 0 1 868 329.5436)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmNP_4}}</text>
 
 		<linearGradient id="SVGID_00000131333346553724260060000003825267574279999384_" gradientUnits="userSpaceOnUse" x1="643.2008" y1="-12.3937" x2="650.3311" y2="-12.3937" gradientTransform="matrix(1 0 0 1 188.2928 250.4688)">
 		<stop  offset="5.586592e-03" style="stop-color:#2A97FF"/>
@@ -2122,23 +2122,23 @@
 	<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M588.6,562h-82.9c-3.1,0-5.7-2.5-5.7-5.7
 		V450.7c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v105.6C594.2,559.4,591.7,562,588.6,562z"/>
 	<text transform="matrix(1 0 0 1 507.7713 457.1738)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Насос исх.воды №1</text>
-	<text data-state="sourceWaterPumps[0].status" data-type="NetworkPumpStatus" transform="matrix(1 0 0 1 513 514.7197)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusPW_1}}</text>
-	<text data-state="sourceWaterPumps[0].statusFc" data-type="VariableFrequencyDriveStatus" transform="matrix(1 0 0 1 513 524.9897)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusFCPW_1}}</text>
-	<text data-state="sourceWaterPumps[0].alarmFc" data-type="VariableFrequencyDriveAlarm" transform="matrix(1 0 0 1 513 543.6181)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmFCPW_1}}</text>
-	<text data-state="sourceWaterPumps[0].mode" data-type="WorkMode" transform="matrix(1 0 0 1 513 498.3649)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modePW_1}}</text>
-	<text data-state="sourceWaterPumps[0].modeFc" data-type="WorkMode" transform="matrix(1 0 0 1 513 488.1606)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeFCPW_1}}</text>
+	<text data-state="sourceWaterPumps[0].status" transform="matrix(1 0 0 1 513 514.7197)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusPW_1}}</text>
+	<text data-state="sourceWaterPumps[0].statusFc" transform="matrix(1 0 0 1 513 524.9897)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusFCPW_1}}</text>
+	<text data-state="sourceWaterPumps[0].alarmFc" transform="matrix(1 0 0 1 513 543.6181)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmFCPW_1}}</text>
+	<text data-state="sourceWaterPumps[0].mode" transform="matrix(1 0 0 1 513 498.3649)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modePW_1}}</text>
+	<text data-state="sourceWaterPumps[0].modeFc" transform="matrix(1 0 0 1 513 488.1606)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeFCPW_1}}</text>
 	<text data-state="sourceWaterPumps[0].setPower" transform="matrix(1 0 0 1 513 472.0049)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{setPowerPW_1}}</text>
-	<text data-state="sourceWaterPumps[0].alarm" data-type="NetworkPumpAlarm" transform="matrix(1 0 0 1 513 555.6634)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmPW_1}}</text>
+	<text data-state="sourceWaterPumps[0].alarm" transform="matrix(1 0 0 1 513 555.6634)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmPW_1}}</text>
 	<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M721.9,562H639c-3.1,0-5.7-2.5-5.7-5.7
 		V450.7c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v105.6C727.6,559.4,725,562,721.9,562z"/>
 	<text transform="matrix(1 0 0 1 641.0889 457.1738)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Насос исх.воды №2</text>
-	<text data-state="sourceWaterPumps[1].status" data-type="NetworkPumpStatus" transform="matrix(1 0 0 1 646 514.7197)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusPW_2}}</text>
-	<text data-state="sourceWaterPumps[1].statusFc" data-type="VariableFrequencyDriveStatus" transform="matrix(1 0 0 1 646 524.9897)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusFCPW_2}}</text>
-	<text data-state="sourceWaterPumps[1].alarmFc" data-type="VariableFrequencyDriveAlarm" transform="matrix(1 0 0 1 646 543.6181)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmFCPW_2}}</text>
-	<tex data-state="sourceWaterPumps[1].mode" data-type="WorkMode" transform="matrix(1 0 0 1 646 498.3649)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modePW_2}}</tex>
-	<text data-state="sourceWaterPumps[1].modeFc" data-type="WorkMode" transform="matrix(1 0 0 1 646 488.1606)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeFCPW_2}}</text>
+	<text data-state="sourceWaterPumps[1].status" transform="matrix(1 0 0 1 646 514.7197)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusPW_2}}</text>
+	<text data-state="sourceWaterPumps[1].statusFc" transform="matrix(1 0 0 1 646 524.9897)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusFCPW_2}}</text>
+	<text data-state="sourceWaterPumps[1].alarmFc" transform="matrix(1 0 0 1 646 543.6181)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmFCPW_2}}</text>
+	<tex data-state="sourceWaterPumps[1].mode" transform="matrix(1 0 0 1 646 498.3649)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modePW_2}}</tex>
+	<text data-state="sourceWaterPumps[1].modeFc" transform="matrix(1 0 0 1 646 488.1606)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeFCPW_2}}</text>
 	<text data-state="sourceWaterPumps[1].setPower" transform="matrix(1 0 0 1 645.2865 472.0049)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{setPowerPW_2}}</text>
-	<text data-state="sourceWaterPumps[1].alarm" data-type="NetworkPumpAlarm" transform="matrix(1 0 0 1 646 555.6634)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmPW_2}}</text>
+	<text data-state="sourceWaterPumps[1].alarm" transform="matrix(1 0 0 1 646 555.6634)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmPW_2}}</text>
 
 		<linearGradient id="SVGID_00000091005043422797722080000010984031617304834455_" gradientUnits="userSpaceOnUse" x1="351.805" y1="563.4923" x2="358.9353" y2="563.4923" gradientTransform="matrix(-1 0 0 -1 835.6649 1106.9979)">
 		<stop  offset="5.586592e-03" style="stop-color:#2A97FF"/>
@@ -2417,15 +2417,15 @@
 	<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M1118.7,551.3h-82.9c-3.1,0-5.7-2.5-5.7-5.7
 		v-51.5c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v51.5C1124.4,548.8,1121.9,551.3,1118.7,551.3z"/>
 	<text transform="matrix(1 0 0 1 1036.2524 500.629)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Насос подпит. №1</text>
-	<text data-state="supplyPumps[0].status" data-type="SupplyPumpStatus" transform="matrix(1 0 0 1 1045.5374 529.3026)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusPH_1}}</text>
-	<text data-state="supplyPumps[0].mode" data-type="WorkMode" transform="matrix(1 0 0 1 1045.7118 515.9067)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modePH_1}}</text>
-	<text data-state="supplyPumps[0].alarm" data-type="SupplyPumpAlarm" transform="matrix(1 0 0 1 1046.1266 543.0701)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmPH_1}}</text>
+	<text data-state="supplyPumps[0].status" transform="matrix(1 0 0 1 1045.5374 529.3026)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusPH_1}}</text>
+	<text data-state="supplyPumps[0].mode" transform="matrix(1 0 0 1 1045.7118 515.9067)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modePH_1}}</text>
+	<text data-state="supplyPumps[0].alarm" transform="matrix(1 0 0 1 1046.1266 543.0701)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmPH_1}}</text>
 	<path style="fill:#CCCCCC;stroke:#mode0;stroke-width:0.25;stroke-miterlimit:10;" d="M1256.2,551.3h-82.9c-3.1,0-5.7-2.5-5.7-5.7
 		v-51.5c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v51.5C1261.8,548.8,1259.3,551.3,1256.2,551.3z"/>
 	<text transform="matrix(1 0 0 1 1173.6854 500.629)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Насос подпит. №2</text>
-	<text data-state="supplyPumps[1].status" data-type="SupplyPumpStatus"  transform="matrix(1 0 0 1 1182.9702 529.3026)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusPH_2}}</text>
-	<text data-state="supplyPumps[1].mode" data-type="WorkMode" transform="matrix(1 0 0 1 1183.1447 515.9067)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modePH_2}}</text>
-	<text data-state="supplyPumps[1].alarm" data-type="SupplyPumpAlarm" transform="matrix(1 0 0 1 1183.5596 543.0701)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmPH_2}}</text>
+	<text data-state="supplyPumps[1].status" transform="matrix(1 0 0 1 1182.9702 529.3026)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusPH_2}}</text>
+	<text data-state="supplyPumps[1].mode" transform="matrix(1 0 0 1 1183.1447 515.9067)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modePH_2}}</text>
+	<text data-state="supplyPumps[1].alarm" transform="matrix(1 0 0 1 1183.5596 543.0701)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmPH_2}}</text>
 
 		<linearGradient id="SVGID_00000109742058346943895570000000716654038366457515_" gradientUnits="userSpaceOnUse" x1="733.2512" y1="-555.1609" x2="740.3815" y2="-555.1609" gradientTransform="matrix(1 0 0 1 274.0056 1018.7068)">
 		<stop  offset="5.586592e-03" style="stop-color:#2A97FF"/>
@@ -2542,15 +2542,15 @@
 	<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M1138.9,414.7H1056c-3.1,0-5.7-2.5-5.7-5.7
 		V389c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v20.1C1144.6,412.2,1142,414.7,1138.9,414.7z"/>
 	<text transform="matrix(1 0 0 1 1058.3992 394.4821)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Клапан подп. сети</text>
-	<text data-state="flapHn.mode" data-type="FlapMode" transform="matrix(1 0 0 1 1070.1685 409.7598)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeVHN}}</text>
+	<text data-state="flapHn.mode" transform="matrix(1 0 0 1 1070.1685 409.7598)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeVHN}}</text>
 	<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M1031,76.2h-82.9c-3.1,0-5.7-2.5-5.7-5.7
 		V50.4c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v20.1C1036.7,73.7,1034.2,76.2,1031,76.2z"/>
 	<text transform="matrix(1 0 0 1 950.4548 55.9579)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Клапан подачи ДТ</text>
-	<text data-state="flapDt.mode" data-type="FlapMode" transform="matrix(1 0 0 1 963.039 71.2357)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeVDT}}</text>
+	<text data-state="flapDt.mode" transform="matrix(1 0 0 1 963.039 71.2357)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeVDT}}</text>
 	<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M1133.6,76.2h-82.9c-3.1,0-5.7-2.5-5.7-5.7
 		V50.4c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v20.1C1139.2,73.7,1136.7,76.2,1133.6,76.2z"/>
 	<text transform="matrix(1 0 0 1 1052.5477 55.9579)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Клапан заполн. ДТ</text>
-	<text data-state="flapDtFill.mode" data-type="FlapMode" transform="matrix(1 0 0 1 1059.6324 71.2357)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeVFillDT}}</text>
+	<text data-state="flapDtFill.mode" transform="matrix(1 0 0 1 1059.6324 71.2357)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeVFillDT}}</text>
 	<g>
 
 			<linearGradient id="SVGID_00000173160880007325790030000013281660455478855057_" gradientUnits="userSpaceOnUse" x1="353.7784" y1="-502.3019" x2="353.7784" y2="-517.7422" gradientTransform="matrix(1 0 0 1 461.0017 946.7943)">
@@ -2582,7 +2582,7 @@
 	<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M868.2,394.5h-82.9c-3.1,0-5.7-2.5-5.7-5.7
 		v-20.1c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v20.1C873.8,391.9,871.3,394.5,868.2,394.5z"/>
 	<text transform="matrix(1 0 0 1 787.3953 375.2244)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Клапан подп. бака</text>
-	<text data-state="flapHt.mode" data-type="FlapMode" transform="matrix(1 0 0 1 800.2559 390.5021)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeVHT}}</text>
+	<text data-state="flapHt.mode" transform="matrix(1 0 0 1 800.2559 390.5021)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeVHT}}</text>
 	<path style="fill:#999999;" d="M961.6,580.5h-86.2c-9.3,0-16.8-7.5-16.8-16.8V426.2c0-9.3,7.5-16.8,16.8-16.8h86.2
 		c9.3,0,16.8,7.5,16.8,16.8v137.5C978.4,573,970.9,580.5,961.6,580.5z"/>
 

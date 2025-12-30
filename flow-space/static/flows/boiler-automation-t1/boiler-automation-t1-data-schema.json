@@ -1,52 +1,170 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "StateModel",
-  "description": "Complete system state model for boiler house equipment",
   "type": "object",
   "properties": {
     "tempRoomAir": {
       "type": "number",
-      "description": "Room air temperature"
+      "unit": "°C",
+      "ui": {
+        "editorType": "dxNumberBox",
+        "group": 1,
+        "label": {
+          "location": "top",
+          "showColon": true,
+          "text": "Температура в котельной"
+        },
+        "editorOptions": {
+          "readOnly": true
+        }
+      }
     },
     "tempOutAir": {
       "type": "number",
-      "description": "Outdoor air temperature"
-    },
-    "pressGas": {
-      "type": "number",
-      "description": "Gas pressure"
-    },
-    "levelDt1": {
-      "type": "number",
-      "description": "Level DT1"
-    },
-    "levelDt2": {
-      "type": "number",
-      "description": "Level DT2"
-    },
-    "pressOutNet": {
-      "type": "number",
-      "description": "Output network pressure"
-    },
-    "tempOutNet": {
-      "type": "number",
-      "description": "Output network temperature"
-    },
-    "pressInNet": {
-      "type": "number",
-      "description": "Input network pressure"
+      "unit": "°C",
+      "ui": {
+        "editorType": "dxNumberBox",
+        "group": 1,
+        "label": {
+          "location": "top",
+          "showColon": true,
+          "text": "Температура наружная"
+        },
+        "editorOptions": {
+          "readOnly": true
+        }
+      }
     },
     "tempInNet": {
       "type": "number",
-      "description": "Input network temperature"
+      "unit": "°C",
+      "ui": {
+        "editorType": "dxNumberBox",
+        "group": 1,
+        "label": {
+          "location": "top",
+          "showColon": true,
+          "text": "Температура на обратке сетевого контура"
+        },
+        "editorOptions": {
+          "readOnly": true
+        }
+      }
+    },
+    "tempOutNet": {
+      "type": "number",
+      "unit": "°C",
+      "ui": {
+        "editorType": "dxNumberBox",
+        "group": 1,
+        "label": {
+          "location": "top",
+          "showColon": true,
+          "text": "Температура на подаче сетевого контура"
+        },
+        "editorOptions": {
+          "readOnly": true
+        }
+      }
+    },
+    "pressGas": {
+      "type": "number",
+      "unit": "кПа",
+      "ui": {
+        "editorType": "dxNumberBox",
+        "group": 1,
+        "label": {
+          "location": "top",
+          "showColon": true,
+          "text": "Давление газа"
+        },
+        "editorOptions": {
+          "readOnly": true
+        }
+      }
+    },
+    "pressInNet": {
+      "type": "number",
+      "unit": "бар",
+      "ui": {
+        "editorType": "dxNumberBox",
+        "group": 1,
+        "label": {
+          "location": "top",
+          "showColon": true,
+          "text": "Давление на обратке сетевого контура"
+        },
+        "editorOptions": {
+          "readOnly": true
+        }
+      }
+    },
+    "pressOutNet": {
+      "type": "number",
+      "unit": "бар",
+      "ui": {
+        "editorType": "dxNumberBox",
+        "group": 1,
+        "label": {
+          "location": "top",
+          "showColon": true,
+          "text": "Давление на подаче сетевого контура"
+        },
+        "editorOptions": {
+          "readOnly": true
+        }
+      }
     },
     "pressOutSrcW": {
       "type": "number",
-      "description": "Output source water pressure"
+      "unit": "бар",
+      "ui": {
+        "editorType": "dxNumberBox",
+        "group": 1,
+        "label": {
+          "location": "top",
+          "showColon": true,
+          "text": "Давление на выходе насосов исходной воды"
+        },
+        "editorOptions": {
+          "readOnly": true
+        }
+      }
+    },
+    "levelDt1": {
+      "type": "number",
+      "unit": "%",
+      "ui": {
+        "editorType": "dxNumberBox",
+        "group": 1,
+        "label": {
+          "location": "top",
+          "showColon": true,
+          "text": "Уровень ДТ в баке 1"
+        },
+        "editorOptions": {
+          "readOnly": true
+        }
+      }
+    },
+    "levelDt2": {
+      "type": "number",
+      "unit": "%",
+      "ui": {
+        "editorType": "dxNumberBox",
+        "group": 1,
+        "label": {
+          "location": "top",
+          "showColon": true,
+          "text": "Уровень ДТ в баке 2"
+        },
+        "editorOptions": {
+          "readOnly": true
+        }
+      }
     },
     "boilers": {
       "type": "array",
-      "description": "Boilers (4-fold)",
       "items": {
         "$ref": "#/$defs/BoilerModel"
       },
@@ -55,7 +173,6 @@
     },
     "boilerValves": {
       "type": "array",
-      "description": "Boiler valves (4-fold)",
       "items": {
         "$ref": "#/$defs/ValveModel"
       },
@@ -64,7 +181,6 @@
     },
     "networkPumps": {
       "type": "array",
-      "description": "Network pumps (4-fold)",
       "items": {
         "$ref": "#/$defs/NetworkPumpModel"
       },
@@ -73,7 +189,6 @@
     },
     "sourceWaterPumps": {
       "type": "array",
-      "description": "Source water pumps (2-fold)",
       "items": {
         "$ref": "#/$defs/NetworkPumpModel"
       },
@@ -82,7 +197,6 @@
     },
     "supplyPumps": {
       "type": "array",
-      "description": "Supply pumps (2-fold)",
       "items": {
         "$ref": "#/$defs/SupplyPumpModel"
       },
@@ -90,20 +204,16 @@
       "maxItems": 2
     },
     "flapHt": {
-      "$ref": "#/$defs/FlapModel",
-      "description": "HT flap valve"
+      "$ref": "#/$defs/FlapModel"
     },
     "flapHn": {
-      "$ref": "#/$defs/FlapModel",
-      "description": "HN flap valve"
+      "$ref": "#/$defs/FlapModel"
     },
     "flapDt": {
-      "$ref": "#/$defs/FlapModel",
-      "description": "DT flap valve"
+      "$ref": "#/$defs/FlapModel"
     },
     "flapDtFill": {
-      "$ref": "#/$defs/FlapModel",
-      "description": "DT fill flap valve"
+      "$ref": "#/$defs/FlapModel"
     }
   },
   "required": [
@@ -130,31 +240,42 @@
   "$defs": {
     "BoilerModel": {
       "type": "object",
-      "description": "Boiler model",
       "properties": {
         "powerBurner": {
           "type": "number",
-          "description": "Burner power"
+          "unit": "%"
         },
         "mode": {
-          "$ref": "#/$defs/WorkMode",
-          "description": "Work mode"
+          "$ref": "#/$defs/WorkMode"
         },
         "status": {
-          "$ref": "#/$defs/BoilerStatus",
-          "description": "Boiler status"
+          "$ref": "#/$defs/BoilerStatus"
         },
         "alarm": {
-          "$ref": "#/$defs/BoilerAlarm",
-          "description": "Boiler alarm code"
+          "$ref": "#/$defs/BoilerAlarm"
         }
       },
-      "required": ["powerBurner", "mode", "status", "alarm"]
+      "required": [
+        "powerBurner",
+        "mode",
+        "status",
+        "alarm"
+      ]
     },
     "BoilerStatus": {
       "type": "integer",
-      "enum": [0, 1, 2, 3, 4, 5, 6, 8, 9, 10],
-      "description": "Boiler status enumeration",
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9,
+        10
+      ],
       "enumDescriptions": {
         "0": "STOPPED - Остановлен",
         "1": "OPENING_OUTLET_VALVE - Открытие задвижки на выходе котла",
@@ -170,8 +291,21 @@
     },
     "BoilerAlarm": {
       "type": "integer",
-      "enum": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-      "description": "Boiler alarm codes enumeration",
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
       "enumDescriptions": {
         "0": "TEMP_SENSOR_FAULT - Неисправность датчика температуры на выходе",
         "1": "BURNER_ALARM - Авария горелки",
@@ -190,19 +324,21 @@
     },
     "FlapModel": {
       "type": "object",
-      "description": "Flap valve model",
       "properties": {
         "mode": {
-          "$ref": "#/$defs/FlapMode",
-          "description": "Flap mode"
+          "$ref": "#/$defs/FlapMode"
         }
       },
-      "required": ["mode"]
+      "required": [
+        "mode"
+      ]
     },
     "FlapMode": {
       "type": "integer",
-      "enum": [0, 1],
-      "description": "Flap mode enumeration",
+      "enum": [
+        0,
+        1
+      ],
       "enumDescriptions": {
         "0": "AUTO - авто",
         "1": "MANUAL - ручной"
@@ -210,35 +346,28 @@
     },
     "NetworkPumpModel": {
       "type": "object",
-      "description": "Network pump model",
       "properties": {
         "setPower": {
           "type": "number",
-          "description": "Set power"
+          "unit": "Гц"
         },
         "mode": {
-          "$ref": "#/$defs/WorkMode",
-          "description": "Work mode"
+          "$ref": "#/$defs/WorkMode"
         },
         "status": {
-          "$ref": "#/$defs/NetworkPumpStatus",
-          "description": "Network pump status"
+          "$ref": "#/$defs/NetworkPumpStatus"
         },
         "alarm": {
-          "$ref": "#/$defs/NetworkPumpAlarm",
-          "description": "Network pump alarm"
+          "$ref": "#/$defs/NetworkPumpAlarm"
         },
         "modeFc": {
-          "$ref": "#/$defs/WorkMode",
-          "description": "Variable frequency drive work mode"
+          "$ref": "#/$defs/WorkMode"
         },
         "statusFc": {
-          "$ref": "#/$defs/VariableFrequencyDriveStatus",
-          "description": "Variable frequency drive status"
+          "$ref": "#/$defs/VariableFrequencyDriveStatus"
         },
         "alarmFc": {
-          "$ref": "#/$defs/VariableFrequencyDriveAlarm",
-          "description": "Variable frequency drive alarm"
+          "$ref": "#/$defs/VariableFrequencyDriveAlarm"
         }
       },
       "required": [
@@ -253,8 +382,15 @@
     },
     "NetworkPumpStatus": {
       "type": "integer",
-      "enum": [0, 1, 5, 6, 7, 9, 11],
-      "description": "Network pump status enumeration",
+      "enum": [
+        0,
+        1,
+        5,
+        6,
+        7,
+        9,
+        11
+      ],
       "enumDescriptions": {
         "0": "WAITING_FOR_READINESS - Ожидание готовности",
         "1": "READINESS - Готовность",
@@ -267,8 +403,15 @@
     },
     "NetworkPumpAlarm": {
       "type": "integer",
-      "enum": [0, 1, 2, 3, 4, 5, 6],
-      "description": "Network pump alarm enumeration",
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
       "enumDescriptions": {
         "0": "NOT_USED_0 - не используется",
         "1": "NOT_USED_1 - не используется",
@@ -281,8 +424,18 @@
     },
     "VariableFrequencyDriveStatus": {
       "type": "integer",
-      "enum": [0, 1, 2, 3, 4, 5, 7, 8, 9, 10],
-      "description": "Variable frequency drive status enumeration",
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        8,
+        9,
+        10
+      ],
       "enumDescriptions": {
         "0": "NO_POWER - Нет питания",
         "1": "STOPPED - Остановлен",
@@ -298,8 +451,16 @@
     },
     "VariableFrequencyDriveAlarm": {
       "type": "integer",
-      "enum": [0, 1, 2, 3, 4, 5, 6, 7],
-      "description": "Variable frequency drive alarm enumeration",
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
       "enumDescriptions": {
         "0": "EXCEEDED_STARTUP_TIME - Превышено время включения",
         "1": "EXCEEDED_SHUTDOWN_TIME - Превышено время отключения",
@@ -313,27 +474,33 @@
     },
     "SupplyPumpModel": {
       "type": "object",
-      "description": "Supply pump model",
       "properties": {
         "mode": {
-          "$ref": "#/$defs/WorkMode",
-          "description": "Work mode"
+          "$ref": "#/$defs/WorkMode"
         },
         "status": {
-          "$ref": "#/$defs/SupplyPumpStatus",
-          "description": "Supply pump status"
+          "$ref": "#/$defs/SupplyPumpStatus"
         },
         "alarm": {
-          "$ref": "#/$defs/SupplyPumpAlarm",
-          "description": "Supply pump alarm"
+          "$ref": "#/$defs/SupplyPumpAlarm"
         }
       },
-      "required": ["mode", "status", "alarm"]
+      "required": [
+        "mode",
+        "status",
+        "alarm"
+      ]
     },
     "SupplyPumpStatus": {
       "type": "integer",
-      "enum": [0, 1, 2, 3, 4, 5],
-      "description": "Supply pump status enumeration",
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
       "enumDescriptions": {
         "0": "NO_POWER - Нет питания",
         "1": "STOPPED - Остановлен",
@@ -345,8 +512,13 @@
     },
     "SupplyPumpAlarm": {
       "type": "integer",
-      "enum": [0, 1, 2, 3, 4],
-      "description": "Supply pump alarm enumeration",
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
       "enumDescriptions": {
         "0": "EXCEEDED_STARTUP_TIME - Превышено время запуска",
         "1": "EXCEEDED_SHUTDOWN_TIME - Превышено время останова",
@@ -357,19 +529,22 @@
     },
     "ValveModel": {
       "type": "object",
-      "description": "Valve model",
       "properties": {
         "status": {
-          "$ref": "#/$defs/ValveStatus",
-          "description": "Valve status"
+          "$ref": "#/$defs/ValveStatus"
         }
       },
-      "required": ["status"]
+      "required": [
+        "status"
+      ]
     },
     "ValveStatus": {
       "type": "integer",
-      "enum": [0, 1, 2],
-      "description": "Valve status enumeration",
+      "enum": [
+        0,
+        1,
+        2
+      ],
       "enumDescriptions": {
         "0": "INTERMEDIATE - Промежуточное",
         "1": "CLOSED - Закрыта",
@@ -378,8 +553,12 @@
     },
     "WorkMode": {
       "type": "integer",
-      "enum": [0, 1, 2, 4],
-      "description": "Work mode enumeration",
+      "enum": [
+        0,
+        1,
+        2,
+        4
+      ],
       "enumDescriptions": {
         "0": "NOT_USED - не используется",
         "1": "REPAIR - ремонт",
@@ -387,5 +566,14 @@
         "4": "PANEL - панель (управление с панели шкафа управления)"
       }
     }
+  },
+  "ui": {
+    "groups": [
+      {
+        "id": 1,
+        "name": "state",
+        "caption": "Состояние"
+      }
+    ]
   }
 }

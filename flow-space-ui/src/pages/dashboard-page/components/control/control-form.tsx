@@ -2,7 +2,6 @@ import 'devextreme-react/switch';
 import Form, { GroupItem, SimpleItem } from 'devextreme-react/form';
 import AppConstants from '../../../../constants/app-constants';
 import { formatMessage } from 'devextreme/localization';
-import { useAuth } from '../../../../contexts/auth';
 import { useMemo, useRef } from 'react';
 import { useDashboardPage } from '../../dashboard-page-context';
 import type { ControlFormProps } from '../../models/control-form-props';
@@ -39,10 +38,8 @@ export const ControlForm = ({ onFieldDataChanged }: ControlFormProps) => {
     }, [dataschema]);
 
 
-    /* eslint-disable @typescript-eslint/no-unused-vars */
-    const { isOperator } = useAuth();
     const dxControlFormRef = useRef<Form>(null);
-    
+
     return (deviceState?.state ?
         <Form
             className='app-form control-form'
@@ -58,7 +55,7 @@ export const ControlForm = ({ onFieldDataChanged }: ControlFormProps) => {
                 const group = dataschema?.ui?.groups?.find((g: { name: string; }) => g.name === groupKey);
 
                 return (
-                    <GroupItem key={group.id} caption={group.description}>
+                    <GroupItem key={group.id} caption={group.caption}>
                         {groupedControlDefinitions[groupKey].map((item: any) => {
                             return (
                                 <SimpleItem

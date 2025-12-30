@@ -26,9 +26,9 @@ const ContentAuth = () => {
                     <Route path='/not-found' element={<NotFoundPage />} />
                     <Route path='*' element={<Navigate to='/' replace />} />
                 </Routes>
-                <Footer>
+                {/* <Footer>
                     <div> Copyright © {new Date().getFullYear()} {AppConstants.appInfo.companyName}.</div>
-                </Footer>
+                </Footer> */}
             </SideNavBarLayout>
         </>
     );

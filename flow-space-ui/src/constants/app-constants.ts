@@ -23,7 +23,7 @@ const AppConstants = {
         returnPipeColor: '#1db2f5',
         outdoorColor: '#4CAF50'
     },
-    pageHeight: '65vh',
+    pageHeight: '75vh',
     formHeight: '55vh',
     chartHeight: '50vh'
 };

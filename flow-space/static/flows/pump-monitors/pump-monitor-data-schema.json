@@ -1,5 +1,5 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Pump Control System Data",
   "type": "object",
   "properties": {
@@ -252,12 +252,12 @@
       {
         "id": 1,
         "name": "control",
-        "description": "Управление"
+        "caption": "Управление"
       },
       {
         "id": 2,
         "name": "state",
-        "description": "Состояние"
+        "caption": "Состояние"
       }
     ]
   }

@@ -94,6 +94,7 @@ const MnemoschemaTabContent = () => {
     }, [deviceState]);
 
     const startStopPumpsHandler = useCallback(() => {
+        // debugger
         if (!deviceState || !deviceState.state) {
             return;
         }
@@ -127,11 +128,17 @@ const MnemoschemaTabContent = () => {
         });
     }, [deviceState]);
 
-    useEffect(() => {
+    const stateSetup = useCallback(() => {
         startStopPumpsHandler()
         levelSensorsHandler();
         faultPumpHandler();
-    }, [levelSensorsHandler, faultPumpHandler, startStopPumpsHandler]);
+    }, [faultPumpHandler, levelSensorsHandler, startStopPumpsHandler]);
+
+    useEffect(() => {
+        setTimeout(() => {
+            stateSetup();
+        }, 10);
+    }, [stateSetup]);
 
     return (
         <>
@@ -144,12 +151,14 @@ const MnemoschemaTabContent = () => {
                 </div>
                 : null
             }
-            <Mnemoschema onMount={(mnemoschemaElement: HTMLElement) => {
-                mnemoschemaElement.setAttribute("height", isSmall || isXSmall ? '450px' : isLarge ? '520px' : '640px');
-                if (isSmall || isXSmall) {
-                    mnemoschemaElement.style.flex = '1';
-                }
-            }} />
+            <Mnemoschema
+                onBeforeMount={(mnemoschemaElement: HTMLElement) => {
+                    mnemoschemaElement.setAttribute("height", isSmall || isXSmall ? '450px' : isLarge ? '520px' : '640px');
+                    if (isSmall || isXSmall) {
+                        mnemoschemaElement.style.flex = '1';
+                    }
+                }}
+            />
         </>
     );
 }

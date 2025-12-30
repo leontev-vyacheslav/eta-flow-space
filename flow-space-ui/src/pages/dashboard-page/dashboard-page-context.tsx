@@ -1,4 +1,4 @@
-import Ajv from 'ajv';
+import Ajv from 'ajv/dist/2020';
 import { createContext, useContext, useEffect, useState } from 'react';
 import type { DeviceModel } from '../../models/flows/device-model';
 import type { DeviceStateModel } from '../../models/flows/device-state-model';
@@ -70,7 +70,9 @@ function DashboardPageContextProvider(props: any) {
         let validateFn;
         try {
             validateFn = ajv.compile(dataschema);
-        } catch {
+        } catch (error) {
+            console.log(error);
+
             validateFn = null;
         }
 

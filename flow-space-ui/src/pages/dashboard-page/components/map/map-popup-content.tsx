@@ -18,7 +18,7 @@ export const MapPopupContent = () => {
             }
         }
 
-        if (propertyInfo.format !== 'date-time' && (propertyInfo.type === 'integer' || propertyInfo.type === 'float') && value !== undefined) {
+        if (propertyInfo.format !== 'date-time' && (['integer', 'float', 'number'].includes(propertyInfo.type)) && value !== undefined) {
             return value;
         }
 
@@ -55,11 +55,15 @@ export const MapPopupContent = () => {
                     <tbody>
                         {
                             Object.keys(dataschema.properties)
-                                .filter(p => !p.startsWith('_'))
+                                .filter(p => !p.startsWith('_') && dataschema.properties[p].ui)
                                 .map(p => {
                                     const propertyInfo = dataschema.properties[p];
                                     const value = (deviceState?.state as any)[p];
-                                    const valueContent = provideStateValue(propertyInfo, value);
+                                    let valueContent = provideStateValue(propertyInfo, value);
+                                    const unit = dataschema.properties[p]["unit"];
+                                    if (unit) {
+                                            valueContent = `${valueContent} ${unit}`;
+                                    }
 
                                     return (
                                         !isXSmall ?
