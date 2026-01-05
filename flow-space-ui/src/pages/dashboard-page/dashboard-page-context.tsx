@@ -1,5 +1,5 @@
 import Ajv from 'ajv/dist/2020';
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import type { DeviceModel } from '../../models/flows/device-model';
 import type { DeviceStateModel } from '../../models/flows/device-state-model';
 import { useAppData } from '../../contexts/app-data/app-data';
@@ -8,6 +8,8 @@ import { proclaim } from '../../utils/proclaim';
 
 import './dashboard-page-content.scss';
 import { getQuickGuid } from '../../utils/uuid';
+import { getKeyValuePairs, type PropertiesChainValuePairModel } from '../../helpers/data-helper';
+import type { DictionaryBaseModel } from '../../models/abstractions/dictionary-base-model';
 
 export type DashboardPageContextModel = {
     device?: DeviceModel;
@@ -16,7 +18,10 @@ export type DashboardPageContextModel = {
     dataschema?: any;
     isValidDeviceState: boolean;
     updateSharedStateRefreshToken: string;
-    setUpdateSharedStateRefreshToken: React.Dispatch<React.SetStateAction<string>>
+    setUpdateSharedStateRefreshToken: React.Dispatch<React.SetStateAction<string>>;
+
+    statePropertiesChainValuePairs: PropertiesChainValuePairModel[] | undefined;
+    registryEnums: Record<string, DictionaryBaseModel[]>;
 };
 
 const DashboardPageContext = createContext({} as DashboardPageContextModel);
@@ -31,6 +36,13 @@ function DashboardPageContextProvider(props: any) {
     const [dataschema, setDataschema] = useState<any | undefined>();
     const [isValidDeviceState, setIsValidDeviceState] = useState<boolean>(false);
     const [updateSharedStateRefreshToken, setUpdateSharedStateRefreshToken] = useState<string>(getQuickGuid());
+    const [registryEnums, setRegistryEnums] = useState<Record<string, DictionaryBaseModel[]>>({});
+
+    const statePropertiesChainValuePairs = useMemo(() => {
+        if (deviceState) {
+            return getKeyValuePairs(deviceState.state)
+        }
+    }, [deviceState]);
 
     useEffect(() => {
         (async () => {
@@ -118,6 +130,27 @@ function DashboardPageContextProvider(props: any) {
         }
     }, [deviceId, getDeviceStateAsync]);
 
+    useEffect(() => {
+        if (dataschema && dataschema.$defs) {
+            const registryEnums = {} as Record<string, DictionaryBaseModel[]>;
+
+            Object
+                .keys(dataschema.$defs)
+                .filter(k => {
+                    return dataschema.$defs[k].enum && Array.isArray(dataschema.$defs[k].enum)
+                })
+                .forEach(k => {
+                    registryEnums[k] = Object.entries(dataschema.$defs[k].enumDescriptions)
+                        .map(([id, description]) => ({
+                            id: Number(id),
+                            description: (description as string).split(' - ').pop() || description as string
+                        }))
+                });
+
+            setRegistryEnums(registryEnums);
+        }
+    }, [dataschema]);
+
     return (
         <DashboardPageContext.Provider value={{
             device,
@@ -126,7 +159,10 @@ function DashboardPageContextProvider(props: any) {
             dataschema,
             isValidDeviceState,
             updateSharedStateRefreshToken,
-            setUpdateSharedStateRefreshToken
+            setUpdateSharedStateRefreshToken,
+
+            statePropertiesChainValuePairs,
+            registryEnums
         }} {...props} />
     );
 }

@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { EmergencyLevel, PumpingStationIcon, StopIcon } from "../icons";
 import { useDashboardPage } from "../../../dashboard-page-context";
 import { Mnemoschema } from "../../../components/mnemoschema/mnemoschema";
@@ -8,13 +8,13 @@ const MnemoschemaTabContent = () => {
     const { isSmall, isXSmall, isLarge } = useScreenSize();
     const { deviceState } = useDashboardPage();
 
-    const levelSensorsHandler = useCallback(() => {
+    const levelSensorsHandler = useCallback((mnemoschemaElement: HTMLElement) => {
         if (!deviceState) {
             return;
         }
 
-        const dumpWaterElement = document.querySelector('#dump-water');
-        const dumpBottomElement = document.querySelector('#dump-bottom')
+        const dumpWaterElement = mnemoschemaElement.querySelector('#dump-water');
+        const dumpBottomElement = mnemoschemaElement.querySelector('#dump-bottom')
 
         if (!dumpBottomElement || !dumpWaterElement || !deviceState.state) {
             return;
@@ -23,7 +23,7 @@ const MnemoschemaTabContent = () => {
         const dumpBottomY = dumpBottomElement.getAttribute('y')!;
 
         const setDumpWaterHeigh = (state: boolean, sensorName: string) => {
-            const levelSensorElement = document.querySelector(`#${sensorName} circle`);
+            const levelSensorElement = mnemoschemaElement.querySelector(`#${sensorName} circle`);
             if (!levelSensorElement) {
                 return;
             }
@@ -55,7 +55,7 @@ const MnemoschemaTabContent = () => {
         }
     }, [deviceState]);
 
-    const faultPumpHandler = useCallback(() => {
+    const faultPumpHandler = useCallback((mnemoschemaElement: HTMLElement) => {
         const svgNs = 'http://www.w3.org/2000/svg';
         if (!deviceState) {
             return;
@@ -66,7 +66,7 @@ const MnemoschemaTabContent = () => {
                 return;
             }
 
-            const stopIcon = document.querySelector(`#pump${a}-stop-icon`);
+            const stopIcon = mnemoschemaElement.querySelector(`#pump${a}-stop-icon`);
             if (!stopIcon) {
                 return;
             }
@@ -93,9 +93,9 @@ const MnemoschemaTabContent = () => {
 
     }, [deviceState]);
 
-    const startStopPumpsHandler = useCallback(() => {
+    const startStopPumpsHandler = useCallback((mnemoschemaElement: HTMLElement) => {
         // debugger
-        if (!deviceState || !deviceState.state) {
+        if (!deviceState || !deviceState.state || Object.keys(deviceState.state).length === 0) {
             return;
         }
         const changeHighlightStroke = (blades: NodeListOf<SVGLineElement> | undefined, color: string) => {
@@ -107,7 +107,7 @@ const MnemoschemaTabContent = () => {
         }
         const pumpBladesGroupNumber = [1, 2];
         pumpBladesGroupNumber.forEach(i => {
-            const pumpBlades = document.querySelector(`#pump-${i}-blades`);
+            const pumpBlades = mnemoschemaElement.querySelector(`#pump-${i}-blades`);
 
             const pumpBladesAnimation = pumpBlades?.querySelector('animateTransform') as SVGAnimateElement;
             const blades: NodeListOf<SVGLineElement> | undefined = pumpBlades?.querySelectorAll('line');
@@ -128,18 +128,6 @@ const MnemoschemaTabContent = () => {
         });
     }, [deviceState]);
 
-    const stateSetup = useCallback(() => {
-        startStopPumpsHandler()
-        levelSensorsHandler();
-        faultPumpHandler();
-    }, [faultPumpHandler, levelSensorsHandler, startStopPumpsHandler]);
-
-    useEffect(() => {
-        setTimeout(() => {
-            stateSetup();
-        }, 10);
-    }, [stateSetup]);
-
     return (
         <>
             {deviceState ?
@@ -157,6 +145,11 @@ const MnemoschemaTabContent = () => {
                     if (isSmall || isXSmall) {
                         mnemoschemaElement.style.flex = '1';
                     }
+                    levelSensorsHandler(mnemoschemaElement);
+                    faultPumpHandler(mnemoschemaElement);
+                }}
+                onAfterMount={(mnemoschemaElement: HTMLElement) => {
+                    startStopPumpsHandler(mnemoschemaElement);
                 }}
             />
         </>

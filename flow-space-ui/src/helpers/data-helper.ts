@@ -1,39 +1,53 @@
-export function getKeyValuePairs(data: any): { key: string, value: any }[] {
-    const dataStateAttrNames: { key: string, value: any }[] = [];
+export type PropertiesChainValuePairModel = {
+    propertiesChain: string;
+    value: any;
+    arrayIndex?: number;
+}
 
-    const collectKeyValuePairs = (data: any, s: string = "") => {
+export function getKeyValuePairs(data: any): PropertiesChainValuePairModel[] {
+    const propertiesChainValuePairs: PropertiesChainValuePairModel[] = [];
+
+    const collectKeyValuePairs = (data: any, s: string = '', arrayIndex?: number) => {
         Object.keys(data).forEach(k => {
             const value = data[k];
             if (Array.isArray(value)) {
                 value.forEach((_, i) => {
                     const vv = value[i];
                     if (typeof vv === 'object' && vv !== null) {
-                        collectKeyValuePairs(vv, `${k}[${i}].`);
+                        collectKeyValuePairs(vv, `${k}[${i}].`, i);
                     }
                 });
             } else if (typeof value === 'object' && value !== null) {
-                collectKeyValuePairs(value, `${k}.`);
+                collectKeyValuePairs(value, `${k}.`, arrayIndex);
             } else {
-                dataStateAttrNames.push({ key: `${s}${k}`, value: value });
+                propertiesChainValuePairs.push({ propertiesChain: `${s}${k}`, value: value, arrayIndex: arrayIndex });
             }
         });
     };
 
     collectKeyValuePairs(data);
 
-    return dataStateAttrNames;
+    return propertiesChainValuePairs;
 }
 
-export const getSchemaTypeInfo = (chain: string, subschema: any, schema?: any): { typeName: string, unit: string | undefined } | undefined => {
+export type SchemaTypeInfoModel = {
+    typeName: string,
+    unit?: string;
+    dimension?: number;
+    ui?: any;
+    isEnum?: boolean;
+};
+
+export const getSchemaTypeInfo = (propertiesChain: string, subschema: any, schema?: any): SchemaTypeInfoModel | undefined => {
     // eslint-disable-next-line prefer-const
-    let [propName, ...restProps] = chain.split('.');
+    let [propName, ...restProps] = propertiesChain.split('.');
     const restChain = restProps.join('.');
     propName = propName.split('[')[0];
     const prop = subschema.properties[propName];
     if (prop) {
         schema = schema || subschema;
-        if (['number', 'integer', 'string'].includes(prop.type)) {
-            return { typeName: prop.type, unit: prop.unit };
+        if (['number', 'integer', 'string', 'boolean'].includes(prop.type)) {
+            return { typeName: prop.type, unit: prop.unit, dimension: prop.dimension, ui: prop.ui };
         } else if (prop.type === 'array') {
             const typeRef = prop.items.$ref;
             if (typeRef) {
@@ -43,7 +57,11 @@ export const getSchemaTypeInfo = (chain: string, subschema: any, schema?: any): 
                     return getSchemaTypeInfo(restChain, objectSchema, schema)
                 }
             } else {
-                return { typeName: prop.items.type, unit: prop.items.unit };
+                return {
+                    typeName: prop.items.type,
+                    unit: prop.items.unit,
+                    dimension: prop.items.dimension
+                };
             }
         } else if (!prop.type && prop.$ref) {
             const typeRef = prop.$ref;
@@ -52,7 +70,14 @@ export const getSchemaTypeInfo = (chain: string, subschema: any, schema?: any): 
             if (restChain) {
                 return getSchemaTypeInfo(restChain, objectSchema, schema)
             } else {
-                return { typeName: typeName, unit: prop.unit };
+                const isEnum = !!schema.$defs[typeName] && !!schema.$defs[typeName].enum;
+                return {
+                    typeName: typeName,
+                    unit: prop.unit,
+                    dimension: prop.dimension,
+                    ui: prop.ui,
+                    isEnum: isEnum
+                };
             }
         }
     }
