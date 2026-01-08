@@ -1,5 +1,5 @@
 import Ajv from 'ajv/dist/2020';
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import type { DeviceModel } from '../../models/flows/device-model';
 import type { DeviceStateModel } from '../../models/flows/device-state-model';
 import { useAppData } from '../../contexts/app-data/app-data';
@@ -8,7 +8,7 @@ import { proclaim } from '../../utils/proclaim';
 
 import './dashboard-page-content.scss';
 import { getQuickGuid } from '../../utils/uuid';
-import { getKeyValuePairs, type PropertiesChainValuePairModel } from '../../helpers/data-helper';
+import { getKeyValuePairs, getSchemaTypeInfo, type SchemaTypeInfoPropertiesChainModel } from '../../helpers/data-helper';
 import type { DictionaryBaseModel } from '../../models/abstractions/dictionary-base-model';
 
 export type DashboardPageContextModel = {
@@ -20,7 +20,7 @@ export type DashboardPageContextModel = {
     updateSharedStateRefreshToken: string;
     setUpdateSharedStateRefreshToken: React.Dispatch<React.SetStateAction<string>>;
 
-    statePropertiesChainValuePairs: PropertiesChainValuePairModel[] | undefined;
+    schemaTypeInfoPropertiesChain: SchemaTypeInfoPropertiesChainModel[] | undefined;
     registryEnums: Record<string, DictionaryBaseModel[]>;
 };
 
@@ -38,22 +38,50 @@ function DashboardPageContextProvider(props: any) {
     const [updateSharedStateRefreshToken, setUpdateSharedStateRefreshToken] = useState<string>(getQuickGuid());
     const [registryEnums, setRegistryEnums] = useState<Record<string, DictionaryBaseModel[]>>({});
 
-    const statePropertiesChainValuePairs = useMemo(() => {
-        if (deviceState) {
+    const schemaTypeInfoPropertiesChain = useMemo(() => {
+        if (deviceState && dataschema) {
             return getKeyValuePairs(deviceState.state)
+                .map(p => {
+                    const typeInfo = getSchemaTypeInfo(p.propertiesChain, dataschema);
+                    return { typeInfo: typeInfo, propertiesChainValuePair: p };
+                })
+                .filter(({ typeInfo }) => !!typeInfo && !!typeInfo.ui)
         }
-    }, [deviceState]);
+    }, [dataschema, deviceState]);
+
+    const getState = useCallback((state: any, schema: any): any => {
+        if (state && schema) {
+            getKeyValuePairs(state).forEach(p => {
+                if (typeof p.value === 'number' && Number.isFinite(p.value)) {
+                    const typeInfo = getSchemaTypeInfo(p.propertiesChain, schema);
+                    if (typeInfo && typeInfo.isEnum !== true && typeInfo.dimension) {
+                        // debugger
+                        eval(`state.${p.propertiesChain} = ${p.value * typeInfo.dimension}`);
+                    }
+                }
+            });
+        }
+    }, []);
 
     useEffect(() => {
         (async () => {
 
             if (deviceId) {
-                const [device, deviceState, mnemoschema, dataschema] = await Promise.all([
+                const results = await Promise.allSettled([
                     getDeviceAsync(parseInt(deviceId)),
                     getDeviceStateAsync(parseInt(deviceId)),
                     getMnemoschemaAsync(parseInt(deviceId)),
                     getDeviceStateDataschemaAsync(parseInt(deviceId)),
                 ])
+
+                const [device, deviceState, mnemoschema, dataschema] = results.map(r => {
+                    return r.status === 'fulfilled' ? r.value : null
+                });
+
+                if (deviceState && dataschema) {
+                    getState(deviceState.state, dataschema);
+                }
+
                 if (device) {
                     setDevice(device);
                 }
@@ -68,7 +96,7 @@ function DashboardPageContextProvider(props: any) {
                 }
             }
         })();
-    }, [deviceId, flowCode, getDeviceAsync, getDeviceStateAsync, getDeviceStateDataschemaAsync, getMnemoschemaAsync, updateSharedStateRefreshToken]);
+    }, [deviceId, flowCode, getDeviceAsync, getDeviceStateAsync, getDeviceStateDataschemaAsync, getMnemoschemaAsync, getState, updateSharedStateRefreshToken]);
 
     useEffect(() => {
         if (!dataschema) {
@@ -116,9 +144,9 @@ function DashboardPageContextProvider(props: any) {
             if (!deviceId) {
                 return;
             }
-
             const deviceState = await getDeviceStateAsync(parseInt(deviceId));
-            if (deviceState) {
+            if (deviceState && dataschema) {
+                getState(deviceState.state, dataschema);
                 setDeviceState(deviceState);
             }
         }, 60000);
@@ -128,12 +156,11 @@ function DashboardPageContextProvider(props: any) {
                 clearInterval(timer);
             }
         }
-    }, [deviceId, getDeviceStateAsync]);
+    }, [dataschema, deviceId, getDeviceStateAsync, getState]);
 
     useEffect(() => {
         if (dataschema && dataschema.$defs) {
             const registryEnums = {} as Record<string, DictionaryBaseModel[]>;
-
             Object
                 .keys(dataschema.$defs)
                 .filter(k => {
@@ -161,7 +188,7 @@ function DashboardPageContextProvider(props: any) {
             updateSharedStateRefreshToken,
             setUpdateSharedStateRefreshToken,
 
-            statePropertiesChainValuePairs,
+            schemaTypeInfoPropertiesChain,
             registryEnums
         }} {...props} />
     );

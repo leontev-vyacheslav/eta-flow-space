@@ -3,14 +3,14 @@ import { useCallback, useMemo } from "react";
 import { useScreenSize } from "../../../../utils/media-query";
 import { useDashboardPage } from "../../dashboard-page-context";
 import { CheckedIcon, LocationIcon, UncheckedIcon } from "../../../../constants/app-icons";
-import { getSchemaTypeInfo, type PropertiesChainValuePairModel, type SchemaTypeInfoModel } from "../../../../helpers/data-helper";
+import { type PropertiesChainValuePairModel, type SchemaTypeInfoModel, type SchemaTypeInfoPropertiesChainModel } from "../../../../helpers/data-helper";
 
 export const MapPopupContent = () => {
     const { isXSmall } = useScreenSize();
-    const { deviceState, dataschema, device, statePropertiesChainValuePairs } = useDashboardPage();
+    const { deviceState, dataschema, device, schemaTypeInfoPropertiesChain } = useDashboardPage();
 
     const renderStateValueByPropertiesChain = useCallback((typeInfo: SchemaTypeInfoModel, propertiesChain: PropertiesChainValuePairModel) => {
-        let value = propertiesChain.value;
+        const value = propertiesChain.value;
 
         if (typeInfo.typeName === 'boolean') {
             if (value === true) {
@@ -26,9 +26,6 @@ export const MapPopupContent = () => {
         }
 
         if ((typeInfo as any)["format"] !== 'date-time' && (['integer', 'float', 'number'].includes(typeInfo.typeName)) && value !== undefined) {
-            if (typeInfo.dimension) {
-                value = value * typeInfo.dimension
-            }
             if (typeInfo?.unit) {
                 return `${value} ${typeInfo?.unit}`;
             }
@@ -48,25 +45,20 @@ export const MapPopupContent = () => {
     }, [dataschema]);
 
     const controlDefinitions = useMemo(() => {
-        if (dataschema && statePropertiesChainValuePairs) {
+        if (dataschema && schemaTypeInfoPropertiesChain) {
             const groups = dataschema.ui?.groups;
             const groupped =
-                statePropertiesChainValuePairs
-                ?.map(p => {
-                    const typeInfo = getSchemaTypeInfo(p.propertiesChain, dataschema);
-                    return { typeInfo: typeInfo!, propertiesChainValuePair: p };
-                })
-                .filter(({ typeInfo }) => !!typeInfo && !!typeInfo.ui)
-                .reduce((acc, item) => {
-                    const key = groups?.find((g: { id: number; }) => g.id === item.typeInfo!.ui.group)?.name || item.typeInfo!.ui.grop;
-                    acc[key] = acc[key] || [];
-                    acc[key].push(item);
+                schemaTypeInfoPropertiesChain
+                    .reduce((acc, item) => {
+                        const key = groups?.find((g: { id: number; }) => g.id === item.typeInfo!.ui.group)?.id || item.typeInfo!.ui.grop;
+                        acc[key] = acc[key] || [];
+                        acc[key].push(item);
 
-                    return acc;
-                }, {} as Record<string, { typeInfo: SchemaTypeInfoModel, propertiesChainValuePair: PropertiesChainValuePairModel }[]>)
+                        return acc;
+                    }, {} as Record<string, SchemaTypeInfoPropertiesChainModel[]>)
             return groupped;
         }
-    }, [dataschema, statePropertiesChainValuePairs]);
+    }, [dataschema, schemaTypeInfoPropertiesChain]);
 
     return (
         deviceState ?
@@ -92,7 +84,7 @@ export const MapPopupContent = () => {
                         <tbody>
                             {
                                 controlDefinitions && Object.keys(controlDefinitions).map((groupKey) => {
-                                    const group = dataschema?.ui?.groups?.find((g: { name: string; }) => g.name === groupKey);
+                                    const group = dataschema?.ui?.groups?.find((g: {id: number, name: string; }) => g.id.toString() === groupKey);
                                     return (
                                         <>
                                             <tr key={groupKey} style={{ backgroundColor: '#f0f0f0' }}>

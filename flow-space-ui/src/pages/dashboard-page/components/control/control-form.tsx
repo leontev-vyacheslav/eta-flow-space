@@ -5,54 +5,43 @@ import { formatMessage } from 'devextreme/localization';
 import { useMemo, useRef } from 'react';
 import { useDashboardPage } from '../../dashboard-page-context';
 import type { ControlFormProps } from '../../models/control-form-props';
-import { getSchemaTypeInfo } from '../../../../helpers/data-helper';
 
 import './control-form.scss';
 
 export const ControlForm = ({ onFieldDataChanged }: ControlFormProps) => {
-    const { deviceState, isValidDeviceState, dataschema, statePropertiesChainValuePairs,registryEnums } = useDashboardPage();
+    const { deviceState, isValidDeviceState, dataschema, registryEnums, schemaTypeInfoPropertiesChain } = useDashboardPage();
     const dxControlFormRef = useRef<Form>(null);
 
     const controlDefinitions = useMemo(() => {
-        if (dataschema && statePropertiesChainValuePairs) {
+        if (dataschema && schemaTypeInfoPropertiesChain) {
             const groups = dataschema.ui?.groups;
             const grouped =
-                statePropertiesChainValuePairs
-                    .map(p => {
-                        const typeInfo = getSchemaTypeInfo(p.propertiesChain, dataschema);
-                        return { typeInfo: typeInfo, propertiesChainValuePair: p };
-                    })
-                    .filter(({ typeInfo }) => !!typeInfo && !!typeInfo.ui)
+                schemaTypeInfoPropertiesChain
                     .map(({ typeInfo, propertiesChainValuePair }) => {
-
+                        const ui = { ...typeInfo!.ui };
                         if (propertiesChainValuePair.arrayIndex !== undefined) {
-                            typeInfo!.ui = {
-                                ...typeInfo!.ui,
-                                label: {
-                                    ...typeInfo!.ui.label,
-                                    text: `${typeInfo!.ui.label.text} ${propertiesChainValuePair.arrayIndex + 1}`
-                                }
+                            ui.label = {
+                                ...ui.label,
+                                text: `${ui.label.text} ${propertiesChainValuePair.arrayIndex + 1}`
                             }
                         }
                         if (typeInfo?.isEnum) {
-                            typeInfo!.ui = {
-                                ...typeInfo!.ui,
-                                editorOptions: {
-                                    ...typeInfo!.ui.editorOptions,
-                                    items: registryEnums[typeInfo.typeName]
-                                }
+                            ui.editorOptions = {
+                                ...ui.editorOptions,
+                                items: registryEnums[typeInfo.typeName]
                             }
                         }
+
                         return {
                             id: propertiesChainValuePair.propertiesChain,
                             dataField: propertiesChainValuePair.propertiesChain,
-                            ui: typeInfo!.ui,
-                            group: typeInfo!.ui.group,
-                            isEnum: typeInfo!.isEnum
+                            ui: ui,
+                            group: ui.group,
+                            isEnum: ui.isEnum
                         }
                     })
                     .reduce((acc, item) => {
-                        const key = groups?.find((g: { id: number; }) => g.id === item.group)?.name || item.group;
+                        const key = groups?.find((g: { id: number; }) => g.id === item.group)?.id || item.group;
                         acc[key] = acc[key] || [];
                         acc[key].push(item);
 
@@ -61,7 +50,7 @@ export const ControlForm = ({ onFieldDataChanged }: ControlFormProps) => {
 
             return grouped;
         }
-    }, [dataschema, registryEnums, statePropertiesChainValuePairs]);
+    }, [dataschema, registryEnums, schemaTypeInfoPropertiesChain]);
 
     return (deviceState?.state ?
         <Form
@@ -74,8 +63,9 @@ export const ControlForm = ({ onFieldDataChanged }: ControlFormProps) => {
             disabled={!isValidDeviceState}
             onFieldDataChanged={onFieldDataChanged}
         >
-            {controlDefinitions && Object.keys(controlDefinitions).map((groupKey) => {
-                const group = dataschema?.ui?.groups?.find((g: { name: string; }) => g.name === groupKey);
+
+            { controlDefinitions && Object.keys(controlDefinitions).map((groupKey) => {
+                const group = dataschema?.ui?.groups?.find((g: {id: number, name: string; }) => g.id.toString() === groupKey);
 
                 return (
                     <GroupItem key={group.id} caption={group.caption} >

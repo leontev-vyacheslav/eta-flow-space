@@ -840,7 +840,21 @@
       "type": "object",
       "properties": {
         "status": {
-          "$ref": "#/$defs/ValveStatus"
+          "$ref": "#/$defs/ValveStatus",
+          "ui": {
+            "editorType": "dxSelectBox",
+            "group": 6,
+            "label": {
+              "location": "top",
+              "showColon": true,
+              "text": "Режим работы задвижки"
+            },
+            "editorOptions": {
+              "readOnly": false,
+              "valueExpr": "id",
+              "displayExpr": "description"
+            }
+          }
         }
       },
       "required": [
@@ -902,6 +916,11 @@
         "id": 5,
         "name": "flaps",
         "caption": "Клапаны"
+      },
+      {
+        "id": 6,
+        "name": "valves",
+        "caption": "Задвижки"
       }
     ]
   }

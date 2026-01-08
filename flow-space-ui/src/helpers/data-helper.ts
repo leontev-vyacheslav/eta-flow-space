@@ -38,6 +38,12 @@ export type SchemaTypeInfoModel = {
     isEnum?: boolean;
 };
 
+
+export type SchemaTypeInfoPropertiesChainModel = {
+    typeInfo?: SchemaTypeInfoModel;
+    propertiesChainValuePair: PropertiesChainValuePairModel
+}
+
 export const getSchemaTypeInfo = (propertiesChain: string, subschema: any, schema?: any): SchemaTypeInfoModel | undefined => {
     // eslint-disable-next-line prefer-const
     let [propName, ...restProps] = propertiesChain.split('.');
@@ -82,3 +88,4 @@ export const getSchemaTypeInfo = (propertiesChain: string, subschema: any, schem
         }
     }
 };
+
