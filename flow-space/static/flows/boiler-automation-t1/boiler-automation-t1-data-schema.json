@@ -8,15 +8,17 @@
       "unit": "°C",
       "dimension": 0.01,
       "ui": {
-        "editorType": "dxNumberBox",
         "group": 1,
-        "label": {
-          "location": "top",
-          "showColon": true,
-          "text": "Температура в котельной"
-        },
-        "editorOptions": {
-          "readOnly": true
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Температура в котельной"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
         }
       }
     },
@@ -25,15 +27,17 @@
       "unit": "°C",
       "dimension": 0.01,
       "ui": {
-        "editorType": "dxNumberBox",
         "group": 1,
-        "label": {
-          "location": "top",
-          "showColon": true,
-          "text": "Температура наружная"
-        },
-        "editorOptions": {
-          "readOnly": true
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Температура наружная"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
         }
       }
     },
@@ -42,15 +46,17 @@
       "unit": "°C",
       "dimension": 0.01,
       "ui": {
-        "editorType": "dxNumberBox",
         "group": 1,
-        "label": {
-          "location": "top",
-          "showColon": true,
-          "text": "Температура на обратке сетевого контура"
-        },
-        "editorOptions": {
-          "readOnly": true
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Температура на обратке сетевого контура"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
         }
       }
     },
@@ -59,15 +65,17 @@
       "unit": "°C",
       "dimension": 0.01,
       "ui": {
-        "editorType": "dxNumberBox",
         "group": 1,
-        "label": {
-          "location": "top",
-          "showColon": true,
-          "text": "Температура на подаче сетевого контура"
-        },
-        "editorOptions": {
-          "readOnly": true
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Температура на подаче сетевого контура"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
         }
       }
     },
@@ -76,15 +84,17 @@
       "unit": "кПа",
       "dimension": 0.01,
       "ui": {
-        "editorType": "dxNumberBox",
         "group": 1,
-        "label": {
-          "location": "top",
-          "showColon": true,
-          "text": "Давление газа"
-        },
-        "editorOptions": {
-          "readOnly": true
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Давление газа"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
         }
       }
     },
@@ -93,15 +103,17 @@
       "unit": "бар",
       "dimension": 0.01,
       "ui": {
-        "editorType": "dxNumberBox",
         "group": 1,
-        "label": {
-          "location": "top",
-          "showColon": true,
-          "text": "Давление на обратке сетевого контура"
-        },
-        "editorOptions": {
-          "readOnly": true
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Давление на обратке сетевого контура"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
         }
       }
     },
@@ -110,15 +122,17 @@
       "unit": "бар",
       "dimension": 0.01,
       "ui": {
-        "editorType": "dxNumberBox",
         "group": 1,
-        "label": {
-          "location": "top",
-          "showColon": true,
-          "text": "Давление на подаче сетевого контура"
-        },
-        "editorOptions": {
-          "readOnly": true
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Давление на подаче сетевого контура"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
         }
       }
     },
@@ -127,15 +141,17 @@
       "unit": "бар",
       "dimension": 0.01,
       "ui": {
-        "editorType": "dxNumberBox",
         "group": 1,
-        "label": {
-          "location": "top",
-          "showColon": true,
-          "text": "Давление на выходе насосов исходной воды"
-        },
-        "editorOptions": {
-          "readOnly": true
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Давление на выходе насосов исходной воды"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
         }
       }
     },
@@ -144,15 +160,17 @@
       "unit": "%",
       "dimension": 0.01,
       "ui": {
-        "editorType": "dxNumberBox",
         "group": 1,
-        "label": {
-          "location": "top",
-          "showColon": true,
-          "text": "Уровень ДТ в баке 1"
-        },
-        "editorOptions": {
-          "readOnly": true
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Уровень ДТ в баке 1"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
         }
       }
     },
@@ -161,15 +179,138 @@
       "unit": "%",
       "dimension": 0.01,
       "ui": {
-        "editorType": "dxNumberBox",
         "group": 1,
-        "label": {
-          "location": "top",
-          "showColon": true,
-          "text": "Уровень ДТ в баке 2"
-        },
-        "editorOptions": {
-          "readOnly": true
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Уровень ДТ в баке 2"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    
+    "isOffInput1": {
+      "type": "boolean",
+      "ui": {
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "none": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isCO1": {
+      "type": "boolean",
+      "ui": {
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "none": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isCH1": {
+      "type": "boolean",
+      "ui": {
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "none": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isCO2": {
+      "type": "boolean",
+      "ui": {
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "none": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isCH2": {
+      "type": "boolean",
+      "ui": {
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "none": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isGasFlap": {
+      "type": "boolean",
+      "ui": {
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "none": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isVapor1": {
+      "type": "boolean",
+      "ui": {
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "none": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isVapor2": {
+      "type": "boolean",
+      "ui": {
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "none": false
+              }
+            }
+          ]
         }
       }
     },
@@ -256,66 +397,74 @@
           "unit": "%",
           "dimension": 0.01,
           "ui": {
-            "editorType": "dxNumberBox",
             "group": 2,
-            "label": {
-              "location": "top",
-              "showColon": true,
-              "text": "Мощность горелки котла"
-            },
-            "editorOptions": {
-              "readOnly": false
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Мощность горелки котла"
+              },
+              "editorOptions": {
+                "readOnly": false
+              }
             }
           }
         },
         "mode": {
           "$ref": "#/$defs/WorkMode",
           "ui": {
-            "editorType": "dxSelectBox",
             "group": 2,
-            "label": {
-              "location": "top",
-              "showColon": true,
-              "text": "Режим работы котла"
-            },
-            "editorOptions": {
-              "readOnly": false,
-              "valueExpr": "id",
-              "displayExpr": "description"
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Режим работы котла"
+              },
+              "editorOptions": {
+                "readOnly": false,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
             }
           }
         },
         "status": {
           "$ref": "#/$defs/BoilerStatus",
           "ui": {
-            "editorType": "dxSelectBox",
             "group": 2,
-            "label": {
-              "location": "top",
-              "showColon": true,
-              "text": "Состояние котла"
-            },
-            "editorOptions": {
-              "readOnly": false,
-              "valueExpr": "id",
-              "displayExpr": "description"
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Состояние котла"
+              },
+              "editorOptions": {
+                "readOnly": false,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
             }
           }
         },
         "alarm": {
           "$ref": "#/$defs/BoilerAlarm",
           "ui": {
-            "editorType": "dxSelectBox",
             "group": 2,
-            "label": {
-              "location": "top",
-              "showColon": true,
-              "text": "Авария котла"
-            },
-            "editorOptions": {
-              "readOnly": false,
-              "valueExpr": "id",
-              "displayExpr": "description"
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Авария котла"
+              },
+              "editorOptions": {
+                "readOnly": false,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
             }
           }
         }
@@ -393,17 +542,19 @@
         "mode": {
           "$ref": "#/$defs/FlapMode",
           "ui": {
-            "editorType": "dxSelectBox",
             "group": 5,
-            "label": {
-              "location": "top",
-              "showColon": true,
-              "text": "Режим работы клапана"
-            },
-            "editorOptions": {
-              "readOnly": false,
-              "valueExpr": "id",
-              "displayExpr": "description"
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Режим работы клапана"
+              },
+              "editorOptions": {
+                "readOnly": false,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
             }
           }
         }
@@ -431,117 +582,131 @@
           "unit": "Гц",
           "dimension": 0.01,
           "ui": {
-            "editorType": "dxNumberBox",
             "group": 3,
-            "label": {
-              "location": "top",
-              "showColon": true,
-              "text": "Задание частоты сетевого насоса"
-            },
-            "editorOptions": {
-              "readOnly": true
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Задание частоты сетевого насоса"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
             }
           }
         },
         "mode": {
           "$ref": "#/$defs/WorkMode",
           "ui": {
-            "editorType": "dxSelectBox",
             "group": 3,
-            "label": {
-              "location": "top",
-              "showColon": true,
-              "text": "Режим работы сетевого насоса"
-            },
-            "editorOptions": {
-              "readOnly": false,
-              "valueExpr": "id",
-              "displayExpr": "description"
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Режим работы сетевого насоса"
+              },
+              "editorOptions": {
+                "readOnly": false,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
             }
           }
         },
         "status": {
           "$ref": "#/$defs/NetworkPumpStatus",
           "ui": {
-            "editorType": "dxSelectBox",
             "group": 3,
-            "label": {
-              "location": "top",
-              "showColon": true,
-              "text": "Состояние сетевого насоса"
-            },
-            "editorOptions": {
-              "readOnly": false,
-              "valueExpr": "id",
-              "displayExpr": "description"
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Состояние сетевого насоса"
+              },
+              "editorOptions": {
+                "readOnly": false,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
             }
           }
         },
         "alarm": {
           "$ref": "#/$defs/NetworkPumpAlarm",
           "ui": {
-            "editorType": "dxSelectBox",
             "group": 3,
-            "label": {
-              "location": "top",
-              "showColon": true,
-              "text": "Авария сетевого насоса"
-            },
-            "editorOptions": {
-              "readOnly": false,
-              "valueExpr": "id",
-              "displayExpr": "description"
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Авария сетевого насоса"
+              },
+              "editorOptions": {
+                "readOnly": false,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
             }
           }
         },
         "modeFc": {
           "$ref": "#/$defs/WorkMode",
           "ui": {
-            "editorType": "dxSelectBox",
             "group": 3,
-            "label": {
-              "location": "top",
-              "showColon": true,
-              "text": "Режим ЧРП сетевого насоса"
-            },
-            "editorOptions": {
-              "readOnly": false,
-              "valueExpr": "id",
-              "displayExpr": "description"
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Режим ЧРП сетевого насоса"
+              },
+              "editorOptions": {
+                "readOnly": false,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
             }
           }
         },
         "statusFc": {
           "$ref": "#/$defs/VariableFrequencyDriveStatus",
           "ui": {
-            "editorType": "dxSelectBox",
             "group": 3,
-            "label": {
-              "location": "top",
-              "showColon": true,
-              "text": "Статус ЧРП сетевого насоса"
-            },
-            "editorOptions": {
-              "readOnly": false,
-              "valueExpr": "id",
-              "displayExpr": "description"
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Статус ЧРП сетевого насоса"
+              },
+              "editorOptions": {
+                "readOnly": false,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
             }
           }
         },
         "alarmFc": {
           "$ref": "#/$defs/VariableFrequencyDriveAlarm",
           "ui": {
-            "editorType": "dxSelectBox",
             "group": 3,
-            "label": {
-              "location": "top",
-              "showColon": true,
-              "text": "Авария ЧРП сетевого насоса"
-            },
-            "editorOptions": {
-              "readOnly": false,
-              "valueExpr": "id",
-              "displayExpr": "description"
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Авария ЧРП сетевого насоса"
+              },
+              "editorOptions": {
+                "readOnly": false,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
             }
           }
         }
@@ -564,117 +729,131 @@
           "unit": "Гц",
           "dimension": 0.01,
           "ui": {
-            "editorType": "dxNumberBox",
             "group": 4,
-            "label": {
-              "location": "top",
-              "showColon": true,
-              "text": "Задание частоты насоса исх. воды"
-            },
-            "editorOptions": {
-              "readOnly": true
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Задание частоты насоса исх. воды"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
             }
           }
         },
         "mode": {
           "$ref": "#/$defs/WorkMode",
           "ui": {
-            "editorType": "dxSelectBox",
             "group": 4,
-            "label": {
-              "location": "top",
-              "showColon": true,
-              "text": "Режим работы насоса исх. воды"
-            },
-            "editorOptions": {
-              "readOnly": false,
-              "valueExpr": "id",
-              "displayExpr": "description"
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Режим работы насоса исх. воды"
+              },
+              "editorOptions": {
+                "readOnly": false,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
             }
           }
         },
         "status": {
           "$ref": "#/$defs/NetworkPumpStatus",
           "ui": {
-            "editorType": "dxSelectBox",
             "group": 4,
-            "label": {
-              "location": "top",
-              "showColon": true,
-              "text": "Состояние насоса исх. воды"
-            },
-            "editorOptions": {
-              "readOnly": false,
-              "valueExpr": "id",
-              "displayExpr": "description"
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Состояние насоса исх. воды"
+              },
+              "editorOptions": {
+                "readOnly": false,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
             }
           }
         },
         "alarm": {
           "$ref": "#/$defs/NetworkPumpAlarm",
           "ui": {
-            "editorType": "dxSelectBox",
             "group": 4,
-            "label": {
-              "location": "top",
-              "showColon": true,
-              "text": "Авария насоса исх. воды"
-            },
-            "editorOptions": {
-              "readOnly": false,
-              "valueExpr": "id",
-              "displayExpr": "description"
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Авария насоса исх. воды"
+              },
+              "editorOptions": {
+                "readOnly": false,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
             }
           }
         },
         "modeFc": {
           "$ref": "#/$defs/WorkMode",
           "ui": {
-            "editorType": "dxSelectBox",
             "group": 4,
-            "label": {
-              "location": "top",
-              "showColon": true,
-              "text": "Режим ЧРП насоса исх. воды"
-            },
-            "editorOptions": {
-              "readOnly": false,
-              "valueExpr": "id",
-              "displayExpr": "description"
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Режим ЧРП насоса исх. воды"
+              },
+              "editorOptions": {
+                "readOnly": false,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
             }
           }
         },
         "statusFc": {
           "$ref": "#/$defs/VariableFrequencyDriveStatus",
           "ui": {
-            "editorType": "dxSelectBox",
             "group": 4,
-            "label": {
-              "location": "top",
-              "showColon": true,
-              "text": "Статус ЧРП насоса исх. воды"
-            },
-            "editorOptions": {
-              "readOnly": false,
-              "valueExpr": "id",
-              "displayExpr": "description"
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Статус ЧРП насоса исх. воды"
+              },
+              "editorOptions": {
+                "readOnly": false,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
             }
           }
         },
         "alarmFc": {
           "$ref": "#/$defs/VariableFrequencyDriveAlarm",
           "ui": {
-            "editorType": "dxSelectBox",
             "group": 4,
-            "label": {
-              "location": "top",
-              "showColon": true,
-              "text": "Авария ЧРП насоса исх. воды"
-            },
-            "editorOptions": {
-              "readOnly": false,
-              "valueExpr": "id",
-              "displayExpr": "description"
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Авария ЧРП насоса исх. воды"
+              },
+              "editorOptions": {
+                "readOnly": false,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
             }
           }
         }
@@ -842,17 +1021,19 @@
         "status": {
           "$ref": "#/$defs/ValveStatus",
           "ui": {
-            "editorType": "dxSelectBox",
             "group": 6,
-            "label": {
-              "location": "top",
-              "showColon": true,
-              "text": "Режим работы задвижки"
-            },
-            "editorOptions": {
-              "readOnly": false,
-              "valueExpr": "id",
-              "displayExpr": "description"
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Режим работы задвижки"
+              },
+              "editorOptions": {
+                "readOnly": false,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
             }
           }
         }

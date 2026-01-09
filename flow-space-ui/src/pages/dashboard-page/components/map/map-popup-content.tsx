@@ -49,8 +49,9 @@ export const MapPopupContent = () => {
             const groups = dataschema.ui?.groups;
             const groupped =
                 schemaTypeInfoPropertiesChain
+                    .filter(p => (!!p.typeInfo?.ui.editor))
                     .reduce((acc, item) => {
-                        const key = groups?.find((g: { id: number; }) => g.id === item.typeInfo!.ui.group)?.id || item.typeInfo!.ui.grop;
+                        const key = groups?.find((g: { id: number; }) => g.id === item.typeInfo!.ui.group)?.id || item.typeInfo!.ui.group;
                         acc[key] = acc[key] || [];
                         acc[key].push(item);
 
@@ -93,7 +94,8 @@ export const MapPopupContent = () => {
                                             {
                                                 controlDefinitions[groupKey].map(({ typeInfo, propertiesChainValuePair }) => {
                                                     const valueContent = renderStateValueByPropertiesChain(typeInfo!, propertiesChainValuePair);
-                                                    const label = propertiesChainValuePair.arrayIndex !== undefined ? `${typeInfo!.ui.label.text} ${propertiesChainValuePair.arrayIndex + 1}` : typeInfo!.ui.label.text;
+                                                    const labelText = typeInfo!.ui.editor.label.text;
+                                                    const label = propertiesChainValuePair.arrayIndex !== undefined ? `${labelText} ${propertiesChainValuePair.arrayIndex + 1}` : labelText;
                                                     return (
                                                         !isXSmall ?
                                                             <tr key={propertiesChainValuePair.propertiesChain}>

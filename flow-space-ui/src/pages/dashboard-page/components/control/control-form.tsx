@@ -17,17 +17,18 @@ export const ControlForm = ({ onFieldDataChanged }: ControlFormProps) => {
             const groups = dataschema.ui?.groups;
             const grouped =
                 schemaTypeInfoPropertiesChain
+                    .filter(p => (!!p.typeInfo?.ui.editor))
                     .map(({ typeInfo, propertiesChainValuePair }) => {
-                        const ui = { ...typeInfo!.ui };
+                        const editor = { ...typeInfo!.ui.editor };
                         if (propertiesChainValuePair.arrayIndex !== undefined) {
-                            ui.label = {
-                                ...ui.label,
-                                text: `${ui.label.text} ${propertiesChainValuePair.arrayIndex + 1}`
+                            editor.label = {
+                                ...editor.label,
+                                text: `${editor.label.text} ${propertiesChainValuePair.arrayIndex + 1}`
                             }
                         }
                         if (typeInfo?.isEnum) {
-                            ui.editorOptions = {
-                                ...ui.editorOptions,
+                            editor.editorOptions = {
+                                ...editor.editorOptions,
                                 items: registryEnums[typeInfo.typeName]
                             }
                         }
@@ -35,9 +36,9 @@ export const ControlForm = ({ onFieldDataChanged }: ControlFormProps) => {
                         return {
                             id: propertiesChainValuePair.propertiesChain,
                             dataField: propertiesChainValuePair.propertiesChain,
-                            ui: ui,
-                            group: ui.group,
-                            isEnum: ui.isEnum
+                            editor: editor,
+                            group: typeInfo!.ui.group,
+                            isEnum: typeInfo!.isEnum
                         }
                     })
                     .reduce((acc, item) => {
@@ -64,8 +65,8 @@ export const ControlForm = ({ onFieldDataChanged }: ControlFormProps) => {
             onFieldDataChanged={onFieldDataChanged}
         >
 
-            { controlDefinitions && Object.keys(controlDefinitions).map((groupKey) => {
-                const group = dataschema?.ui?.groups?.find((g: {id: number, name: string; }) => g.id.toString() === groupKey);
+            {controlDefinitions && Object.keys(controlDefinitions).map((groupKey) => {
+                const group = dataschema?.ui?.groups?.find((g: { id: number, name: string; }) => g.id.toString() === groupKey);
 
                 return (
                     <GroupItem key={group.id} caption={group.caption} >
@@ -74,10 +75,10 @@ export const ControlForm = ({ onFieldDataChanged }: ControlFormProps) => {
                                 <SimpleItem
                                     key={item.id}
                                     dataField={item.dataField}
-                                    label={item.ui.label}
-                                    editorType={item.ui.editorType}
-                                    editorOptions={item.ui.editorOptions ? { ...item.ui.editorOptions } : {}}
-                                    cssClass={item.ui.cssClass}
+                                    label={item.editor.label}
+                                    editorType={item.editor.editorType}
+                                    editorOptions={item.editor.editorOptions ? { ...item.editor.editorOptions } : {}}
+                                    cssClass={item.editor.cssClass}
                                 />
                             );
                         })}

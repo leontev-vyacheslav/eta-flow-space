@@ -11,20 +11,36 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
         if (schemaTypeInfoPropertiesChain) {
             schemaTypeInfoPropertiesChain
                 .forEach(({ typeInfo, propertiesChainValuePair }) => {
-                    const element = mnemoschemaElement.querySelector(`[data-state="${propertiesChainValuePair.propertiesChain}"]`);
+                    const element = mnemoschemaElement.querySelector(`[data-state="${propertiesChainValuePair.propertiesChain}"]`) as SVGElement;
                     if (element) {
-                        const unit = typeInfo && typeInfo.unit;
-                       // const dimension = typeInfo && typeInfo.dimension;
                         const value = propertiesChainValuePair.value;
-
-                        if (typeInfo?.isEnum) {
-                            element.innerHTML = dataschema.$defs[typeInfo.typeName].enumDescriptions[value].split(' - ').pop();
+                        if (!typeInfo?.ui.colorizer) {
+                            if (typeInfo?.isEnum) {
+                                element.innerHTML = dataschema.$defs[typeInfo.typeName].enumDescriptions[value].split(' - ').pop();
+                            } else {
+                                const unit = typeInfo && typeInfo.unit;
+                                if (unit) {
+                                    element.innerHTML = `${value} ${unit ? unit : ''}`;
+                                } else {
+                                    element.innerHTML = value;
+                                }
+                            }
                         } else {
-                            if (unit) {
-                                element.innerHTML = `${value} ${unit ? unit : ''}`;
-                            } else
-                                {
-                                element.innerHTML = value;
+                            const styleProps = typeInfo?.ui.colorizer.styleProps;
+                            if (styleProps) {
+                                // "styleProps": [ ... ]
+                                styleProps.forEach((styleProp: any) => {
+                                    Object.keys(styleProp).forEach(stylePropKey => {
+                                        //  "fill": {...}
+                                        const stylePropObj = styleProp[stylePropKey];
+                                        Object.keys(stylePropObj).forEach(k => {
+                                            // "red": true
+                                            if (stylePropObj[k] === value) {
+                                                (element.style as any)[stylePropKey] = k;
+                                            }
+                                        });
+                                    })
+                                })
                             }
                         }
                     }

@@ -49,13 +49,12 @@ function DashboardPageContextProvider(props: any) {
         }
     }, [dataschema, deviceState]);
 
-    const getState = useCallback((state: any, schema: any): any => {
+    const applyDimensionsToState = useCallback((state: any, schema: any): any => {
         if (state && schema) {
             getKeyValuePairs(state).forEach(p => {
                 if (typeof p.value === 'number' && Number.isFinite(p.value)) {
                     const typeInfo = getSchemaTypeInfo(p.propertiesChain, schema);
                     if (typeInfo && typeInfo.isEnum !== true && typeInfo.dimension) {
-                        // debugger
                         eval(`state.${p.propertiesChain} = ${p.value * typeInfo.dimension}`);
                     }
                 }
@@ -79,7 +78,7 @@ function DashboardPageContextProvider(props: any) {
                 });
 
                 if (deviceState && dataschema) {
-                    getState(deviceState.state, dataschema);
+                    applyDimensionsToState(deviceState.state, dataschema);
                 }
 
                 if (device) {
@@ -96,7 +95,7 @@ function DashboardPageContextProvider(props: any) {
                 }
             }
         })();
-    }, [deviceId, flowCode, getDeviceAsync, getDeviceStateAsync, getDeviceStateDataschemaAsync, getMnemoschemaAsync, getState, updateSharedStateRefreshToken]);
+    }, [deviceId, flowCode, getDeviceAsync, getDeviceStateAsync, getDeviceStateDataschemaAsync, getMnemoschemaAsync, applyDimensionsToState, updateSharedStateRefreshToken]);
 
     useEffect(() => {
         if (!dataschema) {
@@ -146,7 +145,7 @@ function DashboardPageContextProvider(props: any) {
             }
             const deviceState = await getDeviceStateAsync(parseInt(deviceId));
             if (deviceState && dataschema) {
-                getState(deviceState.state, dataschema);
+                applyDimensionsToState(deviceState.state, dataschema);
                 setDeviceState(deviceState);
             }
         }, 60000);
@@ -156,7 +155,7 @@ function DashboardPageContextProvider(props: any) {
                 clearInterval(timer);
             }
         }
-    }, [dataschema, deviceId, getDeviceStateAsync, getState]);
+    }, [dataschema, deviceId, getDeviceStateAsync, applyDimensionsToState]);
 
     useEffect(() => {
         if (dataschema && dataschema.$defs) {

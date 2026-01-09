@@ -4,6 +4,18 @@ export type PropertiesChainValuePairModel = {
     arrayIndex?: number;
 }
 
+export type SchemaTypeInfoModel = {
+    typeName: string,
+    unit?: string;
+    dimension?: number;
+    ui?: any;
+    isEnum?: boolean;
+};
+
+export type SchemaTypeInfoPropertiesChainModel = {
+    typeInfo?: SchemaTypeInfoModel;
+    propertiesChainValuePair: PropertiesChainValuePairModel
+}
 export function getKeyValuePairs(data: any): PropertiesChainValuePairModel[] {
     const propertiesChainValuePairs: PropertiesChainValuePairModel[] = [];
 
@@ -28,20 +40,6 @@ export function getKeyValuePairs(data: any): PropertiesChainValuePairModel[] {
     collectKeyValuePairs(data);
 
     return propertiesChainValuePairs;
-}
-
-export type SchemaTypeInfoModel = {
-    typeName: string,
-    unit?: string;
-    dimension?: number;
-    ui?: any;
-    isEnum?: boolean;
-};
-
-
-export type SchemaTypeInfoPropertiesChainModel = {
-    typeInfo?: SchemaTypeInfoModel;
-    propertiesChainValuePair: PropertiesChainValuePairModel
 }
 
 export const getSchemaTypeInfo = (propertiesChain: string, subschema: any, schema?: any): SchemaTypeInfoModel | undefined => {
