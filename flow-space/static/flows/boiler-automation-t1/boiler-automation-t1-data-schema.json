@@ -193,16 +193,31 @@
         }
       }
     },
-    
     "isOffInput1": {
       "type": "boolean",
       "ui": {
+        "group": 0,
+        "editor": {
+          "editorType": "dxSwitch",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Ввод 1 выключен"
+          },
+          "editorOptions": {
+            "readOnly": false
+          }
+        },
         "colorizer": {
           "styleProps": [
             {
               "fill": {
                 "red": true,
                 "none": false
+              },
+              "stroke": {
+                "yellow": true,
+                "black": false
               }
             }
           ]
@@ -212,6 +227,18 @@
     "isCO1": {
       "type": "boolean",
       "ui": {
+        "group": 0,
+        "editor": {
+          "editorType": "dxSwitch",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Газоанализатор СО №1"
+          },
+          "editorOptions": {
+            "readOnly": false
+          }
+        },
         "colorizer": {
           "styleProps": [
             {
@@ -227,6 +254,18 @@
     "isCH1": {
       "type": "boolean",
       "ui": {
+        "group": 0,
+        "editor": {
+          "editorType": "dxSwitch",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Газоанализатор СH №1"
+          },
+          "editorOptions": {
+            "readOnly": false
+          }
+        },
         "colorizer": {
           "styleProps": [
             {
@@ -242,6 +281,18 @@
     "isCO2": {
       "type": "boolean",
       "ui": {
+        "group": 0,
+        "editor": {
+          "editorType": "dxSwitch",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Газоанализатор СО №2"
+          },
+          "editorOptions": {
+            "readOnly": false
+          }
+        },
         "colorizer": {
           "styleProps": [
             {
@@ -257,6 +308,18 @@
     "isCH2": {
       "type": "boolean",
       "ui": {
+        "group": 0,
+        "editor": {
+          "editorType": "dxSwitch",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Газоанализатор СH №2"
+          },
+          "editorOptions": {
+            "readOnly": false
+          }
+        },
         "colorizer": {
           "styleProps": [
             {
@@ -272,6 +335,18 @@
     "isGasFlap": {
       "type": "boolean",
       "ui": {
+        "group": 0,
+        "editor": {
+          "editorType": "dxSwitch",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Клапан газа закрыт"
+          },
+          "editorOptions": {
+            "readOnly": false
+          }
+        },
         "colorizer": {
           "styleProps": [
             {
@@ -284,9 +359,21 @@
         }
       }
     },
-    "isVapor1": {
+    "isVaporDt1": {
       "type": "boolean",
       "ui": {
+        "group": 0,
+        "editor": {
+          "editorType": "dxSwitch",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Пары ДТ 1"
+          },
+          "editorOptions": {
+            "readOnly": false
+          }
+        },
         "colorizer": {
           "styleProps": [
             {
@@ -299,9 +386,21 @@
         }
       }
     },
-    "isVapor2": {
+    "isVaporDt2": {
       "type": "boolean",
       "ui": {
+        "group": 0,
+        "editor": {
+          "editorType": "dxSwitch",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Пары ДТ 2"
+          },
+          "editorOptions": {
+            "readOnly": false
+          }
+        },
         "colorizer": {
           "styleProps": [
             {
@@ -1074,9 +1173,14 @@
   "ui": {
     "groups": [
       {
+        "id": 0,
+        "name": "emergency",
+        "caption": "Аварии"
+      },
+      {
         "id": 1,
         "name": "state",
-        "caption": "Состояние"
+        "caption": "Состояния"
       },
       {
         "id": 2,

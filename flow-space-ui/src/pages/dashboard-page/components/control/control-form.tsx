@@ -26,10 +26,16 @@ export const ControlForm = ({ onFieldDataChanged }: ControlFormProps) => {
                                 text: `${editor.label.text} ${propertiesChainValuePair.arrayIndex + 1}`
                             }
                         }
-                        if (typeInfo?.isEnum) {
+                        if (typeInfo!.isEnum) {
                             editor.editorOptions = {
                                 ...editor.editorOptions,
-                                items: registryEnums[typeInfo.typeName]
+                                items: registryEnums[typeInfo!.typeName]
+                            }
+                        }
+                        if (typeInfo!.unit) {
+                            editor.label = {
+                                ...editor.label,
+                                text: `${editor.label.text} (${typeInfo!.unit})`
                             }
                         }
 
