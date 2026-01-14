@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { Fragment, useCallback, useMemo } from "react";
 
 import { useScreenSize } from "../../../../utils/media-query";
 import { useDashboardPage } from "../../dashboard-page-context";
@@ -84,38 +84,44 @@ export const MapPopupContent = () => {
                         </thead>
                         <tbody>
                             {
-                                controlDefinitions && Object.keys(controlDefinitions).map((groupKey) => {
-                                    const group = dataschema?.ui?.groups?.find((g: {id: number, name: string; }) => g.id.toString() === groupKey);
-                                    return (
-                                        <>
-                                            <tr key={groupKey} style={{ backgroundColor: '#f0f0f0' }}>
-                                                <td colSpan={2} style={{ height: '25px', textAlign: 'center', fontWeight: 'bold' }}> {group.caption}</td>
-                                            </tr>
-                                            {
-                                                controlDefinitions[groupKey].map(({ typeInfo, propertiesChainValuePair }) => {
-                                                    const valueContent = renderStateValueByPropertiesChain(typeInfo!, propertiesChainValuePair);
-                                                    const labelText = typeInfo!.ui.editor.label.text;
-                                                    const label = propertiesChainValuePair.arrayIndex !== undefined ? `${labelText} ${propertiesChainValuePair.arrayIndex + 1}` : labelText;
-                                                    return (
-                                                        !isXSmall ?
-                                                            <tr key={propertiesChainValuePair.propertiesChain}>
-                                                                <td style={{ width: '250px' }}>{label}</td>
-                                                                <td style={{ width: '120px', textAlign: 'center' }}>{valueContent}</td>
-                                                            </tr> :
-                                                            <>
-                                                                <tr>
-                                                                    <td style={{ width: '250px', fontWeight: '600' }}>{label}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td style={{ marginLeft: '10px' }}>{valueContent}</td>
-                                                                </tr>
-                                                            </>
-                                                    )
-                                                })
-                                            }
-                                        </>
-                                    )
-                                })
+                                controlDefinitions && Object.keys(controlDefinitions)
+                                    .sort((a, b) => {
+                                        const groupA = dataschema.ui.groups.find((g: { id: number }) => g.id.toString() === a).order,
+                                            groupB = dataschema.ui.groups.find((g: { id: number }) => g.id.toString() === b).order;
+                                        return (groupA - groupB);
+                                    })
+                                    .map((groupKey) => {
+                                        const group = dataschema?.ui?.groups?.find((g: { id: number, name: string; }) => g.id.toString() === groupKey);
+                                        return (
+                                            <Fragment key={groupKey}>
+                                                <tr key={groupKey} style={{ backgroundColor: '#f0f0f0' }}>
+                                                    <td colSpan={2} style={{ height: '25px', textAlign: 'center', fontWeight: 'bold' }}> {group.caption}</td>
+                                                </tr>
+                                                {
+                                                    controlDefinitions[groupKey].map(({ typeInfo, propertiesChainValuePair }) => {
+                                                        const valueContent = renderStateValueByPropertiesChain(typeInfo!, propertiesChainValuePair);
+                                                        const labelText = typeInfo!.ui.editor.label.text;
+                                                        const label = propertiesChainValuePair.arrayIndex !== undefined ? `${labelText} ${propertiesChainValuePair.arrayIndex + 1}` : labelText;
+                                                        return (
+                                                            !isXSmall ?
+                                                                <tr key={propertiesChainValuePair.propertiesChain}>
+                                                                    <td style={{ width: '250px' }}>{label}</td>
+                                                                    <td style={{ width: '120px', textAlign: 'center' }}>{valueContent}</td>
+                                                                </tr> :
+                                                                <Fragment key={propertiesChainValuePair.propertiesChain}>
+                                                                    <tr >
+                                                                        <td style={{ width: '250px', fontWeight: '600' }}>{label}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style={{ marginLeft: '10px' }}>{valueContent}</td>
+                                                                    </tr>
+                                                                </Fragment>
+                                                        )
+                                                    })
+                                                }
+                                            </Fragment>
+                                        )
+                                    })
                             }
                         </tbody>
                     </table>

@@ -24,7 +24,7 @@ const AppConstants = {
         outdoorColor: '#4CAF50'
     },
     pageHeight: '75vh',
-    formHeight: '55vh',
+    formHeight: '65vh',
     chartHeight: '50vh'
 };
 

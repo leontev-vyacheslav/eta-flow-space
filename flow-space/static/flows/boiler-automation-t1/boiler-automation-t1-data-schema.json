@@ -196,7 +196,7 @@
     "isOffInput1": {
       "type": "boolean",
       "ui": {
-        "group": 0,
+        "group": 7,
         "editor": {
           "editorType": "dxSwitch",
           "label": {
@@ -224,10 +224,78 @@
         }
       }
     },
+    "isSupplyWaterLevelEmergencyMax": {
+      "type": "boolean",
+      "ui": {
+        "group": 8,
+        "editor": {
+          "editorType": "dxSwitch",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Уровень воды в баке авар. макс."
+          },
+          "editorOptions": {
+            "readOnly": false
+          }
+        }
+      }
+    },
+    "isSupplyWaterLevelWorkingMax": {
+      "type": "boolean",
+      "ui": {
+        "group": 8,
+        "editor": {
+          "editorType": "dxSwitch",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Уровень воды в баке раб. мах."
+          },
+          "editorOptions": {
+            "readOnly": false
+          }
+        }
+      }
+    },
+    "isSupplyWaterLevelWorkingMin": {
+      "type": "boolean",
+      "ui": {
+        "group": 8,
+        "editor": {
+          "editorType": "dxSwitch",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Уровень воды в баке раб. мин."
+          },
+          "editorOptions": {
+            "readOnly": false
+          }
+        }
+      }
+    },
+    "isSupplyWaterLevelEmergencyMin": {
+      "type": "boolean",
+      "ui": {
+        "group": 8,
+        "editor": {
+          "editorType": "dxSwitch",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Уровень воды в баке авар. мин."
+          },
+          "editorOptions": {
+            "readOnly": false
+          }
+        }
+      }
+    },
     "isCO1": {
       "type": "boolean",
       "ui": {
-        "group": 0,
+        "group": 7,
         "editor": {
           "editorType": "dxSwitch",
           "label": {
@@ -254,7 +322,7 @@
     "isCH1": {
       "type": "boolean",
       "ui": {
-        "group": 0,
+        "group": 7,
         "editor": {
           "editorType": "dxSwitch",
           "label": {
@@ -281,7 +349,7 @@
     "isCO2": {
       "type": "boolean",
       "ui": {
-        "group": 0,
+        "group": 7,
         "editor": {
           "editorType": "dxSwitch",
           "label": {
@@ -308,7 +376,7 @@
     "isCH2": {
       "type": "boolean",
       "ui": {
-        "group": 0,
+        "group": 7,
         "editor": {
           "editorType": "dxSwitch",
           "label": {
@@ -335,7 +403,7 @@
     "isGasFlap": {
       "type": "boolean",
       "ui": {
-        "group": 0,
+        "group": 7,
         "editor": {
           "editorType": "dxSwitch",
           "label": {
@@ -362,7 +430,7 @@
     "isVaporDt1": {
       "type": "boolean",
       "ui": {
-        "group": 0,
+        "group": 7,
         "editor": {
           "editorType": "dxSwitch",
           "label": {
@@ -389,7 +457,7 @@
     "isVaporDt2": {
       "type": "boolean",
       "ui": {
-        "group": 0,
+        "group": 7,
         "editor": {
           "editorType": "dxSwitch",
           "label": {
@@ -505,7 +573,7 @@
                 "text": "Мощность горелки котла"
               },
               "editorOptions": {
-                "readOnly": false
+                "readOnly": true
               }
             }
           }
@@ -522,7 +590,7 @@
                 "text": "Режим работы котла"
               },
               "editorOptions": {
-                "readOnly": false,
+                "readOnly": true,
                 "valueExpr": "id",
                 "displayExpr": "description"
               }
@@ -541,7 +609,7 @@
                 "text": "Состояние котла"
               },
               "editorOptions": {
-                "readOnly": false,
+                "readOnly": true,
                 "valueExpr": "id",
                 "displayExpr": "description"
               }
@@ -560,7 +628,7 @@
                 "text": "Авария котла"
               },
               "editorOptions": {
-                "readOnly": false,
+                "readOnly": true,
                 "valueExpr": "id",
                 "displayExpr": "description"
               }
@@ -650,7 +718,7 @@
                 "text": "Режим работы клапана"
               },
               "editorOptions": {
-                "readOnly": false,
+                "readOnly": true,
                 "valueExpr": "id",
                 "displayExpr": "description"
               }
@@ -707,7 +775,7 @@
                 "text": "Режим работы сетевого насоса"
               },
               "editorOptions": {
-                "readOnly": false,
+                "readOnly": true,
                 "valueExpr": "id",
                 "displayExpr": "description"
               }
@@ -726,7 +794,7 @@
                 "text": "Состояние сетевого насоса"
               },
               "editorOptions": {
-                "readOnly": false,
+                "readOnly": true,
                 "valueExpr": "id",
                 "displayExpr": "description"
               }
@@ -745,7 +813,7 @@
                 "text": "Авария сетевого насоса"
               },
               "editorOptions": {
-                "readOnly": false,
+                "readOnly": true,
                 "valueExpr": "id",
                 "displayExpr": "description"
               }
@@ -764,7 +832,7 @@
                 "text": "Режим ЧРП сетевого насоса"
               },
               "editorOptions": {
-                "readOnly": false,
+                "readOnly": true,
                 "valueExpr": "id",
                 "displayExpr": "description"
               }
@@ -783,7 +851,7 @@
                 "text": "Статус ЧРП сетевого насоса"
               },
               "editorOptions": {
-                "readOnly": false,
+                "readOnly": true,
                 "valueExpr": "id",
                 "displayExpr": "description"
               }
@@ -802,7 +870,7 @@
                 "text": "Авария ЧРП сетевого насоса"
               },
               "editorOptions": {
-                "readOnly": false,
+                "readOnly": true,
                 "valueExpr": "id",
                 "displayExpr": "description"
               }
@@ -854,7 +922,7 @@
                 "text": "Режим работы насоса исх. воды"
               },
               "editorOptions": {
-                "readOnly": false,
+                "readOnly": true,
                 "valueExpr": "id",
                 "displayExpr": "description"
               }
@@ -873,7 +941,7 @@
                 "text": "Состояние насоса исх. воды"
               },
               "editorOptions": {
-                "readOnly": false,
+                "readOnly": true,
                 "valueExpr": "id",
                 "displayExpr": "description"
               }
@@ -892,7 +960,7 @@
                 "text": "Авария насоса исх. воды"
               },
               "editorOptions": {
-                "readOnly": false,
+                "readOnly": true,
                 "valueExpr": "id",
                 "displayExpr": "description"
               }
@@ -911,7 +979,7 @@
                 "text": "Режим ЧРП насоса исх. воды"
               },
               "editorOptions": {
-                "readOnly": false,
+                "readOnly": true,
                 "valueExpr": "id",
                 "displayExpr": "description"
               }
@@ -930,7 +998,7 @@
                 "text": "Статус ЧРП насоса исх. воды"
               },
               "editorOptions": {
-                "readOnly": false,
+                "readOnly": true,
                 "valueExpr": "id",
                 "displayExpr": "description"
               }
@@ -949,7 +1017,7 @@
                 "text": "Авария ЧРП насоса исх. воды"
               },
               "editorOptions": {
-                "readOnly": false,
+                "readOnly": true,
                 "valueExpr": "id",
                 "displayExpr": "description"
               }
@@ -1063,7 +1131,23 @@
       "type": "object",
       "properties": {
         "mode": {
-          "$ref": "#/$defs/WorkMode"
+          "$ref": "#/$defs/WorkMode",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Режим работы питательного насоса"
+              },
+              "editorOptions": {
+                "readOnly": true,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
+            }
+          }
         },
         "status": {
           "$ref": "#/$defs/SupplyPumpStatus"
@@ -1129,7 +1213,7 @@
                 "text": "Режим работы задвижки"
               },
               "editorOptions": {
-                "readOnly": false,
+                "readOnly": true,
                 "valueExpr": "id",
                 "displayExpr": "description"
               }
@@ -1171,41 +1255,61 @@
     }
   },
   "ui": {
+    "useTabs": true,
     "groups": [
-      {
-        "id": 0,
-        "name": "emergency",
-        "caption": "Аварии"
-      },
       {
         "id": 1,
         "name": "state",
-        "caption": "Состояния"
+        "caption": "Состояния",
+        "order": 100
       },
       {
         "id": 2,
         "name": "boilers",
-        "caption": "Котлы"
+        "caption": "Котлы",
+        "order": 200
       },
       {
         "id": 3,
         "name": "networkPumps",
-        "caption": "Сетевые насосы"
+        "caption": "Сетевые насосы",
+        "order": 300
       },
       {
         "id": 4,
         "name": "sourceWaternetworkPumps",
-        "caption": "Насосы исходной воды"
+        "caption": "Насосы исходной воды",
+        "order": 400
       },
       {
         "id": 5,
         "name": "flaps",
-        "caption": "Клапаны"
+        "caption": "Клапаны",
+        "order": 500
       },
       {
         "id": 6,
         "name": "valves",
-        "caption": "Задвижки"
+        "caption": "Задвижки",
+        "order": 600
+      },
+      {
+        "id": 7,
+        "name": "emergency",
+        "caption": "Аварии",
+        "order": 150
+      },
+      {
+        "id": 8,
+        "name": "levels",
+        "caption": "Уровни",
+        "order": 155
+      },
+      {
+        "id": 9,
+        "name": "supplyPumps",
+        "caption": "Насосы подпитки",
+        "order": 450
       }
     ]
   }

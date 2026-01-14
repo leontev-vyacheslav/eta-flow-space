@@ -57,7 +57,7 @@ const DashboardPageInner = () => {
             const [controlModule, mnemoschemaModule, mapModule] = results.map(result =>
                 result.status === 'fulfilled' ? result.value : null
             );
-
+            // debugger
             setControlTabContent(() => controlModule ? controlModule.default : null);
             setMnemoschemaTabContent(() => mnemoschemaModule ? mnemoschemaModule.default : null);
             setMapTabContent(() => mapModule ? mapModule.default : null);
@@ -78,17 +78,18 @@ const DashboardPageInner = () => {
                         height={AppConstants.pageHeight}
                         loop
                         className='dashboard-tabs'
+                        deferRendering
                         onSelectedIndexChange={(value: number) => {
-                            setTabIndex(value);
+                             setTabIndex(value);
                         }}>
 
                         <TabPanelItem disabled={MnemoschemaTabContent === null} title='Мнемосхема' tabRender={(e) => <IconTab tab={e} icon={<CircuitIcon size={18} />} />}>
                             {
-                                MnemoschemaTabContent && tabIndex === 0 ? <MnemoschemaTabContent /> : null
+                                MnemoschemaTabContent && tabIndex === 0 ?
+                                 <MnemoschemaTabContent />
+                                 : null
                             }
                         </TabPanelItem>
-
-
 
                         <TabPanelItem disabled={ControlTabContent === null} title='Управление' tabRender={(e) => <IconTab tab={e} icon={<ParamsIcon size={18} />} />}>
                             {
@@ -96,13 +97,11 @@ const DashboardPageInner = () => {
                             }
                         </TabPanelItem>
 
-
                         <TabPanelItem disabled={MapTabContent === null} title='Карта' tabRender={(e) => <IconTab tab={e} icon={<MapIcon size={18} />} />}>
                             {
                                 MapTabContent && tabIndex === 2 ? <MapTabContent /> : null
                             }
                         </TabPanelItem>
-
                     </TabPanel>
                 </div>
             </div>

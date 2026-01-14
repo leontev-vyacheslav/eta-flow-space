@@ -1,3 +1,5 @@
+import { formatMessage } from "devextreme/localization";
+
 export const MapNoDataOverlay = () => {
     return (
         <div className="leaflet-middle leaflet-center leaflet-control"
@@ -12,7 +14,7 @@ export const MapNoDataOverlay = () => {
                 background: 'rgba(255, 255, 255, 0.9)',
                 padding: '20px 50px',
             }}>
-            <div className="leaflet-control leaflet-bar" style={{ border: 'none' }}>Нет данных</div>
+            <div className="leaflet-control leaflet-bar" style={{ border: 'none' }}>{formatMessage('noDataText')}</div>
         </div>
     );
 };

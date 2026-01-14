@@ -42,6 +42,12 @@ const ControlTabContent = () => {
         }
     }, []);
 
+    // useEffect(() => {
+    //     if (flowCode) {
+    //         console.log("ControlTabContent: ", flowCode);
+    //     }
+    // }, [flowCode]);
+
     return (
         <ControlForm onFieldDataChanged={fieldDataChangedHandler} />
     );

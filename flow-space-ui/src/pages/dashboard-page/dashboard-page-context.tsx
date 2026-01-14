@@ -76,7 +76,6 @@ function DashboardPageContextProvider(props: any) {
                 const [device, deviceState, mnemoschema, dataschema] = results.map(r => {
                     return r.status === 'fulfilled' ? r.value : null
                 });
-
                 if (deviceState && dataschema) {
                     applyDimensionsToState(deviceState.state, dataschema);
                 }
