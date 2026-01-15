@@ -40,6 +40,7 @@ const MnemoschemaTabContent = () => {
 
     const onBeforeMountHandler = useCallback((mnemoschemaElement: HTMLElement) => {
         mnemoschemaElement.setAttribute("height", isSmall || isXSmall ? '450px' : isLarge ? '540px' : '640px');
+        mnemoschemaElement.setAttribute("width", isSmall || isXSmall ? '100%' : isLarge ? '100%' : '100%');
         if (isSmall || isXSmall) {
             mnemoschemaElement.style.flex = '1';
         }

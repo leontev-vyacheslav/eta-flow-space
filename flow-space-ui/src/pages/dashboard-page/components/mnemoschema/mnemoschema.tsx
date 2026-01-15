@@ -1,9 +1,12 @@
 import { useCallback, useEffect, useRef } from "react";
 import { useDashboardPage } from "../../dashboard-page-context";
 import { useScreenSize } from "../../../../utils/media-query";
+import { TransformWrapper, TransformComponent, type ReactZoomPanPinchRef } from "react-zoom-pan-pinch";
 
 export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfterMount }: { onBeforeMount?: (mnemoschemaElement: HTMLElement) => void, onAfterMount?: (mnemoschemaElement: HTMLElement) => void }) => {
     const mnemoschemaContainerRef = useRef<HTMLDivElement>(null);
+    const transformComponentRef = useRef<ReactZoomPanPinchRef | null>(null);
+
     const { isSmall, isXSmall, isLarge } = useScreenSize();
     const { mnemoschema, isValidDeviceState, dataschema, schemaTypeInfoPropertiesChain } = useDashboardPage();
 
@@ -37,7 +40,7 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
                                                 // "red": true
                                                 if (stylePropObj[k] === value) {
                                                     const hint = element.getAttribute('data-colorizer-hint');
-                                                    if(hint) {
+                                                    if (hint) {
                                                         if (hint === stylePropKey) {
                                                             ((element as SVGElement).style as any)[stylePropKey] = k;
                                                         }
@@ -85,7 +88,22 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
     return (
         <>
             {mnemoschema
-                ? <div style={{ display: 'flex', alignItems: 'center', opacity: (isValidDeviceState ? 1 : 1) }} ref={mnemoschemaContainerRef} />
+                ?
+                <TransformWrapper ref={transformComponentRef}>
+                    {({ zoomIn, zoomOut, resetTransform}) => (
+                        <>
+                            <TransformComponent>
+                                 <div style={{ display: 'flex', alignItems: 'center', opacity: (isValidDeviceState ? 1 : 1) }} ref={mnemoschemaContainerRef} />
+                            </TransformComponent>
+                            <div className="tools">
+                                <button onClick={() => zoomIn()}>+</button>
+                                <button onClick={() => zoomOut()}>-</button>
+                                <button onClick={() => resetTransform()}>x</button>
+                            </div>
+                        </>
+                    )}
+
+                </TransformWrapper>
                 : null
             }
         </>
