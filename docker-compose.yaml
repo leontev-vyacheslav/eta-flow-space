@@ -25,7 +25,17 @@ services:
       - ./flow-space-data:/var/lib/postgresql/data
     restart: unless-stopped
     networks:
-        - eta-flow-space-network
+      - eta-flow-space-network
+
+  eta-flow-space-ui:
+    build:
+      context: ./flow-space-ui/
+      dockerfile: Dockerfile.ui
+    container_name: eta-flow-space-ui
+    ports:
+      - "3000:80"
+    networks:
+      - eta-flow-space-network
 
 networks:
   eta-flow-space-network:

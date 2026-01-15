@@ -47,7 +47,6 @@ const DashboardPageInner = () => {
 
     useEffect(() => {
         (async () => {
-
             const results = await Promise.allSettled([
                 import(`./flows/${flowCode}/control/control-tab-content.tsx`),
                 import(`./flows/${flowCode}/mnemoschema/mnemoschema-tab-content.tsx`),
@@ -57,10 +56,18 @@ const DashboardPageInner = () => {
             const [controlModule, mnemoschemaModule, mapModule] = results.map(result =>
                 result.status === 'fulfilled' ? result.value : null
             );
-            // debugger
             setControlTabContent(() => controlModule ? controlModule.default : null);
             setMnemoschemaTabContent(() => mnemoschemaModule ? mnemoschemaModule.default : null);
             setMapTabContent(() => mapModule ? mapModule.default : null);
+            if (tabPanelRef?.current) {
+                const tabIndex = tabPanelRef.current?.instance.option('selectedIndex');
+                if (tabIndex) {
+                    setTabIndex(-1);
+                    setTimeout(() => {
+                        setTabIndex(tabIndex);
+                    }, 0);
+                }
+            }
         })();
     }, [flowCode]);
 
@@ -71,7 +78,8 @@ const DashboardPageInner = () => {
             </PageHeader>
             <div className={'content-block'}>
                 <div className={'dx-card responsive-paddings dashboard-page-content'}>
-                    <TabPanel ref={tabPanelRef}
+                    <TabPanel
+                        ref={tabPanelRef}
                         swipeEnabled={false}
                         animationEnabled={false}
                         width={'100%'}
@@ -80,26 +88,30 @@ const DashboardPageInner = () => {
                         className='dashboard-tabs'
                         deferRendering
                         onSelectedIndexChange={(value: number) => {
-                             setTabIndex(value);
+                            setTabIndex(value);
                         }}>
 
                         <TabPanelItem disabled={MnemoschemaTabContent === null} title='Мнемосхема' tabRender={(e) => <IconTab tab={e} icon={<CircuitIcon size={18} />} />}>
                             {
                                 MnemoschemaTabContent && tabIndex === 0 ?
-                                 <MnemoschemaTabContent />
-                                 : null
+                                    <MnemoschemaTabContent />
+                                    : null
                             }
                         </TabPanelItem>
 
                         <TabPanelItem disabled={ControlTabContent === null} title='Управление' tabRender={(e) => <IconTab tab={e} icon={<ParamsIcon size={18} />} />}>
                             {
-                                ControlTabContent && tabIndex === 1 ? <ControlTabContent /> : null
+                                ControlTabContent && tabIndex === 1
+                                    ? <ControlTabContent />
+                                    : null
                             }
                         </TabPanelItem>
 
                         <TabPanelItem disabled={MapTabContent === null} title='Карта' tabRender={(e) => <IconTab tab={e} icon={<MapIcon size={18} />} />}>
                             {
-                                MapTabContent && tabIndex === 2 ? <MapTabContent /> : null
+                                MapTabContent && tabIndex === 2
+                                    ? <MapTabContent />
+                                    : null
                             }
                         </TabPanelItem>
                     </TabPanel>

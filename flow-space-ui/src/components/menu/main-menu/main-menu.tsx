@@ -3,7 +3,7 @@ import { Menu } from 'devextreme-react/menu';
 import { MenuItem } from '../menu-item/menu-item';
 import type { MenuItemModel } from '../../../models/menu-item-model';
 import type { Item } from 'devextreme/ui/menu';
-import { forwardRef, LegacyRef } from 'react';
+import { forwardRef, type LegacyRef } from 'react';
 
 export type MainMenuProps = {
   items: MenuItemModel[];
