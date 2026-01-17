@@ -1,14 +1,18 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useLongPress } from "use-long-press";
 import { useDashboardPage } from "../../dashboard-page-context";
 import { useScreenSize } from "../../../../utils/media-query";
-import { TransformWrapper, TransformComponent, type ReactZoomPanPinchRef } from "react-zoom-pan-pinch";
+import { TransformWrapper, TransformComponent, type ReactZoomPanPinchRef} from "react-zoom-pan-pinch";
+import { useParams } from "react-router";
+
 
 export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfterMount }: { onBeforeMount?: (mnemoschemaElement: HTMLElement) => void, onAfterMount?: (mnemoschemaElement: HTMLElement) => void }) => {
-    const mnemoschemaContainerRef = useRef<HTMLDivElement>(null);
-    const transformComponentRef = useRef<ReactZoomPanPinchRef | null>(null);
-
-    const { isSmall, isXSmall, isLarge } = useScreenSize();
+    const { flowCode } = useParams();
     const { mnemoschema, isValidDeviceState, dataschema, schemaTypeInfoPropertiesChain } = useDashboardPage();
+    const { isSmall, isXSmall, isLarge } = useScreenSize();
+    const containerRef = useRef<HTMLDivElement>(null);
+    const transformComponentRef = useRef<ReactZoomPanPinchRef | null>(null);
+    const [isInitComplete, setIsInitComplete] = useState<boolean>(false);
 
     const stateSetup = useCallback((mnemoschemaElement: HTMLElement) => {
         if (schemaTypeInfoPropertiesChain) {
@@ -59,15 +63,24 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dataschema, schemaTypeInfoPropertiesChain, isSmall, isXSmall, isLarge]);
 
+    const longPressBinder = useLongPress(
+        () => {
+            transformComponentRef.current!.setTransform(0, 0, 1);
+        }, {
+        threshold: 500,
+        cancelOnMovement: 25,
+        captureEvent: true,
+    });
+
     useEffect(() => {
-        if (!mnemoschemaContainerRef.current || !mnemoschema) {
+        if (!containerRef.current || !mnemoschema) {
             return;
         }
 
         try {
             const parser = new DOMParser();
             const mnemoschemaDoc = parser.parseFromString(mnemoschema, 'image/svg+xml');
-            mnemoschemaContainerRef.current.innerHTML = '';
+            containerRef.current.innerHTML = '';
 
             stateSetup(mnemoschemaDoc.documentElement);
 
@@ -75,34 +88,51 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
                 onBeforeMount(mnemoschemaDoc.documentElement);
             }
 
-            const mnemoschemaElement = mnemoschemaContainerRef.current.appendChild(mnemoschemaDoc.documentElement);
+            const mnemoschemaElement = containerRef.current.appendChild(mnemoschemaDoc.documentElement);
 
             if (onAfterMount) {
                 onAfterMount(mnemoschemaElement);
             }
+
         } catch (error) {
             console.error(error);
         }
     }, [mnemoschema, onBeforeMount, onAfterMount, stateSetup]);
 
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            const savedState = localStorage.getItem(`mnemoschema_transformed_state_${flowCode}`);
+            if (savedState && transformComponentRef.current) {
+                try {
+                    const { scale, positionX, positionY } = JSON.parse(savedState);
+                    transformComponentRef.current.setTransform(positionX, positionY, scale);
+
+                } catch (e) {
+                    console.error("Failed to restore transform state", e);
+                }
+            }
+            setIsInitComplete(true);
+        }, 100);
+
+        return () => clearTimeout(timer);
+    }, [flowCode]);
+
     return (
         <>
             {mnemoschema
                 ?
-                <TransformWrapper ref={transformComponentRef}>
-                    {({ zoomIn, zoomOut, resetTransform}) => (
-                        <>
-                            <TransformComponent>
-                                 <div style={{ display: 'flex', alignItems: 'center', opacity: (isValidDeviceState ? 1 : 1) }} ref={mnemoschemaContainerRef} />
-                            </TransformComponent>
-                            <div className="tools">
-                                <button onClick={() => zoomIn()}>+</button>
-                                <button onClick={() => zoomOut()}>-</button>
-                                <button onClick={() => resetTransform()}>x</button>
-                            </div>
-                        </>
-                    )}
-
+                <TransformWrapper ref={transformComponentRef}
+                    doubleClick={{ step: 1 }}
+                    minScale={0.5}
+                    onTransformed={(_, transformedState) => {
+                        if (isInitComplete) {
+                            localStorage.setItem(`mnemoschema_transformed_state_${flowCode}`, JSON.stringify(transformedState));
+                        }
+                    }}
+                >
+                    <TransformComponent>
+                        <div {...longPressBinder()} style={{ display: 'flex', alignItems: 'center', opacity: (isValidDeviceState ? 1 : 0.8) }} ref={containerRef} />
+                    </TransformComponent>
                 </TransformWrapper>
                 : null
             }

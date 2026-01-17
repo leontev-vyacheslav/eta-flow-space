@@ -49,7 +49,7 @@ function App() {
             'archives-graphs': 'Температурные графики',
             'schedule-windows-title': 'Временные окна',
             'schedules-title': 'Дни недели',
-            'dxDataGrid-noDataText': 'Нет данных для отображения',
+            'dxDataGrid-noDataText': 'Нет данных',
 
             'app-outdoor-temperature': 'Температура наружного воздуха, °C',
             'app-media-temperature': 'Температура носителя, °C',
@@ -58,7 +58,7 @@ function App() {
 
             'app-remote-connector-settings-applying': 'Изменения будут применены после перезапуска системы!',
             'confirm-dialog-system-start-stop': 'Внимание! Действительно хотите выполнить {0} устройства!',
-            'noDataText': 'Нет данных для отображения',
+            'noDataText': 'Нет данных',
         }
     });
     locale('ru-RU');
