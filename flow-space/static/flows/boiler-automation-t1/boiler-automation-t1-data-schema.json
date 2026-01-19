@@ -613,7 +613,18 @@
                 "valueExpr": "id",
                 "displayExpr": "description"
               }
-            }
+            },
+            "colorizer":{
+              "styleProps": [
+                {
+                  "fill": {
+                    "#00FF00": [3,4],
+                    "red": [6],
+                    "none": [0, 1, 2, 5, 8, 9, 10]
+                  }
+                }
+              ]
+          }
           }
         },
         "alarm": {
@@ -661,7 +672,7 @@
         "0": "STOPPED - Остановлен",
         "1": "OPENING_OUTLET_VALVE - Открытие задвижки на выходе котла",
         "2": "BURNER_STARTUP - Запуск горелки",
-        "3": "OPERATION_LOW_BURN - Работа - малое горение",
+        "3": "OPERATION_LOW_BURN - Работа (малое горение)",
         "4": "OPERATION_REGULATION - Работа (регулирование)",
         "5": "BURNER_STOP - Останов горелки",
         "6": "ALARM - Авария",
@@ -1150,10 +1161,42 @@
           }
         },
         "status": {
-          "$ref": "#/$defs/SupplyPumpStatus"
+          "$ref": "#/$defs/SupplyPumpStatus",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Состояние работы питательного насоса"
+              },
+              "editorOptions": {
+                "readOnly": true,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
+            }
+          }
         },
         "alarm": {
-          "$ref": "#/$defs/SupplyPumpAlarm"
+          "$ref": "#/$defs/SupplyPumpAlarm",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Авария питательного насоса"
+              },
+              "editorOptions": {
+                "readOnly": true,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
+            }
+          }
         }
       },
       "required": [

@@ -21,7 +21,7 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
                     mnemoschemaElement.querySelectorAll(`[data-state="${propertiesChainValuePair.propertiesChain}"]`)
                         .forEach(element => {
                             const value = propertiesChainValuePair.value;
-                            if (!typeInfo?.ui.colorizer) {
+                            if ( element.tagName === 'text') {
                                 if (typeInfo?.isEnum) {
                                     element.innerHTML = dataschema.$defs[typeInfo.typeName].enumDescriptions[value].split(' - ').pop();
                                 } else {
@@ -32,7 +32,7 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
                                         element.innerHTML = value;
                                     }
                                 }
-                            } else {
+                            } else if (typeInfo?.ui.colorizer) {
                                 const styleProps = typeInfo?.ui.colorizer.styleProps;
                                 if (styleProps) {
                                     // "styleProps": [ ... ]
@@ -42,7 +42,7 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
                                             const stylePropObj = styleProp[stylePropKey];
                                             Object.keys(stylePropObj).forEach(k => {
                                                 // "red": true
-                                                if (stylePropObj[k] === value) {
+                                                if (stylePropObj[k] === value || (Array.isArray(stylePropObj[k]) && stylePropObj[k].includes(value))) {
                                                     const hint = element.getAttribute('data-colorizer-hint');
                                                     if (hint) {
                                                         if (hint === stylePropKey) {
@@ -67,8 +67,8 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
         () => {
             transformComponentRef.current!.setTransform(0, 0, 1);
         }, {
-        threshold: 500,
-        cancelOnMovement: 25,
+        threshold: 250,
+        cancelOnMovement: 5,
         captureEvent: true,
     });
 

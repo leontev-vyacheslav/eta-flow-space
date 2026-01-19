@@ -151,7 +151,7 @@
 			<stop  offset="0.9637" style="stop-color:#B3B3B3"/>
 		</linearGradient>
 
-			<circle style="fill:url(#SVGID_00000086688679898693993700000002196810747937978795_);stroke:#000000;stroke-miterlimit:10;" cx="49.9" cy="331.9" r="6.4"/>
+			<circle data-state="boilers[1].status" style="fill:none;stroke:#000000;stroke-miterlimit:10;" cx="49.9" cy="331.9" r="6.4"/>
 
 			<linearGradient id="SVGID_00000083056559014121563010000018387170311554909830_" gradientUnits="userSpaceOnUse" x1="172.5878" y1="623.9261" x2="172.5878" y2="602.0184" gradientTransform="matrix(0 -1 1 0 -397.9659 538.7399)">
 			<stop  offset="5.586592e-03" style="stop-color:#B3B3B3"/>
@@ -353,7 +353,7 @@
 			<stop  offset="0.9637" style="stop-color:#B3B3B3"/>
 		</linearGradient>
 
-			<circle style="fill:url(#SVGID_00000009587861037623141540000000701063293321873281_);stroke:#000000;stroke-miterlimit:10;" cx="50.3" cy="517.4" r="6.4"/>
+			<circle data-state="boilers[2].status" style="fill:url(#SVGID_00000009587861037623141540000000701063293321873281_);stroke:#000000;stroke-miterlimit:10;" cx="50.3" cy="517.4" r="6.4"/>
 
 			<linearGradient id="SVGID_00000152230505691718368020000007778737049001435312_" gradientUnits="userSpaceOnUse" x1="-12.886" y1="624.3411" x2="-12.886" y2="602.4334" gradientTransform="matrix(0 -1 1 0 -397.9659 538.7399)">
 			<stop  offset="5.586592e-03" style="stop-color:#B3B3B3"/>
@@ -555,7 +555,7 @@
 			<stop  offset="0.9637" style="stop-color:#B3B3B3"/>
 		</linearGradient>
 
-			<circle style="fill:url(#SVGID_00000053516632251854427000000008393637707365636538_);stroke:#000000;stroke-miterlimit:10;" cx="50.3" cy="703.3" r="6.4"/>
+			<circle data-state="boilers[3].status" style="fill:url(#SVGID_00000053516632251854427000000008393637707365636538_);stroke:#000000;stroke-miterlimit:10;" cx="50.3" cy="703.3" r="6.4"/>
 
 			<linearGradient id="SVGID_00000052801208672488930430000015912176177493801095_" gradientUnits="userSpaceOnUse" x1="-198.7367" y1="624.3411" x2="-198.7367" y2="602.4334" gradientTransform="matrix(0 -1 1 0 -397.9659 538.7399)">
 			<stop  offset="5.586592e-03" style="stop-color:#B3B3B3"/>
@@ -757,7 +757,7 @@
 			<stop  offset="0.9637" style="stop-color:#B3B3B3"/>
 		</linearGradient>
 
-			<circle style="fill:url(#SVGID_00000109732867792373009500000015658114712821111433_);stroke:#000000;stroke-miterlimit:10;" cx="49.7" cy="147.6" r="6.4"/>
+			<circle data-state="boilers[0].status" style="fill:none;stroke:#000000;stroke-miterlimit:10;" cx="49.7" cy="147.6" r="6.4"/>
 
 			<linearGradient id="SVGID_00000053532427269635475710000009381009429917831556_" gradientUnits="userSpaceOnUse" x1="356.9707" y1="623.7271" x2="356.9707" y2="601.8194" gradientTransform="matrix(0 -1 1 0 -397.9659 538.7399)">
 			<stop  offset="5.586592e-03" style="stop-color:#B3B3B3"/>

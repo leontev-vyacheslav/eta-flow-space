@@ -5,11 +5,11 @@ import type { DeviceStateModel } from '../../models/flows/device-state-model';
 import { useAppData } from '../../contexts/app-data/app-data';
 import { useParams } from 'react-router';
 import { proclaim } from '../../utils/proclaim';
-
-import './dashboard-page-content.scss';
 import { getQuickGuid } from '../../utils/uuid';
 import { getKeyValuePairs, getSchemaTypeInfo, type SchemaTypeInfoPropertiesChainModel } from '../../helpers/data-helper';
 import type { DictionaryBaseModel } from '../../models/abstractions/dictionary-base-model';
+
+import './dashboard-page-content.scss';
 
 export type DashboardPageContextModel = {
     device?: DeviceModel;
