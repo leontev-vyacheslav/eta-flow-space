@@ -934,10 +934,10 @@
 
 			<circle style="fill:url(#SVGID_00000023999209208862473100000017439408399869727619_);stroke:#808080;stroke-width:0.25;stroke-miterlimit:10;" cx="231.6" cy="46.4" r="12.4"/>
 		<line style="fill:none;stroke:#4D4D4D;stroke-width:0.5;stroke-miterlimit:10;" x1="207.4" y1="46.4" x2="219.2" y2="46.4"/>
-		<polygon style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="231.6,54.8 227,47 236.3,47
-			231.6,54.8 		"/>
-		<polygon style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="231.6,38.4 236.3,46.2 227,46.2
-			231.6,38.4 		"/>
+		<polygon data-state="boilerValves[0].status" style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="231.6,54.8 227,47 236.3,47
+			231.6,54.8"/>
+		<polygon data-state="boilerValves[0].status" style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="231.6,38.4 236.3,46.2 227,46.2
+			231.6,38.4"/>
 	</g>
 	<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M335.2,63.3h-82.9c-3.1,0-5.7-2.5-5.7-5.7
 		V35.1c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v22.5C340.9,60.8,338.3,63.3,335.2,63.3z"/>
@@ -1109,9 +1109,9 @@
 
 			<circle style="fill:url(#SVGID_00000093141047209036581050000016557255744542247813_);stroke:#808080;stroke-width:0.25;stroke-miterlimit:10;" cx="231.2" cy="231.1" r="12.4"/>
 		<line style="fill:none;stroke:#4D4D4D;stroke-width:0.5;stroke-miterlimit:10;" x1="207" y1="231.1" x2="218.8" y2="231.1"/>
-		<polygon style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="231.2,239.5 226.5,231.7
+		<polygon data-state="boilerValves[1].status" style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="231.2,239.5 226.5,231.7
 			235.8,231.7 231.2,239.5 		"/>
-		<polygon style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="231.2,223.1 235.8,230.9
+		<polygon data-state="boilerValves[1].status" style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="231.2,223.1 235.8,230.9
 			226.5,230.9 231.2,223.1 		"/>
 	</g>
 	<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M334.7,248.1h-82.9c-3.1,0-5.7-2.5-5.7-5.7
@@ -1252,9 +1252,9 @@
 
 			<circle style="fill:url(#SVGID_00000062898581940589769800000013793425230633967502_);stroke:#808080;stroke-width:0.25;stroke-miterlimit:10;" cx="230.9" cy="416.2" r="12.4"/>
 		<line style="fill:none;stroke:#4D4D4D;stroke-width:0.5;stroke-miterlimit:10;" x1="206.7" y1="416.2" x2="218.5" y2="416.2"/>
-		<polygon style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="230.9,424.5 226.3,416.7
+		<polygon data-state="boilerValves[2].status" style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="230.9,424.5 226.3,416.7
 			235.6,416.7 230.9,424.5 		"/>
-		<polygon style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="230.9,408.2 235.6,416 226.3,416
+		<polygon data-state="boilerValves[2].status" style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="230.9,408.2 235.6,416 226.3,416
 			230.9,408.2 		"/>
 	</g>
 	<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M334.5,433.1h-82.9c-3.1,0-5.7-2.5-5.7-5.7
@@ -1395,9 +1395,9 @@
 
 			<circle style="fill:url(#SVGID_00000096746796880827722170000008205852880045695651_);stroke:#808080;stroke-width:0.25;stroke-miterlimit:10;" cx="230.5" cy="601.9" r="12.4"/>
 		<line style="fill:none;stroke:#4D4D4D;stroke-width:0.5;stroke-miterlimit:10;" x1="206.3" y1="601.9" x2="218.1" y2="601.9"/>
-		<polygon style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="230.5,610.3 225.8,602.5
+		<polygon data-state="boilerValves[3].status" style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="230.5,610.3 225.8,602.5
 			235.1,602.5 230.5,610.3 		"/>
-		<polygon style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="230.5,593.9 235.1,601.7
+		<polygon data-state="boilerValves[3].status" style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="230.5,593.9 235.1,601.7
 			225.8,601.7 230.5,593.9 		"/>
 	</g>
 	<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M334,618.8h-82.9c-3.1,0-5.7-2.5-5.7-5.7
@@ -1768,7 +1768,7 @@
 	</linearGradient>
 
 		<circle style="fill:url(#SVGID_00000021805601613474564560000005048136326169594020_);stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="434.3" cy="277.3" r="10.9"/>
-	<polygon style="fill:#4D4D4D;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="434.4,287.6 429.7,279.8 439,279.8
+		<polygon data-state="networkPumps[0].status" style="fill:#4D4D4D;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="434.4,287.6 429.7,279.8 439,279.8
 		434.4,287.6 	"/>
 
 		<linearGradient id="SVGID_00000107552235618519600220000011088668710159003785_" gradientUnits="userSpaceOnUse" x1="178.5923" y1="21.3741" x2="185.7226" y2="21.3741" gradientTransform="matrix(-1 0 0 -1 749.9521 338.7599)">
@@ -1829,7 +1829,7 @@
 	</linearGradient>
 
 		<circle style="fill:url(#SVGID_00000044863082690546990600000011649556364558739613_);stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="567.8" cy="277.3" r="10.9"/>
-	<polygon style="fill:#4D4D4D;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="567.9,287.6 563.3,279.8
+	<polygon data-state="networkPumps[1].status" style="fill:#4D4D4D;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="567.9,287.6 563.3,279.8
 		572.5,279.8 567.9,287.6 	"/>
 
 		<linearGradient id="SVGID_00000049935269315415071180000013980766884205594498_" gradientUnits="userSpaceOnUse" x1="44.8554" y1="21.3741" x2="51.9857" y2="21.3741" gradientTransform="matrix(-1 0 0 -1 749.9521 338.7599)">
@@ -1889,7 +1889,7 @@
 	</linearGradient>
 
 		<circle style="fill:url(#SVGID_00000112604843927210347020000017649416156918978206_);stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="701.5" cy="277.3" r="10.9"/>
-	<polygon style="fill:#4D4D4D;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="701.6,287.6 697,279.8 706.3,279.8
+	<polygon data-state="networkPumps[2].status" style="fill:#4D4D4D;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="701.6,287.6 697,279.8 706.3,279.8
 		701.6,287.6 	"/>
 
 		<linearGradient id="SVGID_00000000203761490584941530000007505940617937990322_" gradientUnits="userSpaceOnUse" x1="-88.6719" y1="21.3741" x2="-81.5416" y2="21.3741" gradientTransform="matrix(-1 0 0 -1 749.9521 338.7599)">
@@ -1949,15 +1949,15 @@
 	</linearGradient>
 
 		<circle style="fill:url(#SVGID_00000118387995114790626030000007125147395666852277_);stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="835.1" cy="277.3" r="10.9"/>
-	<polygon style="fill:#4D4D4D;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="835.2,287.6 830.5,279.8
+	<polygon data-state="networkPumps[3].status" style="fill:#4D4D4D;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="835.2,287.6 830.5,279.8
 		839.8,279.8 835.2,287.6 	"/>
 	<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M978.3,124.4h-65.5c-3.1,0-5.7-2.5-5.7-5.7
 		V100c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C983.9,121.8,981.4,124.4,978.3,124.4z"/>
-	<text data-state="tempOutNet" transform="matrix(1 0 0 1 915.6235 118.2395)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{tempOutNet}} ºC</text>
+	<text data-state="tempOutNet" transform="matrix(1 0 0 1 935 118.2395)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{tempOutNet}} ºC</text>
 	<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M874,124.4h-65.5c-3.1,0-5.7-2.5-5.7-5.7
 		V100c0-3.1,2.5-5.7,5.7-5.7H874c3.1,0,5.7,2.5,5.7,5.7v18.7C879.6,121.8,877.1,124.4,874,124.4z"/>
 	<text transform="matrix(1 0 0 1 823.4235 105.7036)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Рподачи</text>
-	<text data-state="pressOutNet" transform="matrix(1 0 0 1 812 118.2395)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{pressOutNet}} бар</text>
+	<text data-state="pressOutNet" transform="matrix(1 0 0 1 830 118.2395)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{pressOutNet}} бар</text>
 
 		<linearGradient id="SVGID_00000031178680862100717090000001107882823616698033_" gradientUnits="userSpaceOnUse" x1="985.674" y1="111.4116" x2="993.0195" y2="111.4116">
 		<stop  offset="8.379889e-03" style="stop-color:#808080"/>
@@ -2020,11 +2020,11 @@
 		v-18.7c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C984.1,202.5,981.5,205,978.4,205z"/>
 	<text transform="matrix(1 0 0 1 925.6754 105.7033)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Тподачи</text>
 	<text transform="matrix(1 0 0 1 925.6754 187.478)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Тобратки</text>
-	<text data-state="tempInNet" transform="matrix(1 0 0 1 916.8123 198.8877)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{tempInNet}} ºC</text>
+	<text data-state="tempInNet" transform="matrix(1 0 0 1 935 198.8877)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{tempInNet}} ºC</text>
 	<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M874.1,205h-65.5c-3.1,0-5.7-2.5-5.7-5.7
 		v-18.7c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C879.8,202.5,877.3,205,874.1,205z"/>
 	<text transform="matrix(1 0 0 1 823.5717 186.3518)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Робратки</text>
-	<text data-state="pressInNet" transform="matrix(1 0 0 1 812 198.8877)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{pressInNet}} бар</text>
+	<text data-state="pressInNet" transform="matrix(1 0 0 1 830 198.8877)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{pressInNet}} бар</text>
 
 		<linearGradient id="SVGID_00000134929321783903621140000008810266501241585034_" gradientUnits="userSpaceOnUse" x1="985.8223" y1="192.0598" x2="993.1677" y2="192.0598">
 		<stop  offset="8.379889e-03" style="stop-color:#808080"/>
@@ -2086,23 +2086,25 @@
 	<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M669.3,75.5h-65.5c-3.1,0-5.7-2.5-5.7-5.7
 		V51.1c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C675,73,672.5,75.5,669.3,75.5z"/>
 	<text transform="matrix(1 0 0 1 627.4408 57.6312)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Тн.в.</text>
-	<text data-state="tempOutAir" transform="matrix(1 0 0 1 607.8622 70.1671)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{tempOutAir}} ºC</text>
+	<text data-state="tempOutAir" transform="matrix(1 0 0 1 623 70.1671)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{tempOutAir}} ºC</text>
+
 	<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M753.4,75.5h-65.5c-3.1,0-5.7-2.5-5.7-5.7
 		V51.1c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C759,73,756.5,75.5,753.4,75.5z"/>
 	<text transform="matrix(1 0 0 1 711.4624 57.6312)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Ргаза</text>
-	<text data-state="pressGas" transform="matrix(1 0 0 1 691.8838 70.1671)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{pressGas}} кПа</text>
+	<text data-state="pressGas" transform="matrix(1 0 0 1 710 70.1671)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{pressGas}} кПа</text>
+
 	<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M839.6,75.5h-65.5c-3.1,0-5.7-2.5-5.7-5.7
 		V51.1c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C845.3,73,842.7,75.5,839.6,75.5z"/>
 	<text transform="matrix(1 0 0 1 779.3279 57.6312)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Уровень ДТ1</text>
-	<text data-state="levelDt1" transform="matrix(1 0 0 1 780.699 70.1671)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{levelDT_1}} %</text>
+	<text data-state="levelDt1" transform="matrix(1 0 0 1 800 70.1671)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{levelDT_1}} %</text>
 	<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M926.9,75.5h-65.5c-3.1,0-5.7-2.5-5.7-5.7
 		V51.1c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C932.6,73,930,75.5,926.9,75.5z"/>
 	<text transform="matrix(1 0 0 1 866.605 57.6312)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Уровень ДТ2</text>
-	<text data-state="levelDt2" transform="matrix(1 0 0 1 867.9761 70.1671)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{levelDT_2}} %</text>
+	<text data-state="levelDt2" transform="matrix(1 0 0 1 885 70.1671)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{levelDT_2}} %</text>
 	<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M585,75.5h-65.5c-3.1,0-5.7-2.5-5.7-5.7
 		V51.1c0-3.1,2.5-5.7,5.7-5.7H585c3.1,0,5.7,2.5,5.7,5.7v18.7C590.7,73,588.1,75.5,585,75.5z"/>
 	<text transform="matrix(1 0 0 1 541.7527 57.6312)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Тпом.</text>
-	<text data-state="tempRoomAir" transform="matrix(1 0 0 1 520.9539 70.1671)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{tempRoomAir}} ºC</text>
+	<text data-state="tempRoomAir" transform="matrix(1 0 0 1 540 70.1671)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{tempRoomAir}} ºC</text>
 
 		<linearGradient id="SVGID_00000034066932443557695660000001516347545508789692_" gradientUnits="userSpaceOnUse" x1="202.7239" y1="-554.512" x2="209.8542" y2="-554.512" gradientTransform="matrix(1 0 0 1 274.0056 1018.7068)">
 		<stop  offset="5.586592e-03" style="stop-color:#2A97FF"/>
@@ -2171,7 +2173,7 @@
 	</linearGradient>
 
 		<circle style="fill:url(#SVGID_00000008865026603949603140000001606653494224271807_);stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="480.3" cy="504.3" r="10.9"/>
-	<polygon style="fill:#4D4D4D;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="480.2,494 484.8,501.8 475.6,501.8
+	<polygon data-state="sourceWaterPumps[0].status" style="fill:#4D4D4D;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="480.2,494 484.8,501.8 475.6,501.8
 		480.2,494 	"/>
 
 		<linearGradient id="SVGID_00000083061479849192831790000003758985285858554034_" gradientUnits="userSpaceOnUse" x1="69.1967" y1="-554.512" x2="76.327" y2="-554.512" gradientTransform="matrix(1 0 0 1 541.0602 1018.7068)">
@@ -2221,7 +2223,7 @@
 	</linearGradient>
 
 		<circle style="fill:url(#SVGID_00000057128623712711564390000005882684439845767078_);stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="613.8" cy="504.3" r="10.9"/>
-	<polygon style="fill:#4D4D4D;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="613.7,494 618.4,501.8 609.1,501.8
+	<polygon data-state="sourceWaterPumps[1].status" style="fill:#4D4D4D;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="613.7,494 618.4,501.8 609.1,501.8
 		613.7,494 	"/>
 	<g>
 
@@ -2474,7 +2476,7 @@
 	</linearGradient>
 
 		<circle style="fill:url(#SVGID_00000183230736472739676060000011297497255133774227_);stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="1147" cy="522.2" r="10.9"/>
-	<polygon style="fill:#4D4D4D;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="1146.9,511.9 1151.5,519.7
+	<polygon data-state="supplyPumps[1].status" style="fill:#4D4D4D;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="1146.9,511.9 1151.5,519.7
 		1142.3,519.7 1146.9,511.9 	"/>
 
 		<linearGradient id="SVGID_00000096058170742938943170000008560665669321962639_" gradientUnits="userSpaceOnUse" x1="771.8461" y1="-191.4136" x2="778.9764" y2="-191.4136" gradientTransform="matrix(0 1 -1 0 887.9763 -296.1563)">
@@ -2546,11 +2548,11 @@
 	<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M1031,76.2h-82.9c-3.1,0-5.7-2.5-5.7-5.7
 		V50.4c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v20.1C1036.7,73.7,1034.2,76.2,1031,76.2z"/>
 	<text transform="matrix(1 0 0 1 950.4548 55.9579)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Клапан подачи ДТ</text>
-	<text data-state="flapDt.mode" transform="matrix(1 0 0 1 963.039 71.2357)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeVDT}}</text>
+	<text data-state="flapDt.mode" transform="matrix(1 0 0 1 970 71.2357)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeVDT}}</text>
 	<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M1133.6,76.2h-82.9c-3.1,0-5.7-2.5-5.7-5.7
 		V50.4c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v20.1C1139.2,73.7,1136.7,76.2,1133.6,76.2z"/>
 	<text transform="matrix(1 0 0 1 1052.5477 55.9579)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Клапан заполн. ДТ</text>
-	<text data-state="flapDtFill.mode" transform="matrix(1 0 0 1 1059.6324 71.2357)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeVFillDT}}</text>
+	<text data-state="flapDtFill.mode" transform="matrix(1 0 0 1 1075 71.2357)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeVFillDT}}</text>
 	<g>
 
 			<linearGradient id="SVGID_00000173160880007325790030000013281660455478855057_" gradientUnits="userSpaceOnUse" x1="353.7784" y1="-502.3019" x2="353.7784" y2="-517.7422" gradientTransform="matrix(1 0 0 1 461.0017 946.7943)">
@@ -2677,7 +2679,7 @@
 	</linearGradient>
 
 		<circle style="fill:url(#SVGID_00000117665231534314158050000000299828228945351830_);stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="1010.6" cy="522.5" r="10.9"/>
-	<polygon style="fill:#4D4D4D;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="1010.5,512.2 1015.1,520
+	<polygon data-state="supplyPumps[0].status" style="fill:#4D4D4D;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="1010.5,512.2 1015.1,520
 		1005.9,520 1010.5,512.2 	"/>
 
 		<linearGradient id="SVGID_00000143611690034841994770000006542747489526302899_" gradientUnits="userSpaceOnUse" x1="451.5915" y1="-474.5744" x2="458.7218" y2="-474.5744" gradientTransform="matrix(0 1 -1 0 319.9986 -18.4278)">
@@ -2696,7 +2698,23 @@
 	<polygon style="fill:url(#SVGID_00000143611690034841994770000006542747489526302899_);" points="781.5,440.3 781.5,433.2
 		807.6,433.2 807.6,440.3 	"/>
 	<text transform="matrix(1 0 0 1 897.1145 394.3805)"><tspan x="0" y="0" style="font-family:'MyriadPro-Regular'; font-size:10px;">Бак запаса </tspan><tspan x="-16.1" y="12" style="font-family:'MyriadPro-Regular'; font-size:10px;">питательной воды</tspan></text>
-	<text transform="matrix(1 0 0 1 873.054 499.6154)"><tspan x="0" y="0" style="font-family:'MyriadPro-Regular'; font-size:10px;">/* уровни по бита</tspan><tspan x="76.5" y="0" style="font-family:'MyriadPro-Regular'; font-size:10px;">м</tspan><tspan x="83.1" y="0" style="font-family:'MyriadPro-Regular'; font-size:10px;">:</tspan><tspan x="17.5" y="12" style="font-family:'MyriadPro-Regular'; font-size:10px;">- авар. макс</tspan><tspan x="19.7" y="24" style="font-family:'MyriadPro-Regular'; font-size:10px;">- раб. макс</tspan><tspan x="21.3" y="36" style="font-family:'MyriadPro-Regular'; font-size:10px;">- раб. мин</tspan><tspan x="14.2" y="48" style="font-family:'MyriadPro-Regular'; font-size:10px;">- авар. мин */</tspan></text>
+
+	<text  transform="matrix(1 0 0 1 873.054 499.6154)">
+		<tspan data-state="isSupplyWaterLevelEmergencyMax" x="10" y="12" style="display: none;font-family:'MyriadPro-Regular'; font-size:10px;">Аварийный макс.</tspan>
+	</text>
+
+	<text  transform="matrix(1 0 0 1 873.054 499.6154)">
+		<tspan data-state="isSupplyWaterLevelEmergencyMin" x="10" y="12" style="display: none;font-family:'MyriadPro-Regular'; font-size:10px;">Аварийный мин.</tspan>
+	</text>
+
+	<text  transform="matrix(1 0 0 1 873.054 499.6154)">
+		<tspan data-state="isSupplyWaterLevelWorkingMax" x="12" y="12" style="display: none;font-family:'MyriadPro-Regular'; font-size:10px;">Рабочий макс.</tspan>
+	</text>
+
+	<text  transform="matrix(1 0 0 1 873.054 499.6154)">
+		<tspan data-state="isSupplyWaterLevelWorkingMin" x="12" y="12" style="display: none;font-family:'MyriadPro-Regular'; font-size:10px;">Рабочий мин.</tspan>
+	</text>
+
 	<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M646.8,429.9h-65.5c-3.1,0-5.7-2.5-5.7-5.7
 		v-18.7c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C652.5,427.4,650,429.9,646.8,429.9z"/>
 	<text transform="matrix(1 0 0 1 583.2741 409.7596)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Рвых.исх.воды</text>

@@ -238,6 +238,16 @@
           "editorOptions": {
             "readOnly": false
           }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "display": {
+              "none": false,
+              "inline": true
+            }
+            }
+          ]
         }
       }
     },
@@ -255,6 +265,16 @@
           "editorOptions": {
             "readOnly": false
           }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "display": {
+              "none": false,
+              "inline": true
+            }
+            }
+          ]
         }
       }
     },
@@ -272,6 +292,16 @@
           "editorOptions": {
             "readOnly": false
           }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "display": {
+              "none": false,
+              "inline": true
+            }
+            }
+          ]
         }
       }
     },
@@ -289,6 +319,16 @@
           "editorOptions": {
             "readOnly": false
           }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "display": {
+              "none": false,
+              "inline": true
+            }
+            }
+          ]
         }
       }
     },
@@ -614,17 +654,24 @@
                 "displayExpr": "description"
               }
             },
-            "colorizer":{
+            "colorizer": {
               "styleProps": [
                 {
                   "fill": {
-                    "#00FF00": [3,4],
+                    "#00FF00": [3, 4],
                     "red": [6],
-                    "none": [0, 1, 2, 5, 8, 9, 10]
+                    "none": [0,
+                      1,
+                      2,
+                      5,
+                      8,
+                      9,
+                      10
+                    ]
                   }
                 }
               ]
-          }
+            }
           }
         },
         "alarm": {
@@ -809,6 +856,17 @@
                 "valueExpr": "id",
                 "displayExpr": "description"
               }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "#00FF00": [6],
+                    "red": [9],
+                    "#4D4D4D": [0, 1, 5, 7, 11]
+                  }
+                }
+              ]
             }
           }
         },
@@ -956,6 +1014,17 @@
                 "valueExpr": "id",
                 "displayExpr": "description"
               }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "#00FF00": [6],
+                    "red": [9],
+                    "#4D4D4D": [0, 1, 5, 7, 11]
+                  }
+                }
+              ]
             }
           }
         },
@@ -1176,6 +1245,17 @@
                 "valueExpr": "id",
                 "displayExpr": "description"
               }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "#00FF00": [3],
+                    "red": [5],
+                    "#4D4D4D": [0, 1, 2, 4]
+                  }
+                }
+              ]
             }
           }
         },
@@ -1260,8 +1340,20 @@
                 "valueExpr": "id",
                 "displayExpr": "description"
               }
-            }
+            },
+            "colorizer": {
+            "styleProps": [
+              {
+                "fill": {
+                  "red": [1],
+                  "#00FF00": [2],
+                  "yellow": [0]
+                }
+              }
+              ]
           }
+          }
+
         }
       },
       "required": [
