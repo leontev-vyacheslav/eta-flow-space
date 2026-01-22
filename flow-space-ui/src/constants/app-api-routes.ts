@@ -1,5 +1,5 @@
 export default {
-    host: process.env.NODE_ENV !== 'production' ? 'http://localhost:1880' : `http://${window.location.hostname}:1880`,
+    host: process.env.NODE_ENV !== 'production' ? 'http://localhost:1895' : `http://${window.location.hostname}:1895`,
 
     accountSignIn: '/sign-in',
     accountSignOut: '/sign-out',

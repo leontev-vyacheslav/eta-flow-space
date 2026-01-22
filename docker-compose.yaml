@@ -1,14 +1,20 @@
 services:
   eta-flow-space:
-    image: nodered/node-red:latest
+    image: nodered/node-red:4.1.3
     container_name: eta-flow-space
     ports:
-      - "1880:1880"
+      - "1895:1880"
     volumes:
       - ./flow-space:/data
     restart: unless-stopped
     environment:
       - TZ=Russia/Moscow
+      - NODE_RED_ENABLE_PROJECTS=false
+    entrypoint: >
+      sh -c "
+        cd /data && npm install
+        exec node-red --userDir /data
+      "
     networks:
       - eta-flow-space-network
 
