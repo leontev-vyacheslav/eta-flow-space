@@ -13,7 +13,7 @@ services:
       - eta-flow-space-network
 
   eta-flow-space-database:
-    image: postgres:latest
+    image: postgres:17
     container_name: eta-flow-space-database
     ports:
       - "35432:5432"
