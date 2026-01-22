@@ -213,7 +213,7 @@
             {
               "fill": {
                 "red": true,
-                "none": false
+                "white": false
               },
               "stroke": {
                 "yellow": true,
@@ -352,7 +352,7 @@
             {
               "fill": {
                 "red": true,
-                "none": false
+                "white": false
               }
             }
           ]
@@ -379,7 +379,7 @@
             {
               "fill": {
                 "red": true,
-                "none": false
+                "white": false
               }
             }
           ]
@@ -406,7 +406,7 @@
             {
               "fill": {
                 "red": true,
-                "none": false
+                "white": false
               }
             }
           ]
@@ -433,7 +433,7 @@
             {
               "fill": {
                 "red": true,
-                "none": false
+                "white": false
               }
             }
           ]
@@ -460,7 +460,7 @@
             {
               "fill": {
                 "red": true,
-                "none": false
+                "white": false
               }
             }
           ]
@@ -487,7 +487,7 @@
             {
               "fill": {
                 "red": true,
-                "none": false
+                "white": false
               }
             }
           ]
@@ -514,7 +514,7 @@
             {
               "fill": {
                 "red": true,
-                "none": false
+                "white": false
               }
             }
           ]
@@ -806,6 +806,7 @@
           "type": "number",
           "unit": "Гц",
           "dimension": 0.01,
+          "label": "<tspan style='fill: blue'>Уставка</tspan>",
           "ui": {
             "group": 3,
             "editor": {
@@ -964,6 +965,7 @@
           "type": "number",
           "unit": "Гц",
           "dimension": 0.01,
+          "label": "<tspan style='fill: blue'>Уставка</tspan>",
           "ui": {
             "group": 4,
             "editor": {

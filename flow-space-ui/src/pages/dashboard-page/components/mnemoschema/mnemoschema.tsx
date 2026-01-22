@@ -2,8 +2,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useLongPress } from "use-long-press";
 import { useDashboardPage } from "../../dashboard-page-context";
 import { useScreenSize } from "../../../../utils/media-query";
-import { TransformWrapper, TransformComponent, type ReactZoomPanPinchRef} from "react-zoom-pan-pinch";
+import { TransformWrapper, TransformComponent, type ReactZoomPanPinchRef } from "react-zoom-pan-pinch";
 import { useParams } from "react-router";
+import dxPopover from "devextreme/ui/popover";
 
 
 export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfterMount }: { onBeforeMount?: (mnemoschemaElement: HTMLElement) => void, onAfterMount?: (mnemoschemaElement: HTMLElement) => void }) => {
@@ -13,6 +14,7 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
     const containerRef = useRef<HTMLDivElement>(null);
     const transformComponentRef = useRef<ReactZoomPanPinchRef | null>(null);
     const [isInitComplete, setIsInitComplete] = useState<boolean>(false);
+    const popoverInstance = useRef<dxPopover<any>>(null);
 
     const stateSetup = useCallback((mnemoschemaElement: HTMLElement) => {
         if (schemaTypeInfoPropertiesChain) {
@@ -21,7 +23,8 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
                     mnemoschemaElement.querySelectorAll(`[data-state="${propertiesChainValuePair.propertiesChain}"]`)
                         .forEach(element => {
                             const value = propertiesChainValuePair.value;
-                            if ( element.tagName === 'text') {
+
+                            if (element.tagName === 'text') {
                                 if (typeInfo?.isEnum) {
                                     element.innerHTML = dataschema.$defs[typeInfo.typeName].enumDescriptions[value].split(' - ').pop();
                                 } else {
@@ -30,6 +33,9 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
                                         element.innerHTML = `${value} ${unit ? unit : ''}`;
                                     } else {
                                         element.innerHTML = value;
+                                    }
+                                    if (typeInfo?.label) {
+                                        element.innerHTML = `${typeInfo?.label}: ${element.innerHTML}`;
                                     }
                                 }
                             } else if (typeInfo?.ui.colorizer) {
@@ -76,6 +82,7 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
         if (!containerRef.current || !mnemoschema) {
             return;
         }
+        let mnemoschemaElement: HTMLElement | undefined = undefined;
 
         try {
             const parser = new DOMParser();
@@ -88,16 +95,79 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
                 onBeforeMount(mnemoschemaDoc.documentElement);
             }
 
-            const mnemoschemaElement = containerRef.current.appendChild(mnemoschemaDoc.documentElement);
+            mnemoschemaElement = containerRef.current.appendChild(mnemoschemaDoc.documentElement);
 
             if (onAfterMount) {
                 onAfterMount(mnemoschemaElement);
             }
 
+
         } catch (error) {
             console.error(error);
         }
-    }, [mnemoschema, onBeforeMount, onAfterMount, stateSetup]);
+
+        const mnemoschemaClickHandler = (event: MouseEvent) => {
+            // debugger
+            if (!(event.target instanceof SVGElement)) {
+                return;
+            }
+            const dataStateAttr = (event.target as SVGElement).getAttribute('data-state');
+
+            if (!dataStateAttr) {
+                return;
+            }
+
+            if (popoverInstance.current) {
+                popoverInstance.current.dispose();
+            }
+
+            const propertyInfo = schemaTypeInfoPropertiesChain?.find(({ propertiesChainValuePair }) => (propertiesChainValuePair.propertiesChain === dataStateAttr));
+
+            if (!propertyInfo) {
+                return;
+            }
+
+            const content = document.querySelector("[data-app-popover]") as HTMLDivElement;
+
+            let value = propertyInfo.propertiesChainValuePair.value;
+            if (propertyInfo.typeInfo?.isEnum) {
+                const enumDescription = dataschema.$defs[propertyInfo.typeInfo?.typeName].enumDescriptions[value].split(' - ').pop();
+                value = enumDescription ? enumDescription + ' (' + value + ')' : value
+            } else {
+                const unit = propertyInfo.typeInfo?.unit;
+                value = `${value}${unit ? ' ' + unit : ''}`;
+            }
+
+            content.innerHTML = `
+                   <table class='simple-grid'>
+                        <thead>
+                            <tr><th colspan='2'>${propertyInfo.typeInfo?.ui.editor.label.text ?? ''}</th></tr>
+                        </thead>
+                       <tbody>
+                            <tr><td>Свойство:</td><td>${propertyInfo.propertiesChainValuePair.propertiesChain}</td></tr>
+                            <tr><td>Тип:</td><td>${propertyInfo.typeInfo?.typeName}</td></tr>
+                            <tr><td>Значение:</td><td>${value}</td></tr>
+                       </tbody>
+                   </table>
+                `;
+
+            popoverInstance.current = new dxPopover(content, {
+                target: event.target,
+                minWidth: 200,
+                shading: false,
+                hideOnOutsideClick: true,
+            });
+
+            popoverInstance.current.show();
+        };
+
+        mnemoschemaElement?.addEventListener('click', mnemoschemaClickHandler);
+
+        return () => {
+            mnemoschemaElement?.removeEventListener('click', mnemoschemaClickHandler);
+        };
+
+    }, [mnemoschema, onBeforeMount, onAfterMount, stateSetup, schemaTypeInfoPropertiesChain, dataschema]);
 
     useEffect(() => {
         const timer = setTimeout(() => {
