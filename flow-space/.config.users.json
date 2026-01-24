@@ -27,9 +27,15 @@
             }
         },
         "debug": {
-            "filter": "filterSelected"
+            "filter": "filterCurrent",
+            "filteredNodes": [
+                "a11210cfe3903d4f",
+                "0cde6358fb843fa9"
+            ]
         },
         "menu-menu-item-sidebar": true,
-        "menu-menu-item-palette": true
+        "menu-menu-item-palette": true,
+        "menu-deploymenu-item-flow": true,
+        "menu-deploymenu-item-full": false
     }
 }

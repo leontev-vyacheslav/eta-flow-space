@@ -2,3 +2,5 @@ node_modules/
 *.cred.json
 *.backup
 .npm/
+
+flow-space-data/
