@@ -91,7 +91,7 @@ export const ControlForm = ({ onFieldDataChanged }: ControlFormProps) => {
                     const group = dataschema.ui.groups.find((g: { id: number, name: string; }) => g.id.toString() === groupKey);
                     const isWritable = (controlDefinitions[groupKey] as Array<any>).some((item: any) => (item.editor.editorOptions.readOnly === false));
                     return (dataschema.ui.useTabs ?
-                        <Tab title={group.caption} key={groupKey} badge={isWritable === true ? 'W': undefined} >
+                        <Tab title={group.caption} key={groupKey} badge={isWritable === true ? 'W' : undefined} >
                             {controlsRender(groupKey)}
                         </Tab>
                         :
@@ -112,9 +112,8 @@ export const ControlForm = ({ onFieldDataChanged }: ControlFormProps) => {
             colCount={1}
             formData={deviceState?.state}
             ref={dxControlFormRef}
-            // disabled={!isValidDeviceState}
             onFieldDataChanged={onFieldDataChanged}
-        // width={'100%'}
+            style={{ opacity: !isValidDeviceState ? 0.6 : 1 }}
         >
             {dataschema.ui.useTabs
                 ?

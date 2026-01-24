@@ -65,7 +65,7 @@ export const Map = () => {
     }, [position, mapRef, isEnable, defaultCenter]);
 
     return (
-        <div style={{ height: '100%', width: '100%', }}>
+        <div style={{ height: '100%', width: '100%', paddingBottom: 30}}>
             <MapContainer
                 ref={mapRef}
                 center={position ?? defaultCenter}
