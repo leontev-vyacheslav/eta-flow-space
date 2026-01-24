@@ -26,7 +26,11 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
 
                             if (element.tagName === 'text') {
                                 if (typeInfo?.isEnum) {
-                                    element.innerHTML = dataschema.$defs[typeInfo.typeName].enumDescriptions[value].split(' - ').pop();
+                                    try {
+                                        element.innerHTML = dataschema.$defs[typeInfo.typeName].enumDescriptions[value].split(' - ').pop();
+                                    } catch (error) {
+                                        console.error(`Enum description resolving error: type: ${typeInfo.typeName}, value: ${value}`);
+                                    }
                                 } else {
                                     const unit = typeInfo && typeInfo.unit;
                                     if (unit) {
@@ -131,7 +135,7 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
 
             let value = propertyInfo.propertiesChainValuePair.value;
             if (propertyInfo.typeInfo?.isEnum) {
-                const enumDescription = dataschema.$defs[propertyInfo.typeInfo?.typeName].enumDescriptions[value].split(' - ').pop();
+                const enumDescription = dataschema.$defs[propertyInfo.typeInfo?.typeName].enumDescriptions[value]?.split(' - ').pop();
                 value = enumDescription ? enumDescription + ' (' + value + ')' : value
             } else {
                 const unit = propertyInfo.typeInfo?.unit;

@@ -6,7 +6,6 @@
     "tempRoomAir": {
       "type": "number",
       "unit": "°C",
-      "dimension": 0.01,
       "ui": {
         "group": 1,
         "editor": {
@@ -25,7 +24,6 @@
     "tempOutAir": {
       "type": "number",
       "unit": "°C",
-      "dimension": 0.01,
       "ui": {
         "group": 1,
         "editor": {
@@ -44,7 +42,6 @@
     "tempInNet": {
       "type": "number",
       "unit": "°C",
-      "dimension": 0.01,
       "ui": {
         "group": 1,
         "editor": {
@@ -63,7 +60,6 @@
     "tempOutNet": {
       "type": "number",
       "unit": "°C",
-      "dimension": 0.01,
       "ui": {
         "group": 1,
         "editor": {
@@ -82,7 +78,6 @@
     "pressGas": {
       "type": "number",
       "unit": "кПа",
-      "dimension": 0.01,
       "ui": {
         "group": 1,
         "editor": {
@@ -101,7 +96,6 @@
     "pressInNet": {
       "type": "number",
       "unit": "бар",
-      "dimension": 0.01,
       "ui": {
         "group": 1,
         "editor": {
@@ -120,7 +114,6 @@
     "pressOutNet": {
       "type": "number",
       "unit": "бар",
-      "dimension": 0.01,
       "ui": {
         "group": 1,
         "editor": {
@@ -139,7 +132,6 @@
     "pressOutSrcW": {
       "type": "number",
       "unit": "бар",
-      "dimension": 0.01,
       "ui": {
         "group": 1,
         "editor": {
@@ -158,7 +150,6 @@
     "levelDt1": {
       "type": "number",
       "unit": "%",
-      "dimension": 0.01,
       "ui": {
         "group": 1,
         "editor": {
@@ -177,7 +168,6 @@
     "levelDt2": {
       "type": "number",
       "unit": "%",
-      "dimension": 0.01,
       "ui": {
         "group": 1,
         "editor": {
@@ -602,7 +592,6 @@
         "powerBurner": {
           "type": "number",
           "unit": "%",
-          "dimension": 0.01,
           "ui": {
             "group": 2,
             "editor": {
@@ -805,7 +794,6 @@
         "setPower": {
           "type": "number",
           "unit": "Гц",
-          "dimension": 0.01,
           "label": "<tspan style='fill: blue'>Уставка</tspan>",
           "ui": {
             "group": 3,
@@ -964,7 +952,6 @@
         "setPower": {
           "type": "number",
           "unit": "Гц",
-          "dimension": 0.01,
           "label": "<tspan style='fill: blue'>Уставка</tspan>",
           "ui": {
             "group": 4,

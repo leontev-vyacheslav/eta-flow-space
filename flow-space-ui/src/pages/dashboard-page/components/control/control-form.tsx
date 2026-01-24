@@ -112,7 +112,7 @@ export const ControlForm = ({ onFieldDataChanged }: ControlFormProps) => {
             colCount={1}
             formData={deviceState?.state}
             ref={dxControlFormRef}
-            disabled={!isValidDeviceState}
+            // disabled={!isValidDeviceState}
             onFieldDataChanged={onFieldDataChanged}
         // width={'100%'}
         >
