@@ -3578,17 +3578,17 @@
 				style="display: none;font-family:'MyriadPro-Regular'; font-size:10px;">Аварийный макс.</tspan>
 		</text>
 
-		<text transform="matrix(1 0 0 1 873 510)">
+		<text transform="matrix(1 0 0 1 873 500)">
 			<tspan data-state="isSupplyWaterLevelEmergencyMin" x="10" y="12"
 				style="display: none;font-family:'MyriadPro-Regular'; font-size:10px;">Аварийный мин.</tspan>
 		</text>
 
-		<text transform="matrix(1 0 0 1 873 490)">
+		<text transform="matrix(1 0 0 1 873 480)">
 			<tspan data-state="isSupplyWaterLevelWorkingMax" x="12" y="12"
 				style="display: none;font-family:'MyriadPro-Regular'; font-size:10px;">Рабочий макс.</tspan>
 		</text>
 
-		<text transform="matrix(1 0 0 1 873 480)">
+		<text transform="matrix(1 0 0 1 873 460)">
 			<tspan data-state="isSupplyWaterLevelWorkingMin" x="12" y="12"
 				style="display: none;font-family:'MyriadPro-Regular'; font-size:10px;">Рабочий мин.</tspan>
 		</text>
