@@ -21,7 +21,7 @@ export const Map = () => {
     }, [device]);
 
     useEffect(() => {
-        const hasValidPosition = position !== null && isValidDeviceState;
+        const hasValidPosition = (position !== null);
         setIsEnable(hasValidPosition);
     }, [isValidDeviceState, position]);
 
@@ -48,7 +48,7 @@ export const Map = () => {
                 }
 
                 const mapElement = mapRef.current.getContainer();
-                mapElement.style.opacity = isEnable ? "1" : "0.5";
+                mapElement.style.opacity = (isValidDeviceState ? 1 : 0.7).toString();
 
                 // how to center popup
                 markerRef.current?.openPopup();
@@ -65,7 +65,7 @@ export const Map = () => {
     }, [position, mapRef, isEnable, defaultCenter]);
 
     return (
-        <div style={{ height: '100%', width: '100%', paddingBottom: 30}}>
+        <div style={{ height: '100%', width: '100%', paddingBottom: 30 }}>
             <MapContainer
                 ref={mapRef}
                 center={position ?? defaultCenter}
@@ -79,13 +79,9 @@ export const Map = () => {
                 {
                     isEnable
                         ? <Marker position={position ?? defaultCenter} ref={markerRef}>
-                            {
-                                isValidDeviceState
-                                    ? <Popup closeButton >
-                                        <MapPopupContent />
-                                    </Popup>
-                                    : null
-                            }
+                                <Popup closeButton >
+                                    <MapPopupContent />
+                                </Popup>
                         </Marker>
                         : <MapNoDataOverlay />
                 }

@@ -22,7 +22,13 @@ export const MapPopupContent = () => {
         }
 
         if (typeInfo.isEnum) {
-            return dataschema.$defs[typeInfo.typeName].enumDescriptions[value].split(' - ').pop()
+            try {
+                return dataschema.$defs[typeInfo.typeName].enumDescriptions[value].split(' - ').pop();;
+            } catch {
+                return (
+                    <span style={{ color: 'red' }}>Ошибка ({value})</span>
+                )
+            }
         }
 
         if ((typeInfo as any)["format"] !== 'date-time' && (['integer', 'float', 'number'].includes(typeInfo.typeName)) && value !== undefined) {
