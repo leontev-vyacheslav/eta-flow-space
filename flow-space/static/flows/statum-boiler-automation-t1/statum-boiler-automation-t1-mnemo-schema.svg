@@ -3573,22 +3573,22 @@
 			<tspan x="-16.1" y="12" style="font-family:'MyriadPro-Regular'; font-size:10px;">питательной воды</tspan>
 		</text>
 
-		<text transform="matrix(1 0 0 1 873 520)">
+		<text transform="matrix(1 0 0 1 873 480)">
 			<tspan data-state="isSupplyWaterLevelEmergencyMax" x="10" y="12"
 				style="display: none;font-family:'MyriadPro-Regular'; font-size:10px;">Аварийный макс.</tspan>
 		</text>
 
-		<text transform="matrix(1 0 0 1 873 480)">
+		<text transform="matrix(1 0 0 1 873 520)">
 			<tspan data-state="isSupplyWaterLevelWorkingMax" x="12" y="12"
 				style="display: none;font-family:'MyriadPro-Regular'; font-size:10px;">Рабочий макс.</tspan>
 		</text>
 
-		<text transform="matrix(1 0 0 1 873 460)">
+		<text transform="matrix(1 0 0 1 873 560)">
 			<tspan data-state="isSupplyWaterLevelWorkingMin" x="12" y="12"
 				style="display: none;font-family:'MyriadPro-Regular'; font-size:10px;">Рабочий мин.</tspan>
 		</text>
 
-		<text transform="matrix(1 0 0 1 873 440)">
+		<text transform="matrix(1 0 0 1 873 600)">
 			<tspan data-state="isSupplyWaterLevelEmergencyMin" x="10" y="12"
 				style="display: none;font-family:'MyriadPro-Regular'; font-size:10px;">Аварийный мин.</tspan>
 		</text>
