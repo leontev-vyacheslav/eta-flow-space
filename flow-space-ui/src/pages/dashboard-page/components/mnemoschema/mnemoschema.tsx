@@ -17,59 +17,63 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
     const popoverInstance = useRef<dxPopover<any>>(null);
 
     const stateSetup = useCallback((mnemoschemaElement: HTMLElement) => {
-        if (schemaTypeInfoPropertiesChain) {
-            schemaTypeInfoPropertiesChain
-                .forEach(({ typeInfo, propertiesChainValuePair }) => {
-                    mnemoschemaElement.querySelectorAll(`[data-state="${propertiesChainValuePair.propertiesChain}"]`)
-                        .forEach(element => {
-                            const value = propertiesChainValuePair.value;
+        if (!schemaTypeInfoPropertiesChain) {
+            return;
+        }
 
-                            if (element.tagName === 'text') {
-                                if (typeInfo?.isEnum) {
-                                    try {
-                                        element.innerHTML = dataschema.$defs[typeInfo.typeName].enumDescriptions[value].split(' - ').pop();
-                                    } catch (error) {
-                                        console.error(`Enum description resolving error: type: ${typeInfo.typeName}, value: ${value}`);
-                                    }
-                                } else {
-                                    const unit = typeInfo && typeInfo.unit;
-                                    if (unit) {
-                                        element.innerHTML = `${value} ${unit ? unit : ''}`;
-                                    } else {
-                                        element.innerHTML = value;
-                                    }
-                                    if (typeInfo?.label) {
-                                        element.innerHTML = `${typeInfo?.label}: ${element.innerHTML}`;
-                                    }
+        schemaTypeInfoPropertiesChain
+            .forEach(({ typeInfo, propertiesChainValuePair }) => {
+                mnemoschemaElement.querySelectorAll(`[data-state="${propertiesChainValuePair.propertiesChain}"]`)
+                    .forEach(element => {
+                        const value = propertiesChainValuePair.value;
+
+                        if (element.tagName === 'text') {
+                            if (typeInfo?.isEnum) {
+                                try {
+                                    element.innerHTML = dataschema.$defs[typeInfo.typeName].enumDescriptions[value].split(' - ').pop();
+                                } catch {
+                                    console.error(`Enum description resolving error: type: ${typeInfo.typeName}, value: ${value}`);
+                                    element.innerHTML = '<tspan style="fill: red">Ошибка</tspan>'
                                 }
-                            } else if (typeInfo?.ui.colorizer) {
-                                const styleProps = typeInfo?.ui.colorizer.styleProps;
-                                if (styleProps) {
-                                    // "styleProps": [ ... ]
-                                    styleProps.forEach((styleProp: any) => {
-                                        Object.keys(styleProp).forEach(stylePropKey => {
-                                            //  "fill": {...}
-                                            const stylePropObj = styleProp[stylePropKey];
-                                            Object.keys(stylePropObj).forEach(k => {
-                                                // "red": true
-                                                if (stylePropObj[k] === value || (Array.isArray(stylePropObj[k]) && stylePropObj[k].includes(value))) {
-                                                    const hint = element.getAttribute('data-colorizer-hint');
-                                                    if (hint) {
-                                                        if (hint === stylePropKey) {
-                                                            ((element as SVGElement).style as any)[stylePropKey] = k;
-                                                        }
-                                                    } else {
-                                                        ((element as SVGElement).style as any)[stylePropKey] = k;
-                                                    }
-                                                }
-                                            });
-                                        })
-                                    })
+                            } else {
+                                const unit = typeInfo && typeInfo.unit;
+                                if (unit) {
+                                    element.innerHTML = `${value} ${unit ? unit : ''}`;
+                                } else {
+                                    element.innerHTML = value;
+                                }
+                                if (typeInfo?.label) {
+                                    element.innerHTML = `${typeInfo?.label}: ${element.innerHTML}`;
                                 }
                             }
-                        });
-                });
-        }
+                        } else if (typeInfo?.ui.colorizer) {
+                            const styleProps = typeInfo?.ui.colorizer.styleProps;
+                            if (styleProps) {
+                                // "styleProps": [ ... ]
+                                styleProps.forEach((styleProp: any) => {
+                                    Object.keys(styleProp).forEach(stylePropKey => {
+                                        //  "fill": {...}
+                                        const stylePropObj = styleProp[stylePropKey];
+                                        Object.keys(stylePropObj).forEach(k => {
+                                            // "red": true
+                                            if (stylePropObj[k] === value || (Array.isArray(stylePropObj[k]) && stylePropObj[k].includes(value))) {
+                                                const hint = element.getAttribute('data-colorizer-hint');
+                                                if (hint) {
+                                                    if (hint === stylePropKey) {
+                                                        ((element as SVGElement).style as any)[stylePropKey] = k;
+                                                    }
+                                                } else {
+                                                    ((element as SVGElement).style as any)[stylePropKey] = k;
+                                                }
+                                            }
+                                        });
+                                    })
+                                })
+                            }
+                        }
+                    });
+            });
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dataschema, schemaTypeInfoPropertiesChain, isSmall, isXSmall, isLarge]);
 
@@ -81,6 +85,84 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
         cancelOnMovement: 5,
         captureEvent: true,
     });
+
+    const mnemoschemaClickHandler = useCallback((event: MouseEvent) => {
+        const target = (event.target as Element)?.closest?.("[data-state]");
+        if (!target) {
+            return;
+        }
+
+        const dataStateAttr = target.getAttribute("data-state");
+
+        if (!dataStateAttr) {
+            return;
+        }
+
+        if (popoverInstance.current) {
+            popoverInstance.current.dispose();
+        }
+
+        const propertyInfo = schemaTypeInfoPropertiesChain?.find(({ propertiesChainValuePair }) => (propertiesChainValuePair.propertiesChain === dataStateAttr));
+
+        if (!propertyInfo) {
+            return;
+        }
+
+        document.querySelectorAll("[data-app-popover]").forEach(element => {
+            try {
+                element.remove();
+            } catch (error) {
+                console.error(error);
+            }
+        });
+
+        const root = document.createElement("div");
+        root.setAttribute("data-app-popover", "");
+        document.body.appendChild(root);
+
+        let value = propertyInfo.propertiesChainValuePair.value;
+        if (propertyInfo.typeInfo?.isEnum) {
+            const enumDescription = dataschema.$defs[propertyInfo.typeInfo?.typeName].enumDescriptions[value]?.split(' - ').pop();
+            value = enumDescription ? enumDescription + ' (' + value + ')' : `<span style='color: red'>Ошибка (${value})</span>`
+        } else {
+            const unit = propertyInfo.typeInfo?.unit;
+            value = `${value}${unit ? ' ' + unit : ''}`;
+        }
+
+        const html = `
+                   <table class='simple-grid'>
+                        <thead>
+                            <tr><th colspan='2'>${propertyInfo.typeInfo?.ui.editor.label.text ?? ''}</th></tr>
+                        </thead>
+                       <tbody>
+                            <tr><td>Свойство:</td><td>${propertyInfo.propertiesChainValuePair.propertiesChain}</td></tr>
+                            <tr><td>Тип:</td><td>${propertyInfo.typeInfo?.typeName}</td></tr>
+                            <tr><td>Значение:</td><td>${value}</td></tr>
+                       </tbody>
+                   </table>
+                `;
+        popoverInstance.current = new dxPopover(root, {
+            minWidth: 200,
+            shading: false,
+            hideOnOutsideClick: true,
+            contentTemplate: () => {
+                const div = document.createElement("div");
+                div.innerHTML = html;
+                return div;
+            },
+            position: {
+                at: "top left",
+                my: "top left",
+                of: window,
+                offset: {
+                    x: event.clientX,
+                    y: event.clientY
+                },
+            }
+        });
+
+        popoverInstance.current.show();
+    }, [dataschema, schemaTypeInfoPropertiesChain]);
 
     useEffect(() => {
         if (!containerRef.current || !mnemoschema) {
@@ -104,74 +186,16 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
             if (onAfterMount) {
                 onAfterMount(mnemoschemaElement);
             }
-
-
         } catch (error) {
             console.error(error);
         }
-
-        const mnemoschemaClickHandler = (event: MouseEvent) => {
-            // debugger
-            if (!(event.target instanceof SVGElement)) {
-                return;
-            }
-            const dataStateAttr = (event.target as SVGElement).getAttribute('data-state');
-
-            if (!dataStateAttr) {
-                return;
-            }
-
-            if (popoverInstance.current) {
-                popoverInstance.current.dispose();
-            }
-
-            const propertyInfo = schemaTypeInfoPropertiesChain?.find(({ propertiesChainValuePair }) => (propertiesChainValuePair.propertiesChain === dataStateAttr));
-
-            if (!propertyInfo) {
-                return;
-            }
-
-            const content = document.querySelector("[data-app-popover]") as HTMLDivElement;
-
-            let value = propertyInfo.propertiesChainValuePair.value;
-            if (propertyInfo.typeInfo?.isEnum) {
-                const enumDescription = dataschema.$defs[propertyInfo.typeInfo?.typeName].enumDescriptions[value]?.split(' - ').pop();
-                value = enumDescription ? enumDescription + ' (' + value + ')' : value
-            } else {
-                const unit = propertyInfo.typeInfo?.unit;
-                value = `${value}${unit ? ' ' + unit : ''}`;
-            }
-
-            content.innerHTML = `
-                   <table class='simple-grid'>
-                        <thead>
-                            <tr><th colspan='2'>${propertyInfo.typeInfo?.ui.editor.label.text ?? ''}</th></tr>
-                        </thead>
-                       <tbody>
-                            <tr><td>Свойство:</td><td>${propertyInfo.propertiesChainValuePair.propertiesChain}</td></tr>
-                            <tr><td>Тип:</td><td>${propertyInfo.typeInfo?.typeName}</td></tr>
-                            <tr><td>Значение:</td><td>${value}</td></tr>
-                       </tbody>
-                   </table>
-                `;
-
-            popoverInstance.current = new dxPopover(content, {
-                target: event.target,
-                minWidth: 200,
-                shading: false,
-                hideOnOutsideClick: true,
-            });
-
-            popoverInstance.current.show();
-        };
 
         mnemoschemaElement?.addEventListener('click', mnemoschemaClickHandler);
 
         return () => {
             mnemoschemaElement?.removeEventListener('click', mnemoschemaClickHandler);
         };
-
-    }, [mnemoschema, onBeforeMount, onAfterMount, stateSetup, schemaTypeInfoPropertiesChain, dataschema]);
+    }, [mnemoschema, onBeforeMount, onAfterMount, stateSetup, schemaTypeInfoPropertiesChain, dataschema, mnemoschemaClickHandler]);
 
     useEffect(() => {
         const timer = setTimeout(() => {
