@@ -62,7 +62,7 @@ export const Map = () => {
                 clearTimeout(timer)
             };
         }
-    }, [position, mapRef, isEnable, defaultCenter]);
+    }, [position, mapRef, isEnable, defaultCenter, isValidDeviceState]);
 
     return (
         <div style={{ height: '100%', width: '100%', paddingBottom: 30 }}>

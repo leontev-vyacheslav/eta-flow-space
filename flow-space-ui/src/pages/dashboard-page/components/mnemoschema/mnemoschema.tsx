@@ -32,7 +32,6 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
                                 try {
                                     element.innerHTML = dataschema.$defs[typeInfo.typeName].enumDescriptions[value].split(' - ').pop();
                                 } catch {
-                                    console.error(`Enum description resolving error: type: ${typeInfo.typeName}, value: ${value}`);
                                     element.innerHTML = '<tspan style="fill: red">Ошибка</tspan>'
                                 }
                             } else {
@@ -204,7 +203,6 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
                 try {
                     const { scale, positionX, positionY } = JSON.parse(savedState);
                     transformComponentRef.current.setTransform(positionX, positionY, scale);
-
                 } catch (e) {
                     console.error("Failed to restore transform state", e);
                 }
@@ -228,7 +226,7 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
                         }
                     }}
                 >
-                    <TransformComponent>
+                    <TransformComponent wrapperStyle={{ width: '100%', height: '100%' }}>
                         <div {...longPressBinder()} style={{ display: 'flex', alignItems: 'center', opacity: (isValidDeviceState ? 1 : 0.7) }} ref={containerRef} />
                     </TransformComponent>
                 </TransformWrapper>

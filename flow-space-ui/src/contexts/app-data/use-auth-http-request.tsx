@@ -56,7 +56,6 @@ export const useAuthHttpRequest = () => {
                     if (!suppressShowError) {
                         await proclaimError(error);
                     }
-                    console.log(error);
                 }
             } finally {
                 if (!suppressLoader) {

@@ -109,7 +109,7 @@ function DashboardPageContextProvider(props: any) {
         try {
             validateFn = ajv.compile(dataschema);
         } catch (error) {
-            console.log(error);
+            console.error(error);
 
             validateFn = null;
         }

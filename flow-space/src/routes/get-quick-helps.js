@@ -7,7 +7,6 @@ async function getQuickHelps(msg) {
     const referenceKey = Buffer.from(referenceKeyEncoded, 'base64').toString('utf8');
     const quickHelpPath = `${path.join('/data/static', '/quick-help/content', referenceKey)}.md`;
 
-    console.log(quickHelpPath)
     if (!existsSync(quickHelpPath)) {
         msg.statusCode = HttpStatusCodes.InternalServerError;
         msg.payload = { message: `Элемент справочной системы ${referenceKey} не найден.` }
