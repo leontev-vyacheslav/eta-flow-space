@@ -30,7 +30,8 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
                         if (element.tagName === 'text') {
                             if (typeInfo?.isEnum) {
                                 try {
-                                    element.innerHTML = dataschema.$defs[typeInfo.typeName].enumDescriptions[value].split(' - ').pop();
+                                    const enumDescription = (dataschema.$defs[typeInfo.typeName].enumDescriptions[value].split(' - ').pop() as string).split('(')[0].trim();
+                                    element.innerHTML = enumDescription === 'Не используется' ? '' : enumDescription;
                                 } catch {
                                     element.innerHTML = '<tspan style="fill: red">Ошибка</tspan>'
                                 }
