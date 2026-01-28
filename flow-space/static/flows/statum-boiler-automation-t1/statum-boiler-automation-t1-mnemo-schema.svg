@@ -3656,7 +3656,7 @@
 		<text data-state="timestamp" data-state-format="time" transform="matrix(1 0 0 1 1155 45)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{timestamp}}</text>
 		<text transform="matrix(1 0 0 1 735.3401 33.26)" style="font-family:'MyriadPro-Regular'; font-size:12px;">Прочие параметры работы котельной</text>
 
-		<g data-section="emegrency">
+		<g data-section="emergency">
 			<path style="fill:none;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;" d="M934.6,728.6H445.7c-5.2,0-9.4-4.2-9.4-9.4
 			v-71.3c0-5.2,4.2-9.4,9.4-9.4h488.9c5.2,0,9.4,4.2,9.4,9.4v71.3C944.1,724.4,939.8,728.6,934.6,728.6z" />
 			<text transform="matrix(1 0 0 1 638.8081 654.7033)"
