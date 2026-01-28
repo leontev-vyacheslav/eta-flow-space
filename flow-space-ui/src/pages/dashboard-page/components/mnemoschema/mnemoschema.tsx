@@ -211,6 +211,7 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
 
     useEffect(() => {
         const timer = setTimeout(() => {
+            // debugger
             const savedState = localStorage.getItem(`mnemoschema_transformed_state_${flowCode}`);
             if (savedState && transformComponentRef.current) {
                 try {
@@ -221,7 +222,7 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
                 }
             }
             setIsInitComplete(true);
-        }, 100);
+        }, 500);
 
         return () => clearTimeout(timer);
     }, [flowCode]);

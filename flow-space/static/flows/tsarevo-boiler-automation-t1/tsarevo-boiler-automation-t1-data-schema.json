@@ -1,0 +1,1461 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "StateModel",
+  "type": "object",
+  "properties": {
+    "tempRoomAir": {
+      "type": "number",
+      "unit": "°C",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Температура в котельной"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "tempOutAir": {
+      "type": "number",
+      "unit": "°C",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Температура наружная"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "tempInNet": {
+      "type": "number",
+      "unit": "°C",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Температура на обратке сетевого контура"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "tempOutNet": {
+      "type": "number",
+      "unit": "°C",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Температура на подаче сетевого контура"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "pressGas": {
+      "type": "number",
+      "unit": "кПа",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Давление газа"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "pressInNet": {
+      "type": "number",
+      "unit": "бар",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Давление на обратке сетевого контура"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "pressOutNet": {
+      "type": "number",
+      "unit": "бар",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Давление на подаче сетевого контура"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "pressOutSrcW": {
+      "type": "number",
+      "unit": "бар",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Давление на выходе насосов исходной воды"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "levelDt1": {
+      "type": "number",
+      "unit": "%",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Уровень ДТ в баке 1"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "levelDt2": {
+      "type": "number",
+      "unit": "%",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Уровень ДТ в баке 2"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "isOffInput1": {
+      "type": "boolean",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxSwitch",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Ввод 1 выключен"
+          },
+          "editorOptions": {
+            "readOnly": false
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              },
+              "stroke": {
+                "yellow": true,
+                "black": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isSupplyWaterLevelEmergencyMax": {
+      "type": "boolean",
+      "ui": {
+        "group": 8,
+        "editor": {
+          "editorType": "dxSwitch",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Уровень воды в баке авар. макс."
+          },
+          "editorOptions": {
+            "readOnly": false
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "display": {
+              "none": false,
+              "inline": true
+            }
+            }
+          ]
+        }
+      }
+    },
+    "isSupplyWaterLevelWorkingMax": {
+      "type": "boolean",
+      "ui": {
+        "group": 8,
+        "editor": {
+          "editorType": "dxSwitch",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Уровень воды в баке раб. мах."
+          },
+          "editorOptions": {
+            "readOnly": false
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "display": {
+              "none": false,
+              "inline": true
+            }
+            }
+          ]
+        }
+      }
+    },
+    "isSupplyWaterLevelWorkingMin": {
+      "type": "boolean",
+      "ui": {
+        "group": 8,
+        "editor": {
+          "editorType": "dxSwitch",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Уровень воды в баке раб. мин."
+          },
+          "editorOptions": {
+            "readOnly": false
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "display": {
+              "none": false,
+              "inline": true
+            }
+            }
+          ]
+        }
+      }
+    },
+    "isSupplyWaterLevelEmergencyMin": {
+      "type": "boolean",
+      "ui": {
+        "group": 8,
+        "editor": {
+          "editorType": "dxSwitch",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Уровень воды в баке авар. мин."
+          },
+          "editorOptions": {
+            "readOnly": false
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "display": {
+              "none": false,
+              "inline": true
+            }
+            }
+          ]
+        }
+      }
+    },
+    "isCO1": {
+      "type": "boolean",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxSwitch",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Газоанализатор СО №1"
+          },
+          "editorOptions": {
+            "readOnly": false
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isCH1": {
+      "type": "boolean",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxSwitch",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Газоанализатор СH №1"
+          },
+          "editorOptions": {
+            "readOnly": false
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isCO2": {
+      "type": "boolean",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxSwitch",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Газоанализатор СО №2"
+          },
+          "editorOptions": {
+            "readOnly": false
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isCH2": {
+      "type": "boolean",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxSwitch",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Газоанализатор СH №2"
+          },
+          "editorOptions": {
+            "readOnly": false
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isGasFlap": {
+      "type": "boolean",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxSwitch",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Клапан газа закрыт"
+          },
+          "editorOptions": {
+            "readOnly": false
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isVaporDt1": {
+      "type": "boolean",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxSwitch",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Пары ДТ 1"
+          },
+          "editorOptions": {
+            "readOnly": false
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isVaporDt2": {
+      "type": "boolean",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxSwitch",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Пары ДТ 2"
+          },
+          "editorOptions": {
+            "readOnly": false
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "boilers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/BoilerModel"
+      },
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "boilerValves": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ValveModel"
+      },
+      "minItems": 4,
+      "maxItems": 4
+    },
+    "networkPumps": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/NetworkPumpModel"
+      },
+      "minItems": 4,
+      "maxItems": 4
+    },
+    "sourceWaterPumps": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/SourceWaterNetworkPumpModel"
+      },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "supplyPumps": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/SupplyPumpModel"
+      },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "flapHt": {
+      "$ref": "#/$defs/FlapModel"
+    },
+    "flapHn": {
+      "$ref": "#/$defs/FlapModel"
+    },
+    "flapDt": {
+      "$ref": "#/$defs/FlapModel"
+    },
+    "flapDtFill": {
+      "$ref": "#/$defs/FlapModel"
+    },
+      "timestamp": {
+      "type": "integer",
+      "format": "date-time",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxDateBox",
+          "editorOptions": {
+            "type": "datetime",
+            "displayFormat": "dd.MM.yyyy HH:mm:ss",
+            "readOnly": true
+          },
+          "cssClass": "form-input-box",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Время опроса"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "tempRoomAir",
+    "tempOutAir",
+    "pressGas",
+    "levelDt1",
+    "levelDt2",
+    "pressOutNet",
+    "tempOutNet",
+    "pressInNet",
+    "tempInNet",
+    "pressOutSrcW",
+    "boilers",
+    "boilerValves",
+    "networkPumps",
+    "sourceWaterPumps",
+    "supplyPumps",
+    "flapHt",
+    "flapHn",
+    "flapDt",
+    "flapDtFill"
+  ],
+  "$defs": {
+    "BoilerModel": {
+      "type": "object",
+      "properties": {
+        "powerBurner": {
+          "type": "number",
+          "unit": "%",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Мощность горелки котла"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "mode": {
+          "$ref": "#/$defs/WorkMode",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Режим работы котла"
+              },
+              "editorOptions": {
+                "readOnly": true,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
+            }
+          }
+        },
+        "status": {
+          "$ref": "#/$defs/BoilerStatus",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Состояние котла"
+              },
+              "editorOptions": {
+                "readOnly": true,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "#00FF00": [3, 4],
+                    "red": [6],
+                    "none": [0,
+                      1,
+                      2,
+                      5,
+                      8,
+                      9,
+                      10
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "alarm": {
+          "$ref": "#/$defs/BoilerAlarm",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Авария котла"
+              },
+              "editorOptions": {
+                "readOnly": true,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "powerBurner",
+        "mode",
+        "status",
+        "alarm"
+      ]
+    },
+    "BoilerStatus": {
+      "type": "integer",
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9,
+        10
+      ],
+      "enumDescriptions": {
+        "0": "STOPPED - Остановлен",
+        "1": "OPENING_OUTLET_VALVE - Открытие задвижки",
+        "2": "BURNER_STARTUP - Запуск горелки",
+        "3": "OPERATION_LOW_BURN - Работа (малое горение)",
+        "4": "OPERATION_REGULATION - Работа (регулирование)",
+        "5": "BURNER_STOP - Останов горелки",
+        "6": "ALARM - Авария",
+        "8": "HOT_RESERVE - Горячий резерв",
+        "9": "CLOSING_OUTLET_VALVE - Закрытие задвижки",
+        "10": "NOT_READY - Нет готовности"
+      }
+    },
+    "BoilerAlarm": {
+      "type": "integer",
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "enumDescriptions": {
+        "0": "TEMP_SENSOR_FAULT - Неисправность (датчик температуры на выходе)",
+        "1": "BURNER_ALARM - Авария (горелка)",
+        "2": "PRESSURE_SENSOR_FAULT - Неисправность (датчик давления)",
+        "3": "SAFETY_CIRCUIT - Цепь безопасности",
+        "4": "EMERGENCY_STOP - Аварийный останов",
+        "5": "HIGH_TEMP_THRESHOLD - Аварийный порог (высокая температура)",
+        "6": "HIGH_PRESSURE_THRESHOLD - Аварийный порог (высокое давление)",
+        "7": "LOW_PRESSURE_THRESHOLD - Аварийный порог (низкое давления)",
+        "8": "NO_FLOW - Нет протока",
+        "9": "PUMPS_DISCONNECTED - Отключение насосов",
+        "10": "BURNER_IGNITION_TIMEOUT - Таймаут (розжиг горелки)",
+        "11": "SPONTANEOUS_BURNER_SHUTDOWN - Самопроизв. отключение (горелка)",
+        "12": "VALVE_ALARM - Авария (задвижка)"
+      }
+    },
+    "FlapModel": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "$ref": "#/$defs/FlapMode",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Режим работы клапана"
+              },
+              "editorOptions": {
+                "readOnly": true,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "mode"
+      ]
+    },
+    "FlapMode": {
+      "type": "integer",
+      "enum": [
+        0,
+        1
+      ],
+      "enumDescriptions": {
+        "0": "AUTO - Авто",
+        "1": "MANUAL - Ручной"
+      }
+    },
+    "NetworkPumpModel": {
+      "type": "object",
+      "properties": {
+        "setPower": {
+          "type": "number",
+          "unit": "Гц",
+          "label": "<tspan style='fill: blue'>Уставка</tspan>",
+          "ui": {
+            "group": 3,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Задание частоты сетевого насоса"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "mode": {
+          "$ref": "#/$defs/WorkMode",
+          "ui": {
+            "group": 3,
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Режим работы сетевого насоса"
+              },
+              "editorOptions": {
+                "readOnly": true,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
+            }
+          }
+        },
+        "status": {
+          "$ref": "#/$defs/NetworkPumpStatus",
+          "ui": {
+            "group": 3,
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Состояние сетевого насоса"
+              },
+              "editorOptions": {
+                "readOnly": true,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "#00FF00": [6],
+                    "red": [9],
+                    "#4D4D4D": [0, 1, 5, 7, 11]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "alarm": {
+          "$ref": "#/$defs/NetworkPumpAlarm",
+          "ui": {
+            "group": 3,
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Авария сетевого насоса"
+              },
+              "editorOptions": {
+                "readOnly": true,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
+            }
+          }
+        },
+        "modeFc": {
+          "$ref": "#/$defs/WorkMode",
+          "ui": {
+            "group": 3,
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Режим ЧРП сетевого насоса"
+              },
+              "editorOptions": {
+                "readOnly": true,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
+            }
+          }
+        },
+        "statusFc": {
+          "$ref": "#/$defs/VariableFrequencyDriveStatus",
+          "ui": {
+            "group": 3,
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Статус ЧРП сетевого насоса"
+              },
+              "editorOptions": {
+                "readOnly": true,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
+            }
+          }
+        },
+        "alarmFc": {
+          "$ref": "#/$defs/VariableFrequencyDriveAlarm",
+          "ui": {
+            "group": 3,
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Авария ЧРП сетевого насоса"
+              },
+              "editorOptions": {
+                "readOnly": true,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "setPower",
+        "mode",
+        "status",
+        "alarm",
+        "modeFc",
+        "statusFc",
+        "alarmFc"
+      ]
+    },
+    "SourceWaterNetworkPumpModel": {
+      "type": "object",
+      "properties": {
+        "setPower": {
+          "type": "number",
+          "unit": "Гц",
+          "label": "<tspan style='fill: blue'>Уставка</tspan>",
+          "ui": {
+            "group": 4,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Задание частоты насоса исх. воды"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "mode": {
+          "$ref": "#/$defs/WorkMode",
+          "ui": {
+            "group": 4,
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Режим работы насоса исх. воды"
+              },
+              "editorOptions": {
+                "readOnly": true,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
+            }
+          }
+        },
+        "status": {
+          "$ref": "#/$defs/NetworkPumpStatus",
+          "ui": {
+            "group": 4,
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Состояние насоса исх. воды"
+              },
+              "editorOptions": {
+                "readOnly": true,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "#00FF00": [6],
+                    "red": [9],
+                    "#4D4D4D": [0, 1, 5, 7, 11]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "alarm": {
+          "$ref": "#/$defs/NetworkPumpAlarm",
+          "ui": {
+            "group": 4,
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Авария насоса исх. воды"
+              },
+              "editorOptions": {
+                "readOnly": true,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
+            }
+          }
+        },
+        "modeFc": {
+          "$ref": "#/$defs/WorkMode",
+          "ui": {
+            "group": 4,
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Режим ЧРП насоса исх. воды"
+              },
+              "editorOptions": {
+                "readOnly": true,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
+            }
+          }
+        },
+        "statusFc": {
+          "$ref": "#/$defs/VariableFrequencyDriveStatus",
+          "ui": {
+            "group": 4,
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Статус ЧРП насоса исх. воды"
+              },
+              "editorOptions": {
+                "readOnly": true,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
+            }
+          }
+        },
+        "alarmFc": {
+          "$ref": "#/$defs/VariableFrequencyDriveAlarm",
+          "ui": {
+            "group": 4,
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Авария ЧРП насоса исх. воды"
+              },
+              "editorOptions": {
+                "readOnly": true,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "setPower",
+        "mode",
+        "status",
+        "alarm",
+        "modeFc",
+        "statusFc",
+        "alarmFc"
+      ]
+    },
+    "NetworkPumpStatus": {
+      "type": "integer",
+      "enum": [
+        0,
+        1,
+        5,
+        6,
+        7,
+        9,
+        11
+      ],
+      "enumDescriptions": {
+        "0": "WAITING_FOR_READINESS - Ожидание (готовности)",
+        "1": "READINESS - Готовность",
+        "5": "START_FROM_VFD - Запуск (от ЧРП)",
+        "6": "OPERATING_FROM_VFD - В работе (от ЧРП)",
+        "7": "STOP_FROM_VFD - Останов (от ЧРП)",
+        "9": "ALARM - Авария",
+        "11": "STOPPED_VFD_READINESS - Остановлен (готовность элементов ЧРП)"
+      }
+    },
+    "NetworkPumpAlarm": {
+      "type": "integer",
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "enumDescriptions": {
+        "0": "NOT_USED_0 - Не используется",
+        "1": "NOT_USED_1 - Не используется",
+        "2": "NOT_USED_2 - Не используется",
+        "3": "VFD_ALARM - Авария ПЧ",
+        "4": "NOT_USED_4 - Не используется",
+        "5": "NO_VFD_READINESS - Нет готовности ПЧ",
+        "6": "DRY_RUN - Сухой ход"
+      }
+    },
+    "VariableFrequencyDriveStatus": {
+      "type": "integer",
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        8,
+        9,
+        10
+      ],
+      "enumDescriptions": {
+        "0": "NO_POWER - Нет питания",
+        "1": "STOPPED - Остановлен",
+        "2": "OPERATING - В работе",
+        "3": "ALARM - Авария",
+        "4": "STARTUP_ACCELERATION - Запуск (разгон)",
+        "5": "STOP - Останов",
+        "7": "REGULATION_MIN_FREQUENCY - Регулирование (мин. частота)",
+        "8": "REGULATION_MAX_FREQUENCY - Регулирование (макс. частота)",
+        "9": "WAITING_FOR_START - Ожидание (включения)",
+        "10": "WAITING_FOR_READINESS - Ожидание (готовности)"
+      }
+    },
+    "VariableFrequencyDriveAlarm": {
+      "type": "integer",
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "enumDescriptions": {
+        "0": "EXCEEDED_STARTUP_TIME - Превышено (время включения)",
+        "1": "EXCEEDED_SHUTDOWN_TIME - Превышено (время отключения)",
+        "2": "SPONTANEOUS_SHUTDOWN - Самопроизв. откл.",
+        "3": "SPONTANEOUS_STARTUP - Самопроизв. вкл.",
+        "4": "VFD_ALARM - Авария ПЧ",
+        "5": "POWER_LOSS_DURING_OPERATION - Пропадание (питания/связи во время работы)",
+        "6": "MIN_CURRENT_AT_MAX_FREQUENCY - Минимальный ток (при максимальной частоте)",
+        "7": "MIN_FREQUENCY_NOT_REACHED - Не достигнута (мин. частота)"
+      }
+    },
+    "SupplyPumpModel": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "$ref": "#/$defs/WorkMode",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Режим работы питательного насоса"
+              },
+              "editorOptions": {
+                "readOnly": true,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
+            }
+          }
+        },
+        "status": {
+          "$ref": "#/$defs/SupplyPumpStatus",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Состояние работы питательного насоса"
+              },
+              "editorOptions": {
+                "readOnly": true,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "#00FF00": [3],
+                    "red": [5],
+                    "#4D4D4D": [0, 1, 2, 4]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "alarm": {
+          "$ref": "#/$defs/SupplyPumpAlarm",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Авария питательного насоса"
+              },
+              "editorOptions": {
+                "readOnly": true,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "mode",
+        "status",
+        "alarm"
+      ]
+    },
+    "SupplyPumpStatus": {
+      "type": "integer",
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "enumDescriptions": {
+        "0": "NO_POWER - Нет питания",
+        "1": "STOPPED - Остановлен",
+        "2": "STARTING - Запускается",
+        "3": "OPERATING - Работа",
+        "4": "STOPPING - Останавливается",
+        "5": "ALARM - Авария"
+      }
+    },
+    "SupplyPumpAlarm": {
+      "type": "integer",
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "enumDescriptions": {
+        "0": "EXCEEDED_STARTUP_TIME - Превышено (время запуска)",
+        "1": "EXCEEDED_SHUTDOWN_TIME - Превышено (время останова)",
+        "2": "SPONTANEOUS_STARTUP - Самопроизв. запуск",
+        "3": "SPONTANEOUS_SHUTDOWN - Самопроизв. откл.",
+        "4": "DRY_RUN - Сухой ход"
+      }
+    },
+    "ValveModel": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/$defs/ValveStatus",
+          "ui": {
+            "group": 6,
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Режим работы задвижки"
+              },
+              "editorOptions": {
+                "readOnly": true,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
+            },
+            "colorizer": {
+            "styleProps": [
+              {
+                "fill": {
+                  "red": [1],
+                  "#00FF00": [2],
+                  "yellow": [0]
+                }
+              }
+              ]
+          }
+          }
+
+        }
+      },
+      "required": [
+        "status"
+      ]
+    },
+    "ValveStatus": {
+      "type": "integer",
+      "enum": [
+        0,
+        1,
+        2
+      ],
+      "enumDescriptions": {
+        "0": "INTERMEDIATE - Промежуточное",
+        "1": "CLOSED - Закрыта",
+        "2": "OPEN - Открыта"
+      }
+    },
+    "WorkMode": {
+      "type": "integer",
+      "enum": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "enumDescriptions": {
+        "0": "NOT_USED - Не используется",
+        "1": "REPAIR - Ремонт",
+        "2": "LOCAL - Местный (ручное управление кнопками на шкафу)",
+        "4": "PANEL - Панель (управление с панели шкафа управления)"
+      }
+    }
+  },
+  "ui": {
+    "useTabs": true,
+    "groups": [
+      {
+        "id": 1,
+        "name": "state",
+        "caption": "Состояния",
+        "order": 100
+      },
+      {
+        "id": 2,
+        "name": "boilers",
+        "caption": "Котлы",
+        "order": 200
+      },
+      {
+        "id": 3,
+        "name": "networkPumps",
+        "caption": "Сетевые насосы",
+        "order": 300
+      },
+      {
+        "id": 4,
+        "name": "sourceWaternetworkPumps",
+        "caption": "Насосы исходной воды",
+        "order": 400
+      },
+      {
+        "id": 5,
+        "name": "flaps",
+        "caption": "Клапаны",
+        "order": 500
+      },
+      {
+        "id": 6,
+        "name": "valves",
+        "caption": "Задвижки",
+        "order": 600
+      },
+      {
+        "id": 7,
+        "name": "emergency",
+        "caption": "Аварии",
+        "order": 150
+      },
+      {
+        "id": 8,
+        "name": "levels",
+        "caption": "Уровни",
+        "order": 155
+      },
+      {
+        "id": 9,
+        "name": "supplyPumps",
+        "caption": "Насосы подпитки",
+        "order": 450
+      }
+    ]
+  }
+}
