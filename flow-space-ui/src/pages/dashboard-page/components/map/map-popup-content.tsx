@@ -31,20 +31,20 @@ export const MapPopupContent = () => {
             }
         }
 
-        if ((typeInfo as any)["format"] !== 'date-time' && (['integer', 'float', 'number'].includes(typeInfo.typeName))) {
-            if (typeInfo?.unit) {
-                return `${value} ${typeInfo?.unit}`;
-            }
-
-            return value;
-        }
-
         if (typeInfo?.ui.editor.editorOptions.type === 'datetime') {
             if (typeInfo.typeName === 'integer') {
                 return (new Date(value)).toLocaleString('ru-RU', {});
             } else if (typeInfo.typeName === 'string') {
                 return (new Date(Date.parse(value))).toLocaleString('ru-RU', {});
             }
+        }
+
+        if (['integer', 'float', 'number'].includes(typeInfo.typeName)) {
+            if (typeInfo?.unit) {
+                return `${value} ${typeInfo?.unit}`;
+            }
+
+            return value;
         }
 
         return 'Нет данных';

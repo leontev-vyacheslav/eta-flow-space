@@ -40,9 +40,17 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
                                 if (unit) {
                                     element.innerHTML = `${value} ${unit ? unit : ''}`;
                                 } else {
-                                    if(typeInfo?.ui.editor.editorOptions.type === 'datetime') {
+                                    const formatAttr = element.getAttribute('data-state-format');
+
+                                    if (typeInfo?.ui.editor.editorOptions.type === 'datetime') {
                                         const date = new Date(value);
-                                        value = date.toLocaleString('ru-RU');
+                                        if (formatAttr === 'date') {
+                                            value = date.toLocaleDateString('ru-RU');
+                                        } else if (formatAttr === 'time') {
+                                            value = date.toLocaleTimeString('ru-RU');
+                                        } else {
+                                            value = date.toLocaleString('ru-RU');
+                                        }
                                     }
                                     element.innerHTML = value;
                                 }
