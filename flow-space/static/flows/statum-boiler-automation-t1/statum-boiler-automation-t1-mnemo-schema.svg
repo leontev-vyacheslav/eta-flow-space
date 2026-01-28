@@ -4,7 +4,6 @@
 	y="0px" viewBox="0 0 1272.6 755.4" style="enable-background:new 0 0 1272.6 755.4;" xml:space="preserve">
 	<g id="Boiler_x5F_1">
 		<g>
-
 			<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="-4.9436" y1="348.2178" x2="1.2325"
 				y2="348.2178" gradientTransform="matrix(0 1 -1 0 508.336 362.297)">
 				<stop offset="0" style="stop-color:#65C8D0" />
@@ -3653,6 +3652,7 @@
 			y2="433.1" />
 		<path style="fill:none;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;" d="M1135.9,83.1H517.8c-5.2,0-9.4-4.2-9.4-9.4V22.9
 		c0-5.2,4.2-9.4,9.4-9.4h618.1c5.2,0,9.4,4.2,9.4,9.4v50.7C1145.3,78.8,1141.1,83.1,1135.9,83.1z" />
+		<text data-state="timestamp" transform="matrix(1 0 0 1 1150 30)" style="font-family:'MyriadPro-Regular'; font-size:12px;">{{timestamp}}</text>
 		<text transform="matrix(1 0 0 1 735.3401 33.26)" style="font-family:'MyriadPro-Regular'; font-size:12px;">Прочие
 			параметры работы котельной</text>
 

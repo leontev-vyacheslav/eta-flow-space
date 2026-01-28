@@ -25,7 +25,7 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
             .forEach(({ typeInfo, propertiesChainValuePair }) => {
                 mnemoschemaElement.querySelectorAll(`[data-state="${propertiesChainValuePair.propertiesChain}"]`)
                     .forEach(element => {
-                        const value = propertiesChainValuePair.value;
+                        let value = propertiesChainValuePair.value;
 
                         if (element.tagName === 'text') {
                             if (typeInfo?.isEnum) {
@@ -40,6 +40,10 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
                                 if (unit) {
                                     element.innerHTML = `${value} ${unit ? unit : ''}`;
                                 } else {
+                                    if(typeInfo?.ui.editor.editorOptions.type === 'datetime') {
+                                        const date = new Date(value);
+                                        value = date.toLocaleString('ru-RU');
+                                    }
                                     element.innerHTML = value;
                                 }
                                 if (typeInfo?.label) {

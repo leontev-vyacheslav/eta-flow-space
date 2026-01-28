@@ -31,14 +31,15 @@ export const MapPopupContent = () => {
             }
         }
 
-        if ((typeInfo as any)["format"] !== 'date-time' && (['integer', 'float', 'number'].includes(typeInfo.typeName)) && value !== undefined) {
+        if ((typeInfo as any)["format"] !== 'date-time' && (['integer', 'float', 'number'].includes(typeInfo.typeName))) {
             if (typeInfo?.unit) {
                 return `${value} ${typeInfo?.unit}`;
             }
 
             return value;
         }
-        if ((typeInfo as any)["format"] === 'date-time' && value !== undefined) {
+
+        if (typeInfo?.ui.editor.editorOptions.type === 'datetime') {
             if (typeInfo.typeName === 'integer') {
                 return (new Date(value)).toLocaleString('ru-RU', {});
             } else if (typeInfo.typeName === 'string') {

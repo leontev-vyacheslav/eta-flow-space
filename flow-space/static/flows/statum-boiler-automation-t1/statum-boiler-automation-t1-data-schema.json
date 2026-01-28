@@ -562,6 +562,27 @@
     },
     "flapDtFill": {
       "$ref": "#/$defs/FlapModel"
+    },
+      "timestamp": {
+      "type": "integer",
+      "format": "date-time",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxDateBox",
+          "editorOptions": {
+            "type": "datetime",
+            "displayFormat": "dd.MM.yyyy HH:mm:ss",
+            "readOnly": true
+          },
+          "cssClass": "form-input-box",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Время опроса"
+          }
+        }
+      }
     }
   },
   "required": [
