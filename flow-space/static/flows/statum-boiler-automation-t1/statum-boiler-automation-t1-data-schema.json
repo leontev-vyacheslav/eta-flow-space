@@ -1176,10 +1176,10 @@
         3,
         4,
         5,
+        6,
         7,
         8,
-        9,
-        10
+        9
       ],
       "enumDescriptions": {
         "0": "NO_POWER - Нет питания",
@@ -1188,10 +1188,10 @@
         "3": "ALARM - Авария",
         "4": "STARTUP_ACCELERATION - Запуск (разгон)",
         "5": "STOP - Останов",
-        "7": "REGULATION_MIN_FREQUENCY - Регулирование (мин. частота)",
-        "8": "REGULATION_MAX_FREQUENCY - Регулирование (макс. частота)",
-        "9": "WAITING_FOR_START - Ожидание (включения)",
-        "10": "WAITING_FOR_READINESS - Ожидание (готовности)"
+        "6": "REGULATION_MIN_FREQUENCY - Регулирование (мин. частота)",
+        "7": "REGULATION_MAX_FREQUENCY - Регулирование (макс. частота)",
+        "8": "WAITING_FOR_START - Ожидание (включения)",
+        "9": "WAITING_FOR_READINESS - Ожидание (готовности)"
       }
     },
     "VariableFrequencyDriveAlarm": {
@@ -1395,6 +1395,7 @@
         "0": "NOT_USED - Не используется",
         "1": "REPAIR - Ремонт",
         "2": "LOCAL - Местный (ручное управление кнопками на шкафу)",
+        "3": "AUTO - Авто",
         "4": "PANEL - Панель (управление с панели шкафа управления)"
       }
     }
@@ -1422,7 +1423,7 @@
       },
       {
         "id": 4,
-        "name": "sourceWaternetworkPumps",
+        "name": "sourceWaterNetworkPumps",
         "caption": "Насосы исходной воды",
         "order": 400
       },
