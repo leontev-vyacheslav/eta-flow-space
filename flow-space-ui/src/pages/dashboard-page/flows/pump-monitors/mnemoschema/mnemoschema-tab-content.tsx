@@ -94,7 +94,6 @@ const MnemoschemaTabContent = () => {
     }, [deviceState]);
 
     const startStopPumpsHandler = useCallback((mnemoschemaElement: HTMLElement) => {
-        // debugger
         if (!deviceState || !deviceState.state || Object.keys(deviceState.state).length === 0) {
             return;
         }

@@ -72,7 +72,6 @@ function DashboardPageContextProvider(props: any) {
                     getMnemoschemaAsync(parseInt(deviceId)),
                     getDeviceStateDataschemaAsync(parseInt(deviceId)),
                 ])
-
                 const [device, deviceState, mnemoschema, dataschema] = results.map(r => {
                     return r.status === 'fulfilled' ? r.value : null
                 });
