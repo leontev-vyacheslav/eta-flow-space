@@ -516,8 +516,8 @@
       "items": {
         "$ref": "#/$defs/BoilerModel"
       },
-      "minItems": 3,
-      "maxItems": 3
+      "minItems": 4,
+      "maxItems": 4
     },
     "boilerValves": {
       "type": "array",
@@ -744,31 +744,33 @@
         0,
         1,
         2,
-        3,
         4,
-        5,
-        6,
-        7,
         8,
-        9,
-        10,
-        11,
-        12
+        16,
+        32,
+        64,
+        128,
+        256,
+        512,
+        1024,
+        2048,
+        4096
       ],
       "enumDescriptions": {
-        "0": "TEMP_SENSOR_FAULT - Неисправность (датчик температуры на выходе)",
-        "1": "BURNER_ALARM - Авария (горелка)",
-        "2": "PRESSURE_SENSOR_FAULT - Неисправность (датчик давления)",
-        "3": "SAFETY_CIRCUIT - Цепь безопасности",
-        "4": "EMERGENCY_STOP - Аварийный останов",
-        "5": "HIGH_TEMP_THRESHOLD - Аварийный порог (высокая температура)",
-        "6": "HIGH_PRESSURE_THRESHOLD - Аварийный порог (высокое давление)",
-        "7": "LOW_PRESSURE_THRESHOLD - Аварийный порог (низкое давления)",
-        "8": "NO_FLOW - Нет протока",
-        "9": "PUMPS_DISCONNECTED - Отключение насосов",
-        "10": "BURNER_IGNITION_TIMEOUT - Таймаут (розжиг горелки)",
-        "11": "SPONTANEOUS_BURNER_SHUTDOWN - Самопроизв. отключение (горелка)",
-        "12": "VALVE_ALARM - Авария (задвижка)"
+        "0": "NORM - Норма",
+        "1": "TEMP_SENSOR_FAULT - Неисправность (датчик температуры на выходе)",
+        "2": "BURNER_ALARM - Авария (горелка)",
+        "4": "PRESSURE_SENSOR_FAULT - Неисправность (датчик давления)",
+        "8": "SAFETY_CIRCUIT - Цепь безопасности",
+        "16": "EMERGENCY_STOP - Аварийный останов",
+        "32": "HIGH_TEMP_THRESHOLD - Аварийный порог (высокая температура)",
+        "64": "HIGH_PRESSURE_THRESHOLD - Аварийный порог (высокое давление)",
+        "128": "LOW_PRESSURE_THRESHOLD - Аварийный порог (низкое давления)",
+        "256": "NO_FLOW - Нет протока",
+        "512": "PUMPS_DISCONNECTED - Отключение насосов",
+        "1024": "BURNER_IGNITION_TIMEOUT - Таймаут (розжиг горелки)",
+        "2048": "SPONTANEOUS_BURNER_SHUTDOWN - Самопроизв. отключение (горелка)",
+        "4096": "VALVE_ALARM - Авария (задвижка)"
       }
     },
     "FlapModel": {
@@ -1128,22 +1130,22 @@
     "NetworkPumpStatus": {
       "type": "integer",
       "enum": [
-        0,
         1,
-        5,
-        6,
-        7,
-        9,
-        11
+        2,
+        32,
+        64,
+        128,
+        512,
+        2048
       ],
       "enumDescriptions": {
-        "0": "WAITING_FOR_READINESS - Ожидание (готовности)",
-        "1": "READINESS - Готовность",
-        "5": "START_FROM_VFD - Запуск (от ЧРП)",
-        "6": "OPERATING_FROM_VFD - В работе (от ЧРП)",
-        "7": "STOP_FROM_VFD - Останов (от ЧРП)",
-        "9": "ALARM - Авария",
-        "11": "STOPPED_VFD_READINESS - Остановлен (готовность элементов ЧРП)"
+        "1": "WAITING_FOR_READINESS - Ожидание (готовности)",
+        "2": "READINESS - Готовность",
+        "32": "START_FROM_VFD - Запуск (от ЧРП)",
+        "64": "OPERATING_FROM_VFD - В работе (от ЧРП)",
+        "128": "STOP_FROM_VFD - Останов (от ЧРП)",
+        "512": "ALARM - Авария",
+        "2048": "STOPPED_VFD_READINESS - Остановлен (готовность элементов ЧРП)"
       }
     },
     "NetworkPumpAlarm": {
@@ -1152,46 +1154,48 @@
         0,
         1,
         2,
-        3,
         4,
-        5,
-        6
+        8,
+        16,
+        32,
+        64
       ],
       "enumDescriptions": {
-        "0": "NOT_USED_0 - Не используется",
-        "1": "NOT_USED_1 - Не используется",
-        "2": "NOT_USED_2 - Не используется",
-        "3": "VFD_ALARM - Авария ПЧ",
-        "4": "NOT_USED_4 - Не используется",
-        "5": "NO_VFD_READINESS - Нет готовности ПЧ",
-        "6": "DRY_RUN - Сухой ход"
+        "0": "NORM - Норма",
+        "1": "NOT_USED_0 - Не используется",
+        "2": "NOT_USED_1 - Не используется",
+        "4": "NOT_USED_2 - Не используется",
+        "8": "VFD_ALARM - Авария ПЧ",
+        "16": "NOT_USED_4 - Не используется",
+        "32": "NO_VFD_READINESS - Нет готовности ПЧ",
+        "64": "DRY_RUN - Сухой ход"
       }
     },
     "VariableFrequencyDriveStatus": {
       "type": "integer",
       "enum": [
-        0,
         1,
         2,
-        3,
         4,
-        5,
-        7,
         8,
-        9,
-        10
+        16,
+        32,
+        64,
+        128,
+        256,
+        512
       ],
       "enumDescriptions": {
-        "0": "NO_POWER - Нет питания",
-        "1": "STOPPED - Остановлен",
-        "2": "OPERATING - В работе",
-        "3": "ALARM - Авария",
-        "4": "STARTUP_ACCELERATION - Запуск (разгон)",
-        "5": "STOP - Останов",
-        "7": "REGULATION_MIN_FREQUENCY - Регулирование (мин. частота)",
-        "8": "REGULATION_MAX_FREQUENCY - Регулирование (макс. частота)",
-        "9": "WAITING_FOR_START - Ожидание (включения)",
-        "10": "WAITING_FOR_READINESS - Ожидание (готовности)"
+        "1": "NO_POWER - Нет питания",
+        "2": "STOPPED - Остановлен",
+        "4": "OPERATING - В работе",
+        "8": "ALARM - Авария",
+        "16": "STARTUP_ACCELERATION - Запуск (разгон)",
+        "32": "STOP - Останов",
+        "64": "REGULATION_MIN_FREQUENCY - Регулирование (мин. частота)",
+        "128": "REGULATION_MAX_FREQUENCY - Регулирование (макс. частота)",
+        "256": "WAITING_FOR_START - Ожидание (включения)",
+        "512": "WAITING_FOR_READINESS - Ожидание (готовности)"
       }
     },
     "VariableFrequencyDriveAlarm": {
@@ -1200,21 +1204,23 @@
         0,
         1,
         2,
-        3,
         4,
-        5,
-        6,
-        7
+        8,
+        16,
+        32,
+        64,
+        128
       ],
       "enumDescriptions": {
-        "0": "EXCEEDED_STARTUP_TIME - Превышено (время включения)",
-        "1": "EXCEEDED_SHUTDOWN_TIME - Превышено (время отключения)",
-        "2": "SPONTANEOUS_SHUTDOWN - Самопроизв. откл.",
-        "3": "SPONTANEOUS_STARTUP - Самопроизв. вкл.",
-        "4": "VFD_ALARM - Авария ПЧ",
-        "5": "POWER_LOSS_DURING_OPERATION - Пропадание (питания/связи во время работы)",
-        "6": "MIN_CURRENT_AT_MAX_FREQUENCY - Минимальный ток (при максимальной частоте)",
-        "7": "MIN_FREQUENCY_NOT_REACHED - Не достигнута (мин. частота)"
+        "0": "NORM - Норма",
+        "1": "EXCEEDED_STARTUP_TIME - Превышено (время включения)",
+        "2": "EXCEEDED_SHUTDOWN_TIME - Превышено (время отключения)",
+        "4": "SPONTANEOUS_SHUTDOWN - Самопроизв. откл.",
+        "8": "SPONTANEOUS_STARTUP - Самопроизв. вкл.",
+        "16": "VFD_ALARM - Авария ПЧ",
+        "32": "POWER_LOSS_DURING_OPERATION - Пропадание (питания/связи во время работы)",
+        "64": "MIN_CURRENT_AT_MAX_FREQUENCY - Минимальный ток (при максимальной частоте)",
+        "128": "MIN_FREQUENCY_NOT_REACHED - Не достигнута (мин. частота)"
       }
     },
     "SupplyPumpModel": {
@@ -1298,20 +1304,20 @@
     "SupplyPumpStatus": {
       "type": "integer",
       "enum": [
-        0,
         1,
         2,
-        3,
         4,
-        5
+        8,
+        16,
+        32
       ],
       "enumDescriptions": {
-        "0": "NO_POWER - Нет питания",
-        "1": "STOPPED - Остановлен",
-        "2": "STARTING - Запускается",
-        "3": "OPERATING - Работа",
-        "4": "STOPPING - Останавливается",
-        "5": "ALARM - Авария"
+        "1": "NO_POWER - Нет питания",
+        "2": "STOPPED - Остановлен",
+        "4": "STARTING - Запускается",
+        "8": "OPERATING - Работа",
+        "16": "STOPPING - Останавливается",
+        "32": "ALARM - Авария"
       }
     },
     "SupplyPumpAlarm": {
@@ -1320,15 +1326,17 @@
         0,
         1,
         2,
-        3,
-        4
+        4,
+        8,
+        16
       ],
       "enumDescriptions": {
-        "0": "EXCEEDED_STARTUP_TIME - Превышено (время запуска)",
-        "1": "EXCEEDED_SHUTDOWN_TIME - Превышено (время останова)",
-        "2": "SPONTANEOUS_STARTUP - Самопроизв. запуск",
-        "3": "SPONTANEOUS_SHUTDOWN - Самопроизв. откл.",
-        "4": "DRY_RUN - Сухой ход"
+        "0": "NORM - Норма",
+        "1": "EXCEEDED_STARTUP_TIME - Превышено (время запуска)",
+        "2": "EXCEEDED_SHUTDOWN_TIME - Превышено (время останова)",
+        "4": "SPONTANEOUS_STARTUP - Самопроизв. запуск",
+        "8": "SPONTANEOUS_SHUTDOWN - Самопроизв. откл.",
+        "16": "DRY_RUN - Сухой ход"
       }
     },
     "ValveModel": {
@@ -1386,16 +1394,18 @@
     "WorkMode": {
       "type": "integer",
       "enum": [
-        0,
         1,
         2,
-        4
+        4,
+        8,
+        16
       ],
       "enumDescriptions": {
-        "0": "NOT_USED - Не используется",
-        "1": "REPAIR - Ремонт",
-        "2": "LOCAL - Местный (ручное управление кнопками на шкафу)",
-        "4": "PANEL - Панель (управление с панели шкафа управления)"
+        "1": "NOT_USED - Не используется",
+        "2": "REPAIR - Ремонт",
+        "4": "LOCAL - Местный (ручное управление кнопками на шкафу)",
+        "8": "AUTO - Авто",
+        "16": "PANEL - Панель (управление с панели шкафа управления)"
       }
     }
   },
@@ -1422,7 +1432,7 @@
       },
       {
         "id": 4,
-        "name": "sourceWaternetworkPumps",
+        "name": "sourceWaterNetworkPumps",
         "caption": "Насосы исходной воды",
         "order": 400
       },
