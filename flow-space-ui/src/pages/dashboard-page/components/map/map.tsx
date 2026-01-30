@@ -1,5 +1,5 @@
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useDashboardPage } from '../../dashboard-page-context';
 import { MapEventController } from './map-event-controller';
 import { MapNoDataOverlay } from './map-no-data-overlay';
@@ -7,9 +7,10 @@ import { MapPopupContent } from './map-popup-content';
 
 import 'leaflet/dist/leaflet.css';
 import './map.scss';
+import { formatMessage } from 'devextreme/localization';
 
 export const Map = () => {
-    const { device, isValidDeviceState } = useDashboardPage();
+    const { device, isValidDeviceState, deviceState } = useDashboardPage();
     const [isEnable, setIsEnable] = useState<boolean>(true);
     const mapRef = useRef<L.Map>(null);
     const markerRef = useRef<L.Marker>(null);
@@ -64,7 +65,11 @@ export const Map = () => {
         }
     }, [position, mapRef, isEnable, defaultCenter, isValidDeviceState]);
 
-    return (
+    const NoData = useCallback(() => {
+        return <div className='dx-widget dx-nodata' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}><div>{formatMessage('noDataText')}</div></div>
+    }, []);
+
+    return ( deviceState?.state && Object.keys(deviceState.state).length !== 0 ?
         <div style={{ height: '100%', width: '100%', paddingBottom: 30 }}>
             <MapContainer
                 ref={mapRef}
@@ -79,15 +84,16 @@ export const Map = () => {
                 {
                     isEnable
                         ? <Marker position={position ?? defaultCenter} ref={markerRef}>
-                                <Popup closeButton >
-                                    <MapPopupContent />
-                                </Popup>
+                            <Popup closeButton >
+                                <MapPopupContent />
+                            </Popup>
                         </Marker>
                         : <MapNoDataOverlay />
                 }
                 <MapEventController position={position} markerRef={markerRef} />
             </MapContainer>
         </div>
+        : <NoData />
     );
 }
 
