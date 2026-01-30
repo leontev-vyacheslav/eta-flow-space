@@ -80,7 +80,7 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
         return () => clearTimeout(timer);
     }, [flowCode]);
 
-    return mnemoschema && schemaTypeInfoPropertiesChain && deviceState?.state
+    return mnemoschema && schemaTypeInfoPropertiesChain && deviceState?.state && Object.keys(deviceState.state).length !== 0
         ?
         <TransformWrapper ref={transformComponentRef}
             doubleClick={{ step: 1 }}
