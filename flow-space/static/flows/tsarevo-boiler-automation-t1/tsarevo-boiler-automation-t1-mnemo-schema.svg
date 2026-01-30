@@ -1892,8 +1892,7 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 			<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M542.6,335.8h-82.9c-3.1,0-5.7-2.5-5.7-5.7
 			V224.5c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v105.6C548.3,333.3,545.8,335.8,542.6,335.8z" />
 
-			<text transform="matrix(1 0 0 1 464 230)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Сетевой
-				насос №1</text>
+			<text transform="matrix(1 0 0 1 464 230)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Сетевой насос №1</text>
 			<text data-state="networkPumps[0].setPower" transform="matrix(1 0 0 1 467 245)"
 				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{setPowerNP_1}}</text>
 
@@ -1982,8 +1981,7 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 		<g data-section="networkPumps[1]">
 			<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M676.2,335.8h-82.9c-3.1,0-5.7-2.5-5.7-5.7
 			V224.5c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v105.6C681.8,333.3,679.3,335.8,676.2,335.8z" />
-			<text transform="matrix(1 0 0 1 597 230)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Сетевой
-				насос №2</text>
+			<text transform="matrix(1 0 0 1 597 230)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Сетевой насос №2</text>
 			<text data-state="networkPumps[1].setPower" transform="matrix(1 0 0 1 600 245)"
 				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{setPowerNP_2}}</text>
 
@@ -2071,8 +2069,7 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 		<g data-section="networkPumps[2]">
 			<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M809.9,335.8H727c-3.1,0-5.7-2.5-5.7-5.7
 			V224.5c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v105.6C815.6,333.3,813,335.8,809.9,335.8z" />
-			<text transform="matrix(1 0 0 1 732 230)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Сетевой
-				насос №3</text>
+			<text transform="matrix(1 0 0 1 732 230)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Сетевой насос №3</text>
 			<text data-state="networkPumps[2].setPower" transform="matrix(1 0 0 1 735 245)"
 				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{setPowerNP_3}}</text>
 
@@ -2161,8 +2158,7 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 		<g data-section="networkPumps[3]">
 			<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M943.4,335.8h-82.9c-3.1,0-5.7-2.5-5.7-5.7
 		V224.5c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v105.6C949.1,333.3,946.6,335.8,943.4,335.8z" />
-			<text transform="matrix(1 0 0 1 865 230)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Сетевой
-				насос №4</text>
+			<text transform="matrix(1 0 0 1 865 230)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Сетевой насос №4</text>
 
 			<text data-state="networkPumps[3].setPower" transform="matrix(1 0 0 1 868 245)"
 				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{setPowerNP_4}}</text>
@@ -2482,8 +2478,7 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 		<g data-section="sourceWaterPumps[0]">
 			<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M588.6,562h-82.9c-3.1,0-5.7-2.5-5.7-5.7
 			V450.7c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v105.6C594.2,559.4,591.7,562,588.6,562z" />
-			<text transform="matrix(1 0 0 1 509 457)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Насос
-				исх.вод. №1</text>
+			<text transform="matrix(1 0 0 1 509 457)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Насос исх.вод. №1</text>
 
 			<text data-state="sourceWaterPumps[0].setPower" transform="matrix(1 0 0 1 513 470)"
 				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{setPowerPW_1}}</text>

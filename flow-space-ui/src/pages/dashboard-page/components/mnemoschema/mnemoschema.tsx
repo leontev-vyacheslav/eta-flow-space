@@ -1,20 +1,25 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useLongPress } from "use-long-press";
 import { useDashboardPage } from "../../dashboard-page-context";
 import { TransformWrapper, TransformComponent, type ReactZoomPanPinchRef } from "react-zoom-pan-pinch";
 import { useParams } from "react-router";
 import { useMnemoschemaPopover } from "./use-mnemoschema-popover";
 import { useMnemoschemaStateSetup } from "./use-mnemoschema-state-setup";
+import { formatMessage } from "devextreme/localization";
 
 
 export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfterMount }: { onBeforeMount?: (mnemoschemaElement: HTMLElement) => void, onAfterMount?: (mnemoschemaElement: HTMLElement) => void }) => {
     const { flowCode } = useParams();
-    const { mnemoschema, isValidDeviceState, dataschema, schemaTypeInfoPropertiesChain } = useDashboardPage();
+    const { mnemoschema, isValidDeviceState, dataschema, schemaTypeInfoPropertiesChain, deviceState } = useDashboardPage();
     const containerRef = useRef<HTMLDivElement>(null);
     const transformComponentRef = useRef<ReactZoomPanPinchRef | null>(null);
     const [isInitComplete, setIsInitComplete] = useState<boolean>(false);
     const mnemoschemaClickHandler = useMnemoschemaPopover();
     const stateSetup = useMnemoschemaStateSetup();
+
+    const NoData = useCallback(() => {
+        return <div className='dx-widget dx-nodata' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}><div>{formatMessage('noDataText')}</div></div>
+    }, []);
 
     const longPressBinder = useLongPress(
         () => {
@@ -75,7 +80,7 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
         return () => clearTimeout(timer);
     }, [flowCode]);
 
-    return mnemoschema && schemaTypeInfoPropertiesChain
+    return mnemoschema && schemaTypeInfoPropertiesChain && deviceState?.state
         ?
         <TransformWrapper ref={transformComponentRef}
             doubleClick={{ step: 1 }}
@@ -90,5 +95,5 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
                 <div {...longPressBinder()} style={{ display: 'flex', alignItems: 'center', opacity: (isValidDeviceState ? 1 : 0.7) }} ref={containerRef} />
             </TransformComponent>
         </TransformWrapper>
-        : null
+        : <NoData />
 }
