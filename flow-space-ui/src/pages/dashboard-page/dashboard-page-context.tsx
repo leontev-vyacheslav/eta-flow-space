@@ -102,6 +102,8 @@ function DashboardPageContextProvider(props: any) {
 
         const ajv = new Ajv({
             strict: false,
+            verbose: true,
+            allErrors: true
         });
 
         let validateFn;
@@ -127,6 +129,8 @@ function DashboardPageContextProvider(props: any) {
         const isValid = validateFn ? validateFn(deviceState.state) : false;
         setIsValidDeviceState(() => {
             if (!isValid && validateFn) {
+                console.warn(validateFn.errors);
+
                 proclaim({
                     type: 'warning',
                     message: `Не было получено валидное состояние устройства ${device?.name}.`,

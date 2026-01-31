@@ -565,7 +565,6 @@
     },
       "timestamp": {
       "type": "integer",
-      "format": "date-time",
       "ui": {
         "group": 1,
         "editor": {
