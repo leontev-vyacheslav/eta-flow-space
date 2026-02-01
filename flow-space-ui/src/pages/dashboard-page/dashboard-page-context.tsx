@@ -8,6 +8,7 @@ import { proclaim } from '../../utils/proclaim';
 import { getQuickGuid } from '../../utils/uuid';
 import { getKeyValuePairs, getSchemaTypeInfo, type SchemaTypeInfoPropertiesChainModel } from '../../helpers/data-helper';
 import type { DictionaryBaseModel } from '../../models/abstractions/dictionary-base-model';
+import { jsonInfoViewService } from '../../services/json-info-view-service';
 
 import './dashboard-page-content.scss';
 
@@ -129,11 +130,27 @@ function DashboardPageContextProvider(props: any) {
         const isValid = validateFn ? validateFn(deviceState.state) : false;
         setIsValidDeviceState(() => {
             if (!isValid && validateFn) {
-                console.warn(validateFn.errors);
-
+                const uid = getQuickGuid();
                 proclaim({
                     type: 'warning',
-                    message: `Не было получено валидное состояние устройства ${device?.name}.`,
+                    contentTemplate: () => {
+                        const div = document.createElement("div");
+                        div.className = "dx-toast-message"
+                        div.style.flexDirection = 'column';
+                        div.innerHTML = `
+                            <div>Не было получено валидное устройства ${device?.name}.</div>
+                            <a data-link='${uid}' href='javascript:void(0)'>Ошибки валидации</a>
+                        `;
+                        return div;
+                    },
+                    onContentReady: () => {
+                        document.querySelector(`[data-link="${uid}"]`)?.addEventListener('click', () => {
+                            const jsonInfoViewDialogRoot = document.querySelector('#json-info-view-dialog-root');
+                            if (!jsonInfoViewDialogRoot && validateFn.errors) {
+                                jsonInfoViewService.show('Ошибки валидации', validateFn.errors);
+                            }
+                        })
+                    },
                 });
             }
             return isValid;

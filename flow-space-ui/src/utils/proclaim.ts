@@ -19,6 +19,7 @@ export function proclaim(options: any) {
 
     notify({
         ...options,
+        
         width: devices.current().phone ? '90%' : undefined,
         position: devices.current().phone ? 'bottom center' : {
             at: 'bottom right',
