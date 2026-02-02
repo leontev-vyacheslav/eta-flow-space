@@ -996,10 +996,10 @@
 				cx="231.6" cy="46.4" r="12.4" />
 			<line style="fill:none;stroke:#4D4D4D;stroke-width:0.5;stroke-miterlimit:10;" x1="207.4" y1="46.4"
 				x2="219.2" y2="46.4" />
-			<polygon data-state="boilerValves[0].status"
+			<polygon data-state="boilerValves[0].status" data-state-eval="if(value === 2) {element.style.fill = 'none'}"
 				style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="231.6,54.8 227,47 236.3,47
 			231.6,54.8" />
-			<polygon data-state="boilerValves[0].status"
+			<polygon data-state="boilerValves[0].status" data-state-eval="if(value === 1) {element.style.fill = 'none'}"
 				style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="231.6,38.4 236.3,46.2 227,46.2
 			231.6,38.4" />
 		</g>
@@ -1208,10 +1208,10 @@
 				cx="231.2" cy="231.1" r="12.4" />
 			<line style="fill:none;stroke:#4D4D4D;stroke-width:0.5;stroke-miterlimit:10;" x1="207" y1="231.1" x2="218.8"
 				y2="231.1" />
-			<polygon data-state="boilerValves[1].status"
+			<polygon data-state="boilerValves[1].status" data-state-eval="if(value === 2) {element.style.fill = 'none'}"
 				style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="231.2,239.5 226.5,231.7
 			235.8,231.7 231.2,239.5 		" />
-			<polygon data-state="boilerValves[1].status"
+			<polygon data-state="boilerValves[1].status" data-state-eval="if(value === 1) {element.style.fill = 'none'}"
 				style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="231.2,223.1 235.8,230.9
 			226.5,230.9 231.2,223.1 		" />
 		</g>
@@ -1384,10 +1384,10 @@
 				cx="230.9" cy="416.2" r="12.4" />
 			<line style="fill:none;stroke:#4D4D4D;stroke-width:0.5;stroke-miterlimit:10;" x1="206.7" y1="416.2"
 				x2="218.5" y2="416.2" />
-			<polygon data-state="boilerValves[2].status"
+			<polygon data-state="boilerValves[2].status" data-state-eval="if(value === 2) {element.style.fill = 'none'}"
 				style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="230.9,424.5 226.3,416.7
 			235.6,416.7 230.9,424.5 		" />
-			<polygon data-state="boilerValves[2].status"
+			<polygon data-state="boilerValves[2].status" data-state-eval="if(value === 1) {element.style.fill = 'none'}"
 				style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="230.9,408.2 235.6,416 226.3,416
 			230.9,408.2 		" />
 		</g>
