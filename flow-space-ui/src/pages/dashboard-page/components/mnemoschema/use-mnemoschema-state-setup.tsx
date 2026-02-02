@@ -74,6 +74,11 @@ export const useMnemoschemaStateSetup = () => {
                                 })
                             }
                         }
+
+                        const dataStateEvalAttr = element.getAttribute('data-state-eval');
+                        if (dataStateEvalAttr) {
+                            eval(dataStateEvalAttr);
+                        }
                     });
             });
 

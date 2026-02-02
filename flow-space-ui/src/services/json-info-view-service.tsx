@@ -40,6 +40,7 @@ class JsonInfoViewService {
         if (this.popupContainer) {
             this.popupContainer.remove();
         }
+        document.querySelector('#json-info-view-dialog-root')?.remove();
     }
 }
 

@@ -1281,7 +1281,7 @@
 			<polygon data-state="boilerValves[0].status"
 				style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="231.6,54.8 227,47 236.3,47
 			231.6,54.8" />
-			<polygon data-state="boilerValves[0].status"
+			<polygon data-state="boilerValves[0].status" data-state-eval="if(value === 1) {element.style.fill = 'none'}"
 				style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="231.6,38.4 236.3,46.2 227,46.2
 			231.6,38.4" />
 		</g>

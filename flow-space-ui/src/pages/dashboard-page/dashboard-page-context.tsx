@@ -145,71 +145,81 @@ function DashboardPageContextProvider(props: any) {
                     },
                     onContentReady: () => {
                         document.querySelector(`[data-link="${uid}"]`)?.addEventListener('click', () => {
+                            jsonInfoViewService.hide();
                             const jsonInfoViewDialogRoot = document.querySelector('#json-info-view-dialog-root');
+
+
                             if (!jsonInfoViewDialogRoot && validateFn.errors) {
-                                jsonInfoViewService.show('Ошибки валидации', validateFn.errors);
-                            }
-                        })
-                    },
-                });
-            }
-            return isValid;
+                                jsonInfoViewService.show('Ошибки валидации',
+                                    validateFn.errors.map(({ data, message, params, ...rest }) => ({
+                                        data,
+                                        message,
+                                        params,
+                                        ...rest
+                                    }))
+                                );
+                    }
+                })
+            },
         });
+    }
+            return isValid;
+});
     }, [dataschema, device, deviceState]);
 
-    useEffect(() => {
-        const timer = setInterval(async () => {
-            if (!deviceId) {
-                return;
-            }
-            const deviceState = await getDeviceStateAsync(parseInt(deviceId));
-            if (deviceState && dataschema) {
-                applyDimensionsToState(deviceState.state, dataschema);
-                setDeviceState(deviceState);
-            }
-        }, 60000);
-
-        return () => {
-            if (timer) {
-                clearInterval(timer);
-            }
+useEffect(() => {
+    const timer = setInterval(async () => {
+        if (!deviceId) {
+            return;
         }
-    }, [dataschema, deviceId, getDeviceStateAsync, applyDimensionsToState]);
-
-    useEffect(() => {
-        if (dataschema && dataschema.$defs) {
-            const registryEnums = {} as Record<string, DictionaryBaseModel[]>;
-            Object
-                .keys(dataschema.$defs)
-                .filter(k => {
-                    return dataschema.$defs[k].enum && Array.isArray(dataschema.$defs[k].enum)
-                })
-                .forEach(k => {
-                    registryEnums[k] = Object.entries(dataschema.$defs[k].enumDescriptions)
-                        .map(([id, description]) => ({
-                            id: Number(id),
-                            description: (description as string).split(' - ').pop() || description as string
-                        }))
-                });
-
-            setRegistryEnums(registryEnums);
+        const deviceState = await getDeviceStateAsync(parseInt(deviceId));
+        if (deviceState && dataschema) {
+            applyDimensionsToState(deviceState.state, dataschema);
+            setDeviceState(deviceState);
         }
-    }, [dataschema]);
+    }, 60000);
 
-    return (
-        <DashboardPageContext.Provider value={{
-            device,
-            deviceState,
-            mnemoschema,
-            dataschema,
-            isValidDeviceState,
-            updateSharedStateRefreshToken,
-            setUpdateSharedStateRefreshToken,
+    return () => {
+        if (timer) {
+            clearInterval(timer);
+        }
+    }
+}, [dataschema, deviceId, getDeviceStateAsync, applyDimensionsToState]);
 
-            schemaTypeInfoPropertiesChain,
-            registryEnums
-        }} {...props} />
-    );
+useEffect(() => {
+    if (dataschema && dataschema.$defs) {
+        const registryEnums = {} as Record<string, DictionaryBaseModel[]>;
+        Object
+            .keys(dataschema.$defs)
+            .filter(k => {
+                return dataschema.$defs[k].enum && Array.isArray(dataschema.$defs[k].enum)
+            })
+            .forEach(k => {
+                registryEnums[k] = Object.entries(dataschema.$defs[k].enumDescriptions)
+                    .map(([id, description]) => ({
+                        id: Number(id),
+                        description: (description as string).split(' - ').pop() || description as string
+                    }))
+            });
+
+        setRegistryEnums(registryEnums);
+    }
+}, [dataschema]);
+
+return (
+    <DashboardPageContext.Provider value={{
+        device,
+        deviceState,
+        mnemoschema,
+        dataschema,
+        isValidDeviceState,
+        updateSharedStateRefreshToken,
+        setUpdateSharedStateRefreshToken,
+
+        schemaTypeInfoPropertiesChain,
+        registryEnums
+    }} {...props} />
+);
 }
 
 const useDashboardPage = () => useContext(DashboardPageContext);
