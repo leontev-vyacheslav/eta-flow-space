@@ -6,6 +6,7 @@ import { useParams } from "react-router";
 import { useMnemoschemaPopover } from "./use-mnemoschema-popover";
 import { useMnemoschemaStateSetup } from "./use-mnemoschema-state-setup";
 import { formatMessage } from "devextreme/localization";
+import routes from '../../../../constants/app-api-routes';
 
 
 export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfterMount }: { onBeforeMount?: (mnemoschemaElement: HTMLElement) => void, onAfterMount?: (mnemoschemaElement: HTMLElement) => void }) => {
@@ -34,34 +35,116 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
         if (!containerRef.current || !mnemoschema) {
             return;
         }
-        let mnemoschemaElement: HTMLElement | undefined = undefined;
 
-        try {
+        let mnemoschemaElement: HTMLElement | null = null;
+        let disposed = false;
+
+        const run = async () => {
+            let plugInModule = null;
+            try {
+                 plugInModule = await import(
+                    `${routes.host}/static/flows/${flowCode}/${flowCode}-mnemo-schema.js?v=${Date.now()}`
+                );
+            } catch (error) {
+                console.error(error);
+            }
+
+            if (disposed) return;
+
             const parser = new DOMParser();
-            const mnemoschemaDoc = parser.parseFromString(mnemoschema, 'image/svg+xml');
-            containerRef.current.innerHTML = '';
+            const mnemoschemaDoc = parser.parseFromString(
+                mnemoschema,
+                'image/svg+xml'
+            );
 
-            stateSetup(mnemoschemaDoc.documentElement);
+            try {
+                const { onBeforeMount: onBeforeMountPluggable, onAfterMount: onAfterMountPluggable } = plugInModule.create();
+                containerRef.current!.innerHTML = '';
 
-            if (onBeforeMount) {
-                onBeforeMount(mnemoschemaDoc.documentElement);
+                stateSetup(mnemoschemaDoc.documentElement);
+                onBeforeMount?.(mnemoschemaDoc.documentElement);
+                onBeforeMountPluggable?.(
+                    mnemoschemaDoc.documentElement
+                );
+
+                mnemoschemaElement = containerRef.current!.appendChild(
+                    mnemoschemaDoc.documentElement
+                );
+
+                onAfterMount?.(mnemoschemaElement);
+                onAfterMountPluggable?.(
+                    mnemoschemaElement
+                );
+                mnemoschemaElement.addEventListener(
+                    'click',
+                    mnemoschemaClickHandler
+                );
+            } catch (error) {
+                console.error(error);
             }
+        };
 
-            mnemoschemaElement = containerRef.current.appendChild(mnemoschemaDoc.documentElement);
-
-            if (onAfterMount) {
-                onAfterMount(mnemoschemaElement);
-            }
-        } catch (error) {
-            console.error(error);
-        }
-
-        mnemoschemaElement?.addEventListener('click', mnemoschemaClickHandler);
+        run();
 
         return () => {
-            mnemoschemaElement?.removeEventListener('click', mnemoschemaClickHandler);
+            disposed = true;
+            mnemoschemaElement?.removeEventListener(
+                'click',
+                mnemoschemaClickHandler
+            );
         };
-    }, [mnemoschema, onBeforeMount, onAfterMount, stateSetup, schemaTypeInfoPropertiesChain, dataschema, mnemoschemaClickHandler]);
+    }, [mnemoschema, onBeforeMount, onAfterMount, stateSetup, schemaTypeInfoPropertiesChain, dataschema, mnemoschemaClickHandler,]);
+
+
+    // useEffect(() => {
+    //     if (!containerRef.current || !mnemoschema) {
+    //         return;
+    //     }
+    //     let mnemoschemaElement: HTMLElement | undefined = undefined;
+
+    //     let mnemoschemaPlugIn = null;
+    //     (async () => {
+    //         try {
+    //             mnemoschemaPlugIn = await import(`${routes.host}/static/flows/${flowCode}/${flowCode}-mnemo-schema.js`);
+    //         } catch (ex) {
+    //             console.error(ex);
+    //         }
+    //     })();
+
+    //     try {
+    //         const parser = new DOMParser();
+    //         const mnemoschemaDoc = parser.parseFromString(mnemoschema, 'image/svg+xml');
+    //         containerRef.current.innerHTML = '';
+
+    //         stateSetup(mnemoschemaDoc.documentElement);
+
+    //         if (mnemoschemaPlugIn && (mnemoschemaPlugIn as any).onBeforeMount) {
+    //             (mnemoschemaPlugIn as any).onBeforeMount(mnemoschemaDoc.documentElement);
+    //         }
+
+    //         if (onBeforeMount) {
+    //             onBeforeMount(mnemoschemaDoc.documentElement);
+    //         }
+
+    //         mnemoschemaElement = containerRef.current.appendChild(mnemoschemaDoc.documentElement);
+
+    //         if (onAfterMount) {
+    //             onAfterMount(mnemoschemaElement);
+    //         }
+
+    //         if (mnemoschemaPlugIn && (mnemoschemaPlugIn as any).onAfterMount) {
+    //             (mnemoschemaPlugIn as any).onAfterMount(mnemoschemaDoc.documentElement);
+    //         }
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+
+    //     mnemoschemaElement?.addEventListener('click', mnemoschemaClickHandler);
+
+    //     return () => {
+    //         mnemoschemaElement?.removeEventListener('click', mnemoschemaClickHandler);
+    //     };
+    // }, [mnemoschema, onBeforeMount, onAfterMount, stateSetup, schemaTypeInfoPropertiesChain, dataschema, mnemoschemaClickHandler]);
 
     useEffect(() => {
         const timer = setTimeout(() => {

@@ -158,68 +158,71 @@ function DashboardPageContextProvider(props: any) {
                                         ...rest
                                     }))
                                 );
-                    }
-                })
-            },
-        });
-    }
+                            }
+                        })
+                    },
+                });
+            }
             return isValid;
-});
+        });
     }, [dataschema, device, deviceState]);
 
-useEffect(() => {
-    const timer = setInterval(async () => {
-        if (!deviceId) {
-            return;
+
+    useEffect(() => {
+        const timer = setInterval(async () => {
+            if (!deviceId) {
+                return;
+            }
+            const deviceState = await getDeviceStateAsync(parseInt(deviceId));
+            if (deviceState && dataschema) {
+                applyDimensionsToState(deviceState.state, dataschema);
+                setDeviceState(deviceState);
+            }
+        }, 60000);
+
+        return () => {
+            if (timer) {
+                clearInterval(timer);
+            }
         }
-        const deviceState = await getDeviceStateAsync(parseInt(deviceId));
-        if (deviceState && dataschema) {
-            applyDimensionsToState(deviceState.state, dataschema);
-            setDeviceState(deviceState);
+    }, [dataschema, deviceId, getDeviceStateAsync, applyDimensionsToState]);
+
+    useEffect(() => {
+        if (dataschema && dataschema.$defs) {
+            const registryEnums = {} as Record<string, DictionaryBaseModel[]>;
+            Object
+                .keys(dataschema.$defs)
+                .filter(k => {
+                    return dataschema.$defs[k].enum && Array.isArray(dataschema.$defs[k].enum)
+                })
+                .forEach(k => {
+                    registryEnums[k] = Object.entries(dataschema.$defs[k].enumDescriptions)
+                        .map(([id, description]) => ({
+                            id: Number(id),
+                            description: (description as string).split(' - ').pop() || description as string
+                        }))
+                });
+
+            setRegistryEnums(registryEnums);
+
+
         }
-    }, 60000);
+    }, [dataschema]);
 
-    return () => {
-        if (timer) {
-            clearInterval(timer);
-        }
-    }
-}, [dataschema, deviceId, getDeviceStateAsync, applyDimensionsToState]);
+    return (
+        <DashboardPageContext.Provider value={{
+            device,
+            deviceState,
+            mnemoschema,
+            dataschema,
+            isValidDeviceState,
+            updateSharedStateRefreshToken,
+            setUpdateSharedStateRefreshToken,
 
-useEffect(() => {
-    if (dataschema && dataschema.$defs) {
-        const registryEnums = {} as Record<string, DictionaryBaseModel[]>;
-        Object
-            .keys(dataschema.$defs)
-            .filter(k => {
-                return dataschema.$defs[k].enum && Array.isArray(dataschema.$defs[k].enum)
-            })
-            .forEach(k => {
-                registryEnums[k] = Object.entries(dataschema.$defs[k].enumDescriptions)
-                    .map(([id, description]) => ({
-                        id: Number(id),
-                        description: (description as string).split(' - ').pop() || description as string
-                    }))
-            });
-
-        setRegistryEnums(registryEnums);
-    }
-}, [dataschema]);
-
-return (
-    <DashboardPageContext.Provider value={{
-        device,
-        deviceState,
-        mnemoschema,
-        dataschema,
-        isValidDeviceState,
-        updateSharedStateRefreshToken,
-        setUpdateSharedStateRefreshToken,
-
-        schemaTypeInfoPropertiesChain,
-        registryEnums
-    }} {...props} />
-);
+            schemaTypeInfoPropertiesChain,
+            registryEnums
+        }} {...props} />
+    );
 }
 
 const useDashboardPage = () => useContext(DashboardPageContext);

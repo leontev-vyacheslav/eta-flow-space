@@ -239,10 +239,8 @@ module.exports = {
      *  Resource Sharing rules for the source. `httpStaticCors` can be used to
      *  set a default cors policy across all static routes.
      */
-    httpStatic: [
-        { path: '/data/static/mnemoschemas/', root: "/mnemoschemas/" },
-    ],
 
+    httpStatic: '/data/static/',
     /**
      * All static routes will be appended to httpStaticRoot
      * e.g. if httpStatic = "/home/nol/docs" and  httpStaticRoot = "/static/"
