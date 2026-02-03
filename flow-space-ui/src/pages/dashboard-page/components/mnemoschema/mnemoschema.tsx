@@ -63,18 +63,14 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
 
                 stateSetup(mnemoschemaDoc.documentElement);
                 onBeforeMount?.(mnemoschemaDoc.documentElement);
-                onBeforeMountPluggable?.(
-                    mnemoschemaDoc.documentElement
-                );
+                onBeforeMountPluggable?.(mnemoschemaDoc.documentElement, deviceState);
 
                 mnemoschemaElement = containerRef.current!.appendChild(
                     mnemoschemaDoc.documentElement
                 );
 
                 onAfterMount?.(mnemoschemaElement);
-                onAfterMountPluggable?.(
-                    mnemoschemaElement
-                );
+                onAfterMountPluggable?.(mnemoschemaElement, deviceState);
                 mnemoschemaElement.addEventListener(
                     'click',
                     mnemoschemaClickHandler
@@ -93,7 +89,7 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
                 mnemoschemaClickHandler
             );
         };
-    }, [mnemoschema, onBeforeMount, onAfterMount, stateSetup, schemaTypeInfoPropertiesChain, dataschema, mnemoschemaClickHandler,]);
+    }, [flowCode, deviceState, mnemoschema, onBeforeMount, onAfterMount, stateSetup, schemaTypeInfoPropertiesChain, dataschema, mnemoschemaClickHandler]);
 
 
     // useEffect(() => {

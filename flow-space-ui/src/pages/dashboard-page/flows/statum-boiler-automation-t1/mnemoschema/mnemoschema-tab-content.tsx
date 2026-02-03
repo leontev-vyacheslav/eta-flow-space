@@ -44,8 +44,8 @@ const MnemoschemaTabContent = () => {
         if (isSmall || isXSmall) {
             mnemoschemaElement.style.flex = '1';
         }
-        supplyWaterLevelHandler(mnemoschemaElement);
-    }, [isLarge, isSmall, isXSmall, supplyWaterLevelHandler]);
+        // supplyWaterLevelHandler(mnemoschemaElement);
+    }, [isLarge, isSmall, isXSmall]);
 
     return (
         <Mnemoschema onBeforeMount={onBeforeMountHandler} />
