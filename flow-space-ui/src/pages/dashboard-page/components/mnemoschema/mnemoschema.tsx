@@ -42,9 +42,8 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
         const run = async () => {
             let plugInModule = null;
             try {
-                 plugInModule = await import(
-                    `${routes.host}/static/flows/${flowCode}/${flowCode}-mnemo-schema.js?v=${Date.now()}`
-                );
+                /* @vite-ignore */
+                plugInModule = await import(`${routes.host}/static/flows/${flowCode}/${flowCode}-mnemo-schema.js?v=${Date.now()}`);
             } catch (error) {
                 console.error(error);
             }
@@ -58,7 +57,7 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
             );
 
             try {
-                const { onBeforeMount: onBeforeMountPluggable, onAfterMount: onAfterMountPluggable } = plugInModule.create();
+                const { onBeforeMount: onBeforeMountPluggable, onAfterMount: onAfterMountPluggable } = plugInModule?.create?.() ?? {};
                 containerRef.current!.innerHTML = '';
 
                 stateSetup(mnemoschemaDoc.documentElement);
@@ -90,57 +89,6 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
             );
         };
     }, [flowCode, deviceState, mnemoschema, onBeforeMount, onAfterMount, stateSetup, schemaTypeInfoPropertiesChain, dataschema, mnemoschemaClickHandler]);
-
-
-    // useEffect(() => {
-    //     if (!containerRef.current || !mnemoschema) {
-    //         return;
-    //     }
-    //     let mnemoschemaElement: HTMLElement | undefined = undefined;
-
-    //     let mnemoschemaPlugIn = null;
-    //     (async () => {
-    //         try {
-    //             mnemoschemaPlugIn = await import(`${routes.host}/static/flows/${flowCode}/${flowCode}-mnemo-schema.js`);
-    //         } catch (ex) {
-    //             console.error(ex);
-    //         }
-    //     })();
-
-    //     try {
-    //         const parser = new DOMParser();
-    //         const mnemoschemaDoc = parser.parseFromString(mnemoschema, 'image/svg+xml');
-    //         containerRef.current.innerHTML = '';
-
-    //         stateSetup(mnemoschemaDoc.documentElement);
-
-    //         if (mnemoschemaPlugIn && (mnemoschemaPlugIn as any).onBeforeMount) {
-    //             (mnemoschemaPlugIn as any).onBeforeMount(mnemoschemaDoc.documentElement);
-    //         }
-
-    //         if (onBeforeMount) {
-    //             onBeforeMount(mnemoschemaDoc.documentElement);
-    //         }
-
-    //         mnemoschemaElement = containerRef.current.appendChild(mnemoschemaDoc.documentElement);
-
-    //         if (onAfterMount) {
-    //             onAfterMount(mnemoschemaElement);
-    //         }
-
-    //         if (mnemoschemaPlugIn && (mnemoschemaPlugIn as any).onAfterMount) {
-    //             (mnemoschemaPlugIn as any).onAfterMount(mnemoschemaDoc.documentElement);
-    //         }
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-
-    //     mnemoschemaElement?.addEventListener('click', mnemoschemaClickHandler);
-
-    //     return () => {
-    //         mnemoschemaElement?.removeEventListener('click', mnemoschemaClickHandler);
-    //     };
-    // }, [mnemoschema, onBeforeMount, onAfterMount, stateSetup, schemaTypeInfoPropertiesChain, dataschema, mnemoschemaClickHandler]);
 
     useEffect(() => {
         const timer = setTimeout(() => {
