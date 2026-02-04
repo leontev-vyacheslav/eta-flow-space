@@ -113,7 +113,7 @@ export const ControlForm = ({ onFieldDataChanged }: ControlFormProps) => {
             formData={deviceState?.state}
             ref={dxControlFormRef}
             onFieldDataChanged={onFieldDataChanged}
-            style={{ opacity: !isValidDeviceState ? 0.7 : 1 }}
+            style={{ opacity: !isValidDeviceState ? 1 : 1 }}
         >
             {dataschema.ui.useTabs
                 ?

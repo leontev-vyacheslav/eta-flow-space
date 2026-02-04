@@ -119,7 +119,7 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
             }}
         >
             <TransformComponent wrapperStyle={{ width: '100%', height: '100%' }}>
-                <div {...longPressBinder()} style={{ display: 'flex', alignItems: 'center', opacity: (isValidDeviceState ? 1 : 0.7) }} ref={containerRef} />
+                <div {...longPressBinder()} style={{ display: 'flex', alignItems: 'center', opacity: (isValidDeviceState ? 1 : 1) }} ref={containerRef} />
             </TransformComponent>
         </TransformWrapper>
         : <NoData />

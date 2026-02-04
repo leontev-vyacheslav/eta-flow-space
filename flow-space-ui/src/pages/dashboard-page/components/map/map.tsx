@@ -49,7 +49,7 @@ export const Map = () => {
                 }
 
                 const mapElement = mapRef.current.getContainer();
-                mapElement.style.opacity = (isValidDeviceState ? 1 : 0.7).toString();
+                mapElement.style.opacity = (isValidDeviceState ? 1 : 1).toString();
 
                 // how to center popup
                 markerRef.current?.openPopup();
