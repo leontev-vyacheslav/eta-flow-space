@@ -42,5 +42,5 @@ export const HomePage = () => {
         })();
     }, [getFlowListAsync, navigate, treeViewRef]);
 
-    return <div className='dx-nodata'><div>{formatMessage('noDataText')}</div></div>;
+    return <div className='dx-widget dx-nodata' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}><div>{formatMessage('noDataText')}</div></div>;
 };
