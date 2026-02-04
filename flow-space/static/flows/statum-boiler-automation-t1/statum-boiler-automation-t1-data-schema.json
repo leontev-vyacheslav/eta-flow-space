@@ -516,16 +516,16 @@
       "items": {
         "$ref": "#/$defs/BoilerModel"
       },
-      "minItems": 4,
-      "maxItems": 4
+      "minItems": 3,
+      "maxItems": 3
     },
     "boilerValves": {
       "type": "array",
       "items": {
         "$ref": "#/$defs/ValveModel"
       },
-      "minItems": 4,
-      "maxItems": 4
+      "minItems": 3,
+      "maxItems": 3
     },
     "networkPumps": {
       "type": "array",
