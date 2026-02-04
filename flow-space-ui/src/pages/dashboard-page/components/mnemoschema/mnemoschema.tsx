@@ -42,8 +42,8 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
         const run = async () => {
             let plugInModule = null;
             try {
-                /* @vite-ignore */
-                plugInModule = await import(`${routes.host}/static/flows/${flowCode}/${flowCode}-mnemo-schema.js?v=${Date.now()}`);
+
+                plugInModule = await import(/* @vite-ignore */`${routes.host}/static/flows/${flowCode}/${flowCode}-mnemo-schema.js?v=${Date.now()}`);
             } catch (error) {
                 console.error(error);
             }
