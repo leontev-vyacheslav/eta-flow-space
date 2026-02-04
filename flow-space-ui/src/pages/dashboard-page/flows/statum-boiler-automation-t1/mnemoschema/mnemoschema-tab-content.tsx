@@ -2,8 +2,6 @@ import { Mnemoschema } from "../../../components/mnemoschema/mnemoschema";
 import { useScreenSize } from "../../../../../utils/media-query";
 import { useCallback } from "react";
 
-
-
 const MnemoschemaTabContent = () => {
     const { isSmall, isXSmall, isLarge } = useScreenSize();
 
