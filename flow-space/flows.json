@@ -1764,7 +1764,7 @@
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
-        "initialize": "// Добавленный здесь код будет исполняться\n// однократно при развертывании узла.\nglobal.set('statumData',{});",
+        "initialize": "",
         "finalize": "",
         "libs": [],
         "x": 1050,
@@ -2385,11 +2385,58 @@
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
-        "initialize": "// Добавленный здесь код будет исполняться\n// однократно при развертывании узла.\nglobal.set('statumData',{});",
+        "initialize": "",
         "finalize": "",
         "libs": [],
         "x": 1150,
         "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b29f033ac81a959b",
+        "type": "inject",
+        "z": "7ada8f3f5d804ee5",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1180,
+        "y": 100,
+        "wires": [
+            [
+                "f6ee91bca231e981"
+            ]
+        ]
+    },
+    {
+        "id": "f6ee91bca231e981",
+        "type": "function",
+        "z": "7ada8f3f5d804ee5",
+        "name": "function 1",
+        "func": "global.set(`deviceState${6}`, null);\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1410,
+        "y": 100,
         "wires": [
             []
         ]

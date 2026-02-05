@@ -219,14 +219,14 @@
       "ui": {
         "group": 8,
         "editor": {
-          "editorType": "dxSwitch",
+          "editorType": "dxCheckBox",
           "label": {
             "location": "top",
             "showColon": true,
             "text": "Уровень воды в баке авар. макс."
           },
           "editorOptions": {
-            "readOnly": false
+            "readOnly": true
           }
         },
         "colorizer": {
@@ -246,14 +246,14 @@
       "ui": {
         "group": 8,
         "editor": {
-          "editorType": "dxSwitch",
+          "editorType": "dxCheckBox",
           "label": {
             "location": "top",
             "showColon": true,
             "text": "Уровень воды в баке раб. мах."
           },
           "editorOptions": {
-            "readOnly": false
+            "readOnly": true
           }
         },
         "colorizer": {
@@ -273,14 +273,14 @@
       "ui": {
         "group": 8,
         "editor": {
-          "editorType": "dxSwitch",
+          "editorType": "dxCheckBox",
           "label": {
             "location": "top",
             "showColon": true,
             "text": "Уровень воды в баке раб. мин."
           },
           "editorOptions": {
-            "readOnly": false
+            "readOnly": true
           }
         },
         "colorizer": {
@@ -300,14 +300,14 @@
       "ui": {
         "group": 8,
         "editor": {
-          "editorType": "dxSwitch",
+          "editorType": "dxCheckBox",
           "label": {
             "location": "top",
             "showColon": true,
             "text": "Уровень воды в баке авар. мин."
           },
           "editorOptions": {
-            "readOnly": false
+            "readOnly": true
           }
         },
         "colorizer": {

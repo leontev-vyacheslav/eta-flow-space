@@ -83,9 +83,9 @@ function DashboardPageContextProvider(props: any) {
                 if (device) {
                     setDevice(device);
                 }
-                if (deviceState) {
+                // if (deviceState) {
                     setDeviceState(deviceState);
-                }
+                // }
                 if (mnemoschema) {
                     setMnemoschema(mnemoschema);
                 }

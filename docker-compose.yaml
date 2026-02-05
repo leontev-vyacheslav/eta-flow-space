@@ -40,6 +40,8 @@ services:
     container_name: eta-flow-space-ui
     ports:
       - "3000:80"
+    restart: unless-stopped
+
     networks:
       - eta-flow-space-network
 
