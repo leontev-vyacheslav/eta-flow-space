@@ -188,14 +188,14 @@
       "ui": {
         "group": 7,
         "editor": {
-          "editorType": "dxSwitch",
+          "editorType": "dxCheckBox",
           "label": {
             "location": "top",
             "showColon": true,
             "text": "Ввод 1 выключен"
           },
           "editorOptions": {
-            "readOnly": false
+            "readOnly": true
           }
         },
         "colorizer": {
@@ -233,9 +233,9 @@
           "styleProps": [
             {
               "display": {
-              "none": false,
-              "inline": true
-            }
+                "none": false,
+                "inline": true
+              }
             }
           ]
         }
@@ -260,9 +260,9 @@
           "styleProps": [
             {
               "display": {
-              "none": false,
-              "inline": true
-            }
+                "none": false,
+                "inline": true
+              }
             }
           ]
         }
@@ -287,9 +287,9 @@
           "styleProps": [
             {
               "display": {
-              "none": false,
-              "inline": true
-            }
+                "none": false,
+                "inline": true
+              }
             }
           ]
         }
@@ -314,9 +314,9 @@
           "styleProps": [
             {
               "display": {
-              "none": false,
-              "inline": true
-            }
+                "none": false,
+                "inline": true
+              }
             }
           ]
         }
@@ -327,14 +327,14 @@
       "ui": {
         "group": 7,
         "editor": {
-          "editorType": "dxSwitch",
+          "editorType": "dxCheckBox",
           "label": {
             "location": "top",
             "showColon": true,
             "text": "Газоанализатор СО №1"
           },
           "editorOptions": {
-            "readOnly": false
+            "readOnly": true
           }
         },
         "colorizer": {
@@ -354,14 +354,14 @@
       "ui": {
         "group": 7,
         "editor": {
-          "editorType": "dxSwitch",
+          "editorType": "dxCheckBox",
           "label": {
             "location": "top",
             "showColon": true,
             "text": "Газоанализатор СH №1"
           },
           "editorOptions": {
-            "readOnly": false
+            "readOnly": true
           }
         },
         "colorizer": {
@@ -381,14 +381,14 @@
       "ui": {
         "group": 7,
         "editor": {
-          "editorType": "dxSwitch",
+          "editorType": "dxCheckBox",
           "label": {
             "location": "top",
             "showColon": true,
             "text": "Газоанализатор СО №2"
           },
           "editorOptions": {
-            "readOnly": false
+            "readOnly": true
           }
         },
         "colorizer": {
@@ -408,14 +408,14 @@
       "ui": {
         "group": 7,
         "editor": {
-          "editorType": "dxSwitch",
+          "editorType": "dxCheckBox",
           "label": {
             "location": "top",
             "showColon": true,
             "text": "Газоанализатор СH №2"
           },
           "editorOptions": {
-            "readOnly": false
+            "readOnly": true
           }
         },
         "colorizer": {
@@ -435,14 +435,14 @@
       "ui": {
         "group": 7,
         "editor": {
-          "editorType": "dxSwitch",
+          "editorType": "dxCheckBox",
           "label": {
             "location": "top",
             "showColon": true,
             "text": "Клапан газа закрыт"
           },
           "editorOptions": {
-            "readOnly": false
+            "readOnly": true
           }
         },
         "colorizer": {
@@ -462,14 +462,14 @@
       "ui": {
         "group": 7,
         "editor": {
-          "editorType": "dxSwitch",
+          "editorType": "dxCheckBox",
           "label": {
             "location": "top",
             "showColon": true,
             "text": "Пары ДТ 1"
           },
           "editorOptions": {
-            "readOnly": false
+            "readOnly": true
           }
         },
         "colorizer": {
@@ -489,14 +489,14 @@
       "ui": {
         "group": 7,
         "editor": {
-          "editorType": "dxSwitch",
+          "editorType": "dxCheckBox",
           "label": {
             "location": "top",
             "showColon": true,
             "text": "Пары ДТ 2"
           },
           "editorOptions": {
-            "readOnly": false
+            "readOnly": true
           }
         },
         "colorizer": {
@@ -563,7 +563,15 @@
     "flapDtFill": {
       "$ref": "#/$defs/FlapModel"
     },
-      "timestamp": {
+    "boilerControlLinkStatuses": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/BoilerControlLinkStatusModel"
+      },
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "timestamp": {
       "type": "integer",
       "ui": {
         "group": 1,
@@ -603,7 +611,8 @@
     "flapHt",
     "flapHn",
     "flapDt",
-    "flapDtFill"
+    "flapDtFill",
+    "boilerControlLinkStatuses"
   ],
   "$defs": {
     "BoilerModel": {
@@ -667,9 +676,15 @@
               "styleProps": [
                 {
                   "fill": {
-                    "#00FF00": [3, 4],
-                    "red": [6],
-                    "none": [0,
+                    "#00FF00": [
+                      3,
+                      4
+                    ],
+                    "red": [
+                      6
+                    ],
+                    "none": [
+                      0,
                       1,
                       2,
                       5,
@@ -791,6 +806,20 @@
                 "valueExpr": "id",
                 "displayExpr": "description"
               }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "#00FF00": [
+                      0
+                    ],
+                    "yellow": [
+                      1
+                    ]
+                  }
+                }
+              ]
             }
           }
         }
@@ -872,9 +901,19 @@
               "styleProps": [
                 {
                   "fill": {
-                    "#00FF00": [6],
-                    "red": [9],
-                    "#4D4D4D": [0, 1, 5, 7, 11]
+                    "#00FF00": [
+                      6
+                    ],
+                    "red": [
+                      9
+                    ],
+                    "#4D4D4D": [
+                      0,
+                      1,
+                      5,
+                      7,
+                      11
+                    ]
                   }
                 }
               ]
@@ -1030,9 +1069,19 @@
               "styleProps": [
                 {
                   "fill": {
-                    "#00FF00": [6],
-                    "red": [9],
-                    "#4D4D4D": [0, 1, 5, 7, 11]
+                    "#00FF00": [
+                      6
+                    ],
+                    "red": [
+                      9
+                    ],
+                    "#4D4D4D": [
+                      0,
+                      1,
+                      5,
+                      7,
+                      11
+                    ]
                   }
                 }
               ]
@@ -1265,9 +1314,18 @@
               "styleProps": [
                 {
                   "fill": {
-                    "#00FF00": [3],
-                    "red": [5],
-                    "#4D4D4D": [0, 1, 2, 4]
+                    "#00FF00": [
+                      3
+                    ],
+                    "red": [
+                      5
+                    ],
+                    "#4D4D4D": [
+                      0,
+                      1,
+                      2,
+                      4
+                    ]
                   }
                 }
               ]
@@ -1359,18 +1417,23 @@
               }
             },
             "colorizer": {
-            "styleProps": [
-              {
-                "fill": {
-                  "red": [1],
-                  "#00FF00": [2],
-                  "yellow": [0]
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": [
+                      1
+                    ],
+                    "#00FF00": [
+                      2
+                    ],
+                    "yellow": [
+                      0
+                    ]
+                  }
                 }
-              }
               ]
+            }
           }
-          }
-
         }
       },
       "required": [
@@ -1406,6 +1469,41 @@
         "8": "AUTO - Авто",
         "16": "PANEL - Панель (управление с панели шкафа управления)"
       }
+    },
+    "BoilerControlLinkStatusModel": {
+      "type": "object",
+      "properties": {
+        "isActive": {
+          "type": "boolean",
+          "ui": {
+            "group": 10,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Связь с ЩУК"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": false,
+                    "#00FF00": true
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "required": [
+        "isActive"
+      ]
     }
   },
   "ui": {
@@ -1464,6 +1562,12 @@
         "name": "supplyPumps",
         "caption": "Насосы подпитки",
         "order": 450
+      },
+      {
+        "id": 10,
+        "name": "boilerControlLinks",
+        "caption": "Связь с ЩУК",
+        "order": 250
       }
     ]
   }
