@@ -1898,12 +1898,12 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 
 			<text transform="matrix(1 0 0 1 467 257)"
 				style="font-family:'MyriadPro-Regular';font-size:10px;fill:blue">Чрп:</text>
-			<text data-state="networkPumps[0].statusFc" transform="matrix(1 0 0 1 467 267)"
-				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusFCNP_1}}</text>
-			<text data-state="networkPumps[0].alarmFc" transform="matrix(1 0 0 1 467 277)"
-				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmFCNP_1}}</text>
-			<text data-state="networkPumps[0].modeFc" transform="matrix(1 0 0 1 467 287)"
+			<text data-state="networkPumps[0].modeFc" transform="matrix(1 0 0 1 467 267)"
 				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeFCNP_1}}</text>
+			<text data-state="networkPumps[0].statusFc" transform="matrix(1 0 0 1 467 277)"
+				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusFCNP_1}}</text>
+			<text data-state="networkPumps[0].alarmFc" transform="matrix(1 0 0 1 467 287)"
+				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmFCNP_1}}</text>
 
 			<text transform="matrix(1 0 0 1 467 300)"
 				style="font-family:'MyriadPro-Regular'; font-size:10px;fill:blue">Насос:</text>
@@ -1987,12 +1987,12 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 
 			<text transform="matrix(1 0 0 1 600 257)"
 				style="font-family:'MyriadPro-Regular';font-size:10px;fill:blue">Чрп:</text>
-			<text data-state="networkPumps[1].statusFc" transform="matrix(1 0 0 1 600 267)"
-				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusFCNP_2}}</text>
-			<text data-state="networkPumps[1].alarmFc" transform="matrix(1 0 0 1 600 277)"
-				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmFCNP_2}}</text>
-			<text data-state="networkPumps[1].modeFc" transform="matrix(1 0 0 1 600 287)"
+			<text data-state="networkPumps[1].modeFc" transform="matrix(1 0 0 1 600 267)"
 				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeFCNP_2}}</text>
+			<text data-state="networkPumps[1].statusFc" transform="matrix(1 0 0 1 600 277)"
+				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusFCNP_2}}</text>
+			<text data-state="networkPumps[1].alarmFc" transform="matrix(1 0 0 1 600 287)"
+				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmFCNP_2}}</text>
 
 			<text transform="matrix(1 0 0 1 600 300)"
 				style="font-family:'MyriadPro-Regular'; font-size:10px;fill:blue">Насос:</text>
@@ -2075,12 +2075,12 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 
 			<text transform="matrix(1 0 0 1 735 257)"
 				style="font-family:'MyriadPro-Regular';font-size:10px;fill:blue">Чрп:</text>
-			<text data-state="networkPumps[2].statusFc" transform="matrix(1 0 0 1 735 267)"
-				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusFCNP_3}}</text>
-			<text data-state="networkPumps[2].alarmFc" transform="matrix(1 0 0 1 735 277)"
-				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmFCNP_3}}</text>
-			<text data-state="networkPumps[2].modeFc" transform="matrix(1 0 0 1 735 287)"
+			<text data-state="networkPumps[2].modeFc" transform="matrix(1 0 0 1 735 267)"
 				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeFCNP_3}}</text>
+			<text data-state="networkPumps[2].statusFc" transform="matrix(1 0 0 1 735 277)"
+				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusFCNP_3}}</text>
+			<text data-state="networkPumps[2].alarmFc" transform="matrix(1 0 0 1 735 287)"
+				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmFCNP_3}}</text>
 
 			<text transform="matrix(1 0 0 1 735 300)"
 				style="font-family:'MyriadPro-Regular'; font-size:10px;fill:blue">Насос:</text>
@@ -2165,12 +2165,12 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 
 			<text transform="matrix(1 0 0 1 868 257)"
 				style="font-family:'MyriadPro-Regular';font-size:10px;fill:blue">Чрп:</text>
-			<text data-state="networkPumps[3].statusFc" transform="matrix(1 0 0 1 868 267)"
-				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusFCNP_4}}</text>
-			<text data-state="networkPumps[3].alarmFc" transform="matrix(1 0 0 1 868 277)"
-				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmFCNP_4}}</text>
-			<text data-state="networkPumps[3].modeFc" transform="matrix(1 0 0 1 868 287)"
+			<text data-state="networkPumps[3].modeFc" transform="matrix(1 0 0 1 868 267)"
 				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeFCNP_4}}</text>
+			<text data-state="networkPumps[3].statusFc" transform="matrix(1 0 0 1 868 277)"
+				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusFCNP_4}}</text>
+			<text data-state="networkPumps[3].alarmFc" transform="matrix(1 0 0 1 868 287)"
+				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmFCNP_4}}</text>
 
 			<text transform="matrix(1 0 0 1 868 300)"
 				style="font-family:'MyriadPro-Regular'; font-size:10px;fill:blue">Насос:</text>
@@ -2485,12 +2485,12 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 
 			<text transform="matrix(1 0 0 1 513 482)"
 				style="font-family:'MyriadPro-Regular';font-size:10px;fill:blue">Чрп:</text>
-			<text data-state="sourceWaterPumps[0].statusFc" transform="matrix(1 0 0 1 513 492)"
-				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusFCPW_1}}</text>
-			<text data-state="sourceWaterPumps[0].alarmFc" transform="matrix(1 0 0 1 513 502)"
-				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmFCPW_1}}</text>
-			<text data-state="sourceWaterPumps[0].modeFc" transform="matrix(1 0 0 1 513 512)"
+			<text data-state="sourceWaterPumps[0].modeFc" transform="matrix(1 0 0 1 513 492)"
 				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeFCPW_1}}</text>
+			<text data-state="sourceWaterPumps[0].statusFc" transform="matrix(1 0 0 1 513 502)"
+				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusFCPW_1}}</text>
+			<text data-state="sourceWaterPumps[0].alarmFc" transform="matrix(1 0 0 1 513 512)"
+				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmFCPW_1}}</text>
 
 			<text transform="matrix(1 0 0 1 513 525)"
 				style="font-family:'MyriadPro-Regular'; font-size:10px;fill:blue">Насос:</text>
@@ -2513,12 +2513,12 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 
 			<text transform="matrix(1 0 0 1 646 482)"
 				style="font-family:'MyriadPro-Regular';font-size:10px;fill:blue">Чрп:</text>
-			<text data-state="sourceWaterPumps[1].statusFc" transform="matrix(1 0 0 1 646 492)"
-				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusFCPW_2}}</text>
-			<text data-state="sourceWaterPumps[1].alarmFc" transform="matrix(1 0 0 1 646 502)"
-				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmFCPW_2}}</text>
-			<text data-state="sourceWaterPumps[1].modeFc" transform="matrix(1 0 0 1 646 512)"
+			<text data-state="sourceWaterPumps[1].modeFc" transform="matrix(1 0 0 1 646 492)"
 				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeFCPW_2}}</text>
+			<text data-state="sourceWaterPumps[1].statusFc" transform="matrix(1 0 0 1 646 502)"
+				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusFCPW_2}}</text>
+			<text data-state="sourceWaterPumps[1].alarmFc" transform="matrix(1 0 0 1 646 512)"
+				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmFCPW_2}}</text>
 
 			<text transform="matrix(1 0 0 1 646 525)"
 				style="font-family:'MyriadPro-Regular'; font-size:10px;fill:blue">Насос:</text>
@@ -2528,21 +2528,6 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusPW_2}}</text>
 			<text data-state="sourceWaterPumps[1].alarm" transform="matrix(1 0 0 1 646 555)"
 				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmPW_2}}</text>
-
-			<!-- <text data-state="sourceWaterPumps[1].status" transform="matrix(1 0 0 1 646 514.7197)"
-				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusPW_2}}</text>
-			<text data-state="sourceWaterPumps[1].statusFc" transform="matrix(1 0 0 1 646 524.9897)"
-				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusFCPW_2}}</text>
-			<text data-state="sourceWaterPumps[1].alarmFc" transform="matrix(1 0 0 1 646 543.6181)"
-				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmFCPW_2}}</text>
-			<tex data-state="sourceWaterPumps[1].mode" transform="matrix(1 0 0 1 646 498.3649)"
-				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modePW_2}}</tex>
-			<text data-state="sourceWaterPumps[1].modeFc" transform="matrix(1 0 0 1 646 488.1606)"
-				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeFCPW_2}}</text>
-			<text data-state="sourceWaterPumps[1].setPower" transform="matrix(1 0 0 1 645.2865 472.0049)"
-				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{setPowerPW_2}}</text>
-			<text data-state="sourceWaterPumps[1].alarm" transform="matrix(1 0 0 1 646 555.6634)"
-				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmPW_2}}</text> -->
 		</g>
 
 		<linearGradient id="SVGID_00000091005043422797722080000010984031617304834455_" gradientUnits="userSpaceOnUse"
