@@ -11,6 +11,7 @@ import type { DictionaryBaseModel } from '../../models/abstractions/dictionary-b
 import { jsonInfoViewService } from '../../services/json-info-view-service';
 
 import './dashboard-page-content.scss';
+import { useAuth } from '../../contexts/auth';
 
 export type DashboardPageContextModel = {
     device?: DeviceModel;
@@ -30,6 +31,7 @@ const DashboardPageContext = createContext({} as DashboardPageContextModel);
 function DashboardPageContextProvider(props: any) {
     const { getDeviceAsync, getDeviceStateAsync, getMnemoschemaAsync, getDeviceStateDataschemaAsync } = useAppData();
     const { deviceId, flowCode } = useParams();
+    const { isAdmin } = useAuth();
 
     const [device, setDevice] = useState<DeviceModel | undefined>();
     const [deviceState, setDeviceState] = useState<DeviceStateModel | undefined>();
@@ -79,19 +81,12 @@ function DashboardPageContextProvider(props: any) {
                 if (deviceState && dataschema) {
                     applyDimensionsToState(deviceState.state, dataschema);
                 }
-
-                if (device) {
+                setTimeout(() => {
                     setDevice(device);
-                }
-                // if (deviceState) {
                     setDeviceState(deviceState);
-                // }
-                if (mnemoschema) {
                     setMnemoschema(mnemoschema);
-                }
-                if (dataschema) {
                     setDataschema(dataschema);
-                }
+                }, 200);
             }
         })();
     }, [deviceId, flowCode, getDeviceAsync, getDeviceStateAsync, getDeviceStateDataschemaAsync, getMnemoschemaAsync, applyDimensionsToState, updateSharedStateRefreshToken]);
@@ -138,16 +133,18 @@ function DashboardPageContextProvider(props: any) {
                         div.className = "dx-toast-message"
                         div.style.flexDirection = 'column';
                         div.innerHTML = `
-                            <div>Не было получено валидное устройства ${device?.name}.</div>
-                            <a data-link='${uid}' href='javascript:void(0)'>Ошибки валидации</a>
+                            <div>Не было получено валидное состояние устройства <i>${device?.name}</i>.</div>
+                            ${isAdmin() ? `<a data-link='${uid}' href='javascript:void(0)'>Ошибки валидации</a>` : ''}
                         `;
                         return div;
                     },
                     onContentReady: () => {
+                        if (!isAdmin()) {
+                            return;
+                        }
                         document.querySelector(`[data-link="${uid}"]`)?.addEventListener('click', () => {
                             jsonInfoViewService.hide();
                             const jsonInfoViewDialogRoot = document.querySelector('#json-info-view-dialog-root');
-
 
                             if (!jsonInfoViewDialogRoot && validateFn.errors) {
                                 jsonInfoViewService.show('Ошибки валидации',
@@ -165,7 +162,7 @@ function DashboardPageContextProvider(props: any) {
             }
             return isValid;
         });
-    }, [dataschema, device, deviceState]);
+    }, [dataschema, device, deviceState, isAdmin]);
 
 
     useEffect(() => {

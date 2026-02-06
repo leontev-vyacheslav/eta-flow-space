@@ -40,7 +40,6 @@ const { HttpStatusCodes } = require('../constants/http');
         token,
         login: user.name,
         role: user.roleId
-
     };
 
     return msg;

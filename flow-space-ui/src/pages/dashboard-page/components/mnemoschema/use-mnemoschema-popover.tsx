@@ -1,8 +1,10 @@
 import { useCallback, useRef } from "react";
 import { useDashboardPage } from "../../dashboard-page-context"
 import dxPopover from "devextreme/ui/popover";
+import { useAuth } from "../../../../contexts/auth";
 
 export const useMnemoschemaPopover = () => {
+    const { isAdmin } = useAuth();
     const { schemaTypeInfoPropertiesChain, dataschema } = useDashboardPage();
     const popoverInstance = useRef<dxPopover<any>>(null);
 
@@ -41,6 +43,9 @@ export const useMnemoschemaPopover = () => {
         document.body.appendChild(root);
 
         let value = propertyInfo.propertiesChainValuePair.value;
+        if (propertyInfo.typeInfo?.typeName === 'boolean') {
+            value = value === true ? 'Да' : 'Нет';
+        }
         if (propertyInfo.typeInfo?.ui.editor.editorOptions.type === 'datetime') {
             const date = new Date(value);
             const formatAttr = target.getAttribute('data-state-format');
@@ -64,9 +69,10 @@ export const useMnemoschemaPopover = () => {
                                 <tr><th colspan='2'>${propertyInfo.typeInfo?.ui.editor.label.text ?? ''}</th></tr>
                             </thead>
                            <tbody>
-                                <tr><td>Свойство:</td><td>${propertyInfo.propertiesChainValuePair.propertiesChain}</td></tr>
-                                <tr><td>Тип:</td><td>${propertyInfo.typeInfo?.typeName}</td></tr>
-                                <tr><td>Значение:</td><td>${value}</td></tr>
+                                ${isAdmin() ? `
+                                    <tr><td>Свойство:</td><td>${propertyInfo.propertiesChainValuePair.propertiesChain}</td></tr>
+                                    <tr><td>Тип:</td><td>${propertyInfo.typeInfo?.typeName}</td></tr>` : ''}
+                                <tr><td>Значение:</td><td><b>${value}</b></td></tr>
                            </tbody>
                        </table>
                     `;
@@ -91,5 +97,5 @@ export const useMnemoschemaPopover = () => {
         });
 
         popoverInstance.current.show();
-    }, [dataschema, schemaTypeInfoPropertiesChain]);
+    }, [dataschema, isAdmin, schemaTypeInfoPropertiesChain]);
 }
