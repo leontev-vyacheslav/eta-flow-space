@@ -2408,14 +2408,14 @@
                 "vt": "str"
             }
         ],
-        "repeat": "",
+        "repeat": "30",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 1180,
+        "x": 1190,
         "y": 100,
         "wires": [
             [
@@ -2428,7 +2428,7 @@
         "type": "function",
         "z": "7ada8f3f5d804ee5",
         "name": "function 1",
-        "func": "global.set(`deviceState${6}`, null);\n\nreturn msg;",
+        "func": "global.set(`deviceState${4}`,\n\n    {\n        \"tempRoomAir\": 22.5,\n        \"tempOutAir\": -3.2,\n        \"tempInNet\": 68.0,\n        \"tempOutNet\": 82.5,\n        \"pressGas\": 120.5,\n        \"pressInNet\": 4.2,\n        \"pressOutNet\": 6.8,\n        \"pressOutSrcW\": 3.5,\n        \"levelDt1\": 65.3,\n        \"levelDt2\": 72.1,\n        \"isOffInput1\": false,\n        \"isSupplyWaterLevelEmergencyMax\": false,\n        \"isSupplyWaterLevelWorkingMax\": true,\n        \"isSupplyWaterLevelWorkingMin\": false,\n        \"isSupplyWaterLevelEmergencyMin\": false,\n        \"isCO1\": false,\n        \"isCH1\": false,\n        \"isCO2\": false,\n        \"isCH2\": false,\n        \"isGasFlap\": false,\n        \"isVaporDt1\": false,\n        \"isVaporDt2\": false,\n        \"boilers\": [\n            {\n                \"powerBurner\": 75.0,\n                \"mode\": 8,\n                \"status\": 4,\n                \"alarm\": 0\n            },\n            {\n                \"powerBurner\": 85.5,\n                \"mode\": 8,\n                \"status\": 3,\n                \"alarm\": 0\n            },\n            {\n                \"powerBurner\": 0.0,\n                \"mode\": 2,\n                \"status\": 0,\n                \"alarm\": 0\n            },\n            {\n                \"powerBurner\": 90.2,\n                \"mode\": 8,\n                \"status\": 4,\n                \"alarm\": 0\n            }\n        ],\n        \"boilerValves\": [\n            {\n                \"status\": 2\n            },\n            {\n                \"status\": 2\n            },\n            {\n                \"status\": 1\n            },\n            {\n                \"status\": 2\n            }\n        ],\n        \"networkPumps\": [\n            {\n                \"setPower\": 45.0,\n                \"mode\": 8,\n                \"status\": 64,\n                \"alarm\": 0,\n                \"modeFc\": 8,\n                \"statusFc\": 4,\n                \"alarmFc\": 0\n            },\n            {\n                \"setPower\": 42.5,\n                \"mode\": 8,\n                \"status\": 64,\n                \"alarm\": 0,\n                \"modeFc\": 8,\n                \"statusFc\": 4,\n                \"alarmFc\": 0\n            },\n            {\n                \"setPower\": 0.0,\n                \"mode\": 2,\n                \"status\": 2,\n                \"alarm\": 0,\n                \"modeFc\": 2,\n                \"statusFc\": 2,\n                \"alarmFc\": 0\n            },\n            {\n                \"setPower\": 0.0,\n                \"mode\": 2,\n                \"status\": 2,\n                \"alarm\": 0,\n                \"modeFc\": 2,\n                \"statusFc\": 2,\n                \"alarmFc\": 0\n            }\n        ],\n        \"sourceWaterPumps\": [\n            {\n                \"setPower\": 38.0,\n                \"mode\": 8,\n                \"status\": 64,\n                \"alarm\": 0,\n                \"modeFc\": 8,\n                \"statusFc\": 4,\n                \"alarmFc\": 0\n            },\n            {\n                \"setPower\": 0.0,\n                \"mode\": 2,\n                \"status\": 2,\n                \"alarm\": 0,\n                \"modeFc\": 2,\n                \"statusFc\": 2,\n                \"alarmFc\": 0\n            }\n        ],\n        \"supplyPumps\": [\n            {\n                \"mode\": 8,\n                \"status\": 8,\n                \"alarm\": 0\n            },\n            {\n                \"mode\": 2,\n                \"status\": 2,\n                \"alarm\": 0\n            }\n        ],\n        \"flapHt\": {\n            \"mode\": 0\n        },\n        \"flapHn\": {\n            \"mode\": 0\n        },\n        \"flapDt\": {\n            \"mode\": 0\n        },\n        \"flapDtFill\": {\n            \"mode\": 0\n        },\n        \"boilerControlLinkStatuses\": [\n            {\n                \"isActive\": true\n            },\n            {\n                \"isActive\": true\n            },\n            {\n                \"isActive\": false\n            },\n            {\n                \"isActive\": true\n            }\n        ],\n        \"timestamp\": 1707206400000\n    }\n);\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,

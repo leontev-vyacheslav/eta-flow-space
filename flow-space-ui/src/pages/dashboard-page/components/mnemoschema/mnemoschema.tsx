@@ -31,6 +31,26 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
         captureEvent: true,
     });
 
+    const injectCss = useCallback(async (mnemoschemaElement: HTMLElement | null) => {
+        if (!mnemoschemaElement) {
+            return;
+        }
+
+        let cssModule = null;
+        try {
+            const cssModuleRequest = await fetch(`${routes.host}/static/flows/${flowCode}/${flowCode}-mnemo-schema.css?v=${Date.now()}`);
+            cssModule = await cssModuleRequest.text();
+        } catch (error) {
+            console.error(error);
+        }
+
+        if (cssModule) {
+            const style = document.createElementNS('http://www.w3.org/2000/svg', 'style');
+            style.textContent = cssModule;
+            mnemoschemaElement.prepend(style);
+        }
+    }, [flowCode]);
+
     useEffect(() => {
         if (!containerRef.current || !mnemoschema) {
             return;
@@ -42,7 +62,6 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
         const run = async () => {
             let plugInModule = null;
             try {
-
                 plugInModule = await import(/* @vite-ignore */`${routes.host}/static/flows/${flowCode}/${flowCode}-mnemo-schema.js?v=${Date.now()}`);
             } catch (error) {
                 console.error(error);
@@ -67,6 +86,8 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
                 mnemoschemaElement = containerRef.current!.appendChild(
                     mnemoschemaDoc.documentElement
                 );
+
+                await injectCss(mnemoschemaElement);
 
                 onAfterMount?.(mnemoschemaElement);
                 onAfterMountPluggable?.(mnemoschemaElement, deviceState);
