@@ -5,6 +5,7 @@
 
 text[data-state]:hover, svg tspan[data-state]:hover {
   fill: #ffeb3b !important;
+  font-weight: bold;
   stroke-width: 2 !important;
 }
 

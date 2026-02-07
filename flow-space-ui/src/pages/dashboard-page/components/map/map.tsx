@@ -1,5 +1,5 @@
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useDashboardPage } from '../../dashboard-page-context';
 import { MapEventController } from './map-event-controller';
 import { MapNoDataOverlay } from './map-no-data-overlay';
@@ -7,7 +7,7 @@ import { MapPopupContent } from './map-popup-content';
 
 import 'leaflet/dist/leaflet.css';
 import './map.scss';
-import { formatMessage } from 'devextreme/localization';
+import { NoData } from '../../../../components/no-data-widget/no-data-widget';
 
 export const Map = () => {
     const { device, isValidDeviceState, deviceState } = useDashboardPage();
@@ -64,10 +64,6 @@ export const Map = () => {
             };
         }
     }, [position, mapRef, isEnable, defaultCenter, isValidDeviceState]);
-
-    const NoData = useCallback(() => {
-        return <div className='dx-widget dx-nodata' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}><div>{formatMessage('noDataText')}</div></div>
-    }, []);
 
     return ( deviceState?.state && Object.keys(deviceState.state).length !== 0 ?
         <div style={{ height: '100%', width: '100%', paddingBottom: 30 }}>

@@ -3,6 +3,8 @@ import { useDashboardPage } from "../../dashboard-page-context"
 import dxPopover from "devextreme/ui/popover";
 import { useAuth } from "../../../../contexts/auth";
 
+import './mnemoschema-popover.scss';
+
 export const useMnemoschemaPopover = () => {
     const { isAdmin } = useAuth();
     const { schemaTypeInfoPropertiesChain, dataschema } = useDashboardPage();
@@ -30,7 +32,7 @@ export const useMnemoschemaPopover = () => {
             return;
         }
 
-        document.querySelectorAll("[data-app-popover]").forEach(element => {
+        document.querySelectorAll("[data-mnemoschema-popover]").forEach(element => {
             try {
                 element.remove();
             } catch (error) {
@@ -39,7 +41,7 @@ export const useMnemoschemaPopover = () => {
         });
 
         const root = document.createElement("div");
-        root.setAttribute("data-app-popover", "");
+        root.setAttribute("data-mnemoschema-popover", "");
         document.body.appendChild(root);
 
         let value = propertyInfo.propertiesChainValuePair.value;
@@ -58,7 +60,11 @@ export const useMnemoschemaPopover = () => {
             }
         } else if (propertyInfo.typeInfo?.isEnum) {
             const enumDescription = dataschema.$defs[propertyInfo.typeInfo?.typeName].enumDescriptions[value]?.split(' - ').pop();
-            value = enumDescription ? enumDescription + ' (' + value + ')' : `<span style='color: red'>Ошибка (${value})</span>`
+            if (isAdmin()) {
+                value = enumDescription ? enumDescription + ' (' + value + ')' : `<span style='color: red'>Ошибка (${value})</span>`
+            }else {
+                value = enumDescription ? enumDescription : `<span style='color: red'>Ошибка (${value})</span>`
+            }
         } else {
             const unit = propertyInfo.typeInfo?.unit;
             value = `${value}${unit ? ' ' + unit : ''}`;
@@ -84,6 +90,9 @@ export const useMnemoschemaPopover = () => {
                 const div = document.createElement("div");
                 div.innerHTML = html;
                 return div;
+            },
+            wrapperAttr: {
+                class: 'mnemoschema-popover'
             },
             position: {
                 at: "top left",

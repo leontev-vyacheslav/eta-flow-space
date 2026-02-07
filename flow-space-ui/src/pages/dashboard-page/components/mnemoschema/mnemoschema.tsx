@@ -1,12 +1,14 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLongPress } from "use-long-press";
 import { useDashboardPage } from "../../dashboard-page-context";
 import { TransformWrapper, TransformComponent, type ReactZoomPanPinchRef } from "react-zoom-pan-pinch";
 import { useParams } from "react-router";
 import { useMnemoschemaPopover } from "./use-mnemoschema-popover";
 import { useMnemoschemaStateSetup } from "./use-mnemoschema-state-setup";
-import { formatMessage } from "devextreme/localization";
 import routes from '../../../../constants/app-api-routes';
+import { useMnemoschemaInjectCss } from "./use-mnemoschema-inject-css";
+import { useMnemoschemaRestoreTransformState } from "./use-mnemoschema-restote-transform-state";
+import { NoData } from "../../../../components/no-data-widget/no-data-widget";
 
 
 export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfterMount }: { onBeforeMount?: (mnemoschemaElement: HTMLElement) => void, onAfterMount?: (mnemoschemaElement: HTMLElement) => void }) => {
@@ -17,10 +19,8 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
     const [isInitComplete, setIsInitComplete] = useState<boolean>(false);
     const mnemoschemaClickHandler = useMnemoschemaPopover();
     const stateSetup = useMnemoschemaStateSetup();
+    const injectCss = useMnemoschemaInjectCss();
 
-    const NoData = useCallback(() => {
-        return <div className='dx-widget dx-nodata' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}><div>{formatMessage('noDataText')}</div></div>
-    }, []);
 
     const longPressBinder = useLongPress(
         () => {
@@ -30,26 +30,6 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
         cancelOnMovement: 5,
         captureEvent: true,
     });
-
-    const injectCss = useCallback(async (mnemoschemaElement: HTMLElement | null) => {
-        if (!mnemoschemaElement) {
-            return;
-        }
-
-        let cssModule = null;
-        try {
-            const cssModuleRequest = await fetch(`${routes.host}/static/flows/${flowCode}/${flowCode}-mnemo-schema.css?v=${Date.now()}`);
-            cssModule = await cssModuleRequest.text();
-        } catch (error) {
-            console.error(error);
-        }
-
-        if (cssModule) {
-            const style = document.createElementNS('http://www.w3.org/2000/svg', 'style');
-            style.textContent = cssModule;
-            mnemoschemaElement.prepend(style);
-        }
-    }, [flowCode]);
 
     useEffect(() => {
         if (!containerRef.current || !mnemoschema) {
@@ -70,10 +50,7 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
             if (disposed) return;
 
             const parser = new DOMParser();
-            const mnemoschemaDoc = parser.parseFromString(
-                mnemoschema,
-                'image/svg+xml'
-            );
+            const mnemoschemaDoc = parser.parseFromString(mnemoschema, 'image/svg+xml');
 
             try {
                 const { onBeforeMount: onBeforeMountPluggable, onAfterMount: onAfterMountPluggable } = plugInModule?.create?.() ?? {};
@@ -109,24 +86,9 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
                 mnemoschemaClickHandler
             );
         };
-    }, [flowCode, deviceState, mnemoschema, onBeforeMount, onAfterMount, stateSetup, schemaTypeInfoPropertiesChain, dataschema, mnemoschemaClickHandler]);
+    }, [flowCode, deviceState, mnemoschema, onBeforeMount, onAfterMount, stateSetup, schemaTypeInfoPropertiesChain, dataschema, mnemoschemaClickHandler, injectCss]);
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            const savedState = localStorage.getItem(`mnemoschema_transformed_state_${flowCode}`);
-            if (savedState && transformComponentRef.current) {
-                try {
-                    const { scale, positionX, positionY } = JSON.parse(savedState);
-                    transformComponentRef.current.setTransform(positionX, positionY, scale);
-                } catch (e) {
-                    console.error("Failed to restore transform state", e);
-                }
-            }
-            setIsInitComplete(true);
-        }, 500);
-
-        return () => clearTimeout(timer);
-    }, [flowCode]);
+    useMnemoschemaRestoreTransformState(flowCode, transformComponentRef, () => setIsInitComplete(true));
 
     return mnemoschema && schemaTypeInfoPropertiesChain && deviceState?.state && Object.keys(deviceState.state).length !== 0
         ?
