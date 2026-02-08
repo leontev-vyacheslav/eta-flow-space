@@ -38,7 +38,7 @@ async function getDeviceState(msg, global) {
             msg.payload = {
                 values: {
                     ...deviceState,
-                    state: JSON.parse(deviceState.state)
+                    state: { isActual: false, ...JSON.parse(deviceState.state)}
                 }
             };
         } else {
@@ -50,7 +50,7 @@ async function getDeviceState(msg, global) {
             values: {
                 id: 0,
                 deviceId: deviceId,
-                state: state,
+                state: {isActual: true, ...state, },
                 createdAt: new Date(),
                 updatedAt: new Date()
             }

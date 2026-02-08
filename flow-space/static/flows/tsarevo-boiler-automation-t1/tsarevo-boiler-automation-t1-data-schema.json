@@ -3,6 +3,24 @@
   "title": "StateModel",
   "type": "object",
   "properties": {
+    "isActual": {
+      "type": "boolean",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "editorOptions": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Актуальное состояние"
+          }
+        }
+      }
+    },
     "tempRoomAir": {
       "type": "number",
       "unit": "°C",
@@ -593,6 +611,7 @@
     }
   },
   "required": [
+    "isActual",
     "tempRoomAir",
     "tempOutAir",
     "pressGas",
