@@ -3,7 +3,7 @@
   "title": "StateModel",
   "type": "object",
   "properties": {
-    "isActual": {
+    "isConnected": {
       "type": "boolean",
       "ui": {
         "group": 1,
@@ -16,8 +16,22 @@
           "label": {
             "location": "top",
             "showColon": true,
-            "text": "Актуальное состояние"
+            "text": "Доступно"
           }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": false,
+                "white": true
+              },
+              "stroke": {
+                "yellow": false,
+                "black": true
+              }
+            }
+          ]
         }
       }
     },
@@ -611,7 +625,7 @@
     }
   },
   "required": [
-    "isActual",
+    "isConnected",
     "tempRoomAir",
     "tempOutAir",
     "pressGas",
