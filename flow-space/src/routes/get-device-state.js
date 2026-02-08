@@ -1,4 +1,5 @@
-const { UserDeviceLinkDataModel } = require('../orm/models');
+const { Op, literal  } = require('sequelize');
+const { UserDeviceLinkDataModel, DeviceStateDataModel } = require('../orm/models');
 const { HttpStatusCodes } = require('../constants');
 
 async function getDeviceState(msg, global) {
@@ -20,22 +21,41 @@ async function getDeviceState(msg, global) {
     }
 
     const state = global.get(`deviceState${deviceId}`);
+
     if (!state) {
-        msg.statusCode = HttpStatusCodes.InternalServerError;
-        msg.payload = { message: `Состояние устройства с ID: ${deviceId} не существует.` }
+        const deviceState = await DeviceStateDataModel.findOne({
+            where: {
+                deviceId: deviceId,
+                [Op.and]: [
+                    literal(`state::text != '"{}"'`),
+                    { state: { [Op.ne]: null } }
+                ]
+            },
+            order: [['createdAt', 'DESC']]
+        });
 
-        return msg;
-    }
-
-    msg.payload = {
-        values: {
-            id: 0,
-            deviceId: deviceId,
-            state: state,
-            createdAt: new Date(),
-            updatedAt: new Date()
+        if (deviceState) {
+            msg.payload = {
+                values: {
+                    ...deviceState,
+                    state: JSON.parse(deviceState.state)
+                }
+            };
+        } else {
+            msg.statusCode = HttpStatusCodes.InternalServerError;
+            msg.payload = { message: `Состояние устройства с ID: ${deviceId} не существует.` }
         }
-    };
+    } else {
+        msg.payload = {
+            values: {
+                id: 0,
+                deviceId: deviceId,
+                state: state,
+                createdAt: new Date(),
+                updatedAt: new Date()
+            }
+        };
+    }
 
     return msg;
 }
