@@ -14,10 +14,24 @@
             "readOnly": true
           },
           "label": {
-            "location": "top",
+            "location": "left",
             "showColon": true,
-            "text": "Доступно"
+            "text": "На связи"
           }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": false,
+                "white": true
+              },
+              "stroke": {
+                "yellow": false,
+                "black": true
+              }
+            }
+          ]
         }
       }
     },
@@ -697,15 +711,15 @@
                   "fill": {
                     "#00FF00": [
                       3,
-                      4
+                      4,
+                      2
                     ],
                     "red": [
                       6
                     ],
-                    "none": [
+                    "white": [
                       0,
                       1,
-                      2,
                       5,
                       8,
                       9,
