@@ -878,7 +878,7 @@
         "setPower": {
           "type": "number",
           "unit": "Гц",
-          "label": "<tspan style='fill: blue'>Уставка</tspan>",
+          "label": "<tspan style='fill: blue'>Уставка:</tspan>",
           "ui": {
             "group": 3,
             "editor": {
@@ -935,17 +935,17 @@
                 {
                   "fill": {
                     "#00FF00": [
-                      6
+                      64
                     ],
                     "red": [
-                      9
+                      512
                     ],
                     "#4D4D4D": [
-                      0,
                       1,
-                      5,
-                      7,
-                      11
+                      2,
+                      32,
+                      128,
+                      2048
                     ]
                   }
                 }
@@ -1046,7 +1046,7 @@
         "setPower": {
           "type": "number",
           "unit": "Гц",
-          "label": "<tspan style='fill: blue'>Уставка</tspan>",
+          "label": "<tspan style='fill: blue'>Уставка:</tspan>",
           "ui": {
             "group": 4,
             "editor": {
@@ -1103,17 +1103,17 @@
                 {
                   "fill": {
                     "#00FF00": [
-                      6
+                      64
                     ],
                     "red": [
-                      9
+                      512
                     ],
                     "#4D4D4D": [
-                      0,
                       1,
-                      5,
-                      7,
-                      11
+                      2,
+                      32,
+                      128,
+                      2048
                     ]
                   }
                 }
@@ -1348,16 +1348,16 @@
                 {
                   "fill": {
                     "#00FF00": [
-                      3
+                      8
                     ],
                     "red": [
-                      5
+                      32
                     ],
                     "#4D4D4D": [
-                      0,
                       1,
                       2,
-                      4
+                      4,
+                      15
                     ]
                   }
                 }

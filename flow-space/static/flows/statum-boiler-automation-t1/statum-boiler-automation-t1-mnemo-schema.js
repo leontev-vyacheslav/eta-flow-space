@@ -7,7 +7,7 @@ function setPathHeight(pathElement, newHeight) {
     pathElement.setAttribute('d', updatedD);
 }
 
-function setLevelSuppyWaterTank(mnemoschemaElement, deviceState) {
+function setLevelSupplyWaterTank(mnemoschemaElement, deviceState) {
     const supplyWaterLevelElement = mnemoschemaElement.querySelector('[data-state="isSupplyWaterLevel"]');
     if (!supplyWaterLevelElement) {
         return;
@@ -61,7 +61,7 @@ export function create(config) {
 
         onAfterMount(mnemoschemaElement, deviceState) {
             if (deviceState && deviceState.state) {
-                setLevelSuppyWaterTank(mnemoschemaElement, deviceState);
+                setLevelSupplyWaterTank(mnemoschemaElement, deviceState);
             }
         },
     };

@@ -7,7 +7,7 @@ import { useMnemoschemaPopover } from "./use-mnemoschema-popover";
 import { useMnemoschemaStateSetup } from "./use-mnemoschema-state-setup";
 import routes from '../../../../constants/app-api-routes';
 import { useMnemoschemaInjectCss } from "./use-mnemoschema-inject-css";
-import { useMnemoschemaRestoreTransformState } from "./use-mnemoschema-restote-transform-state";
+import { useMnemoschemaRestoreTransformState } from "./use-mnemoschema-restore-transform-state";
 import { NoData } from "../../../../components/no-data-widget/no-data-widget";
 
 

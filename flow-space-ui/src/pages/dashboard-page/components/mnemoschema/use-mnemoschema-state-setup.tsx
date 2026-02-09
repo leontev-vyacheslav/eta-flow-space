@@ -46,7 +46,7 @@ export const useMnemoschemaStateSetup = () => {
                                     element.innerHTML = value;
                                 }
                                 if (typeInfo?.label) {
-                                    element.innerHTML = `${typeInfo?.label}: ${element.innerHTML}`;
+                                    element.innerHTML = `${typeInfo?.label} ${element.innerHTML}`;
                                 }
                             }
                         } else if (typeInfo?.ui.colorizer) {
