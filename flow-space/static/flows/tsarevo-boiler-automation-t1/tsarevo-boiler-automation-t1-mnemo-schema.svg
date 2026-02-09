@@ -3637,9 +3637,14 @@
 			y2="433.1" />
 		<path style="fill:none;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;" d="M1135.9,83.1H517.8c-5.2,0-9.4-4.2-9.4-9.4V22.9
 		c0-5.2,4.2-9.4,9.4-9.4h618.1c5.2,0,9.4,4.2,9.4,9.4v50.7C1145.3,78.8,1141.1,83.1,1135.9,83.1z" />
-		<text data-state="timestamp" data-state-format="date" transform="matrix(1 0 0 1 1150 30)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{timestamp}}</text>
-		<text data-state="timestamp" data-state-format="time" transform="matrix(1 0 0 1 1155 45)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{timestamp}}</text>
-		<text transform="matrix(1 0 0 1 735.3401 33.26)" style="font-family:'MyriadPro-Regular'; font-size:12px;">Прочие параметры работы котельной</text>
+
+		<g transform="matrix(1 0 0 1 10 20)" style="font-weight:bold; letter-spacing: 1px" data-state="timestamp" data-state-eval="if(schemaTypeInfoPropertiesChain.find(s => s.propertiesChainValuePair.propertiesChain === 'isConnected')?.propertiesChainValuePair.value === false) {element.style.fill = 'red'}">
+			<text data-state="timestamp"
+				data-state-format="date"
+				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{timestamp}}</text>
+			<text data-state="timestamp" data-state-format="time" transform="matrix(1 0 0 1 5 15)"
+				style="font-family:'MyriadPro-Regular'; font-size:10px;">{{timestamp}}</text>
+		</g>
 
 		<g data-section="emergency">
 			<path style="fill:none;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;" d="M934.6,728.6H381.7c-5.2,0-9.4-4.2-9.4-9.4
@@ -3993,8 +3998,8 @@
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1111.2" y1="589.5" x2="1111.3" y2="618.3" />
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1118.8" y1="589.5" x2="1118.9" y2="618.3" />
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1126.3" y1="589.5" x2="1126.4" y2="618.3" />
-		<circle data-state="boilerControlLinkStatuses[0].isActive" style="fill:#FFFFFF;stroke:#666666;stroke-width:0.25;stroke-miterlimit:10;" cx="1091.4" cy="593.2"
-			r="2.5" />
+		<circle data-state="boilerControlLinkStatuses[0].isActive" style="fill:#FFFFFF;stroke:#666666;stroke-width:0.25;stroke-miterlimit:10;" cx="1094" cy="596"
+			r="4" />
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1106.1" y1="596.1" x2="1109" y2="596.1" />
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1113.6" y1="596.1" x2="1116.5" y2="596.1" />
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1121.1" y1="596.1" x2="1124" y2="596.1" />
@@ -4014,8 +4019,8 @@
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1111.1" y1="626.1" x2="1111.2" y2="654.9" />
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1118.6" y1="626.1" x2="1118.8" y2="654.9" />
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1126.1" y1="626.1" x2="1126.3" y2="654.9" />
-		<circle data-state="boilerControlLinkStatuses[1].isActive" style="fill:#FFFFFF;stroke:#666666;stroke-width:0.25;stroke-miterlimit:10;" cx="1091.2" cy="629.9"
-			r="2.5" />
+		<circle data-state="boilerControlLinkStatuses[1].isActive" style="fill:#FFFFFF;stroke:#666666;stroke-width:0.25;stroke-miterlimit:10;" cx="1094" cy="632.7"
+			r="4" />
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1106" y1="632.7" x2="1108.9" y2="632.7" />
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1113.5" y1="632.7" x2="1116.4" y2="632.7" />
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1121" y1="632.7" x2="1123.9" y2="632.7" />
@@ -4035,8 +4040,8 @@
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1111.1" y1="663.6" x2="1111.2" y2="692.4" />
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1118.6" y1="663.6" x2="1118.7" y2="692.4" />
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1126.1" y1="663.6" x2="1126.2" y2="692.4" />
-		<circle data-state="boilerControlLinkStatuses[2].isActive" style="fill:#FFFFFF;stroke:#666666;stroke-width:0.25;stroke-miterlimit:10;" cx="1091.2" cy="667.4"
-			r="2.5" />
+		<circle data-state="boilerControlLinkStatuses[2].isActive" style="fill:#FFFFFF;stroke:#666666;stroke-width:0.25;stroke-miterlimit:10;" cx="1094" cy="670.2"
+			r="4" />
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1105.9" y1="670.3" x2="1108.8" y2="670.3" />
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1113.5" y1="670.3" x2="1116.4" y2="670.3" />
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1121" y1="670.3" x2="1123.9" y2="670.3" />
@@ -4056,8 +4061,8 @@
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1111.1" y1="701.2" x2="1111.2" y2="730" />
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1118.6" y1="701.2" x2="1118.7" y2="730" />
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1126.1" y1="701.2" x2="1126.2" y2="730" />
-		<circle data-state="boilerControlLinkStatuses[3].isActive" style="fill:#FFFFFF;stroke:#666666;stroke-width:0.25;stroke-miterlimit:10;" cx="1091.2" cy="705"
-			r="2.5" />
+		<circle data-state="boilerControlLinkStatuses[3].isActive" style="fill:#FFFFFF;stroke:#666666;stroke-width:0.25;stroke-miterlimit:10;" cx="1094" cy="707.8"
+			r="4" />
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1105.9" y1="707.9" x2="1108.8" y2="707.9" />
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1113.5" y1="707.9" x2="1116.4" y2="707.9" />
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1121" y1="707.9" x2="1123.9" y2="707.9" />
