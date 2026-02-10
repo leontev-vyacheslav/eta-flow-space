@@ -1,14 +1,6 @@
-function setPathHeight(pathElement, newHeight) {
-    const d = pathElement.getAttribute('d');
-    if (!d) {
-        return;
-    }
-    const updatedD = d.replace(/v-(\d+\.?\d*)/g, `v-${newHeight}`);
-    pathElement.setAttribute('d', updatedD);
-}
 
 function setLevelSupplyWaterTank(mnemoschemaElement, deviceState) {
-    const supplyWaterLevelElement = mnemoschemaElement.querySelector('[data-state="isSupplyWaterLevel"]');
+    const supplyWaterLevelElement = mnemoschemaElement.querySelector('[data-section="supplyWaterLevel"] rect');
     if (!supplyWaterLevelElement) {
         return;
     }
@@ -43,26 +35,24 @@ function setLevelSupplyWaterTank(mnemoschemaElement, deviceState) {
 
     for (const level of levels) {
         if (deviceState.state[level.state]) {
-            setPathHeight(supplyWaterLevelElement, level.height);
+            supplyWaterLevelElement.setAttribute('height', level.height);
             return;
         }
     }
 
-    setPathHeight(
-        supplyWaterLevelElement,
-        levels.pop()?.height ?? 0
-    );
+   supplyWaterLevelElement.setAttribute('height', levels.pop()?.height ?? 0);
 }
 
 export function create(config) {
     return {
         onBeforeMount(mnemoschemaElement, deviceState) {
-        },
-
-        onAfterMount(mnemoschemaElement, deviceState) {
             if (deviceState && deviceState.state) {
                 setLevelSupplyWaterTank(mnemoschemaElement, deviceState);
             }
+        },
+
+        onAfterMount(mnemoschemaElement, deviceState) {
+            //
         },
     };
 }
