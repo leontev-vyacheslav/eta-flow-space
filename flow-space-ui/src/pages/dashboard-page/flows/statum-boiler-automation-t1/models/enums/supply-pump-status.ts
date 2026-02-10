@@ -1,5 +1,5 @@
 /**
- * Статус насоса подпитки
+ * Состояние насоса подпитки
  */
 export const enum SupplyPumpStatus {
     NO_POWER = 0,// Нет питания

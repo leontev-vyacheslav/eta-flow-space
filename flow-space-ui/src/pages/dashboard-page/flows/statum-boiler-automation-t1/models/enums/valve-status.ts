@@ -1,5 +1,5 @@
 /**
- * Статус вентиля
+ * Состояние вентиля
  */
 export const enum ValveStatus {
     INTERMEDIATE = 0,// Промежуточное

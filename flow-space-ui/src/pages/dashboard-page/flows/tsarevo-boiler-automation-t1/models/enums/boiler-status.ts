@@ -1,5 +1,5 @@
 /**
- * Статус котла
+ * Состояние котла
  */
 export const enum BoilerStatus {
     STOPPED = 0,// Остановлен

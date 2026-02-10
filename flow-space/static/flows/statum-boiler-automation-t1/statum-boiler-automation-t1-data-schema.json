@@ -1000,7 +1000,7 @@
               "label": {
                 "location": "top",
                 "showColon": true,
-                "text": "Статус ЧРП сетевого насоса"
+                "text": "Состояние ЧРП сетевого насоса"
               },
               "editorOptions": {
                 "readOnly": true,
@@ -1168,7 +1168,7 @@
               "label": {
                 "location": "top",
                 "showColon": true,
-                "text": "Статус ЧРП насоса исх. воды"
+                "text": "Состояние ЧРП насоса исх. воды"
               },
               "editorOptions": {
                 "readOnly": true,

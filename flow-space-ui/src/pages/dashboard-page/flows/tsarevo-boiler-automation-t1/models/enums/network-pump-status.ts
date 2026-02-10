@@ -1,5 +1,5 @@
 /**
- * Статус сетевого насоса
+ * Состояние сетевого насоса
  */
 export const enum NetworkPumpStatus {
     WAITING_FOR_READINESS = 0,// Ожидание готовности

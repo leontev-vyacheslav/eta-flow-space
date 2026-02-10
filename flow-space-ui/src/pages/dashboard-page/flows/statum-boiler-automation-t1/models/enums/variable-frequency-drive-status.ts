@@ -1,5 +1,5 @@
 /**
- * Статус частотного преобразователя (ЧРП)
+ * Состояние частотного преобразователя (ЧРП)
  */
 export const enum VariableFrequencyDriveStatus {
     NO_POWER = 0,// Нет питания
