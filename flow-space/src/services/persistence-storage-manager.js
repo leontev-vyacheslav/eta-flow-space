@@ -23,7 +23,7 @@ async function storeStates(msg, global) {
                         await DeviceStateDataModel.create(
                             {
                                 deviceId: d.id,
-                                state: JSON.stringify(deviceState)
+                                state: deviceState
                             },
                             { transaction: t }
                         );

@@ -1,4 +1,4 @@
-@baseUrl = http://127.0.0.1:1880
+@baseUrl = http://127.0.0.1:1895
 
 ###
 @authToken = {{signIn.response.body.token}}
@@ -9,7 +9,7 @@ POST {{baseUrl}}/sign-in/
 content-type: application/json
 
 {
-    "login": "boiler-1-watcher",
+    "login": "boiler-watcher",
     "password": "0987654321"
 }
 
@@ -20,7 +20,7 @@ Authorization: Bearer {{authToken}}
 
 ###
 # @name getDeviceStatesByDateRange
-GET {{baseUrl}}/api/states/device/1/dates?beginDate=2025-10-31T00:00:00&endDate=2025-10-31T23:59:59
+GET {{baseUrl}}/api/states/device/4/dates?beginDate=2026-02-11T00:00:00&endDate=2026-02-11T23:59:59&field=networkPumps[1]
 Authorization: Bearer {{authToken}}
 
 ###

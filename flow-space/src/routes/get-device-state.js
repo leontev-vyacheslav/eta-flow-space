@@ -27,7 +27,7 @@ async function getDeviceState(msg, global) {
             where: {
                 deviceId: deviceId,
                 [Op.and]: [
-                    literal(`state::text != '"{}"'`),
+                    literal(`state::text <> '{}'`),
                     { state: { [Op.ne]: null } }
                 ]
             },
@@ -38,7 +38,7 @@ async function getDeviceState(msg, global) {
             msg.payload = {
                 values: {
                     ...deviceState,
-                    state: { isConnected: false, ...JSON.parse(deviceState.state)}
+                    state: { isConnected: false, ...deviceState.state}
                 }
             };
         } else {
