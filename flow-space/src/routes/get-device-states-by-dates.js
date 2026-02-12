@@ -7,7 +7,12 @@ async function getDeviceStatesByDates(msg) {
 
     const beginDateStr = msg.req.query.beginDate;
     const endDateStr = msg.req.query.endDate;
-    const field = msg.req.query.field;
+    const stateFieldsStr = msg.req.query.fields;
+    const stateFields = stateFieldsStr ? stateFieldsStr
+        .split(';')
+        .map(f => {
+            return [json(`state.${f}`), f];
+        }): [];
 
     const deviceId = parseInt(msg.req.params.deviceId);
 
@@ -31,7 +36,7 @@ async function getDeviceStatesByDates(msg) {
         attributes: [
             'id',
             'deviceId',
-            [json(`state.${field}`), field],
+            ...stateFields,
             'createdAt'
         ],
         where: {

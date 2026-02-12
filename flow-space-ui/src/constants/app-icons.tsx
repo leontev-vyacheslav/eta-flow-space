@@ -40,13 +40,11 @@ export { VscDebug as DebugIcon } from 'react-icons/vsc';
 export { IoEllipsisHorizontal as ExtensionIcon } from 'react-icons/io5';
 export { IoCloudDownloadOutline as DownloadIcon } from 'react-icons/io5';
 export { ImFileZip as PackageIcon } from 'react-icons/im';
-export { IoHardwareChipOutline as GpioIcon } from 'react-icons/io5';
 export { VscTools as ServiceIcon } from 'react-icons/vsc';
 export { IoTodayOutline as DayOfWeekIcon } from 'react-icons/io5';
 
 export { VscCircuitBoard as CircuitIcon } from 'react-icons/vsc';
 export { IoHandRightOutline as ManualModeIcon } from 'react-icons/io5';
-export { LuCalendarClock as RtcClockIcon } from 'react-icons/lu';
 export { VscGraphLine as GraphIcon } from 'react-icons/vsc';
 export { VscTable as TableIcon } from 'react-icons/vsc';
 export { TbArrowsExchange2 as AxisInvertIcon } from 'react-icons/tb';
