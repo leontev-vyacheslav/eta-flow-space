@@ -7,9 +7,11 @@ import { GraphIcon } from "../../../../constants/app-icons";
 
 import './mnemoschema-popover.scss';
 import { graphService } from "../../../../services/graph-service";
+import { useParams } from "react-router";
 
 export const useMnemoschemaPopover = () => {
     const { isAdmin } = useAuth();
+    const { deviceId } = useParams();
     const { schemaTypeInfoPropertiesChain, dataschema } = useDashboardPage();
     const popoverInstance = useRef<dxPopover<any>>(null);
 
@@ -108,18 +110,21 @@ export const useMnemoschemaPopover = () => {
                 },
             },
             onContentReady: () => {
-                if (propertyInfo.typeInfo?.ui.chart) {
-                    document.querySelector(`[data-state-graph="${propertyInfo.propertiesChainValuePair.propertiesChain}"]`)
-                        ?.addEventListener(
-                            'click', () => {
-                                popoverInstance.current?.hide();
-                                popoverInstance.current?.dispose();
-                                graphService.show([propertyInfo.propertiesChainValuePair.propertiesChain]);
-                            });
+                if (!propertyInfo.typeInfo?.ui.chart) {
+                    return;
                 }
+                document.querySelector(`[data-state-graph="${propertyInfo.propertiesChainValuePair.propertiesChain}"]`)
+                    ?.addEventListener('click', () => {
+                        popoverInstance.current?.hide();
+                        popoverInstance.current?.dispose();
+                        if (!deviceId) {
+                            return;
+                        }
+                        graphService.show(parseInt(deviceId), [propertyInfo.propertiesChainValuePair.propertiesChain]);
+                    });
             }
         });
 
         popoverInstance.current.show();
-    }, [dataschema, isAdmin, schemaTypeInfoPropertiesChain]);
+    }, [dataschema, deviceId, isAdmin, schemaTypeInfoPropertiesChain]);
 }

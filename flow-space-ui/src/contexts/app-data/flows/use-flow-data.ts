@@ -5,7 +5,7 @@ import type { Method } from 'axios';
 import { useAuthHttpRequest } from '../use-auth-http-request';
 import type { FlowModel } from '../../../models/flows/flow-model';
 import type { DeviceModel } from '../../../models/flows/device-model';
-import type { DeviceStateModel } from '../../../models/flows/device-state-model';
+import type { DeviceStateModel, DeviceStatePropertiesModel } from '../../../models/flows/device-state-model';
 
 export type GetFlowListAsyncFunc = () => Promise<FlowModel[] | undefined>;
 export type GetDeviceListAsyncFunc = () => Promise<DeviceModel[] | undefined>;
@@ -13,6 +13,7 @@ export type GetDeviceStateAsyncFunc = (deviceId: number) => Promise<DeviceStateM
 export type GetMnemoschemaAsyncFunc = (deviceId: number) => Promise<string | undefined>;
 export type GetDeviceAsyncFunc = (deviceId: number) => Promise<DeviceModel | undefined>;
 export type GetDeviceStateDataschemaAsyncFunc = (deviceId: number) => Promise<any | undefined>;
+export type GetDeviceStatesByDatesAsyncFunc = (deviceId: number, beginDate: Date, endDate: Date, fields: string[]) => Promise<DeviceStatePropertiesModel[] | undefined>;
 
 export type AppDataContextFlowEndpointsModel = {
     getFlowListAsync: GetFlowListAsyncFunc;
@@ -21,6 +22,7 @@ export type AppDataContextFlowEndpointsModel = {
     getMnemoschemaAsync: GetMnemoschemaAsyncFunc;
     getDeviceAsync: GetDeviceAsyncFunc;
     getDeviceStateDataschemaAsync: GetDeviceStateDataschemaAsyncFunc;
+    getDeviceStatesByDatesAsync: GetDeviceStatesByDatesAsyncFunc
 };
 
 export const useFlowData = () => {
@@ -94,13 +96,25 @@ export const useFlowData = () => {
         }
     }, [authHttpRequest]);
 
+    const getDeviceStatesByDatesAsync = useCallback(async (deviceId: number, beginDate: Date, endDate: Date, fields: string[]) => {
+         const response = await authHttpRequest({
+            url: `${routes.host}${routes.states}/${deviceId}/dates?beginDate=${beginDate}&endDate=${endDate}&fields=${fields.join(';')}`,
+            method: HttpConstants.Methods.Get as Method,
+        });
+
+        if (response && response.status === HttpConstants.StatusCodes.Ok) {
+            return response.data.values as DeviceStatePropertiesModel[];
+        }
+    }, [authHttpRequest]);
+
     return {
         getFlowListAsync,
         getDeviceListAsync,
         getDeviceStateAsync,
         getMnemoschemaAsync,
         getDeviceAsync,
-        getDeviceStateDataschemaAsync
+        getDeviceStateDataschemaAsync,
+        getDeviceStatesByDatesAsync
     };
 }
 

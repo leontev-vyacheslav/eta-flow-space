@@ -8,7 +8,7 @@ class GraphService {
     private popupContainer?: HTMLDivElement;
     private root?: Root;
 
-    public show(propertiesChains: string[]) {
+    public show(deviceId: number, propertiesChains: string[]) {
         document.querySelector('#graph-dialog-root')?.remove();
 
         this.popupContainer = document.createElement('div');
@@ -22,6 +22,7 @@ class GraphService {
                 <SharedAreaProvider>
                     <AppDataProvider>
                         <GraphDialog
+                            deviceId={deviceId}
                             propertiesChains={propertiesChains}
                             callback={() => { }}
                             onHidden={() => { this.hide(); }}

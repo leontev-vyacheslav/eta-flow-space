@@ -6,3 +6,7 @@ export interface DeviceStateModel extends EntityModel, TimestampBaseModel {
 
     state: any;
 }
+
+export interface DeviceStatePropertiesModel extends EntityModel, TimestampBaseModel, Record<string, any> {
+    deviceId: number;
+}
