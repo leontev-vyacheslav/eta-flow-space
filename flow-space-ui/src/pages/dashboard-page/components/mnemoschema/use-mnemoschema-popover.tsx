@@ -2,6 +2,8 @@ import { useCallback, useRef } from "react";
 import { useDashboardPage } from "../../dashboard-page-context"
 import dxPopover from "devextreme/ui/popover";
 import { useAuth } from "../../../../contexts/auth";
+import { renderToStaticMarkup } from "react-dom/server";
+import { FaChartArea } from "react-icons/fa";
 
 import './mnemoschema-popover.scss';
 
@@ -69,10 +71,11 @@ export const useMnemoschemaPopover = () => {
             const unit = propertyInfo.typeInfo?.unit;
             value = `${value}${unit ? ' ' + unit : ''}`;
         }
+        const chartIconHtml = propertyInfo.typeInfo?.ui.chart ? renderToStaticMarkup(<FaChartArea />) : '';
 
         const html = `<table class='simple-grid'>
                             <thead>
-                                <tr><th colspan='2'>${propertyInfo.typeInfo?.ui.editor.label.text ?? ''}</th></tr>
+                                <tr><th colspan='2'>${propertyInfo.typeInfo?.ui.editor.label.text ?? ''}${chartIconHtml}</th></tr>
                             </thead>
                            <tbody>
                                 ${isAdmin() ? `

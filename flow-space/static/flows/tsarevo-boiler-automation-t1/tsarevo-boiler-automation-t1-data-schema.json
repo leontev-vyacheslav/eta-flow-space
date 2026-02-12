@@ -50,6 +50,9 @@
           "editorOptions": {
             "readOnly": true
           }
+        },
+        "chart": {
+          
         }
       }
     },
