@@ -20,7 +20,7 @@ Authorization: Bearer {{authToken}}
 
 ###
 # @name getDeviceStatesByDateRange
-GET {{baseUrl}}/api/states/device/4/dates?beginDate=2026-02-11T00:00:00&endDate=2026-02-11T23:59:59&field=networkPumps[1]
+GET {{baseUrl}}/api/states/device/4/dates?beginDate=2026-02-11T00:00:00&endDate=2026-02-11T23:59:59&fields=tempRoomAir;tempOutAir;pressGas;levelDt2;boilers[0].status;networkPumps[3].statusFc
 Authorization: Bearer {{authToken}}
 
 ###
