@@ -51,9 +51,7 @@
             "readOnly": true
           }
         },
-        "chart": {
-
-        }
+        "chart": {}
       }
     },
     "tempOutAir": {
@@ -72,9 +70,7 @@
             "readOnly": true
           }
         },
-         "chart": {
-
-        }
+        "chart": {}
       }
     },
     "tempInNet": {
@@ -93,9 +89,7 @@
             "readOnly": true
           }
         },
-         "chart": {
-
-        }
+        "chart": {}
       }
     },
     "tempOutNet": {
@@ -114,9 +108,7 @@
             "readOnly": true
           }
         },
-         "chart": {
-
-        }
+        "chart": {}
       }
     },
     "pressGas": {
@@ -135,9 +127,7 @@
             "readOnly": true
           }
         },
-         "chart": {
-
-        }
+        "chart": {}
       }
     },
     "pressInNet": {
@@ -156,9 +146,7 @@
             "readOnly": true
           }
         },
-         "chart": {
-
-        }
+        "chart": {}
       }
     },
     "pressOutNet": {
@@ -177,9 +165,7 @@
             "readOnly": true
           }
         },
-         "chart": {
-
-        }
+        "chart": {}
       }
     },
     "pressOutSrcW": {
@@ -198,9 +184,7 @@
             "readOnly": true
           }
         },
-         "chart": {
-
-        }
+        "chart": {}
       }
     },
     "levelDt1": {
@@ -219,9 +203,7 @@
             "readOnly": true
           }
         },
-         "chart": {
-
-        }
+        "chart": {}
       }
     },
     "levelDt2": {
@@ -240,9 +222,7 @@
             "readOnly": true
           }
         },
-         "chart": {
-
-        }
+        "chart": {}
       }
     },
     "isOffInput1": {
@@ -260,9 +240,7 @@
             "readOnly": true
           }
         },
-         "chart": {
-
-        },
+        "chart": {},
         "colorizer": {
           "styleProps": [
             {
@@ -924,7 +902,8 @@
               "editorOptions": {
                 "readOnly": true
               }
-            }
+            },
+            "chart": {}
           }
         },
         "mode": {
