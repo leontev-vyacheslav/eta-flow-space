@@ -1418,7 +1418,7 @@
         2,
         4,
         8,
-        16
+        64
       ],
       "enumDescriptions": {
         "0": "NORM - Норма",
@@ -1426,7 +1426,7 @@
         "2": "EXCEEDED_SHUTDOWN_TIME - Превышено (время останова)",
         "4": "SPONTANEOUS_STARTUP - Самопроизв. запуск",
         "8": "SPONTANEOUS_SHUTDOWN - Самопроизв. откл.",
-        "16": "DRY_RUN - Сухой ход"
+        "64": "DRY_RUN - Сухой ход"
       }
     },
     "ValveModel": {
