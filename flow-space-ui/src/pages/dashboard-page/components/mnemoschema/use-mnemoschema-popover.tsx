@@ -120,7 +120,7 @@ export const useMnemoschemaPopover = () => {
                         if (!deviceId) {
                             return;
                         }
-                        graphService.show(parseInt(deviceId), [propertyInfo.propertiesChainValuePair.propertiesChain]);
+                        graphService.show(parseInt(deviceId), [propertyInfo]);
                     });
             }
         });

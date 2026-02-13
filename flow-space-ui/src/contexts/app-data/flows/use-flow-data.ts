@@ -98,7 +98,7 @@ export const useFlowData = () => {
 
     const getDeviceStatesByDatesAsync = useCallback(async (deviceId: number, beginDate: Date, endDate: Date, fields: string[]) => {
          const response = await authHttpRequest({
-            url: `${routes.host}${routes.states}/${deviceId}/dates?beginDate=${beginDate}&endDate=${endDate}&fields=${fields.join(';')}`,
+            url: `${routes.host}${routes.states}/${deviceId}/dates?beginDate=${beginDate.toISOString()}&endDate=${endDate.toISOString()}&fields=${fields.join(';')}`,
             method: HttpConstants.Methods.Get as Method,
         });
 
