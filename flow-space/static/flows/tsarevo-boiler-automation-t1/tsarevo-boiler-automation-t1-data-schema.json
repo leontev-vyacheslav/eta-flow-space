@@ -677,7 +677,8 @@
               "editorOptions": {
                 "readOnly": true
               }
-            }
+            },
+            "chart": {}
           }
         },
         "mode": {
@@ -1071,7 +1072,8 @@
               "editorOptions": {
                 "readOnly": true
               }
-            }
+            },
+            "chart": {}
           }
         },
         "mode": {
