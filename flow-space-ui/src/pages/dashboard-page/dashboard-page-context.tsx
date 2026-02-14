@@ -81,12 +81,10 @@ function DashboardPageContextProvider(props: any) {
                 if (deviceState && dataschema) {
                     applyDimensionsToState(deviceState.state, dataschema);
                 }
-                setTimeout(() => {
-                    setDevice(device);
-                    setDeviceState(deviceState);
-                    setMnemoschema(mnemoschema);
-                    setDataschema(dataschema);
-                }, 200);
+                setDevice(device);
+                setDeviceState(deviceState);
+                setMnemoschema(mnemoschema);
+                setDataschema(dataschema);
             }
         })();
     }, [deviceId, flowCode, getDeviceAsync, getDeviceStateAsync, getDeviceStateDataschemaAsync, getMnemoschemaAsync, applyDimensionsToState, updateSharedStateRefreshToken]);
