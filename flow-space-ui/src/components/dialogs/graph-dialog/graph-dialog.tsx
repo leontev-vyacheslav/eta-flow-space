@@ -27,7 +27,26 @@ export const GraphDialog = (props: GraphDialogProps) => {
       const now = new Date();
       const beginDate = startOfDay(now);
       const endDate = endOfDay(now);
-      const stateProperties = await getDeviceStatesByDatesAsync(props.deviceId, beginDate, endDate, props.schemaTypeInfos.map(t => (t.propertiesChainValuePair.propertiesChain)));
+      let stateProperties = await getDeviceStatesByDatesAsync(
+        props.deviceId,
+        beginDate,
+        endDate,
+        props.schemaTypeInfos.map(t => (t.propertiesChainValuePair.propertiesChain))
+      );
+
+      if (stateProperties) {
+        stateProperties = stateProperties.map(stateItem => {
+          props.schemaTypeInfos.forEach(t => {
+            const fieldName = t.propertiesChainValuePair.propertiesChain;
+            let typedValue = stateItem[fieldName];
+            if (['integer', 'number'].includes(t.typeInfo!.typeName)) {
+              typedValue = Number(stateItem[fieldName]);
+            }
+            stateItem[fieldName] = typedValue
+          });
+          return stateItem;
+        });
+      }
 
       setStateProperties(stateProperties);
     })();
@@ -48,7 +67,6 @@ export const GraphDialog = (props: GraphDialogProps) => {
       }}
     >
       <Chart
-        className='temperature-graph-chart'
         ref={chartRef}
         dataSource={stateProperties}
         width='100%'
@@ -66,6 +84,11 @@ export const GraphDialog = (props: GraphDialogProps) => {
             argumentField: "createdAt",
             type: 'spline',
             axis: 'commonAxis',
+            point: {
+              visible: true,
+              size: 8
+            },
+            color: 'red'
           }
         ]}
       >
