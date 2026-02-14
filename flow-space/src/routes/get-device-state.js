@@ -22,7 +22,7 @@ async function getDeviceState(msg, global) {
 
     const state = global.get(`deviceState${deviceId}`);
 
-    if (!state) {
+    if (!state || Object.values(state).every(value => value === undefined)) {
         const deviceState = await DeviceStateDataModel.findOne({
             where: {
                 deviceId: deviceId,
