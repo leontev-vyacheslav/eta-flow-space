@@ -1,4 +1,4 @@
-const { Op, literal  } = require('sequelize');
+const { Op, literal } = require('sequelize');
 const { UserDeviceLinkDataModel, DeviceStateDataModel } = require('../orm/models');
 const { HttpStatusCodes } = require('../constants');
 
@@ -21,8 +21,17 @@ async function getDeviceState(msg, global) {
     }
 
     const state = global.get(`deviceState${deviceId}`);
+    let stateIsMissing = false;
+    if (state) {
+        const stateKeys = Object.keys(state);
+        if (stateKeys.every(k => state[k] === undefined || state[k] === null) || stateKeys.length === 0) {
+            stateIsMissing = true;
+        }
+    } else {
+        stateIsMissing = true;
+    }
 
-    if (!state || Object.values(state).every(value => value === undefined)) {
+    if (stateIsMissing) {
         const deviceState = await DeviceStateDataModel.findOne({
             where: {
                 deviceId: deviceId,
@@ -38,7 +47,7 @@ async function getDeviceState(msg, global) {
             msg.payload = {
                 values: {
                     ...deviceState,
-                    state: { isConnected: false, ...deviceState.state}
+                    state: { isConnected: false, ...deviceState.state }
                 }
             };
         } else {
@@ -50,7 +59,7 @@ async function getDeviceState(msg, global) {
             values: {
                 id: 0,
                 deviceId: deviceId,
-                state: {isConnected: true, ...state, },
+                state: { isConnected: true, ...state, },
                 createdAt: new Date(),
                 updatedAt: new Date()
             }
