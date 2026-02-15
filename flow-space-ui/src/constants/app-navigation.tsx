@@ -30,11 +30,13 @@ export const useSideNavigationMenuItems = () => {
                 id: f.code,
                 text: f.name,
                 iconRender: (props: IconBaseProps) => <FlowIcon size={22} {...props} />,
+                entity: { typeName: 'FlowModel', id: f.id },
                 items: f.devices.map(d => ({
                     id: d.code,
                     text: d.name,
-                    iconRender: (props: IconBaseProps) =>  <DeviceIcon size={22} {...props}/>,
+                    iconRender: (props: IconBaseProps) => <DeviceIcon size={22} {...props} />,
                     path: `/${f.code}/device/${d.id}`,
+                    entity: { typeName: 'DeviceModel', id: d.id },
                 }))
             })) || []),
             {

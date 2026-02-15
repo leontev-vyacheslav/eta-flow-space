@@ -10,6 +10,7 @@ import type { DeviceStatePropertiesModel } from '../../../models/flows/device-st
 import { startOfDay, endOfDay } from 'date-fns';
 import { formatMessage } from 'devextreme/localization';
 import type { SchemaTypeInfoPropertiesChainModel } from '../../../helpers/data-helper';
+import type { EventInfo } from 'devextreme/events';
 
 export type GraphDialogProps = React.PropsWithChildren<IPopupOptions> & AppModalPopupProps & {
     deviceId: number;
@@ -55,8 +56,9 @@ export const GraphDialog = (props: GraphDialogProps) => {
     return (
         <AppModalPopup
             title='График'
-            width={isXSmall || isSmall ? '95%' : 640}
-            height={isXSmall || isSmall ? '80%' : 480}
+            width={isXSmall || isSmall ? '95%' : undefined}
+            height={isXSmall || isSmall ? '80%' : undefined}
+
             dragEnabled={!(isXSmall || isSmall)}
             resizeEnabled
             {...props}
@@ -65,6 +67,37 @@ export const GraphDialog = (props: GraphDialogProps) => {
                     props.callback(modalResult);
                 }
             }}
+            onContentReady={(e: EventInfo<any>) => {
+                if (isXSmall || isSmall) {
+                    return;
+                }
+
+                const graphDialogSizeStr = localStorage.getItem('graph_dialog_size');
+                if (graphDialogSizeStr) {
+                    try {
+                        const size = JSON.parse(graphDialogSizeStr);
+                        e.component.option('width', size.width);
+                        e.component.option('height', size.height);
+                    } catch {
+                        e.component.option('width', 640);
+                        e.component.option('height', 480);
+                    }
+                }
+            }}
+            onOptionChanged={(e) => {
+                if (isXSmall || isSmall) {
+                    return;
+                }
+                const width = e.component.option('width');
+                const height = e.component.option('height');
+                if (width && height) {
+                    localStorage.setItem('graph_dialog_size', JSON.stringify({
+                        width,
+                        height
+                    }));
+                }
+            }}
+
         >
             <Chart
                 ref={chartRef}
@@ -96,7 +129,7 @@ export const GraphDialog = (props: GraphDialogProps) => {
                             name: t.propertiesChainValuePair.propertiesChain,
                             position: 'left',
                             title: {
-                                text: t.typeInfo?.ui.editor.label.text,
+                                text: t.typeInfo?.ui.editor.label.text + (t.typeInfo?.unit ? `, (${t.typeInfo?.unit})` : ''),
                                 font: {
                                     size: 12
                                 }

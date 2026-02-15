@@ -17,4 +17,6 @@ export type TreeViewItemModel = {
   items?: TreeViewItemModel[];
 
   visible?: boolean;
+
+  entity?: { typeName: string, id: number }
 }

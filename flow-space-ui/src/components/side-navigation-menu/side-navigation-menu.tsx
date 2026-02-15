@@ -78,7 +78,7 @@ export function SideNavigationMenu(props: SideNavigationMenuProps) {
         return (
             <>
                 {e.iconRender ? <i className="dx-icon">{e.iconRender({})}</i> : null}
-                <span>{e.text}</span>
+                <span data-entity={e.entity ? JSON.stringify(e.entity) : ''}>{e.text}</span>
             </>
         );
     }

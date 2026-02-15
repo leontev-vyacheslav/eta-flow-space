@@ -20,7 +20,6 @@ export const useMnemoschemaPopover = () => {
         if (!target) {
             return;
         }
-
         const dataStateAttr = target.getAttribute("data-state");
 
         if (!dataStateAttr) {
