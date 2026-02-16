@@ -678,7 +678,11 @@
                 "readOnly": true
               }
             },
-            "chart": {}
+            "chart": {
+              "series": {
+                "type": "bar"
+              }
+            }
           }
         },
         "mode": {
