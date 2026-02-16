@@ -26,12 +26,13 @@ export const GraphChart = (props: GraphChartProps) => {
                     valueField: t.propertiesChainValuePair.propertiesChain,
                     argumentField: "createdAt",
                     type: 'spline',
+                    
                     axis: t.propertiesChainValuePair.propertiesChain,
                     point: {
                         visible: true,
                         size: 8
                     },
-                    ...t.typeInfo?.ui.chart.series
+                    ...t.typeInfo?.ui.chart.series,
                 };
             })}
             valueAxis={
