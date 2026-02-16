@@ -680,7 +680,8 @@
             },
             "chart": {
               "series": {
-                "type": "bar"
+                "type": "bar",
+                "color": "red"
               }
             }
           }
