@@ -92,7 +92,7 @@ export { IoMapOutline as MapIcon } from 'react-icons/io5';
 export { MdOutlineCheckBox as CheckedIcon } from 'react-icons/md';
 export { MdOutlineCheckBoxOutlineBlank as UncheckedIcon } from 'react-icons/md';
 export { IoLocationOutline as LocationIcon } from "react-icons/io5";
-
+export { IoTimeSharp as TimeChartSingIcon } from 'react-icons/io5';
 
 import { MdMoreVert } from 'react-icons/md';
 export const GridAdditionalMenuIcon = () => <MdMoreVert style={{ cursor: 'pointer' }} size={18} />
