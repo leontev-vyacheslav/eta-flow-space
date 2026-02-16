@@ -26,7 +26,7 @@ export const GraphChart = (props: GraphChartProps) => {
                     valueField: t.propertiesChainValuePair.propertiesChain,
                     argumentField: "createdAt",
                     type: 'spline',
-                    
+
                     axis: t.propertiesChainValuePair.propertiesChain,
                     point: {
                         visible: true,
@@ -45,7 +45,8 @@ export const GraphChart = (props: GraphChartProps) => {
                             font: {
                                 size: 12
                             }
-                        }
+                        },
+                        ...t.typeInfo?.ui.chart.valueAxis,
                     }
                 })
             }
