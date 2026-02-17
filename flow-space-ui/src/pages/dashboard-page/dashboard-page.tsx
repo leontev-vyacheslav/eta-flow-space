@@ -13,7 +13,7 @@ import { NoData } from '../../components/no-data-widget/no-data-widget';
 
 const DashboardPageInner = () => {
     const tabPanelRef = useRef<TabPanel>(null);
-    const { setUpdateSharedStateRefreshToken } = useDashboardPage();
+    const { setRefreshToken } = useDashboardPage();
     const { flowCode } = useParams();
     const [ControlTabContent, setControlTabContent] = useState<ComponentType<any> | null>(null);
     const [MnemoschemaTabContent, setMnemoschemaTabContent] = useState<ComponentType<any> | null>(null);
@@ -29,10 +29,9 @@ const DashboardPageInner = () => {
                         icon: () => <RefreshIcon size={20} />,
                         text: 'Обновить...',
                         onClick: () => {
-                            setUpdateSharedStateRefreshToken(getQuickGuid());
+                            setRefreshToken(getQuickGuid());
                         }
                     },
-
                     {
                         icon: () => <HelpIcon size={20} />,
                         text: 'Справка...',
@@ -43,7 +42,7 @@ const DashboardPageInner = () => {
                 ]
             }
         ] as MenuItemModel[];
-    }, [setUpdateSharedStateRefreshToken]);
+    }, [setRefreshToken]);
 
 
     useEffect(() => {

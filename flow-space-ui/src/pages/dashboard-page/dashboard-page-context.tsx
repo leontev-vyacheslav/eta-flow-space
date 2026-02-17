@@ -19,8 +19,8 @@ export type DashboardPageContextModel = {
     mnemoschema?: string;
     dataschema?: any;
     isValidDeviceState: boolean;
-    updateSharedStateRefreshToken: string;
-    setUpdateSharedStateRefreshToken: React.Dispatch<React.SetStateAction<string>>;
+    refreshToken: string;
+    setRefreshToken: React.Dispatch<React.SetStateAction<string>>;
 
     schemaTypeInfoPropertiesChain: SchemaTypeInfoPropertiesChainModel[] | undefined;
     registryEnums: Record<string, DictionaryBaseModel[]>;
@@ -38,7 +38,7 @@ function DashboardPageContextProvider(props: any) {
     const [mnemoschema, setMnemoschema] = useState<string | undefined>();
     const [dataschema, setDataschema] = useState<any | undefined>();
     const [isValidDeviceState, setIsValidDeviceState] = useState<boolean>(false);
-    const [updateSharedStateRefreshToken, setUpdateSharedStateRefreshToken] = useState<string>(getQuickGuid());
+    const [refreshToken, setRefreshToken] = useState<string>(getQuickGuid());
     const [registryEnums, setRegistryEnums] = useState<Record<string, DictionaryBaseModel[]>>({});
 
     const schemaTypeInfoPropertiesChain = useMemo(() => {
@@ -87,7 +87,7 @@ function DashboardPageContextProvider(props: any) {
                 setDataschema(dataschema);
             }
         })();
-    }, [deviceId, flowCode, getDeviceAsync, getDeviceStateAsync, getDeviceStateDataschemaAsync, getMnemoschemaAsync, applyDimensionsToState, updateSharedStateRefreshToken]);
+    }, [deviceId, flowCode, getDeviceAsync, getDeviceStateAsync, getDeviceStateDataschemaAsync, getMnemoschemaAsync, applyDimensionsToState, refreshToken]);
 
     useEffect(() => {
         if (!dataschema) {
@@ -211,8 +211,8 @@ function DashboardPageContextProvider(props: any) {
             mnemoschema,
             dataschema,
             isValidDeviceState,
-            updateSharedStateRefreshToken,
-            setUpdateSharedStateRefreshToken,
+            refreshToken,
+            setRefreshToken,
 
             schemaTypeInfoPropertiesChain,
             registryEnums

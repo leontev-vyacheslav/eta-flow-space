@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useAppData } from "../../../contexts/app-data/app-data";
 import type { DeviceStatePropertiesModel } from "../../../models/flows/device-state-model";
 
-export const useDeviceStateProperties = (props: GraphChartProps) => {
+export const useDeviceStateProperties = (props: GraphChartProps & {refreshToken: string}) => {
     const { getDeviceStatesByDatesAsync } = useAppData();
     const [stateProperties, setStateProperties] = useState<DeviceStatePropertiesModel[] | undefined>();
 
@@ -36,7 +36,7 @@ export const useDeviceStateProperties = (props: GraphChartProps) => {
 
             setStateProperties(stateProperties);
         })();
-    }, [getDeviceStatesByDatesAsync, props.beginDate, props.deviceId, props.endDate, props.schemaTypeInfos]);
+    }, [getDeviceStatesByDatesAsync, props.beginDate, props.deviceId, props.endDate, props.schemaTypeInfos, props.refreshToken]);
 
     return stateProperties;
 }

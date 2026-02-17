@@ -3,17 +3,42 @@ import { useScreenSize } from '../../../utils/media-query';
 import type { EventInfo } from 'devextreme/events';
 import type { GraphDialogProps } from '../../../models/graph-dialog-props';
 import { GraphChart } from './graph-chart';
+import type { MenuItemModel } from '../../../models/menu-item-model';
+import { AdditionalMenuIcon, RefreshIcon } from '../../../constants/app-icons';
+import { useMemo, useRef } from 'react';
+import { Popup as PopupRef } from "devextreme-react/popup";
+import { GraphDialogTitle } from './graph-dialog-title';
+import { GraphDialogContextProvider, useGraphDialog } from './graph-dialog-context';
+import { getQuickGuid } from '../../../utils/uuid';
 
-
-export const GraphDialog = (props: GraphDialogProps) => {
+const GraphDialogInternal = (props: GraphDialogProps) => {
     const { isXSmall, isSmall } = useScreenSize();
+    const popupRef = useRef<PopupRef>(null);
+    const { setRefreshToken } = useGraphDialog();
+
+    const menuItems = useMemo(() => {
+        return [
+            {
+                icon: () => <AdditionalMenuIcon size={20} color='black' />,
+                items: [
+                    {
+                        icon: () => <RefreshIcon size={20} />,
+                        text: 'Обновить...',
+                        onClick: () => {
+                            setRefreshToken(getQuickGuid());
+                        }
+                    }
+                ]
+            }
+        ] as MenuItemModel[];
+    }, [setRefreshToken]);
 
     return (
         <AppModalPopup
-            title='График'
+            ref={popupRef}
             width={isXSmall || isSmall ? '95%' : undefined}
             height={isXSmall || isSmall ? '80%' : undefined}
-
+            titleRender={() => <GraphDialogTitle popupRef={popupRef} menuItems={menuItems} />}
             dragEnabled={!(isXSmall || isSmall)}
             resizeEnabled
             {...props}
@@ -56,4 +81,10 @@ export const GraphDialog = (props: GraphDialogProps) => {
             <GraphChart {...props} />
         </AppModalPopup >
     );
+}
+
+export const GraphDialog = (props: GraphDialogProps) => {
+    return <GraphDialogContextProvider {...props}>
+        <GraphDialogInternal {...props} />
+    </GraphDialogContextProvider>
 }

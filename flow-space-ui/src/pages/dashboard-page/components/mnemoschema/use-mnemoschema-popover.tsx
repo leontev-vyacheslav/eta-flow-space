@@ -107,6 +107,7 @@ export const useMnemoschemaPopover = () => {
                     x: event.clientX,
                     y: event.clientY
                 },
+                collision: 'flipfit'
             },
             onContentReady: () => {
                 if (!propertyInfo.typeInfo?.ui.chart) {
