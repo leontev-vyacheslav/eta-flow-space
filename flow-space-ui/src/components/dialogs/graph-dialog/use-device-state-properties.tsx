@@ -1,4 +1,4 @@
-import { endOfDay, startOfDay } from "date-fns";
+import { endOfDay, startOfDay, add } from "date-fns";
 import type { GraphChartProps } from "../../../models/graph-dialog-props";
 import { useEffect, useState } from "react";
 import { useAppData } from "../../../contexts/app-data/app-data";
@@ -11,8 +11,9 @@ export const useDeviceStateProperties = (props: GraphChartProps & {refreshToken:
     useEffect(() => {
         (async () => {
             const now = new Date();
-            const beginDate = props.beginDate ?? startOfDay(now);
+            const beginDate = props.beginDate ?? startOfDay(add(now, {days: 0 }));
             const endDate = props.endDate ??  endOfDay(now);
+
             let stateProperties = await getDeviceStatesByDatesAsync(
                 props.deviceId,
                 beginDate,

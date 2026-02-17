@@ -1,4 +1,4 @@
-import  ProgressGear  from '../../assets/progress-gears.svg?react';
+import ProgressGear from '../../assets/progress-gears.svg?react';
 import LoadPanel from 'devextreme-react/load-panel';
 import './loader.scss';
 
@@ -11,8 +11,6 @@ const Loader = () => {
             showPane={true}
             shading={true}
             width={200}
-            height={70}
-            // minWidth={ 200 }
             maxWidth={undefined}
             maxHeight={70}
             shadingColor={'rgba(0, 0, 0, 0.15)'}
