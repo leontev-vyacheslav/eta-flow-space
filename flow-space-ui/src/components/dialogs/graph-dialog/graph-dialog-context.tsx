@@ -3,20 +3,28 @@ import { useDeviceStateProperties } from "./use-device-state-properties";
 import type { DeviceStatePropertiesModel } from "../../../models/flows/device-state-model";
 import type { GraphChartProps } from "../../../models/graph-dialog-props";
 import { getQuickGuid } from "../../../utils/uuid";
+
 type GraphDialogContextModel = {
-    stateProperties: DeviceStatePropertiesModel[] | undefined,
-    setRefreshToken:  React.Dispatch<React.SetStateAction<string>>;
+    refreshToken: string;
+    setRefreshToken: React.Dispatch<React.SetStateAction<string>>;
+    stateProperties: DeviceStatePropertiesModel[] | undefined;
+    samplingHorizon: number;
+    setSamplingHorizon: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const GraphDialogContext = createContext({} as GraphDialogContextModel);
 
 function GraphDialogContextProvider(props: GraphChartProps) {
     const [refreshToken, setRefreshToken] = useState<string>(getQuickGuid());
-    const stateProperties = useDeviceStateProperties({...props, refreshToken: refreshToken});
+    const [samplingHorizon, setSamplingHorizon] = useState<number>(0);
+    const stateProperties = useDeviceStateProperties({ ...props, samplingHorizon: samplingHorizon, refreshToken: refreshToken });
 
     return <GraphDialogContext.Provider value={{
+        refreshToken,
+        setRefreshToken,
         stateProperties,
-        setRefreshToken
+        samplingHorizon,
+        setSamplingHorizon
     }} {...props} />
 }
 

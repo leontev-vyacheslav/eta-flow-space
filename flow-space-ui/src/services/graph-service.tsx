@@ -9,7 +9,7 @@ class GraphService {
     private popupContainer?: HTMLDivElement;
     private root?: Root;
 
-    public show({deviceId, schemaTypeInfos} : GraphChartProps) {
+    public show({ deviceId, schemaTypeInfos, beginDate, endDate }: GraphChartProps) {
         document.querySelector('#graph-dialog-root')?.remove();
 
         this.popupContainer = document.createElement('div');
@@ -24,6 +24,8 @@ class GraphService {
                     <AppDataProvider>
                         <GraphDialog
                             deviceId={deviceId}
+                            beginDate={beginDate}
+                            endDate={endDate}
                             schemaTypeInfos={schemaTypeInfos}
                             callback={() => { }}
                             onHidden={() => { this.hide(); }}

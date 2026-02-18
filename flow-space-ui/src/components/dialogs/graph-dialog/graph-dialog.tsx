@@ -4,7 +4,7 @@ import type { EventInfo } from 'devextreme/events';
 import type { GraphDialogProps } from '../../../models/graph-dialog-props';
 import { GraphChart } from './graph-chart';
 import type { MenuItemModel } from '../../../models/menu-item-model';
-import { AdditionalMenuIcon, RefreshIcon } from '../../../constants/app-icons';
+import { AdditionalMenuIcon, DateRangeIcon, DayIcon, MonthIcon, RefreshIcon, WeekIcon } from '../../../constants/app-icons';
 import { useMemo, useRef } from 'react';
 import { Popup as PopupRef } from "devextreme-react/popup";
 import { GraphDialogTitle } from './graph-dialog-title';
@@ -14,7 +14,7 @@ import { getQuickGuid } from '../../../utils/uuid';
 const GraphDialogInternal = (props: GraphDialogProps) => {
     const { isXSmall, isSmall } = useScreenSize();
     const popupRef = useRef<PopupRef>(null);
-    const { setRefreshToken } = useGraphDialog();
+    const { setRefreshToken, setSamplingHorizon, samplingHorizon } = useGraphDialog();
 
     const menuItems = useMemo(() => {
         return [
@@ -27,11 +27,42 @@ const GraphDialogInternal = (props: GraphDialogProps) => {
                         onClick: () => {
                             setRefreshToken(getQuickGuid());
                         }
+                    },
+                    {
+                        text: "Выборка",
+                        icon: () => <DateRangeIcon size={24} />,
+                        items: [
+                            {
+                                icon: () => <DayIcon size={24} />,
+                                text: 'За сутки',
+                                textColor: samplingHorizon === 0 ? 'red': 'black',
+                                onClick: () => {
+                                    setSamplingHorizon(0);
+                                }
+                            },
+                            {
+                                icon: () => <WeekIcon size={24} />,
+                                text: 'За неделю',
+                                textColor: samplingHorizon === -6 ? 'red': 'black',
+                                onClick: () => {
+                                    setSamplingHorizon(-6);
+                                }
+                            },
+                            {
+                                icon: () => <MonthIcon size={24} />,
+                                text: 'За месяц',
+                                textColor: samplingHorizon === -30 ? 'red': 'black',
+                                onClick: () => {
+                                    setSamplingHorizon(-30);
+                                }
+                            }
+                        ]
                     }
+
                 ]
             }
         ] as MenuItemModel[];
-    }, [setRefreshToken]);
+    }, [samplingHorizon, setRefreshToken, setSamplingHorizon]);
 
     return (
         <AppModalPopup
