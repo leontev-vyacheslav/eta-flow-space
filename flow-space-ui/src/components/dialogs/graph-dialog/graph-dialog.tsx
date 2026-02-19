@@ -35,7 +35,7 @@ const GraphDialogInternal = (props: GraphDialogProps) => {
                             {
                                 icon: () => <DayIcon size={24} />,
                                 text: 'За сутки',
-                                textColor: samplingHorizon === 0 ? 'red': 'black',
+                                textFontWeight: samplingHorizon === 0 ? 'bold': null,
                                 onClick: () => {
                                     setSamplingHorizon(0);
                                 }
@@ -43,7 +43,7 @@ const GraphDialogInternal = (props: GraphDialogProps) => {
                             {
                                 icon: () => <WeekIcon size={24} />,
                                 text: 'За неделю',
-                                textColor: samplingHorizon === -6 ? 'red': 'black',
+                                textFontWeight: samplingHorizon === -6 ? 'bold': null,
                                 onClick: () => {
                                     setSamplingHorizon(-6);
                                 }
@@ -51,7 +51,7 @@ const GraphDialogInternal = (props: GraphDialogProps) => {
                             {
                                 icon: () => <MonthIcon size={24} />,
                                 text: 'За месяц',
-                                textColor: samplingHorizon === -30 ? 'red': 'black',
+                                textFontWeight: samplingHorizon === -30 ? 'bold': null,
                                 onClick: () => {
                                     setSamplingHorizon(-30);
                                 }
