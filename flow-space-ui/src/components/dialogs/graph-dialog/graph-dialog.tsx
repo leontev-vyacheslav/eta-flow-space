@@ -5,7 +5,7 @@ import type { GraphDialogProps } from '../../../models/graph-dialog-props';
 import { GraphChart } from './graph-chart';
 import type { MenuItemModel } from '../../../models/menu-item-model';
 import { AdditionalMenuIcon, DateRangeIcon, DayIcon, MonthIcon, RefreshIcon, WeekIcon } from '../../../constants/app-icons';
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { Popup as PopupRef } from "devextreme-react/popup";
 import { GraphDialogTitle } from './graph-dialog-title';
 import { GraphDialogContextProvider, useGraphDialog } from './graph-dialog-context';
@@ -63,6 +63,12 @@ const GraphDialogInternal = (props: GraphDialogProps) => {
             }
         ] as MenuItemModel[];
     }, [samplingHorizon, setRefreshToken, setSamplingHorizon]);
+
+    useEffect ( () => {
+        setTimeout( () => {
+            popupRef.current?.instance.repaint();
+        }, 1000);
+    }, []);
 
     return (
         <AppModalPopup

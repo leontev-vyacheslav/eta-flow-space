@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useDeviceStateProperties } from "./use-device-state-properties";
 import type { DeviceStatePropertiesModel } from "../../../models/flows/device-state-model";
 import type { GraphChartProps } from "../../../models/graph-dialog-props";
@@ -16,7 +16,17 @@ const GraphDialogContext = createContext({} as GraphDialogContextModel);
 
 function GraphDialogContextProvider(props: GraphChartProps) {
     const [refreshToken, setRefreshToken] = useState<string>(getQuickGuid());
-    const [samplingHorizon, setSamplingHorizon] = useState<number>(0);
+    const [samplingHorizon, setSamplingHorizon] = useState<number>(
+        () => {
+            const samplingHorizonStored = localStorage.getItem('graphdialog_samplingHorizon');
+            return samplingHorizonStored ? parseInt(JSON.parse(samplingHorizonStored)) : 0;
+        }
+    );
+
+    useEffect(() => {
+        localStorage.setItem('graphdialog_samplingHorizon', JSON.stringify(samplingHorizon));
+    }, [samplingHorizon]);
+
     const stateProperties = useDeviceStateProperties({ ...props, samplingHorizon: samplingHorizon, refreshToken: refreshToken });
 
     return <GraphDialogContext.Provider value={{
