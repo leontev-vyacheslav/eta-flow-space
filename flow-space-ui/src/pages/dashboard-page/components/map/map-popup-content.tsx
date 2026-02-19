@@ -2,12 +2,15 @@ import { Fragment, useCallback, useMemo } from "react";
 
 import { useScreenSize } from "../../../../utils/media-query";
 import { useDashboardPage } from "../../dashboard-page-context";
-import { CheckedIcon, LocationIcon, UncheckedIcon } from "../../../../constants/app-icons";
+import { CheckedIcon, GraphIcon, LocationIcon, UncheckedIcon } from "../../../../constants/app-icons";
 import { type PropertiesChainValuePairModel, type SchemaTypeInfoModel, type SchemaTypeInfoPropertiesChainModel } from "../../../../helpers/data-helper";
+import { graphService } from "../../../../services/graph-service";
+import { useParams } from "react-router";
 
 export const MapPopupContent = () => {
     const { isXSmall } = useScreenSize();
     const { deviceState, dataschema, device, schemaTypeInfoPropertiesChain } = useDashboardPage();
+    const { deviceId } = useParams();
 
     const renderStateValueByPropertiesChain = useCallback((typeInfo: SchemaTypeInfoModel, propertiesChain: PropertiesChainValuePairModel) => {
         const value = propertiesChain.value;
@@ -68,6 +71,48 @@ export const MapPopupContent = () => {
         }
     }, [dataschema, schemaTypeInfoPropertiesChain]);
 
+    const graphIconClickHandler = useCallback((propertyInfo: SchemaTypeInfoPropertiesChainModel) => {
+        if (!deviceId) {
+            return;
+        }
+
+        graphService.show({
+            deviceId: parseInt(deviceId),
+            schemaTypeInfos: [propertyInfo]
+        });
+    }, [deviceId]);
+
+    const statePropertyRowRender = useCallback(({ typeInfo, propertiesChainValuePair }: SchemaTypeInfoPropertiesChainModel) => {
+        const valueContent = renderStateValueByPropertiesChain(typeInfo!, propertiesChainValuePair);
+        const labelText = typeInfo!.ui.editor.label.text;
+        const label = propertiesChainValuePair.arrayIndex !== undefined ? `${labelText} ${propertiesChainValuePair.arrayIndex + 1}` : labelText;
+        return (
+            !isXSmall ?
+                <tr key={propertiesChainValuePair.propertiesChain}>
+                    <td style={{ width: '250px' }}>{label}</td>
+                    <td style={{ width: '120px', textAlign: 'center' }}>
+                        <div style={{ display: 'flex' }}>
+                            <div style={{ flex: 1 }}>
+                                {valueContent}
+                            </div>
+                            <div style={{ marginRight: 10 }}>
+                                {typeInfo!.ui.chart ? <GraphIcon data-state-graph={propertiesChainValuePair.propertiesChain} alignmentBaseline="middle" size={16} style={{ cursor: 'pointer' }}
+                                    onClick={() => { graphIconClickHandler({ typeInfo, propertiesChainValuePair }); }} /> : <div style={{ width: 16 }} />}
+                            </div>
+                        </div>
+                    </td>
+                </tr> :
+                <Fragment key={propertiesChainValuePair.propertiesChain}>
+                    <tr >
+                        <td style={{ width: '250px', fontWeight: '600' }}>{label}</td>
+                    </tr>
+                    <tr>
+                        <td style={{ marginLeft: '10px' }}>{valueContent}</td>
+                    </tr>
+                </Fragment>
+        );
+    }, [graphIconClickHandler, isXSmall, renderStateValueByPropertiesChain]);
+
     return (
         deviceState ?
             <>
@@ -105,26 +150,7 @@ export const MapPopupContent = () => {
                                                     <td colSpan={2} style={{ height: '25px', textAlign: 'center', fontWeight: 'bold' }}> {group.caption}</td>
                                                 </tr>
                                                 {
-                                                    controlDefinitions[groupKey].map(({ typeInfo, propertiesChainValuePair }) => {
-                                                        const valueContent = renderStateValueByPropertiesChain(typeInfo!, propertiesChainValuePair);
-                                                        const labelText = typeInfo!.ui.editor.label.text;
-                                                        const label = propertiesChainValuePair.arrayIndex !== undefined ? `${labelText} ${propertiesChainValuePair.arrayIndex + 1}` : labelText;
-                                                        return (
-                                                            !isXSmall ?
-                                                                <tr key={propertiesChainValuePair.propertiesChain}>
-                                                                    <td style={{ width: '250px' }}>{label}</td>
-                                                                    <td style={{ width: '120px', textAlign: 'center' }}>{valueContent}</td>
-                                                                </tr> :
-                                                                <Fragment key={propertiesChainValuePair.propertiesChain}>
-                                                                    <tr >
-                                                                        <td style={{ width: '250px', fontWeight: '600' }}>{label}</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td style={{ marginLeft: '10px' }}>{valueContent}</td>
-                                                                    </tr>
-                                                                </Fragment>
-                                                        )
-                                                    })
+                                                    controlDefinitions[groupKey].map(({ typeInfo, propertiesChainValuePair }) => (statePropertyRowRender({ typeInfo, propertiesChainValuePair })))
                                                 }
                                             </Fragment>
                                         )
