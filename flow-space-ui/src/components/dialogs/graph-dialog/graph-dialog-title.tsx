@@ -3,7 +3,7 @@ import type { MenuItemModel } from "../../../models/menu-item-model";
 import { MainMenu } from "../../menu/main-menu/main-menu";
 import { Popup as PopupRef } from "devextreme-react/popup";
 
-export const GraphDialogTitle = ({popupRef, menuItems}: { popupRef: React.RefObject<PopupRef | null>, menuItems: MenuItemModel[]}) => {
+export const GraphDialogTitle = ({ popupRef, menuItems }: { popupRef: React.RefObject<PopupRef | null>, menuItems: MenuItemModel[] }) => {
     return (
         <div style={{
             display: 'flex',

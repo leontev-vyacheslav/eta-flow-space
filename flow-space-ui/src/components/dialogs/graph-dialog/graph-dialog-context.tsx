@@ -18,13 +18,13 @@ function GraphDialogContextProvider(props: GraphChartProps) {
     const [refreshToken, setRefreshToken] = useState<string>(getQuickGuid());
     const [samplingHorizon, setSamplingHorizon] = useState<number>(
         () => {
-            const samplingHorizonStored = localStorage.getItem('graphdialog_samplingHorizon');
+            const samplingHorizonStored = localStorage.getItem('graphChartSamplingHorizon');
             return samplingHorizonStored ? parseInt(JSON.parse(samplingHorizonStored)) : 0;
         }
     );
 
     useEffect(() => {
-        localStorage.setItem('graphdialog_samplingHorizon', JSON.stringify(samplingHorizon));
+        localStorage.setItem('graphChartSamplingHorizon', JSON.stringify(samplingHorizon));
     }, [samplingHorizon]);
 
     const stateProperties = useDeviceStateProperties({ ...props, samplingHorizon: samplingHorizon, refreshToken: refreshToken });

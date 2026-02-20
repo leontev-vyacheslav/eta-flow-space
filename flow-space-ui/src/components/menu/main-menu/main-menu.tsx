@@ -13,15 +13,15 @@ export type MainMenuProps = {
 const MainMenuInner = ({ items, innerRef }: MainMenuProps) => {
   return (
     <Menu
-      ref={ innerRef }
-      className={ 'main-menu' }
+      ref={innerRef}
+      className={'main-menu'}
       hideSubmenuOnMouseLeave
-      items={ items as unknown as Item[] }
-      itemRender={ (item) => <MenuItem item={ item } /> }
+      items={items as unknown as Item[]}
+      itemRender={(item) => <MenuItem item={item} />}
     />
   );
 };
 
 export const MainMenu = forwardRef<Menu<any>, MainMenuProps>((props, ref) =>
-  <MainMenuInner { ...props } innerRef={ ref }/>
+  <MainMenuInner {...props} innerRef={ref} />
 );

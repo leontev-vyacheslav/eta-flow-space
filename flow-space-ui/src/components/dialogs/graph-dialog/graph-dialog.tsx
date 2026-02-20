@@ -89,7 +89,7 @@ const GraphDialogInternal = (props: GraphDialogProps) => {
                     return;
                 }
 
-                const graphDialogSizeStr = localStorage.getItem('graph_dialog_size');
+                const graphDialogSizeStr = localStorage.getItem('graphDialogSize');
                 if (graphDialogSizeStr) {
                     try {
                         const size = JSON.parse(graphDialogSizeStr);
@@ -108,7 +108,7 @@ const GraphDialogInternal = (props: GraphDialogProps) => {
                 const width = e.component.option('width');
                 const height = e.component.option('height');
                 if (width && height) {
-                    localStorage.setItem('graph_dialog_size', JSON.stringify({
+                    localStorage.setItem('graphDialogSize', JSON.stringify({
                         width,
                         height
                     }));

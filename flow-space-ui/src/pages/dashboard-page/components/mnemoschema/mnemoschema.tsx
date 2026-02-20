@@ -97,7 +97,7 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
             minScale={0.5}
             onTransformed={(_, transformedState) => {
                 if (isInitComplete) {
-                    localStorage.setItem(`mnemoschema_transformed_state_${flowCode}`, JSON.stringify(transformedState));
+                    localStorage.setItem(`mnemoschemaTransformedState_${flowCode}`, JSON.stringify(transformedState));
                 }
             }}
         >

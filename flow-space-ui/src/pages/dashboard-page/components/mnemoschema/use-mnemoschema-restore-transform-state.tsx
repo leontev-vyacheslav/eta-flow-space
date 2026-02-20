@@ -13,7 +13,7 @@ export function useMnemoschemaRestoreTransformState(
     useEffect(() => {
         const timer = setTimeout(() => {
             const savedState = localStorage.getItem(
-                `mnemoschema_transformed_state_${flowCode}`
+                `mnemoschemaTransformedState_${flowCode}`
             );
 
             if (savedState && transformComponentRef?.current) {
