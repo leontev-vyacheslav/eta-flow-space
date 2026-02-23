@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import {
     AboutIcon,
     ExitIcon,
@@ -8,21 +8,10 @@ import {
 } from './app-icons';
 import type { TreeViewItemModel } from '../models/tree-view-item';
 import type { IconBaseProps } from 'react-icons';
-import { useAppData } from '../contexts/app-data/app-data';
-import type { FlowModel } from '../models/flows/flow-model';
+import { useAppSettings } from '../contexts/app-settings';
 
 export const useSideNavigationMenuItems = () => {
-    const { getFlowListAsync } = useAppData();
-    const [flows, setFlows] = useState<FlowModel[]>();
-
-    useEffect(() => {
-        (async () => {
-            const flows = await getFlowListAsync();
-            if (flows) {
-                setFlows(flows);
-            }
-        })();
-    }, [getFlowListAsync]);
+    const { flows } = useAppSettings();
 
     return useMemo<TreeViewItemModel[]>(() => {
         return [

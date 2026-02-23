@@ -1,60 +1,55 @@
-import moment from 'moment';
-import { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import { add } from 'date-fns';
+import { createContext, useContext, useEffect, useState } from 'react';
 import type { AppSettingsContextModel, AppSettingsDataContextModel } from '../models/app-settings-context';
 import type { AppBaseProviderProps } from '../models/app-base-provider-props';
+import type { FlowModel } from '../models/flows/flow-model';
+import { useAppData } from './app-data/app-data';
 
 const AppSettingsContext = createContext<AppSettingsContextModel>({} as AppSettingsContextModel);
 
 const useAppSettings = () => useContext(AppSettingsContext);
 
 function AppSettingsProvider(props: AppBaseProviderProps) {
-
+    const { getFlowListAsync } = useAppData();
+    const [flows, setFlows] = useState<FlowModel[]>();
 
     const [appSettingsData, setAppSettingsData] = useState<AppSettingsDataContextModel>({
         isShowFooter: true,
     });
 
-    const updateWorkDateAsync = useCallback(async () => {
-        const rtcDateTime =new Date();
-        if (rtcDateTime) {
-            setAppSettingsData(previous => {
-                return { ...previous, workDate: rtcDateTime };
-            });
-        }
-    }, []);
-
     useEffect(() => {
         (async () => {
-            await updateWorkDateAsync();
+            const flows = await getFlowListAsync();
+            if (flows) {
+                setFlows(flows);
+            }
         })();
-    }, [updateWorkDateAsync]);
+    }, [getFlowListAsync]);
 
     useEffect(() => {
-        const rtcIntervalTimer = setInterval(async () => {
-            await updateWorkDateAsync();
-        }, 60000 * 10);
+        const workDate = new Date();
+        setAppSettingsData(previous => {
+            return { ...previous, workDate: workDate };
+        });
 
-
-        const intervalTimer = setInterval(async () => {
+        const timer = setInterval(async () => {
             setAppSettingsData(previous => {
-                const workDate = moment(previous.workDate).add(60, 'seconds');
+                const workDate = add(previous.workDate!, { seconds: 60 });
 
-                return { ...previous, workDate: workDate.toDate() };
+                return { ...previous, workDate: workDate };
             });
         }, 60000);
 
         return () => {
-            clearInterval(rtcIntervalTimer);
-            clearInterval(intervalTimer);
+            clearInterval(timer);
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    return <AppSettingsContext.Provider value={ {
+    return <AppSettingsContext.Provider value={{
         appSettingsData,
         setAppSettingsData,
-        updateWorkDateAsync,
-       } } { ...props } />;
+        flows
+    }} {...props} />;
 }
 
 export { AppSettingsProvider, useAppSettings };
