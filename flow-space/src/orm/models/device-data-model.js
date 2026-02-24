@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       DeviceDataModel.belongsTo(models.FlowDataModel, { foreignKey: 'flowId', as: 'flow' });
       DeviceDataModel.belongsTo(models.ObjectLocationDataModel, { foreignKey: 'objectLocationId', as: 'objectLocation' });
       DeviceDataModel.hasMany(models.DeviceStateDataModel, { foreignKey: 'deviceId', as: 'states' });
+      DeviceDataModel.hasMany(models.EmergencyStateDataModel, { foreignKey: 'deviceId', as: 'emergencyStates' });
       DeviceDataModel.hasMany(models.UserDeviceLinkDataModel, { foreignKey: 'deviceId', as: 'userDeviceLinks' });
     }
   }
