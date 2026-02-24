@@ -63,7 +63,7 @@
         "x": 28,
         "y": 33,
         "w": 1084,
-        "h": 834
+        "h": 894
     },
     {
         "id": "41c82c569adc9a0c",
@@ -103,12 +103,15 @@
             "8e7193e6b1cfc533",
             "cfd3bfec49dd036d",
             "6d432d77ac870b96",
-            "599dd7db8ee5cbb5"
+            "599dd7db8ee5cbb5",
+            "3a5c928ea11c81d2",
+            "d1b9ae86e7d25599",
+            "5558c60e10dce090"
         ],
         "x": 54,
         "y": 239,
         "w": 1032,
-        "h": 602
+        "h": 662
     },
     {
         "id": "d4fc72a987396215",
@@ -859,6 +862,60 @@
         "headers": {},
         "x": 890,
         "y": 580,
+        "wires": []
+    },
+    {
+        "id": "3a5c928ea11c81d2",
+        "type": "http in",
+        "z": "2dca6eed12b296f5",
+        "g": "41c82c569adc9a0c",
+        "name": "",
+        "url": "/api/states/emergency/:deviceId",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 220,
+        "y": 860,
+        "wires": [
+            [
+                "d1b9ae86e7d25599"
+            ]
+        ]
+    },
+    {
+        "id": "d1b9ae86e7d25599",
+        "type": "function",
+        "z": "2dca6eed12b296f5",
+        "g": "41c82c569adc9a0c",
+        "name": "get-emergency-state",
+        "func": "const { getEmergencyState } = global.get('routes');\n\nreturn await getEmergencyState(msg, global);",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 860,
+        "wires": [
+            [
+                "5558c60e10dce090"
+            ]
+        ]
+    },
+    {
+        "id": "5558c60e10dce090",
+        "type": "http response",
+        "z": "2dca6eed12b296f5",
+        "g": "41c82c569adc9a0c",
+        "name": "http-get-emergency-state-response",
+        "statusCode": "",
+        "headers": {
+            "content-type": "application/json"
+        },
+        "x": 860,
+        "y": 860,
         "wires": []
     },
     {
@@ -1774,6 +1831,53 @@
         ]
     },
     {
+        "id": "3399c7d3c09f4d06",
+        "type": "inject",
+        "z": "30c8a42fdf53c9ea",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 790,
+        "y": 700,
+        "wires": [
+            [
+                "127dfbd55cf54f1c"
+            ]
+        ]
+    },
+    {
+        "id": "127dfbd55cf54f1c",
+        "type": "function",
+        "z": "30c8a42fdf53c9ea",
+        "name": "function 1",
+        "func": "\nglobal.set(\"emergencyState4\", {\n    properties: [\n        \"isVaporDt2\"\n    ],\n    reason: \"Перевышена предельно допустимая концентрация паров дизельного топлива по каналу 2\",\n    timestamp: Date.now(),\n});\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1030,
+        "y": 700,
+        "wires": [
+            []
+        ]
+    },
+    {
         "id": "13bfc5999f0041c0",
         "type": "modbus-read",
         "z": "7ada8f3f5d804ee5",
@@ -2390,55 +2494,6 @@
         "libs": [],
         "x": 1150,
         "y": 360,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "0b370ffc6b4580be",
-        "type": "inject",
-        "z": "7ada8f3f5d804ee5",
-        "d": true,
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "1",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 1010,
-        "y": 100,
-        "wires": [
-            [
-                "d6879156df1b18e2"
-            ]
-        ]
-    },
-    {
-        "id": "d6879156df1b18e2",
-        "type": "function",
-        "z": "7ada8f3f5d804ee5",
-        "d": true,
-        "name": "function 1",
-        "func": "const deviceState = {\n    \"tempRoomAir\": 22.5,\n    \"tempOutAir\": -3.2,\n    \"tempInNet\": 68.0,\n    \"tempOutNet\": 82.5,\n    \"pressGas\": 120.5,\n    \"pressInNet\": 4.2,\n    \"pressOutNet\": 6.8,\n    \"pressOutSrcW\": 3.5,\n    \"levelDt1\": 65.3,\n    \"levelDt2\": 72.1,\n    \"isOffInput1\": false,\n    \"isSupplyWaterLevelEmergencyMax\": false,\n    \"isSupplyWaterLevelWorkingMax\": true,\n    \"isSupplyWaterLevelWorkingMin\": false,\n    \"isSupplyWaterLevelEmergencyMin\": false,\n    \"isCO1\": false,\n    \"isCH1\": false,\n    \"isCO2\": false,\n    \"isCH2\": false,\n    \"isGasFlap\": false,\n    \"isVaporDt1\": false,\n    \"isVaporDt2\": false,\n    \"boilers\": [\n        {\n            \"powerBurner\": 75.0,\n            \"mode\": 8,\n            \"status\": 4,\n            \"alarm\": 0\n        },\n        {\n            \"powerBurner\": 85.5,\n            \"mode\": 8,\n            \"status\": 3,\n            \"alarm\": 0\n        },\n        {\n            \"powerBurner\": 0.0,\n            \"mode\": 2,\n            \"status\": 0,\n            \"alarm\": 0\n        },\n        {\n            \"powerBurner\": 90.2,\n            \"mode\": 8,\n            \"status\": 4,\n            \"alarm\": 0\n        }\n    ],\n    \"boilerValves\": [\n        {\n            \"status\": 2\n        },\n        {\n            \"status\": 2\n        },\n        {\n            \"status\": 1\n        },\n        {\n            \"status\": 2\n        }\n    ],\n    \"networkPumps\": [\n        {\n            \"setPower\": 45.0,\n            \"mode\": 8,\n            \"status\": 64,\n            \"alarm\": 0,\n            \"modeFc\": 8,\n            \"statusFc\": 4,\n            \"alarmFc\": 0\n        },\n        {\n            \"setPower\": 42.5,\n            \"mode\": 8,\n            \"status\": 64,\n            \"alarm\": 0,\n            \"modeFc\": 8,\n            \"statusFc\": 4,\n            \"alarmFc\": 0\n        },\n        {\n            \"setPower\": 0.0,\n            \"mode\": 2,\n            \"status\": 2,\n            \"alarm\": 0,\n            \"modeFc\": 2,\n            \"statusFc\": 2,\n            \"alarmFc\": 0\n        },\n        {\n            \"setPower\": 0.0,\n            \"mode\": 2,\n            \"status\": 2,\n            \"alarm\": 0,\n            \"modeFc\": 2,\n            \"statusFc\": 2,\n            \"alarmFc\": 0\n        }\n    ],\n    \"sourceWaterPumps\": [\n        {\n            \"setPower\": 38.0,\n            \"mode\": 8,\n            \"status\": 64,\n            \"alarm\": 0,\n            \"modeFc\": 8,\n            \"statusFc\": 4,\n            \"alarmFc\": 0\n        },\n        {\n            \"setPower\": 0.0,\n            \"mode\": 2,\n            \"status\": 2,\n            \"alarm\": 0,\n            \"modeFc\": 2,\n            \"statusFc\": 2,\n            \"alarmFc\": 0\n        }\n    ],\n    \"supplyPumps\": [\n        {\n            \"mode\": 8,\n            \"status\": 8,\n            \"alarm\": 0\n        },\n        {\n            \"mode\": 2,\n            \"status\": 2,\n            \"alarm\": 0\n        }\n    ],\n    \"flapHt\": {\n        \"mode\": 0\n    },\n    \"flapHn\": {\n        \"mode\": 0\n    },\n    \"flapDt\": {\n        \"mode\": 0\n    },\n    \"flapDtFill\": {\n        \"mode\": 0\n    },\n    \"boilerControlLinkStatuses\": [\n        {\n            \"isActive\": true\n        },\n        {\n            \"isActive\": true\n        },\n        {\n            \"isActive\": false\n        },\n        {\n            \"isActive\": true\n        }\n    ],\n    \"timestamp\": 1707206400000\n};\n\nglobal.set('deviceState4', deviceState);\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1320,
-        "y": 100,
         "wires": [
             []
         ]
