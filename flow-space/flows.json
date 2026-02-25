@@ -870,12 +870,12 @@
         "z": "2dca6eed12b296f5",
         "g": "41c82c569adc9a0c",
         "name": "",
-        "url": "/api/states/emergency/:deviceId",
+        "url": "/api/states/emergency/device/:deviceId",
         "method": "get",
         "upload": false,
         "skipBodyParsing": false,
         "swaggerDoc": "",
-        "x": 220,
+        "x": 250,
         "y": 860,
         "wires": [
             [
@@ -896,7 +896,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 520,
+        "x": 560,
         "y": 860,
         "wires": [
             [
