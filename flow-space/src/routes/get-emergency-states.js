@@ -1,9 +1,9 @@
-const { UserDeviceLinkDataModel, DeviceModel } = require('../orm/models');
+const { UserDeviceLinkDataModel, DeviceDataModel } = require('../orm/models');
 
 async function getEmergencyStates(msg, global) {
     const { userId } = msg.req.user;
 
-    const devices = await DeviceModel.findAll({
+    const devices = await DeviceDataModel.findAll({
         attributes: ['id'],
         include: [
             {
