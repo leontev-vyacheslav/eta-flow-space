@@ -75,5 +75,5 @@ GET {{baseUrl}}/api/states/device/4
 Authorization: Bearer {{authToken}}
 
 ###
-GET {{baseUrl}}/api/states/emergency/4
+GET {{baseUrl}}/api/states/emergency/device/4
 Authorization: Bearer {{authToken}}
