@@ -9,7 +9,8 @@ export default {
     quickHelpReference: '/api/quick-helps',
     flows: '/api/flows',
     devices: '/api/devices',
-    states: '/api/states/device',
+    deviceStates: '/api/states/device',
     dataschema: '/api/data-schemas/device',
-    mnemoschemas: '/api/mnemoschemas/device'
+    mnemoschemas: '/api/mnemoschemas/device',
+    emergencyStates: '/api/states/emergency/device',
 };

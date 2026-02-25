@@ -1,4 +1,3 @@
-import { add } from 'date-fns';
 import { createContext, useContext, useEffect, useState } from 'react';
 import type { AppSettingsContextModel, AppSettingsDataContextModel } from '../models/app-settings-context';
 import type { AppBaseProviderProps } from '../models/app-base-provider-props';
@@ -27,16 +26,13 @@ function AppSettingsProvider(props: AppBaseProviderProps) {
     }, [getFlowListAsync]);
 
     useEffect(() => {
-        const workDate = new Date();
         setAppSettingsData(previous => {
-            return { ...previous, workDate: workDate };
+            return { ...previous, workDate: new Date() };
         });
 
         const timer = setInterval(async () => {
             setAppSettingsData(previous => {
-                const workDate = add(previous.workDate!, { seconds: 60 });
-
-                return { ...previous, workDate: workDate };
+                return { ...previous, workDate: new Date() };
             });
         }, 60000);
 

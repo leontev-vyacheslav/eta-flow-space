@@ -6,10 +6,12 @@ import { useAuthHttpRequest } from '../use-auth-http-request';
 import type { FlowModel } from '../../../models/flows/flow-model';
 import type { DeviceModel } from '../../../models/flows/device-model';
 import type { DeviceStateModel, DeviceStatePropertiesModel } from '../../../models/flows/device-state-model';
+import type { EmergencyStateModel } from '../../../models/flows/emergency-state-model';
 
 export type GetFlowListAsyncFunc = () => Promise<FlowModel[] | undefined>;
 export type GetDeviceListAsyncFunc = () => Promise<DeviceModel[] | undefined>;
 export type GetDeviceStateAsyncFunc = (deviceId: number) => Promise<DeviceStateModel | undefined>;
+export type GetEmergencyStateAsyncFunc = (deviceId: number) => Promise<EmergencyStateModel | undefined>;
 export type GetMnemoschemaAsyncFunc = (deviceId: number) => Promise<string | undefined>;
 export type GetDeviceAsyncFunc = (deviceId: number) => Promise<DeviceModel | undefined>;
 export type GetDeviceStateDataschemaAsyncFunc = (deviceId: number) => Promise<any | undefined>;
@@ -22,7 +24,8 @@ export type AppDataContextFlowEndpointsModel = {
     getMnemoschemaAsync: GetMnemoschemaAsyncFunc;
     getDeviceAsync: GetDeviceAsyncFunc;
     getDeviceStateDataschemaAsync: GetDeviceStateDataschemaAsyncFunc;
-    getDeviceStatesByDatesAsync: GetDeviceStatesByDatesAsyncFunc
+    getDeviceStatesByDatesAsync: GetDeviceStatesByDatesAsyncFunc;
+    getEmergencyStateAsync: GetEmergencyStateAsyncFunc;
 };
 
 export const useFlowData = () => {
@@ -54,7 +57,7 @@ export const useFlowData = () => {
 
     const getDeviceStateAsync = useCallback<GetDeviceStateAsyncFunc>(async (deviceId: number) => {
         const response = await authHttpRequest({
-            url: `${routes.host}${routes.states}/${deviceId}`,
+            url: `${routes.host}${routes.deviceStates}/${deviceId}`,
             method: HttpConstants.Methods.Get as Method,
         }, true);
 
@@ -98,12 +101,23 @@ export const useFlowData = () => {
 
     const getDeviceStatesByDatesAsync = useCallback(async (deviceId: number, beginDate: Date, endDate: Date, fields: string[]) => {
          const response = await authHttpRequest({
-            url: `${routes.host}${routes.states}/${deviceId}/dates?beginDate=${beginDate.toISOString()}&endDate=${endDate.toISOString()}&fields=${fields.join(';')}`,
+            url: `${routes.host}${routes.deviceStates}/${deviceId}/dates?beginDate=${beginDate.toISOString()}&endDate=${endDate.toISOString()}&fields=${fields.join(';')}`,
             method: HttpConstants.Methods.Get as Method,
         });
 
         if (response && response.status === HttpConstants.StatusCodes.Ok) {
             return response.data.values as DeviceStatePropertiesModel[];
+        }
+    }, [authHttpRequest]);
+
+    const getEmergencyStateAsync = useCallback(async (deviceId: number) => {
+        const response = await authHttpRequest({
+            url: `${routes.host}${routes.emergencyStates}/${deviceId}`,
+            method: HttpConstants.Methods.Get as Method,
+        }, true);
+
+        if (response && response.status === HttpConstants.StatusCodes.Ok) {
+            return response.data.values as EmergencyStateModel;
         }
     }, [authHttpRequest]);
 
@@ -114,7 +128,8 @@ export const useFlowData = () => {
         getMnemoschemaAsync,
         getDeviceAsync,
         getDeviceStateDataschemaAsync,
-        getDeviceStatesByDatesAsync
+        getDeviceStatesByDatesAsync,
+        getEmergencyStateAsync
     };
 }
 
