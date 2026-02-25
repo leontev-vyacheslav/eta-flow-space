@@ -1,30 +1,49 @@
 import Chart, { Tooltip } from "devextreme-react/chart";
 import { formatMessage } from "devextreme/localization";
 import type { GraphChartProps } from "../../../models/graph-dialog-props";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { GraphChartTooltip } from "./graph-chart-tooltip";
 import { useGraphDialog } from "./graph-dialog-context";
 import { useLongPress } from "use-long-press";
 
 export const GraphChart = (props: GraphChartProps) => {
     const chartRef = useRef<Chart>(null);
-    const { stateProperties } = useGraphDialog();
+    const dateRangerRef = useRef<HTMLDivElement>(null);
+    const { stateProperties, dateRange, refreshToken } = useGraphDialog();
     const longPressBinder = useLongPress(
         () => {
             const chart = chartRef.current!.instance;
-             chart.resetVisualRange();
+            chart.resetVisualRange();
         }, {
         threshold: 250,
         cancelOnMovement: 5,
         captureEvent: true,
     });
 
+    useEffect(() => {
+        if (!dateRangerRef.current) {
+            return;
+        }
+        dateRangerRef.current.innerText = `${dateRange.beginDate.toLocaleString('ru-Ru')} - ${dateRange.endDate.toLocaleString('ru-Ru')}`;
+
+    }, [dateRange, refreshToken]);
+
     return (
-        <div  {...longPressBinder()} style={{ width: '100%', height: '100%' }}>
+        <div  {...longPressBinder()} style={{ width: '100%', height: '97%' }}>
             <Chart
                 ref={chartRef}
                 dataSource={stateProperties}
                 width='100%'
+                onZoomEnd={(e) => {
+                    if (!dateRangerRef.current) {
+                        return;
+                    }
+                    if ((e.rangeStart instanceof Date) && (e.rangeEnd instanceof Date)) {
+                        dateRangerRef.current.innerText = `${e.rangeStart!.toLocaleString('ru-Ru')} - ${e.rangeEnd!.toLocaleString('ru-Ru')}`;
+                    } else {
+                        dateRangerRef.current.innerText = `${dateRange.beginDate.toLocaleString('ru-Ru')} - ${dateRange.endDate.toLocaleString('ru-Ru')}`;
+                    }
+                }}
                 scrollBar={{
                     position: 'top',
                     visible: true,
@@ -107,7 +126,9 @@ export const GraphChart = (props: GraphChartProps) => {
                     opacity={1}
                     contentRender={(info: any) => <GraphChartTooltip info={info} schemaTypeInfos={props.schemaTypeInfos} />}
                 />
+
             </Chart >
+            <div ref={dateRangerRef} style={{ fontSize: 10, color: 'rgb(118, 118, 118)', paddingLeft: 30 }}></div>
         </div>
     );
 }

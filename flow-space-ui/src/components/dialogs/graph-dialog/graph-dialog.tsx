@@ -67,7 +67,7 @@ const GraphDialogInternal = (props: GraphDialogProps) => {
     useEffect ( () => {
         setTimeout( () => {
             popupRef.current?.instance.repaint();
-        }, 1000);
+        }, 500);
     }, []);
 
     return (

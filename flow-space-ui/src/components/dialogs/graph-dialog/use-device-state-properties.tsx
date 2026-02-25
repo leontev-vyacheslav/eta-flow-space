@@ -1,23 +1,19 @@
-import { endOfDay, startOfDay, add } from "date-fns";
 import type { GraphChartProps } from "../../../models/graph-dialog-props";
 import { useEffect, useState } from "react";
 import { useAppData } from "../../../contexts/app-data/app-data";
 import type { DeviceStatePropertiesModel } from "../../../models/flows/device-state-model";
 
-export const useDeviceStateProperties = (props: GraphChartProps & {samplingHorizon: number, refreshToken: string}) => {
+export const useDeviceStateProperties = (props: GraphChartProps & { refreshToken: string}) => {
     const { getDeviceStatesByDatesAsync } = useAppData();
     const [stateProperties, setStateProperties] = useState<DeviceStatePropertiesModel[] | undefined>();
 
     useEffect(() => {
         (async () => {
-            const now = new Date();
-            const beginDate = props.beginDate ?? startOfDay(add(now, {days: props.samplingHorizon }));
-            const endDate = props.endDate ??  endOfDay(now);
 
             let stateProperties = await getDeviceStatesByDatesAsync(
                 props.deviceId,
-                beginDate,
-                endDate,
+                props.beginDate!,
+                props.endDate!,
                 props.schemaTypeInfos.map(t => (t.propertiesChainValuePair.propertiesChain))
             );
 
@@ -37,7 +33,7 @@ export const useDeviceStateProperties = (props: GraphChartProps & {samplingHoriz
 
             setStateProperties(stateProperties);
         })();
-    }, [getDeviceStatesByDatesAsync, props.beginDate, props.deviceId, props.endDate, props.schemaTypeInfos, props.refreshToken, props.samplingHorizon]);
+    }, [getDeviceStatesByDatesAsync, props.beginDate, props.deviceId, props.endDate, props.schemaTypeInfos, props.refreshToken]);
 
     return stateProperties;
 }
