@@ -1834,7 +1834,7 @@
         "id": "3399c7d3c09f4d06",
         "type": "inject",
         "z": "30c8a42fdf53c9ea",
-        "name": "",
+        "name": "set-interval-1min",
         "props": [
             {
                 "p": "payload"
@@ -1851,7 +1851,7 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 790,
+        "x": 810,
         "y": 700,
         "wires": [
             [
@@ -1863,15 +1863,15 @@
         "id": "127dfbd55cf54f1c",
         "type": "function",
         "z": "30c8a42fdf53c9ea",
-        "name": "function 1",
-        "func": "\nglobal.set(\"emergencyState4\", {\n    properties: [\n        \"isVaporDt2\"\n    ],\n    reason: \"Перевышена предельно допустимая концентрация паров дизельного топлива по каналу 2\",\n    timestamp: Date.now(),\n});\n\nreturn msg;",
+        "name": "stub-collect-emergency-state",
+        "func": "\nglobal.set(\"emergencyState4\", {\n    reasons: [\n        {\n            properties: [\n                { isVaporDt2: true }\n            ],\n            description: \"Перевышена предельно допустимая концентрация паров дизельного топлива по каналу 2\"\n        }\n    ],\n    timestamp: Date.now(),\n});\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1030,
+        "x": 1090,
         "y": 700,
         "wires": [
             []
