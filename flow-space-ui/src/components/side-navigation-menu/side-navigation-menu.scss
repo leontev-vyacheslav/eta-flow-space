@@ -29,8 +29,10 @@
         padding-right: 0;
 
         .dx-icon {
-          width: my.$side-panel-min-width !important;
+          // width: my.$side-panel-min-width !important;
           margin: 0 !important;
+          // padding-left: 10px;
+          // padding-right: 5px;
         }
       }
 

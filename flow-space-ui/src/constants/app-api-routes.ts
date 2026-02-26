@@ -12,5 +12,5 @@ export default {
     deviceStates: '/api/states/device',
     dataschema: '/api/data-schemas/device',
     mnemoschemas: '/api/mnemoschemas/device',
-    emergencyStates: '/api/states/emergency/device',
+    emergencyStates: '/api/states/emergency',
 };

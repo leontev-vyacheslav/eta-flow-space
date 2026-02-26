@@ -76,10 +76,11 @@ export function SideNavigationMenu(props: SideNavigationMenuProps) {
 
     const TreeViewItemContent = (e: TreeViewItemModel) => {
         return (
-            <>
-                {e.iconRender ? <i className="dx-icon">{e.iconRender({})}</i> : null}
-                <span data-entity={e.entity ? JSON.stringify(e.entity) : ''}>{e.text}</span>
-            </>
+            <div style={{ display: 'flex', paddingLeft: 5, gap: 10 }}>
+                {e.iconRender ? <i className="dx-icon">{e.iconRender({ style: { width: 'auto', flex: '0 0 auto' } })}</i> : null}
+                <span >{e.text}</span>
+                <i className="dx-icon" style={{fontSize: 'initial'}} data-device-emergency={e.entity?.id}></i>
+            </div>
         );
     }
 
@@ -95,6 +96,7 @@ export function SideNavigationMenu(props: SideNavigationMenuProps) {
                     itemRender={TreeViewItemContent}
                     focusStateEnabled={true}
                     expandEvent={'click'}
+
                     onItemClick={async event => {
                         if (!event.itemData) {
 
