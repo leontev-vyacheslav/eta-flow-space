@@ -3,9 +3,11 @@ import type { AppSettingsContextModel, AppSettingsDataContextModel } from '../mo
 import type { AppBaseProviderProps } from '../models/app-base-provider-props';
 import type { FlowModel } from '../models/flows/flow-model';
 import { useAppData } from './app-data/app-data';
-import { WarningIcon } from '../constants/app-icons';
+import { EmegencySoundMute, OneHourIcon, ThreeHourIcon, TwoHourIcon, WarningIcon } from '../constants/app-icons';
 import { renderToStaticMarkup } from 'react-dom/server';
 import dxPopover from 'devextreme/ui/popover';
+import { createRoot } from 'react-dom/client';
+import { MainMenu } from '../components/menu/main-menu/main-menu';
 
 const AppSettingsContext = createContext<AppSettingsContextModel>({} as AppSettingsContextModel);
 
@@ -20,17 +22,37 @@ function AppSettingsProvider(props: AppBaseProviderProps) {
         isShowFooter: true,
     });
 
-    const emegrencyPopoverContent = useCallback((emergencyState: any) => {
+    const popoverContentRender = useCallback((emergencyState: any) => {
         return (
-            <table className='simple-grid'>
-                <thead>
-                    <tr><th colSpan={2}>Нештатные / аварийные ситуации</th></tr>
-                </thead>
-                <tbody>
-                    {(emergencyState.reasons as any[]).map((r: any) => <tr><td>{r.description}</td></tr>)}
+            <>
+                <table className='simple-grid'>
+                    <thead>
+                        <tr><th colSpan={2}>
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                                <span style={{ flex: 1 }}>Нештатные / аварийные ситуации</span>
+                                <WarningIcon size={20} style={{ fill: '#FFC107' }} />
+                            </div>
+                        </th></tr>
+                    </thead>
+                    <tbody>
+                        {(emergencyState.reasons as any[]).map((r: any, i: number) => <tr key={i}><td>{i + 1}.</td><td>{r.description}</td></tr>)}
+                    </tbody>
+                </table>
+                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <MainMenu items={[
+                        {
+                            icon: () => <EmegencySoundMute size={20} color='black' />,
+                            items: [
+                                { icon: () => <OneHourIcon size={20} />, text: 'На 1 час' },
+                                { icon: () => <TwoHourIcon size={20} />, text: 'На 2 часа' },
+                                { icon: () => <ThreeHourIcon size={20} />, text: 'На 3 часа' }
+                            ]
+                        }
+                    ]} />
 
-                </tbody>
-            </table>
+                </div>
+
+            </>
         );
     }, []);
 
@@ -49,21 +71,27 @@ function AppSettingsProvider(props: AppBaseProviderProps) {
             }
         });
 
-        const root = document.createElement('div');
-        root.setAttribute('data-emergency-popover', '');
-        document.body.appendChild(root);
+        const popoverContainer = document.createElement('div');
+        popoverContainer.setAttribute('data-emergency-popover', '');
+        document.body.appendChild(popoverContainer);
 
-        const html = renderToStaticMarkup(emegrencyPopoverContent(emergencyState));
+        const popoverContentContainer = document.createElement('div');
+        const popoverContentReactRoot = createRoot(popoverContentContainer);
 
-        popoverInstance.current = new dxPopover(root, {
-            minWidth: 200,
+        popoverInstance.current = new dxPopover(popoverContainer, {
             maxWidth: 300,
             shading: false,
             hideOnOutsideClick: true,
+            onHidden: () => {
+                popoverContentReactRoot.unmount();
+                popoverContentContainer.remove();
+                setTimeout(() => {
+                    popoverContainer.remove();
+                }, 0);
+            },
             contentTemplate: () => {
-                const div = document.createElement('div');
-                div.innerHTML = html;
-                return div;
+                popoverContentReactRoot.render(popoverContentRender(emergencyState));
+                return popoverContentContainer;
             },
             wrapperAttr: {
                 class: 'mnemoschema-popover'
@@ -81,16 +109,20 @@ function AppSettingsProvider(props: AppBaseProviderProps) {
         });
 
         popoverInstance.current.show();
-    }, [emegrencyPopoverContent]);
+    }, [popoverContentRender]);
 
     const updateEmegrencyState = useCallback(async () => {
+        if (!flows) {
+            return;
+        }
+
         const emergencyStates = await getEmergencyStatesAsync();
         if (!emergencyStates) {
             return;
         }
 
         const warningIcon = renderToStaticMarkup(
-            <WarningIcon size={20} style={{ fill: '#FFC107', verticalAlign: 'middle', cursor: 'pointer' }} />
+            <WarningIcon size={20} style={{ fill: '#FFC107', cursor: 'pointer' }} />
         );
         const deviceEmergencyElements = Array.from(document.querySelectorAll('.side-navigation-menu [data-device-emergency]'));
 
@@ -129,7 +161,6 @@ function AppSettingsProvider(props: AppBaseProviderProps) {
             return { ...previous, workDate: new Date() };
         });
 
-
         (async () => {
             await updateEmegrencyState();
         })();
@@ -149,7 +180,7 @@ function AppSettingsProvider(props: AppBaseProviderProps) {
             clearInterval(timer1);
             clearInterval(timer2);
         };
-    }, [flows, updateEmegrencyState]);
+    }, [updateEmegrencyState]);
 
     return <AppSettingsContext.Provider value={{
         appSettingsData,
