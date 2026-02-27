@@ -12,6 +12,6 @@ export type AppSettingsDataContextModel = AppSettingsModel;
 export type AppSettingsContextModel = {
     appSettingsData: AppSettingsDataContextModel;
     setAppSettingsData: Dispatch<SetStateAction<AppSettingsDataContextModel>>;
-    
+
     flows?: FlowModel[];
 }

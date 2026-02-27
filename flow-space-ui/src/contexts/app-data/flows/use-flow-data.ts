@@ -11,7 +11,7 @@ import type { EmergencyStateModel } from '../../../models/flows/emergency-state-
 export type GetFlowListAsyncFunc = () => Promise<FlowModel[] | undefined>;
 export type GetDeviceListAsyncFunc = () => Promise<DeviceModel[] | undefined>;
 export type GetDeviceStateAsyncFunc = (deviceId: number) => Promise<DeviceStateModel | undefined>;
-export type GetEmergencyStateAsyncFunc = (deviceId: number) => Promise<EmergencyStateModel | undefined>;
+export type GetEmergencyStateAsyncFunc = () => Promise<EmergencyStateModel[] | undefined>;
 export type GetMnemoschemaAsyncFunc = (deviceId: number) => Promise<string | undefined>;
 export type GetDeviceAsyncFunc = (deviceId: number) => Promise<DeviceModel | undefined>;
 export type GetDeviceStateDataschemaAsyncFunc = (deviceId: number) => Promise<any | undefined>;
@@ -25,7 +25,7 @@ export type AppDataContextFlowEndpointsModel = {
     getDeviceAsync: GetDeviceAsyncFunc;
     getDeviceStateDataschemaAsync: GetDeviceStateDataschemaAsyncFunc;
     getDeviceStatesByDatesAsync: GetDeviceStatesByDatesAsyncFunc;
-    getEmergencyStateAsync: GetEmergencyStateAsyncFunc;
+    getEmergencyStatesAsync: GetEmergencyStateAsyncFunc;
 };
 
 export const useFlowData = () => {
@@ -110,14 +110,14 @@ export const useFlowData = () => {
         }
     }, [authHttpRequest]);
 
-    const getEmergencyStateAsync = useCallback(async (deviceId: number) => {
+    const getEmergencyStatesAsync = useCallback(async () => {
         const response = await authHttpRequest({
-            url: `${routes.host}${routes.emergencyStates}/${deviceId}`,
+            url: `${routes.host}${routes.emergencyStates}`,
             method: HttpConstants.Methods.Get as Method,
         }, true);
 
         if (response && response.status === HttpConstants.StatusCodes.Ok) {
-            return response.data.values as EmergencyStateModel;
+            return response.data.values as EmergencyStateModel[];
         }
     }, [authHttpRequest]);
 
@@ -129,7 +129,7 @@ export const useFlowData = () => {
         getDeviceAsync,
         getDeviceStateDataschemaAsync,
         getDeviceStatesByDatesAsync,
-        getEmergencyStateAsync
+        getEmergencyStatesAsync
     };
 }
 
