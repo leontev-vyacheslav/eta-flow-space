@@ -104,9 +104,6 @@
             "cfd3bfec49dd036d",
             "6d432d77ac870b96",
             "599dd7db8ee5cbb5",
-            "3a5c928ea11c81d2",
-            "d1b9ae86e7d25599",
-            "5558c60e10dce090",
             "d5a75d5c252488e6",
             "8897204c354d5aed",
             "9ebc49b2121e9ec5"
@@ -865,60 +862,6 @@
         "headers": {},
         "x": 890,
         "y": 580,
-        "wires": []
-    },
-    {
-        "id": "3a5c928ea11c81d2",
-        "type": "http in",
-        "z": "2dca6eed12b296f5",
-        "g": "41c82c569adc9a0c",
-        "name": "",
-        "url": "/api/states/emergency/device/:deviceId",
-        "method": "get",
-        "upload": false,
-        "skipBodyParsing": false,
-        "swaggerDoc": "",
-        "x": 250,
-        "y": 860,
-        "wires": [
-            [
-                "d1b9ae86e7d25599"
-            ]
-        ]
-    },
-    {
-        "id": "d1b9ae86e7d25599",
-        "type": "function",
-        "z": "2dca6eed12b296f5",
-        "g": "41c82c569adc9a0c",
-        "name": "get-emergency-state",
-        "func": "const { getEmergencyState } = global.get('routes');\n\nreturn await getEmergencyState(msg, global);",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 560,
-        "y": 860,
-        "wires": [
-            [
-                "5558c60e10dce090"
-            ]
-        ]
-    },
-    {
-        "id": "5558c60e10dce090",
-        "type": "http response",
-        "z": "2dca6eed12b296f5",
-        "g": "41c82c569adc9a0c",
-        "name": "http-get-emergency-state-response",
-        "statusCode": "",
-        "headers": {
-            "content-type": "application/json"
-        },
-        "x": 860,
-        "y": 860,
         "wires": []
     },
     {
@@ -1901,15 +1844,15 @@
                 "vt": "str"
             }
         ],
-        "repeat": "60",
+        "repeat": "",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 810,
-        "y": 700,
+        "x": 490,
+        "y": 760,
         "wires": [
             [
                 "127dfbd55cf54f1c"
@@ -1921,15 +1864,15 @@
         "type": "function",
         "z": "30c8a42fdf53c9ea",
         "name": "stub-collect-emergency-state",
-        "func": "\nglobal.set(\"emergencyState4\", {\n    reasons: [\n        {\n            properties: [\n                { isVaporDt2: true }\n            ],\n            description: \"Превышена предельно допустимая концентрация паров дизельного топлива по каналу 2\"\n        }\n    ],\n    timestamp: Date.now(),\n});\n\nreturn msg;",
+        "func": "\nglobal.set(\"emergencyState4\", {\n    reasons: [\n        {\n            properties: [\n                { isVaporDt2: true }\n            ],\n            description: \"Превышена предельно допустимая концентрация паров дизельного топлива по каналу 2\"\n        }\n    ],\n    timestamp: Date.now(),\n});\n\nglobal.set(\"emergencyState6\", {\n    reasons: [\n        {\n            properties: [\n                { isVaporDt2: true }\n            ],\n            description: \"Превышена предельно допустимая концентрация паров дизельного топлива по каналу 2\"\n        }\n    ],\n    timestamp: Date.now(),\n});\n\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1090,
-        "y": 700,
+        "x": 780,
+        "y": 760,
         "wires": [
             []
         ]
