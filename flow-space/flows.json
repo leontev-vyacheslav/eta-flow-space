@@ -1864,7 +1864,7 @@
         "type": "function",
         "z": "30c8a42fdf53c9ea",
         "name": "stub-collect-emergency-state",
-        "func": "\nglobal.set(\"emergencyState4\", {\n    reasons: [\n        {\n            properties: [\n                { isVaporDt2: true }\n            ],\n            description: \"Превышена предельно допустимая концентрация паров дизельного топлива по каналу 2\"\n        }\n    ],\n    timestamp: Date.now(),\n});\n\nglobal.set(\"emergencyState6\", {\n    reasons: [\n        {\n            properties: [\n                { isVaporDt2: true }\n            ],\n            description: \"Превышена предельно допустимая концентрация паров дизельного топлива по каналу 2\"\n        }\n    ],\n    timestamp: Date.now(),\n});\n\n\nreturn msg;",
+        "func": "\nglobal.set(\"emergencyState4\", {\n    reasons: [\n        {\n            id: 8,\n            expression: \"isVaporDt2 === true\",\n            description: \"Превышена предельно допустимая концентрация паров дизельного топлива по каналу 2\"\n        }\n    ],\n    timestamp: Date.now(),\n});\n\nglobal.set(\"emergencyState6\", {\n    reasons: [\n        {\n            id: 8,\n            expression: \"isVaporDt2 === true\",\n            description: \"Превышена предельно допустимая концентрация паров дизельного топлива по каналу 2\"\n        }\n    ],\n    timestamp: Date.now(),\n});\n\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
