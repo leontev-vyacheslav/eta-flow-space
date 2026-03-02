@@ -15,7 +15,7 @@ const useAppSettings = () => useContext(AppSettingsContext);
 
 function AppSettingsProvider(props: AppBaseProviderProps) {
     const { getFlowListAsync, getEmergencyStatesAsync } = useAppData();
-    const [flows, setFlows] = useState<FlowModel[]>();
+    const [flows, setFlows] = useState<FlowModel[] | undefined>([]);
     const popoverInstance = useRef<dxPopover<any>>(null);
 
     const [appSettingsData, setAppSettingsData] = useState<AppSettingsDataContextModel>({
@@ -35,20 +35,53 @@ function AppSettingsProvider(props: AppBaseProviderProps) {
                         </th></tr>
                     </thead>
                     <tbody>
-                        {(emergencyState.reasons as any[]).map((r: any, i: number) => <tr key={i}><td>{i + 1}.</td><td>{r.description}</td></tr>)}
+                        {
+                            (emergencyState.reasons as any[]).map(
+                                (r: any, i: number) =>
+                                    <tr key={i}>
+                                        <td style={{width: 0}}>{i + 1}.</td>
+                                        <td>
+                                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                                                <span style={{flex: 1}}>{r.description}</span>
+                                                <span>
+                                                    <MainMenu items={[
+                                                        {
+                                                            icon: () => <EmegencySoundMute size={20} color='black' />,
+                                                            items: [
+                                                                {
+                                                                    text: 'На 1 час',
+                                                                    icon: () => <OneHourIcon size={20} />,
+                                                                    onClick: () => {
+                                                                        alert(`На 1 час: ${r.id}`);
+                                                                    },
+                                                                },
+                                                                {
+                                                                    text: 'На 2 часа',
+                                                                    icon: () => <TwoHourIcon size={20} />,
+                                                                    onClick: () => {
+                                                                        alert(`На 2 час: ${r.id}`);
+                                                                    }
+                                                                },
+                                                                {
+                                                                    text: 'На 3 часа',
+                                                                    icon: () => <ThreeHourIcon size={20} />,
+                                                                    onClick: () => {
+                                                                        alert(`На 3 час: ${r.id}`);
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]} />
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                            )
+                        }
                     </tbody>
                 </table>
                 <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                    <MainMenu items={[
-                        {
-                            icon: () => <EmegencySoundMute size={20} color='black' />,
-                            items: [
-                                { icon: () => <OneHourIcon size={20} />, text: 'На 1 час' },
-                                { icon: () => <TwoHourIcon size={20} />, text: 'На 2 часа' },
-                                { icon: () => <ThreeHourIcon size={20} />, text: 'На 3 часа' }
-                            ]
-                        }
-                    ]} />
+
 
                 </div>
 
@@ -79,7 +112,8 @@ function AppSettingsProvider(props: AppBaseProviderProps) {
         const popoverContentReactRoot = createRoot(popoverContentContainer);
 
         popoverInstance.current = new dxPopover(popoverContainer, {
-            maxWidth: 300,
+            maxWidth: 350,
+            minWidth: 350,
             shading: false,
             hideOnOutsideClick: true,
             onHidden: () => {
@@ -149,9 +183,7 @@ function AppSettingsProvider(props: AppBaseProviderProps) {
     useEffect(() => {
         (async () => {
             const flows = await getFlowListAsync();
-            if (flows) {
-                setFlows(flows);
-            }
+            setFlows(flows);
         })();
 
     }, [getFlowListAsync]);

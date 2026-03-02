@@ -7,7 +7,6 @@ import { useScreenSize } from '../../utils/media-query';
 import { useSharedArea } from '../../contexts/shared-area';
 import type { TreeViewItemModel } from '../../models/tree-view-item';
 import type { SideNavigationMenuProps } from '../../models/side-navigation-menu-props';
-import { useWorkdatePicker } from '../../contexts/workdate-context';
 import { quickHelpReferenceService } from '../../services/quick-help-reference-service';
 
 import './side-navigation-menu.scss';
@@ -23,7 +22,6 @@ export function SideNavigationMenu(props: SideNavigationMenuProps) {
 
     const { isLarge } = useScreenSize();
     const { signOutWithConfirm, treeViewRef } = useSharedArea();
-    const { showWorkDatePicker } = useWorkdatePicker();
     const { navigationData: { currentPath } } = useNavigation();
     const wrapperRef = useRef<Element | Element[]>(null);
     const sideNavigationMenuItems = useSideNavigationMenuItems();
@@ -116,12 +114,6 @@ export function SideNavigationMenu(props: SideNavigationMenuProps) {
                         }
 
                         selectedItemChanged(event);
-
-                        if (treeViewItem.command === 'workDate') {
-                            showWorkDatePicker();
-
-                            return;
-                        }
 
                         if (treeViewItem.command === 'exit') {
                             signOutWithConfirm();
