@@ -35,18 +35,20 @@
         "id": "b74b1a6d538c13c2",
         "type": "group",
         "z": "2dca6eed12b296f5",
-        "name": "persistent-storage",
+        "name": "services",
         "style": {
             "label": true
         },
         "nodes": [
             "443b413283d10c89",
-            "abf540bef0e1bad8"
+            "abf540bef0e1bad8",
+            "bba8f96b625dae82",
+            "f69d7d7c5b8b9117"
         ],
         "x": 34,
         "y": 1019,
-        "w": 632,
-        "h": 82
+        "w": 592,
+        "h": 162
     },
     {
         "id": "cbcfb9f537c21426",
@@ -441,7 +443,7 @@
         "type": "function",
         "z": "2dca6eed12b296f5",
         "g": "b74b1a6d538c13c2",
-        "name": "post-device-state-to-database",
+        "name": "store-device-states",
         "func": "const { storeStates } = global.get('services');\n\nreturn await storeStates(msg, global);",
         "outputs": 1,
         "timeout": 0,
@@ -449,7 +451,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 510,
+        "x": 470,
         "y": 1060,
         "wires": [
             []
@@ -917,6 +919,55 @@
         "x": 870,
         "y": 900,
         "wires": []
+    },
+    {
+        "id": "f69d7d7c5b8b9117",
+        "type": "function",
+        "z": "2dca6eed12b296f5",
+        "g": "b74b1a6d538c13c2",
+        "name": "store-emergency-states",
+        "func": "const { storeEmergencyStates } = global.get('services');\n\nreturn await storeEmergencyStates(msg, global);",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 1140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "bba8f96b625dae82",
+        "type": "inject",
+        "z": "2dca6eed12b296f5",
+        "g": "b74b1a6d538c13c2",
+        "name": "set-interval-1min",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 1140,
+        "wires": [
+            [
+                "f69d7d7c5b8b9117"
+            ]
+        ]
     },
     {
         "id": "3254130808eb2f14",

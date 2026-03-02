@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       DeviceDataModel.hasMany(models.DeviceStateDataModel, { foreignKey: 'deviceId', as: 'states' });
       DeviceDataModel.hasMany(models.EmergencyStateDataModel, { foreignKey: 'deviceId', as: 'emergencyStates' });
       DeviceDataModel.hasMany(models.UserDeviceLinkDataModel, { foreignKey: 'deviceId', as: 'userDeviceLinks' });
+      DeviceDataModel.hasOne(models.EmergencyDataModel, { foreignKey: 'deviceId', as: 'emergencies' });
     }
   }
 
