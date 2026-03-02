@@ -33,6 +33,16 @@ services:
     networks:
       - eta-flow-space-network
 
+  eta-flow-space-database-backup:
+    build:
+      dockerfile: ./Dockerfile.backup
+    container_name: eta-flow-space-database-backup
+    privileged: true
+    volumes:
+      - ./flow-space-backups:/backups
+    networks:
+      - eta-flow-space-network
+
   eta-flow-space-ui:
     build:
       context: ./flow-space-ui/

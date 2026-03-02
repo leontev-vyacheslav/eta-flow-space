@@ -1,0 +1,10 @@
+FROM alpine:latest
+
+RUN apk add --no-cache postgresql-client curl && \
+    curl -L https://github.com/aptible/supercronic/releases/latest/download/supercronic-linux-amd64 \
+    -o /usr/local/bin/supercronic && \
+    chmod +x /usr/local/bin/supercronic
+
+COPY crontab /crontab
+
+CMD ["supercronic", "/crontab"]

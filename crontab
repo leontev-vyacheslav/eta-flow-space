@@ -1,0 +1,3 @@
+# min hour day month weekday command
+0 0  * * * PGPASSWORD=0987654321 pg_dump -h eta-flow-space-database -U postgres -d eta_flow_space_database -F c -f /backups/eta_flow_space_database_$(date +%Y%m%d_%H%M%S).dump && ls -t /backups/*.dump | tail -n +15 | xargs rm -f
+0 6 * * * PGPASSWORD=0987654321 pg_dump -h eta-flow-space-database -U postgres -d eta_flow_space_database -F c -f /backups/eta_flow_space_database_$(date +%Y%m%d_%H%M%S).dump && ls -t /backups/*.dump | tail -n +15 | xargs rm -f

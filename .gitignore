@@ -1,6 +1,8 @@
 node_modules/
 *.cred.json
 *.backup
+!Dockerfile.backup
 .npm/
 
 flow-space-data/
+flow-space-backups/
