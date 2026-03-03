@@ -1,5 +1,5 @@
-const { differenceInMinutes } = require('date-fns');
-const { DeviceDataModel, EmergencyDataModel, sequelize } = require('../orm/models');
+const { Op, literal } = require('sequelize');
+const { DeviceDataModel, EmergencyDataModel, DeviceStateDataModel } = require('../orm/models');
 
 async function storeEmergencyStates(msg, global) {
     const devices = await DeviceDataModel.findAll({
@@ -11,9 +11,17 @@ async function storeEmergencyStates(msg, global) {
         }]
     });
 
-    devices.forEach(device => {
-        const state = global.get(`deviceState${device.id}`);
+    devices.forEach(async (device) => {
+        let state = global.get(`deviceState${device.id}`);
         let stateIsMissing = false;
+        const emergencyReasons = [];
+
+        if (!device.emergencies) {
+            global.set(`emergencyState${device.id}`, undefined);
+
+            return;
+        }
+
         if (state) {
             const stateKeys = Object.keys(state);
             if (stateKeys.every(k => state[k] === undefined || state[k] === null) || stateKeys.length === 0) {
@@ -24,27 +32,27 @@ async function storeEmergencyStates(msg, global) {
         }
 
         if (stateIsMissing) {
-            global.set(`emergencyState${device.id}`, {
-                reasons: [
-                    {
-                        id: 100,
-                        expression: "state.isConnected === false",
-                        description: "Связь отсутствует."
-                    }
-                ],
-                timestamp: Date.now(),
+            const deviceState = await DeviceStateDataModel.findOne({
+                where: {
+                    deviceId: device.id,
+                    [Op.and]: [
+                        literal(`state::text <> '{}'`),
+                        { state: { [Op.ne]: null } }
+                    ]
+                },
+                order: [['createdAt', 'DESC']]
             });
 
-            return;
-        }
+            if (deviceState) {
+                state = deviceState.state;
+            }
 
-        if (!device.emergencies) {
-            global.set(`emergencyState${device.id}`, undefined);
-            
-            return;
+            emergencyReasons.push({
+                id: 100,
+                expression: "state.isConnected === false",
+                description: "Связь отсутствует."
+            })
         }
-
-        const emergencyReasons = [];
 
         device.emergencies.reasons.forEach(emergencyReason => {
             const result = eval(emergencyReason.expression);
@@ -53,15 +61,17 @@ async function storeEmergencyStates(msg, global) {
             }
         });
 
-        if (emergencyReasons.length === 0) {
-            global.set(`emergencyState${device.id}`, undefined);
-        } else {
-            global.set(`emergencyState${device.id}`, {
+        const emergencyState = emergencyReasons.length === 0
+            ? undefined
+            : {
                 reasons: emergencyReasons,
                 timestamp: Date.now(),
-            });
-        }
+            };
+
+        global.set(`emergencyState${device.id}`, emergencyState);
     });
+
+     return msg;
 }
 
 module.exports = {
