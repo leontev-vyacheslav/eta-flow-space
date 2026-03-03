@@ -14,14 +14,14 @@ module.exports = (sequelize, DataTypes) => {
   EmergencyDataModel.init({
     deviceId: DataTypes.INTEGER,
     reasons: DataTypes.JSON,
+    updateStateInterval: DataTypes.INTEGER,
+    lastStateUpdate: DataTypes.DATE,
   }, {
     sequelize,
     modelName: 'EmergencyDataModel',
     tableName: 'emergency',
     freezeTableName: true,
   });
-
-
 
   return EmergencyDataModel;
 };

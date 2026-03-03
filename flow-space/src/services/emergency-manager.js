@@ -1,5 +1,5 @@
 const { Op, literal } = require('sequelize');
-const { DeviceDataModel, EmergencyDataModel, DeviceStateDataModel } = require('../orm/models');
+const { DeviceDataModel, EmergencyDataModel, DeviceStateDataModel, EmergencyStateDataModel } = require('../orm/models');
 
 async function storeEmergencyStates(msg, global) {
     const devices = await DeviceDataModel.findAll({
@@ -69,9 +69,23 @@ async function storeEmergencyStates(msg, global) {
             };
 
         global.set(`emergencyState${device.id}`, emergencyState);
+
+        if (emergencyState) {
+            try {
+                await EmergencyStateDataModel.create(
+                    {
+                        deviceId: device.id,
+                        state: emergencyState
+                    },
+                );
+            }
+            catch (error) {
+                console.log(`The emergency state update failed due to the error: ${error}`);
+            }
+        }
     });
 
-     return msg;
+    return msg;
 }
 
 module.exports = {
