@@ -3,7 +3,7 @@ import type { AppSettingsContextModel, AppSettingsDataContextModel } from '../mo
 import type { AppBaseProviderProps } from '../models/app-base-provider-props';
 import type { FlowModel } from '../models/flows/flow-model';
 import { useAppData } from './app-data/app-data';
-import { EmegencySoundMute, OneHourIcon, ThreeHourIcon, TwoHourIcon, WarningIcon } from '../constants/app-icons';
+import { EmergencySoundMute, OneHourIcon, ThreeHourIcon, TwoHourIcon, WarningIcon } from '../constants/app-icons';
 import { renderToStaticMarkup } from 'react-dom/server';
 import dxPopover from 'devextreme/ui/popover';
 import { createRoot } from 'react-dom/client';
@@ -46,7 +46,7 @@ function AppSettingsProvider(props: AppBaseProviderProps) {
                                                 <span>
                                                     <MainMenu items={[
                                                         {
-                                                            icon: () => <EmegencySoundMute size={20} color='black' />,
+                                                            icon: () => <EmergencySoundMute size={20} color='black' />,
                                                             items: [
                                                                 {
                                                                     text: 'На 1 час',
@@ -89,7 +89,7 @@ function AppSettingsProvider(props: AppBaseProviderProps) {
         );
     }, []);
 
-    const emrgencyIconClickHandler = useCallback((event: PointerEvent, emergencyState: any) => {
+    const emergencyIconClickHandler = useCallback((event: PointerEvent, emergencyState: any) => {
         event.stopPropagation();
 
         if (popoverInstance.current) {
@@ -145,7 +145,7 @@ function AppSettingsProvider(props: AppBaseProviderProps) {
         popoverInstance.current.show();
     }, [popoverContentRender]);
 
-    const updateEmegrencyState = useCallback(async () => {
+    const updateEmergencyState = useCallback(async () => {
         if (!flows) {
             return;
         }
@@ -175,10 +175,10 @@ function AppSettingsProvider(props: AppBaseProviderProps) {
                 }
 
                 const warningIconElement = new DOMParser().parseFromString(warningIcon, 'image/svg+xml').documentElement;
-                warningIconElement.addEventListener('click', (e) => emrgencyIconClickHandler(e, state))
+                warningIconElement.addEventListener('click', (e) => emergencyIconClickHandler(e, state))
                 deviceEmergencyElement.append(warningIconElement);
             });
-    }, [emrgencyIconClickHandler, flows, getEmergencyStatesAsync]);
+    }, [emergencyIconClickHandler, flows, getEmergencyStatesAsync]);
 
     useEffect(() => {
         (async () => {
@@ -194,7 +194,7 @@ function AppSettingsProvider(props: AppBaseProviderProps) {
         });
 
         (async () => {
-            await updateEmegrencyState();
+            await updateEmergencyState();
         })();
 
 
@@ -205,14 +205,14 @@ function AppSettingsProvider(props: AppBaseProviderProps) {
         }, 60000);
 
         const timer2 = setInterval(async () => {
-            await updateEmegrencyState();
+            await updateEmergencyState();
         }, 10000);
 
         return () => {
             clearInterval(timer1);
             clearInterval(timer2);
         };
-    }, [updateEmegrencyState]);
+    }, [updateEmergencyState]);
 
     return <AppSettingsContext.Provider value={{
         appSettingsData,

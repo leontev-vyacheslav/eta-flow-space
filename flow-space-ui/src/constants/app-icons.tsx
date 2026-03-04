@@ -102,7 +102,7 @@ export { TbNumber1Small as OneHourIcon} from 'react-icons/tb';
 export { TbNumber2Small as TwoHourIcon} from 'react-icons/tb';
 export { TbNumber3Small as ThreeHourIcon} from 'react-icons/tb';
 
-export { IoVolumeMuteOutline as EmegencySoundMute} from 'react-icons/io5';
+export { IoVolumeMuteOutline as EmergencySoundMute} from 'react-icons/io5';
 
 import { MdMoreVert } from 'react-icons/md';
 export const GridAdditionalMenuIcon = () => <MdMoreVert style={{ cursor: 'pointer' }} size={18} />

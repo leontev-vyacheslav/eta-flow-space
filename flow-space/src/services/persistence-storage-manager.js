@@ -1,4 +1,4 @@
-const { differenceInMinutes, differenceInSeconds } = require('date-fns');
+const { differenceInMinutes } = require('date-fns');
 const { DeviceDataModel, DeviceStateDataModel, sequelize } = require('../orm/models');
 
 async function storeStates(msg, global) {
@@ -6,23 +6,23 @@ async function storeStates(msg, global) {
         attributes: ['id', 'updateStateInterval', 'lastStateUpdate'],
     });
 
-    devices.forEach(async (d) => {
+    devices.forEach(async (device) => {
         const now = new Date();
-        const deviceState = global.get(`deviceState${d.id}`);
+        const deviceState = global.get(`deviceState${device.id}`);
         if (deviceState && Object.keys(deviceState).length > 0 && deviceState.timestamp) {
-            if (differenceInMinutes(now, deviceState.timestamp) > d.updateStateInterval * 2) {
+            if (differenceInMinutes(now, deviceState.timestamp) > device.updateStateInterval * 2) {
                 Object.keys(deviceState).forEach(key => {
                     deviceState[key] = undefined;
                 });
-                global.set(`deviceState${d.id}`, deviceState);
+                global.set(`deviceState${device.id}`, deviceState);
             }
 
-            if (!d.lastStateUpdate || differenceInMinutes(now, d.lastStateUpdate) >= d.updateStateInterval) {
+            if (!device.lastStateUpdate || differenceInMinutes(now, device.lastStateUpdate) >= device.updateStateInterval) {
                 try {
                     await sequelize.transaction(async t => {
                         await DeviceStateDataModel.create(
                             {
-                                deviceId: d.id,
+                                deviceId: device.id,
                                 state: deviceState
                             },
                             { transaction: t }
@@ -32,7 +32,7 @@ async function storeStates(msg, global) {
                             { lastStateUpdate: now },
                             {
                                 where: {
-                                    id: d.id,
+                                    id: device.id,
                                 },
                             },
                             { transaction: t }

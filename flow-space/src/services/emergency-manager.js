@@ -1,27 +1,28 @@
+const { differenceInMinutes } = require('date-fns');
 const { Op, literal } = require('sequelize');
 const { DeviceDataModel, EmergencyDataModel, DeviceStateDataModel, EmergencyStateDataModel, sequelize } = require('../orm/models');
 
 async function storeEmergencyStates(msg, global) {
     const devices = await DeviceDataModel.findAll({
-        attributes: ['id', 'updateStateInterval', 'lastStateUpdate'],
+        attributes: ['id'],
         include: [{
             model: EmergencyDataModel,
             as: 'emergencies',
-            attributes: ["reasons"],
+            attributes: ["reasons", 'updateStateInterval', 'lastStateUpdate'],
         }]
     });
 
     const emergencyStates = [];
     for (const device of devices) {
-        let state = global.get(`deviceState${device.id}`);
-        let stateIsMissing = false;
-        const emergencyReasons = [];
-
         if (!device.emergencies) {
             global.set(`emergencyState${device.id}`, undefined);
 
             continue;
         }
+
+        let state = global.get(`deviceState${device.id}`);
+        let stateIsMissing = false;
+        const emergencyReasons = [];
 
         if (state) {
             const stateKeys = Object.keys(state);
@@ -72,16 +73,28 @@ async function storeEmergencyStates(msg, global) {
         global.set(`emergencyState${device.id}`, emergencyState);
 
         if (emergencyState) {
-            emergencyStates.push({
-                deviceId: device.id,
-                state: emergencyState
-            });
+            if (!device.emergencies.lastStateUpdate || differenceInMinutes(new Date(), device.emergencies.lastStateUpdate) >= device.emergencies.updateStateInterval) {
+                emergencyStates.push({
+                    deviceId: device.id,
+                    state: emergencyState
+                });
+            }
         }
     }
 
     if (emergencyStates.length > 0) {
         try {
             await sequelize.transaction(async t => {
+                await EmergencyDataModel.update(
+                    { lastStateUpdate: new Date() },
+                    {
+                        where: {
+                            deviceId: { [Op.in]: emergencyStates.map(s => s.deviceId) }
+                        },
+                        transaction: t
+                    }
+                );
+
                 await EmergencyStateDataModel.bulkCreate(emergencyStates, { transaction: t });
             });
         } catch (error) {

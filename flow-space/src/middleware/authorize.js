@@ -12,7 +12,7 @@ function authorize(req, res, next) {
     if (!token) {
         return res
             .status(HttpStatusCodes.Unauthorized)
-            .json({ message: 'Токен авторизации не указа в запросе.' });
+            .json({ message: 'Токен авторизации не указан в запросе.' });
     }
 
     try {
