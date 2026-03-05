@@ -1,6 +1,6 @@
 const { UserDeviceLinkDataModel, EmergencyStateDataModel } = require('../orm/models');
 
-async function getEmergencyLogByDates(msg, global) {
+async function getEmergencyStatesByDates(msg) {
     const { userId } = msg.req.user;
     const deviceId = parseInt(msg.req.params.deviceId);
     const beginDateStr = msg.req.query.beginDate;
@@ -43,5 +43,5 @@ async function getEmergencyLogByDates(msg, global) {
 }
 
 module.exports = {
-    getEmergencyLogByDates
+    getEmergencyStatesByDates
 }

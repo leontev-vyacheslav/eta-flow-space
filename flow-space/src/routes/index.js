@@ -12,6 +12,7 @@ module.exports = {
     ...require('./get-device-state-data-schema'),
 
     ...require('./get-emergency-states'),
+    ...require('./get-emergency-states-by-dates'),
 
     ...require('./get-quick-helps'),
 };
