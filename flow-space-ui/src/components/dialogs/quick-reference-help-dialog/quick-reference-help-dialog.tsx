@@ -17,18 +17,18 @@ export type QuickReferenceHelpDialogProps = React.PropsWithChildren<IPopupOption
 };
 
 export const QuickReferenceHelpDialog = (props: QuickReferenceHelpDialogProps) => {
-    const { getQuickHelpRefernceAsync } = useAppData();
+    const { getQuickHelpReferenceAsync } = useAppData();
     const [quickHelpReference, setQuickHelpReference] = useState<QuickHelpReferenceModel | null>(null);
     const { isXSmall, isSmall } = useScreenSize();
 
     useEffect(() => {
         (async () => {
-            const quickHelpReference = await getQuickHelpRefernceAsync(props.referenceKey);
+            const quickHelpReference = await getQuickHelpReferenceAsync(props.referenceKey);
             if (quickHelpReference) {
                 setQuickHelpReference(quickHelpReference);
             }
         })();
-    }, [getQuickHelpRefernceAsync, props.referenceKey]);
+    }, [getQuickHelpReferenceAsync, props.referenceKey]);
 
     useEffect(() => {
         const popup = document.querySelector('.dx-loadpanel-wrapper') as HTMLDivElement;

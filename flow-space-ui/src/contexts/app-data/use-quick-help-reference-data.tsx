@@ -5,16 +5,16 @@ import  { type Method, HttpStatusCode } from 'axios';
 import { useAuthHttpRequest } from './use-auth-http-request';
 import type { QuickHelpReferenceModel } from '../../models/quick-help-reference-model';
 
-export type GetQuickHelpRefernceAsyncFunc = (referenceKey: string) => Promise<QuickHelpReferenceModel | null>;
+export type GetQuickHelpReferenceAsyncFunc = (referenceKey: string) => Promise<QuickHelpReferenceModel | null>;
 
-export type AppDataContextQuickHelpRefernceEndpointsModel = {
-    getQuickHelpRefernceAsync: GetQuickHelpRefernceAsyncFunc;
+export type AppDataContextQuickHelpReferenceEndpointsModel = {
+    getQuickHelpReferenceAsync: GetQuickHelpReferenceAsyncFunc;
 }
 
-export const useQuickHelpRefernceData = () => {
+export const useQuickHelpReferenceData = () => {
     const authHttpRequest = useAuthHttpRequest();
 
-    const getQuickHelpRefernceAsync = useCallback<GetQuickHelpRefernceAsyncFunc>(async (referenceKey: string) => {
+    const getQuickHelpReferenceAsync = useCallback<GetQuickHelpReferenceAsyncFunc>(async (referenceKey: string) => {
         const response = await authHttpRequest({
             url: `${routes.host}${routes.quickHelpReference}/${btoa(referenceKey)}`,
             method: HttpConstants.Methods.Get as Method,
@@ -32,7 +32,7 @@ export const useQuickHelpRefernceData = () => {
     }, [authHttpRequest]);
 
     return {
-        getQuickHelpRefernceAsync
+        getQuickHelpReferenceAsync
     }
 }
 
