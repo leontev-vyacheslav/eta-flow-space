@@ -65,7 +65,7 @@
         "x": 28,
         "y": 33,
         "w": 1084,
-        "h": 934
+        "h": 994
     },
     {
         "id": "41c82c569adc9a0c",
@@ -108,12 +108,15 @@
             "599dd7db8ee5cbb5",
             "d5a75d5c252488e6",
             "8897204c354d5aed",
-            "9ebc49b2121e9ec5"
+            "9ebc49b2121e9ec5",
+            "a595e975913d53db",
+            "7d9aa39bbe09689b",
+            "51c82d63f145dd99"
         ],
         "x": 54,
         "y": 239,
         "w": 1032,
-        "h": 702
+        "h": 762
     },
     {
         "id": "d4fc72a987396215",
@@ -968,6 +971,58 @@
                 "f69d7d7c5b8b9117"
             ]
         ]
+    },
+    {
+        "id": "a595e975913d53db",
+        "type": "http in",
+        "z": "2dca6eed12b296f5",
+        "g": "41c82c569adc9a0c",
+        "name": "",
+        "url": "/api/states/emergency/:deviceId/dates",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 240,
+        "y": 960,
+        "wires": [
+            [
+                "7d9aa39bbe09689b"
+            ]
+        ]
+    },
+    {
+        "id": "7d9aa39bbe09689b",
+        "type": "function",
+        "z": "2dca6eed12b296f5",
+        "g": "41c82c569adc9a0c",
+        "name": "get-emergency-states-by-dates",
+        "func": "const { getEmergencyStatesByDates } = global.get('routes');\n\nreturn await getEmergencyStatesByDates(msg);\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 960,
+        "wires": [
+            [
+                "51c82d63f145dd99"
+            ]
+        ]
+    },
+    {
+        "id": "51c82d63f145dd99",
+        "type": "http response",
+        "z": "2dca6eed12b296f5",
+        "g": "41c82c569adc9a0c",
+        "name": "http-emergency-states-by-dates-response",
+        "statusCode": "",
+        "headers": {},
+        "x": 900,
+        "y": 960,
+        "wires": []
     },
     {
         "id": "3254130808eb2f14",
