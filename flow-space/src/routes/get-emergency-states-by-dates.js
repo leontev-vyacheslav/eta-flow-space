@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { UserDeviceLinkDataModel, EmergencyStateDataModel } = require('../orm/models');
 
 async function getEmergencyStatesByDates(msg) {
