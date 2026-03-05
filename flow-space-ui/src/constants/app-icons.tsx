@@ -3,9 +3,6 @@ export { MdTimer as BeginDateIcon } from 'react-icons/md';
 export { MdTimerOff as EndDateIcon } from 'react-icons/md';
 export { MdDateRange as DateRangeIcon } from 'react-icons/md';
 export { MdTimer as TimeIcon } from 'react-icons/md';
-export { RiCalendarCheckLine as RegistrationDateIcon } from 'react-icons/ri';
-export { AiOutlineAndroid as AndroidIcon } from 'react-icons/ai';
-export { SiIos as IosIcon } from 'react-icons/si';
 export { MdMoreVert as AdditionalMenuIcon } from 'react-icons/md';
 export { MdTimeline as TimelineIcon } from 'react-icons/md';
 export { RiCalendarLine as CurrentDateIcon } from 'react-icons/ri';
@@ -25,6 +22,7 @@ export { RiDeleteBin7Line as DeleteAllIcon } from 'react-icons/ri';
 export { CgAddR as AddIcon } from 'react-icons/cg';
 export { BiEdit as EditIcon } from 'react-icons/bi';
 export { IoWarningSharp as WarningIcon } from 'react-icons/io5';
+export { IoWarningOutline as WarningLogIcon } from 'react-icons/io5';
 export { IoInformationCircleSharp as InformationIcon } from 'react-icons/io5';
 export { BsBoxArrowInLeft as WorkDateBackwardIcon } from 'react-icons/bs';
 export { BsBoxArrowInRight as WorkDateForwardIcon } from 'react-icons/bs';
@@ -61,14 +59,10 @@ export { MdOutlineManageHistory as ManageIcon } from 'react-icons/md';
 export { IoDownloadOutline as DownloadIcon2 } from 'react-icons/io5';
 export { IoReloadSharp as ResetIcon } from 'react-icons/io5';
 
-export { AiOutlineFire as HeatSysIcon } from 'react-icons/ai';
-export { IoWaterOutline as HotWaterIcon } from 'react-icons/io5';
-export { MdOutlineWindPower as VentilationIcon } from 'react-icons/md';
 export { AiOutlineAppstore as AppIcon } from 'react-icons/ai';
 export { IoSunnyOutline as OutdoorIcon } from 'react-icons/io5';
 export { IoMdLogIn as SupplyPipeIcon } from 'react-icons/io';
 export { IoMdLogOut as ReturnPipeIcon } from 'react-icons/io';
-export { RxArchive as ArchivesIcon } from 'react-icons/rx';
 
 export { IoMdKey as AccessTokenIcon } from 'react-icons/io';
 export { IoIosLock as LockIcon } from 'react-icons/io';
@@ -81,7 +75,6 @@ export { MdOutlineLiveHelp as HelpIcon } from 'react-icons/md';
 export { IoEyeOutline as ViewIcon } from 'react-icons/io5';
 
 export { IoCheckmark as CheckIcon } from 'react-icons/io5';
-
 
 export { MdOutlineDashboard as FlowIcon } from 'react-icons/md';
 export { VscDashboard as DeviceIcon } from 'react-icons/vsc';

@@ -2,7 +2,7 @@ import { Item as TabPanelItem, TabPanel } from 'devextreme-react/tab-panel';
 import { useEffect, useMemo, useRef, useState, type ComponentType } from "react";
 import PageHeader from "../../components/page-header/page-header";
 import AppConstants from "../../constants/app-constants";
-import { AdditionalMenuIcon, CircuitIcon, DashboardIcon, HelpIcon, MapIcon, ParamsIcon, RefreshIcon } from "../../constants/app-icons";
+import { AdditionalMenuIcon, CircuitIcon, DashboardIcon, HelpIcon, MapIcon, ParamsIcon, RefreshIcon, WarningLogIcon } from "../../constants/app-icons";
 import type { MenuItemModel } from "../../models/menu-item-model";
 import { quickHelpReferenceService } from "../../services/quick-help-reference-service";
 import { IconTab } from '../../components/tab-utils/icon-tab';
@@ -10,11 +10,13 @@ import { useParams } from 'react-router';
 import { DashboardPageContextProvider, useDashboardPage } from './dashboard-page-context';
 import { getQuickGuid } from '../../utils/uuid';
 import { NoData } from '../../components/no-data-widget/no-data-widget';
+import { EmergencyContextProvider } from './emergency-context';
+import { emergencyLogService } from '../../services/emergency-log-service';
 
 const DashboardPageInner = () => {
     const tabPanelRef = useRef<TabPanel>(null);
     const { setRefreshToken } = useDashboardPage();
-    const { flowCode } = useParams();
+    const { flowCode, deviceId } = useParams();
     const [ControlTabContent, setControlTabContent] = useState<ComponentType<any> | null>(null);
     const [MnemoschemaTabContent, setMnemoschemaTabContent] = useState<ComponentType<any> | null>(null);
     const [MapTabContent, setMapTabContent] = useState<ComponentType<any> | null>(null);
@@ -31,6 +33,14 @@ const DashboardPageInner = () => {
                         onClick: () => {
                             setRefreshToken(getQuickGuid());
                         }
+                    }, {
+                        icon: () => <WarningLogIcon size={20} />,
+                        text: 'Журнал НС...',
+                        onClick: () => {
+                            if (deviceId) {
+                            emergencyLogService.show({deviceId: parseInt(deviceId)});
+                            }
+                        }
                     },
                     {
                         icon: () => <HelpIcon size={20} />,
@@ -42,7 +52,7 @@ const DashboardPageInner = () => {
                 ]
             }
         ] as MenuItemModel[];
-    }, [setRefreshToken]);
+    }, [deviceId, setRefreshToken]);
 
 
     useEffect(() => {
@@ -91,7 +101,7 @@ const DashboardPageInner = () => {
                             setTabIndex(value);
                         }}>
 
-                        <TabPanelItem  title='Мнемосхема' tabRender={(e) => <IconTab tab={e} icon={<CircuitIcon size={18} />} />}>
+                        <TabPanelItem title='Мнемосхема' tabRender={(e) => <IconTab tab={e} icon={<CircuitIcon size={18} />} />}>
                             {
                                 MnemoschemaTabContent && tabIndex === 0 ?
                                     <MnemoschemaTabContent />
@@ -99,7 +109,7 @@ const DashboardPageInner = () => {
                             }
                         </TabPanelItem>
 
-                        <TabPanelItem  title='Управление' tabRender={(e) => <IconTab tab={e} icon={<ParamsIcon size={18} />} />}>
+                        <TabPanelItem title='Управление' tabRender={(e) => <IconTab tab={e} icon={<ParamsIcon size={18} />} />}>
                             {
                                 ControlTabContent && tabIndex === 1
                                     ? <ControlTabContent />
@@ -107,7 +117,7 @@ const DashboardPageInner = () => {
                             }
                         </TabPanelItem>
 
-                        <TabPanelItem  title='Карта' tabRender={(e) => <IconTab tab={e} icon={<MapIcon size={18} />} />}>
+                        <TabPanelItem title='Карта' tabRender={(e) => <IconTab tab={e} icon={<MapIcon size={18} />} />}>
                             {
                                 MapTabContent && tabIndex === 2
                                     ? <MapTabContent />
@@ -123,8 +133,10 @@ const DashboardPageInner = () => {
 
 export const DashboardPage = () => {
     return (
-        <DashboardPageContextProvider>
-            <DashboardPageInner />
-        </DashboardPageContextProvider>
+        <EmergencyContextProvider>
+            <DashboardPageContextProvider>
+                <DashboardPageInner />
+            </DashboardPageContextProvider>
+        </EmergencyContextProvider>
     );
 }

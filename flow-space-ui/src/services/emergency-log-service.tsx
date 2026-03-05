@@ -1,18 +1,18 @@
 import { createRoot, type Root, } from 'react-dom/client';
-import { QuickReferenceHelpDialog } from '../components/dialogs/quick-reference-help-dialog/quick-reference-help-dialog';
 import { AppDataProvider } from '../contexts/app-data/app-data';
 import { AuthProvider } from '../contexts/auth';
 import { SharedAreaProvider } from '../contexts/shared-area';
+import { EmergencyLogDialog } from '../components/dialogs/emergency-log-dialog/emergency-log-dialog';
 
-class QuickHelpReferenceService {
+class EmergencyLogService {
     private popupContainer?: HTMLDivElement;
     private root?: Root;
 
-    public show(referenceKey: string) {
-        document.querySelector('#quick-help-dialog-root')?.remove();
+    public show({ deviceId }: {deviceId: number}) {
+        document.querySelector('#emergency-log-dialog-root')?.remove();
 
         this.popupContainer = document.createElement('div');
-        this.popupContainer.setAttribute('id', 'quick-help-dialog-root');
+        this.popupContainer.setAttribute('id', 'emergency-log-dialog-root');
         document.body.appendChild(this.popupContainer);
 
         this.root = createRoot(this.popupContainer);
@@ -21,10 +21,10 @@ class QuickHelpReferenceService {
             <AuthProvider>
                 <SharedAreaProvider>
                     <AppDataProvider>
-                        <QuickReferenceHelpDialog
-                            referenceKey={ referenceKey }
-                            callback={ () => { } }
-                            onHidden={ () => { this.hide(); } }
+                        <EmergencyLogDialog
+                            deviceId={deviceId}
+                            callback={() => { }}
+                            onHidden={() => { this.hide(); }}
                         />
                     </AppDataProvider>
                 </SharedAreaProvider>
@@ -39,7 +39,8 @@ class QuickHelpReferenceService {
         if (this.popupContainer) {
             this.popupContainer.remove();
         }
+        document.querySelector('#emergency-log-dialog-root')?.remove();
     }
 }
 
-export const quickHelpReferenceService = new QuickHelpReferenceService();
+export const emergencyLogService = new EmergencyLogService();

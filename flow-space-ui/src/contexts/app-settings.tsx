@@ -1,191 +1,26 @@
-import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import type { AppSettingsContextModel, AppSettingsDataContextModel } from '../models/app-settings-context';
 import type { AppBaseProviderProps } from '../models/app-base-provider-props';
 import type { FlowModel } from '../models/flows/flow-model';
 import { useAppData } from './app-data/app-data';
-import { EmergencySoundMute, OneHourIcon, ThreeHourIcon, TwoHourIcon, WarningIcon } from '../constants/app-icons';
-import { renderToStaticMarkup } from 'react-dom/server';
-import dxPopover from 'devextreme/ui/popover';
-import { createRoot } from 'react-dom/client';
-import { MainMenu } from '../components/menu/main-menu/main-menu';
+
 
 const AppSettingsContext = createContext<AppSettingsContextModel>({} as AppSettingsContextModel);
 
 const useAppSettings = () => useContext(AppSettingsContext);
 
 function AppSettingsProvider(props: AppBaseProviderProps) {
-    const { getFlowListAsync, getEmergencyStatesAsync } = useAppData();
+    const { getFlowListAsync } = useAppData();
     const [flows, setFlows] = useState<FlowModel[] | undefined>([]);
-    const popoverInstance = useRef<dxPopover<any>>(null);
-
     const [appSettingsData, setAppSettingsData] = useState<AppSettingsDataContextModel>({
         isShowFooter: true,
     });
-
-    const popoverContentRender = useCallback((emergencyState: any) => {
-        return (
-            <>
-                <table className='simple-grid'>
-                    <thead>
-                        <tr><th colSpan={2}>
-                            <div style={{ display: 'flex', alignItems: 'center' }}>
-                                <span style={{ flex: 1 }}>Нештатные / аварийные ситуации</span>
-                                <WarningIcon size={20} style={{ fill: '#FFC107' }} />
-                            </div>
-                        </th></tr>
-                    </thead>
-                    <tbody>
-                        {
-                            (emergencyState.reasons as any[]).map(
-                                (r: any, i: number) =>
-                                    <tr key={i}>
-                                        <td style={{width: 0}}>{i + 1}.</td>
-                                        <td>
-                                            <div style={{ display: 'flex', alignItems: 'center' }}>
-                                                <span style={{flex: 1}}>{r.description}</span>
-                                                <span>
-                                                    <MainMenu items={[
-                                                        {
-                                                            icon: () => <EmergencySoundMute size={20} color='black' />,
-                                                            items: [
-                                                                {
-                                                                    text: 'На 1 час',
-                                                                    icon: () => <OneHourIcon size={20} />,
-                                                                    onClick: () => {
-                                                                        alert(`На 1 час: ${r.id}`);
-                                                                    },
-                                                                },
-                                                                {
-                                                                    text: 'На 2 часа',
-                                                                    icon: () => <TwoHourIcon size={20} />,
-                                                                    onClick: () => {
-                                                                        alert(`На 2 час: ${r.id}`);
-                                                                    }
-                                                                },
-                                                                {
-                                                                    text: 'На 3 часа',
-                                                                    icon: () => <ThreeHourIcon size={20} />,
-                                                                    onClick: () => {
-                                                                        alert(`На 3 час: ${r.id}`);
-                                                                    }
-                                                                }
-                                                            ]
-                                                        }
-                                                    ]} />
-                                                </span>
-                                            </div>
-                                        </td>
-                                    </tr>
-                            )
-                        }
-                    </tbody>
-                </table>
-                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-
-
-                </div>
-
-            </>
-        );
-    }, []);
-
-    const emergencyIconClickHandler = useCallback((event: PointerEvent, emergencyState: any) => {
-        event.stopPropagation();
-
-        if (popoverInstance.current) {
-            popoverInstance.current.dispose();
-        }
-
-        document.querySelectorAll('[data-emergency-popover]').forEach(element => {
-            try {
-                element.remove();
-            } catch (error) {
-                console.error(error);
-            }
-        });
-
-        const popoverContainer = document.createElement('div');
-        popoverContainer.setAttribute('data-emergency-popover', '');
-        document.body.appendChild(popoverContainer);
-
-        const popoverContentContainer = document.createElement('div');
-        const popoverContentReactRoot = createRoot(popoverContentContainer);
-
-        popoverInstance.current = new dxPopover(popoverContainer, {
-            maxWidth: 350,
-            minWidth: 350,
-            shading: false,
-            hideOnOutsideClick: true,
-            onHidden: () => {
-                popoverContentReactRoot.unmount();
-                popoverContentContainer.remove();
-                setTimeout(() => {
-                    popoverContainer.remove();
-                }, 0);
-            },
-            contentTemplate: () => {
-                popoverContentReactRoot.render(popoverContentRender(emergencyState));
-                return popoverContentContainer;
-            },
-            wrapperAttr: {
-                class: 'mnemoschema-popover'
-            },
-            position: {
-                at: "top left",
-                my: "top left",
-                of: window,
-                offset: {
-                    x: event.clientX,
-                    y: event.clientY
-                },
-                collision: 'flipfit'
-            },
-        });
-
-        popoverInstance.current.show();
-    }, [popoverContentRender]);
-
-    const updateEmergencyState = useCallback(async () => {
-        if (!flows) {
-            return;
-        }
-
-        const emergencyStates = await getEmergencyStatesAsync();
-        if (!emergencyStates) {
-            return;
-        }
-
-        const warningIcon = renderToStaticMarkup(
-            <WarningIcon size={20} style={{ fill: '#FFC107', cursor: 'pointer' }} />
-        );
-        const deviceEmergencyElements = Array.from(document.querySelectorAll('.side-navigation-menu [data-device-emergency]'));
-
-        flows
-            ?.flatMap(f => (f.devices))
-            .forEach(d => {
-                const deviceEmergencyElement = deviceEmergencyElements.find(e => e.getAttribute('data-device-emergency') === d.id.toString());
-                if (!deviceEmergencyElement) {
-                    return;
-                }
-                deviceEmergencyElement.firstChild?.remove();
-
-                const state = emergencyStates.find(s => s.deviceId === d.id);
-                if (!state) {
-                    return;
-                }
-
-                const warningIconElement = new DOMParser().parseFromString(warningIcon, 'image/svg+xml').documentElement;
-                warningIconElement.addEventListener('click', (e) => emergencyIconClickHandler(e, state))
-                deviceEmergencyElement.append(warningIconElement);
-            });
-    }, [emergencyIconClickHandler, flows, getEmergencyStatesAsync]);
 
     useEffect(() => {
         (async () => {
             const flows = await getFlowListAsync();
             setFlows(flows);
         })();
-
     }, [getFlowListAsync]);
 
     useEffect(() => {
@@ -193,26 +28,16 @@ function AppSettingsProvider(props: AppBaseProviderProps) {
             return { ...previous, workDate: new Date() };
         });
 
-        (async () => {
-            await updateEmergencyState();
-        })();
-
-
-        const timer1 = setInterval(async () => {
+        const timer = setInterval(async () => {
             setAppSettingsData(previous => {
                 return { ...previous, workDate: new Date() };
             });
         }, 60000);
 
-        const timer2 = setInterval(async () => {
-            await updateEmergencyState();
-        }, 10000);
-
         return () => {
-            clearInterval(timer1);
-            clearInterval(timer2);
+            clearInterval(timer);
         };
-    }, [updateEmergencyState]);
+    }, []);
 
     return <AppSettingsContext.Provider value={{
         appSettingsData,
