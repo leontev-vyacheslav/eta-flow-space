@@ -4,6 +4,7 @@ import { add } from "date-fns";
 import type { EmergencyLogProps } from "../../../models/emergency-log-dialog-props";
 import { useAppData } from "../../../contexts/app-data/app-data";
 import type { EmergencyFlattenStateModel } from "../../../models/flows/emergency-state-model";
+import { v7 as uuidv7 } from 'uuid';
 
 type DateRangeModel = {
     beginDate: Date;
@@ -65,8 +66,8 @@ function EmergencyLogDialogContextProvider(props: EmergencyLogProps) {
                 props.endDate ?? rangeDates.endDate
             );
             setEmergencyStates(emergencyStates?.flatMap(({ id, state, createdAt }) =>
-                state.reasons.map(({ id: emergencyId, description }: any, index: number) => ({
-                    id: index,
+                state.reasons.map(({ id: emergencyId, description }: any) => ({
+                    id: uuidv7(),
                     emergencyStateId: id,
                     emergencyId,
                     description,

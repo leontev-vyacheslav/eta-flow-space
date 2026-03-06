@@ -27,6 +27,7 @@ export const EmergencyLogGrid = () => {
                 columnAutoWidth={true}
                 dataSource={emergencyStates}
                 height={'100%'}
+                focusedRowEnabled
             >
                 <SearchPanel visible={true} searchVisibleColumnsOnly={false}  />
                 <Grouping autoExpandAll={true} key={'id'} />
@@ -45,7 +46,7 @@ export const EmergencyLogGrid = () => {
                     caption={'Время'}
                     allowSorting={true}
                     sortOrder='desc'
-                    visible={grouped}
+                    visible={!grouped}
                 >
                 </Column>
                 <Column
