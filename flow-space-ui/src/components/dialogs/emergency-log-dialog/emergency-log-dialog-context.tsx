@@ -75,7 +75,7 @@ function EmergencyLogDialogContextProvider(props: EmergencyLogProps) {
             ));
         })();
 
-    }, [getDateRange, getEmergencyStatesByDatesAsync, props, samplingHorizon]);
+    }, [getDateRange, getEmergencyStatesByDatesAsync, props, samplingHorizon, refreshToken]);
 
 
     return <EmergencyLogDialogContext.Provider value={{
