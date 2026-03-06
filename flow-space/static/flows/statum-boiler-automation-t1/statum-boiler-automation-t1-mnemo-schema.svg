@@ -727,8 +727,7 @@
 		<text transform="matrix(1 0 0 1 24.7238 178.8639)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Горелка №1</text>
 		<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M93.1,122.6H10.2c-3.1,0-5.7-2.5-5.7-5.7
 		V72.1c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v44.8C98.8,120,96.2,122.6,93.1,122.6z" />
-		<text transform="matrix(1 0 0 1 31.3067 76.697)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Котел
-			№1</text>
+		<text transform="matrix(1 0 0 1 31.3067 76.697)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Котел №1</text>
 		<text data-state="boilers[0].mode" transform="matrix(1 0 0 1 16.9818 88.4922)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeBoiler_1}}</text>
 		<text data-state="boilers[0].status" transform="matrix(1 0 0 1 16.8068 101.2963)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusBoiler_1}}</text>
 		<text data-state="boilers[0].powerBurner" transform="matrix(1 0 0 1 15.6437 191.3998)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{powerBurner_1}} %</text>
@@ -1046,8 +1045,7 @@
 		<text transform="matrix(1 0 0 1 24.9228 547.9724)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Горелка №3</text>
 		<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M92.4,492.4H9.5c-3.1,0-5.7-2.5-5.7-5.7
 		v-44.8c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v44.8C98.1,489.8,95.5,492.4,92.4,492.4z" />
-		<text transform="matrix(1 0 0 1 30.6153 446.485)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Котел
-			№3</text>
+		<text transform="matrix(1 0 0 1 30.6153 446.485)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Котел №3</text>
 		<text data-state="boilers[2].mode" transform="matrix(1 0 0 1 16.2904 458.2803)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeBoiler_3}}</text>
 		<text data-state="boilers[2].status" transform="matrix(1 0 0 1 16.1155 471.0844)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusBoiler_3}}</text>
 		<text data-state="boilers[2].powerBurner" transform="matrix(1 0 0 1 15.8427 560.5082)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{powerBurner_3}} %</text>

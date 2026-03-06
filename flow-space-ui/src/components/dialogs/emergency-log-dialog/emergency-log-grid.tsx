@@ -45,6 +45,7 @@ export const EmergencyLogGrid = () => {
                     caption={'Время'}
                     allowSorting={true}
                     sortOrder='desc'
+                    visible={grouped}
                 >
                 </Column>
                 <Column
