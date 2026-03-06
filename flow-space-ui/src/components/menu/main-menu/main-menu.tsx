@@ -6,15 +6,17 @@ import type { Item } from 'devextreme/ui/menu';
 import { forwardRef, type LegacyRef } from 'react';
 
 export type MainMenuProps = {
+  disabled?: boolean;
   items: MenuItemModel[];
   innerRef?: LegacyRef<Menu<any>> | undefined
 };
 
-const MainMenuInner = ({ items, innerRef }: MainMenuProps) => {
+const MainMenuInner = ({ items, innerRef, disabled }: MainMenuProps) => {
   return (
     <Menu
       ref={innerRef}
       className={'main-menu'}
+      disabled={disabled}
       hideSubmenuOnMouseLeave
       items={items as unknown as Item[]}
       itemRender={(item) => <MenuItem item={item} />}

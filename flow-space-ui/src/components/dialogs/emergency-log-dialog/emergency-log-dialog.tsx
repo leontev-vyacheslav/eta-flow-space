@@ -2,7 +2,7 @@ import AppModalPopup from '../app-modal-popup/app-modal-popup';
 import { useScreenSize } from '../../../utils/media-query';
 import type { EventInfo } from 'devextreme/events';
 import type { MenuItemModel } from '../../../models/menu-item-model';
-import { AdditionalMenuIcon, DateRangeIcon, DayIcon, MonthIcon, RefreshIcon, WeekIcon } from '../../../constants/app-icons';
+import { AdditionalMenuIcon, DateRangeIcon, DayIcon, GroupedList, RefreshIcon, UngroupedList, WeekIcon } from '../../../constants/app-icons';
 import { useEffect, useMemo, useRef } from 'react';
 import { Popup as PopupRef } from "devextreme-react/popup";
 import { EmergencyLogDialogTitle } from './emergency-log-dialog-title';
@@ -14,7 +14,7 @@ import { EmergencyLogGrid } from './emergency-log-grid';
 const EmergencyLogDialogInternal = (props: EmergencyLogDialogProps) => {
     const { isXSmall, isSmall } = useScreenSize();
     const popupRef = useRef<PopupRef>(null);
-    const { setRefreshToken, setSamplingHorizon, samplingHorizon } = useEmergencyLogDialog();
+    const { setRefreshToken, setSamplingHorizon, samplingHorizon, grouped, setGrouped } = useEmergencyLogDialog();
 
     const menuItems = useMemo(() => {
         return [
@@ -27,42 +27,39 @@ const EmergencyLogDialogInternal = (props: EmergencyLogDialogProps) => {
                         onClick: () => {
                             setRefreshToken(getQuickGuid());
                         }
+                    },                    {
+                        icon: () => grouped ? <UngroupedList size={20} /> : <GroupedList size={20} />,
+                        text: grouped ? 'Разгруппировать' : 'Группировать...',
+                        onClick: () => {
+                            setGrouped(prev => !prev);
+                        }
                     },
                     {
                         text: "Выборка",
                         icon: () => <DateRangeIcon size={24} />,
                         items: [
                             {
-                                icon: () => <DayIcon size={24} />,
-                                text: 'За сутки',
-                                textFontWeight: samplingHorizon === 0 ? 'bold' : null,
-                                onClick: () => {
-                                    setSamplingHorizon(0);
-                                }
-                            },
-                            {
                                 icon: () => <WeekIcon size={24} />,
-                                text: 'За неделю',
-                                textFontWeight: samplingHorizon === -6 ? 'bold' : null,
+                                text: 'За последний час',
+                                textFontWeight: samplingHorizon === -1 ? 'bold' : null,
                                 onClick: () => {
-                                    setSamplingHorizon(-6);
+                                    setSamplingHorizon(-1);
                                 }
                             },
                             {
-                                icon: () => <MonthIcon size={24} />,
-                                text: 'За месяц',
-                                textFontWeight: samplingHorizon === -30 ? 'bold' : null,
+                                icon: () => <DayIcon size={24} />,
+                                text: 'За текущие сутки',
+                                textFontWeight: samplingHorizon === -24 ? 'bold' : null,
                                 onClick: () => {
-                                    setSamplingHorizon(-30);
+                                    setSamplingHorizon(-24);
                                 }
                             }
                         ]
-                    }
-
+                    },
                 ]
             }
         ] as MenuItemModel[];
-    }, [samplingHorizon, setRefreshToken, setSamplingHorizon]);
+    }, [grouped, samplingHorizon, setGrouped, setRefreshToken, setSamplingHorizon]);
 
     useEffect(() => {
         setTimeout(() => {

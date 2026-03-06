@@ -6,7 +6,7 @@ export const EmergencyPopoverContent = ({ emergencyState }: { emergencyState: an
 
     const MenuRender = useCallback(({ emergencyReason }: { emergencyReason: any }) => {
         return (
-            <MainMenu items={[
+            <MainMenu disabled={true} items={[
                 {
                     icon: () => <EmergencySoundMute size={20} color='black' />,
                     items: [

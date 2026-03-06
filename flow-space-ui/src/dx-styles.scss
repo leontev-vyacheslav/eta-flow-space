@@ -1,8 +1,9 @@
 @use "./themes/generated/variables.base.scss" as *;
 @use "./themes/variables" as my;
 @use "sass:color";
+
 .app {
-  background-color:  color.adjust($base-bg, $lightness: -5%);
+  background-color: color.adjust($base-bg, $lightness: -5%);
   display: flex;
   height: 100%;
   width: 100%;
@@ -165,6 +166,10 @@ body {
 
   .dx-datagrid-search-panel {
     width: 250px !important;
+
+    input {
+      padding-bottom: 10px !important;
+    }
   }
 
   .dx-row .dx-item-content svg {

@@ -1,7 +1,9 @@
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { getQuickGuid } from "../../../utils/uuid";
-import { add, endOfDay, startOfDay } from "date-fns";
+import { add } from "date-fns";
 import type { EmergencyLogProps } from "../../../models/emergency-log-dialog-props";
+import { useAppData } from "../../../contexts/app-data/app-data";
+import type { EmergencyFlattenStateModel } from "../../../models/flows/emergency-state-model";
 
 type DateRangeModel = {
     beginDate: Date;
@@ -15,13 +17,20 @@ type EmergencyLogDialogContextModel = {
     samplingHorizon: number;
     setSamplingHorizon: React.Dispatch<React.SetStateAction<number>>;
 
-    dateRange: DateRangeModel
-    setDateRange: React.Dispatch<React.SetStateAction<DateRangeModel>>
+    dateRange: DateRangeModel;
+    setDateRange: React.Dispatch<React.SetStateAction<DateRangeModel>>;
+
+    emergencyStates: EmergencyFlattenStateModel[] | undefined;
+
+    grouped: boolean;
+    setGrouped: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const EmergencyLogDialogContext = createContext({} as EmergencyLogDialogContextModel);
 
 function EmergencyLogDialogContextProvider(props: EmergencyLogProps) {
+    const { getEmergencyStatesByDatesAsync } = useAppData();
+    const [emergencyStates, setEmergencyStates] = useState<EmergencyFlattenStateModel[] | undefined>();
     const [refreshToken, setRefreshToken] = useState<string>(getQuickGuid());
     const [samplingHorizon, setSamplingHorizon] = useState<number>(
         () => {
@@ -29,11 +38,12 @@ function EmergencyLogDialogContextProvider(props: EmergencyLogProps) {
             return samplingHorizonStored ? parseInt(JSON.parse(samplingHorizonStored)) : 0;
         }
     );
+    const [grouped, setGrouped] = useState<boolean>(true);
 
     const getDateRange = useCallback(() => {
         const now = new Date();
-        const beginDate = props.beginDate ?? startOfDay(add(now, { days: samplingHorizon }));
-        const endDate = props.endDate ?? endOfDay(now);
+        const beginDate = props.beginDate ?? add(now, { hours: samplingHorizon });
+        const endDate = props.endDate ?? now;
         return {
             beginDate: beginDate, endDate: endDate
         }
@@ -48,7 +58,24 @@ function EmergencyLogDialogContextProvider(props: EmergencyLogProps) {
         const rangeDates = getDateRange();
         setDateRange(rangeDates);
 
-    }, [getDateRange, samplingHorizon]);
+        (async () => {
+            const emergencyStates = await getEmergencyStatesByDatesAsync(
+                props.deviceId,
+                props.beginDate ?? rangeDates.beginDate,
+                props.endDate ?? rangeDates.endDate
+            );
+            setEmergencyStates(emergencyStates?.flatMap(({ id, state, createdAt }) =>
+                state.reasons.map(({ id: emergencyId, description }: any, index: number) => ({
+                    id: index,
+                    emergencyStateId: id,
+                    emergencyId,
+                    description,
+                    createdAt
+                }))
+            ));
+        })();
+
+    }, [getDateRange, getEmergencyStatesByDatesAsync, props, samplingHorizon]);
 
 
     return <EmergencyLogDialogContext.Provider value={{
@@ -59,7 +86,11 @@ function EmergencyLogDialogContextProvider(props: EmergencyLogProps) {
         setSamplingHorizon,
 
         dateRange,
-        setDateRange
+        setDateRange,
+        emergencyStates,
+
+        grouped,
+        setGrouped
     }} {...props} />
 }
 
