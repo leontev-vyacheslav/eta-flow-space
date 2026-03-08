@@ -2,7 +2,7 @@ import { Item as TabPanelItem, TabPanel } from 'devextreme-react/tab-panel';
 import { useEffect, useMemo, useRef, useState, type ComponentType } from "react";
 import PageHeader from "../../components/page-header/page-header";
 import AppConstants from "../../constants/app-constants";
-import { AdditionalMenuIcon, CircuitIcon, DashboardIcon, HelpIcon, MapIcon, ParamsIcon, RefreshIcon, WarningLogIcon } from "../../constants/app-icons";
+import { AdditionalMenuIcon, CircuitIcon, DashboardIcon, GraphIcon, HelpIcon, MapIcon, ParamsIcon, RefreshIcon, WarningLogIcon } from "../../constants/app-icons";
 import type { MenuItemModel } from "../../models/menu-item-model";
 import { quickHelpReferenceService } from "../../services/quick-help-reference-service";
 import { IconTab } from '../../components/tab-utils/icon-tab';
@@ -12,10 +12,11 @@ import { getQuickGuid } from '../../utils/uuid';
 import { NoData } from '../../components/no-data-widget/no-data-widget';
 import { EmergencyContextProvider } from './emergency-context';
 import { emergencyLogService } from '../../services/emergency-log-service';
+import { graphService } from '../../services/graph-service';
 
 const DashboardPageInner = () => {
     const tabPanelRef = useRef<TabPanel>(null);
-    const { setRefreshToken } = useDashboardPage();
+    const { setRefreshToken, schemaTypeInfoPropertiesChain } = useDashboardPage();
     const { flowCode, deviceId } = useParams();
     const [ControlTabContent, setControlTabContent] = useState<ComponentType<any> | null>(null);
     const [MnemoschemaTabContent, setMnemoschemaTabContent] = useState<ComponentType<any> | null>(null);
@@ -34,15 +35,23 @@ const DashboardPageInner = () => {
                             setRefreshToken(getQuickGuid());
                         }
                     }, {
+                        icon: () => <GraphIcon size={20} />,
+                        text: 'Графики...',
+                        onClick: () => {
+                            if (deviceId) {
+                                const s = schemaTypeInfoPropertiesChain?.filter(chain => chain.typeInfo?.ui.chart);
+                                graphService.show({ deviceId: parseInt(deviceId), schemaTypeInfos: s || [] });
+                            }
+                        }
+                    }, {
                         icon: () => <WarningLogIcon size={20} />,
                         text: 'Журнал НС...',
                         onClick: () => {
                             if (deviceId) {
-                            emergencyLogService.show({deviceId: parseInt(deviceId)});
+                                emergencyLogService.show({ deviceId: parseInt(deviceId) });
                             }
                         }
-                    },
-                    {
+                    }, {
                         icon: () => <HelpIcon size={20} />,
                         text: 'Справка...',
                         onClick: () => {
@@ -52,7 +61,7 @@ const DashboardPageInner = () => {
                 ]
             }
         ] as MenuItemModel[];
-    }, [deviceId, setRefreshToken]);
+    }, [deviceId, schemaTypeInfoPropertiesChain, setRefreshToken]);
 
 
     useEffect(() => {

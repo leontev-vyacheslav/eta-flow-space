@@ -3,13 +3,13 @@ import { AppDataProvider } from '../contexts/app-data/app-data';
 import { AuthProvider } from '../contexts/auth';
 import { SharedAreaProvider } from '../contexts/shared-area';
 import { GraphDialog } from '../components/dialogs/graph-dialog/graph-dialog';
-import type { GraphChartProps } from '../models/graph-dialog-props';
+import type { GraphDialogProps } from '../models/graph-dialog-props';
 
 class GraphService {
     private popupContainer?: HTMLDivElement;
     private root?: Root;
 
-    public show({ deviceId, schemaTypeInfos, beginDate, endDate }: GraphChartProps) {
+    public show({ deviceId, schemaTypeInfos, beginDate, endDate }: GraphDialogProps) {
         document.querySelector('#graph-dialog-root')?.remove();
 
         this.popupContainer = document.createElement('div');

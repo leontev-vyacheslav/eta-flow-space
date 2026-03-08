@@ -14,7 +14,7 @@ import { getQuickGuid } from '../../../utils/uuid';
 const GraphDialogInternal = (props: GraphDialogProps) => {
     const { isXSmall, isSmall } = useScreenSize();
     const popupRef = useRef<PopupRef>(null);
-    const { setRefreshToken, setSamplingHorizon, samplingHorizon } = useGraphDialog();
+    const { setRefreshToken, setSamplingHorizon, samplingHorizon, currentSchemaTypeInfoIndex } = useGraphDialog();
 
     const menuItems = useMemo(() => {
         return [
@@ -35,7 +35,7 @@ const GraphDialogInternal = (props: GraphDialogProps) => {
                             {
                                 icon: () => <DayIcon size={24} />,
                                 text: 'За сутки',
-                                textFontWeight: samplingHorizon === 0 ? 'bold': null,
+                                textFontWeight: samplingHorizon === 0 ? 'bold' : null,
                                 onClick: () => {
                                     setSamplingHorizon(0);
                                 }
@@ -43,7 +43,7 @@ const GraphDialogInternal = (props: GraphDialogProps) => {
                             {
                                 icon: () => <WeekIcon size={24} />,
                                 text: 'За неделю',
-                                textFontWeight: samplingHorizon === -6 ? 'bold': null,
+                                textFontWeight: samplingHorizon === -6 ? 'bold' : null,
                                 onClick: () => {
                                     setSamplingHorizon(-6);
                                 }
@@ -51,7 +51,7 @@ const GraphDialogInternal = (props: GraphDialogProps) => {
                             {
                                 icon: () => <MonthIcon size={24} />,
                                 text: 'За месяц',
-                                textFontWeight: samplingHorizon === -30 ? 'bold': null,
+                                textFontWeight: samplingHorizon === -30 ? 'bold' : null,
                                 onClick: () => {
                                     setSamplingHorizon(-30);
                                 }
@@ -64,8 +64,8 @@ const GraphDialogInternal = (props: GraphDialogProps) => {
         ] as MenuItemModel[];
     }, [samplingHorizon, setRefreshToken, setSamplingHorizon]);
 
-    useEffect ( () => {
-        setTimeout( () => {
+    useEffect(() => {
+        setTimeout(() => {
             popupRef.current?.instance.repaint();
         }, 500);
     }, []);
@@ -75,7 +75,7 @@ const GraphDialogInternal = (props: GraphDialogProps) => {
             ref={popupRef}
             width={isXSmall || isSmall ? '95%' : undefined}
             height={isXSmall || isSmall ? '80%' : undefined}
-            titleRender={() => <GraphDialogTitle popupRef={popupRef} menuItems={menuItems} />}
+            titleRender={() => <GraphDialogTitle popupRef={popupRef} menuItems={menuItems} schemaTypeInfos={props.schemaTypeInfos} />}
             dragEnabled={!(isXSmall || isSmall)}
             resizeEnabled
             {...props}
@@ -115,7 +115,7 @@ const GraphDialogInternal = (props: GraphDialogProps) => {
                 }
             }}
         >
-            <GraphChart {...props} />
+            <GraphChart { ...{...props, schemaTypeInfo: props.schemaTypeInfos[currentSchemaTypeInfoIndex]} } />
         </AppModalPopup >
     );
 }

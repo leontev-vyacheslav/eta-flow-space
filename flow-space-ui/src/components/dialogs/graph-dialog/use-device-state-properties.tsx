@@ -14,12 +14,12 @@ export const useDeviceStateProperties = (props: GraphChartProps & { refreshToken
                 props.deviceId,
                 props.beginDate!,
                 props.endDate!,
-                props.schemaTypeInfos.map(t => (t.propertiesChainValuePair.propertiesChain))
+                [props.schemaTypeInfo].map(t => (t.propertiesChainValuePair.propertiesChain))
             );
 
             if (stateProperties) {
                 stateProperties = stateProperties.map(stateItem => {
-                    props.schemaTypeInfos.forEach(t => {
+                    [props.schemaTypeInfo].forEach(t => {
                         const fieldName = t.propertiesChainValuePair.propertiesChain;
                         let typedValue = stateItem[fieldName];
                         if (['integer', 'number'].includes(t.typeInfo!.typeName)) {
@@ -32,8 +32,9 @@ export const useDeviceStateProperties = (props: GraphChartProps & { refreshToken
             }
 
             setStateProperties(stateProperties);
+            console.log(stateProperties);
         })();
-    }, [getDeviceStatesByDatesAsync, props.beginDate, props.deviceId, props.endDate, props.schemaTypeInfos, props.refreshToken]);
+    }, [getDeviceStatesByDatesAsync, props.beginDate, props.deviceId, props.endDate, props.schemaTypeInfo, props.refreshToken]);
 
     return stateProperties;
 }

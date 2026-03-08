@@ -20,6 +20,7 @@ function EmergencyContextProvider(props: any) {
         event.stopPropagation();
 
         if (popoverInstance.current) {
+            popoverInstance.current.hide();
             popoverInstance.current.dispose();
         }
 
@@ -87,8 +88,7 @@ function EmergencyContextProvider(props: any) {
         );
         const deviceEmergencyElements = Array.from(document.querySelectorAll('.side-navigation-menu [data-device-emergency]'));
 
-        flows
-            ?.flatMap(f => (f.devices))
+        flows?.flatMap(f => (f.devices ?? []))
             .forEach(d => {
                 const deviceEmergencyElement = deviceEmergencyElements.find(e => e.getAttribute('data-device-emergency') === d.id.toString());
                 if (!deviceEmergencyElement) {

@@ -1,7 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { useDeviceStateProperties } from "./use-device-state-properties";
 import type { DeviceStatePropertiesModel } from "../../../models/flows/device-state-model";
-import type { GraphChartProps } from "../../../models/graph-dialog-props";
+import type { GraphDialogProps } from "../../../models/graph-dialog-props";
 import { getQuickGuid } from "../../../utils/uuid";
 import { add, endOfDay, startOfDay } from "date-fns";
 
@@ -19,13 +19,16 @@ type GraphDialogContextModel = {
     samplingHorizon: number;
     setSamplingHorizon: React.Dispatch<React.SetStateAction<number>>;
 
-    dateRange: DateRangeModel
-    setDateRange: React.Dispatch<React.SetStateAction<DateRangeModel>>
+    dateRange: DateRangeModel;
+    setDateRange: React.Dispatch<React.SetStateAction<DateRangeModel>>;
+
+    currentSchemaTypeInfoIndex: number;
+    setCurrentSchemaTypeInfoIndex: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const GraphDialogContext = createContext({} as GraphDialogContextModel);
 
-function GraphDialogContextProvider(props: GraphChartProps) {
+function GraphDialogContextProvider(props: GraphDialogProps) {
     const [refreshToken, setRefreshToken] = useState<string>(getQuickGuid());
     const [samplingHorizon, setSamplingHorizon] = useState<number>(
         () => {
@@ -47,6 +50,8 @@ function GraphDialogContextProvider(props: GraphChartProps) {
         return getDateRange();
     });
 
+    const [currentSchemaTypeInfoIndex, setCurrentSchemaTypeInfoIndex] = useState(0);
+
     useEffect(() => {
         localStorage.setItem('graphChartSamplingHorizon', JSON.stringify(samplingHorizon));
         const rangeDates = getDateRange();
@@ -54,7 +59,7 @@ function GraphDialogContextProvider(props: GraphChartProps) {
 
     }, [getDateRange, samplingHorizon]);
 
-    const stateProperties = useDeviceStateProperties({ ...props, beginDate: dateRange.beginDate, endDate: dateRange.endDate, refreshToken: refreshToken });
+    const stateProperties = useDeviceStateProperties({ ...props, schemaTypeInfo: props.schemaTypeInfos[currentSchemaTypeInfoIndex], beginDate: dateRange.beginDate, endDate: dateRange.endDate, refreshToken: refreshToken });
 
     return <GraphDialogContext.Provider value={{
         refreshToken,
@@ -65,7 +70,10 @@ function GraphDialogContextProvider(props: GraphChartProps) {
         setSamplingHorizon,
 
         dateRange,
-        setDateRange
+        setDateRange,
+
+        currentSchemaTypeInfoIndex,
+        setCurrentSchemaTypeInfoIndex
     }} {...props} />
 }
 

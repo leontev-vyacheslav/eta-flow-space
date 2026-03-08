@@ -6,5 +6,5 @@ export type AppModalPopupProps = {
 
   children?: ReactNode;
 
-  callback: ({ ...any }: PopupCallbackModel) => void;
+  callback?: ({ ...any }: PopupCallbackModel) => void;
 }

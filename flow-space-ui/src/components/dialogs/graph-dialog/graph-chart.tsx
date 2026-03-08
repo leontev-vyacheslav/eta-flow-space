@@ -53,7 +53,7 @@ export const GraphChart = (props: GraphChartProps) => {
                 margin={{ top: 10, bottom: 10, left: 10, right: 10 }}
                 palette={'Office'}
                 series={
-                    props.schemaTypeInfos.map(t => {
+                    [props.schemaTypeInfo].map(t => {
                         return {
                             valueField: t.propertiesChainValuePair.propertiesChain,
                             argumentField: "createdAt",
@@ -69,7 +69,7 @@ export const GraphChart = (props: GraphChartProps) => {
                     })
                 }
                 valueAxis={
-                    props.schemaTypeInfos.map(t => {
+                    [props.schemaTypeInfo].map(t => {
                         return {
                             name: t.propertiesChainValuePair.propertiesChain,
                             position: 'left',
@@ -124,7 +124,7 @@ export const GraphChart = (props: GraphChartProps) => {
                     zIndex={3000}
                     arrowLength={5}
                     opacity={1}
-                    contentRender={(info: any) => <GraphChartTooltip info={info} schemaTypeInfos={props.schemaTypeInfos} />}
+                    contentRender={(info: any) => <GraphChartTooltip info={info} schemaTypeInfos={[props.schemaTypeInfo]} />}
                 />
 
             </Chart >
