@@ -18,7 +18,7 @@ const AppModalPopup = forwardRef<PopupRef, React.PropsWithChildren<IPopupOptions
                 showTitle={true}
                 showCloseButton={true}
                 onHiding={() =>
-                    props.callback({
+                    props.callback?.({
                         modalResult: DialogConstants.ModalResults.Close,
                         parametric: null
                     })
