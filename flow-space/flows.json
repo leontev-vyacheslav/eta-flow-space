@@ -841,7 +841,7 @@
         "type": "function",
         "z": "2dca6eed12b296f5",
         "g": "41c82c569adc9a0c",
-        "name": "get-device-state-data-schema",
+        "name": "get-device-data-schema",
         "func": "const { getDeviceStateDataschema } = global.get('routes');\n\nreturn await getDeviceStateDataschema(msg);",
         "outputs": 1,
         "timeout": 0,
@@ -849,7 +849,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 550,
+        "x": 530,
         "y": 580,
         "wires": [
             [
@@ -862,10 +862,10 @@
         "type": "http response",
         "z": "2dca6eed12b296f5",
         "g": "41c82c569adc9a0c",
-        "name": "http-get-device-state-data-schema-response",
+        "name": "http-get-device-data-schema-response",
         "statusCode": "",
         "headers": {},
-        "x": 890,
+        "x": 870,
         "y": 580,
         "wires": []
     },
@@ -1932,53 +1932,6 @@
         "libs": [],
         "x": 1050,
         "y": 300,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "3399c7d3c09f4d06",
-        "type": "inject",
-        "z": "30c8a42fdf53c9ea",
-        "name": "set-interval-1min",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 490,
-        "y": 760,
-        "wires": [
-            [
-                "127dfbd55cf54f1c"
-            ]
-        ]
-    },
-    {
-        "id": "127dfbd55cf54f1c",
-        "type": "function",
-        "z": "30c8a42fdf53c9ea",
-        "name": "stub-collect-emergency-state",
-        "func": "\nglobal.set(\"emergencyState4\", {\n    reasons: [\n        {\n            id: 8,\n            expression: \"isVaporDt2 === true\",\n            description: \"Пары ДТ2\"\n        }\n    ],\n    timestamp: Date.now(),\n});\n\nglobal.set(\"emergencyState6\", {\n    reasons: [\n        {\n            id: 8,\n            expression: \"isVaporDt2 === true\",\n            description: \"Пары ДТ2\"\n        }\n    ],\n    timestamp: Date.now(),\n});\n\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 780,
-        "y": 760,
         "wires": [
             []
         ]
