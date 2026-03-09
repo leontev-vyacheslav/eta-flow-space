@@ -2,7 +2,6 @@ import { IoTimeSharp as TimeChartSingIcon } from "react-icons/io5";
 import { VscGraphLine as GraphIcon } from "react-icons/vsc";
 import type { SchemaTypeInfoPropertiesChainModel } from "../../../helpers/data-helper";
 
-
 export const GraphChartTooltip = ({ info, schemaTypeInfos }: { info: any; schemaTypeInfos: SchemaTypeInfoPropertiesChainModel[]; }) => {
 
     return (
@@ -13,13 +12,13 @@ export const GraphChartTooltip = ({ info, schemaTypeInfos }: { info: any; schema
                 <div>{(info.point.data.createdAt as Date).toLocaleString('ru-RU')}</div>
             </div>
             {schemaTypeInfos.map((t, i) => {
-                return (
+                return info.point.data && info.point.data[t.propertiesChainValuePair.propertiesChain] !== undefined ?
                     <div key={i} style={{ display: "flex", alignItems: 'center', gap: 8 }}>
                         <GraphIcon size={18} />
                         <div>{t.typeInfo?.ui.editor.label.text}{":"}</div>
                         <div>{info.point.data[t.propertiesChainValuePair.propertiesChain].toLocaleString(undefined, { minimumFractionDigits: 1 })} {t.typeInfo?.unit ? `${t.typeInfo?.unit}` : ''}</div>
                     </div>
-                );
+                    : null;
             })}
         </div>
     );
