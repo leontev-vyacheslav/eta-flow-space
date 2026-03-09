@@ -32,7 +32,6 @@ export const useDeviceStateProperties = (props: GraphChartProps & { refreshToken
             }
 
             setStateProperties(stateProperties);
-            console.log(stateProperties);
         })();
     }, [getDeviceStatesByDatesAsync, props.beginDate, props.deviceId, props.endDate, props.schemaTypeInfo, props.refreshToken]);
 
