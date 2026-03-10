@@ -1,4 +1,4 @@
-const { Op } = require('sequelize');
+const { Op, col } = require('sequelize');
 const { UserDeviceLinkDataModel, EmergencyStateDataModel } = require('../orm/models');
 
 async function getEmergencyStatesByDates(msg) {
@@ -27,8 +27,17 @@ async function getEmergencyStatesByDates(msg) {
         attributes: [
             'id',
             'deviceId',
+            [col('device.name'), 'deviceName'],
             'state',
             'createdAt'
+        ],
+         include: [
+            {
+                model: DeviceDataModel,
+                as: 'device',
+                required: true,
+                attributes: [],
+            }
         ],
         where: {
             deviceId: deviceId,

@@ -38,6 +38,12 @@ export const EmergencyLogGrid = () => {
                     groupCellRender={(groupCell) => <GroupRowContent groupCell={groupCell} />}
                     visible={false}
                 />
+                 <Column
+                    dataType='string'
+                    dataField='deviceName'
+                    caption={'Устройство'}
+                    allowSorting={false}
+                ></Column>
 
                 <Column
                     dataType='datetime'
