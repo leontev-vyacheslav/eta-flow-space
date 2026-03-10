@@ -45,7 +45,7 @@ const DashboardPageInner = () => {
                         }
                     }, {
                         icon: () => <WarningLogIcon size={20} />,
-                        text: 'Журнал НС...',
+                        text: 'Журнал аварий...',
                         onClick: () => {
                             if (deviceId) {
                                 emergencyLogService.show({ deviceId: parseInt(deviceId) });

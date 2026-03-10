@@ -16,7 +16,7 @@ export type GetMnemoschemaAsyncFunc = (deviceId: number) => Promise<string | und
 export type GetDeviceAsyncFunc = (deviceId: number) => Promise<DeviceModel | undefined>;
 export type GetDeviceStateDataschemaAsyncFunc = (deviceId: number) => Promise<any | undefined>;
 export type GetDeviceStatesByDatesAsyncFunc = (deviceId: number, beginDate: Date, endDate: Date, fields: string[]) => Promise<DeviceStatePropertiesModel[] | undefined>;
-export type GetEmergencyStatesByDatesAsyncFunc = (deviceId: number, beginDate: Date, endDate: Date) => Promise<EmergencyStateModel[] | undefined>;
+export type GetEmergencyStatesByDatesAsyncFunc = (deviceId: number | undefined, beginDate: Date, endDate: Date) => Promise<EmergencyStateModel[] | undefined>;
 
 export type AppDataContextFlowEndpointsModel = {
     getFlowListAsync: GetFlowListAsyncFunc;

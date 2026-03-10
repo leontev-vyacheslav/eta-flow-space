@@ -65,10 +65,11 @@ function EmergencyLogDialogContextProvider(props: EmergencyLogProps) {
                 props.beginDate ?? rangeDates.beginDate,
                 props.endDate ?? rangeDates.endDate
             );
-            setEmergencyStates(emergencyStates?.flatMap(({ id, state, createdAt }) =>
+            setEmergencyStates(emergencyStates?.flatMap(({ id, deviceName, state, createdAt }) =>
                 state.reasons.map(({ id: emergencyId, description }: any) => ({
                     id: uuidv7(),
                     emergencyStateId: id,
+                    deviceName,
                     emergencyId,
                     description,
                     createdAt

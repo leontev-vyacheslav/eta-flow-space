@@ -39,13 +39,6 @@ export const EmergencyLogGrid = () => {
                     visible={false}
                 />
                  <Column
-                    dataType='string'
-                    dataField='deviceName'
-                    caption={'Устройство'}
-                    allowSorting={false}
-                ></Column>
-
-                <Column
                     dataType='datetime'
                     dataField='createdAt'
                     width={150}
@@ -53,15 +46,20 @@ export const EmergencyLogGrid = () => {
                     allowSorting={true}
                     sortOrder='desc'
                     visible={!grouped}
-                >
-                </Column>
+                />
+                 <Column
+                    dataType='string'
+                    dataField='deviceName'
+                    caption={'Устройство'}
+                    allowSorting={false}
+                    width={200}
+                />
                 <Column
                     dataType='string'
                     dataField='description'
                     caption={'Описание НС'}
                     allowSorting={false}
-                >
-                </Column>
+                />
 
             </DataGrid>
             : null

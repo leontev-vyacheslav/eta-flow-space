@@ -12,7 +12,7 @@ export const EmergencyLogDialogTitle = ({ popupRef, menuItems }: { popupRef: Rea
             width: '100%',
             padding: '0 8px'
         }}>
-            <span style={{ fontSize: '20px', fontWeight: 500 }}>Журнал НС</span>
+            <span style={{ fontSize: '20px', fontWeight: 500 }}>Журнал аварий</span>
             <div style={{ display: 'flex' }}>
                 <MainMenu items={menuItems} />
                 <MainMenu items={[{

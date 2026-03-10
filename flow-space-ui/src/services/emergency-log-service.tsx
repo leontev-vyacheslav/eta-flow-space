@@ -8,7 +8,7 @@ class EmergencyLogService {
     private popupContainer?: HTMLDivElement;
     private root?: Root;
 
-    public show({ deviceId }: {deviceId: number}) {
+    public show({ deviceId }: {deviceId?: number}) {
         document.querySelector('#emergency-log-dialog-root')?.remove();
 
         this.popupContainer = document.createElement('div');

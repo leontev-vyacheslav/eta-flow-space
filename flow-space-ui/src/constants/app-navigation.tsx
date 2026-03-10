@@ -4,7 +4,8 @@ import {
     ExitIcon,
     HelpIcon,
     FlowIcon,
-    DeviceIcon
+    DeviceIcon,
+    WarningLogIcon
 } from './app-icons';
 import type { TreeViewItemModel } from '../models/tree-view-item';
 import type { IconBaseProps } from 'react-icons';
@@ -28,6 +29,12 @@ export const useSideNavigationMenuItems = () => {
                     entity: { typeName: 'DeviceModel', id: d.id },
                 }))
             })) || []),
+            {
+                id: 'emergency-log',
+                text: 'Журнал аварий',
+                iconRender: (props: IconBaseProps) => <WarningLogIcon size={20} {...props} />,
+                command: 'emergency-log',
+            },
             {
                 id: 'about',
                 text: 'О программе',

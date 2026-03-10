@@ -2,7 +2,7 @@ import type { IPopupOptions } from "devextreme-react/popup";
 import type { AppModalPopupProps } from "./app-modal-popup-props";
 
 export type EmergencyLogProps = {
-    deviceId: number;
+    deviceId?: number;
     beginDate?: Date;
     endDate?: Date;
 };

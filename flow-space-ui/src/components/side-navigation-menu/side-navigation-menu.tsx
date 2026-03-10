@@ -8,6 +8,7 @@ import { useSharedArea } from '../../contexts/shared-area';
 import type { TreeViewItemModel } from '../../models/tree-view-item';
 import type { SideNavigationMenuProps } from '../../models/side-navigation-menu-props';
 import { quickHelpReferenceService } from '../../services/quick-help-reference-service';
+import { emergencyLogService } from '../../services/emergency-log-service';
 
 import './side-navigation-menu.scss';
 
@@ -123,6 +124,12 @@ export function SideNavigationMenu(props: SideNavigationMenuProps) {
 
                         if (treeViewItem.command === 'help') {
                             quickHelpReferenceService.show('common/introduction');
+
+                            return;
+                        }
+
+                         if (treeViewItem.command === 'emergency-log') {
+                            emergencyLogService.show({});
 
                             return;
                         }
