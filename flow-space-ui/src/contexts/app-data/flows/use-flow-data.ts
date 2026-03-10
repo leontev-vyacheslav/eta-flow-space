@@ -124,8 +124,12 @@ export const useFlowData = () => {
     }, [authHttpRequest]);
 
     const getEmergencyStatesByDatesAsync = useCallback(async (deviceId: number, beginDate: Date, endDate: Date) => {
+        const urlDateParams = `?beginDate=${beginDate.toISOString()}&endDate=${endDate.toISOString()}`;
+        const url = deviceId
+            ? `${routes.host}${routes.emergencyStates}/${deviceId}/dates${urlDateParams}`
+            : `${routes.host}${routes.emergencyStates}/dates${urlDateParams}`;
         const response = await authHttpRequest({
-            url: `${routes.host}${routes.emergencyStates}/${deviceId}/dates?beginDate=${beginDate.toISOString()}&endDate=${endDate.toISOString()}`,
+            url: url,
             method: HttpConstants.Methods.Get as Method,
         });
 
