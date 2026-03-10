@@ -87,3 +87,9 @@ Authorization: Bearer {{authToken}}
 # @name getEmergencyStatesByDates
 GET {{baseUrl}}/api/states/emergency/6/dates?beginDate=2026-03-05T00:00:00&endDate=2026-03-05T23:59:59
 Authorization: Bearer {{authToken}}
+
+
+###
+# @name getUserEmergencyStatesByDates
+GET {{baseUrl}}/api/states/emergency/dates?beginDate=2026-03-10T00:00:00&endDate=2026-03-10T23:59:59
+Authorization: Bearer {{authToken}}

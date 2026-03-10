@@ -46,7 +46,7 @@
             "f69d7d7c5b8b9117"
         ],
         "x": 34,
-        "y": 1019,
+        "y": 1119,
         "w": 592,
         "h": 162
     },
@@ -64,8 +64,8 @@
         ],
         "x": 28,
         "y": 33,
-        "w": 1084,
-        "h": 994
+        "w": 1144,
+        "h": 1054
     },
     {
         "id": "41c82c569adc9a0c",
@@ -111,12 +111,15 @@
             "9ebc49b2121e9ec5",
             "a595e975913d53db",
             "7d9aa39bbe09689b",
-            "51c82d63f145dd99"
+            "51c82d63f145dd99",
+            "97fd0e5ab83e8c62",
+            "4f037ee787c04572",
+            "25c24d9b2ed0751c"
         ],
         "x": 54,
         "y": 239,
-        "w": 1032,
-        "h": 762
+        "w": 1092,
+        "h": 822
     },
     {
         "id": "d4fc72a987396215",
@@ -455,7 +458,7 @@
         "finalize": "",
         "libs": [],
         "x": 470,
-        "y": 1060,
+        "y": 1160,
         "wires": [
             []
         ]
@@ -483,7 +486,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 170,
-        "y": 1060,
+        "y": 1160,
         "wires": [
             [
                 "443b413283d10c89"
@@ -937,7 +940,7 @@
         "finalize": "",
         "libs": [],
         "x": 490,
-        "y": 1140,
+        "y": 1240,
         "wires": [
             []
         ]
@@ -965,7 +968,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 170,
-        "y": 1140,
+        "y": 1240,
         "wires": [
             [
                 "f69d7d7c5b8b9117"
@@ -1022,6 +1025,58 @@
         "headers": {},
         "x": 900,
         "y": 960,
+        "wires": []
+    },
+    {
+        "id": "97fd0e5ab83e8c62",
+        "type": "http in",
+        "z": "2dca6eed12b296f5",
+        "g": "41c82c569adc9a0c",
+        "name": "",
+        "url": "/api/states/emergency/dates",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 210,
+        "y": 1020,
+        "wires": [
+            [
+                "4f037ee787c04572"
+            ]
+        ]
+    },
+    {
+        "id": "4f037ee787c04572",
+        "type": "function",
+        "z": "2dca6eed12b296f5",
+        "g": "41c82c569adc9a0c",
+        "name": "get-user-emergency-states-by-dates",
+        "func": "const { getUserEmergencyStatesByDates } = global.get('routes');\n\nreturn await getUserEmergencyStatesByDates(msg);\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 590,
+        "y": 1020,
+        "wires": [
+            [
+                "25c24d9b2ed0751c"
+            ]
+        ]
+    },
+    {
+        "id": "25c24d9b2ed0751c",
+        "type": "http response",
+        "z": "2dca6eed12b296f5",
+        "g": "41c82c569adc9a0c",
+        "name": "http-user-emergency-states-by-dates-response",
+        "statusCode": "",
+        "headers": {},
+        "x": 940,
+        "y": 1020,
         "wires": []
     },
     {

@@ -13,6 +13,7 @@ module.exports = {
 
     ...require('./get-emergency-states'),
     ...require('./get-emergency-states-by-dates'),
+    ...require('./get-user-emergency-states-by-dates'),
 
     ...require('./get-quick-helps'),
 };
