@@ -20,7 +20,7 @@ export const GraphDialogTitle = ({ popupRef, menuItems, schemaTypeInfos }: { pop
             <span style={{ fontSize: '20px', fontWeight: 500 }}>График</span>
             <div style={{ display: 'flex', gap: 5 }}>
                 {schemaTypeInfos.length > 1 ?
-                    <SelectBox displayExpr={'label'} valueExpr={'value'} dataSource={schemaTypeInfos.map(c => ({ label: c.typeInfo?.ui.editor.label.text, value: c }))}
+                    <SelectBox displayExpr={'label'} valueExpr={'value'} dataSource={schemaTypeInfos.map(c => ({ label: `${c.typeInfo?.ui.editor.label.text} ${c.propertiesChainValuePair.arrayIndex !== undefined ? `${c.propertiesChainValuePair.arrayIndex + 1}` : ''}`, value: c }))}
                         value={schemaTypeInfos[currentSchemaTypeInfoIndex]}
                         onValueChanged={(e) => setCurrentSchemaTypeInfoIndex(schemaTypeInfos.indexOf(e.value))}
                         dropDownOptions={ {
