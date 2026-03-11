@@ -30,12 +30,13 @@ export const EmergencyLogGrid = () => {
                 focusedRowEnabled
             >
                 <SearchPanel visible={true} searchVisibleColumnsOnly={false}  />
-                <Grouping autoExpandAll={true} key={'id'} />
+                <Grouping autoExpandAll={true} />
 
                 <Column
                     dataField={'emergencyStateId'}
                     groupIndex={grouped ? 0 : undefined}
                     groupCellRender={(groupCell) => <GroupRowContent groupCell={groupCell} />}
+                    sortOrder={grouped ? 'desc' : undefined}
                     visible={false}
                 />
                  <Column
