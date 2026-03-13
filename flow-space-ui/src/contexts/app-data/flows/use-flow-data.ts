@@ -7,11 +7,12 @@ import type { FlowModel } from '../../../models/flows/flow-model';
 import type { DeviceModel } from '../../../models/flows/device-model';
 import type { DeviceStateModel, DeviceStatePropertiesModel } from '../../../models/flows/device-state-model';
 import type { EmergencyStateModel } from '../../../models/flows/emergency-state-model';
+import type { EmergencyModel } from "../../../models/flows/emergency-model";
 
 export type GetFlowListAsyncFunc = () => Promise<FlowModel[] | undefined>;
 export type GetDeviceListAsyncFunc = () => Promise<DeviceModel[] | undefined>;
 export type GetDeviceStateAsyncFunc = (deviceId: number) => Promise<DeviceStateModel | undefined>;
-export type GetEmergencyStateAsyncFunc = () => Promise<EmergencyStateModel[] | undefined>;
+export type GetEmergencyStateAsyncFunc = () => Promise<EmergencyModel[] | undefined>;
 export type GetMnemoschemaAsyncFunc = (deviceId: number) => Promise<string | undefined>;
 export type GetDeviceAsyncFunc = (deviceId: number) => Promise<DeviceModel | undefined>;
 export type GetDeviceStateDataschemaAsyncFunc = (deviceId: number) => Promise<any | undefined>;
@@ -119,7 +120,7 @@ export const useFlowData = () => {
         }, true);
 
         if (response && response.status === HttpConstants.StatusCodes.Ok) {
-            return response.data.values as EmergencyStateModel[];
+            return response.data.values as EmergencyModel[];
         }
     }, [authHttpRequest]);
 

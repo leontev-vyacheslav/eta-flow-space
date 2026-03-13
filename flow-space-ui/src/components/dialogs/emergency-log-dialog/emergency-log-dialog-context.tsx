@@ -3,7 +3,7 @@ import { getQuickGuid } from "../../../utils/uuid";
 import { add } from "date-fns";
 import type { EmergencyLogProps } from "../../../models/emergency-log-dialog-props";
 import { useAppData } from "../../../contexts/app-data/app-data";
-import type { EmergencyFlattenStateModel } from "../../../models/flows/emergency-state-model";
+import type { EmergencyFlattenStateModel } from "../../../models/flows/emergency-flatten-state-model";
 import { v7 as uuidv7 } from 'uuid';
 
 type DateRangeModel = {

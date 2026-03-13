@@ -1,41 +1,70 @@
 import { useCallback } from "react";
 import { MainMenu } from "../../components/menu/main-menu/main-menu";
-import { EmergencySoundMute, OneHourIcon, TwoHourIcon, ThreeHourIcon, WarningLogIcon } from "../../constants/app-icons";
+import { EmergencySoundMute, WarningLogIcon, EmergencySoundUnmute, AdditionalMenuIcon } from "../../constants/app-icons";
+import { emergencyMuteManager } from "../../services/emergency-mute-manager";
+import type dxPopover from "devextreme/ui/popover";
 
-export const EmergencyPopoverContent = ({ emergencyState }: { emergencyState: any }) => {
+export const EmergencyPopoverContent = ({ emergencyState, popoverInstance }: { emergencyState: any, popoverInstance: React.RefObject<dxPopover<any> | null> }) => {
 
-    const MenuRender = useCallback(({ emergencyReason }: { emergencyReason: any }) => {
+    const MenuRender = useCallback(({ deviceId, emergencyReason }: { deviceId: number, emergencyReason: any }) => {
         return (
-            <MainMenu disabled={true} items={[
+            <MainMenu disabled={false} items={[
                 {
-                    icon: () => <EmergencySoundMute size={20} color='black' />,
+                    icon: () => <AdditionalMenuIcon size={18} color='black' />,
                     items: [
                         {
-                            text: 'На 1 час',
-                            icon: () => <OneHourIcon size={20} />,
+                            text: "Включить звук",
+                            icon: () => <EmergencySoundUnmute size={18} />,
                             onClick: () => {
-                                alert(`На 1 час: ${emergencyReason.id}`);
-                            },
-                        },
-                        {
-                            text: 'На 2 часа',
-                            icon: () => <TwoHourIcon size={20} />,
-                            onClick: () => {
-                                alert(`На 2 час: ${emergencyReason.id}`);
+                                emergencyMuteManager.removeMute(deviceId, emergencyReason.id);
+                                popoverInstance.current?.hide();
+                                popoverInstance.current?.dispose();
                             }
                         },
                         {
-                            text: 'На 3 часа',
-                            icon: () => <ThreeHourIcon size={20} />,
+                            text: 'Выключить на 1 час',
+                            icon: () => <EmergencySoundMute size={18} />,
                             onClick: () => {
-                                alert(`На 3 час: ${emergencyReason.id}`);
+                                emergencyMuteManager.addMute(
+                                    deviceId,
+                                    emergencyReason.id,
+                                    3600000
+                                );
+                                popoverInstance.current?.hide();
+                                popoverInstance.current?.dispose();
+                            }
+                        },
+                        {
+                            text: 'Выключить на 2 часа',
+                            icon: () => <EmergencySoundMute size={18} />,
+                            onClick: () => {
+                                emergencyMuteManager.addMute(
+                                    deviceId,
+                                    emergencyReason.id,
+                                    7200000
+                                );
+                                popoverInstance.current?.hide();
+                                popoverInstance.current?.dispose();
+                            }
+                        },
+                        {
+                            text: 'Выключить на 3 часа',
+                            icon: () => <EmergencySoundMute size={18} />,
+                            onClick: () => {
+                                emergencyMuteManager.addMute(
+                                    deviceId,
+                                    emergencyReason.id,
+                                    10800000
+                                );
+                                popoverInstance.current?.hide();
+                                popoverInstance.current?.dispose();
                             }
                         }
                     ]
                 }
             ]} />
         );
-    }, []);
+    }, [popoverInstance]);
 
     return (
         <table className='simple-grid'>
@@ -57,7 +86,7 @@ export const EmergencyPopoverContent = ({ emergencyState }: { emergencyState: an
                                     <div style={{ display: 'flex', alignItems: 'center' }}>
                                         <span style={{ flex: 1 }}>{r.description}</span>
                                         <span>
-                                            <MenuRender emergencyReason={r} />
+                                            <MenuRender deviceId={emergencyState.deviceId} emergencyReason={r} />
                                         </span>
                                     </div>
                                 </td>

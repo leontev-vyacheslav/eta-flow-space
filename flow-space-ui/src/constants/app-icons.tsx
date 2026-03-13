@@ -95,7 +95,8 @@ export { TbNumber1Small as OneHourIcon} from 'react-icons/tb';
 export { TbNumber2Small as TwoHourIcon} from 'react-icons/tb';
 export { TbNumber3Small as ThreeHourIcon} from 'react-icons/tb';
 
-export { IoVolumeMuteOutline as EmergencySoundMute} from 'react-icons/io5';
+export { IoNotificationsOffOutline as EmergencySoundMute} from 'react-icons/io5';
+export { IoNotificationsOutline as EmergencySoundUnmute} from 'react-icons/io5';
 
 export  { TbList as UngroupedList } from "react-icons/tb";
 export  { TbListDetails as GroupedList } from "react-icons/tb";

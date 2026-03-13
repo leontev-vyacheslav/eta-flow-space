@@ -6,6 +6,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { useAppData } from "../../contexts/app-data/app-data";
 import { useAppSettings } from "../../contexts/app-settings";
 import { EmergencyPopoverContent } from "./emergency-popover-content";
+import { emergencyMuteManager } from "../../services/emergency-mute-manager";
 
 export type EmergencyContextModel = any;
 
@@ -52,7 +53,7 @@ function EmergencyContextProvider(props: any) {
                 }, 0);
             },
             contentTemplate: () => {
-                popoverContentReactRoot.render(<EmergencyPopoverContent emergencyState={emergencyState} />);
+                popoverContentReactRoot.render(<EmergencyPopoverContent popoverInstance = {popoverInstance} emergencyState={emergencyState} />);
                 return popoverContentContainer;
             },
             wrapperAttr: {
@@ -82,6 +83,8 @@ function EmergencyContextProvider(props: any) {
         if (!emergencyStates) {
             return;
         }
+
+        emergencyMuteManager.processEmergencyStates(emergencyStates);
 
         const warningIcon = renderToStaticMarkup(
             <WarningIcon size={20} style={{ fill: '#FFC107', cursor: 'pointer' }} />
