@@ -2,7 +2,7 @@ import AppModalPopup from '../app-modal-popup/app-modal-popup';
 import { useScreenSize } from '../../../utils/media-query';
 import type { EventInfo } from 'devextreme/events';
 import type { MenuItemModel } from '../../../models/menu-item-model';
-import { AdditionalMenuIcon, DateRangeIcon, DayIcon, GroupedList, RefreshIcon, UngroupedList, WeekIcon } from '../../../constants/app-icons';
+import { AdditionalMenuIcon, DateRangeIcon, GroupedList, OneHourIcon, RefreshIcon, TwentyFourHourIcon, UngroupedList } from '../../../constants/app-icons';
 import { useEffect, useMemo, useRef } from 'react';
 import { Popup as PopupRef } from "devextreme-react/popup";
 import { EmergencyLogDialogTitle } from './emergency-log-dialog-title';
@@ -39,7 +39,7 @@ const EmergencyLogDialogInternal = (props: EmergencyLogDialogProps) => {
                         icon: () => <DateRangeIcon size={24} />,
                         items: [
                             {
-                                icon: () => <WeekIcon size={24} />,
+                                icon: () => <OneHourIcon size={24} />,
                                 text: 'За последний час',
                                 textFontWeight: samplingHorizon === -1 ? 'bold' : null,
                                 onClick: () => {
@@ -47,7 +47,7 @@ const EmergencyLogDialogInternal = (props: EmergencyLogDialogProps) => {
                                 }
                             },
                             {
-                                icon: () => <DayIcon size={24} />,
+                                icon: () => <TwentyFourHourIcon size={24} />,
                                 text: 'За текущие сутки',
                                 textFontWeight: samplingHorizon === -24 ? 'bold' : null,
                                 onClick: () => {

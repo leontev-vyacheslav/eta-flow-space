@@ -53,8 +53,8 @@ class EmergencyMuteManager {
     purgeExpiredMutes(): void {
         const now = Date.now();
         const devices = this.getDevices()
-            .map(d => ({ ...d, mute: d.muteReasonItems.filter(m => m.time > now) }))
-            .filter(d => d.mute.length > 0);
+            .map(d => ({ ...d, muteReasonItems: d.muteReasonItems.filter(m => m.time > now) }))
+            .filter(d => d.muteReasonItems.length > 0);
 
         this.saveDevices(devices);
     }
@@ -99,7 +99,7 @@ class EmergencyMuteManager {
                 });
 
                 return unmutedReasons.length > 0
-                    ? emergencyState
+                    ? { ...emergencyState, reasons: unmutedReasons }
                     : null;
             })
             .filter(e => e !== null);
@@ -138,7 +138,7 @@ class EmergencyMuteManager {
 
     processEmergencyStates(emergencyStates: EmergencyModel[]): void {
         const hasUnmuted = this.hasUnmutedEmergencies(emergencyStates);
-        if(hasUnmuted) {
+        if (hasUnmuted) {
             this.playAlertSound();
         }
         this.purgeExpiredMutes();

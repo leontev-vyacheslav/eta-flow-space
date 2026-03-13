@@ -36,7 +36,7 @@ function EmergencyLogDialogContextProvider(props: EmergencyLogProps) {
     const [samplingHorizon, setSamplingHorizon] = useState<number>(
         () => {
             const samplingHorizonStored = localStorage.getItem('emergencyLogSamplingHorizon');
-            return samplingHorizonStored ? parseInt(JSON.parse(samplingHorizonStored)) : 0;
+            return samplingHorizonStored ? parseInt(JSON.parse(samplingHorizonStored)) : -1;
         }
     );
     const [grouped, setGrouped] = useState<boolean>(true);

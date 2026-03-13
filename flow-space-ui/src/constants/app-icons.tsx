@@ -94,6 +94,7 @@ export { TbNumber31Small as MonthIcon} from 'react-icons/tb';
 export { TbNumber1Small as OneHourIcon} from 'react-icons/tb';
 export { TbNumber2Small as TwoHourIcon} from 'react-icons/tb';
 export { TbNumber3Small as ThreeHourIcon} from 'react-icons/tb';
+export { TbNumber24Small  as TwentyFourHourIcon} from 'react-icons/tb';
 
 export { IoNotificationsOffOutline as EmergencySoundMute} from 'react-icons/io5';
 export { IoNotificationsOutline as EmergencySoundUnmute} from 'react-icons/io5';

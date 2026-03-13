@@ -1,11 +1,12 @@
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { MainMenu } from "../../components/menu/main-menu/main-menu";
 import { EmergencySoundMute, WarningLogIcon, EmergencySoundUnmute, AdditionalMenuIcon } from "../../constants/app-icons";
 import { emergencyMuteManager } from "../../services/emergency-mute-manager";
 import type dxPopover from "devextreme/ui/popover";
+import type { EmergencyModel } from "../../models/flows/emergency-model";
 
 export const EmergencyPopoverContent = ({ emergencyState, popoverInstance }: { emergencyState: any, popoverInstance: React.RefObject<dxPopover<any> | null> }) => {
-
+    const [unmutedEmergencies, setUnmutedEmergencies] = useState<EmergencyModel[]>([]);
     const MenuRender = useCallback(({ deviceId, emergencyReason }: { deviceId: number, emergencyReason: any }) => {
         return (
             <MainMenu disabled={false} items={[
@@ -13,7 +14,7 @@ export const EmergencyPopoverContent = ({ emergencyState, popoverInstance }: { e
                     icon: () => <AdditionalMenuIcon size={18} color='black' />,
                     items: [
                         {
-                            text: "Включить звук",
+                            text: "Включить",
                             icon: () => <EmergencySoundUnmute size={18} />,
                             onClick: () => {
                                 emergencyMuteManager.removeMute(deviceId, emergencyReason.id);
@@ -66,13 +67,18 @@ export const EmergencyPopoverContent = ({ emergencyState, popoverInstance }: { e
         );
     }, [popoverInstance]);
 
+    useEffect(() => {
+        // console.log(emergencyMuteManager.getUnmutedEmergencies([emergencyState]));
+        setUnmutedEmergencies(emergencyMuteManager.getUnmutedEmergencies([emergencyState]));
+    }, [emergencyState]);
+
     return (
         <table className='simple-grid'>
             <thead>
                 <tr><th colSpan={2}>
                     <div style={{ display: 'flex', alignItems: 'center' }}>
-                        <span style={{ flex: 1 }}>Нештатные / аварийные ситуации</span>
                         <WarningLogIcon size={20} />
+                        <span style={{ flex: 1 }}>Нештатные / аварийные ситуации</span>
                     </div>
                 </th></tr>
             </thead>
@@ -85,6 +91,11 @@ export const EmergencyPopoverContent = ({ emergencyState, popoverInstance }: { e
                                 <td>
                                     <div style={{ display: 'flex', alignItems: 'center' }}>
                                         <span style={{ flex: 1 }}>{r.description}</span>
+                                        {
+                                            unmutedEmergencies.length > 0 && unmutedEmergencies.find(() => true)!.reasons.some((unmutedReason) => unmutedReason.id === r.id)
+                                                ? <EmergencySoundUnmute size={18} />
+                                                : <EmergencySoundMute size={18} />
+                                        }
                                         <span>
                                             <MenuRender deviceId={emergencyState.deviceId} emergencyReason={r} />
                                         </span>
