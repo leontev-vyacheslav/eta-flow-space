@@ -99,6 +99,9 @@ const GraphDialogInternal = (props: GraphDialogProps) => {
                         e.component.option('width', 640);
                         e.component.option('height', 480);
                     }
+                } else {
+                    e.component.option('width', 640);
+                    e.component.option('height', 480);
                 }
             }}
             onOptionChanged={(e) => {
@@ -115,7 +118,7 @@ const GraphDialogInternal = (props: GraphDialogProps) => {
                 }
             }}
         >
-            <GraphChart { ...{...props, schemaTypeInfo: props.schemaTypeInfos[currentSchemaTypeInfoIndex]} } />
+            <GraphChart {...{ ...props, schemaTypeInfo: props.schemaTypeInfos[currentSchemaTypeInfoIndex] }} />
         </AppModalPopup >
     );
 }

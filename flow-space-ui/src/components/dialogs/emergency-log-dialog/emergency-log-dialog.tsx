@@ -27,7 +27,7 @@ const EmergencyLogDialogInternal = (props: EmergencyLogDialogProps) => {
                         onClick: () => {
                             setRefreshToken(getQuickGuid());
                         }
-                    },                    {
+                    }, {
                         icon: () => grouped ? <UngroupedList size={20} /> : <GroupedList size={20} />,
                         text: grouped ? 'Разгруппировать' : 'Группировать...',
                         onClick: () => {
@@ -96,6 +96,9 @@ const EmergencyLogDialogInternal = (props: EmergencyLogDialogProps) => {
                         e.component.option('width', 640);
                         e.component.option('height', 480);
                     }
+                } else {
+                    e.component.option('width', 640);
+                    e.component.option('height', 480);
                 }
             }}
             onOptionChanged={(e) => {
