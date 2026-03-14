@@ -13,6 +13,7 @@ import { NoData } from '../../components/no-data-widget/no-data-widget';
 import { EmergencyContextProvider } from './emergency-context';
 import { emergencyLogService } from '../../services/emergency-log-service';
 import { graphService } from '../../services/graph-service';
+import { emergencyMuteManager } from '../../services/emergency-mute-manager';
 
 const DashboardPageInner = () => {
     const tabPanelRef = useRef<TabPanel>(null);
@@ -89,6 +90,12 @@ const DashboardPageInner = () => {
             }
         })();
     }, [flowCode]);
+
+    useEffect(() => {
+        const unlock = () => emergencyMuteManager.unlockAudio();
+        document.addEventListener('click', unlock, { once: true });
+        return () => document.removeEventListener('click', unlock);
+    }, []);
 
     return (
         <>

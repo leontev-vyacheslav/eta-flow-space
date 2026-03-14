@@ -4,6 +4,7 @@ import type { MutedDeviceModel } from "../models/flows/muted-device-model";
 
 class EmergencyMuteManager {
     private readonly storageKey = 'emergencyDeviceMuted';
+    private audioUnlocked = false;
 
     private getDevices(): MutedDeviceModel[] {
         const data = localStorage.getItem(this.storageKey);
@@ -14,7 +15,7 @@ class EmergencyMuteManager {
         localStorage.setItem(this.storageKey, JSON.stringify(devices));
     }
 
-        private playAlertSound(): void {
+    private playAlertSound(): void {
         const ctx = new AudioContext();
 
         const beep = (startTime: number, frequency: number, duration: number) => {
@@ -72,7 +73,7 @@ class EmergencyMuteManager {
             };
         }
 
-        const wave =() => {
+        const wave = () => {
             const frequencies = [800, 1200, 2000, 1200, 800];
             const interval = 0.1;
 
@@ -191,6 +192,15 @@ class EmergencyMuteManager {
             this.playAlertSound();
         }
         this.purgeExpiredMutes();
+    }
+
+    unlockAudio(): void {
+        if (this.audioUnlocked) return;
+        const ctx = new AudioContext();
+        ctx.resume().then(() => {
+            this.audioUnlocked = true;
+            ctx.close();
+        });
     }
 }
 
