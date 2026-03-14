@@ -6,8 +6,7 @@ import type dxPopover from "devextreme/ui/popover";
 import type { EmergencyModel } from "../../models/flows/emergency-model";
 import { IoFlashOutline } from "react-icons/io5";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const EmergencyPopoverContent = ({ emergencyState, popoverInstance }: { emergencyState: EmergencyModel, popoverInstance: React.RefObject<dxPopover<any> | null> }) => {
+export const EmergencyPopoverContent = ({ emergencyState }: { emergencyState: EmergencyModel, popoverInstance: React.RefObject<dxPopover<any> | null> }) => {
     const [unmutedEmergencies, setUnmutedEmergencies] = useState<EmergencyModel[]>([]);
 
     const MenuRender = useCallback(({ deviceId, emergencyReason }: { deviceId: number, emergencyReason: any }) => {
@@ -74,7 +73,7 @@ export const EmergencyPopoverContent = ({ emergencyState, popoverInstance }: { e
                                         <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
 
                                             <span style={{ flex: 1, fontSize: '1em' }}>{r.description}</span>
-                                    
+
                                             <span style={{ color: 'gray', fontSize: '0.85em', display: 'flex', alignItems: 'center', gap: 5 }}>
                                                 <IoFlashOutline size={12} />
                                                 {emergencyState.timestamp && new Date(emergencyState.timestamp).toLocaleString('ru-RU', { dateStyle: 'short', timeStyle: 'short' })}

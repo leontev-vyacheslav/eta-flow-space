@@ -80,7 +80,7 @@ class EmergencyMuteManager {
                 beep(ctx.currentTime + index * interval, freq, interval);
             });
         };
-
+        console.log(siren);
         wave();
     }
 
