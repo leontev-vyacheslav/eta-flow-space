@@ -14,6 +14,76 @@ class EmergencyMuteManager {
         localStorage.setItem(this.storageKey, JSON.stringify(devices));
     }
 
+        private playAlertSound(): void {
+        const ctx = new AudioContext();
+
+        const beep = (startTime: number, frequency: number, duration: number) => {
+            const oscillator = ctx.createOscillator();
+            const gainNode = ctx.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(ctx.destination);
+
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(frequency, startTime);
+
+            // Fade in/out to avoid clicks
+            gainNode.gain.setValueAtTime(0, startTime);
+            gainNode.gain.linearRampToValueAtTime(0.4, startTime + 0.01);
+            gainNode.gain.linearRampToValueAtTime(0, startTime + duration);
+
+            oscillator.start(startTime);
+            oscillator.stop(startTime + duration);
+        };
+
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const siren = (durationMs: number = 2500) => {
+
+            const ctx = new AudioContext();
+
+            const oscillator = ctx.createOscillator();
+            const gainNode = ctx.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(ctx.destination);
+
+            oscillator.type = 'sawtooth';
+
+            // Fade out at the end
+            gainNode.gain.setValueAtTime(0.3, ctx.currentTime);
+            gainNode.gain.setValueAtTime(0.3, ctx.currentTime + durationMs / 1000 - 0.3);
+            gainNode.gain.linearRampToValueAtTime(0, ctx.currentTime + durationMs / 1000);
+
+            const sweepDuration = 0.8;
+            const cycles = Math.ceil((durationMs / 1000) / sweepDuration);
+
+            for (let i = 0; i < cycles; i++) {
+                const t = ctx.currentTime + i * sweepDuration;
+                oscillator.frequency.setValueAtTime(440, t);
+                oscillator.frequency.linearRampToValueAtTime(880, t + sweepDuration / 2);
+                oscillator.frequency.linearRampToValueAtTime(440, t + sweepDuration);
+            }
+
+            oscillator.start(ctx.currentTime);
+            oscillator.stop(ctx.currentTime + durationMs / 1000);
+
+            oscillator.onended = () => {
+                ctx?.close();
+            };
+        }
+
+        const wave =() => {
+            const frequencies = [800, 1200, 2000, 1200, 800];
+            const interval = 0.1;
+
+            frequencies.forEach((freq, index) => {
+                beep(ctx.currentTime + index * interval, freq, interval);
+            });
+        };
+
+        wave();
+    }
+
     addMute(deviceId: number, reason: number, duration: number): void {
         const devices = this.getDevices();
         let device = devices.find(d => d.id === deviceId);
@@ -63,14 +133,20 @@ class EmergencyMuteManager {
         return this.getDevices().find(d => d.id === deviceId);
     }
 
-    isDeviceMuted(deviceId: number, reason?: number): boolean {
+    isDeviceMuted(deviceId: number, reason: number): boolean {
         const device = this.getDevice(deviceId);
         if (!device) return false;
 
         const now = Date.now();
-        return reason !== undefined
-            ? device.muteReasonItems.some(m => m.id === reason && m.time > now)
-            : device.muteReasonItems.some(m => m.time > now);
+        return device.muteReasonItems.some(m => m.id === reason && m.time > now)
+    }
+
+    getReason(deviceId: number, reason: number): MutedReasonModel | undefined {
+        const device = this.getDevice(deviceId);
+        if (!device) return undefined;
+
+        const now = Date.now();
+        return device.muteReasonItems.find(m => m.id === reason && m.time > now);
     }
 
     getAll(): MutedDeviceModel[] {
@@ -107,33 +183,6 @@ class EmergencyMuteManager {
 
     hasUnmutedEmergencies(emergencyState: EmergencyModel[]): boolean {
         return this.getUnmutedEmergencies(emergencyState).length > 0;
-    }
-
-    private playAlertSound(): void {
-        const ctx = new AudioContext();
-
-        const beep = (startTime: number, frequency: number, duration: number) => {
-            const oscillator = ctx.createOscillator();
-            const gainNode = ctx.createGain();
-
-            oscillator.connect(gainNode);
-            gainNode.connect(ctx.destination);
-
-            oscillator.type = 'sine';
-            oscillator.frequency.setValueAtTime(frequency, startTime);
-
-            // Fade in/out to avoid clicks
-            gainNode.gain.setValueAtTime(0, startTime);
-            gainNode.gain.linearRampToValueAtTime(0.4, startTime + 0.01);
-            gainNode.gain.linearRampToValueAtTime(0, startTime + duration);
-
-            oscillator.start(startTime);
-            oscillator.stop(startTime + duration);
-        };
-
-        // Two short beeps
-        beep(ctx.currentTime, 880, 0.15);
-        beep(ctx.currentTime + 0.2, 880, 0.15);
     }
 
     processEmergencyStates(emergencyStates: EmergencyModel[]): void {

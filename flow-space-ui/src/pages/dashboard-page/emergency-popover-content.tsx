@@ -4,9 +4,12 @@ import { EmergencySoundMute, WarningLogIcon, EmergencySoundUnmute, AdditionalMen
 import { emergencyMuteManager } from "../../services/emergency-mute-manager";
 import type dxPopover from "devextreme/ui/popover";
 import type { EmergencyModel } from "../../models/flows/emergency-model";
+import { IoFlashOutline } from "react-icons/io5";
 
-export const EmergencyPopoverContent = ({ emergencyState, popoverInstance }: { emergencyState: any, popoverInstance: React.RefObject<dxPopover<any> | null> }) => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const EmergencyPopoverContent = ({ emergencyState, popoverInstance }: { emergencyState: EmergencyModel, popoverInstance: React.RefObject<dxPopover<any> | null> }) => {
     const [unmutedEmergencies, setUnmutedEmergencies] = useState<EmergencyModel[]>([]);
+
     const MenuRender = useCallback(({ deviceId, emergencyReason }: { deviceId: number, emergencyReason: any }) => {
         return (
             <MainMenu disabled={false} items={[
@@ -18,8 +21,7 @@ export const EmergencyPopoverContent = ({ emergencyState, popoverInstance }: { e
                             icon: () => <EmergencySoundUnmute size={18} />,
                             onClick: () => {
                                 emergencyMuteManager.removeMute(deviceId, emergencyReason.id);
-                                popoverInstance.current?.hide();
-                                popoverInstance.current?.dispose();
+                                setUnmutedEmergencies(emergencyMuteManager.getUnmutedEmergencies([emergencyState]));
                             }
                         },
                         {
@@ -31,44 +33,17 @@ export const EmergencyPopoverContent = ({ emergencyState, popoverInstance }: { e
                                     emergencyReason.id,
                                     3600000
                                 );
-                                popoverInstance.current?.hide();
-                                popoverInstance.current?.dispose();
+                                setUnmutedEmergencies(emergencyMuteManager.getUnmutedEmergencies([emergencyState]));
                             }
                         },
-                        {
-                            text: 'Выключить на 2 часа',
-                            icon: () => <EmergencySoundMute size={18} />,
-                            onClick: () => {
-                                emergencyMuteManager.addMute(
-                                    deviceId,
-                                    emergencyReason.id,
-                                    7200000
-                                );
-                                popoverInstance.current?.hide();
-                                popoverInstance.current?.dispose();
-                            }
-                        },
-                        {
-                            text: 'Выключить на 3 часа',
-                            icon: () => <EmergencySoundMute size={18} />,
-                            onClick: () => {
-                                emergencyMuteManager.addMute(
-                                    deviceId,
-                                    emergencyReason.id,
-                                    10800000
-                                );
-                                popoverInstance.current?.hide();
-                                popoverInstance.current?.dispose();
-                            }
-                        }
+
                     ]
                 }
             ]} />
         );
-    }, [popoverInstance]);
+    }, [emergencyState]);
 
     useEffect(() => {
-        // console.log(emergencyMuteManager.getUnmutedEmergencies([emergencyState]));
         setUnmutedEmergencies(emergencyMuteManager.getUnmutedEmergencies([emergencyState]));
     }, [emergencyState]);
 
@@ -84,18 +59,35 @@ export const EmergencyPopoverContent = ({ emergencyState, popoverInstance }: { e
             </thead>
             <tbody>
                 {
-                    (emergencyState.reasons as any[]).map(
-                        (r: any, i: number) =>
+                    (emergencyState.reasons).map(
+                        (r, i: number) =>
                             <tr key={i}>
-                                <td style={{ width: 0 }}>{i + 1}.</td>
+                                <td style={{ width: 0 }}>
+                                    {
+                                        unmutedEmergencies.length > 0 && unmutedEmergencies.find(() => true)!.reasons.some((unmutedReason) => unmutedReason.id === r.id)
+                                            ? <EmergencySoundUnmute size={16} />
+                                            : <EmergencySoundMute size={16} />
+                                    }
+                                </td>
                                 <td>
                                     <div style={{ display: 'flex', alignItems: 'center' }}>
-                                        <span style={{ flex: 1 }}>{r.description}</span>
-                                        {
-                                            unmutedEmergencies.length > 0 && unmutedEmergencies.find(() => true)!.reasons.some((unmutedReason) => unmutedReason.id === r.id)
-                                                ? <EmergencySoundUnmute size={18} />
-                                                : <EmergencySoundMute size={18} />
-                                        }
+                                        <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+
+                                            <span style={{ flex: 1, fontSize: '1em' }}>{r.description}</span>
+                                    
+                                            <span style={{ color: 'gray', fontSize: '0.85em', display: 'flex', alignItems: 'center', gap: 5 }}>
+                                                <IoFlashOutline size={12} />
+                                                {emergencyState.timestamp && new Date(emergencyState.timestamp).toLocaleString('ru-RU', { dateStyle: 'short', timeStyle: 'short' })}
+                                            </span>
+
+                                            {emergencyMuteManager.getReason(emergencyState.deviceId, r.id)?.time
+                                                ? <span style={{ color: 'gray', fontSize: '0.85em', display: 'flex', alignItems: 'center', gap: 5 }}>
+                                                    <EmergencySoundUnmute size={12} />
+                                                    {new Date(emergencyMuteManager.getReason(emergencyState.deviceId, r.id)!.time).toLocaleString('ru-RU', { dateStyle: 'short', timeStyle: 'short' })}
+                                                </span>
+                                                : null
+                                            }
+                                        </div>
                                         <span>
                                             <MenuRender deviceId={emergencyState.deviceId} emergencyReason={r} />
                                         </span>

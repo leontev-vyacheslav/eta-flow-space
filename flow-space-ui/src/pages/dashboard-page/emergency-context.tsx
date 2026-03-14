@@ -7,6 +7,7 @@ import { useAppData } from "../../contexts/app-data/app-data";
 import { useAppSettings } from "../../contexts/app-settings";
 import { EmergencyPopoverContent } from "./emergency-popover-content";
 import { emergencyMuteManager } from "../../services/emergency-mute-manager";
+import type { EmergencyModel } from "../../models/flows/emergency-model";
 
 export type EmergencyContextModel = any;
 
@@ -17,7 +18,7 @@ function EmergencyContextProvider(props: any) {
     const { getEmergencyStatesAsync } = useAppData();
     const { flows } = useAppSettings();
 
-    const emergencyIconClickHandler = useCallback((event: PointerEvent, emergencyState: any) => {
+    const emergencyIconClickHandler = useCallback((event: PointerEvent, emergencyState: EmergencyModel) => {
         event.stopPropagation();
 
         if (popoverInstance.current) {
@@ -53,7 +54,7 @@ function EmergencyContextProvider(props: any) {
                 }, 0);
             },
             contentTemplate: () => {
-                popoverContentReactRoot.render(<EmergencyPopoverContent popoverInstance = {popoverInstance} emergencyState={emergencyState} />);
+                popoverContentReactRoot.render(<EmergencyPopoverContent popoverInstance={popoverInstance} emergencyState={emergencyState} />);
                 return popoverContentContainer;
             },
             wrapperAttr: {
@@ -73,6 +74,8 @@ function EmergencyContextProvider(props: any) {
 
         popoverInstance.current.show();
     }, []);
+
+
 
     const updateEmergencyState = useCallback(async () => {
         if (!flows) {
