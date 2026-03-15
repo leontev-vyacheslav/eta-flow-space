@@ -1,6 +1,6 @@
 import dxPopover from "devextreme/ui/popover";
 import { createContext, useCallback, useContext, useEffect, useRef } from "react";
-import { EmergencyWarning, EmergencyWarningOff } from "../../constants/app-icons";
+import { EmergencyWarning, EmergencyWarningOff, WarningIcon } from "../../constants/app-icons";
 import { createRoot } from "react-dom/client";
 import { renderToStaticMarkup } from "react-dom/server";
 import { useAppData } from "../../contexts/app-data/app-data";
@@ -88,35 +88,42 @@ function EmergencyContextProvider(props: any) {
 
         emergencyMuteManager.processEmergencyStates(emergencyStates);
 
-        const warningIconMuted = renderToStaticMarkup(
-            <EmergencyWarningOff className="my-btn" size={18} style={{ stroke: '#FFC107', cursor: 'pointer' }} />
+        const emergencyMutedIcon = renderToStaticMarkup(
+            <>
+                <WarningIcon size={18} style={{ fill: '#FFC107', cursor: 'pointer' }} />
+                <EmergencyWarningOff data-emergency-mute-icon size={12} style={{ fill: '#FFC107', cursor: 'pointer', position: 'absolute',top: '-5px', right: '-5px' }} />
+            </>
         );
-        const warningIconUnmuted = renderToStaticMarkup(
-            <EmergencyWarning className="my-btn" size={18} style={{ stroke: '#FFC107', cursor: 'pointer' }} />
+        const emergencyUnmutedIcon = renderToStaticMarkup(
+            <>
+                <WarningIcon size={18} style={{ fill: '#FFC107', cursor: 'pointer' }} />
+                <EmergencyWarning  data-emergency-mute-icon size={12} style={{ fill: '#FFC107', cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px' }} />
+            </>
         );
-        const deviceEmergencyElements = Array.from(document.querySelectorAll('.side-navigation-menu [data-device-emergency]'));
+        const emergencyIconContainerElements = Array.from(document.querySelectorAll('.side-navigation-menu [data-emergency-icon-container]'));
 
         flows?.flatMap(f => (f.devices ?? []))
             .forEach(d => {
-                const deviceEmergencyElement = deviceEmergencyElements.find(e => e.getAttribute('data-device-emergency') === d.id.toString());
-                if (!deviceEmergencyElement) {
+                const emergencyIconContainerElement = emergencyIconContainerElements.find(e => e.getAttribute('data-emergency-icon-container') === d.id.toString());
+                if (!emergencyIconContainerElement) {
                     return;
                 }
-                deviceEmergencyElement.firstChild?.remove();
+                emergencyIconContainerElement.innerHTML = '';
 
                 const emergencyState = emergencyStates.find(s => s.deviceId === d.id);
                 if (!emergencyState) {
                     return;
                 }
 
-                const warningIconElement = new DOMParser().parseFromString(
+                const emergencyIconDom = new DOMParser().parseFromString(
                     emergencyMuteManager.isDeviceMuted(emergencyState)
-                        ? warningIconMuted
-                        : warningIconUnmuted,
-                    'image/svg+xml'
-                ).documentElement;
-                warningIconElement.addEventListener('click', (e) => emergencyIconClickHandler(e, emergencyState))
-                deviceEmergencyElement.append(warningIconElement);
+                        ? emergencyMutedIcon
+                        : emergencyUnmutedIcon,
+                    'text/html'
+                );
+
+                (emergencyIconDom.body.firstElementChild as HTMLElement).addEventListener('click', (e) => emergencyIconClickHandler(e, emergencyState));
+                emergencyIconContainerElement.append(...emergencyIconDom.body.childNodes);
             });
     }, [emergencyIconClickHandler, flows, getEmergencyStatesAsync]);
 

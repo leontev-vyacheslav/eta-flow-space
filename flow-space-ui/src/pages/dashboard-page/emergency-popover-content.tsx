@@ -11,19 +11,20 @@ export const EmergencyPopoverContent = ({ emergencyState }: { emergencyState: Em
     const [unmutedEmergencies, setUnmutedEmergencies] = useState<EmergencyModel[]>([]);
 
     const toggleEmergencyIcon = useCallback((deviceId: number) => {
-        const deviceEmergencyElement = document.querySelector(`.side-navigation-menu [data-device-emergency="${deviceId}"]`);
-        if (!deviceEmergencyElement) {
+        const emergencyIconContainerElement = document.querySelector(`.side-navigation-menu [data-emergency-icon-container="${deviceId}"]`);
+        if (!emergencyIconContainerElement) {
             return;
-
         }
-        const isDeviceMuted = emergencyMuteManager.isDeviceMuted(emergencyState);
-        const warningIcon = renderToStaticMarkup(
-            isDeviceMuted
-                ? <EmergencyWarningOff size={18} style={{ stroke: '#FFC107', cursor: 'pointer' }} />
-                : <EmergencyWarning size={18} style={{ stroke: '#FFC107', cursor: 'pointer' }} />
-        );
-        deviceEmergencyElement.innerHTML = warningIcon;
 
+        const isDeviceMuted = emergencyMuteManager.isDeviceMuted(emergencyState);
+        const emergencyMutedIcon = renderToStaticMarkup(
+            isDeviceMuted
+                ? <EmergencyWarningOff data-emergency-mute-icon size={12} style={{ fill: '#FFC107', cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px' }} />
+                : <EmergencyWarning data-emergency-mute-icon size={12} style={{ fill: '#FFC107', cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px' }} />
+
+        );
+        emergencyIconContainerElement.querySelector('[data-emergency-mute-icon]')!.remove();
+        emergencyIconContainerElement.append(new DOMParser().parseFromString(emergencyMutedIcon, 'image/svg+xml').documentElement);
     }, [emergencyState]);
 
     const MenuRender = useCallback(({ deviceId, emergencyReason }: { deviceId: number, emergencyReason: any }) => {
@@ -45,16 +46,11 @@ export const EmergencyPopoverContent = ({ emergencyState }: { emergencyState: Em
                             text: 'Выключить на 1 час',
                             icon: () => <EmergencySoundMute size={18} />,
                             onClick: () => {
-                                emergencyMuteManager.addMute(
-                                    deviceId,
-                                    emergencyReason.id,
-                                    3600000
-                                );
+                                emergencyMuteManager.addMute(deviceId, emergencyReason.id, 3600000);
                                 setUnmutedEmergencies(emergencyMuteManager.getUnmutedEmergencies([emergencyState]));
                                 toggleEmergencyIcon(deviceId);
                             }
                         },
-
                     ]
                 }
             ]} />
@@ -90,14 +86,11 @@ export const EmergencyPopoverContent = ({ emergencyState }: { emergencyState: Em
                                 <td>
                                     <div style={{ display: 'flex', alignItems: 'center' }}>
                                         <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
-
                                             <span style={{ flex: 1, fontSize: '1em' }}>{r.description}</span>
-
                                             <span style={{ color: 'gray', fontSize: '0.85em', display: 'flex', alignItems: 'center', gap: 5 }}>
                                                 <IoFlashOutline size={12} />
                                                 {emergencyState.timestamp && new Date(emergencyState.timestamp).toLocaleString('ru-RU', { dateStyle: 'short', timeStyle: 'short' })}
                                             </span>
-
                                             {emergencyMuteManager.getReason(emergencyState.deviceId, r.id)?.time
                                                 ? <span style={{ color: 'gray', fontSize: '0.85em', display: 'flex', alignItems: 'center', gap: 5 }}>
                                                     <EmergencySoundUnmute size={12} />

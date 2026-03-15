@@ -99,8 +99,8 @@ export { TbNumber24Small  as TwentyFourHourIcon} from 'react-icons/tb';
 export { IoNotificationsOffOutline as EmergencySoundMute} from 'react-icons/io5';
 export { IoNotificationsOutline as EmergencySoundUnmute} from 'react-icons/io5';
 
-export { IoNotificationsOffOutline as EmergencyWarningOff} from 'react-icons/io5';
-export { IoNotificationsOutline as EmergencyWarning} from 'react-icons/io5';
+export { IoNotificationsOff as EmergencyWarningOff} from 'react-icons/io5';
+export { IoNotifications as EmergencyWarning} from 'react-icons/io5';
 
 export  { TbList as UngroupedList } from "react-icons/tb";
 export  { TbListDetails as GroupedList } from "react-icons/tb";
