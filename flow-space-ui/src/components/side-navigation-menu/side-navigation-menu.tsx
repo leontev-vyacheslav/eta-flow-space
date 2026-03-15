@@ -77,8 +77,8 @@ export function SideNavigationMenu(props: SideNavigationMenuProps) {
         return (
             <div style={{ display: 'flex', paddingLeft: 5, gap: 10 }}>
                 {e.iconRender ? <i className="dx-icon">{e.iconRender({ style: { width: 'auto', flex: '0 0 auto' } })}</i> : null}
-                <span >{e.text}</span>
-                <i className="dx-icon" style={{fontSize: 'initial'}} data-device-emergency={e.entity?.id}></i>
+                <span style={{flex: 1}}>{e.text}</span>
+                <i className="dx-icon" style={{fontSize: 'initial', position: 'relative', display: 'inline'}} data-emergency-icon-container={e.entity?.id}></i>
             </div>
         );
     }

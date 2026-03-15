@@ -1,13 +1,31 @@
 import { useCallback, useEffect, useState } from "react";
 import { MainMenu } from "../../components/menu/main-menu/main-menu";
-import { EmergencySoundMute, WarningLogIcon, EmergencySoundUnmute, AdditionalMenuIcon } from "../../constants/app-icons";
+import { EmergencySoundMute, WarningLogIcon, EmergencySoundUnmute, AdditionalMenuIcon, EmergencyWarningOff, EmergencyWarning } from "../../constants/app-icons";
 import { emergencyMuteManager } from "../../services/emergency-mute-manager";
 import type dxPopover from "devextreme/ui/popover";
 import type { EmergencyModel } from "../../models/flows/emergency-model";
 import { IoFlashOutline } from "react-icons/io5";
+import { renderToStaticMarkup } from "react-dom/server";
 
 export const EmergencyPopoverContent = ({ emergencyState }: { emergencyState: EmergencyModel, popoverInstance: React.RefObject<dxPopover<any> | null> }) => {
     const [unmutedEmergencies, setUnmutedEmergencies] = useState<EmergencyModel[]>([]);
+
+    const toggleEmergencyIcon = useCallback((deviceId: number) => {
+        const emergencyIconContainerElement = document.querySelector(`.side-navigation-menu [data-emergency-icon-container="${deviceId}"]`);
+        if (!emergencyIconContainerElement) {
+            return;
+        }
+
+        const isDeviceMuted = emergencyMuteManager.isDeviceMuted(emergencyState);
+        const emergencyMutedIcon = renderToStaticMarkup(
+            isDeviceMuted
+                ? <EmergencyWarningOff data-emergency-mute-icon size={12} style={{ fill: '#FFC107', cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px' }} />
+                : <EmergencyWarning data-emergency-mute-icon size={12} style={{ fill: '#FFC107', cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px' }} />
+
+        );
+        emergencyIconContainerElement.querySelector('[data-emergency-mute-icon]')!.remove();
+        emergencyIconContainerElement.append(new DOMParser().parseFromString(emergencyMutedIcon, 'image/svg+xml').documentElement);
+    }, [emergencyState]);
 
     const MenuRender = useCallback(({ deviceId, emergencyReason }: { deviceId: number, emergencyReason: any }) => {
         return (
@@ -21,26 +39,23 @@ export const EmergencyPopoverContent = ({ emergencyState }: { emergencyState: Em
                             onClick: () => {
                                 emergencyMuteManager.removeMute(deviceId, emergencyReason.id);
                                 setUnmutedEmergencies(emergencyMuteManager.getUnmutedEmergencies([emergencyState]));
+                                toggleEmergencyIcon(deviceId);
                             }
                         },
                         {
                             text: 'Выключить на 1 час',
                             icon: () => <EmergencySoundMute size={18} />,
                             onClick: () => {
-                                emergencyMuteManager.addMute(
-                                    deviceId,
-                                    emergencyReason.id,
-                                    3600000
-                                );
+                                emergencyMuteManager.addMute(deviceId, emergencyReason.id, 3600000);
                                 setUnmutedEmergencies(emergencyMuteManager.getUnmutedEmergencies([emergencyState]));
+                                toggleEmergencyIcon(deviceId);
                             }
                         },
-
                     ]
                 }
             ]} />
         );
-    }, [emergencyState]);
+    }, [emergencyState, toggleEmergencyIcon]);
 
     useEffect(() => {
         setUnmutedEmergencies(emergencyMuteManager.getUnmutedEmergencies([emergencyState]));
@@ -71,14 +86,11 @@ export const EmergencyPopoverContent = ({ emergencyState }: { emergencyState: Em
                                 <td>
                                     <div style={{ display: 'flex', alignItems: 'center' }}>
                                         <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
-
                                             <span style={{ flex: 1, fontSize: '1em' }}>{r.description}</span>
-
                                             <span style={{ color: 'gray', fontSize: '0.85em', display: 'flex', alignItems: 'center', gap: 5 }}>
                                                 <IoFlashOutline size={12} />
                                                 {emergencyState.timestamp && new Date(emergencyState.timestamp).toLocaleString('ru-RU', { dateStyle: 'short', timeStyle: 'short' })}
                                             </span>
-
                                             {emergencyMuteManager.getReason(emergencyState.deviceId, r.id)?.time
                                                 ? <span style={{ color: 'gray', fontSize: '0.85em', display: 'flex', alignItems: 'center', gap: 5 }}>
                                                     <EmergencySoundUnmute size={12} />
