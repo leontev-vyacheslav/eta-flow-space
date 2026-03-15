@@ -81,7 +81,8 @@ class EmergencyMuteManager {
                 beep(ctx.currentTime + index * interval, freq, interval);
             });
         };
-        console.log(siren);
+
+        console.info(siren);
         wave();
     }
 
@@ -134,12 +135,22 @@ class EmergencyMuteManager {
         return this.getDevices().find(d => d.id === deviceId);
     }
 
-    isDeviceMuted(deviceId: number, reason: number): boolean {
-        const device = this.getDevice(deviceId);
+    isDeviceMuted(emergencyState: EmergencyModel): boolean {
+        const device = this.getDevice(emergencyState.deviceId);
         if (!device) return false;
-
         const now = Date.now();
-        return device.muteReasonItems.some(m => m.id === reason && m.time > now)
+        const a = emergencyState.reasons.map(r => r.id)
+        const b = device.muteReasonItems.filter(m => m.time > now).map(m => m.id)
+
+        const setA = new Set(a);
+        const setB = new Set(b);
+
+        const symDiff = [
+            ...a.filter(x => !setB.has(x)),
+            ...b.filter(x => !setA.has(x)),
+        ];
+
+        return symDiff.length === 0 && b.length > 0;
     }
 
     getReason(deviceId: number, reason: number): MutedReasonModel | undefined {

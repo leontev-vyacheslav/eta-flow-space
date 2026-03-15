@@ -1,13 +1,30 @@
 import { useCallback, useEffect, useState } from "react";
 import { MainMenu } from "../../components/menu/main-menu/main-menu";
-import { EmergencySoundMute, WarningLogIcon, EmergencySoundUnmute, AdditionalMenuIcon } from "../../constants/app-icons";
+import { EmergencySoundMute, WarningLogIcon, EmergencySoundUnmute, AdditionalMenuIcon, EmergencyWarningOff, EmergencyWarning } from "../../constants/app-icons";
 import { emergencyMuteManager } from "../../services/emergency-mute-manager";
 import type dxPopover from "devextreme/ui/popover";
 import type { EmergencyModel } from "../../models/flows/emergency-model";
 import { IoFlashOutline } from "react-icons/io5";
+import { renderToStaticMarkup } from "react-dom/server";
 
 export const EmergencyPopoverContent = ({ emergencyState }: { emergencyState: EmergencyModel, popoverInstance: React.RefObject<dxPopover<any> | null> }) => {
     const [unmutedEmergencies, setUnmutedEmergencies] = useState<EmergencyModel[]>([]);
+
+    const toggleEmergencyIcon = useCallback((deviceId: number) => {
+        const deviceEmergencyElement = document.querySelector(`.side-navigation-menu [data-device-emergency="${deviceId}"]`);
+        if (!deviceEmergencyElement) {
+            return;
+
+        }
+        const isDeviceMuted = emergencyMuteManager.isDeviceMuted(emergencyState);
+        const warningIcon = renderToStaticMarkup(
+            isDeviceMuted
+                ? <EmergencyWarningOff size={18} style={{ stroke: '#FFC107', cursor: 'pointer' }} />
+                : <EmergencyWarning size={18} style={{ stroke: '#FFC107', cursor: 'pointer' }} />
+        );
+        deviceEmergencyElement.innerHTML = warningIcon;
+
+    }, [emergencyState]);
 
     const MenuRender = useCallback(({ deviceId, emergencyReason }: { deviceId: number, emergencyReason: any }) => {
         return (
@@ -21,6 +38,7 @@ export const EmergencyPopoverContent = ({ emergencyState }: { emergencyState: Em
                             onClick: () => {
                                 emergencyMuteManager.removeMute(deviceId, emergencyReason.id);
                                 setUnmutedEmergencies(emergencyMuteManager.getUnmutedEmergencies([emergencyState]));
+                                toggleEmergencyIcon(deviceId);
                             }
                         },
                         {
@@ -33,6 +51,7 @@ export const EmergencyPopoverContent = ({ emergencyState }: { emergencyState: Em
                                     3600000
                                 );
                                 setUnmutedEmergencies(emergencyMuteManager.getUnmutedEmergencies([emergencyState]));
+                                toggleEmergencyIcon(deviceId);
                             }
                         },
 
@@ -40,7 +59,7 @@ export const EmergencyPopoverContent = ({ emergencyState }: { emergencyState: Em
                 }
             ]} />
         );
-    }, [emergencyState]);
+    }, [emergencyState, toggleEmergencyIcon]);
 
     useEffect(() => {
         setUnmutedEmergencies(emergencyMuteManager.getUnmutedEmergencies([emergencyState]));

@@ -1,6 +1,6 @@
 import dxPopover from "devextreme/ui/popover";
 import { createContext, useCallback, useContext, useEffect, useRef } from "react";
-import { WarningIcon } from "../../constants/app-icons";
+import { EmergencyWarning, EmergencyWarningOff } from "../../constants/app-icons";
 import { createRoot } from "react-dom/client";
 import { renderToStaticMarkup } from "react-dom/server";
 import { useAppData } from "../../contexts/app-data/app-data";
@@ -18,22 +18,7 @@ function EmergencyContextProvider(props: any) {
     const { getEmergencyStatesAsync } = useAppData();
     const { flows } = useAppSettings();
 
-    const emergencyIconClickHandler = useCallback((event: PointerEvent, emergencyState: EmergencyModel) => {
-        event.stopPropagation();
-
-        if (popoverInstance.current) {
-            popoverInstance.current.hide();
-            popoverInstance.current.dispose();
-        }
-
-        document.querySelectorAll('[data-emergency-popover]').forEach(element => {
-            try {
-                element.remove();
-            } catch (error) {
-                console.error(error);
-            }
-        });
-
+    const renderPopover = useCallback(({ position, emergencyState }: { position: { x: number, y: number }, emergencyState: EmergencyModel }) => {
         const popoverContainer = document.createElement('div');
         popoverContainer.setAttribute('data-emergency-popover', '');
         document.body.appendChild(popoverContainer);
@@ -64,10 +49,7 @@ function EmergencyContextProvider(props: any) {
                 at: "top left",
                 my: "top left",
                 of: window,
-                offset: {
-                    x: event.clientX,
-                    y: event.clientY
-                },
+                offset: { ...position },
                 collision: 'flipfit'
             },
         });
@@ -75,7 +57,24 @@ function EmergencyContextProvider(props: any) {
         popoverInstance.current.show();
     }, []);
 
+    const emergencyIconClickHandler = useCallback((event: PointerEvent, emergencyState: EmergencyModel) => {
+        event.stopPropagation();
 
+        if (popoverInstance.current) {
+            popoverInstance.current.hide();
+            popoverInstance.current.dispose();
+        }
+
+        document.querySelectorAll('[data-emergency-popover]').forEach(element => {
+            try {
+                element.remove();
+            } catch (error) {
+                console.error(error);
+            }
+        });
+
+        renderPopover({ position: { x: event.clientX, y: event.clientY }, emergencyState });
+    }, [renderPopover]);
 
     const updateEmergencyState = useCallback(async () => {
         if (!flows) {
@@ -89,8 +88,11 @@ function EmergencyContextProvider(props: any) {
 
         emergencyMuteManager.processEmergencyStates(emergencyStates);
 
-        const warningIcon = renderToStaticMarkup(
-            <WarningIcon size={20} style={{ fill: '#FFC107', cursor: 'pointer' }} />
+        const warningIconMuted = renderToStaticMarkup(
+            <EmergencyWarningOff className="my-btn" size={18} style={{ stroke: '#FFC107', cursor: 'pointer' }} />
+        );
+        const warningIconUnmuted = renderToStaticMarkup(
+            <EmergencyWarning className="my-btn" size={18} style={{ stroke: '#FFC107', cursor: 'pointer' }} />
         );
         const deviceEmergencyElements = Array.from(document.querySelectorAll('.side-navigation-menu [data-device-emergency]'));
 
@@ -102,13 +104,18 @@ function EmergencyContextProvider(props: any) {
                 }
                 deviceEmergencyElement.firstChild?.remove();
 
-                const state = emergencyStates.find(s => s.deviceId === d.id);
-                if (!state) {
+                const emergencyState = emergencyStates.find(s => s.deviceId === d.id);
+                if (!emergencyState) {
                     return;
                 }
 
-                const warningIconElement = new DOMParser().parseFromString(warningIcon, 'image/svg+xml').documentElement;
-                warningIconElement.addEventListener('click', (e) => emergencyIconClickHandler(e, state))
+                const warningIconElement = new DOMParser().parseFromString(
+                    emergencyMuteManager.isDeviceMuted(emergencyState)
+                        ? warningIconMuted
+                        : warningIconUnmuted,
+                    'image/svg+xml'
+                ).documentElement;
+                warningIconElement.addEventListener('click', (e) => emergencyIconClickHandler(e, emergencyState))
                 deviceEmergencyElement.append(warningIconElement);
             });
     }, [emergencyIconClickHandler, flows, getEmergencyStatesAsync]);
