@@ -3,6 +3,7 @@ import type { AppSettingsContextModel, AppSettingsDataContextModel } from '../mo
 import type { AppBaseProviderProps } from '../models/app-base-provider-props';
 import type { FlowModel } from '../models/flows/flow-model';
 import { useAppData } from './app-data/app-data';
+import { useAuth } from './auth';
 
 
 const AppSettingsContext = createContext<AppSettingsContextModel>({} as AppSettingsContextModel);
@@ -10,6 +11,7 @@ const AppSettingsContext = createContext<AppSettingsContextModel>({} as AppSetti
 const useAppSettings = () => useContext(AppSettingsContext);
 
 function AppSettingsProvider(props: AppBaseProviderProps) {
+    const { user } = useAuth();
     const { getFlowListAsync } = useAppData();
     const [flows, setFlows] = useState<FlowModel[] | undefined>([]);
     const [appSettingsData, setAppSettingsData] = useState<AppSettingsDataContextModel>({
@@ -21,7 +23,7 @@ function AppSettingsProvider(props: AppBaseProviderProps) {
             const flows = await getFlowListAsync();
             setFlows(flows);
         })();
-    }, [getFlowListAsync]);
+    }, [getFlowListAsync, user]);
 
     useEffect(() => {
         setAppSettingsData(previous => {

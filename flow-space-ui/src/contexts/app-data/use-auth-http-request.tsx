@@ -68,7 +68,6 @@ export const useAuthHttpRequest = () => {
             return response;
         },
         [getUserAuthDataFromStorage, hideLoader, showLoader, signOut],
-
     );
 
     return axiosWithCredentials
