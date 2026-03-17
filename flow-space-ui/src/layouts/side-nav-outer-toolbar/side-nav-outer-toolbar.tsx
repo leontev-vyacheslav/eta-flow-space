@@ -1,7 +1,7 @@
 import Drawer from 'devextreme-react/drawer';
 import ScrollView from 'devextreme-react/scroll-view';
 import React, { type ReactElement, useCallback, useRef, useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { Footer, Header, SideNavigationMenu } from '../../components';
 import { useScreenSize } from '../../utils/media-query';
 import { useMenuPatch } from '../../utils/patches';
@@ -12,6 +12,10 @@ import type { ClickEvent } from 'devextreme/ui/button';
 import './side-nav-outer-toolbar.scss';
 
 export function SideNavOuterToolbar({ title, children }: SideNavProps) {
+    const ROUTES_WITHOUT_SCROLL = ['/map'];
+    const location = useLocation();
+    const disableScroll = ROUTES_WITHOUT_SCROLL.includes(location.pathname);
+
     const scrollViewRef = useRef<ScrollView>(null);
     const history = useNavigate();
     const { isXSmall, isLarge } = useScreenSize();
@@ -43,8 +47,8 @@ export function SideNavOuterToolbar({ title, children }: SideNavProps) {
             prevMenuStatus => {
                 result = prevMenuStatus !== MenuStatus.Closed && !isLarge;
                 return prevMenuStatus !== MenuStatus.Closed && !isLarge
-                  ? MenuStatus.Closed
-                  : prevMenuStatus;
+                    ? MenuStatus.Closed
+                    : prevMenuStatus;
             }
         );
 
@@ -53,7 +57,6 @@ export function SideNavOuterToolbar({ title, children }: SideNavProps) {
 
 
     const onNavigationChanged = useCallback(({ itemData: { path }, event, node }: any) => {
-
         if (!isLarge || menuStatus === MenuStatus.TemporaryOpened) {
             setMenuStatus(MenuStatus.Closed);
             event.stopPropagation();
@@ -76,47 +79,59 @@ export function SideNavOuterToolbar({ title, children }: SideNavProps) {
 
     }, [history, menuStatus, isLarge]);
 
+    const content = (
+        <>
+            <div className={'content'} style={{ height: disableScroll ? '100%' : undefined }}>
+                {React.Children.map(children, (item) => {
+                    return (item as ReactElement).type !== Footer && item;
+                })}
+            </div>
+            <div className={'content-block'}>
+                {React.Children.map(children, (item) => {
+                    return (item as ReactElement).type === Footer && item;
+                })}
+            </div>
+        </>
+    );
+
     return (
-        <div className={ 'side-nav-outer-toolbar' }>
+        <div className={'side-nav-outer-toolbar'}>
             <Header
                 menuToggleEnabled
-                toggleMenu={ toggleMenu }
-                title={ title }
+                toggleMenu={toggleMenu}
+                title={title}
             />
             <Drawer
-                className={ ['drawer', patchCssClass].join(' ') }
-                position={ 'before' }
-                closeOnOutsideClick={ onOutsideClick }
-                openedStateMode={ isLarge ? 'shrink' : 'overlap' }
-                revealMode={ isXSmall ? 'slide' : 'expand' }
-                minSize={ isXSmall ? 0 : 45 }
-                maxSize={ 250 }
-                shading={ !isLarge }
-                opened={ menuStatus !== MenuStatus.Closed }
-                template={ 'menu' }
+                className={['drawer', patchCssClass].join(' ')}
+                position={'before'}
+                closeOnOutsideClick={onOutsideClick}
+                openedStateMode={isLarge ? 'shrink' : 'overlap'}
+                revealMode={isXSmall ? 'slide' : 'expand'}
+                minSize={isXSmall ? 0 : 45}
+                maxSize={250}
+                shading={!isLarge}
+                opened={menuStatus !== MenuStatus.Closed}
+                template={'menu'}
             >
-                <div className={ 'container' }>
-                    <ScrollView ref={ scrollViewRef } className={ 'layout-body with-footer' } height={ () => {
-                        return window.innerHeight - 76;
-                    } }>
-                        <div className={ 'content' }>
-                            { React.Children.map(children, (item) => {
-                                return (item as ReactElement).type !== Footer && item;
-                            }) }
-                        </div>
-                        <div className={ 'content-block' }>
-                            { React.Children.map(children, (item) => {
-                                return (item as ReactElement).type === Footer && item;
-                            }) }
-                        </div>
-                    </ScrollView>
+                <div className={'container'} style={{ height: disableScroll ? '100%' : undefined }} >
+                    {disableScroll ?
+                        content
+                        :
+                        <ScrollView ref={scrollViewRef} className={'layout-body with-footer'}
+                            height={() => {
+                                return window.innerHeight - 76;
+                            }}
+                        >
+                            {content}
+                        </ScrollView>
+                    }
                 </div>
-                <Template name={ 'menu' }>
+                <Template name={'menu'}>
                     <SideNavigationMenu
-                        compactMode={ menuStatus === MenuStatus.Closed }
-                        selectedItemChanged={ onNavigationChanged as any }
-                        openMenu={ temporaryOpenMenu }
-                        onMenuReady={ onMenuReady }
+                        compactMode={menuStatus === MenuStatus.Closed}
+                        selectedItemChanged={onNavigationChanged as any}
+                        openMenu={temporaryOpenMenu}
+                        onMenuReady={onMenuReady}
                     />
                 </Template>
             </Drawer>

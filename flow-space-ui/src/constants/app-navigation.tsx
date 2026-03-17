@@ -5,7 +5,8 @@ import {
     HelpIcon,
     FlowIcon,
     DeviceIcon,
-    WarningLogIcon
+    WarningLogIcon,
+    MapIcon
 } from './app-icons';
 import type { TreeViewItemModel } from '../models/tree-view-item';
 import type { IconBaseProps } from 'react-icons';
@@ -29,6 +30,12 @@ export const useSideNavigationMenuItems = () => {
                     entity: { typeName: 'DeviceModel', id: d.id },
                 }))
             })) || []),
+            {
+                id: 'map',
+                text: 'Карта объектов',
+                iconRender: (props: IconBaseProps) => <MapIcon size={22} {...props} />,
+                path: '/map',
+            },
             {
                 id: 'emergency-log',
                 text: 'Журнал аварий',
