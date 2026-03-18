@@ -8,37 +8,73 @@ import AppConstants from "../../constants/app-constants";
 import type { MenuItemModel } from "../../models/menu-item-model";
 import { useAppData } from "../../contexts/app-data/app-data";
 import L from "leaflet";
+import { createRoot } from "react-dom/client";
+import { MapPagePopupContent } from "./map-page-popup-content";
 
 export const MapPage = () => {
+    const defaultCenter: [number, number] = [51.50853, -0.12574];
+    const { getDeviceListAsync, getDeviceStateAsync, getDeviceStateDataschemaAsync } = useAppData();
     const mapRef = useRef<L.Map>(null);
-    const { getDeviceListAsync } = useAppData();
+    const rootsRef = useRef<Map<number, ReturnType<typeof createRoot>>>(new Map());
 
     useEffect(() => {
+
         const fetchData = async () => {
             const devices = await getDeviceListAsync();
-            if (devices && mapRef.current) {
-                const group = L.featureGroup().addTo(mapRef.current);
+            if (!devices || !mapRef.current) {
+                return;
+            }
 
-                devices.forEach(device => {
-                    if (device.objectLocation) {
-                        const { latitude, longitude } = device.objectLocation;
-                        L.marker([latitude, longitude]).addTo(group);
+            const markersFeatureGroup = L.featureGroup().addTo(mapRef.current);
+
+            devices.forEach(device => {
+                if (!device.objectLocation) {
+                    return;
+                }
+
+                const { latitude, longitude } = device.objectLocation;
+                const marker = L.marker([latitude, longitude]).addTo(markersFeatureGroup);
+                const container = document.createElement('div');
+                const popup = L.popup({ minWidth: 220 }).setContent(container);
+
+                marker.bindPopup(popup);
+
+                marker.on('popupopen', async () => {
+                    const [deviceState, dataschema] = await Promise.all([
+                        getDeviceStateAsync(device.id),
+                        getDeviceStateDataschemaAsync(device.id),
+                    ]);
+
+                    if (!deviceState || !dataschema) {
+                        return;
                     }
+
+                    if (!rootsRef.current.has(device.id)) {
+                        rootsRef.current.set(device.id, createRoot(container));
+                    }
+                    rootsRef.current.get(device.id)!.render(
+                        <MapPagePopupContent device={device} deviceState={deviceState} dataschema={dataschema} />
+                    );
                 });
 
-                // Fit map to markers bounds if any markers were added
-                if (group.getLayers().length > 0) {
-                    mapRef.current.fitBounds(group.getBounds(), {
-                        padding: [40, 40],
-                        maxZoom: 15,
-                    });
-                }
+                marker.on('popupclose', () => {
+                    // Unmount to cancel in-flight requests and free memory
+                    rootsRef.current.get(device.id)?.unmount();
+                    rootsRef.current.delete(device.id);
+                });
+            });
+
+            // Fit map to markers bounds if any markers were added
+            if (markersFeatureGroup.getLayers().length > 0) {
+                mapRef.current.fitBounds(markersFeatureGroup.getBounds(), {
+                    padding: [40, 40],
+                    maxZoom: 15,
+                });
             }
+
         };
         fetchData();
-    }, [getDeviceListAsync]);
-
-    const defaultCenter: [number, number] = [51.50853, -0.12574];
+    }, [getDeviceListAsync, getDeviceStateAsync, getDeviceStateDataschemaAsync]);
 
     const menuItems = useMemo(() => {
         return [
