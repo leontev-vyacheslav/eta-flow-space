@@ -39,7 +39,7 @@ function EmergencyLogDialogContextProvider(props: EmergencyLogProps) {
             return samplingHorizonStored ? parseInt(JSON.parse(samplingHorizonStored)) : -1;
         }
     );
-    const [grouped, setGrouped] = useState<boolean>(true);
+    const [grouped, setGrouped] = useState<boolean>(false);
 
     const getDateRange = useCallback(() => {
         const now = new Date();

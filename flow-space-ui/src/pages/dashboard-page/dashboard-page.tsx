@@ -70,7 +70,7 @@ const DashboardPageInner = () => {
             const results = await Promise.allSettled([
                 import(`./flows/${flowCode}/control/control-tab-content.tsx`),
                 import(`./flows/${flowCode}/mnemoschema/mnemoschema-tab-content.tsx`),
-                import(`./flows/${flowCode}/map/map-tab-content.tsx`)
+                // import(`./flows/${flowCode}/map/map-tab-content.tsx`)
             ]);
 
             const [controlModule, mnemoschemaModule, mapModule] = results.map(result =>
@@ -78,7 +78,7 @@ const DashboardPageInner = () => {
             );
             setControlTabContent(() => controlModule ? controlModule.default : null);
             setMnemoschemaTabContent(() => mnemoschemaModule ? mnemoschemaModule.default : null);
-            setMapTabContent(() => mapModule ? mapModule.default : null);
+            // setMapTabContent(() => mapModule ? mapModule.default : null);
             if (tabPanelRef?.current) {
                 const tabIndex = tabPanelRef.current?.instance.option('selectedIndex');
                 if (tabIndex) {
@@ -133,13 +133,13 @@ const DashboardPageInner = () => {
                             }
                         </TabPanelItem>
 
-                        <TabPanelItem title='Карта' tabRender={(e) => <IconTab tab={e} icon={<MapIcon size={18} />} />}>
+                        {/* <TabPanelItem title='Карта' tabRender={(e) => <IconTab tab={e} icon={<MapIcon size={18} />} />}>
                             {
                                 MapTabContent && tabIndex === 2
                                     ? <MapTabContent />
                                     : <NoData />
                             }
-                        </TabPanelItem>
+                        </TabPanelItem> */}
                     </TabPanel>
                 </div>
             </div>
