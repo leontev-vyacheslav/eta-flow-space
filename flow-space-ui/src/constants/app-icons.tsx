@@ -104,6 +104,7 @@ export { IoNotifications as EmergencyWarning} from 'react-icons/io5';
 
 export  { TbList as UngroupedList } from "react-icons/tb";
 export  { TbListDetails as GroupedList } from "react-icons/tb";
+export { TbWifiOff  as ConnectionOff } from "react-icons/tb";
 
 import { MdMoreVert } from 'react-icons/md';
 export const GridAdditionalMenuIcon = () => <MdMoreVert style={{ cursor: 'pointer' }} size={18} />
