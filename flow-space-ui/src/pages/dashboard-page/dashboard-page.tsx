@@ -2,7 +2,7 @@ import { Item as TabPanelItem, TabPanel } from 'devextreme-react/tab-panel';
 import { useEffect, useMemo, useRef, useState, type ComponentType } from "react";
 import PageHeader from "../../components/page-header/page-header";
 import AppConstants from "../../constants/app-constants";
-import { AdditionalMenuIcon, CircuitIcon, DashboardIcon, GraphIcon, HelpIcon, MapIcon, ParamsIcon, RefreshIcon, WarningLogIcon } from "../../constants/app-icons";
+import { AdditionalMenuIcon, CircuitIcon, DashboardIcon, GraphIcon, HelpIcon, ParamsIcon, RefreshIcon, WarningLogIcon } from "../../constants/app-icons";
 import type { MenuItemModel } from "../../models/menu-item-model";
 import { quickHelpReferenceService } from "../../services/quick-help-reference-service";
 import { IconTab } from '../../components/tab-utils/icon-tab';
@@ -10,7 +10,6 @@ import { useParams } from 'react-router';
 import { DashboardPageContextProvider, useDashboardPage } from './dashboard-page-context';
 import { getQuickGuid } from '../../utils/uuid';
 import { NoData } from '../../components/no-data-widget/no-data-widget';
-import { EmergencyContextProvider } from './emergency-context';
 import { emergencyLogService } from '../../services/emergency-log-service';
 import { graphService } from '../../services/graph-service';
 import { emergencyMuteManager } from '../../services/emergency-mute-manager';
@@ -21,7 +20,6 @@ const DashboardPageInner = () => {
     const { flowCode, deviceId } = useParams();
     const [ControlTabContent, setControlTabContent] = useState<ComponentType<any> | null>(null);
     const [MnemoschemaTabContent, setMnemoschemaTabContent] = useState<ComponentType<any> | null>(null);
-    const [MapTabContent, setMapTabContent] = useState<ComponentType<any> | null>(null);
     const [tabIndex, setTabIndex] = useState<number>(0);
 
     const menuItems = useMemo(() => {
@@ -70,15 +68,13 @@ const DashboardPageInner = () => {
             const results = await Promise.allSettled([
                 import(`./flows/${flowCode}/control/control-tab-content.tsx`),
                 import(`./flows/${flowCode}/mnemoschema/mnemoschema-tab-content.tsx`),
-                // import(`./flows/${flowCode}/map/map-tab-content.tsx`)
             ]);
 
-            const [controlModule, mnemoschemaModule, mapModule] = results.map(result =>
+            const [controlModule, mnemoschemaModule /*, mapModule*/] = results.map(result =>
                 result.status === 'fulfilled' ? result.value : null
             );
             setControlTabContent(() => controlModule ? controlModule.default : null);
             setMnemoschemaTabContent(() => mnemoschemaModule ? mnemoschemaModule.default : null);
-            // setMapTabContent(() => mapModule ? mapModule.default : null);
             if (tabPanelRef?.current) {
                 const tabIndex = tabPanelRef.current?.instance.option('selectedIndex');
                 if (tabIndex) {
@@ -132,14 +128,6 @@ const DashboardPageInner = () => {
                                     : <NoData />
                             }
                         </TabPanelItem>
-
-                        {/* <TabPanelItem title='Карта' tabRender={(e) => <IconTab tab={e} icon={<MapIcon size={18} />} />}>
-                            {
-                                MapTabContent && tabIndex === 2
-                                    ? <MapTabContent />
-                                    : <NoData />
-                            }
-                        </TabPanelItem> */}
                     </TabPanel>
                 </div>
             </div>
@@ -149,10 +137,8 @@ const DashboardPageInner = () => {
 
 export const DashboardPage = () => {
     return (
-        <EmergencyContextProvider>
             <DashboardPageContextProvider>
                 <DashboardPageInner />
             </DashboardPageContextProvider>
-        </EmergencyContextProvider>
     );
 }

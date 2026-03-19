@@ -15,6 +15,7 @@ import { locale, loadMessages } from 'devextreme/localization';
 import ContentAuth from './content-auth';
 import ContentNonAuth from './content-non-auth';
 import Loader from './components/loader/loader';
+import { EmergencyContextProvider } from './contexts/emergency-context';
 
 
 function App() {
@@ -61,12 +62,14 @@ function Main() {
                 <SharedAreaProvider>
                     <AppDataProvider>
                         <AppSettingsProvider>
+                            <EmergencyContextProvider>
                                 <NavigationProvider>
                                     <div className={`app ${screenSizeClass}`}>
                                         <App />
                                         <Loader />
                                     </div>
                                 </NavigationProvider>
+                            </EmergencyContextProvider>
                         </AppSettingsProvider>
                     </AppDataProvider>
                 </SharedAreaProvider>

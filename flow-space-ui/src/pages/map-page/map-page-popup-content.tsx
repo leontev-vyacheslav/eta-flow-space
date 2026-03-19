@@ -1,13 +1,13 @@
 import { Fragment, useCallback, useMemo } from "react";
 
 import { getKeyValuePairs, getSchemaTypeInfo, type PropertiesChainValuePairModel, type SchemaTypeInfoModel, type SchemaTypeInfoPropertiesChainModel } from "../../helpers/data-helper";
-import type { DeviceStateModel } from "../../models/flows/device-state-model";
-import type { DeviceModel } from "../../models/flows/device-model";
 import { useScreenSize } from "../../utils/media-query";
-import { CheckedIcon, GraphIcon, LocationIcon, UncheckedIcon } from "../../constants/app-icons";
+import { CheckedIcon, EmergencyWarning, EmergencyWarningOff, GraphIcon, LocationIcon, UncheckedIcon, WarningIcon } from "../../constants/app-icons";
 import { graphService } from "../../services/graph-service";
+import type { MapPagePopupContentProps } from "../../models/map-page-popup-content-props";
+import { emergencyMuteManager } from "../../services/emergency-mute-manager";
 
-export const MapPagePopupContent = ({ device, deviceState, dataschema }: { device: DeviceModel, deviceState?: DeviceStateModel, dataschema?: any, schemaTypeInfoPropertiesChain?: SchemaTypeInfoPropertiesChainModel[] }) => {
+export const MapPagePopupContent = ({ device, deviceState, dataschema, emergencyState }: MapPagePopupContentProps) => {
     const { isXSmall } = useScreenSize();
 
     const schemaTypeInfoPropertiesChain = useMemo(() => {
@@ -120,6 +120,19 @@ export const MapPagePopupContent = ({ device, deviceState, dataschema }: { devic
         );
     }, [graphIconClickHandler, isXSmall, renderStateValueByPropertiesChain]);
 
+    const emergencyMutedIcon = () => (
+        <>
+            <WarningIcon size={18} style={{ fill: '#FFC107', cursor: 'pointer' }} />
+            <EmergencyWarningOff data-emergency-mute-icon size={12} style={{ fill: '#FFC107', position: 'absolute', top: '-5px', right: '-5px' }} />
+        </>
+    );
+    const emergencyUnmutedIcon = () => (
+        <>
+            <WarningIcon size={18} style={{ fill: '#FFC107', cursor: 'pointer' }} />
+            <EmergencyWarning data-emergency-mute-icon size={12} style={{ fill: '#FFC107', position: 'absolute', top: '-5px', right: '-5px' }} />
+        </>
+    );
+
     return (
         deviceState ?
             <>
@@ -129,6 +142,13 @@ export const MapPagePopupContent = ({ device, deviceState, dataschema }: { devic
                         <div style={{ fontWeight: 'bold' }}>{device ? device.description : 'Нет данных'}</div>
                         <div>{device && device.objectLocation ? device.objectLocation.address : 'Нет данных'}</div>
                     </div>
+
+                    {emergencyState
+                        ? <div style={{position: 'relative'}}>
+                            {emergencyMuteManager.isDeviceMuted(emergencyState) ? emergencyMutedIcon() : emergencyUnmutedIcon()}
+                        </div>
+                        : null
+                    }
                 </div>
                 <div className="map-pop-content-wrapper">
                     <table className="simple-grid" style={{ width: '100%' }}>

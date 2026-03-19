@@ -1,13 +1,13 @@
 import dxPopover from "devextreme/ui/popover";
 import { createContext, useCallback, useContext, useEffect, useRef } from "react";
-import { EmergencyWarning, EmergencyWarningOff, WarningIcon } from "../../constants/app-icons";
+import { EmergencyWarning, EmergencyWarningOff, WarningIcon } from "../constants/app-icons";
 import { createRoot } from "react-dom/client";
 import { renderToStaticMarkup } from "react-dom/server";
-import { useAppData } from "../../contexts/app-data/app-data";
-import { useAppSettings } from "../../contexts/app-settings";
+import { useAppData } from "./app-data/app-data";
+import { useAppSettings } from "./app-settings";
 import { EmergencyPopoverContent } from "./emergency-popover-content";
-import { emergencyMuteManager } from "../../services/emergency-mute-manager";
-import type { EmergencyModel } from "../../models/flows/emergency-model";
+import { emergencyMuteManager } from "../services/emergency-mute-manager";
+import type { EmergencyModel } from "../models/flows/emergency-model";
 
 export type EmergencyContextModel = any;
 

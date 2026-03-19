@@ -12,10 +12,11 @@ import type { DeviceModel } from "../../models/flows/device-model";
 
 import 'leaflet/dist/leaflet.css';
 import './map-page.scss';
+import type { EmergencyModel } from "../../models/flows/emergency-model";
 
 export const MapPage = () => {
     const defaultCenter: [number, number] = [51.50853, -0.12574];
-    const { getDeviceListAsync, getDeviceStateAsync, getDeviceStateDataschemaAsync } = useAppData();
+    const { getDeviceListAsync, getDeviceStateAsync, getDeviceStateDataschemaAsync, getEmergencyStatesAsync } = useAppData();
     const mapRef = useRef<L.Map>(null);
     const rootsRef = useRef<Map<number, ReturnType<typeof createRoot>>>(new Map());
 
@@ -36,7 +37,19 @@ export const MapPage = () => {
         ] as MenuItemModel[];
     }, []);
 
-    const markerPopupOpenHandler = useCallback(async (device: DeviceModel, container: HTMLElement) => {
+    const createMarker = useCallback((color: string) => L.divIcon({
+        className: '',
+        html: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 36" width="28" height="36">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 9 12 24 12 24s12-15 12-24C24 5.37 18.63 0 12 0z"
+                  fill="${color}" stroke="white" stroke-width="1.5"/>
+            <circle cx="12" cy="12" r="4" fill="white"/>
+        </svg>`,
+        iconSize: [24, 36],
+        iconAnchor: [12, 36],
+        popupAnchor: [0, -36],
+    }), []);
+
+    const markerPopupOpenHandler = useCallback(async (device: DeviceModel, emergencyState: EmergencyModel | undefined, container: HTMLElement) => {
         const [deviceState, dataschema] = await Promise.all([
             getDeviceStateAsync(device.id),
             getDeviceStateDataschemaAsync(device.id),
@@ -50,7 +63,7 @@ export const MapPage = () => {
             rootsRef.current.set(device.id, createRoot(container));
         }
         rootsRef.current.get(device.id)!.render(
-            <MapPagePopupContent device={device} deviceState={deviceState} dataschema={dataschema} />
+            <MapPagePopupContent device={device} deviceState={deviceState} dataschema={dataschema} emergencyState={emergencyState} />
         );
     }, [getDeviceStateAsync, getDeviceStateDataschemaAsync]);
 
@@ -60,7 +73,7 @@ export const MapPage = () => {
     }, []);
 
     const buildMarkersAsync = useCallback(async () => {
-        const devices = await getDeviceListAsync();
+        const [emergencyStates, devices] = await Promise.all([getEmergencyStatesAsync(), getDeviceListAsync()]);
         if (!devices || !mapRef.current) {
             return;
         }
@@ -73,23 +86,27 @@ export const MapPage = () => {
             }
 
             const { latitude, longitude } = device.objectLocation;
-            const marker = L.marker([latitude, longitude]).addTo(markersFeatureGroup);
+            const emergencyState = emergencyStates?.find(s => s.deviceId === device.id);
+            const hasEmergency = !!emergencyState;
+
+            const marker = L.marker([latitude, longitude],
+                { icon: createMarker(hasEmergency ? '#FFC107' : '#2ecc71') })
+                .addTo(markersFeatureGroup);
+
             const container = document.createElement('div');
             const popup = L.popup({ minWidth: 220 }).setContent(container);
-
             marker.bindPopup(popup);
-            marker.on('popupopen', markerPopupOpenHandler.bind(null, device, container));
+            marker.on('popupopen', markerPopupOpenHandler.bind(null, device, emergencyState, container));
             marker.on('popupclose', markerPopupCloseHandler.bind(null, device.id));
         });
 
         if (markersFeatureGroup.getLayers().length > 0) {
             mapRef.current.fitBounds(markersFeatureGroup.getBounds(), {
-                padding: [40, 40],
-                maxZoom: 15,
+                padding: [20, 20],
+                maxZoom: 14,
             });
         }
-
-    }, [getDeviceListAsync, markerPopupOpenHandler, markerPopupCloseHandler]);
+    }, [getEmergencyStatesAsync, getDeviceListAsync, createMarker, markerPopupOpenHandler, markerPopupCloseHandler]);
 
     useEffect(() => {
         buildMarkersAsync();

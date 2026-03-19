@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
-import { MainMenu } from "../../components/menu/main-menu/main-menu";
-import { EmergencySoundMute, WarningLogIcon, EmergencySoundUnmute, AdditionalMenuIcon, EmergencyWarningOff, EmergencyWarning } from "../../constants/app-icons";
-import { emergencyMuteManager } from "../../services/emergency-mute-manager";
+import { MainMenu } from "../components/menu/main-menu/main-menu";
+import { EmergencySoundMute, WarningLogIcon, EmergencySoundUnmute, AdditionalMenuIcon, EmergencyWarningOff, EmergencyWarning } from "../constants/app-icons";
+import { emergencyMuteManager } from "../services/emergency-mute-manager";
 import type dxPopover from "devextreme/ui/popover";
-import type { EmergencyModel } from "../../models/flows/emergency-model";
+import type { EmergencyModel } from "../models/flows/emergency-model";
 import { IoFlashOutline } from "react-icons/io5";
 import { renderToStaticMarkup } from "react-dom/server";
 
