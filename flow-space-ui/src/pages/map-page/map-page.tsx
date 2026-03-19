@@ -14,6 +14,15 @@ import 'leaflet/dist/leaflet.css';
 import './map-page.scss';
 import type { EmergencyModel } from "../../models/flows/emergency-model";
 
+const MapPagePopupSkeleton = () => (
+    <div className="popup-skeleton">
+        <div className="popup-skeleton__line popup-skeleton__line--title" />
+        <div className="popup-skeleton__line popup-skeleton__line--short" />
+        <div className="popup-skeleton__line popup-skeleton__line--long" />
+        <div className="popup-skeleton__line popup-skeleton__line--short" />
+    </div>
+);
+
 export const MapPage = () => {
     const defaultCenter: [number, number] = [51.50853, -0.12574];
     const { getDeviceListAsync, getDeviceStateAsync, getDeviceStateDataschemaAsync, getEmergencyStatesAsync } = useAppData();
@@ -50,6 +59,13 @@ export const MapPage = () => {
     }), []);
 
     const markerPopupOpenHandler = useCallback(async (device: DeviceModel, emergencyState: EmergencyModel | undefined, container: HTMLElement) => {
+        if (!rootsRef.current.has(device.id)) {
+            rootsRef.current.set(device.id, createRoot(container));
+        }
+
+        const root = rootsRef.current.get(device.id)!;
+        root.render(<MapPagePopupSkeleton />);
+
         const [deviceState, dataschema] = await Promise.all([
             getDeviceStateAsync(device.id),
             getDeviceStateDataschemaAsync(device.id),

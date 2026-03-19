@@ -77,3 +77,29 @@
     align-items: center;
     justify-content: center;
   }
+
+
+
+  .popup-skeleton {
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 4px 0;
+
+  &__line {
+    border-radius: 4px;
+    background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.2s infinite;
+
+    &--title { width: 60%; height: 14px; }
+    &--short { width: 80%; height: 12px; }
+    &--long  { width: 95%; height: 12px; }
+  }
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
