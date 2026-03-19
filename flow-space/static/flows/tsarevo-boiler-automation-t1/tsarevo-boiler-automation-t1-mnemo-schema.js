@@ -4,6 +4,13 @@ function setLevelSupplyWaterTank(mnemoschemaElement, deviceState) {
     if (!supplyWaterLevelElement) {
         return;
     }
+
+    supplyWaterLevelElement?.setAttribute('height', '0');
+    if (!deviceState.state.isSupplyWaterLevelEmergencyMin && !deviceState.state.isSupplyWaterLevelWorkingMin && !deviceState.state.isSupplyWaterLevelWorkingMax && !deviceState.state.isSupplyWaterLevelEmergencyMax) {
+        supplyWaterLevelElement.display = 'none';
+        return;
+    }
+
     let isMaxLevel = false;
     const levels = [
         { state: 'isSupplyWaterLevelEmergencyMax', height: 140 },
@@ -40,7 +47,7 @@ function setLevelSupplyWaterTank(mnemoschemaElement, deviceState) {
         }
     }
 
-   supplyWaterLevelElement.setAttribute('height', levels.pop()?.height ?? 0);
+    supplyWaterLevelElement.setAttribute('height', levels.pop()?.height ?? 0);
 }
 
 export function create(config) {

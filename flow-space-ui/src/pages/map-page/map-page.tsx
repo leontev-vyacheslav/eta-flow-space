@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo, useRef } from "react";
 import { createRoot } from "react-dom/client";
 import { MapContainer, TileLayer } from "react-leaflet";
 import PageHeader from "../../components/page-header/page-header";
-import { AdditionalMenuIcon, MapIcon, RefreshIcon } from "../../constants/app-icons";
+import { AdditionalMenuIcon, LocationIcon, MapIcon, RefreshIcon } from "../../constants/app-icons";
 import AppConstants from "../../constants/app-constants";
 import type { MenuItemModel } from "../../models/menu-item-model";
 import { useAppData } from "../../contexts/app-data/app-data";
@@ -14,13 +14,21 @@ import 'leaflet/dist/leaflet.css';
 import './map-page.scss';
 import type { EmergencyModel } from "../../models/flows/emergency-model";
 
-const MapPagePopupSkeleton = () => (
-    <div className="popup-skeleton">
-        <div className="popup-skeleton__line popup-skeleton__line--title" />
-        <div className="popup-skeleton__line popup-skeleton__line--short" />
-        <div className="popup-skeleton__line popup-skeleton__line--long" />
-        <div className="popup-skeleton__line popup-skeleton__line--short" />
-    </div>
+const MapPagePopupSkeleton = ({ device }: { device: DeviceModel | undefined }) => (
+    <>
+        <LocationIcon size={22} />
+        <div className="map-pop-content-location">
+            <div style={{ fontWeight: 'bold' }}>{device ? device.description : 'Нет данных'}</div>
+            <div>{device && device.objectLocation ? device.objectLocation.address : 'Нет данных'}</div>
+        </div>
+
+        <div className="popup-skeleton">
+            <div className="popup-skeleton__line popup-skeleton__line--title" />
+            <div className="popup-skeleton__line popup-skeleton__line--short" />
+            <div className="popup-skeleton__line popup-skeleton__line--long" />
+            <div className="popup-skeleton__line popup-skeleton__line--short" />
+        </div>
+    </>
 );
 
 export const MapPage = () => {
@@ -64,7 +72,7 @@ export const MapPage = () => {
         }
 
         const root = rootsRef.current.get(device.id)!;
-        root.render(<MapPagePopupSkeleton />);
+        root.render(<MapPagePopupSkeleton device={device} />);
 
         const [deviceState, dataschema] = await Promise.all([
             getDeviceStateAsync(device.id),
