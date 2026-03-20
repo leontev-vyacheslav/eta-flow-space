@@ -15,6 +15,7 @@ import { useLongPress } from "use-long-press";
 
 import 'leaflet/dist/leaflet.css';
 import './map-page.scss';
+import { isSuppressedForLongPress } from "../../helpers/map-helpers";
 
 export const MapPage = () => {
     const { getDeviceListAsync, getDeviceStateAsync, getDeviceStateDataschemaAsync, getEmergencyStatesAsync } = useAppData();
@@ -45,6 +46,7 @@ export const MapPage = () => {
         threshold: 250,
         cancelOnMovement: 5,
         captureEvent: true,
+        filterEvents: (e) => !isSuppressedForLongPress(e.target as HTMLElement),
     });
 
     const menuItems = useMemo(() => {
