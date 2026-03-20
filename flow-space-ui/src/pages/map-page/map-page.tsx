@@ -17,10 +17,11 @@ import 'leaflet/dist/leaflet.css';
 import './map-page.scss';
 
 export const MapPage = () => {
-    const defaultCenter: [number, number] = [51.50853, -0.12574];
     const { getDeviceListAsync, getDeviceStateAsync, getDeviceStateDataschemaAsync, getEmergencyStatesAsync } = useAppData();
     const mapRef = useRef<L.Map>(null);
+    const markersGroupRef = useRef<L.FeatureGroup | null>(null);
     const rootsRef = useRef<Map<number, ReturnType<typeof createRoot>>>(new Map());
+    const latestRequestRef = useRef<number>(0);
 
     const longPressBinder = useLongPress(
         () => {
@@ -29,20 +30,15 @@ export const MapPage = () => {
                 mapRef.current.closePopup();
 
                 // center by markers bounds
-                const markersGroup = L.featureGroup();
-                mapRef.current.eachLayer(layer => {
-                    if (layer instanceof L.Marker) {
-                        markersGroup.addLayer(layer);
-                    }
-                });
+                if (!markersGroupRef.current) {
+                    return;
+                }
+                const markersGroup = markersGroupRef.current!;
 
                 if (markersGroup.getLayers().length > 0) {
-                    mapRef.current.fitBounds(markersGroup.getBounds(), {
-                        padding: [40, 40],
-                        maxZoom: 14,
-                    });
+                    mapRef.current.fitBounds(markersGroup.getBounds(), AppConstants.mapDefaultBoundsSetting as L.FitBoundsOptions);
                 } else {
-                    mapRef.current.setView(defaultCenter, 16, { animate: true });
+                    mapRef.current.setView(AppConstants.mapDefaultCenter, AppConstants.mapDefaultZoom, { animate: true });
                 }
             }
         }, {
@@ -97,13 +93,9 @@ export const MapPage = () => {
             return;
         }
 
-        if (!rootsRef.current.has(device.id)) {
-            rootsRef.current.set(device.id, createRoot(container));
-        }
-        rootsRef.current.get(device.id)!.render(
+        rootsRef.current.get(device.id)?.render(
             <MapPagePopupContent device={device} deviceState={deviceState} dataschema={dataschema} emergencyState={emergencyState} />
         );
-
 
     }, [getDeviceStateAsync, getDeviceStateDataschemaAsync]);
 
@@ -112,13 +104,33 @@ export const MapPage = () => {
         rootsRef.current.delete(deviceId);
     }, []);
 
+    const markerClickHandler = useCallback(([latitude, longitude]: [number, number]) => {
+        if (mapRef.current) {
+            const map = mapRef.current;
+            map.setView([latitude, longitude], AppConstants.mapDefaultZoom, { animate: true });
+            // Wait for setView animation to finish, then shift down
+            map.once('moveend', () => {
+                map.panBy([0, -50], { animate: true });
+            });
+        }
+    }, []);
+
     const buildMarkersAsync = useCallback(async () => {
+        const requestId = ++latestRequestRef.current;
+
         const [emergencyStates, devices] = await Promise.all([getEmergencyStatesAsync(), getDeviceListAsync()]);
+        if (requestId !== latestRequestRef.current) {
+            return;
+        }
+
         if (!devices || !mapRef.current) {
             return;
         }
 
+        markersGroupRef.current?.remove();
+
         const markersFeatureGroup = L.featureGroup().addTo(mapRef.current);
+        markersGroupRef.current = markersFeatureGroup;
 
         devices.forEach(device => {
             if (!device.objectLocation) {
@@ -130,7 +142,7 @@ export const MapPage = () => {
             const hasEmergency = !!emergencyState;
 
             const marker = L.marker([latitude, longitude],
-                { icon: createMarker(hasEmergency && emergencyState.reasons.find(r => r.id === 100) ? '#F44336' : (hasEmergency ? '#FFC107' : '#4CAF50')) })
+                { icon: createMarker(hasEmergency && emergencyState?.reasons?.find(r => r.id === AppConstants.identifiers.connectionEmergencyReasonId) ? AppConstants.colors.emergencyCriticalColor : (hasEmergency ? AppConstants.colors.emergencyWarningColor : AppConstants.colors.normalDeviceStateColor)) })
                 .addTo(markersFeatureGroup);
 
             const container = document.createElement('div');
@@ -139,29 +151,29 @@ export const MapPage = () => {
             marker.bindPopup(popup);
             marker.on('popupopen', markerPopupOpenHandler.bind(null, device, emergencyState, container));
             marker.on('popupclose', markerPopupCloseHandler.bind(null, device.id));
-            marker.on('click', () => {
-                if (mapRef.current) {
-                    const map = mapRef.current;
-                    map.setView([latitude, longitude], 14, { animate: true });
-                    // Wait for setView animation to finish, then shift down
-                    map.once('moveend', () => {
-                        map.panBy([0, -50], { animate: true });
-                    });
-                }
-            });
+            marker.on('click', markerClickHandler.bind(null, [latitude, longitude]));
         });
 
         if (markersFeatureGroup.getLayers().length > 0) {
-            mapRef.current.fitBounds(markersFeatureGroup.getBounds(), {
-                padding: [40, 40],
-                maxZoom: 14,
-            });
+            mapRef.current?.fitBounds(markersFeatureGroup.getBounds(), AppConstants.mapDefaultBoundsSetting as L.FitBoundsOptions);
         }
-    }, [getEmergencyStatesAsync, getDeviceListAsync, createMarker, markerPopupOpenHandler, markerPopupCloseHandler]);
+
+    }, [getEmergencyStatesAsync, getDeviceListAsync, createMarker, markerPopupOpenHandler, markerPopupCloseHandler, markerClickHandler]);
 
     useEffect(() => {
         buildMarkersAsync();
     }, [buildMarkersAsync]);
+
+    useEffect(() => {
+        return () => {
+            // Clean up roots on unmount
+            rootsRef.current.forEach(root => root.unmount());
+            rootsRef.current.clear();
+
+            markersGroupRef.current?.remove();
+            mapRef.current?.remove();
+        };
+    }, []);
 
     return (
         <>
@@ -171,8 +183,8 @@ export const MapPage = () => {
             <div {...longPressBinder()} style={{ height: 'calc(100% - 60px)', width: '100%', padding: 10 }}>
                 <MapContainer
                     ref={mapRef}
-                    center={defaultCenter}
-                    zoom={16}
+                    center={AppConstants.mapDefaultCenter}
+                    zoom={AppConstants.mapDefaultZoom}
                     style={{ height: '100%', width: '100%' }}>
                     <TileLayer
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

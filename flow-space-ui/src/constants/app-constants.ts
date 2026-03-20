@@ -18,10 +18,20 @@ const AppConstants = {
         borderGreyColor: '#a3a3a3',
         themeBaseAccent: '#FF5722',
         baseDarkgreyTextColor: '#464646',
-        supplyPipeColor: '#f5564a',
-        calculatedSupplyPipeColor: '#f5564a',
-        returnPipeColor: '#1db2f5',
-        outdoorColor: '#4CAF50'
+
+        normalDeviceStateColor: '#4CAF50',
+        emergencyWarningColor: '#FFC107',
+        emergencyCriticalColor: '#F44336',
+
+    },
+    identifiers: {
+        connectionEmergencyReasonId: 100
+    },
+    mapDefaultZoom: 14,
+    mapDefaultCenter: [51.50853, -0.12574] as [number, number],
+    mapDefaultBoundsSetting: {
+        padding: [40, 40],
+        maxZoom: 14,
     },
     pageHeight: '75vh',
     formHeight: '65vh',
