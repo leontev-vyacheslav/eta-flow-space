@@ -6,5 +6,6 @@ RUN apk add --no-cache postgresql-client curl && \
     chmod +x /usr/local/bin/supercronic
 
 COPY crontab /crontab
+COPY cleanup.sh /cleanup.sh
 
 CMD ["supercronic", "/crontab"]
