@@ -4,4 +4,4 @@ node_modules
 
 /lib/generated/prisma
 
-**/.sessions.json
+.sessions.json
