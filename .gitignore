@@ -4,5 +4,7 @@ node_modules/
 !Dockerfile.backup
 .npm/
 
+**/.sessions.json
+
 flow-space-data/
 flow-space-backups/
