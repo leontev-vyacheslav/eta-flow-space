@@ -37,42 +37,6 @@ class EmergencyMuteManager {
             oscillator.stop(startTime + duration);
         };
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const siren = (durationMs: number = 2500) => {
-
-            const ctx = new AudioContext();
-
-            const oscillator = ctx.createOscillator();
-            const gainNode = ctx.createGain();
-
-            oscillator.connect(gainNode);
-            gainNode.connect(ctx.destination);
-
-            oscillator.type = 'sawtooth';
-
-            // Fade out at the end
-            gainNode.gain.setValueAtTime(0.3, ctx.currentTime);
-            gainNode.gain.setValueAtTime(0.3, ctx.currentTime + durationMs / 1000 - 0.3);
-            gainNode.gain.linearRampToValueAtTime(0, ctx.currentTime + durationMs / 1000);
-
-            const sweepDuration = 0.8;
-            const cycles = Math.ceil((durationMs / 1000) / sweepDuration);
-
-            for (let i = 0; i < cycles; i++) {
-                const t = ctx.currentTime + i * sweepDuration;
-                oscillator.frequency.setValueAtTime(440, t);
-                oscillator.frequency.linearRampToValueAtTime(880, t + sweepDuration / 2);
-                oscillator.frequency.linearRampToValueAtTime(440, t + sweepDuration);
-            }
-
-            oscillator.start(ctx.currentTime);
-            oscillator.stop(ctx.currentTime + durationMs / 1000);
-
-            oscillator.onended = () => {
-                ctx?.close();
-            };
-        }
-
         const wave = () => {
             const frequencies = [800, 1200, 2000, 1200, 800];
             const interval = 0.1;
@@ -82,7 +46,6 @@ class EmergencyMuteManager {
             });
         };
 
-        console.info(siren);
         wave();
     }
 

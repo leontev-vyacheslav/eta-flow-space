@@ -1,4 +1,4 @@
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useDashboardPage } from "../../dashboard-page-context"
 import dxPopover from "devextreme/ui/popover";
 import { useAuth } from "../../../../contexts/auth";
@@ -15,6 +15,9 @@ export const useMnemoschemaPopover = () => {
     const { deviceId } = useParams();
     const { schemaTypeInfoPropertiesChain, dataschema } = useDashboardPage();
     const popoverInstance = useRef<dxPopover<any>>(null);
+    const escapeHandlerRef = useRef<((e: KeyboardEvent) => void) | null>(null); // Track the handler
+    const popoverContentReactRootRef = useRef<ReturnType<typeof createRoot> | null>(null); // Store the root
+    const popoverContainerRef = useRef<HTMLDivElement | null>(null); // Store the container
 
     const popoverContentRender = useCallback((propertyInfo: SchemaTypeInfoPropertiesChainModel, target: Element) => {
         let value = propertyInfo.propertiesChainValuePair.value;
@@ -76,6 +79,25 @@ export const useMnemoschemaPopover = () => {
         );
     }, [dataschema, isAdmin]);
 
+    useEffect(() => {
+        return () => {
+            queueMicrotask(() => {
+                if (popoverInstance.current) {
+                    popoverInstance.current.dispose();
+                    popoverInstance.current = null;
+                }
+                if (popoverContentReactRootRef.current) {
+                    popoverContentReactRootRef.current.unmount();
+                    popoverContentReactRootRef.current = null;
+                }
+                if (popoverContainerRef.current) {
+                    popoverContainerRef.current.remove();
+                    popoverContainerRef.current = null;
+                }
+            })
+        };
+    }, []);
+
     return useCallback((event: MouseEvent) => {
         const target = (event.target as Element)?.closest?.("[data-state]");
         if (!target) {
@@ -108,20 +130,47 @@ export const useMnemoschemaPopover = () => {
         const popoverContainer = document.createElement('div');
         popoverContainer.setAttribute('data-mnemoschema-popover', '');
         document.body.appendChild(popoverContainer);
+        popoverContainerRef.current = popoverContainer; // Store it
 
         const popoverContentContainer = document.createElement('div');
         const popoverContentReactRoot = createRoot(popoverContentContainer);
+        popoverContentReactRootRef.current = popoverContentReactRoot; // Store it
 
+        // Create escape key handler
+        escapeHandlerRef.current = (e: KeyboardEvent) => {
+            if (e.key === 'Escape' && popoverInstance.current) {
+                popoverInstance.current.hide();
+            }
+        };
         popoverInstance.current = new dxPopover(popoverContainer, {
             minWidth: 200,
             shading: false,
             hideOnOutsideClick: true,
+            onShown: () => {
+                // Add escape key listener when popover is shown
+                if (escapeHandlerRef.current) {
+                    document.addEventListener('keydown', escapeHandlerRef.current);
+                }
+            },
             onHidden: () => {
-                popoverContentReactRoot.unmount();
-                popoverContentContainer.remove();
-                setTimeout(() => {
-                    popoverContainer.remove();
-                }, 0);
+                // Remove escape key listener when popover is hidden
+                if (escapeHandlerRef.current) {
+                    document.removeEventListener('keydown', escapeHandlerRef.current);
+                    escapeHandlerRef.current = null;
+                }
+
+                queueMicrotask(() => {
+                    if (popoverContentReactRootRef.current) {
+                        popoverContentReactRootRef.current.unmount();
+                        popoverContentReactRootRef.current = null;
+                    }
+                    popoverContentContainer.remove();
+                    if (popoverContainerRef.current) {
+                        popoverContainerRef.current.remove();
+                        popoverContainerRef.current = null;
+
+                    }
+                });
             },
             contentTemplate: () => {
                 popoverContentReactRoot.render(popoverContentRender(propertyInfo, target));

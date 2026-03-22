@@ -167,15 +167,26 @@ export const MapPage = () => {
     }, [buildMarkersAsync]);
 
     useEffect(() => {
+        const map = mapRef.current;
+        const markersGroup = markersGroupRef.current;
+        const roots = rootsRef.current;
+
         return () => {
-            markersGroupRef.current?.remove();
-            mapRef.current?.remove();
+            markersGroup?.remove();
+            map?.remove();
 
             // Clean up all React roots (deferred to avoid race condition)
-            rootsRef.current.forEach(root => {
-                queueMicrotask(() => root.unmount());
+            roots.forEach(root => {
+                for (const [key, value] of roots) {
+                    if (value === root) {
+                        queueMicrotask(() => {
+                            root.unmount();
+                            roots.delete(key);
+                        });
+                        break;
+                    }
+                }
             });
-            rootsRef.current.clear();
         };
     }, []);
 
