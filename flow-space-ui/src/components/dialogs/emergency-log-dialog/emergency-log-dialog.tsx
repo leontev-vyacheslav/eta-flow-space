@@ -72,7 +72,7 @@ const EmergencyLogDialogInternal = (props: EmergencyLogDialogProps) => {
             ref={popupRef}
             width={isXSmall || isSmall ? '95%' : undefined}
             height={isXSmall || isSmall ? '80%' : undefined}
-            titleRender={() => <EmergencyLogDialogTitle popupRef={popupRef} menuItems={menuItems} />}
+            titleRender={() => <EmergencyLogDialogTitle device={props.device} popupRef={popupRef} menuItems={menuItems} />}
             dragEnabled={!(isXSmall || isSmall)}
             resizeEnabled
             {...props}

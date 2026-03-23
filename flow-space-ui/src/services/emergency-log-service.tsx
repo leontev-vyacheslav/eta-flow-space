@@ -3,12 +3,13 @@ import { AppDataProvider } from '../contexts/app-data/app-data';
 import { AuthProvider } from '../contexts/auth';
 import { SharedAreaProvider } from '../contexts/shared-area';
 import { EmergencyLogDialog } from '../components/dialogs/emergency-log-dialog/emergency-log-dialog';
+import type { DeviceModel } from '../models/flows/device-model';
 
 class EmergencyLogService {
     private popupContainer?: HTMLDivElement;
     private root?: Root;
 
-    public show({ deviceId }: {deviceId?: number}) {
+    public show({ device }: {device?: DeviceModel}) {
         document.querySelector('#emergency-log-dialog-root')?.remove();
 
         this.popupContainer = document.createElement('div');
@@ -22,7 +23,7 @@ class EmergencyLogService {
                 <SharedAreaProvider>
                     <AppDataProvider>
                         <EmergencyLogDialog
-                            deviceId={deviceId}
+                            device={device}
                             callback={() => { }}
                             onHidden={() => { this.hide(); }}
                         />

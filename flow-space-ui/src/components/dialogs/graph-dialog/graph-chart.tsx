@@ -128,7 +128,7 @@ export const GraphChart = (props: GraphChartProps) => {
                 />
 
             </Chart >
-            <div ref={dateRangerRef} style={{ fontSize: 10, color: 'rgb(118, 118, 118)', paddingLeft: 30 }}></div>
+            <div ref={dateRangerRef} style={{ fontSize: 12, color: 'rgb(118, 118, 118)', paddingLeft: 30 }}></div>
         </div>
     );
 }

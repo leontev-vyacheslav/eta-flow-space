@@ -13,7 +13,7 @@ import './mnemoschema-popover.scss';
 export const useMnemoschemaPopover = () => {
     const { isAdmin } = useAuth();
     const { deviceId } = useParams();
-    const { schemaTypeInfoPropertiesChain, dataschema } = useDashboardPage();
+    const { schemaTypeInfoPropertiesChain, dataschema, device } = useDashboardPage();
     const popoverInstance = useRef<dxPopover<any>>(null);
     const escapeHandlerRef = useRef<((e: KeyboardEvent) => void) | null>(null); // Track the handler
     const popoverContentReactRootRef = useRef<ReturnType<typeof createRoot> | null>(null); // Store the root
@@ -202,11 +202,11 @@ export const useMnemoschemaPopover = () => {
                             queueMicrotask(() => {
                                 popoverContainer.remove();
                             });
-                            if (!deviceId) {
+                            if (!device) {
                                 return;
                             }
                             graphService.show({
-                                deviceId: parseInt(deviceId),
+                                device: device,
                                 schemaTypeInfos: [propertyInfo]
                             });
                         });
@@ -215,5 +215,5 @@ export const useMnemoschemaPopover = () => {
         });
 
         popoverInstance.current.show();
-    }, [deviceId, popoverContentRender, schemaTypeInfoPropertiesChain]);
+    }, [device, popoverContentRender, schemaTypeInfoPropertiesChain]);
 }

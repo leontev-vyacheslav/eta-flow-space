@@ -75,7 +75,7 @@ const GraphDialogInternal = (props: GraphDialogProps) => {
             ref={popupRef}
             width={isXSmall || isSmall ? '95%' : undefined}
             height={isXSmall || isSmall ? '80%' : undefined}
-            titleRender={() => <GraphDialogTitle popupRef={popupRef} menuItems={menuItems} schemaTypeInfos={props.schemaTypeInfos} />}
+            titleRender={() => <GraphDialogTitle device={props.device} popupRef={popupRef} menuItems={menuItems} schemaTypeInfos={props.schemaTypeInfos} />}
             dragEnabled={!(isXSmall || isSmall)}
             resizeEnabled
             {...props}

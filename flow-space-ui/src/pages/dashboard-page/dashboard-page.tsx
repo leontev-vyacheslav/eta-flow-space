@@ -16,8 +16,8 @@ import { emergencyMuteManager } from '../../services/emergency-mute-manager';
 
 const DashboardPageInner = () => {
     const tabPanelRef = useRef<TabPanel>(null);
-    const { setRefreshToken, schemaTypeInfoPropertiesChain } = useDashboardPage();
-    const { flowCode, deviceId } = useParams();
+    const { setRefreshToken, schemaTypeInfoPropertiesChain, device } = useDashboardPage();
+    const { flowCode } = useParams();
     const [ControlTabContent, setControlTabContent] = useState<ComponentType<any> | null>(null);
     const [MnemoschemaTabContent, setMnemoschemaTabContent] = useState<ComponentType<any> | null>(null);
     const [tabIndex, setTabIndex] = useState<number>(0);
@@ -37,17 +37,17 @@ const DashboardPageInner = () => {
                         icon: () => <GraphIcon size={20} />,
                         text: 'Графики...',
                         onClick: () => {
-                            if (deviceId) {
+                            if (device) {
                                 const s = schemaTypeInfoPropertiesChain?.filter(chain => chain.typeInfo?.ui.chart);
-                                graphService.show({ deviceId: parseInt(deviceId), schemaTypeInfos: s || [] });
+                                graphService.show({ device: device, schemaTypeInfos: s || [] });
                             }
                         }
                     }, {
                         icon: () => <WarningLogIcon size={20} />,
                         text: 'Журнал аварий...',
                         onClick: () => {
-                            if (deviceId) {
-                                emergencyLogService.show({ deviceId: parseInt(deviceId) });
+                            if (device) {
+                                emergencyLogService.show({ device: device });
                             }
                         }
                     }, {
@@ -60,8 +60,7 @@ const DashboardPageInner = () => {
                 ]
             }
         ] as MenuItemModel[];
-    }, [deviceId, schemaTypeInfoPropertiesChain, setRefreshToken]);
-
+    }, [device, schemaTypeInfoPropertiesChain, setRefreshToken]);
 
     useEffect(() => {
         (async () => {
@@ -70,7 +69,7 @@ const DashboardPageInner = () => {
                 import(`./flows/${flowCode}/mnemoschema/mnemoschema-tab-content.tsx`),
             ]);
 
-            const [controlModule, mnemoschemaModule /*, mapModule*/] = results.map(result =>
+            const [controlModule, mnemoschemaModule] = results.map(result =>
                 result.status === 'fulfilled' ? result.value : null
             );
             setControlTabContent(() => controlModule ? controlModule.default : null);
@@ -95,7 +94,13 @@ const DashboardPageInner = () => {
 
     return (
         <>
-            <PageHeader caption={'Приборная панель'} menuItems={menuItems}>
+
+            <PageHeader caption={() => {
+                return <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <span>Приборная панель</span>
+                    <span style={{ fontSize: 12, fontWeight: 'normal', minHeight: 16, color: 'rgb(118, 118, 118)' }}>{device?.name}</span>
+                </div>
+            }} menuItems={menuItems}>
                 <DashboardIcon size={AppConstants.headerIconSize} />
             </PageHeader>
             <div className={'content-block'}>
@@ -137,8 +142,8 @@ const DashboardPageInner = () => {
 
 export const DashboardPage = () => {
     return (
-            <DashboardPageContextProvider>
-                <DashboardPageInner />
-            </DashboardPageContextProvider>
+        <DashboardPageContextProvider>
+            <DashboardPageInner />
+        </DashboardPageContextProvider>
     );
 }

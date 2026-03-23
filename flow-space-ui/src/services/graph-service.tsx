@@ -9,7 +9,7 @@ class GraphService {
     private popupContainer?: HTMLDivElement;
     private root?: Root;
 
-    public show({ deviceId, schemaTypeInfos, beginDate, endDate }: GraphDialogProps) {
+    public show({ device, schemaTypeInfos, beginDate, endDate }: GraphDialogProps) {
         document.querySelector('#graph-dialog-root')?.remove();
 
         this.popupContainer = document.createElement('div');
@@ -23,7 +23,7 @@ class GraphService {
                 <SharedAreaProvider>
                     <AppDataProvider>
                         <GraphDialog
-                            deviceId={deviceId}
+                            device={device}
                             beginDate={beginDate}
                             endDate={endDate}
                             schemaTypeInfos={schemaTypeInfos}

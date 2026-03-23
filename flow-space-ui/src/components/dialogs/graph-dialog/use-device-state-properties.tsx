@@ -11,7 +11,7 @@ export const useDeviceStateProperties = (props: GraphChartProps & { refreshToken
         (async () => {
 
             let stateProperties = await getDeviceStatesByDatesAsync(
-                props.deviceId,
+                props.device!.id,
                 props.beginDate!,
                 props.endDate!,
                 [props.schemaTypeInfo].map(t => (t.propertiesChainValuePair.propertiesChain))
@@ -33,7 +33,7 @@ export const useDeviceStateProperties = (props: GraphChartProps & { refreshToken
 
             setStateProperties(stateProperties);
         })();
-    }, [getDeviceStatesByDatesAsync, props.beginDate, props.deviceId, props.endDate, props.schemaTypeInfo, props.refreshToken]);
+    }, [getDeviceStatesByDatesAsync, props.beginDate, props.endDate, props.schemaTypeInfo, props.refreshToken, props.device]);
 
     return stateProperties;
 }

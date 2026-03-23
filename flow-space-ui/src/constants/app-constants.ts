@@ -9,7 +9,7 @@ const AppConstants = {
 
     noDataLongText: 'Нет данных для отображения',
     loadingDelay: 500,
-    headerIconSize: 26,
+    headerIconSize: 24,
     colors: {
         companyColor: '#2c394c',
         companyColorHighlight: '#e0e6eb',

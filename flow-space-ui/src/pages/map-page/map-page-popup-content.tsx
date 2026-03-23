@@ -84,10 +84,10 @@ export const MapPagePopupContent = ({ device, deviceState, dataschema, emergency
     const graphIconClickHandler = useCallback((propertyInfo: SchemaTypeInfoPropertiesChainModel) => {
 
         graphService.show({
-            deviceId: device.id,
+            device: device,
             schemaTypeInfos: [propertyInfo]
         });
-    }, [device.id]);
+    }, [device]);
 
     const statePropertyRowRender = useCallback(({ typeInfo, propertiesChainValuePair }: SchemaTypeInfoPropertiesChainModel) => {
         const valueContent = renderStateValueByPropertiesChain(typeInfo!, propertiesChainValuePair);
