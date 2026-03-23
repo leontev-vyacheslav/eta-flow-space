@@ -13,7 +13,7 @@ import { NoData } from "../../../../components/no-data-widget/no-data-widget";
 
 export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfterMount }: { onBeforeMount?: (mnemoschemaElement: HTMLElement) => void, onAfterMount?: (mnemoschemaElement: HTMLElement) => void }) => {
     const { flowCode } = useParams();
-    const { mnemoschema, isValidDeviceState, dataschema, schemaTypeInfoPropertiesChain, deviceState } = useDashboardPage();
+    const { mnemoschema, dataschema, schemaTypeInfoPropertiesChain, deviceState } = useDashboardPage();
     const containerRef = useRef<HTMLDivElement>(null);
     const transformComponentRef = useRef<ReactZoomPanPinchRef | null>(null);
     const [isInitComplete, setIsInitComplete] = useState<boolean>(false);
@@ -102,7 +102,7 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
             }}
         >
             <TransformComponent wrapperStyle={{ width: '100%', height: '100%' }}>
-                <div {...longPressBinder()} style={{ display: 'flex', alignItems: 'center', opacity: (isValidDeviceState ? 1 : 1) }} ref={containerRef} />
+                <div {...longPressBinder()} style={{ display: 'flex', alignItems: 'center' }} ref={containerRef} />
             </TransformComponent>
         </TransformWrapper>
         : <NoData />

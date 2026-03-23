@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useRef } from "react";
+import { createRoot } from "react-dom/client";
 import { useDashboardPage } from "../../dashboard-page-context"
 import dxPopover from "devextreme/ui/popover";
 import { useAuth } from "../../../../contexts/auth";
 import { GraphIcon } from "../../../../constants/app-icons";
-
-import './mnemoschema-popover.scss';
 import { graphService } from "../../../../services/graph-service";
 import { useParams } from "react-router";
 import type { SchemaTypeInfoPropertiesChainModel } from "../../../../helpers/data-helper";
-import { createRoot } from "react-dom/client";
+
+import './mnemoschema-popover.scss';
 
 export const useMnemoschemaPopover = () => {
     const { isAdmin } = useAuth();
@@ -193,14 +193,15 @@ export const useMnemoschemaPopover = () => {
                 if (!propertyInfo.typeInfo?.ui.chart) {
                     return;
                 }
-                const t = setTimeout(() => {
+                queueMicrotask(() => {
                     document.querySelector(`[data-state-graph="${propertyInfo.propertiesChainValuePair.propertiesChain}"]`)
                         ?.addEventListener('click', () => {
                             popoverInstance.current?.hide();
                             popoverInstance.current?.dispose();
-                            setTimeout(() => {
+                            popoverInstance.current = null;
+                            queueMicrotask(() => {
                                 popoverContainer.remove();
-                            }, 0);
+                            });
                             if (!deviceId) {
                                 return;
                             }
@@ -208,9 +209,8 @@ export const useMnemoschemaPopover = () => {
                                 deviceId: parseInt(deviceId),
                                 schemaTypeInfos: [propertyInfo]
                             });
-                            clearTimeout(t);
                         });
-                }, 0);
+                });
             }
         });
 
