@@ -5,14 +5,12 @@ import dxPopover from "devextreme/ui/popover";
 import { useAuth } from "../../../../contexts/auth";
 import { GraphIcon } from "../../../../constants/app-icons";
 import { graphService } from "../../../../services/graph-service";
-import { useParams } from "react-router";
 import type { SchemaTypeInfoPropertiesChainModel } from "../../../../helpers/data-helper";
 
 import './mnemoschema-popover.scss';
 
 export const useMnemoschemaPopover = () => {
     const { isAdmin } = useAuth();
-    const { deviceId } = useParams();
     const { schemaTypeInfoPropertiesChain, dataschema, device } = useDashboardPage();
     const popoverInstance = useRef<dxPopover<any>>(null);
     const escapeHandlerRef = useRef<((e: KeyboardEvent) => void) | null>(null); // Track the handler

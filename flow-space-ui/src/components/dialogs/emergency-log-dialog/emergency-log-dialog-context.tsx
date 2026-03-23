@@ -61,7 +61,7 @@ function EmergencyLogDialogContextProvider(props: EmergencyLogProps) {
 
         (async () => {
             const emergencyStates = await getEmergencyStatesByDatesAsync(
-                props.deviceId,
+                props.device?.id,
                 props.beginDate ?? rangeDates.beginDate,
                 props.endDate ?? rangeDates.endDate
             );
