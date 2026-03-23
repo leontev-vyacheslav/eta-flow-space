@@ -118,11 +118,8 @@ export const ControlForm = ({ onFieldDataChanged }: ControlFormProps) => {
             {dataschema.ui.useTabs
                 ?
                 <TabbedItem tabPanelOptions={{
-                    // width: '100%'
                     scrollByContent: true,
                     showNavButtons: true,
-                    // swipeEnabled: true,
-                    // activeStateEnabled: true,
                     scrollingEnabled: true,
                     width: isXSmall ? '85vw' : '70vw',
                     deferRendering: true,

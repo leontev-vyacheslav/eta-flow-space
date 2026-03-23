@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 
 type TransformRef = {
     setTransform: (x: number, y: number, scale: number) => void;
@@ -6,32 +6,43 @@ type TransformRef = {
 
 export function useMnemoschemaRestoreTransformState(
     flowCode: string | undefined,
-    transformComponentRef: React.RefObject<TransformRef | null> ,
+    transformComponentRef: React.RefObject<TransformRef | null>,
     onInitComplete?: () => void,
     delay = 500
 ) {
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            const savedState = localStorage.getItem(
-                `mnemoschemaTransformedState_${flowCode}`
-            );
+    const restore = useCallback(() => {
+        const savedState = localStorage.getItem(
+            `mnemoschemaTransformedState_${flowCode}`
+        );
 
-            if (savedState && transformComponentRef?.current) {
-                try {
-                    const { scale, positionX, positionY } = JSON.parse(savedState);
-                    transformComponentRef.current.setTransform(
-                        positionX,
-                        positionY,
-                        scale
-                    );
-                } catch (e) {
-                    console.error('Failed to restore transform state', e);
-                }
+        if (savedState && transformComponentRef?.current) {
+            try {
+                const { scale, positionX, positionY } = JSON.parse(savedState);
+                transformComponentRef.current.setTransform(
+                    positionX,
+                    positionY,
+                    scale
+                );
+            } catch (e) {
+                console.error('Failed to restore transform state', e);
             }
+        }
 
-            onInitComplete?.();
+        onInitComplete?.();
+    }, [flowCode, transformComponentRef, onInitComplete]);
+
+    useEffect(() => {
+        const timer1 = setTimeout(() => {
+            restore();
         }, delay);
 
-        return () => clearTimeout(timer);
-    }, [flowCode, delay, onInitComplete, transformComponentRef]);
+        const timer2 = setTimeout(() => {
+            restore();
+        }, delay * 2);
+
+        return () => {
+            clearTimeout(timer1);
+            clearTimeout(timer2);
+        };
+    }, [delay, restore]);
 }

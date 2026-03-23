@@ -1,5 +1,5 @@
 import L from "leaflet";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { MapContainer, TileLayer } from "react-leaflet";
 import PageHeader from "../../components/page-header/page-header";
@@ -12,14 +12,16 @@ import type { DeviceModel } from "../../models/flows/device-model";
 import type { EmergencyModel } from "../../models/flows/emergency-model";
 import { MapPagePopupSkeleton } from "./map-page-popup-skeleton";
 import { useLongPress } from "use-long-press";
+import { isSuppressedForLongPress } from "../../helpers/map-helpers";
+import { createMapMarkerIcon } from "./map-marker-icon";
+import { getQuickGuid } from "../../utils/uuid";
 
 import 'leaflet/dist/leaflet.css';
 import './map-page.scss';
-import { isSuppressedForLongPress } from "../../helpers/map-helpers";
-import { createMapMarkerIcon } from "./map-marker-icon";
 
 export const MapPage = () => {
     const { getDeviceListAsync, getDeviceStateAsync, getDeviceStateDataschemaAsync, getEmergencyStatesAsync } = useAppData();
+    const [refreshToken, setRefreshToken] = useState<string>(getQuickGuid());
     const mapRef = useRef<L.Map>(null);
     const markersGroupRef = useRef<L.FeatureGroup | null>(null);
     const rootsRef = useRef<Map<number, ReturnType<typeof createRoot>>>(new Map());
@@ -59,7 +61,7 @@ export const MapPage = () => {
                         icon: () => <RefreshIcon size={20} />,
                         text: 'Обновить...',
                         onClick: () => {
-                            // setRefreshToken(getQuickGuid());
+                            setRefreshToken(getQuickGuid());
                         }
                     },
                 ]
@@ -114,7 +116,6 @@ export const MapPage = () => {
 
     const buildMarkersAsync = useCallback(async () => {
         const requestId = ++latestRequestRef.current;
-
         const [emergencyStates, devices] = await Promise.all([getEmergencyStatesAsync(), getDeviceListAsync()]);
         if (requestId !== latestRequestRef.current) {
             return;
@@ -160,7 +161,8 @@ export const MapPage = () => {
             mapRef.current?.fitBounds(markersFeatureGroup.getBounds(), AppConstants.mapDefaultBoundsSetting as L.FitBoundsOptions);
         }
 
-    }, [getEmergencyStatesAsync, getDeviceListAsync, markerPopupOpenHandler, markerPopupCloseHandler, markerClickHandler]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [getEmergencyStatesAsync, getDeviceListAsync, markerPopupOpenHandler, markerPopupCloseHandler, markerClickHandler, refreshToken]);
 
     useEffect(() => {
         buildMarkersAsync();
