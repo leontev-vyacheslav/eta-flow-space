@@ -75,6 +75,7 @@ const EmergencyLogDialogInternal = (props: EmergencyLogDialogProps) => {
             titleRender={() => <EmergencyLogDialogTitle device={props.device} popupRef={popupRef} menuItems={menuItems} />}
             dragEnabled={!(isXSmall || isSmall)}
             resizeEnabled
+            hideOnOutsideClick
             {...props}
             callback={(modalResult) => {
                 if (props.callback) {

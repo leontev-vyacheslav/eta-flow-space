@@ -78,6 +78,7 @@ const GraphDialogInternal = (props: GraphDialogProps) => {
             titleRender={() => <GraphDialogTitle device={props.device} popupRef={popupRef} menuItems={menuItems} schemaTypeInfos={props.schemaTypeInfos} />}
             dragEnabled={!(isXSmall || isSmall)}
             resizeEnabled
+            hideOnOutsideClick
             {...props}
             callback={(modalResult) => {
                 if (props.callback) {
