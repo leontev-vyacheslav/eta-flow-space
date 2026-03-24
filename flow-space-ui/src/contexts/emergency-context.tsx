@@ -1,5 +1,5 @@
 import dxPopover from "devextreme/ui/popover";
-import { createContext, useCallback, useContext, useEffect, useRef } from "react";
+import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { EmergencyWarning, EmergencyWarningOff, WarningIcon } from "../constants/app-icons";
 import { createRoot } from "react-dom/client";
 import { renderToStaticMarkup } from "react-dom/server";
@@ -9,16 +9,25 @@ import { EmergencyPopoverContent } from "./emergency-popover-content";
 import { emergencyMuteManager } from "../services/emergency-mute-manager";
 import type { EmergencyModel } from "../models/flows/emergency-model";
 
-export type EmergencyContextModel = any;
+export interface EmergencyContextModel {
+    refreshEmergencyStates: () => Promise<void>;
+    showEmergencyPopover: (position: { x: number; y: number }, emergencyState: EmergencyModel) => void;
+    emergencyStates: EmergencyModel[];
+}
 
-const EmergencyContext = createContext({} as EmergencyContextModel);
+interface EmergencyContextProviderProps {
+    children: ReactNode;
+}
 
-function EmergencyContextProvider(props: any) {
+const EmergencyContext = createContext<EmergencyContextModel | undefined>(undefined);
+
+function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
     const popoverInstance = useRef<dxPopover<any>>(null);
     const { getEmergencyStatesAsync } = useAppData();
     const { flows } = useAppSettings();
+    const [emergencyStates] = useState<EmergencyModel[]>([]);
 
-    const renderPopover = useCallback(({ position, emergencyState }: { position: { x: number, y: number }, emergencyState: EmergencyModel }) => {
+    const showEmergencyPopover = useCallback((position: { x: number; y: number }, emergencyState: EmergencyModel) => {
         const popoverContainer = document.createElement('div');
         popoverContainer.setAttribute('data-emergency-popover', '');
         document.body.appendChild(popoverContainer);
@@ -73,10 +82,10 @@ function EmergencyContextProvider(props: any) {
             }
         });
 
-        renderPopover({ position: { x: event.clientX, y: event.clientY }, emergencyState });
-    }, [renderPopover]);
+        showEmergencyPopover({ x: event.clientX, y: event.clientY }, emergencyState);
+    }, [showEmergencyPopover]);
 
-    const updateEmergencyState = useCallback(async () => {
+    const refreshEmergencyStates = useCallback(async () => {
         if (!flows) {
             return;
         }
@@ -91,16 +100,16 @@ function EmergencyContextProvider(props: any) {
         const emergencyMutedIcon = renderToStaticMarkup(
             <>
                 <WarningIcon size={18} style={{ fill: '#FFC107', cursor: 'pointer' }} />
-                <EmergencyWarningOff data-emergency-mute-icon size={12} style={{ fill: '#FFC107', cursor: 'pointer', position: 'absolute',top: '-5px', right: '-5px' }} />
+                <EmergencyWarningOff data-emergency-mute-icon size={12} style={{ fill: '#FFC107', cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px' }} />
             </>
         );
         const emergencyUnmutedIcon = renderToStaticMarkup(
             <>
                 <WarningIcon size={18} style={{ fill: '#FFC107', cursor: 'pointer' }} />
-                <EmergencyWarning  data-emergency-mute-icon size={12} style={{ fill: '#FFC107', cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px' }} />
+                <EmergencyWarning data-emergency-mute-icon size={12} style={{ fill: '#FFC107', cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px' }} />
             </>
         );
-        const emergencyIconContainerElements = Array.from(document.querySelectorAll('.side-navigation-menu [data-emergency-icon-container]'));
+        const emergencyIconContainerElements = Array.from(document.querySelectorAll('[data-emergency-icon-container]'));
 
         flows?.flatMap(f => (f.devices ?? []))
             .forEach(d => {
@@ -129,21 +138,33 @@ function EmergencyContextProvider(props: any) {
 
     useEffect(() => {
         (async () => {
-            await updateEmergencyState();
+            await refreshEmergencyStates();
         })();
 
         const timer = setInterval(async () => {
-            await updateEmergencyState();
+            await refreshEmergencyStates();
         }, 10000);
 
         return () => {
             clearInterval(timer);
         };
-    }, [updateEmergencyState]);
+    }, [refreshEmergencyStates]);
 
-    return <EmergencyContext.Provider {...props} value={{}} />
+    const contextValue: EmergencyContextModel = {
+        refreshEmergencyStates,
+        showEmergencyPopover,
+        emergencyStates,
+    };
+
+    return <EmergencyContext.Provider value={contextValue}>{children}</EmergencyContext.Provider>;
 }
 
-const useEmergency = () => useContext(EmergencyContext);
+const useEmergency = (): EmergencyContextModel => {
+    const context = useContext(EmergencyContext);
+    if (context === undefined) {
+        throw new Error('useEmergency must be used within an EmergencyContextProvider');
+    }
+    return context;
+};
 
 export { EmergencyContextProvider, useEmergency }
