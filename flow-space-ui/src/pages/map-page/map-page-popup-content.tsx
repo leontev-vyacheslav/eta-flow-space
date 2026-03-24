@@ -144,7 +144,7 @@ export const MapPagePopupContent = ({ device, deviceState, dataschema, emergency
                     </div>
 
                     {emergencyState
-                        ? <div style={{ position: 'relative' }}>
+                        ? <div style={{ position: 'relative' }} data-emergency-icon-container={device.id}>
                             {emergencyMuteManager.isDeviceMuted(emergencyState) ? emergencyMutedIcon() : emergencyUnmutedIcon()}
                         </div>
                         : null

@@ -11,20 +11,23 @@ export const EmergencyPopoverContent = ({ emergencyState }: { emergencyState: Em
     const [unmutedEmergencies, setUnmutedEmergencies] = useState<EmergencyModel[]>([]);
 
     const toggleEmergencyIcon = useCallback((deviceId: number) => {
-        const emergencyIconContainerElement = document.querySelector(`.side-navigation-menu [data-emergency-icon-container="${deviceId}"]`);
-        if (!emergencyIconContainerElement) {
-            return;
+        const emergencyIconContainerElements = document.querySelectorAll(`[data-emergency-icon-container="${deviceId}"]`);
+        for (const emergencyIconContainerElement of emergencyIconContainerElements) {
+            if (!emergencyIconContainerElement) {
+                return;
+            }
+
+            const isDeviceMuted = emergencyMuteManager.isDeviceMuted(emergencyState);
+            const emergencyMutedIcon = renderToStaticMarkup(
+                isDeviceMuted
+                    ? <EmergencyWarningOff data-emergency-mute-icon size={12} style={{ fill: '#FFC107', cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px' }} />
+                    : <EmergencyWarning data-emergency-mute-icon size={12} style={{ fill: '#FFC107', cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px' }} />
+
+            );
+            emergencyIconContainerElement.querySelector('[data-emergency-mute-icon]')!.remove();
+            emergencyIconContainerElement.append(new DOMParser().parseFromString(emergencyMutedIcon, 'image/svg+xml').documentElement);
         }
 
-        const isDeviceMuted = emergencyMuteManager.isDeviceMuted(emergencyState);
-        const emergencyMutedIcon = renderToStaticMarkup(
-            isDeviceMuted
-                ? <EmergencyWarningOff data-emergency-mute-icon size={12} style={{ fill: '#FFC107', cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px' }} />
-                : <EmergencyWarning data-emergency-mute-icon size={12} style={{ fill: '#FFC107', cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px' }} />
-
-        );
-        emergencyIconContainerElement.querySelector('[data-emergency-mute-icon]')!.remove();
-        emergencyIconContainerElement.append(new DOMParser().parseFromString(emergencyMutedIcon, 'image/svg+xml').documentElement);
     }, [emergencyState]);
 
     const MenuRender = useCallback(({ deviceId, emergencyReason }: { deviceId: number, emergencyReason: any }) => {
