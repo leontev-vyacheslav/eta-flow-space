@@ -1,0 +1,34 @@
+.emergency-popover {
+    a.popup-close-button {
+        position: absolute;
+        top: 3px;
+        right: 3px;
+        border: none;
+        text-align: center;
+        width: 24px;
+        height: 24px;
+        font: 16px/24px Tahoma, Verdana, sans-serif;
+        color: #757575;
+        text-decoration: none;
+        background: transparent;
+        cursor: pointer;
+    }
+
+    a.popup-close-button:hover,
+    a.popup-close-button:focus {
+        color: #585858;
+    }
+
+    .dx-popup-title {
+        border-bottom: none !important;
+    }
+
+    .dx-popup-content {
+        padding: 22px 22px;
+        padding-top: 0px !important;
+    }
+
+    .simple-grid {
+        margin: 0px !important;
+    }
+}

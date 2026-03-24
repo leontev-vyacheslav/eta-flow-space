@@ -1,87 +1,89 @@
+.leaflet-control-attribution.leaflet-control {
+  display: none !important;
+}
 
-  .leaflet-control-attribution.leaflet-control {
-    display: none !important;
-  }
+.leaflet-popup-content-wrapper {
+  border-radius: 4px;
+}
+
+.leaflet-popup-content {
+  width: 350px !important;
+}
+
+.screen-x-small .leaflet-popup-content {
+  width: 225px !important;
+}
+
+table.simple-grid {
+  width: 100%;
+  line-height: initial;
+  border-collapse: collapse !important;
+  empty-cells: show;
+  border-spacing: 0px;
+  border: 1px Solid #c0c0c0;
+  margin: 10px 0 10px 0;
+  font-size: 8pt
+}
+
+.map-pop-content-location-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.screen-x-small .map-pop-content-location-wrapper {
+  font-size: 10px;
+}
+
+.map-pop-content-location {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 10px;
+  gap: 5px
+}
+
+.screen-x-small .map-pop-content-location {
+  align-items: start;
+}
+
+table.simple-grid tbody td {
+  border: 1px Solid #c0c0c0;
+  padding: 3px 6px 4px;
+  text-align: left;
+}
+
+table.simple-grid thead th {
+  font-weight: bold;
+  border: 1px Solid #c0c0c0;
+  background-color: #f0f0f0;
+  vertical-align: middle;
+  height: 30px;
+  text-align: center;
+}
+
+.map-pop-content-wrapper {
+  overflow: scroll;
+  height: 250px;
+}
+
+.screen-x-small .map-pop-content-wrapper {
+  height: 210px;
+}
+
+.map-no-data {
+  height: 50vh;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 
-  .leaflet-popup-content {
-    width: 350px !important;
-  }
 
-  .screen-x-small .leaflet-popup-content {
-    width: 225px !important;
-  }
-
-  table.simple-grid {
-    width: 100%;
-    line-height: initial;
-    border-collapse: collapse !important;
-    empty-cells: show;
-    border-spacing: 0px;
-    border: 1px Solid #c0c0c0;
-    margin: 10px 0 10px 0;
-    font-size: 8pt
-  }
-
-  .map-pop-content-location-wrapper {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-  }
-
-  .screen-x-small .map-pop-content-location-wrapper {
-    font-size: 10px;
-  }
-
-  .map-pop-content-location {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-left: 5px;
-    padding-right: 5px;
-    padding-bottom: 10px;
-    gap: 5px
-  }
-
-  .screen-x-small .map-pop-content-location {
-    align-items: start;
-  }
-
-  table.simple-grid tbody td {
-    border: 1px Solid #c0c0c0;
-    padding: 3px 6px 4px;
-    text-align: left;
-  }
-
-  table.simple-grid thead th {
-    font-weight: bold;
-    border: 1px Solid #c0c0c0;
-    background-color: #f0f0f0;
-    vertical-align: middle;
-    height: 30px;
-    text-align: center;
-  }
-
-  .map-pop-content-wrapper {
-    overflow: scroll;
-    height: 250px;
-  }
-
-  .screen-x-small .map-pop-content-wrapper {
-    height: 210px;
-  }
-
-  .map-no-data {
-    height: 50vh;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-
-
-  .popup-skeleton {
+.popup-skeleton {
   min-width: 200px;
   display: flex;
   flex-direction: column;
@@ -94,13 +96,29 @@
     background-size: 200% 100%;
     animation: shimmer 1.2s infinite;
 
-    &--title { width: 60%; height: 14px; }
-    &--short { width: 80%; height: 12px; }
-    &--long  { width: 95%; height: 12px; }
+    &--title {
+      width: 60%;
+      height: 14px;
+    }
+
+    &--short {
+      width: 80%;
+      height: 12px;
+    }
+
+    &--long {
+      width: 95%;
+      height: 12px;
+    }
   }
 }
 
 @keyframes shimmer {
-  0%   { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
 }

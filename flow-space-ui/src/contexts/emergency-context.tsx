@@ -8,6 +8,9 @@ import { useAppSettings } from "./app-settings";
 import { EmergencyPopoverContent } from "./emergency-popover-content";
 import { emergencyMuteManager } from "../services/emergency-mute-manager";
 import type { EmergencyModel } from "../models/flows/emergency-model";
+import AppConstants from "../constants/app-constants";
+
+import "./emergency-popover.scss";
 
 export interface EmergencyContextModel {
     refreshEmergencyStates: () => Promise<void>;
@@ -26,33 +29,62 @@ function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
     const { getEmergencyStatesAsync } = useAppData();
     const { flows } = useAppSettings();
     const [emergencyStates] = useState<EmergencyModel[]>([]);
+    const popoverContentContainerRef = useRef<HTMLDivElement>(null);
+    const popoverContentReactRootRef = useRef<ReturnType<typeof createRoot> | null>(null);
+    const popoverContainerRef = useRef<HTMLDivElement>(null);
+
+    const unmountEmergencyPopoverRoot = useCallback(() => {
+        popoverContentReactRootRef.current?.unmount();
+        popoverContentReactRootRef.current = null;
+
+        popoverContentContainerRef.current?.remove();
+        setTimeout(() => {
+            popoverContainerRef.current?.remove();
+        }, 0);
+    }, []);
 
     const showEmergencyPopover = useCallback((position: { x: number; y: number }, emergencyState: EmergencyModel) => {
         const popoverContainer = document.createElement('div');
+        popoverContainerRef.current = popoverContainer;
+
         popoverContainer.setAttribute('data-emergency-popover', '');
         document.body.appendChild(popoverContainer);
 
         const popoverContentContainer = document.createElement('div');
+        popoverContentContainerRef.current = popoverContentContainer;
+
         const popoverContentReactRoot = createRoot(popoverContentContainer);
+        popoverContentReactRootRef.current = popoverContentReactRoot;
 
         popoverInstance.current = new dxPopover(popoverContainer, {
             maxWidth: 300,
             minWidth: 300,
             shading: false,
             hideOnOutsideClick: true,
+            showTitle: true,
             onHidden: () => {
-                popoverContentReactRoot.unmount();
-                popoverContentContainer.remove();
-                setTimeout(() => {
-                    popoverContainer.remove();
-                }, 0);
+                unmountEmergencyPopoverRoot();
             },
             contentTemplate: () => {
                 popoverContentReactRoot.render(<EmergencyPopoverContent popoverInstance={popoverInstance} emergencyState={emergencyState} />);
                 return popoverContentContainer;
             },
+            onContentReady: () => {
+                document
+                    .querySelector('.emergency-popover a.popup-close-button')
+                    ?.addEventListener('click', () => {
+                        popoverInstance.current?.hide();
+                    });
+            },
+            titleTemplate: () => {
+                return (
+                    `<a class="popup-close-button" role="button" aria-label="Close popup">
+                        <span aria-hidden="true">×</span>
+                    </a>`
+                );
+            },
             wrapperAttr: {
-                class: 'mnemoschema-popover'
+                class: 'emergency-popover'
             },
             position: {
                 at: "top left",
@@ -64,7 +96,7 @@ function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
         });
 
         popoverInstance.current.show();
-    }, []);
+    }, [unmountEmergencyPopoverRoot]);
 
     const emergencyIconClickHandler = useCallback((event: PointerEvent, emergencyState: EmergencyModel) => {
         event.stopPropagation();
@@ -73,6 +105,7 @@ function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
             popoverInstance.current.hide();
             popoverInstance.current.dispose();
         }
+        unmountEmergencyPopoverRoot();
 
         document.querySelectorAll('[data-emergency-popover]').forEach(element => {
             try {
@@ -83,7 +116,7 @@ function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
         });
 
         showEmergencyPopover({ x: event.clientX, y: event.clientY }, emergencyState);
-    }, [showEmergencyPopover]);
+    }, [showEmergencyPopover, unmountEmergencyPopoverRoot]);
 
     const refreshEmergencyStates = useCallback(async () => {
         if (!flows) {
@@ -99,14 +132,14 @@ function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
 
         const emergencyMutedIcon = renderToStaticMarkup(
             <>
-                <WarningIcon size={18} style={{ fill: '#FFC107', cursor: 'pointer' }} />
-                <EmergencyWarningOff data-emergency-mute-icon size={12} style={{ fill: '#FFC107', cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px' }} />
+                <WarningIcon size={18} style={{ fill: AppConstants.colors.emergencyWarningColor, cursor: 'pointer' }} />
+                <EmergencyWarningOff data-emergency-mute-icon size={12} style={{ fill: AppConstants.colors.emergencyWarningColor, cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px' }} />
             </>
         );
         const emergencyUnmutedIcon = renderToStaticMarkup(
             <>
-                <WarningIcon size={18} style={{ fill: '#FFC107', cursor: 'pointer' }} />
-                <EmergencyWarning data-emergency-mute-icon size={12} style={{ fill: '#FFC107', cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px' }} />
+                <WarningIcon size={18} style={{ fill: AppConstants.colors.emergencyWarningColor, cursor: 'pointer' }} />
+                <EmergencyWarning data-emergency-mute-icon size={12} style={{ fill: AppConstants.colors.emergencyWarningColor, cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px' }} />
             </>
         );
         const emergencyIconContainerElements = Array.from(document.querySelectorAll('[data-emergency-icon-container]'));
@@ -149,6 +182,16 @@ function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
             clearInterval(timer);
         };
     }, [refreshEmergencyStates]);
+
+    useEffect(() => {
+        return () => {
+            if (popoverInstance.current) {
+                popoverInstance.current.hide();
+                popoverInstance.current.dispose();
+            }
+            unmountEmergencyPopoverRoot();
+        };
+    }, [unmountEmergencyPopoverRoot]);
 
     const contextValue: EmergencyContextModel = {
         refreshEmergencyStates,
