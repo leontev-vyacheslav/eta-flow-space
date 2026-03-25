@@ -4,9 +4,9 @@ import { Column, Grouping, SearchPanel } from "devextreme-react/data-grid";
 import { useCallback } from "react";
 
 export const EmergencyLogGrid = () => {
-    const { emergencyStates, grouped } = useEmergencyLogDialog();
+    const { emergencyStates, grouped, device } = useEmergencyLogDialog();
 
-    const GroupRowContent = useCallback(({ groupCell }: { groupCell: any }) => {
+    const GroupRowContentByDate = useCallback(({ groupCell }: { groupCell: any }) => {
         const items = groupCell.data.items ?? groupCell.data.collapsedItems;
         const groupDataItem = items?.[0];
 
@@ -15,9 +15,22 @@ export const EmergencyLogGrid = () => {
         }
 
         return (
-            (groupDataItem.createdAt as Date).toLocaleString('ru-RU')
+            `${(groupDataItem.createdAt as Date).toLocaleString('ru-RU')}`
         );
     }, []);
+
+    const GroupRowContentByDevice = useCallback(({ groupCell }: { groupCell: any }) => {
+        const items = groupCell.data.items ?? groupCell.data.collapsedItems;
+        const groupDataItem = items?.[0];
+
+        if (!groupDataItem) {
+            return null;
+        }
+
+        return (
+            `${groupDataItem.deviceName} (${emergencyStates?.filter((x: any) => x.deviceId === groupDataItem.deviceId).length})`
+        );
+    }, [emergencyStates]);
 
     return (
         emergencyStates ?
@@ -29,26 +42,33 @@ export const EmergencyLogGrid = () => {
                 height={'100%'}
                 focusedRowEnabled
             >
-                <SearchPanel visible={true} searchVisibleColumnsOnly={false}  />
+                <SearchPanel visible={true} searchVisibleColumnsOnly={false} />
                 <Grouping autoExpandAll={true} />
 
                 <Column
                     dataField={'emergencyStateId'}
-                    groupIndex={grouped ? 0 : undefined}
-                    groupCellRender={(groupCell) => <GroupRowContent groupCell={groupCell} />}
+                    groupIndex={grouped && device ? 0 : undefined}
+                    groupCellRender={(groupCell) => <GroupRowContentByDate groupCell={groupCell} />}
                     sortOrder={grouped ? 'desc' : undefined}
                     visible={false}
                 />
-                 <Column
+                <Column
                     dataType='datetime'
                     dataField='createdAt'
                     width={150}
                     caption={'Время'}
                     allowSorting={true}
                     sortOrder='desc'
-                    visible={!grouped}
+                    visible={!(grouped && device)}
                 />
-                 <Column
+                <Column
+                    dataType="number"
+                    dataField="deviceId"
+                    visible={false}
+                    groupIndex={grouped && !device ? 0 : undefined}
+                    groupCellRender={(groupCell) => <GroupRowContentByDevice groupCell={groupCell} />}
+                />
+                <Column
                     dataType='string'
                     dataField='deviceName'
                     caption={'Устройство'}
@@ -61,7 +81,6 @@ export const EmergencyLogGrid = () => {
                     caption={'Описание НС'}
                     allowSorting={false}
                 />
-
             </DataGrid>
             : null
     );

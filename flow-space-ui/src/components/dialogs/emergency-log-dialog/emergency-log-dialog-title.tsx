@@ -15,7 +15,7 @@ export const EmergencyLogDialogTitle = ({ device, popupRef, menuItems }: { devic
         }}>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <span style={{ fontSize: '20px', fontWeight: 500 }}>Журнал аварий</span>
-                <span style={{ fontSize: '12px', color: 'rgb(118, 118, 118)'}}>{device?.name}</span>
+                <span style={{ fontSize: '12px', color: 'rgb(118, 118, 118)'}}>{device ? device.name :  'Все устройства'}</span>
             </div>
             <div style={{ display: 'flex' }}>
                 <MainMenu items={menuItems} />

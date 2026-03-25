@@ -5,6 +5,7 @@ import type { EmergencyLogProps } from "../../../models/emergency-log-dialog-pro
 import { useAppData } from "../../../contexts/app-data/app-data";
 import type { EmergencyFlattenStateModel } from "../../../models/flows/emergency-flatten-state-model";
 import { v7 as uuidv7 } from 'uuid';
+import type { DeviceModel } from "../../../models/flows/device-model";
 
 type DateRangeModel = {
     beginDate: Date;
@@ -25,6 +26,8 @@ type EmergencyLogDialogContextModel = {
 
     grouped: boolean;
     setGrouped: React.Dispatch<React.SetStateAction<boolean>>;
+
+    device?: DeviceModel | undefined
 }
 
 const EmergencyLogDialogContext = createContext({} as EmergencyLogDialogContextModel);
@@ -39,7 +42,7 @@ function EmergencyLogDialogContextProvider(props: EmergencyLogProps) {
             return samplingHorizonStored ? parseInt(JSON.parse(samplingHorizonStored)) : -1;
         }
     );
-    const [grouped, setGrouped] = useState<boolean>(false);
+    const [grouped, setGrouped] = useState<boolean>(true);
 
     const getDateRange = useCallback(() => {
         const now = new Date();
@@ -65,10 +68,11 @@ function EmergencyLogDialogContextProvider(props: EmergencyLogProps) {
                 props.beginDate ?? rangeDates.beginDate,
                 props.endDate ?? rangeDates.endDate
             );
-            setEmergencyStates(emergencyStates?.flatMap(({ id, deviceName, state, createdAt }) =>
+            setEmergencyStates(emergencyStates?.flatMap(({ id, deviceId, deviceName, state, createdAt }) =>
                 state.reasons.map(({ id: emergencyId, description }: any) => ({
                     id: uuidv7(),
                     emergencyStateId: id,
+                    deviceId,
                     deviceName,
                     emergencyId,
                     description,
@@ -78,7 +82,6 @@ function EmergencyLogDialogContextProvider(props: EmergencyLogProps) {
         })();
 
     }, [getDateRange, getEmergencyStatesByDatesAsync, props, samplingHorizon, refreshToken]);
-
 
     return <EmergencyLogDialogContext.Provider value={{
         refreshToken,
@@ -92,7 +95,9 @@ function EmergencyLogDialogContextProvider(props: EmergencyLogProps) {
         emergencyStates,
 
         grouped,
-        setGrouped
+        setGrouped,
+
+        device: props.device
     }} {...props} />
 }
 
