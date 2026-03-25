@@ -9,6 +9,7 @@ import type { SchemaTypeInfoPropertiesChainModel } from "../../../../helpers/dat
 
 import './mnemoschema-popover.scss';
 
+
 export const useMnemoschemaPopover = () => {
     const { isAdmin } = useAuth();
     const { schemaTypeInfoPropertiesChain, dataschema, device } = useDashboardPage();
@@ -16,6 +17,8 @@ export const useMnemoschemaPopover = () => {
     const escapeHandlerRef = useRef<((e: KeyboardEvent) => void) | null>(null); // Track the handler
     const popoverContentReactRootRef = useRef<ReturnType<typeof createRoot> | null>(null); // Store the root
     const popoverContainerRef = useRef<HTMLDivElement | null>(null); // Store the container
+    const popoverTitleContainerRef = useRef<HTMLDivElement>(null);
+    const popoverTitleReactRootRef = useRef<ReturnType<typeof createRoot> | null>(null);
 
     const popoverContentRender = useCallback((propertyInfo: SchemaTypeInfoPropertiesChainModel, target: Element) => {
         let value = propertyInfo.propertiesChainValuePair.value;
@@ -80,21 +83,29 @@ export const useMnemoschemaPopover = () => {
     useEffect(() => {
         return () => {
             queueMicrotask(() => {
-                if (popoverInstance.current) {
-                    popoverInstance.current.dispose();
-                    popoverInstance.current = null;
-                }
-                if (popoverContentReactRootRef.current) {
-                    popoverContentReactRootRef.current.unmount();
-                    popoverContentReactRootRef.current = null;
-                }
-                if (popoverContainerRef.current) {
-                    popoverContainerRef.current.remove();
-                    popoverContainerRef.current = null;
-                }
+                popoverInstance.current?.dispose();
+                popoverInstance.current = null;
+
+                popoverContentReactRootRef.current?.unmount();
+                popoverContentReactRootRef.current = null;
+                popoverContainerRef.current?.remove();
+                popoverContainerRef.current = null;
+
+                popoverTitleReactRootRef.current?.unmount();
+                popoverTitleReactRootRef.current = null;
+                popoverTitleContainerRef.current?.remove();
+                popoverTitleContainerRef.current = null;
             })
         };
     }, []);
+
+    const EmergencyPopoverTitle = () => {
+        return (
+            <a className="popup-close-button" onClick={() => popoverInstance.current?.hide()}>
+                <span aria-hidden="true">×</span>
+            </a>
+        );
+    }
 
     return useCallback((event: MouseEvent) => {
         const target = (event.target as Element)?.closest?.("[data-state]");
@@ -134,6 +145,12 @@ export const useMnemoschemaPopover = () => {
         const popoverContentReactRoot = createRoot(popoverContentContainer);
         popoverContentReactRootRef.current = popoverContentReactRoot; // Store it
 
+        const popoverTitleContainer = document.createElement('div');
+        popoverTitleContainerRef.current = popoverTitleContainer;
+
+        const popoverTitleReactRoot = createRoot(popoverTitleContainer);
+        popoverTitleReactRootRef.current = popoverTitleReactRoot;
+
         // Create escape key handler
         escapeHandlerRef.current = (e: KeyboardEvent) => {
             if (e.key === 'Escape' && popoverInstance.current) {
@@ -144,6 +161,7 @@ export const useMnemoschemaPopover = () => {
             minWidth: 200,
             shading: false,
             hideOnOutsideClick: true,
+            showTitle: true,
             onShown: () => {
                 // Add escape key listener when popover is shown
                 if (escapeHandlerRef.current) {
@@ -173,6 +191,12 @@ export const useMnemoschemaPopover = () => {
             contentTemplate: () => {
                 popoverContentReactRoot.render(popoverContentRender(propertyInfo, target));
                 return popoverContentContainer;
+            },
+            titleTemplate: () => {
+                popoverTitleReactRoot.render(
+                    <EmergencyPopoverTitle />
+                )
+                return popoverTitleContainer;
             },
             wrapperAttr: {
                 class: 'mnemoschema-popover'

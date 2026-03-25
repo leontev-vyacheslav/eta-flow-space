@@ -6,6 +6,7 @@ import type dxPopover from "devextreme/ui/popover";
 import type { EmergencyModel } from "../models/flows/emergency-model";
 import { IoFlashOutline } from "react-icons/io5";
 import { renderToStaticMarkup } from "react-dom/server";
+import AppConstants from "../constants/app-constants";
 
 export const EmergencyPopoverContent = ({ emergencyState }: { emergencyState: EmergencyModel, popoverInstance: React.RefObject<dxPopover<any> | null> }) => {
     const [unmutedEmergencies, setUnmutedEmergencies] = useState<EmergencyModel[]>([]);
@@ -20,8 +21,8 @@ export const EmergencyPopoverContent = ({ emergencyState }: { emergencyState: Em
             const isDeviceMuted = emergencyMuteManager.isDeviceMuted(emergencyState);
             const emergencyMutedIcon = renderToStaticMarkup(
                 isDeviceMuted
-                    ? <EmergencyWarningOff data-emergency-mute-icon size={12} style={{ fill: '#FFC107', cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px' }} />
-                    : <EmergencyWarning data-emergency-mute-icon size={12} style={{ fill: '#FFC107', cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px' }} />
+                    ? <EmergencyWarningOff data-emergency-mute-icon size={12} style={{ fill: AppConstants.colors.emergencyWarningColor, cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px' }} />
+                    : <EmergencyWarning data-emergency-mute-icon size={12} style={{ fill: AppConstants.colors.emergencyWarningColor, cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px' }} />
 
             );
             emergencyIconContainerElement.querySelector('[data-emergency-mute-icon]')!.remove();

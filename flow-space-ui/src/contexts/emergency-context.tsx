@@ -32,16 +32,30 @@ function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
     const popoverContentContainerRef = useRef<HTMLDivElement>(null);
     const popoverContentReactRootRef = useRef<ReturnType<typeof createRoot> | null>(null);
     const popoverContainerRef = useRef<HTMLDivElement>(null);
+    const popoverTitleContainerRef = useRef<HTMLDivElement>(null);
+    const popoverTitleReactRootRef = useRef<ReturnType<typeof createRoot> | null>(null);
 
     const unmountEmergencyPopoverRoot = useCallback(() => {
         popoverContentReactRootRef.current?.unmount();
         popoverContentReactRootRef.current = null;
 
+        popoverTitleReactRootRef.current?.unmount();
+        popoverTitleReactRootRef.current = null;
+
         popoverContentContainerRef.current?.remove();
+        popoverTitleContainerRef.current?.remove();
         setTimeout(() => {
             popoverContainerRef.current?.remove();
         }, 0);
     }, []);
+
+    const EmergencyPopoverTitle = () => {
+        return (
+            <a className="popup-close-button" onClick={() => popoverInstance.current?.hide()}>
+                <span aria-hidden="true">×</span>
+            </a>
+        );
+    }
 
     const showEmergencyPopover = useCallback((position: { x: number; y: number }, emergencyState: EmergencyModel) => {
         const popoverContainer = document.createElement('div');
@@ -56,6 +70,12 @@ function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
         const popoverContentReactRoot = createRoot(popoverContentContainer);
         popoverContentReactRootRef.current = popoverContentReactRoot;
 
+        const popoverTitleContainer = document.createElement('div');
+        popoverTitleContainerRef.current = popoverTitleContainer;
+
+        const popoverTitleReactRoot = createRoot(popoverTitleContainer);
+        popoverTitleReactRootRef.current = popoverTitleReactRoot;
+
         popoverInstance.current = new dxPopover(popoverContainer, {
             maxWidth: 300,
             minWidth: 300,
@@ -69,19 +89,12 @@ function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
                 popoverContentReactRoot.render(<EmergencyPopoverContent popoverInstance={popoverInstance} emergencyState={emergencyState} />);
                 return popoverContentContainer;
             },
-            onContentReady: () => {
-                document
-                    .querySelector('.emergency-popover a.popup-close-button')
-                    ?.addEventListener('click', () => {
-                        popoverInstance.current?.hide();
-                    });
-            },
+
             titleTemplate: () => {
-                return (
-                    `<a class="popup-close-button" role="button" aria-label="Close popup">
-                        <span aria-hidden="true">×</span>
-                    </a>`
+                popoverTitleReactRoot.render(
+                    <EmergencyPopoverTitle />
                 );
+                return popoverTitleContainer;
             },
             wrapperAttr: {
                 class: 'emergency-popover'
@@ -97,6 +110,8 @@ function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
 
         popoverInstance.current.show();
     }, [unmountEmergencyPopoverRoot]);
+
+
 
     const emergencyIconClickHandler = useCallback((event: PointerEvent, emergencyState: EmergencyModel) => {
         event.stopPropagation();
