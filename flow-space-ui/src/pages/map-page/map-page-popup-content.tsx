@@ -6,9 +6,11 @@ import { CheckedIcon, ConnectionOff, EmergencyWarning, EmergencyWarningOff, Grap
 import { graphService } from "../../services/graph-service";
 import type { MapPagePopupContentProps } from "../../models/map-page-popup-content-props";
 import { emergencyMuteManager } from "../../services/emergency-mute-manager";
+import { useAuth } from "../../contexts/auth";
 
 export const MapPagePopupContent = ({ device, deviceState, dataschema, emergencyState }: MapPagePopupContentProps) => {
     const { isXSmall } = useScreenSize();
+    const {isAdmin } = useAuth();
 
     const schemaTypeInfoPropertiesChain = useMemo(() => {
         if (deviceState && dataschema) {
@@ -120,13 +122,13 @@ export const MapPagePopupContent = ({ device, deviceState, dataschema, emergency
         );
     }, [graphIconClickHandler, isXSmall, renderStateValueByPropertiesChain]);
 
-    const emergencyMutedIcon = () => (
+    const EmergencyMutedIcon = () => (
         <>
             <WarningIcon size={18} style={{ fill: '#FFC107' }} />
             <EmergencyWarningOff data-emergency-mute-icon size={12} style={{ fill: '#FFC107', position: 'absolute', top: '-5px', right: '-5px' }} />
         </>
     );
-    const emergencyUnmutedIcon = () => (
+    const EmergencyUnmutedIcon = () => (
         <>
             <WarningIcon size={18} style={{ fill: '#FFC107' }} />
             <EmergencyWarning data-emergency-mute-icon size={12} style={{ fill: '#FFC107', position: 'absolute', top: '-5px', right: '-5px' }} />
@@ -139,13 +141,13 @@ export const MapPagePopupContent = ({ device, deviceState, dataschema, emergency
                 <div className="map-pop-content-location-wrapper" style={{}}>
                     <LocationIcon size={22} />
                     <div className="map-pop-content-location">
-                        <div style={{ fontWeight: 'bold' }}>{device ? device.description : 'Нет данных'}</div>
+                        <div style={{ fontWeight: 'bold' }}>{ device.description }{isAdmin() && ` [${device.id}]`}</div>
                         <div>{device && device.objectLocation ? device.objectLocation.address : 'Нет данных'}</div>
                     </div>
 
                     {emergencyState
                         ? <div style={{ position: 'relative' }} data-emergency-icon-container={device.id}>
-                            {emergencyMuteManager.isDeviceMuted(emergencyState) ? emergencyMutedIcon() : emergencyUnmutedIcon()}
+                            {emergencyMuteManager.isDeviceMuted(emergencyState) ? EmergencyMutedIcon() : EmergencyUnmutedIcon()}
                         </div>
                         : null
                     }

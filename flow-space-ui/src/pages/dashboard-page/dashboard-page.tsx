@@ -13,9 +13,11 @@ import { NoData } from '../../components/no-data-widget/no-data-widget';
 import { emergencyLogService } from '../../services/emergency-log-service';
 import { graphService } from '../../services/graph-service';
 import { emergencyMuteManager } from '../../services/emergency-mute-manager';
+import { useAuth } from '../../contexts/auth';
 
 const DashboardPageInner = () => {
     const tabPanelRef = useRef<TabPanel>(null);
+    const { isAdmin } = useAuth();
     const { setRefreshToken, schemaTypeInfoPropertiesChain, device } = useDashboardPage();
     const { flowCode } = useParams();
     const [ControlTabContent, setControlTabContent] = useState<ComponentType<any> | null>(null);
@@ -98,7 +100,7 @@ const DashboardPageInner = () => {
             <PageHeader caption={() => {
                 return <div style={{ display: 'flex', flexDirection: 'column' }}>
                     <span>Приборная панель</span>
-                    <span style={{ fontSize: 12, fontWeight: 'normal', minHeight: 16, color: 'rgb(118, 118, 118)' }}>{device?.name}</span>
+                    <span style={{ fontSize: 12, fontWeight: 'normal', minHeight: 16, color: 'rgb(118, 118, 118)' }}>{device?.name}{isAdmin() && ` [${device?.id}]`}</span>
                 </div>
             }} menuItems={menuItems}>
                 <DashboardIcon size={AppConstants.headerIconSize} />

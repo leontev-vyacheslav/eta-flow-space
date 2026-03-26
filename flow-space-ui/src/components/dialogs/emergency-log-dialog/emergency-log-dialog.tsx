@@ -10,6 +10,7 @@ import { getQuickGuid } from '../../../utils/uuid';
 import { EmergencyLogDialogContextProvider, useEmergencyLogDialog } from './emergency-log-dialog-context';
 import type { EmergencyLogDialogProps } from '../../../models/emergency-log-dialog-props';
 import { EmergencyLogGrid } from './emergency-log-grid';
+import { AuthProvider } from '../../../contexts/auth';
 
 const EmergencyLogDialogInternal = (props: EmergencyLogDialogProps) => {
     const { isXSmall, isSmall } = useScreenSize();
@@ -123,6 +124,8 @@ const EmergencyLogDialogInternal = (props: EmergencyLogDialogProps) => {
 
 export const EmergencyLogDialog = (props: EmergencyLogDialogProps) => {
     return <EmergencyLogDialogContextProvider {...props} >
-        <EmergencyLogDialogInternal {...props} />
+        <AuthProvider>
+            <EmergencyLogDialogInternal {...props} />
+        </AuthProvider>
     </EmergencyLogDialogContextProvider>
 }

@@ -247,7 +247,7 @@ body {
   }
 
   .dx-popup-title.dx-toolbar .dx-toolbar-items-container {
-    height: 46px;
+    height: 46px !important
   }
 
   .nodata {
@@ -337,3 +337,13 @@ body {
   padding: 10px;
   padding-left: 5px;
 }
+
+  .dx-popup-title.dx-toolbar .dx-toolbar-items-container {
+    height: 46px !important
+  }
+
+  .dx-popup-content.dx-dialog-content {
+    padding: 10px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }

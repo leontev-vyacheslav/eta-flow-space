@@ -3,12 +3,12 @@ import { createRoot } from "react-dom/client";
 import { useDashboardPage } from "../../dashboard-page-context"
 import dxPopover from "devextreme/ui/popover";
 import { useAuth } from "../../../../contexts/auth";
-import { GraphIcon } from "../../../../constants/app-icons";
+import { GraphIcon, HelpIcon } from "../../../../constants/app-icons";
 import { graphService } from "../../../../services/graph-service";
 import type { SchemaTypeInfoPropertiesChainModel } from "../../../../helpers/data-helper";
+import { showAlertDialog } from "../../../../utils/dialogs";
 
 import './mnemoschema-popover.scss';
-
 
 export const useMnemoschemaPopover = () => {
     const { isAdmin } = useAuth();
@@ -19,6 +19,37 @@ export const useMnemoschemaPopover = () => {
     const popoverContainerRef = useRef<HTMLDivElement | null>(null); // Store the container
     const popoverTitleContainerRef = useRef<HTMLDivElement>(null);
     const popoverTitleReactRootRef = useRef<ReturnType<typeof createRoot> | null>(null);
+
+    const showEnumReference = useCallback((propertyInfo: SchemaTypeInfoPropertiesChainModel) => {
+        showAlertDialog({
+            title: 'Информация',
+            textRender: () => {
+                return (
+                    <>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: 5, marginBottom: 10 }} >
+                            <div style={{ fontSize: 12, fontWeight: 500 }}>{propertyInfo.typeInfo!.ui.editor.label.text}</div>
+                            <div style={{ fontSize: 10, color: 'rgb(118, 118, 118)' }}>{propertyInfo.propertiesChainValuePair.propertiesChain}</div>
+                        </div>
+                        <table className='simple-grid' style={{ margin: 0, width: '100%', minWidth: '350px' }}>
+                            <tbody>
+                                {
+                                    Object.entries(dataschema.$defs[propertyInfo.typeInfo!.typeName].enumDescriptions).map(
+                                        ([key, value]) =>
+                                            <tr key={key} >
+                                                <td style={{ width: 30 }}>{key}</td>
+                                                <td> {(value as any).split(' - ').shift()}</td>
+                                                <td> {(value as any).split(' - ').pop()}</td>
+                                            </tr>
+                                    )
+                                }
+                            </tbody>
+                        </table>
+                    </>
+                )
+            },
+            callback: async () => { }
+        });
+    }, [dataschema]);
 
     const popoverContentRender = useCallback((propertyInfo: SchemaTypeInfoPropertiesChainModel, target: Element) => {
         let value = propertyInfo.propertiesChainValuePair.value;
@@ -36,9 +67,19 @@ export const useMnemoschemaPopover = () => {
                 value = date.toLocaleString('ru-RU');
             }
         } else if (propertyInfo.typeInfo?.isEnum) {
+
             const enumDescription = dataschema.$defs[propertyInfo.typeInfo?.typeName].enumDescriptions[value]?.split(' - ').pop();
             if (isAdmin()) {
                 value = enumDescription ? enumDescription + ' (' + value + ')' : <span style={{ color: 'red' }}>Ошибка ({value})</span>
+                value = (
+                    <div style={{ display: 'flex', gap: 5 }}>
+                        <span>{value}</span>
+                        <HelpIcon style={{ cursor: 'pointer' }} size={14} onClick={() => {
+                            popoverInstance.current!.hide();
+                            showEnumReference(propertyInfo);
+                        }} />
+                    </div>
+                );
             } else {
                 value = enumDescription ? enumDescription : <span style={{ color: 'red' }}>Ошибка ({value})</span>
             }
@@ -70,7 +111,7 @@ export const useMnemoschemaPopover = () => {
                         <td>Значение:</td>
                         <td>
                             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                                <b>{value}</b>
+                                <b style={{ width: '100%' }}>{value}</b>
                                 {propertyInfo.typeInfo?.ui.chart ? <GraphIcon data-state-graph={propertyInfo.propertiesChainValuePair.propertiesChain} alignmentBaseline="middle" size={16} style={{ cursor: 'pointer' }} /> : null}
                             </div>
                         </td>
@@ -78,7 +119,7 @@ export const useMnemoschemaPopover = () => {
                 </tbody>
             </table>
         );
-    }, [dataschema, isAdmin]);
+    }, [dataschema, isAdmin, showEnumReference]);
 
     useEffect(() => {
         return () => {

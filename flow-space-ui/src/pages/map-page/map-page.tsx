@@ -18,6 +18,7 @@ import { getQuickGuid } from "../../utils/uuid";
 
 import 'leaflet/dist/leaflet.css';
 import './map-page.scss';
+import { AuthProvider } from "../../contexts/auth";
 
 export const MapPage = () => {
     const { getDeviceListAsync, getDeviceStateAsync, getDeviceStateDataschemaAsync, getEmergencyStatesAsync } = useAppData();
@@ -87,9 +88,10 @@ export const MapPage = () => {
         }
 
         rootsRef.current.get(device.id)?.render(
-            <MapPagePopupContent device={device} deviceState={deviceState} dataschema={dataschema} emergencyState={emergencyState} />
+            <AuthProvider>
+                <MapPagePopupContent device={device} deviceState={deviceState} dataschema={dataschema} emergencyState={emergencyState} />
+            </AuthProvider>
         );
-
     }, [getDeviceStateAsync, getDeviceStateDataschemaAsync]);
 
     const markerPopupCloseHandler = useCallback((deviceId: number) => {

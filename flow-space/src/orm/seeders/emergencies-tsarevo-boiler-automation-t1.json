@@ -1,0 +1,142 @@
+[
+    {
+        "id": 1,
+        "expression": "state.isOffInput1 === true",
+        "description": "Ввод 1 выключен."
+    },
+    {
+        "id": 2,
+        "expression": "state.isCO1 === true",
+        "description": "Газоанализатор СО №1."
+    },
+    {
+        "id": 3,
+        "expression": "state.isCH1 === true",
+        "description": "Газоанализатор CH №1."
+    },
+    {
+        "id": 4,
+        "expression": "state.isCO2 === true",
+        "description": "Газоанализатор СО №2."
+    },
+    {
+        "id": 5,
+        "expression": "state.isCH2 === true",
+        "description": "Газоанализатор CH №2."
+    },
+    {
+        "id": 6,
+        "expression": "state.isGasFlap === true",
+        "description": "Клапан газа закрыт."
+    },
+    {
+        "id": 7,
+        "expression": "state.isVaporDt1 === true",
+        "description": "Пары ДТ 1."
+    },
+    {
+        "id": 8,
+        "expression": "state.isVaporDt2 === true",
+        "description": "Пары ДТ 2."
+    },
+    {
+        "id": 9,
+        "expression": "state.isSupplyWaterLevelEmergencyMax === true && state.isSupplyWaterLevelEmergencyMin === true && state.isSupplyWaterLevelWorkingMin === true && state.isSupplyWaterLevelWorkingMax === true",
+        "description": "Аварийный высокий уровень в баке запаса питательной воды."
+    },
+    {
+        "id": 10,
+        "expression": "state.isSupplyWaterLevelEmergencyMin === true && state.isSupplyWaterLevelWorkingMin === false && state.isSupplyWaterLevelWorkingMax === false && state.isSupplyWaterLevelEmergencyMax === false",
+        "description": "Аварийный низкий уровень в баке запаса питательной воды."
+    },
+    {
+        "id": 11,
+        "expression": "state.tempInNet > 110",
+        "description": "Температура на обратке сетевого контура выше предельного значение."
+    },
+    {
+        "id": 12,
+        "expression": "state.tempInNet < 30",
+        "description": "Температура на обратке сетевого контура ниже предельного значение."
+    },
+    {
+        "id": 13,
+        "expression": "state.networkPumps[0].status === 512",
+        "description": "Авария сетевого насоса 1."
+    },
+    {
+        "id": 14,
+        "expression": "state.networkPumps[0].statusFc === 8",
+        "description": "Авария ЧРП сетевого насоса 1."
+    },
+    {
+        "id": 15,
+        "expression": "state.networkPumps[1].status === 512",
+        "description": "Авария сетевого насоса 2."
+    },
+    {
+        "id": 16,
+        "expression": "state.networkPumps[1].statusFc === 8",
+        "description": "Авария ЧРП сетевого насоса 2."
+    },
+    {
+        "id": 17,
+        "expression": "state.networkPumps[2].status === 512",
+        "description": "Авария сетевого насоса 3."
+    },
+    {
+        "id": 18,
+        "expression": "state.networkPumps[2].statusFc === 8",
+        "description": "Авария ЧРП сетевого насоса 3."
+    },
+    {
+        "id": 19,
+        "expression": "state.networkPumps[3].status === 512",
+        "description": "Авария сетевого насоса 4."
+    },
+    {
+        "id": 20,
+        "expression": "state.networkPumps[3].statusFc === 8",
+        "description": "Авария ЧРП сетевого насоса 4."
+    },
+    {
+        "id": 21,
+        "expression": "state.sourceWaterPumps[0].status === 512",
+        "description": "Авария насоса исх. воды 1."
+    },
+    {
+        "id": 22,
+        "expression": "state.sourceWaterPumps[0].statusFc === 8",
+        "description": "Авария ЧРП насоса исх. воды 1."
+    },
+    {
+        "id": 23,
+        "expression": "state.sourceWaterPumps[1].status === 512",
+        "description": "Авария насоса исх. воды 2."
+    },
+    {
+        "id": 24,
+        "expression": "state.sourceWaterPumps[1].statusFc === 8",
+        "description": "Авария ЧРП насоса исх. воды 2."
+    },
+    {
+        "id": 25,
+        "expression": "state.boilers[0].status === 6",
+        "description": "Авария котла 1."
+    },
+    {
+        "id": 26,
+        "expression": "state.boilers[1].status === 6",
+        "description": "Авария котла 2."
+    },
+    {
+        "id": 27,
+        "expression": "state.boilers[2].status === 6",
+        "description": "Авария котла 3."
+    },
+    {
+        "id": 28,
+        "expression": "state.boilers[3].status === 6",
+        "description": "Авария котла 4."
+    }
+]

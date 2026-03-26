@@ -11,6 +11,7 @@ import type { EmergencyModel } from "../models/flows/emergency-model";
 import AppConstants from "../constants/app-constants";
 
 import "./emergency-popover.scss";
+import { AuthProvider } from "./auth";
 
 export interface EmergencyContextModel {
     refreshEmergencyStates: () => Promise<void>;
@@ -57,6 +58,20 @@ function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
         );
     }
 
+    const EmergencyMutedIcon = () => (
+        <>
+            <WarningIcon size={18} style={{ fill: AppConstants.colors.emergencyWarningColor, cursor: 'pointer' }} />
+            <EmergencyWarningOff data-emergency-mute-icon size={12} style={{ fill: AppConstants.colors.emergencyWarningColor, cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px' }} />
+        </>
+    );
+
+    const EmergencyUnmutedIcon = () => (
+        <>
+            <WarningIcon size={18} style={{ fill: AppConstants.colors.emergencyWarningColor, cursor: 'pointer' }} />
+            <EmergencyWarning data-emergency-mute-icon size={12} style={{ fill: AppConstants.colors.emergencyWarningColor, cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px' }} />
+        </>
+    );
+
     const showEmergencyPopover = useCallback((position: { x: number; y: number }, emergencyState: EmergencyModel) => {
         const popoverContainer = document.createElement('div');
         popoverContainerRef.current = popoverContainer;
@@ -86,7 +101,11 @@ function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
                 unmountEmergencyPopoverRoot();
             },
             contentTemplate: () => {
-                popoverContentReactRoot.render(<EmergencyPopoverContent popoverInstance={popoverInstance} emergencyState={emergencyState} />);
+                popoverContentReactRoot.render(
+                    <AuthProvider>
+                        <EmergencyPopoverContent popoverInstance={popoverInstance} emergencyState={emergencyState} />
+                    </AuthProvider>
+                );
                 return popoverContentContainer;
             },
 
@@ -110,8 +129,6 @@ function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
 
         popoverInstance.current.show();
     }, [unmountEmergencyPopoverRoot]);
-
-
 
     const emergencyIconClickHandler = useCallback((event: PointerEvent, emergencyState: EmergencyModel) => {
         event.stopPropagation();
@@ -145,18 +162,6 @@ function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
 
         emergencyMuteManager.processEmergencyStates(emergencyStates);
 
-        const emergencyMutedIcon = renderToStaticMarkup(
-            <>
-                <WarningIcon size={18} style={{ fill: AppConstants.colors.emergencyWarningColor, cursor: 'pointer' }} />
-                <EmergencyWarningOff data-emergency-mute-icon size={12} style={{ fill: AppConstants.colors.emergencyWarningColor, cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px' }} />
-            </>
-        );
-        const emergencyUnmutedIcon = renderToStaticMarkup(
-            <>
-                <WarningIcon size={18} style={{ fill: AppConstants.colors.emergencyWarningColor, cursor: 'pointer' }} />
-                <EmergencyWarning data-emergency-mute-icon size={12} style={{ fill: AppConstants.colors.emergencyWarningColor, cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px' }} />
-            </>
-        );
         const emergencyIconContainerElements = Array.from(document.querySelectorAll('[data-emergency-icon-container]'));
 
         flows?.flatMap(f => (f.devices ?? []))
@@ -174,8 +179,8 @@ function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
 
                 const emergencyIconDom = new DOMParser().parseFromString(
                     emergencyMuteManager.isDeviceMuted(emergencyState)
-                        ? emergencyMutedIcon
-                        : emergencyUnmutedIcon,
+                        ? renderToStaticMarkup(<EmergencyMutedIcon />)
+                        : renderToStaticMarkup(<EmergencyUnmutedIcon />),
                     'text/html'
                 );
 

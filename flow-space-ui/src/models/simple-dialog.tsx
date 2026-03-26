@@ -2,7 +2,7 @@ import type { ProcFunc } from './primitive-type';
 import type { ReactNode } from 'react';
 
 export type SimpleDialogContentModel = {
-  iconName: string;
+  iconName?: string;
 
   iconSize?: number;
 

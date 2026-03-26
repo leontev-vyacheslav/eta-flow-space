@@ -15,10 +15,10 @@ const dialogContentRender = ({ iconName, iconSize, iconColor, textRender }: Simp
     function innerContent() {
         return (
             <div style={ { display: 'flex', alignItems: 'center' } }>
-                <div>
+              { iconName && <div>
                     {createElement((AppIcons as any)[iconName], { size: iconSize = iconSize ? iconSize : 24, style: { alignSelf: 'flex-start', color: iconColor ? iconColor : '#ff5722' } })}
-                </div>
-                {textRender ? <span style={ { marginLeft: 10 } }>{textRender()}</span> : null}
+                </div>}
+                {textRender ? <span style={ {  width: '100%' } }>{textRender()}</span> : null}
             </div>
         );
     }
@@ -143,12 +143,5 @@ const showPromptDialog = ({ title, iconName, iconSize, iconColor, textRender, ca
     popup.show();
 };
 
-const showAccessTokenPromptDialog = ({ callback }: Omit<PromptSimpleDialogModel, 'title' | 'iconName' | 'textRender'>) =>
-    showPromptDialog({
-        title: 'Токен доступа',
-        iconName: 'AccessTokenIcon',
-        textRender: () => 'Введите токен доступа в текстовое поле',
-        callback: callback
-    });
 
-export { showConfirmDialog, showAlertDialog, showPromptDialog, showConfirmDialogEx, showAccessTokenPromptDialog };
+export { showConfirmDialog, showAlertDialog, showPromptDialog, showConfirmDialogEx };
