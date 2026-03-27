@@ -52,7 +52,7 @@ async function storeEmergencyStates(msg, global) {
             emergencyReasons.push({
                 id: 100,
                 expression: "state.isConnected === false",
-                description: "Связь отсутствует."
+                description: "Связь отсутствует"
             })
         }
 
