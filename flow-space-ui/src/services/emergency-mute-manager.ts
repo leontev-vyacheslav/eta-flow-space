@@ -3,6 +3,9 @@ import type { MutedReasonModel } from "../models/flows/muted-reason-model";
 import type { MutedDeviceModel } from "../models/flows/muted-device-model";
 
 class EmergencyMuteManager {
+    oneHour =  3600000;
+    oneYear = 31536000000;
+
     private readonly storageKey = 'emergencyDeviceMuted';
     private audioUnlocked = false;
 
@@ -85,10 +88,12 @@ class EmergencyMuteManager {
         this.saveDevices(updated);
     }
 
-    purgeExpiredMutes(): void {
+    private purgeExpiredMutes(emergencyStates: EmergencyModel[]): void {
+        console.log(emergencyStates);
+
         const now = Date.now();
         const devices = this.getDevices()
-            .map(d => ({ ...d, muteReasonItems: d.muteReasonItems.filter(m => m.time > now) }))
+            .map(d => ({ ...d, muteReasonItems: d.muteReasonItems.filter(m => m.time > now && emergencyStates.find(e => e.deviceId === d.id)?.reasons.map(r => r.id).includes(m.id)) }))
             .filter(d => d.muteReasonItems.length > 0);
 
         this.saveDevices(devices);
@@ -165,7 +170,7 @@ class EmergencyMuteManager {
         if (hasUnmuted) {
             this.playAlertSound();
         }
-        this.purgeExpiredMutes();
+        this.purgeExpiredMutes(emergencyStates);
     }
 
     unlockAudio(): void {

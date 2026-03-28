@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { MainMenu } from "../components/menu/main-menu/main-menu";
-import { EmergencySoundMute, WarningLogIcon, EmergencySoundUnmute, AdditionalMenuIcon, EmergencyWarningOff, EmergencyWarning } from "../constants/app-icons";
+import { EmergencySoundMute, WarningLogIcon, EmergencySoundUnmute, AdditionalMenuIcon, EmergencyWarningOff, EmergencyWarning, EmergencySoundMuteForever } from "../constants/app-icons";
 import { emergencyMuteManager } from "../services/emergency-mute-manager";
 import type dxPopover from "devextreme/ui/popover";
 import type { EmergencyModel } from "../models/flows/emergency-model";
@@ -49,10 +49,21 @@ export const EmergencyPopoverContent = ({ emergencyState }: { emergencyState: Em
                             }
                         },
                         {
-                            text: 'Выключить на 1 час',
+                            text:  'На 1 час',
+                            textFontWeight: emergencyMuteManager.getReason(deviceId, emergencyReason.id)?.duration === emergencyMuteManager.oneHour ? 'bold' : undefined,
                             icon: () => <EmergencySoundMute size={18} />,
                             onClick: () => {
-                                emergencyMuteManager.addMute(deviceId, emergencyReason.id, 3600000);
+                                emergencyMuteManager.addMute(deviceId, emergencyReason.id, emergencyMuteManager.oneHour);
+                                setUnmutedEmergencies(emergencyMuteManager.getUnmutedEmergencies([emergencyState]));
+                                toggleEmergencyIcon(deviceId);
+                            }
+                        },
+                        {
+                            text: 'До устранения',
+                            textFontWeight: emergencyMuteManager.getReason(deviceId, emergencyReason.id)?.duration === emergencyMuteManager.oneYear ? 'bold' : undefined,
+                            icon: () => <EmergencySoundMuteForever size={18} />,
+                            onClick: () => {
+                                emergencyMuteManager.addMute(deviceId, emergencyReason.id, emergencyMuteManager.oneYear);
                                 setUnmutedEmergencies(emergencyMuteManager.getUnmutedEmergencies([emergencyState]));
                                 toggleEmergencyIcon(deviceId);
                             }
@@ -80,8 +91,10 @@ export const EmergencyPopoverContent = ({ emergencyState }: { emergencyState: Em
             <tbody>
                 {
                     (emergencyState.reasons).map(
-                        (r, i: number) =>
-                            <tr key={i}>
+                        (r, i: number) => {
+                            const muteReason = emergencyMuteManager.getReason(emergencyState.deviceId, r.id);
+
+                            return (<tr key={i}>
                                 <td style={{ width: 0 }}>
                                     {
                                         unmutedEmergencies.length > 0 && unmutedEmergencies.find(() => true)!.reasons.some((unmutedReason) => unmutedReason.id === r.id)
@@ -97,10 +110,12 @@ export const EmergencyPopoverContent = ({ emergencyState }: { emergencyState: Em
                                                 <IoFlashOutline size={12} />
                                                 {emergencyState.timestamp && new Date(emergencyState.timestamp).toLocaleString('ru-RU', { dateStyle: 'short', timeStyle: 'short' })}
                                             </span>
-                                            {emergencyMuteManager.getReason(emergencyState.deviceId, r.id)?.time
+                                            {muteReason?.time
                                                 ? <span style={{ color: 'gray', fontSize: '0.85em', display: 'flex', alignItems: 'center', gap: 5 }}>
                                                     <EmergencySoundUnmute size={12} />
-                                                    {new Date(emergencyMuteManager.getReason(emergencyState.deviceId, r.id)!.time).toLocaleString('ru-RU', { dateStyle: 'short', timeStyle: 'short' })}
+                                                    {
+                                                        muteReason.duration === emergencyMuteManager.oneYear ? 'До устранения' : new Date(muteReason!.time).toLocaleString('ru-RU', { dateStyle: 'short', timeStyle: 'short' })
+                                                    }
                                                 </span>
                                                 : null
                                             }
@@ -110,7 +125,8 @@ export const EmergencyPopoverContent = ({ emergencyState }: { emergencyState: Em
                                         </span>
                                     </div>
                                 </td>
-                            </tr>
+                            </tr>);
+                        }
                     )
                 }
             </tbody>

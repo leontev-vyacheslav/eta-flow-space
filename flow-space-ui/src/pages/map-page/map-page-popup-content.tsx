@@ -123,16 +123,16 @@ export const MapPagePopupContent = ({ device, deviceState, dataschema, emergency
     }, [graphIconClickHandler, isXSmall, renderStateValueByPropertiesChain]);
 
     const EmergencyMutedIcon = () => (
-        <>
+        <div>
             <WarningIcon size={18} style={{ fill: '#FFC107' }} />
             <EmergencyWarningOff data-emergency-mute-icon size={12} style={{ fill: '#FFC107', position: 'absolute', top: '-5px', right: '-5px' }} />
-        </>
+        </div>
     );
     const EmergencyUnmutedIcon = () => (
-        <>
+        <div>
             <WarningIcon size={18} style={{ fill: '#FFC107' }} />
             <EmergencyWarning data-emergency-mute-icon size={12} style={{ fill: '#FFC107', position: 'absolute', top: '-5px', right: '-5px' }} />
-        </>
+        </div>
     );
 
     return (

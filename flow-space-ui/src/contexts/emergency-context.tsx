@@ -59,17 +59,17 @@ function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
     }
 
     const EmergencyMutedIcon = () => (
-        <>
+        <div>
             <WarningIcon size={18} style={{ fill: AppConstants.colors.emergencyWarningColor, cursor: 'pointer' }} />
             <EmergencyWarningOff data-emergency-mute-icon size={12} style={{ fill: AppConstants.colors.emergencyWarningColor, cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px' }} />
-        </>
+        </div>
     );
 
     const EmergencyUnmutedIcon = () => (
-        <>
+        <div>
             <WarningIcon size={18} style={{ fill: AppConstants.colors.emergencyWarningColor, cursor: 'pointer' }} />
             <EmergencyWarning data-emergency-mute-icon size={12} style={{ fill: AppConstants.colors.emergencyWarningColor, cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px' }} />
-        </>
+        </div>
     );
 
     const showEmergencyPopover = useCallback((position: { x: number; y: number }, emergencyState: EmergencyModel) => {
