@@ -932,7 +932,7 @@
         "z": "2dca6eed12b296f5",
         "g": "b74b1a6d538c13c2",
         "name": "store-emergency-states",
-        "func": "const { storeEmergencyStates } = global.get('services');\n\nconst msg1 = await storeEmergencyStates(msg, global);\n\nconst old = global.get('emergencyState6');\nglobal.set('emergencyState6', {\n    ...old, reasons: [...old.reasons, {id: 200, expression: \"state.isTest === true\", \n    description: \"Testing the emegrency situation\"}]\n});\n\n\nreturn msg1;",
+        "func": "const { storeEmergencyStates } = global.get('services');\n\nconst msg1 = await storeEmergencyStates(msg, global);\n\nconst old = global.get('emergencyState6');\nglobal.set('emergencyState6', {\n    ...old, reasons: [...old.reasons,\n    { id: 200, expression: \"state.isTest === true\", description: \"Testing the emegrency situation\" }\n    ]\n});\n\n\nreturn msg1;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
