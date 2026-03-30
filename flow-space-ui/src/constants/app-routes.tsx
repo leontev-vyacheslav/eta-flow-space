@@ -19,6 +19,10 @@ const routes = [
         component: DashboardPage,
     },
     {
+        path: '/map/:flowCode/device/:deviceId',
+        component: MapPage,
+    },
+    {
         path: '/map',
         component: MapPage,
     }

@@ -85,6 +85,7 @@ export { IoMapOutline as MapIcon } from 'react-icons/io5';
 export { MdOutlineCheckBox as CheckedIcon } from 'react-icons/md';
 export { MdOutlineCheckBoxOutlineBlank as UncheckedIcon } from 'react-icons/md';
 export { IoLocationOutline as LocationIcon } from "react-icons/io5";
+export { HiOutlineViewfinderCircle as LocationAllIcon } from 'react-icons/hi2';
 export { IoTimeSharp as TimeChartSingIcon } from 'react-icons/io5';
 
 export { TbNumber1Small as DayIcon} from 'react-icons/tb';
@@ -106,6 +107,8 @@ export { IoNotifications as EmergencyWarning} from 'react-icons/io5';
 export  { TbList as UngroupedList } from "react-icons/tb";
 export  { TbListDetails as GroupedList } from "react-icons/tb";
 export { TbWifiOff  as ConnectionOff } from "react-icons/tb";
+
+
 
 import { MdMoreVert } from 'react-icons/md';
 export const GridAdditionalMenuIcon = () => <MdMoreVert style={{ cursor: 'pointer' }} size={18} />

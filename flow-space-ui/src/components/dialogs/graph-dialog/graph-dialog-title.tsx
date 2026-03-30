@@ -23,7 +23,7 @@ export const GraphDialogTitle = ({ device, popupRef, menuItems, schemaTypeInfos 
         }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
                 <span style={{ fontSize: '20px', fontWeight: 500 }}>График</span>
-                <div style={{ fontSize: 12, color: 'rgb(118, 118, 118)' }}>{device && (device.name + (isAdmin() && ` [${device.id}]`))}</div>
+                <div style={{ fontSize: 12, color: 'rgb(118, 118, 118)' }}>{device && (device.name + (isAdmin() ? ` [${device.id}]` : ''))}</div>
             </div>
             <div style={{ display: 'flex', gap: 5 }}>
                 {schemaTypeInfos.length > 1 ?

@@ -14,7 +14,7 @@ import './side-nav-outer-toolbar.scss';
 export function SideNavOuterToolbar({ title, children }: SideNavProps) {
     const ROUTES_WITHOUT_SCROLL = ['/map'];
     const location = useLocation();
-    const disableScroll = ROUTES_WITHOUT_SCROLL.includes(location.pathname);
+    const disableScroll = ROUTES_WITHOUT_SCROLL.some(route => location.pathname.startsWith(route));
 
     const scrollViewRef = useRef<ScrollView>(null);
     const history = useNavigate();

@@ -6,7 +6,9 @@ import {
     FlowIcon,
     DeviceIcon,
     WarningLogIcon,
-    MapIcon
+    MapIcon,
+    LocationIcon,
+    LocationAllIcon,
 } from './app-icons';
 import type { TreeViewItemModel } from '../models/tree-view-item';
 import type { IconBaseProps } from 'react-icons';
@@ -33,8 +35,21 @@ export const useSideNavigationMenuItems = () => {
             {
                 id: 'map',
                 text: 'Карта объектов',
+
                 iconRender: (props: IconBaseProps) => <MapIcon size={22} {...props} />,
-                path: '/map',
+                items: [{
+                    id: 'map-only',
+                    text: 'Все объекты',
+                    iconRender: (props: IconBaseProps) => <LocationAllIcon size={22} {...props} />,
+                    path: '/map',
+                }, ...(flows?.flatMap(f => f.devices.map((d: any) => ({ ...d, flowCode: f.code })))
+                    .map((d: any) => ({
+                        id: d.code,
+                        text: d.name,
+                        iconRender: (props: IconBaseProps) => <LocationIcon size={22} {...props} />,
+                        entity: { typeName: 'DeviceModel', id: d.id },
+                        path: `/map/${d.flowCode}/device/${d.id}`,
+                    })) || []),]
             },
             {
                 id: 'emergency-log',

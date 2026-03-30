@@ -7,7 +7,7 @@ import { useAuth } from "../../../contexts/auth";
 
 export const EmergencyLogDialogTitle = ({ device, popupRef, menuItems }: { device?: DeviceModel, popupRef: React.RefObject<PopupRef | null>, menuItems: MenuItemModel[] }) => {
     const { isAdmin } = useAuth();
-    
+
     return (
         <div style={{
             display: 'flex',
@@ -18,7 +18,7 @@ export const EmergencyLogDialogTitle = ({ device, popupRef, menuItems }: { devic
         }}>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <span style={{ fontSize: '20px', fontWeight: 500 }}>Журнал аварий</span>
-                <span style={{ fontSize: '12px', color: 'rgb(118, 118, 118)'}}>{device ? device.name + (isAdmin() && ` [${device.id}]`) :  'Все устройства'}</span>
+                <span style={{ fontSize: '12px', color: 'rgb(118, 118, 118)'}}>{device ? device.name + (isAdmin() ? ` [${device.id}]` : '') :  'Все устройства'}</span>
             </div>
             <div style={{ display: 'flex' }}>
                 <MainMenu items={menuItems} />

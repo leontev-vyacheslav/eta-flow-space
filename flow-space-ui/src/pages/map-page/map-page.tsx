@@ -19,14 +19,20 @@ import { getQuickGuid } from "../../utils/uuid";
 import 'leaflet/dist/leaflet.css';
 import './map-page.scss';
 import { AuthProvider } from "../../contexts/auth";
+import { useNavigate, useParams } from "react-router-dom";
+import { useSharedArea } from "../../contexts/shared-area";
 
 export const MapPage = () => {
+    const navigate = useNavigate();
+    const { deviceId } = useParams();
     const { getDeviceListAsync, getDeviceStateAsync, getDeviceStateDataschemaAsync, getEmergencyStatesAsync } = useAppData();
     const [refreshToken, setRefreshToken] = useState<string>(getQuickGuid());
     const mapRef = useRef<L.Map>(null);
     const markersGroupRef = useRef<L.FeatureGroup | null>(null);
     const rootsRef = useRef<Map<number, ReturnType<typeof createRoot>>>(new Map());
+    const markersRef = useRef<Map<number, L.Marker>>(new Map());
     const latestRequestRef = useRef<number>(0);
+    const { treeViewRef } = useSharedArea();
 
     const longPressBinder = useLongPress(
         () => {
@@ -44,6 +50,12 @@ export const MapPage = () => {
                     mapRef.current.fitBounds(markersGroup.getBounds(), AppConstants.mapDefaultBoundsSetting as L.FitBoundsOptions);
                 } else {
                     mapRef.current.setView(AppConstants.mapDefaultCenter, AppConstants.mapDefaultZoom, { animate: true });
+                }
+                const path = `/map`;
+                navigate(path, { replace: true });
+                const navigationItem = document.querySelector(`li[data-item-id="${path}"]`);
+                if (navigationItem) {
+                    treeViewRef.current?.instance.selectItem(navigationItem);
                 }
             }
         }, {
@@ -105,7 +117,7 @@ export const MapPage = () => {
         }
     }, []);
 
-    const markerClickHandler = useCallback(([latitude, longitude]: [number, number]) => {
+    const markerClickHandler = useCallback(({ device, latitude, longitude }: { device: DeviceModel, latitude: number, longitude: number }) => {
         if (mapRef.current) {
             const map = mapRef.current;
             map.setView([latitude, longitude], AppConstants.mapDefaultZoom, { animate: true });
@@ -114,6 +126,37 @@ export const MapPage = () => {
                 map.panBy([0, -50], { animate: true });
             });
         }
+        const path = `/map/${device.flow?.code}/device/${device.id}`;
+        navigate(path, { replace: true });
+        const navigationItem = document.querySelector(`li[data-item-id="${path}"]`);
+        if (navigationItem) {
+            treeViewRef.current?.instance.selectItem(navigationItem);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const showPopup = useCallback((deviceId: string | undefined) => {
+        if (!deviceId || !mapRef.current) {
+            return;
+        }
+
+        const targetDeviceId = parseInt(deviceId, 10);
+        if (isNaN(targetDeviceId)) {
+            return;
+        }
+
+        const marker = markersRef.current.get(targetDeviceId);
+        if (!marker) {
+            return;
+        }
+
+        const latLng = marker.getLatLng();
+        mapRef.current.setView([latLng.lat, latLng.lng], AppConstants.mapDefaultZoom, { animate: true });
+
+        mapRef.current.once('moveend', () => {
+            marker.openPopup();
+            mapRef.current?.panBy([0, -50], { animate: true });
+        });
     }, []);
 
     const buildMarkersAsync = useCallback(async () => {
@@ -132,6 +175,7 @@ export const MapPage = () => {
         const markersFeatureGroup = L.featureGroup().addTo(mapRef.current);
         markersGroupRef.current = markersFeatureGroup;
 
+        markersRef.current.clear();
         devices.forEach(device => {
             if (!device.objectLocation) {
                 return;
@@ -144,8 +188,17 @@ export const MapPage = () => {
                 icon: createMapMarkerIcon(emergencyState)
             }).addTo(markersFeatureGroup);
 
+            // Store marker reference by device ID
+            markersRef.current.set(device.id, marker);
+
             const container = document.createElement('div');
-            const popup = L.popup({ minWidth: 220 }).setContent(container);
+            const popup = L.popup({
+                minWidth: 220,
+                autoClose: true,
+                closeOnClick: false,
+                closeOnEscapeKey: false
+
+            }).setContent(container);
 
             marker.bindPopup(popup);
             marker.on('popupopen', () => {
@@ -155,12 +208,16 @@ export const MapPage = () => {
                 markerPopupCloseHandler(device.id)
             });
             marker.on('click', () => {
-                markerClickHandler([latitude, longitude]);
+                markerClickHandler({ device, latitude, longitude });
             });
         });
 
-        if (markersFeatureGroup.getLayers().length > 0) {
-            mapRef.current?.fitBounds(markersFeatureGroup.getBounds(), AppConstants.mapDefaultBoundsSetting as L.FitBoundsOptions);
+        if (!deviceId) {
+            if (markersFeatureGroup.getLayers().length > 0) {
+                mapRef.current?.fitBounds(markersFeatureGroup.getBounds(), AppConstants.mapDefaultBoundsSetting as L.FitBoundsOptions);
+            }
+        } else {
+            showPopup(deviceId);
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -169,6 +226,12 @@ export const MapPage = () => {
     useEffect(() => {
         buildMarkersAsync();
     }, [buildMarkersAsync]);
+
+    // Open popup for specific deviceId after markers are built
+    useEffect(() => {
+        showPopup(deviceId);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [deviceId]);
 
     useEffect(() => {
         const map = mapRef.current;
