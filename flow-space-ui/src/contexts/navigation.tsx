@@ -4,6 +4,7 @@ import type { AppBaseProviderProps } from '../models/app-base-provider-props';
 import { createContext, useContext, useState, useEffect, type ElementType } from 'react';
 import { useLocation } from 'react-router';
 import { useSharedArea } from './shared-area';
+// import { useScreenSize } from '../utils/media-query';
 
 const NavigationContext = createContext<NavigationContextModel>({} as NavigationContextModel);
 const useNavigation = () => useContext(NavigationContext);
@@ -23,16 +24,17 @@ function NavigationProvider(props: AppBaseProviderProps) {
 function withNavigationWatcher(Component: ElementType, path: string) {
     const WrappedComponent = function (props: Record<string, unknown>) {
         const { setNavigationData } = useNavigation();
+        // const { isSmall, isXSmall, isLarge } = useScreenSize();
 
         const location = useLocation();
         const { treeViewRef } = useSharedArea();
 
         useEffect(() => {
+            // treeViewRef.current?.instance.expandAll();
             const navigationItem = document.querySelector(`li[data-item-id="${location.pathname}"]`);
             if (navigationItem) {
                 treeViewRef.current?.instance.selectItem(navigationItem);
             }
-
         }, [location, treeViewRef]);
 
         useEffect(

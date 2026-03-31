@@ -77,8 +77,11 @@ export function SideNavigationMenu(props: SideNavigationMenuProps) {
         return (
             <div style={{ display: 'flex', paddingLeft: 5, gap: 10 }}>
                 {e.iconRender ? <i className="dx-icon">{e.iconRender({ style: { width: 'auto', flex: '0 0 auto' } })}</i> : null}
-                <span style={{flex: 1}}>{e.text}</span>
-                <i className="dx-icon" style={{fontSize: 'initial', position: 'relative', display: 'inline'}} data-emergency-icon-container={e.entity?.id}></i>
+                <span style={{ flex: 1 }}>{e.text}</span>
+                <i className="dx-icon"
+                    style={{ fontSize: 'initial', position: 'relative', display: 'inline' }}
+                    {...(e.entity?.typeName === 'DeviceModel' ? { "data-emergency-icon-container": e.entity?.id } : undefined)} >
+                </i>
             </div>
         );
     }
@@ -95,6 +98,8 @@ export function SideNavigationMenu(props: SideNavigationMenuProps) {
                     itemRender={TreeViewItemContent}
                     focusStateEnabled={true}
                     expandEvent={'click'}
+                    virtualModeEnabled={false}
+                    expandAllEnabled={true}
 
                     onItemClick={async event => {
                         if (!event.itemData) {
@@ -128,7 +133,7 @@ export function SideNavigationMenu(props: SideNavigationMenuProps) {
                             return;
                         }
 
-                         if (treeViewItem.command === 'emergency-log') {
+                        if (treeViewItem.command === 'emergency-log') {
                             emergencyLogService.show({});
 
                             return;

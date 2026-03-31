@@ -25,7 +25,8 @@ export const useSideNavigationMenuItems = () => {
                 iconRender: (props: IconBaseProps) => <FlowIcon size={22} {...props} />,
                 entity: { typeName: 'FlowModel', id: f.id },
                 items: f.devices.map(d => ({
-                    id: d.code,
+                    //id: d.code,
+                    id: `${f.code}/device/${d.id}`,
                     text: d.name,
                     iconRender: (props: IconBaseProps) => <DeviceIcon size={22} {...props} />,
                     path: `/${f.code}/device/${d.id}`,
@@ -33,7 +34,8 @@ export const useSideNavigationMenuItems = () => {
                 }))
             })) || []),
             {
-                id: 'map',
+                //id: 'map',
+                id: '/map',
                 text: 'Карта объектов',
 
                 iconRender: (props: IconBaseProps) => <MapIcon size={22} {...props} />,
@@ -44,7 +46,8 @@ export const useSideNavigationMenuItems = () => {
                     path: '/map',
                 }, ...(flows?.flatMap(f => f.devices.map((d: any) => ({ ...d, flowCode: f.code })))
                     .map((d: any) => ({
-                        id: d.code,
+                        //id: d.code,
+                        id: `/map/${d.flowCode}/device/${d.id}`,
                         text: d.name,
                         iconRender: (props: IconBaseProps) => <LocationIcon size={22} {...props} />,
                         entity: { typeName: 'DeviceModel', id: d.id },
