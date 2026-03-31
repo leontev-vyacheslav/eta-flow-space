@@ -51,12 +51,14 @@ export const MapPage = () => {
                 } else {
                     mapRef.current.setView(AppConstants.mapDefaultCenter, AppConstants.mapDefaultZoom, { animate: true });
                 }
-                const path = `/map`;
-                navigate(path, { replace: true });
-                const navigationItem = document.querySelector(`li[data-item-id="${path}"]`);
-                if (navigationItem) {
-                    treeViewRef.current?.instance.selectItem(navigationItem);
-                }
+                setTimeout(() => {
+                    const path = `/map`;
+                    navigate(path);
+                    const navigationItem = document.querySelector(`li[data-item-id="${path}"]`);
+                    if (navigationItem) {
+                        treeViewRef.current?.instance.selectItem(navigationItem);
+                    }
+                }, 500);
             }
         }, {
         threshold: 250,
@@ -127,7 +129,7 @@ export const MapPage = () => {
             });
         }
         const path = `/map/${device.flow?.code}/device/${device.id}`;
-        navigate(path, { replace: true });
+        navigate(path);
         const navigationItem = document.querySelector(`li[data-item-id="${path}"]`);
         if (navigationItem) {
             treeViewRef.current?.instance.selectItem(navigationItem);
