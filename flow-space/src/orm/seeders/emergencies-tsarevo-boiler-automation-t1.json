@@ -138,5 +138,25 @@
         "id": 28,
         "expression": "state.boilers[3].status === 6",
         "description": "Авария котла 4"
+    },
+    {
+        "id": 29,
+        "expression": "state.pressOutNet > 6",
+        "description": "Аварийный высокий уровень давления на подаче сетевого контура"
+    },
+    {
+        "id": 30,
+        "expression": "state.pressOutNet < 0.5",
+        "description": "Аварийный низкий уровень давления на подаче сетевого контура"
+    },
+    {
+        "id": 31,
+        "expression": "state.pressInNet > 3",
+        "description": "Аварийный высокий уровень давления на обратке сетевого контура"
+    },
+    {
+        "id": 32,
+        "expression": "state.pressInNet < 0.5",
+        "description": "Аварийный низкий уровень давления на обратке сетевого контура"
     }
 ]

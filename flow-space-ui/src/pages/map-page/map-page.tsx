@@ -135,7 +135,7 @@ export const MapPage = () => {
             treeViewRef.current?.instance.selectItem(navigationItem);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [treeViewRef]);
 
     const showPopup = useCallback((deviceId: string | undefined) => {
         if (!deviceId || !mapRef.current) {
