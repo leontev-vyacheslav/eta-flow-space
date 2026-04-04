@@ -40,6 +40,7 @@ services:
     privileged: true
     volumes:
       - ./flow-space-backups:/backups
+    restart: unless-stopped
     networks:
       - eta-flow-space-network
 
