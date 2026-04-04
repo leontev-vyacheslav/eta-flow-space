@@ -85,7 +85,8 @@ export { IoMapOutline as MapIcon } from 'react-icons/io5';
 export { MdOutlineCheckBox as CheckedIcon } from 'react-icons/md';
 export { MdOutlineCheckBoxOutlineBlank as UncheckedIcon } from 'react-icons/md';
 export { IoLocationOutline as LocationIcon } from "react-icons/io5";
-export { HiOutlineViewfinderCircle as LocationAllIcon } from 'react-icons/hi2';
+export { PiMapPinArea as LocationAllIcon } from 'react-icons/pi';
+
 export { IoTimeSharp as TimeChartSingIcon } from 'react-icons/io5';
 
 export { TbNumber1Small as DayIcon} from 'react-icons/tb';
