@@ -6,10 +6,11 @@ from fastapi.openapi.docs import get_swagger_ui_html
 from fastapi.staticfiles import StaticFiles
 
 app = FastAPI(
-    title="Flow Space Reporting",
-    description="Reporting service for Eta Flow Space",
+    title="FlowSpace Reporting",
+    description="Reporting service for Eta FlowSpace",
     version="0.1.0",
     docs_url=None,
+    openapi_url="/openapi.json",
 )
 bearer_scheme = HTTPBearer()
 
@@ -29,9 +30,8 @@ async def health_check():
 
 @app.get("/docs", include_in_schema=False)
 async def custom_swagger_ui():
-    assert app.openapi_url is not None
     return get_swagger_ui_html(
-        openapi_url=app.openapi_url,
+        openapi_url="/docs/reporting/openapi.json",  # points to Nginx path
         title=app.title,
-        swagger_favicon_url="/static/favicon.ico",  # your custom icon
+        swagger_favicon_url="/static/favicon.ico",
     )
