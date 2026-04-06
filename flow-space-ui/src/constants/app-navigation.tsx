@@ -27,7 +27,6 @@ export const useSideNavigationMenuItems = () => {
                 iconRender: (props: IconBaseProps) => <FlowIcon size={22} {...props} />,
                 entity: { typeName: 'FlowModel', id: f.id },
                 items: f.devices.map(d => ({
-                    //id: d.code,
                     id: `${f.code}/device/${d.id}`,
                     text: d.name,
                     iconRender: (props: IconBaseProps) => <DeviceIcon size={22} {...props} />,
@@ -48,7 +47,6 @@ export const useSideNavigationMenuItems = () => {
                     path: '/map',
                 }, ...(flows?.flatMap(f => f.devices.map((d: any) => ({ ...d, flowCode: f.code })))
                     .map((d: any) => ({
-                        //id: d.code,
                         id: `/map/${d.flowCode}/device/${d.id}`,
                         text: d.name,
                         iconRender: (props: IconBaseProps) => <LocationIcon size={22} {...props} />,
@@ -68,10 +66,10 @@ export const useSideNavigationMenuItems = () => {
                 iconRender: (props: IconBaseProps) => <ReportIcon size={20} {...props} />,
                items: [
                     {
-                        id: 'emergency-summary-report',
+                        id: '/reports/emergency-summary-report',
                         text: 'Аварийные ситуации',
                         iconRender: (props: IconBaseProps) => <div style={{position: 'relative'}}><WarningLogIcon size={20} {...props} ></WarningLogIcon> <BetaIcon size={12} {...props} style={{position: 'absolute', top: '-5px', right: '-5px'}} /></div>,
-                        command: 'emergency-summary-report',
+                        path: '/reports/emergency-summary-report',
                     },
                 ]
             },

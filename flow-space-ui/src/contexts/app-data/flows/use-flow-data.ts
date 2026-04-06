@@ -144,11 +144,9 @@ export const useFlowData = () => {
     const getEmergencySummaryAsync = useCallback(async () => {
         const response = await authHttpRequest({
             url: `${routes.host}${routes.emergencySummaryReport}`,
-            // url: 'http://eta24.ru:3000/api/reporting/emergency-summary',
             method: HttpConstants.Methods.Get as Method,
             responseType: 'blob',
-        }, true);
-
+        });
 
         if (response && response.status === HttpConstants.StatusCodes.Ok) {
             return new Blob([response.data], { type: 'application/pdf' });

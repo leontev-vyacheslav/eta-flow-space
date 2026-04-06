@@ -264,12 +264,12 @@ export const MapPage = () => {
             <PageHeader caption={'Карта объектов'} menuItems={menuItems}>
                 <MapIcon size={AppConstants.headerIconSize} />
             </PageHeader>
-            <div {...longPressBinder()} style={{ height: 'calc(100% - 60px)', width: '100%', padding: 10 }}>
+            <div {...longPressBinder()} style={{ height: '100%', width: '100%', padding: 10 }}>
                 <MapContainer
                     ref={mapRef}
                     center={AppConstants.mapDefaultCenter}
                     zoom={AppConstants.mapDefaultZoom}
-                    style={{ height: '100%', width: '100%' }}>
+                    style={{ height: 'calc(100% - 50px)', width: '100%', }}>
                     <TileLayer
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

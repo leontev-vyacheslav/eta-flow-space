@@ -1,5 +1,5 @@
 import { withNavigationWatcher } from '../contexts/navigation';
-import {  AboutPage, SignOutPage, DashboardPage, HomePage, MapPage} from '../pages';
+import {  AboutPage, SignOutPage, DashboardPage, HomePage, MapPage, ReportPage} from '../pages';
 
 const routes = [
     {
@@ -25,7 +25,12 @@ const routes = [
     {
         path: '/map',
         component: MapPage,
-    }
+    },
+    {
+        path: '/reports/:reportName',
+        component: ReportPage,
+    },
+
 ];
 
 export default routes.map((route) => {
