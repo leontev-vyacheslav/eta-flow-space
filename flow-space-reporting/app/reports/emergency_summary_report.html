@@ -88,7 +88,7 @@
                     <td style="width: 30px;">{{ row.reason_id }}</td>
                     <td>{{ row.emergency_type or 'N/A' }}</td>
                     <td style="width: 75px;">{{ row.occurrences }}</td>
-                    <td style="width: 100px;">
+                    <td style="width: 125px;">
                         {% if row.last_occurrence %}
                         {{ row.last_occurrence | localize_datetime }}
                         {% else %}
