@@ -26,5 +26,3 @@ build/
 *.egg-info/
 *.egg
 
-# Reports output
-reports/

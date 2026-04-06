@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Сводный отчёт по нештатным ситуациям</title>
+    <style>
+        @page {
+            margin-top: 15mm;
+            margin-bottom: 15mm;
+            margin-left: 15mm;
+            margin-right: 15mm;
+        }
+
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            border-bottom: 1px solid black;
+            padding-bottom: 10px;
+            font-size: 14pt;
+            text-align: center;
+        }
+
+        h2 {
+            margin-top: 20px;
+            padding: 10px;
+            border-left: 4px solid #c0c0c0;
+            font-size: 12pt;
+        }
+
+        table {
+            width: 100%;
+            font-size: 12px;
+            line-height: initial;
+            border-collapse: collapse !important;
+            empty-cells: show;
+            border-spacing: 0;
+            border: 1px Solid #c0c0c0;
+            margin: 10px 0 10px 0;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        tbody td {
+            border: 1px solid #c0c0c0;
+            padding: 5px 5px;
+            text-align: left;
+        }
+
+        thead th {
+            font-weight: bold;
+            border: 1px Solid #c0c0c0;
+            padding: 3px 6px 4px;
+            background-color: #f0f0f0;
+            height: 25px;
+        }
+
+        .section {
+            page-break-inside: avoid;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Сводный отчёт по нештатным ситуациям</h1>
+    {% for (device_id, device_name, month), group_rows in grouped_data.items() %}
+    <div class="section">
+        {% set month_str = month | month %}
+        {% set display_name = device_name or 'Device ' ~ device_id %}
+        <h2>{{ display_name }} — {{ month_str }}</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ИД</th>
+                    <th>Описание</th>
+                    <th>Возникновений</th>
+                    <th>
+                        <div style="width: 0;">Последнее возникновение</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in group_rows %}
+                <tr>
+                    <td style="width: 30px;">{{ row.reason_id }}</td>
+                    <td>{{ row.emergency_type or 'N/A' }}</td>
+                    <td style="width: 75px;">{{ row.occurrences }}</td>
+                    <td style="width: 100px;">
+                        {% if row.last_occurrence %}
+                        {{ row.last_occurrence | localize_datetime }}
+                        {% else %}
+                        N/A
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endfor %}
+</body>
+
+</html>
