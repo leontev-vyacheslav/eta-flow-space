@@ -109,6 +109,9 @@ export  { TbList as UngroupedList } from "react-icons/tb";
 export  { TbListDetails as GroupedList } from "react-icons/tb";
 export { TbWifiOff  as ConnectionOff } from "react-icons/tb";
 
+export { HiOutlineDocumentReport as ReportIcon } from 'react-icons/hi';
+export { TbBeta as BetaIcon } from 'react-icons/tb';
+
 
 
 import { MdMoreVert } from 'react-icons/md';

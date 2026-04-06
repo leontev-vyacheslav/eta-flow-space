@@ -4,6 +4,7 @@ from fastapi.security import HTTPBearer
 from app.api.router import router
 from fastapi.openapi.docs import get_swagger_ui_html
 from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(
     title="FlowSpace Reporting",
@@ -12,6 +13,14 @@ app = FastAPI(
     docs_url=None,
     openapi_url="/openapi.json",
 )
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Authorization", "Content-Type", "X-Requested-User"],
+)
+
 bearer_scheme = HTTPBearer()
 
 app.include_router(router, prefix="/api")

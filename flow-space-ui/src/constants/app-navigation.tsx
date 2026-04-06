@@ -9,6 +9,8 @@ import {
     MapIcon,
     LocationIcon,
     LocationAllIcon,
+    ReportIcon,
+    BetaIcon,
 } from './app-icons';
 import type { TreeViewItemModel } from '../models/tree-view-item';
 import type { IconBaseProps } from 'react-icons';
@@ -59,6 +61,19 @@ export const useSideNavigationMenuItems = () => {
                 text: 'Журнал аварий',
                 iconRender: (props: IconBaseProps) => <WarningLogIcon size={20} {...props} />,
                 command: 'emergency-log',
+            },
+            {
+                id: 'reports',
+                text: 'Отчеты',
+                iconRender: (props: IconBaseProps) => <ReportIcon size={20} {...props} />,
+               items: [
+                    {
+                        id: 'emergency-summary-report',
+                        text: 'Аварийные ситуации',
+                        iconRender: (props: IconBaseProps) => <div style={{position: 'relative'}}><WarningLogIcon size={20} {...props} ></WarningLogIcon> <BetaIcon size={12} {...props} style={{position: 'absolute', top: '-5px', right: '-5px'}} /></div>,
+                        command: 'emergency-summary-report',
+                    },
+                ]
             },
             {
                 id: 'about',
