@@ -31,7 +31,7 @@ async def health_check():
 @app.get("/docs", include_in_schema=False)
 async def custom_swagger_ui():
     return get_swagger_ui_html(
-        openapi_url="/docs/reporting/openapi.json",  # points to Nginx path
+        openapi_url="/openapi.json",  # points to Nginx path
         title=app.title,
         swagger_favicon_url="/static/favicon.ico",
     )
