@@ -58,13 +58,9 @@ services:
       context: ./flow-space-reporting/
       dockerfile: Dockerfile
     container_name: eta-flow-space-reporting
-    ports:
-      - "8000:8000"
     restart: unless-stopped
-    environment:
-      - DATABASE_URL=postgresql+asyncpg://postgres:0987654321@eta-flow-space-database:5432/eta_flow_space_database
-      - DATABASE_POOL_SIZE=5
-      - DATABASE_MAX_OVERFLOW=10
+    env_file:
+    - ./flow-space-reporting/.env
     depends_on:
       - eta-flow-space-database
     networks:
