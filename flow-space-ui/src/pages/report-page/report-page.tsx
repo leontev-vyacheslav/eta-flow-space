@@ -61,7 +61,7 @@ export const ReportPage = () => {
                 {reportUrl ? <iframe src={reportUrl}
                     style={{
                         width: '100%',
-                        height: 'calc(100% - 50px)',
+                        height: 'calc(100% - 60px)',
                         border: 'none',
                     }}></iframe>
                     : <NoData />}
