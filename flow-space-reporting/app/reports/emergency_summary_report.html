@@ -21,7 +21,7 @@
         h1 {
             border-bottom: 1px solid black;
             padding-bottom: 10px;
-            font-size: 14pt;
+            font-size: 16px;
             text-align: center;
         }
 
@@ -29,7 +29,8 @@
             margin-top: 20px;
             padding: 10px;
             border-left: 4px solid #c0c0c0;
-            font-size: 12pt;
+            font-size: 14px;
+            font-weight: normal;
         }
 
         table {
@@ -65,7 +66,21 @@
 </head>
 
 <body>
-    <h1>Сводный отчёт по нештатным ситуациям</h1>
+
+    <h1 style="display: flex; align-items: center; justify-content: center;">
+        <style>
+            .header-logo path,
+            .header-logo rect,
+            .header-logo circle,
+            .header-logo polygon {
+                fill: #000000 !important;
+            }
+        </style>
+        <img class="header-logo" src="{{ templates_dir }}/header-logo-grayscale.svg" alt="Report Icon"
+            style=" height: 55px; vertical-align: middle; margin-right: 8px;">
+        <div style="flex: 1;">Сводный отчёт по нештатным ситуациям</div>
+        <div style="width: 60px;" />
+    </h1>
     {% for (device_id, device_name, month), group_rows in grouped_data.items() %}
     <div class="section">
         {% set month_str = month | month %}

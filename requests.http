@@ -1,4 +1,4 @@
-@baseUrl = http://127.0.0.1:1895
+@baseUrl = http://localhost:3001
 
 ###
 @authToken = {{signIn.response.body.token}}
@@ -92,4 +92,10 @@ Authorization: Bearer {{authToken}}
 ###
 # @name getUserEmergencyStatesByDates
 GET {{baseUrl}}/api/states/emergency/dates?beginDate=2026-03-10T00:00:00&endDate=2026-03-10T23:59:59
+Authorization: Bearer {{authToken}}
+
+
+###
+# @name getEmergencySummaryReport
+GET {{baseUrl}}/api/reporting/emergency-summary
 Authorization: Bearer {{authToken}}

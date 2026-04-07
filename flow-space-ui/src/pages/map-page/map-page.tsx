@@ -264,7 +264,7 @@ export const MapPage = () => {
             <PageHeader caption={'Карта объектов'} menuItems={menuItems}>
                 <MapIcon size={AppConstants.headerIconSize} />
             </PageHeader>
-            <div {...longPressBinder()} style={{ height: '100%', width: '100%', padding: 10 }}>
+            <div {...longPressBinder()} style={{ height: '100%', width: '100%', padding: 5 }}>
                 <MapContainer
                     ref={mapRef}
                     center={AppConstants.mapDefaultCenter}

@@ -18,10 +18,11 @@ router = APIRouter()
 templates_dir = Path(__file__).parent.parent / "reports"
 template_env = Environment(loader=FileSystemLoader(templates_dir))
 
-def localize_datetime(value, format='short'):
+
+def localize_datetime(value, format="short"):
     """Format datetime with locale and timezone from settings."""
     if value is None:
-        return 'N/A'
+        return "N/A"
 
     if isinstance(value, datetime):
         # Convert to report timezone
@@ -36,17 +37,22 @@ def localize_datetime(value, format='short'):
 
     return str(value)
 
-def format_month(value, locale='ru_RU'):
-    if not value:
-        return 'Unknown'
-    return format_date(value, format='LLLL yyyy', locale=locale)
 
-template_env.filters['localize_datetime'] = localize_datetime
-template_env.filters['month'] = format_month
+def format_month(value, locale="ru_RU"):
+    if not value:
+        return "Unknown"
+    return format_date(value, format="LLLL yyyy", locale=locale)
+
+
+template_env.filters["localize_datetime"] = localize_datetime
+template_env.filters["month"] = format_month
 
 
 @router.get("/emergency-summary")
-async def generate_emergency_summary_report(db: AsyncSession = Depends(get_db), token_payload: dict = Depends(verify_token),):
+async def generate_emergency_summary_report(
+    db: AsyncSession = Depends(get_db),
+    token_payload: dict = Depends(verify_token),
+):
     """Generate a PDF report for emergency state summary by month."""
     user_id = token_payload.get("userId")
 
@@ -97,10 +103,15 @@ async def generate_emergency_summary_report(db: AsyncSession = Depends(get_db), 
         grouped_data[key].append(row)
 
     # Sort groups by month, then device_id
-    sorted_groups = sorted(grouped_data.items(), key=lambda x: (x[0][2] or "", x[0][0] or 0))
+    sorted_groups = sorted(
+        grouped_data.items(), key=lambda x: (x[0][2] or "", x[0][0] or 0)
+    )
 
     template = template_env.get_template("emergency_summary_report.html")
-    html_content = template.render(grouped_data=dict(sorted_groups))
+    html_content = template.render(
+        grouped_data=dict(sorted_groups),
+        templates_dir=templates_dir.as_uri(),
+    )
 
     pdf_bytes = HTML(string=html_content).write_pdf()
 
