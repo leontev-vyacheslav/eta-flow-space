@@ -4,6 +4,8 @@ services:
     container_name: eta-flow-space
     ports:
       - "1895:1880"
+    env_file:
+      - ./flow-space/.env-flows
     volumes:
       - ./flow-space:/data
     restart: unless-stopped
