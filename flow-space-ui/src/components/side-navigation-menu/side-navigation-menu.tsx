@@ -11,7 +11,6 @@ import { quickHelpReferenceService } from '../../services/quick-help-reference-s
 import { emergencyLogService } from '../../services/emergency-log-service';
 
 import './side-navigation-menu.scss';
-import { useAppData } from '../../contexts/app-data/app-data';
 
 export function SideNavigationMenu(props: SideNavigationMenuProps) {
     const {
@@ -27,7 +26,6 @@ export function SideNavigationMenu(props: SideNavigationMenuProps) {
     const { navigationData: { currentPath } } = useNavigation();
     const wrapperRef = useRef<Element | Element[]>(null);
     const sideNavigationMenuItems = useSideNavigationMenuItems();
-    const { getEmergencySummaryAsync } = useAppData();
 
     const items: TreeViewItemModel[] = useMemo<TreeViewItemModel[]>(
         () => {
@@ -140,22 +138,6 @@ export function SideNavigationMenu(props: SideNavigationMenuProps) {
 
                             return;
                         }
-                        if (treeViewItem.command === 'emergency-summary-report') {
-
-                            const blob = await getEmergencySummaryAsync();
-                            if (!blob) {
-                                return;
-                            }
-                            const url = URL.createObjectURL(blob);
-                            const link = document.createElement('a');
-                            link.href = url;
-                            link.download = `report.pdf`;
-                            link.click();
-                            URL.revokeObjectURL(url);
-
-                            return;
-                        }
-
 
                         if (treeViewRef.current) {
                             setTimeout(() => {

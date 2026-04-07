@@ -2621,7 +2621,7 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 			<path style="fill:none;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;" d="M934.6,728.6H381.7c-5.2,0-9.4-4.2-9.4-9.4
 			v-71.3c0-5.2,4.2-9.4,9.4-9.4h552.9c5.2,0,9.4,4.2,9.4,9.4v71.3C944.1,724.4,939.8,728.6,934.6,728.6z" />
 
-			<text transform="matrix(1 0 0 1 638.8081 654.7033)" style="font-family:'MyriadPro-Regular'; font-size:12px;">Аварийные события</text>
+			<text transform="matrix(1 0 0 1 638.8081 654.7033)" style="font-family:'MyriadPro-Regular'; font-size:12px;">Нештатные ситуации</text>
 
 			<g transform="matrix(1, 0, 0, 1, -63, 0)">
 				<path data-colorizer-hint="fill" data-state="isConnected" style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;" d="M485.8,724H452c-6.6,0-12-5.4-12-12v-33.8

@@ -3690,7 +3690,7 @@
             v-71.3c0-5.2,4.2-9.4,9.4-9.4h552.9c5.2,0,9.4,4.2,9.4,9.4v71.3C944.1,724.4,939.8,728.6,934.6,728.6z" />
 
             <text transform="matrix(1 0 0 1 638.8081 654.7033)"
-                style="font-family:'MyriadPro-Regular'; font-size:12px;">Аварийные события</text>
+                style="font-family:'MyriadPro-Regular'; font-size:12px;">Нештатные ситуации</text>
 
             <g transform="matrix(1, 0, 0, 1, -63, 0)">
                 <path data-colorizer-hint="fill" data-state="isConnected"

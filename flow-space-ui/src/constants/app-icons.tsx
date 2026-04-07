@@ -111,6 +111,7 @@ export { TbWifiOff  as ConnectionOff } from "react-icons/tb";
 
 export { HiOutlineDocumentReport as ReportIcon } from 'react-icons/hi';
 export { TbBeta as BetaIcon } from 'react-icons/tb';
+export { TbSum as SummaryReportIcon } from "react-icons/tb";
 
 
 
