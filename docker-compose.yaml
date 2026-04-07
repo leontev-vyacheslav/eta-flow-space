@@ -24,9 +24,9 @@ services:
     ports:
       - "35432:5432"
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=0987654321
       - POSTGRES_DB=eta_flow_space_database
+    env_file:
+      - ./.env-database
     volumes:
       - ./flow-space-data:/var/lib/postgresql/data
     restart: unless-stopped
@@ -60,7 +60,7 @@ services:
     container_name: eta-flow-space-reporting
     restart: unless-stopped
     env_file:
-    - ./flow-space-reporting/.env
+    - ./flow-space-reporting/.env-reporting
     depends_on:
       - eta-flow-space-database
     networks:
