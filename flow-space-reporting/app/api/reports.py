@@ -51,6 +51,7 @@ async def generate_emergency_summary_report(
 ):
     """Generate a PDF report for emergency state summary by month."""
     user_id = token_payload.get("userId")
+    is_admin = token_payload.get("roleId", 2) == 1;
 
     reasons_table = (
         func.json_array_elements(EmergencyState.state["reasons"])
@@ -112,6 +113,7 @@ async def generate_emergency_summary_report(
         grouped_data=dict(sorted_groups),
         templates_dir=templates_dir.as_uri(),
         time_zone=time_zone,
+        is_admin=is_admin,
     )
 
     pdf_bytes = HTML(string=html_content).write_pdf()

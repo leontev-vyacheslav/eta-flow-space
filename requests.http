@@ -9,7 +9,7 @@ POST {{baseUrl}}/sign-in/
 content-type: application/json
 
 {
-    "login": "boiler-watcher",
+    "login": "admin-boiler-watcher",
     "password": "0987654321"
 }
 

@@ -10,7 +10,6 @@ import {
     LocationIcon,
     LocationAllIcon,
     ReportIcon,
-    BetaIcon,
     SummaryReportIcon,
 } from './app-icons';
 import type { TreeViewItemModel } from '../models/tree-view-item';
@@ -69,7 +68,7 @@ export const useSideNavigationMenuItems = () => {
                     {
                         id: '/reports/emergency-summary',
                         text: 'Нештатные ситуации',
-                        iconRender: (props: IconBaseProps) => <div style={{ position: 'relative' }}><SummaryReportIcon size={20} {...props} /> <BetaIcon size={12} {...props} style={{ position: 'absolute', top: '-5px', right: '-10px' }} /></div>,
+                        iconRender: (props: IconBaseProps) => <div style={{ position: 'relative' }}><WarningLogIcon size={20} {...props} /> <SummaryReportIcon size={16} {...props} style={{ position: 'absolute', top: '-5px', right: '-10px' }} /></div>,
                         path: '/reports/emergency-summary',
                     },
                 ]

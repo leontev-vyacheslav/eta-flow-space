@@ -87,12 +87,16 @@
     {% for (device_id, device_name, month), group_rows in grouped_data.items() %}
     <div class="section">
         {% set month_str = month | locale_format_month %}
-        {% set display_name = device_name or 'Device ' ~ device_id %}
+        {% if is_admin %}
+        {% set display_name = device_name ~ ' [' ~ device_id ~ ']' %}
+        {% else %}
+        {% set display_name = device_name  %}
+        {% endif %}
         <h2>{{ display_name }} — {{ month_str }}</h2>
         <table>
             <thead>
                 <tr>
-                    <th>ИД</th>
+                    <th>#.</th>
                     <th>Описание</th>
                     <th colspan="2">
                         <div style="width: 100%; text-align: center;">Интервал возникновений</div>
@@ -103,9 +107,16 @@
             <tbody>
                 {% for row in group_rows %}
                 <tr>
-                    <td style="width: 25px;">{{ row.reason_id }}</td>
-                    <td>{{ row.emergency_type or 'N/A' }}</td>
-                     <td style="width: 100px;">
+                    <td style="width: 25px;">
+                        {{ loop.index }}.
+                    </td>
+                    <td>
+                        {{ row.emergency_type or 'N/A' }}
+                        {% if is_admin %}
+                        [{{ row.reason_id }}]
+                        {% endif %}
+                    </td>
+                    <td style="width: 100px;">
                         {% if row.first_occurrence %}
                         {{ row.first_occurrence | locale_format_datetime(time_zone) }}
                         {% else %}
