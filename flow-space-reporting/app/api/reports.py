@@ -11,7 +11,7 @@ from weasyprint import HTML
 
 from app.config import settings
 from app.db.database import get_db
-from app.models import Device, EmergencyState, UserDeviceLink
+from app.models import Device, EmergencyState, UserDeviceLink, UserRoles
 from app.auth import verify_token
 
 router = APIRouter()
@@ -20,18 +20,18 @@ templates_dir = Path(__file__).parent.parent / "reports"
 template_env = Environment(loader=FileSystemLoader(templates_dir))
 
 
-def locale_format_datetime(value, time_zone: str = "UTC", format="short"):
+def locale_format_datetime(value, format="short"):
     """Format datetime with locale and timezone from settings."""
     if value is None:
         return "N/A"
 
     if isinstance(value, datetime):
-        return format_datetime(value, format, locale=settings.REPORT_LOCALE)
+        return format_datetime(value, format, locale=settings.DEFAULT_REPORT_LOCALE)
 
     return str(value)
 
 
-def locale_format_month(value, locale="ru_RU"):
+def locale_format_month(value, locale=settings.DEFAULT_REPORT_LOCALE):
     if not value:
         return "N/A"
 
@@ -44,13 +44,13 @@ template_env.filters["locale_format_month"] = locale_format_month
 
 @router.get("/emergency-summary")
 async def generate_emergency_summary_report(
-    time_zone: str = Query(alias="timezone", default="UTC"),
+    time_zone: str = Query(alias="timezone", default=settings.DEFAULT_REPORT_TIMEZONE),
     db: AsyncSession = Depends(get_db),
     token_payload: dict = Depends(verify_token),
 ):
     """Generate a PDF report for emergency state summary by month."""
     user_id = token_payload.get("userId")
-    is_admin = token_payload.get("roleId", 2) == 1;
+    is_admin = token_payload.get("roleId", UserRoles.USER.value) == UserRoles.ADMIN.value;
 
     reasons_table = (
         func.json_array_elements(EmergencyState.state["reasons"])

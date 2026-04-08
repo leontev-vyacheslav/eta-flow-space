@@ -118,14 +118,14 @@
                     </td>
                     <td style="width: 100px;">
                         {% if row.first_occurrence %}
-                        {{ row.first_occurrence | locale_format_datetime(time_zone) }}
+                        {{ row.first_occurrence | locale_format_datetime }}
                         {% else %}
                         N/A
                         {% endif %}
                     </td>
                     <td style="width: 100px;">
                         {% if row.last_occurrence %}
-                        {{ row.last_occurrence | locale_format_datetime(time_zone) }}
+                        {{ row.last_occurrence | locale_format_datetime }}
                         {% else %}
                         N/A
                         {% endif %}

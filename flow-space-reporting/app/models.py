@@ -1,4 +1,5 @@
 from datetime import datetime
+from enum import IntEnum
 from typing import Optional
 
 from sqlalchemy import (
@@ -59,8 +60,12 @@ class Device(TimestampMixin, Base):
     description: Mapped[Optional[str]] = mapped_column(String(32))
     flow_id: Mapped[Optional[int]] = mapped_column(ForeignKey("flow.id"), name="flowId")
     settings: Mapped[Optional[dict]] = mapped_column(JSON)
-    update_state_interval: Mapped[Optional[int]] = mapped_column(Integer, name="updateStateInterval")
-    last_state_update: Mapped[Optional[datetime]] = mapped_column(DateTime, name="lastStateUpdate")
+    update_state_interval: Mapped[Optional[int]] = mapped_column(
+        Integer, name="updateStateInterval"
+    )
+    last_state_update: Mapped[Optional[datetime]] = mapped_column(
+        DateTime, name="lastStateUpdate"
+    )
     object_location_id: Mapped[Optional[int]] = mapped_column(
         ForeignKey("object_location.id"), name="objectLocationId"
     )
@@ -83,7 +88,9 @@ class DeviceState(TimestampMixin, Base):
     __tablename__ = "device_state"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    device_id: Mapped[Optional[int]] = mapped_column(ForeignKey("device.id"), name="deviceId")
+    device_id: Mapped[Optional[int]] = mapped_column(
+        ForeignKey("device.id"), name="deviceId"
+    )
     state: Mapped[Optional[dict]] = mapped_column(JSON)
 
     device: Mapped[Optional["Device"]] = relationship(back_populates="states")
@@ -93,10 +100,16 @@ class Emergency(TimestampMixin, Base):
     __tablename__ = "emergency"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    device_id: Mapped[Optional[int]] = mapped_column(ForeignKey("device.id"), name="deviceId")
+    device_id: Mapped[Optional[int]] = mapped_column(
+        ForeignKey("device.id"), name="deviceId"
+    )
     reasons: Mapped[Optional[dict]] = mapped_column(JSON)
-    update_state_interval: Mapped[Optional[int]] = mapped_column(Integer, name="updateStateInterval")
-    last_state_update: Mapped[Optional[datetime]] = mapped_column(DateTime, name="lastStateUpdate")
+    update_state_interval: Mapped[Optional[int]] = mapped_column(
+        Integer, name="updateStateInterval"
+    )
+    last_state_update: Mapped[Optional[datetime]] = mapped_column(
+        DateTime, name="lastStateUpdate"
+    )
 
     device: Mapped[Optional["Device"]] = relationship(back_populates="emergencies")
 
@@ -105,7 +118,9 @@ class EmergencyState(TimestampMixin, Base):
     __tablename__ = "emergency_state"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    device_id: Mapped[Optional[int]] = mapped_column(ForeignKey("device.id"), name="deviceId")
+    device_id: Mapped[Optional[int]] = mapped_column(
+        ForeignKey("device.id"), name="deviceId"
+    )
     state: Mapped[Optional[dict]] = mapped_column(JSON)
 
     device: Mapped[Optional["Device"]] = relationship(back_populates="emergency_states")
@@ -130,11 +145,15 @@ class UserDeviceLink(TimestampMixin, Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     user_id: Mapped[Optional[int]] = mapped_column(ForeignKey("user.id"), name="userId")
-    device_id: Mapped[Optional[int]] = mapped_column(ForeignKey("device.id"), name="deviceId")
+    device_id: Mapped[Optional[int]] = mapped_column(
+        ForeignKey("device.id"), name="deviceId"
+    )
 
     user: Mapped[Optional["User"]] = relationship(back_populates="user_device_links")
     device: Mapped[Optional["Device"]] = relationship(
         back_populates="user_device_links"
     )
 
-# need to make enum with user's roles 1 - Admin, 2 - User
+class UserRoles(IntEnum):
+    ADMIN = 1
+    USER = 2
