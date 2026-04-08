@@ -111,7 +111,6 @@ async def generate_emergency_summary_report(
     html_content = template.render(
         grouped_data=dict(sorted_groups),
         templates_dir=templates_dir.as_uri(),
-        time_zone=time_zone,
         is_admin=is_admin,
     )
 
