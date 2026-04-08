@@ -136,3 +136,5 @@ class UserDeviceLink(TimestampMixin, Base):
     device: Mapped[Optional["Device"]] = relationship(
         back_populates="user_device_links"
     )
+
+# need to make enum with user's roles 1 - Admin, 2 - User

@@ -26,8 +26,6 @@ def locale_format_datetime(value, time_zone: str = "UTC", format="short"):
         return "N/A"
 
     if isinstance(value, datetime):
-
-        # Format with locale
         return format_datetime(value, format, locale=settings.REPORT_LOCALE)
 
     return str(value)
@@ -35,7 +33,8 @@ def locale_format_datetime(value, time_zone: str = "UTC", format="short"):
 
 def locale_format_month(value, locale="ru_RU"):
     if not value:
-        return "Unknown"
+        return "N/A"
+
     return format_date(value, format="LLLL yyyy", locale=locale)
 
 
