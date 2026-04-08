@@ -141,7 +141,7 @@ export const useFlowData = () => {
     }, [authHttpRequest]);
 
     const getEmergencySummaryReportAsync = useCallback(async () => {
-        const timezone = 'UTC'; // Intl.DateTimeFormat().resolvedOptions().timeZone;
+        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
         const response = await authHttpRequest({
             url: `${routes.host}${routes.emergencySummaryReport}`,

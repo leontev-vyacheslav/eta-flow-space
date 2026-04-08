@@ -26,12 +26,6 @@ def locale_format_datetime(value, time_zone: str = "UTC", format="short"):
         return "N/A"
 
     if isinstance(value, datetime):
-        # Convert to report timezone
-        if value.tzinfo is None:
-            value = pytz.utc.localize(value)
-
-        target_tz = pytz.timezone(time_zone)
-        value = value.astimezone(target_tz)
 
         # Format with locale
         return format_datetime(value, format, locale=settings.REPORT_LOCALE)
@@ -64,16 +58,18 @@ async def generate_emergency_summary_report(
         .lateral("reason")
     )
 
+    created_at_tz = func.timezone(time_zone, EmergencyState.created_at)
+
     select_query = (
         select(
             EmergencyState.device_id,
             Device.name.label("device_name"),
-            func.date_trunc("month", EmergencyState.created_at).label("month"),
+            func.date_trunc("month", created_at_tz).label("month"),
             literal_column("reason->>'description'").label("emergency_type"),
             cast(literal_column("(reason->>'id')"), Integer).label("reason_id"),
             func.count().label("occurrences"),
-            func.min(EmergencyState.created_at).label("first_occurrence"),
-            func.max(EmergencyState.created_at).label("last_occurrence"),
+            func.min(created_at_tz).label("first_occurrence"),
+            func.max(created_at_tz).label("last_occurrence"),
         )
         .select_from(EmergencyState)
         .join(Device, EmergencyState.device_id == Device.id)
@@ -94,7 +90,6 @@ async def generate_emergency_summary_report(
             text("occurrences DESC"),
         )
     )
-    # print("Executing SQL query for emergency summary report...", select_query)
 
     result = await db.execute(select_query)
     rows = result.fetchall()
