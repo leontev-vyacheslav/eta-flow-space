@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Query
 from fastapi.responses import Response
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, text, func, cast, Integer, true, column, literal_column
@@ -7,10 +7,11 @@ from pathlib import Path
 from datetime import datetime
 from babel.dates import format_date, format_datetime
 import pytz
+from weasyprint import HTML
+
 from app.config import settings
 from app.db.database import get_db
 from app.models import Device, EmergencyState, UserDeviceLink
-from weasyprint import HTML
 from app.auth import verify_token
 
 router = APIRouter()
@@ -19,7 +20,7 @@ templates_dir = Path(__file__).parent.parent / "reports"
 template_env = Environment(loader=FileSystemLoader(templates_dir))
 
 
-def localize_datetime(value, format="short"):
+def locale_format_datetime(value, time_zone: str = "UTC", format="short"):
     """Format datetime with locale and timezone from settings."""
     if value is None:
         return "N/A"
@@ -29,7 +30,7 @@ def localize_datetime(value, format="short"):
         if value.tzinfo is None:
             value = pytz.utc.localize(value)
 
-        target_tz = pytz.timezone(settings.REPORT_TIMEZONE)
+        target_tz = pytz.timezone(time_zone)
         value = value.astimezone(target_tz)
 
         # Format with locale
@@ -38,18 +39,19 @@ def localize_datetime(value, format="short"):
     return str(value)
 
 
-def format_month(value, locale="ru_RU"):
+def locale_format_month(value, locale="ru_RU"):
     if not value:
         return "Unknown"
     return format_date(value, format="LLLL yyyy", locale=locale)
 
 
-template_env.filters["localize_datetime"] = localize_datetime
-template_env.filters["month"] = format_month
+template_env.filters["locale_format_datetime"] = locale_format_datetime
+template_env.filters["locale_format_month"] = locale_format_month
 
 
 @router.get("/emergency-summary")
 async def generate_emergency_summary_report(
+    time_zone: str = Query(alias="timezone", default="UTC"),
     db: AsyncSession = Depends(get_db),
     token_payload: dict = Depends(verify_token),
 ):
@@ -70,6 +72,7 @@ async def generate_emergency_summary_report(
             literal_column("reason->>'description'").label("emergency_type"),
             cast(literal_column("(reason->>'id')"), Integer).label("reason_id"),
             func.count().label("occurrences"),
+            func.min(EmergencyState.created_at).label("first_occurrence"),
             func.max(EmergencyState.created_at).label("last_occurrence"),
         )
         .select_from(EmergencyState)
@@ -87,9 +90,11 @@ async def generate_emergency_summary_report(
         .order_by(
             text("month"),
             EmergencyState.device_id,
+            text("reason_id"),
             text("occurrences DESC"),
         )
     )
+    # print("Executing SQL query for emergency summary report...", select_query)
 
     result = await db.execute(select_query)
     rows = result.fetchall()
@@ -111,6 +116,7 @@ async def generate_emergency_summary_report(
     html_content = template.render(
         grouped_data=dict(sorted_groups),
         templates_dir=templates_dir.as_uri(),
+        time_zone=time_zone,
     )
 
     pdf_bytes = HTML(string=html_content).write_pdf()

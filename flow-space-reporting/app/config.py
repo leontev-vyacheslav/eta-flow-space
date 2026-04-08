@@ -10,8 +10,6 @@ class Settings(BaseSettings):
     HOST: str = "localhost"
     PORT: int = 8000
 
-    # Timezone for report localization
-    REPORT_TIMEZONE: str = "Europe/Moscow"
     REPORT_LOCALE: str = "ru_RU"
 
     class Config:

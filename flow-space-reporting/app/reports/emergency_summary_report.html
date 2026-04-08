@@ -83,7 +83,7 @@
     </h1>
     {% for (device_id, device_name, month), group_rows in grouped_data.items() %}
     <div class="section">
-        {% set month_str = month | month %}
+        {% set month_str = month | locale_format_month %}
         {% set display_name = device_name or 'Device ' ~ device_id %}
         <h2>{{ display_name }} — {{ month_str }}</h2>
         <table>
@@ -91,10 +91,10 @@
                 <tr>
                     <th>ИД</th>
                     <th>Описание</th>
-                    <th>Возникновений</th>
-                    <th>
-                        <div style="width: 0;">Последнее возникновение</div>
+                    <th colspan="2">
+                        <div style="width: 100%; text-align: center;">Интервал возникновений</div>
                     </th>
+                    <th>Всего</th>
                 </tr>
             </thead>
             <tbody>
@@ -102,14 +102,21 @@
                 <tr>
                     <td style="width: 30px;">{{ row.reason_id }}</td>
                     <td>{{ row.emergency_type or 'N/A' }}</td>
-                    <td style="width: 75px;">{{ row.occurrences }}</td>
-                    <td style="width: 125px;">
-                        {% if row.last_occurrence %}
-                        {{ row.last_occurrence | localize_datetime }}
+                     <td style="width: 100px;">
+                        {% if row.first_occurrence %}
+                        {{ row.first_occurrence | locale_format_datetime(time_zone) }}
                         {% else %}
                         N/A
                         {% endif %}
                     </td>
+                    <td style="width: 100px;">
+                        {% if row.last_occurrence %}
+                        {{ row.last_occurrence | locale_format_datetime(time_zone) }}
+                        {% else %}
+                        N/A
+                        {% endif %}
+                    </td>
+                    <td style="width: 55px;">{{ row.occurrences }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
