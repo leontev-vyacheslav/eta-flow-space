@@ -1,10 +1,10 @@
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 from fastapi.responses import Response
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, text, func, cast, Integer, true, column, literal_column
 from jinja2 import Environment, FileSystemLoader
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timezone
 from babel.dates import format_date, format_datetime
 import pytz
 from weasyprint import HTML
@@ -18,6 +18,8 @@ router = APIRouter()
 
 templates_dir = Path(__file__).parent.parent / "reports"
 template_env = Environment(loader=FileSystemLoader(templates_dir))
+
+REPORT_FILENAME = "emergency_summary"
 
 
 def locale_format_datetime(value, format="short"):
@@ -49,8 +51,17 @@ async def generate_emergency_summary_report(
     token_payload: dict = Depends(verify_token),
 ):
     """Generate a PDF report for emergency state summary by month."""
+
+    if time_zone not in pytz.all_timezones:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Invalid timezone: {time_zone}",
+        )
+
     user_id = token_payload.get("userId")
-    is_admin = token_payload.get("roleId", UserRoles.USER.value) == UserRoles.ADMIN.value;
+    is_admin = (
+        token_payload.get("roleId", UserRoles.USER.value) == UserRoles.ADMIN.value
+    )
 
     reasons_table = (
         func.json_array_elements(EmergencyState.state["reasons"])
@@ -91,8 +102,20 @@ async def generate_emergency_summary_report(
         )
     )
 
-    result = await db.execute(select_query)
-    rows = result.fetchall()
+    try:
+        result = await db.execute(select_query)
+        rows = result.fetchall()
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Database error: {str(e)}",
+        )
+
+    if not rows:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="No emergency data found for this user",
+        )
 
     # Group data by device_id, device_name, and month
     grouped_data = {}
@@ -103,23 +126,23 @@ async def generate_emergency_summary_report(
         grouped_data[key].append(row)
 
     # Sort groups by month, then device_id
-    sorted_groups = sorted(
-        grouped_data.items(), key=lambda x: (x[0][2] or "", x[0][0] or 0)
+    report_data = sorted(
+        grouped_data.items(), key=lambda x: (x[0][2] or datetime.min, x[0][0] or 0)
     )
 
-    template = template_env.get_template("emergency_summary_report.html")
+    template = template_env.get_template(f"{REPORT_FILENAME}_report.html")
     html_content = template.render(
-        grouped_data=dict(sorted_groups),
+        data=dict(report_data),
         templates_dir=templates_dir.as_uri(),
         is_admin=is_admin,
     )
 
     pdf_bytes = HTML(string=html_content).write_pdf()
 
+    filename = f"{REPORT_FILENAME}_{datetime.now(timezone.utc).strftime('%Y%m%d')}.pdf"
+
     return Response(
         content=pdf_bytes,
         media_type="application/pdf",
-        headers={
-            "Content-Disposition": "attachment; filename=emergency_summary_report.pdf"
-        },
+        headers={"Content-Disposition": f'attachment; filename="{filename}"'},
     )
