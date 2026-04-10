@@ -14,9 +14,7 @@ class EmergencyRepository:
     def __init__(self, session: Annotated[AsyncSession, Depends(get_db)]):
         self._session = session
 
-    async def get_emergency_summary_by_month(
-        self, user_id: int, time_zone: str
-    ) -> list[EmergencySummaryReportRow]:
+    async def get_emergency_summary_by_month(self, user_id: int, time_zone: str) -> list[EmergencySummaryReportRow]:
         reasons_table = (
             func.json_array_elements(EmergencyState.state["reasons"])
             .table_valued(column("reason"), name="reason")
