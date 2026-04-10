@@ -4,6 +4,8 @@ services:
     container_name: eta-flow-space
     ports:
       - "1895:1880"
+    env_file:
+      - ./flow-space/.env-flows
     volumes:
       - ./flow-space:/data
     restart: unless-stopped
@@ -24,9 +26,9 @@ services:
     ports:
       - "35432:5432"
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=0987654321
       - POSTGRES_DB=eta_flow_space_database
+    env_file:
+      - ./.env-database
     volumes:
       - ./flow-space-data:/var/lib/postgresql/data
     restart: unless-stopped
@@ -40,6 +42,7 @@ services:
     privileged: true
     volumes:
       - ./flow-space-backups:/backups
+    restart: unless-stopped
     networks:
       - eta-flow-space-network
 
@@ -48,10 +51,35 @@ services:
       context: ./flow-space-ui/
       dockerfile: Dockerfile.ui
     container_name: eta-flow-space-ui
+    restart: unless-stopped
+    networks:
+      - eta-flow-space-network
+
+  eta-flow-space-reporting:
+    build:
+      context: ./flow-space-reporting/
+      dockerfile: Dockerfile
+    container_name: eta-flow-space-reporting
+    restart: unless-stopped
+    env_file:
+    - ./flow-space-reporting/.env-reporting
+    depends_on:
+      - eta-flow-space-database
+    networks:
+      - eta-flow-space-network
+
+  eta-flow-space-gateway:
+    image: nginx:alpine
+    container_name: eta-flow-space-gateway
     ports:
       - "3000:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - eta-flow-space
+      - eta-flow-space-ui
+      - eta-flow-space-reporting
     restart: unless-stopped
-
     networks:
       - eta-flow-space-network
 

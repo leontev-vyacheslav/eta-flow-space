@@ -1,5 +1,5 @@
 import { withNavigationWatcher } from '../contexts/navigation';
-import {  AboutPage, SignOutPage, DashboardPage, HomePage, MapPage} from '../pages';
+import {  AboutPage, SignOutPage, DashboardPage, HomePage, MapPage, ReportPage} from '../pages';
 
 const routes = [
     {
@@ -19,9 +19,18 @@ const routes = [
         component: DashboardPage,
     },
     {
+        path: '/map/:flowCode/device/:deviceId',
+        component: MapPage,
+    },
+    {
         path: '/map',
         component: MapPage,
-    }
+    },
+    {
+        path: '/reports/:reportCode',
+        component: ReportPage,
+    },
+
 ];
 
 export default routes.map((route) => {

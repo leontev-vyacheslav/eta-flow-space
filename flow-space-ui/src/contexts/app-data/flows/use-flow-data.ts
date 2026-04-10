@@ -29,6 +29,7 @@ export type AppDataContextFlowEndpointsModel = {
     getDeviceStatesByDatesAsync: GetDeviceStatesByDatesAsyncFunc;
     getEmergencyStatesAsync: GetEmergencyStateAsyncFunc;
     getEmergencyStatesByDatesAsync: GetEmergencyStatesByDatesAsyncFunc;
+    getEmergencySummaryReportAsync: () => Promise<Blob | undefined>;
 };
 
 export const useFlowData = () => {
@@ -139,6 +140,23 @@ export const useFlowData = () => {
         }
     }, [authHttpRequest]);
 
+    const getEmergencySummaryReportAsync = useCallback(async () => {
+        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+        const response = await authHttpRequest({
+            url: `${routes.host}${routes.emergencySummaryReport}`,
+            params: { timezone: timezone },
+            method: HttpConstants.Methods.Get as Method,
+            responseType: 'blob',
+        });
+
+        if (response && response.status === HttpConstants.StatusCodes.Ok) {
+            return new Blob([response.data], { type: 'application/pdf' });
+        }
+
+    }, [authHttpRequest]);
+
+
     return {
         getFlowListAsync,
         getDeviceListAsync,
@@ -149,6 +167,7 @@ export const useFlowData = () => {
         getDeviceStatesByDatesAsync,
         getEmergencyStatesAsync,
         getEmergencyStatesByDatesAsync,
+        getEmergencySummaryReportAsync,
     };
 }
 

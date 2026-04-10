@@ -1,5 +1,5 @@
 export default {
-    host: process.env.NODE_ENV !== 'production' ? 'http://localhost:1895' : `http://${window.location.hostname}:1895`,
+    host: process.env.NODE_ENV !== 'production' ? 'http://localhost:3001' : `http://${window.location.hostname}:3000`,
 
     accountSignIn: '/sign-in',
     accountSignOut: '/sign-out',
@@ -13,4 +13,5 @@ export default {
     dataschema: '/api/data-schemas/device',
     mnemoschemas: '/api/mnemoschemas/device',
     emergencyStates: '/api/states/emergency',
+    emergencySummaryReport: '/api/reporting/emergency-summary',
 };

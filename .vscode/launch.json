@@ -1,0 +1,26 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "flow-space-reporting",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/flow-space-reporting/.venv/bin/uvicorn",
+      "args": [
+        "main:app",
+        "--reload",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "8000"
+      ],
+      "cwd": "${workspaceFolder}/flow-space-reporting",
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}/flow-space-reporting"
+      },
+      "justMyCode": false,
+      "console": "integratedTerminal"
+    }
+  ],
+  
+}

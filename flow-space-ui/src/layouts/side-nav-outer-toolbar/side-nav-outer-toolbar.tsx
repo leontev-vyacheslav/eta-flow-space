@@ -12,9 +12,9 @@ import type { ClickEvent } from 'devextreme/ui/button';
 import './side-nav-outer-toolbar.scss';
 
 export function SideNavOuterToolbar({ title, children }: SideNavProps) {
-    const ROUTES_WITHOUT_SCROLL = ['/map'];
+    const ROUTES_WITHOUT_SCROLL = ['/map', '/reports/'];
     const location = useLocation();
-    const disableScroll = ROUTES_WITHOUT_SCROLL.includes(location.pathname);
+    const disableScroll = ROUTES_WITHOUT_SCROLL.some(route => location.pathname.startsWith(route));
 
     const scrollViewRef = useRef<ScrollView>(null);
     const history = useNavigate();

@@ -1,6 +1,6 @@
 const { differenceInMinutes } = require('date-fns');
 const { Op, literal } = require('sequelize');
-const { DeviceDataModel, EmergencyDataModel, DeviceStateDataModel, EmergencyStateDataModel, sequelize } = require('../orm/models');
+const { DeviceDataModel, EmergencyDataModel, DeviceStateDataModel, EmergencyStateDataModel, sequelize, UserDeviceLinkDataModel, UserDataModel } = require('../orm/models');
 
 async function storeEmergencyStates(msg, global) {
     const devices = await DeviceDataModel.findAll({
@@ -81,7 +81,6 @@ async function storeEmergencyStates(msg, global) {
             }
         }
     }
-
     if (emergencyStates.length > 0) {
         try {
             await sequelize.transaction(async t => {
@@ -98,8 +97,59 @@ async function storeEmergencyStates(msg, global) {
                 await EmergencyStateDataModel.bulkCreate(emergencyStates, { transaction: t });
             });
         } catch (error) {
-            console.log(`The devices emergency states update failed due to the error: ${error}`);
+            console.error(`The devices emergency states update failed due to the error: ${error}`);
         }
+/*
+        const targetUsers = await UserDataModel.findAll({
+            attributes: ['id', 'name', 'settings'],
+            include: [{
+                model: UserDeviceLinkDataModel,
+                as: 'userDeviceLinks',
+                attributes: ['deviceId'],
+                required: true,
+                where: {
+                    deviceId: { [Op.in]: emergencyStates.map(s => s.deviceId) }
+                }
+            }],
+            where: {
+                [Op.and]: [
+                    { settings: { [Op.not]: null } },
+                    literal(`settings #>> '{notifications,ntfy,topicUid}' IS NOT NULL`),
+                    literal(`settings #>> '{notifications,ntfy,topicUid}' != ''`)
+                ]
+            }
+        });
+        console.log(targetUsers);
+
+        const notificationPromises = [];
+
+        for (const user of targetUsers) {
+            const topicUid = user.settings.notifications.ntfy.topicUid;
+            const topic = `${user.name}-${topicUid}`;
+            const userEmergencyStates = user.userDeviceLinks
+                .map(link => emergencyStates.find(s => s.deviceId === link.deviceId))
+                .filter(Boolean);
+
+            for (const userEmergencyState of userEmergencyStates) {
+                const message = `Аварийное состояние устройства [${userEmergencyState.deviceId}]:\n${userEmergencyState.state.reasons.map(r => r.description).join('\n')}.`;
+                const notificationPromise = fetch(`https://ntfy.sh/${topic}`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${process.env.NTFY_TOKEN}`,
+                        'Title': `⚠️ ETA Flow Space`,
+                        'Priority': 'high',
+                        'Tags': 'warning,rotating_light',
+                        'Content-Type': 'text/plain',
+                    },
+                    body: message
+                });
+
+                notificationPromises.push(notificationPromise);
+            }
+        }
+
+        const results = await Promise.allSettled(notificationPromises);
+*/
     }
 
     return msg;

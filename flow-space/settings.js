@@ -20,7 +20,6 @@
  *
  **/
 process.env.NODE_ENV = 'production';
-process.env.JWT_SECRET = '5840ff8778d33ae4eb010e0c83e1fb25d7ca0ded9119293b4911964744c8b2fa635a66f7c35fe4c1b775f8512d6c9519b08b78863b1d9a0f59861f791b498271';
 
 const { authorize } = require('./src/middleware/authorize');
 

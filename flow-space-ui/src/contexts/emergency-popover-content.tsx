@@ -27,8 +27,12 @@ export const EmergencyPopoverContent = ({ emergencyState }: { emergencyState: Em
                     : <EmergencyWarning data-emergency-mute-icon size={12} style={{ fill: AppConstants.colors.emergencyWarningColor, cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px' }} />
 
             );
-            emergencyIconContainerElement.querySelector('[data-emergency-mute-icon]')!.remove();
-            emergencyIconContainerElement.append(new DOMParser().parseFromString(emergencyMutedIcon, 'image/svg+xml').documentElement);
+            
+            const iconElement = emergencyIconContainerElement.querySelector('[data-emergency-mute-icon]');
+            if (iconElement) {
+                iconElement!.remove();
+                emergencyIconContainerElement.append(new DOMParser().parseFromString(emergencyMutedIcon, 'image/svg+xml').documentElement);
+            }
         }
 
     }, [emergencyState]);
@@ -49,7 +53,7 @@ export const EmergencyPopoverContent = ({ emergencyState }: { emergencyState: Em
                             }
                         },
                         {
-                            text:  'На 1 час',
+                            text: 'На 1 час',
                             textFontWeight: emergencyMuteManager.getReason(deviceId, emergencyReason.id)?.duration === emergencyMuteManager.oneHour ? 'bold' : undefined,
                             icon: () => <EmergencySoundMute size={18} />,
                             onClick: () => {

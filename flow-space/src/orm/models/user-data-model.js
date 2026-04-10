@@ -12,7 +12,8 @@ module.exports = (sequelize, DataTypes) => {
   UserDataModel.init({
     name: DataTypes.STRING(32),
     password: DataTypes.STRING(128),
-    roleId: DataTypes.INTEGER
+    roleId: DataTypes.INTEGER,
+    settings: DataTypes.JSON,
   }, {
     sequelize,
     modelName: 'UserDataModel',

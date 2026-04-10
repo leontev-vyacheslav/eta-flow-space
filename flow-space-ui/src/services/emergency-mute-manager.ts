@@ -89,8 +89,6 @@ class EmergencyMuteManager {
     }
 
     private purgeExpiredMutes(emergencyStates: EmergencyModel[]): void {
-        console.log(emergencyStates);
-
         const now = Date.now();
         const devices = this.getDevices()
             .map(d => ({ ...d, muteReasonItems: d.muteReasonItems.filter(m => m.time > now && emergencyStates.find(e => e.deviceId === d.id)?.reasons.map(r => r.id).includes(m.id)) }))

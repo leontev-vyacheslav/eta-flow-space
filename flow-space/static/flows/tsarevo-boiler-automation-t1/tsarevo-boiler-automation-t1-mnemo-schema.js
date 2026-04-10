@@ -1,5 +1,7 @@
 
 function setLevelSupplyWaterTank(mnemoschemaElement, deviceState) {
+    const baseBottom = 555;
+
     const supplyWaterLevelElement = mnemoschemaElement.querySelector('[data-section="supplyWaterLevel"] rect');
     if (!supplyWaterLevelElement) {
         return;
@@ -43,6 +45,7 @@ function setLevelSupplyWaterTank(mnemoschemaElement, deviceState) {
     for (const level of levels) {
         if (deviceState.state[level.state]) {
             supplyWaterLevelElement.setAttribute('height', level.height);
+            supplyWaterLevelElement.setAttribute('y', baseBottom - level.height);
             return;
         }
     }
