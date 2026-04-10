@@ -10,7 +10,7 @@ from app.config import settings
 from app.repositories.emergency_repository import EmergencySummaryReportRow
 
 
-templates_dir = Path(__file__).parent.parent / "reports"
+templates_dir = Path(__file__).parent.parent / "templates/reports"
 template_env = Environment(loader=FileSystemLoader(templates_dir))
 
 
@@ -45,21 +45,13 @@ class EmergencySummaryReportService:
                 grouped[key] = []
             grouped[key].append(row)
 
-        return sorted(
-            grouped.items(), key=lambda x: (x[0][2] or datetime.min, x[0][0] or 0)
-        )
+        return sorted(grouped.items(), key=lambda x: (x[0][2] or datetime.min, x[0][0] or 0))
 
-    def render(
-        self,
-        rows: list[EmergencySummaryReportRow],
-        is_admin: bool,
-    ) -> tuple[bytes | None, str]:
+    def render(self, rows: list[EmergencySummaryReportRow], is_admin: bool) -> tuple[bytes | None, str]:
 
         grouped_data = self.__group_data(rows)
 
-        html_content = template_env.get_template(
-            "emergency_summary_report.html"
-        ).render(
+        html_content = template_env.get_template("emergency_summary_report.html").render(
             data=dict(grouped_data),
             templates_dir=templates_dir.as_uri(),
             is_admin=is_admin,
@@ -67,8 +59,6 @@ class EmergencySummaryReportService:
 
         pdf_bytes = HTML(string=html_content).write_pdf()
 
-        filename = (
-            f"emergency_summary_{datetime.now(timezone.utc).strftime('%Y%m%d')}.pdf"
-        )
+        filename = f"emergency_summary_{datetime.now(timezone.utc).strftime('%Y%m%d')}.pdf"
 
         return pdf_bytes, filename

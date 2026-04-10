@@ -27,9 +27,7 @@ async def get_emergency_summary_report(
     user_id = token_payload.get("userId")
     assert isinstance(user_id, int), "userId in token payload must be an integer"
 
-    is_admin = (
-        token_payload.get("roleId", UserRoles.USER.value) == UserRoles.ADMIN.value
-    )
+    is_admin = token_payload.get("roleId", UserRoles.USER.value) == UserRoles.ADMIN.value
 
     try:
         rows = await repository.get_emergency_summary_by_month(user_id, time_zone)

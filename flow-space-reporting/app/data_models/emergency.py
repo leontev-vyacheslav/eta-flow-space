@@ -13,14 +13,14 @@ class Emergency(Base, TimestampMixin):
     __tablename__ = "emergency"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    device_id: Mapped[Optional[int]] = mapped_column(
+    device_id: Mapped[int | None] = mapped_column(
         ForeignKey("device.id"), name="deviceId"
     )
-    reasons: Mapped[Optional[dict]] = mapped_column(JSON)
-    update_state_interval: Mapped[Optional[int]] = mapped_column(
+    reasons: Mapped[dict | None] = mapped_column(JSON)
+    update_state_interval: Mapped[int | None] = mapped_column(
         Integer, name="updateStateInterval"
     )
-    last_state_update: Mapped[Optional[datetime]] = mapped_column(
+    last_state_update: Mapped[datetime | None] = mapped_column(
         DateTime, name="lastStateUpdate"
     )
 

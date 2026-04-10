@@ -13,8 +13,8 @@ class UserDeviceLink(Base, TimestampMixin):
     __tablename__ = "user_device_link"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    user_id: Mapped[Optional[int]] = mapped_column(ForeignKey("user.id"), name="userId")
-    device_id: Mapped[Optional[int]] = mapped_column(
+    user_id: Mapped[int | None] = mapped_column(ForeignKey("user.id"), name="userId")
+    device_id: Mapped[int | None] = mapped_column(
         ForeignKey("device.id"), name="deviceId"
     )
 

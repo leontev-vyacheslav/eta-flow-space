@@ -18,18 +18,18 @@ class Device(Base, TimestampMixin):
     __tablename__ = "device"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    code: Mapped[Optional[str]] = mapped_column(String(32))
-    name: Mapped[Optional[str]] = mapped_column(String(32))
-    description: Mapped[Optional[str]] = mapped_column(String(32))
-    flow_id: Mapped[Optional[int]] = mapped_column(ForeignKey("flow.id"), name="flowId")
-    settings: Mapped[Optional[dict]] = mapped_column(JSON)
-    update_state_interval: Mapped[Optional[int]] = mapped_column(
+    code: Mapped[str | None] = mapped_column(String(32))
+    name: Mapped[str | None] = mapped_column(String(32))
+    description: Mapped[str | None] = mapped_column(String(32))
+    flow_id: Mapped[int | None] = mapped_column(ForeignKey("flow.id"), name="flowId")
+    settings: Mapped[dict | None] = mapped_column(JSON)
+    update_state_interval: Mapped[int | None] = mapped_column(
         Integer, name="updateStateInterval"
     )
-    last_state_update: Mapped[Optional[datetime]] = mapped_column(
+    last_state_update: Mapped[datetime | None] = mapped_column(
         DateTime, name="lastStateUpdate"
     )
-    object_location_id: Mapped[Optional[int]] = mapped_column(
+    object_location_id: Mapped[int | None] = mapped_column(
         ForeignKey("object_location.id"), name="objectLocationId"
     )
 
