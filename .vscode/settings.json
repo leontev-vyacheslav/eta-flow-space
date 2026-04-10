@@ -7,6 +7,9 @@
         "**/Thumbs.db": true,
         "**/node_modules": true,
         "**/__pycache__": true,
+        "**/dist": true,
+        "**/build": true,
+        "**/coverage": true,
     },
     "svg.preview.background": "transparent",
     "[python]": {
@@ -16,5 +19,5 @@
     "black-formatter.args": [
         "--line-length",
         "160",
-    ]
+    ],
 }
