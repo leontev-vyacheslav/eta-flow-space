@@ -17,6 +17,7 @@ export interface JwtConfig {
 export interface AppConfig {
     nodeEnv: string;
     port: number;
+    staticPath: string;
 }
 
 export interface Config {

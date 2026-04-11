@@ -18,5 +18,6 @@ export const configuration = (): Config => ({
     app: {
         nodeEnv: process.env.NODE_ENV || 'development',
         port: parseInt(process.env.PORT || '3002', 10),
+        staticPath: process.env.STATIC_PATH || '',
     },
 });

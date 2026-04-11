@@ -42,3 +42,15 @@ Authorization: Bearer {{ authToken }}
 # @name healthCheck
 GET {{baseUrl}}/health-check
 Authorization: Bearer {{ authToken }}
+
+
+###
+# @name getDeviceMnemoschema
+GET {{baseUrl}}/api/devices/4/mnemoschema
+Authorization: Bearer {{ authToken }}
+
+###
+# @name getDeviceSchema
+GET {{baseUrl}}/api/devices/6/data-schema
+Authorization: Bearer {{ authToken }}
+

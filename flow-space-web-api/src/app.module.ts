@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 import { configuration } from './config/configuration';
 import { AppController } from './app.controller';
 import { DatabaseModule } from './database/database.module';
@@ -15,6 +17,10 @@ import { DeviceModule } from './device/device.module';
         ConfigModule.forRoot({
             isGlobal: true,
             load: [configuration],
+        }),
+        ServeStaticModule.forRoot({
+            rootPath: join(__dirname, '..', 'static'),
+            serveRoot: '/static',
         }),
         DatabaseModule,
         AuthModule,
