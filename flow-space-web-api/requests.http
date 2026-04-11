@@ -15,5 +15,10 @@ content-type: application/json
 
 ###
 # @name getDeviceStatesByDates
-GET {{baseUrl}}/api/states/device/4/dates?beginDate=2026-02-11T00:00:00&endDate=2026-02-11T23:59:59&fields=tempRoomAir;tempOutAir;pressGas;levelDt2;boilers[0].status;networkPumps[3].statusFc
+GET {{baseUrl}}/api/states/device/6/dates?beginDate=2026-04-11T00:00:00Z&endDate=2026-04-11T23:59:59Z&fields=tempRoomAir;tempOutAir;pressGas;levelDt2;boilers[0].status;networkPumps[3].statusFc
+Authorization: Bearer {{ authToken }}
+
+###
+# @name getEmergencyStatesByDates
+GET {{baseUrl}}/api/states/emergency/device/4/dates?beginDate=2026-04-11T00:00:00Z&endDate=2026-04-11T23:59:59Z
 Authorization: Bearer {{ authToken }}
