@@ -1,8 +1,9 @@
-import { Controller, Post, Body, HttpCode, HttpStatus, UnauthorizedException } from '@nestjs/common';
+import { Controller, Post, Body, Get, HttpCode, HttpStatus, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UsersService } from '../users/users.service';
 import { IsString } from 'class-validator';
 import { createHash } from 'crypto';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 class SignInModel {
     @IsString()
@@ -35,5 +36,14 @@ export class AuthController {
             userId: user.id,
             roleId: user.roleId,
         });
+    }
+
+    @Get('health-check')
+    @UseGuards(JwtAuthGuard)
+    @HttpCode(HttpStatus.OK)
+    healthCheck() {
+        return {
+            message: 'Пользователь аутентифицирован.',
+        };
     }
 }

@@ -7,6 +7,8 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { DeviceStateModule } from './device-state/device-state.module';
 import { EmergencyStateModule } from './emergency-state/emergency-state.module';
+import { FlowModule } from './flow/flow.module';
+import { DeviceModule } from './device/device.module';
 
 @Module({
     imports: [
@@ -19,6 +21,8 @@ import { EmergencyStateModule } from './emergency-state/emergency-state.module';
         UsersModule,
         DeviceStateModule,
         EmergencyStateModule,
+        FlowModule,
+        DeviceModule,
     ],
     controllers: [AppController],
     providers: [],

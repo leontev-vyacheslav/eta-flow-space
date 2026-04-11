@@ -22,3 +22,23 @@ Authorization: Bearer {{ authToken }}
 # @name getEmergencyStatesByDates
 GET {{baseUrl}}/api/states/emergency/device/4/dates?beginDate=2026-04-11T00:00:00Z&endDate=2026-04-11T23:59:59Z
 Authorization: Bearer {{ authToken }}
+
+###
+# @name getFlows
+GET {{baseUrl}}/api/flows
+Authorization: Bearer {{ authToken }}
+
+###
+# @name getDevices
+GET {{baseUrl}}/api/devices
+Authorization: Bearer {{ authToken }}
+
+###
+# @name getDevice
+GET {{baseUrl}}/api/devices/1
+Authorization: Bearer {{ authToken }}
+
+###
+# @name healthCheck
+GET {{baseUrl}}/health-check
+Authorization: Bearer {{ authToken }}
