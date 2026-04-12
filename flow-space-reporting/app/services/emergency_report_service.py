@@ -40,7 +40,7 @@ class EmergencySummaryReportService:
     ) -> list[tuple[tuple[int, str, datetime | None], list[EmergencySummaryReportRow]]]:
         grouped: dict[tuple[int, str, datetime | None], list[EmergencySummaryReportRow]] = {}
         for row in rows:
-            key = (row.device_id, row.device_name, row.month)
+            key = (row.device_id, row.device_name, row.period)
             if key not in grouped:
                 grouped[key] = []
             grouped[key].append(row)

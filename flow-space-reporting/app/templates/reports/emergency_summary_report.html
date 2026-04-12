@@ -84,9 +84,9 @@
         <div style="flex: 1;">Сводный отчёт по нештатным ситуациям</div>
         <div style="width: 60px;" />
     </h1>
-    {% for (device_id, device_name, month), group_rows in data.items() %}
+    {% for (device_id, device_name, period), group_rows in data.items() %}
     <div class="section">
-        {% set month_str = month | locale_format_month %}
+        {% set month_str = period | locale_format_month %}
         {% if is_admin %}
         {% set display_name = device_name ~ ' [' ~ device_id ~ ']' %}
         {% else %}

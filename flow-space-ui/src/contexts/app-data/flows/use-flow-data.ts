@@ -145,7 +145,10 @@ export const useFlowData = () => {
 
         const response = await authHttpRequest({
             url: `${routes.host}${routes.emergencySummaryReport}`,
-            params: { timezone: timezone },
+            params: {
+                periodType: 'month',
+                timezone: timezone
+            },
             method: HttpConstants.Methods.Get as Method,
             responseType: 'blob',
         });

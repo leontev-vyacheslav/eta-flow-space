@@ -12,6 +12,7 @@ router = APIRouter()
 
 @router.get("/emergency-summary")
 async def get_emergency_summary_report(
+    period_type: str = Query(alias="periodType", default="month"),
     time_zone: str = Query(alias="timezone", default="Europe/Moscow"),
     token_payload: dict = Depends(verify_token),
     repository: EmergencyRepository = Depends(EmergencyRepository),
@@ -30,7 +31,7 @@ async def get_emergency_summary_report(
     is_admin = token_payload.get("roleId", UserRoles.USER.value) == UserRoles.ADMIN.value
 
     try:
-        rows = await repository.get_emergency_summary_by_month(user_id, time_zone)
+        rows = await repository.get_emergency_summary_by_month(user_id, period_type, time_zone)
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,

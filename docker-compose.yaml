@@ -35,6 +35,18 @@ services:
     networks:
       - eta-flow-space-network
 
+  flow-space-store:
+    image: redis:7-alpine
+    container_name: flow-space-store
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./flow-space-store:/data
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    networks:
+      - eta-flow-space-network
+
   eta-flow-space-database-backup:
     build:
       dockerfile: ./Dockerfile.backup

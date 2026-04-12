@@ -15,3 +15,4 @@ flow-space-backups/
 !.env.example
 
 dist/
+*.rdb

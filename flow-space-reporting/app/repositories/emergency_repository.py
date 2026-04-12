@@ -14,12 +14,8 @@ class EmergencyRepository:
     def __init__(self, session: Annotated[AsyncSession, Depends(get_db)]):
         self._session = session
 
-    async def get_emergency_summary_by_month(self, user_id: int, time_zone: str) -> list[EmergencySummaryReportRow]:
-        reasons_table = (
-            func.json_array_elements(EmergencyState.state["reasons"])
-            .table_valued(column("reason"), name="reason")
-            .lateral("reason")
-        )
+    async def get_emergency_summary_by_month(self, user_id: int, period_type: str, time_zone: str) -> list[EmergencySummaryReportRow]:
+        reasons_table = func.json_array_elements(EmergencyState.state["reasons"]).table_valued(column("reason"), name="reason").lateral("reason")
 
         created_at_tz = func.timezone(time_zone, EmergencyState.created_at)
 
@@ -27,7 +23,7 @@ class EmergencyRepository:
             select(
                 EmergencyState.device_id,
                 Device.name.label("device_name"),
-                func.date_trunc("month", created_at_tz).label("month"),
+                func.date_trunc(period_type, created_at_tz).label("period"),
                 literal_column("reason->>'description'").label("emergency_type"),
                 cast(literal_column("(reason->>'id')"), Integer).label("reason_id"),
                 func.count().label("occurrences"),
@@ -42,12 +38,12 @@ class EmergencyRepository:
             .group_by(
                 EmergencyState.device_id,
                 Device.name,
-                "month",
+                "period",
                 "reason_id",
                 "emergency_type",
             )
             .order_by(
-                text("month"),
+                text("period"),
                 EmergencyState.device_id,
                 text("reason_id"),
                 text("occurrences DESC"),
@@ -61,7 +57,7 @@ class EmergencyRepository:
             EmergencySummaryReportRow(
                 device_id=row.device_id,
                 device_name=row.device_name,
-                month=row.month,
+                period=row.period,
                 emergency_type=row.emergency_type,
                 reason_id=row.reason_id,
                 occurrences=row.occurrences,

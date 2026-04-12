@@ -6,7 +6,7 @@ from datetime import datetime
 class EmergencySummaryReportRow:
     device_id: int
     device_name: str
-    month: datetime | None
+    period: datetime | None
     emergency_type: str
     reason_id: int
     occurrences: int
