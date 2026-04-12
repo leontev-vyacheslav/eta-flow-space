@@ -22,7 +22,7 @@
             border-bottom: 1px solid black;
             margin: 0;
             padding: 0;
-            padding-bottom: 10px;
+            padding-bottom: 5px;
             font-size: 16px;
             text-align: center;
         }
@@ -89,14 +89,14 @@
             }
         </style>
         <img class="header-logo" src="{{ templates_dir }}/header-logo-grayscale.svg" alt="Report Icon"
-            style=" height: 55px; vertical-align: middle; margin-right: 8px;">
+            style=" height: 50px; vertical-align: middle; margin-right: 8px;">
         <div style="flex: 1;">Сводный отчёт по нештатным ситуациям</div>
-        <div style="width: 60px;"></div>
+        <div style="width: 55px;"></div>
     </h1>
     <div style="display: flex;">
         <div style="display: flex; gap: 10px; flex-direction: column; margin-top: 5px;">
-            <div style="font-size: 12px;">Тип периода: {{ period_type | period_type_title_format }}</div>
-            <div style="font-size: 12px;">Устройства: все</div>
+            <div style="font-size: 10px;">Тип группировки: {{ period_type | period_type_title_format }}</div>
+            <div style="font-size: 10px;">Устройства: все</div>
         </div>
     </div>
 

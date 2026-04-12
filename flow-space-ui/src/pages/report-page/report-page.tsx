@@ -17,7 +17,7 @@ type ReportDataSourceRegistryItem = {
 export const ReportPage = () => {
     const { reportCode } = useParams();
 
-    const [periodType, setPeriodType] = useState<string | undefined>('month');
+    const [periodType, setPeriodType] = useState<string>('month');
     const [reportUrl, setReportUrl] = useState<string | null>(null);
     const [showParamsDialog, setShowParamsDialog] = useState<boolean>(false);
     const { getEmergencySummaryReportAsync } = useAppData();

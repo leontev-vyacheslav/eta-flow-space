@@ -74,14 +74,15 @@ export const ReportParamsDialog = ({ visible, initialPeriodType, onApply, onClos
                     </Item>
                 </Form>
                 <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '20px' }}>
-                    <Button
-                        text="Отмена"
-                        onClick={handleCancel}
-                    />
+
                     <Button
                         text="Применить"
                         type="default"
                         onClick={handleApply}
+                    />
+                    <Button
+                        text="Отмена"
+                        onClick={handleCancel}
                     />
                 </div>
             </div>
