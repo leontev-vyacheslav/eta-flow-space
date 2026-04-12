@@ -27,7 +27,7 @@ const routes = [
         component: MapPage,
     },
     {
-        path: '/reports/:reportCode',
+        path: '/reports/:reportCode/:periodType',
         component: ReportPage,
     },
 

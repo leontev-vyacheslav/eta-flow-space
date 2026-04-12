@@ -14,7 +14,8 @@ type ReportDataSourceRegistryItem = {
 }
 
 export const ReportPage = () => {
-    const { reportCode } = useParams();
+    const { reportCode, periodType } = useParams();
+
     const [reportUrl, setReportUrl] = useState<string | null>(null);
     const { getEmergencySummaryReportAsync } = useAppData();
     const [refreshToken, setRefreshToken] = useState<string>(getQuickGuid());
@@ -37,7 +38,7 @@ export const ReportPage = () => {
     }, []);
 
     const reportDataSourceRegistry: Record<string, ReportDataSourceRegistryItem> = {
-        'emergency-summary': { description: 'Сводный отчёт по нештатным ситуациям', getDataAsync: getEmergencySummaryReportAsync },
+        'emergency-summary': { description: 'Сводный отчёт по нештатным ситуациям', getDataAsync: () => getEmergencySummaryReportAsync(periodType ?? 'month') },
     };
 
     const getDataSourceAsyncWrapper = useCallback(async () => {
@@ -46,7 +47,7 @@ export const ReportPage = () => {
         }
         return await reportDataSourceRegistry[reportCode]?.getDataAsync();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [periodType]);
 
     useEffect(() => {
         let url: string | null = null;
@@ -65,7 +66,7 @@ export const ReportPage = () => {
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [refreshToken]);
+    }, [refreshToken, getDataSourceAsyncWrapper]);
 
     return (
         <>

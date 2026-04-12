@@ -6,13 +6,15 @@ from app.data_models import UserRoles
 from app.auth import verify_token
 from app.repositories.emergency_repository import EmergencyRepository
 from app.services.emergency_report_service import EmergencySummaryReportService
+from app.models.emergency_period_types import EmergencyPeriodType
+
 
 router = APIRouter()
 
 
 @router.get("/emergency-summary")
 async def get_emergency_summary_report(
-    period_type: str = Query(alias="periodType", default="month"),
+    period_type: EmergencyPeriodType = Query(alias="periodType", default=EmergencyPeriodType.month),
     time_zone: str = Query(alias="timezone", default="Europe/Moscow"),
     token_payload: dict = Depends(verify_token),
     repository: EmergencyRepository = Depends(EmergencyRepository),
@@ -44,7 +46,7 @@ async def get_emergency_summary_report(
             detail="No emergency data found for this user",
         )
 
-    pdf_bytes, filename = service.render(rows, is_admin)
+    pdf_bytes, filename = service.render(rows, period_type, is_admin)
 
     return Response(
         content=pdf_bytes,

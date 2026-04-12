@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Сводный отчёт по нештатным ситуациям</title>
+    <title>Сводный отчёт по нештатным ситуациям ({{ period_type | period_type_title_format }})</title>
     <style>
         @page {
             margin-top: 10mm;
@@ -81,18 +81,19 @@
         </style>
         <img class="header-logo" src="{{ templates_dir }}/header-logo-grayscale.svg" alt="Report Icon"
             style=" height: 55px; vertical-align: middle; margin-right: 8px;">
-        <div style="flex: 1;">Сводный отчёт по нештатным ситуациям</div>
+        <div style="flex: 1;">Сводный отчёт по нештатным ситуациям ({{ period_type | period_type_title_format }})</div>
         <div style="width: 60px;" />
     </h1>
-    {% for (device_id, device_name, period), group_rows in data.items() %}
+    {% for (device_id, device_name, period_begin, period_end), group_rows in data.items() %}
     <div class="section">
-        {% set period_str = period | locale_format_month %}
+        {% set period_str_begin = period_begin | locale_format_month %}
+        {% set period_str_end = period_end | locale_format_month %}
         {% if is_admin %}
         {% set display_name = device_name ~ ' [' ~ device_id ~ ']' %}
         {% else %}
         {% set display_name = device_name  %}
         {% endif %}
-        <h2>{{ display_name }} — {{ period_str }}</h2>
+        <h2>{{ display_name }} — {{ period_str_begin }} — {{ period_str_end }} ({{ period_type | period_type_group_format }})</h2>
         <table>
             <thead>
                 <tr>

@@ -11,6 +11,7 @@ import {
     LocationAllIcon,
     ReportIcon,
     SummaryReportIcon,
+    BetaIcon,
 } from './app-icons';
 import type { TreeViewItemModel } from '../models/tree-view-item';
 import type { IconBaseProps } from 'react-icons';
@@ -66,13 +67,26 @@ export const useSideNavigationMenuItems = () => {
                 iconRender: (props: IconBaseProps) => <ReportIcon size={20} {...props} />,
                 items: [
                     {
-                        id: '/reports/emergency-summary',
-                        text: 'Нештатные ситуации',
-                        iconRender: (props: IconBaseProps) => <div style={{ position: 'relative' }}><WarningLogIcon size={20} {...props} /> <SummaryReportIcon size={16} {...props} style={{ position: 'absolute', top: '-5px', right: '-10px' }} /></div>,
-                        path: '/reports/emergency-summary',
+                        id: '/reports/emergency-summary/month',
+                        text: 'Нештатные ситуации (мес.)',
+                        iconRender: (props: IconBaseProps) => <div style={{ position: 'relative' }}><WarningLogIcon size={18} {...props} /> <div><BetaIcon size={12} style={{ position: 'absolute', top: '-5px', right: '-12px' }}/> <SummaryReportIcon size={12} {...props} style={{ position: 'absolute', top: '-5px', right: '-5px' }} /></div></div>,
+                        path: '/reports/emergency-summary/month',
+                    },
+                    {
+                        id: '/reports/emergency-summary/week',
+                        text: 'Нештатные ситуации (нед.)',
+                        iconRender: (props: IconBaseProps) => <div style={{ position: 'relative' }}><WarningLogIcon size={18} {...props} /> <div><BetaIcon size={12} style={{ position: 'absolute', top: '-5px', right: '-12px' }}/> <SummaryReportIcon size={12} {...props} style={{ position: 'absolute', top: '-5px', right: '-5px' }} /></div></div>,
+                        path: '/reports/emergency-summary/week',
+                    },
+                    {
+                        id: '/reports/emergency-summary/day',
+                        text: 'Нештатные ситуации (дн.)',
+                        iconRender: (props: IconBaseProps) => <div style={{ position: 'relative' }}><WarningLogIcon size={18} {...props} /> <div><BetaIcon size={12} style={{ position: 'absolute', top: '-5px', right: '-12px' }}/> <SummaryReportIcon size={12} {...props} style={{ position: 'absolute', top: '-5px', right: '-5px' }} /></div></div>,
+                        path: '/reports/emergency-summary/day',
                     },
                 ]
             },
+
             {
                 id: 'about',
                 text: 'О программе',
