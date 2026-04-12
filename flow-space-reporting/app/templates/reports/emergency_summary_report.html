@@ -86,13 +86,13 @@
     </h1>
     {% for (device_id, device_name, period), group_rows in data.items() %}
     <div class="section">
-        {% set month_str = period | locale_format_month %}
+        {% set period_str = period | locale_format_month %}
         {% if is_admin %}
         {% set display_name = device_name ~ ' [' ~ device_id ~ ']' %}
         {% else %}
         {% set display_name = device_name  %}
         {% endif %}
-        <h2>{{ display_name }} — {{ month_str }}</h2>
+        <h2>{{ display_name }} — {{ period_str }}</h2>
         <table>
             <thead>
                 <tr>
