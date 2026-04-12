@@ -80,7 +80,7 @@ export const useSideNavigationMenuItems = () => {
                     },
                     {
                         id: '/reports/emergency-summary/day',
-                        text: 'Нештатные ситуации (дн.)',
+                        text: 'Нештатные ситуации (сут.)',
                         iconRender: (props: IconBaseProps) => <div style={{ position: 'relative' }}><WarningLogIcon size={18} {...props} /> <div><BetaIcon size={12} style={{ position: 'absolute', top: '-5px', right: '-12px' }}/> <SummaryReportIcon size={12} {...props} style={{ position: 'absolute', top: '-5px', right: '-5px' }} /></div></div>,
                         path: '/reports/emergency-summary/day',
                     },
