@@ -31,11 +31,11 @@ def _locale_format_month(value: Any) -> str:
 
 def _period_type_title_format(value: Any) -> str:
     if value == EmergencyPeriodType.month:
-        return "месячный"
+        return "месяц"
     if value == EmergencyPeriodType.week:
-        return "недельный"
+        return "неделя"
     if value == EmergencyPeriodType.day:
-        return "суточный"
+        return "сутки"
 
     return value
 

@@ -29,7 +29,7 @@ export type AppDataContextFlowEndpointsModel = {
     getDeviceStatesByDatesAsync: GetDeviceStatesByDatesAsyncFunc;
     getEmergencyStatesAsync: GetEmergencyStateAsyncFunc;
     getEmergencyStatesByDatesAsync: GetEmergencyStatesByDatesAsyncFunc;
-    getEmergencySummaryReportAsync: (periodType: string) => Promise<Blob | undefined>;
+    getEmergencySummaryReportAsync: (periodType: string | undefined) => Promise<Blob | undefined>;
 };
 
 export const useFlowData = () => {
@@ -140,7 +140,7 @@ export const useFlowData = () => {
         }
     }, [authHttpRequest]);
 
-    const getEmergencySummaryReportAsync = useCallback(async (periodType: string) => {
+    const getEmergencySummaryReportAsync = useCallback(async (periodType: string | undefined) => {
         const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
         const response = await authHttpRequest({

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Сводный отчёт по нештатным ситуациям ({{ period_type | period_type_title_format }})</title>
+    <title>Сводный отчёт по нештатным ситуациям</title>
     <style>
         @page {
             margin-top: 10mm;
@@ -72,7 +72,7 @@
         }
 
         .section {
-           margin-bottom: 25px;
+            margin-bottom: 25px;
         }
     </style>
 </head>
@@ -90,20 +90,27 @@
         </style>
         <img class="header-logo" src="{{ templates_dir }}/header-logo-grayscale.svg" alt="Report Icon"
             style=" height: 55px; vertical-align: middle; margin-right: 8px;">
-        <div style="flex: 1;">Сводный отчёт по нештатным ситуациям ({{ period_type | period_type_title_format }})</div>
-        <div style="width: 60px;" />
+        <div style="flex: 1;">Сводный отчёт по нештатным ситуациям</div>
+        <div style="width: 60px;"></div>
     </h1>
+    <div style="display: flex;">
+        <div style="display: flex; gap: 10px; flex-direction: column; margin-top: 5px;">
+            <div style="font-size: 12px;">Тип периода: {{ period_type | period_type_title_format }}</div>
+            <div style="font-size: 12px;">Устройства: все</div>
+        </div>
+    </div>
+
     {% for (period_begin, period_end), device_groups in data %}
     <div class="section">
         {% set period_str_begin = period_begin | locale_format_month %}
         {% set period_str_end = period_end | locale_format_month %}
-        <h2>Период ({{ period_type | period_type_group_format }}): {{ period_str_begin }} — {{ period_str_end }}</h2>
+        <h2>Период: {{ period_str_begin }} — {{ period_str_end }}</h2>
         {% for (device_id, device_name), group_rows in device_groups %}
         <div class="device-subgroup">
             {% if is_admin %}
             {% set display_name = device_name ~ ' [' ~ device_id ~ ']' %}
             {% else %}
-            {% set display_name = device_name  %}
+            {% set display_name = device_name %}
             {% endif %}
             <h3>{{ display_name }}</h3>
             <table>
