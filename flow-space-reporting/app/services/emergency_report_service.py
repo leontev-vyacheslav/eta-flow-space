@@ -31,11 +31,11 @@ def _locale_format_month(value: Any) -> str:
 
 def _period_type_title_format(value: Any) -> str:
     if value == EmergencyPeriodType.month:
-        return "ежемесячный"
+        return "месячный"
     if value == EmergencyPeriodType.week:
-        return "еженедельный"
+        return "недельный"
     if value == EmergencyPeriodType.day:
-        return "ежедневный"
+        return "суточный"
 
     return value
 
@@ -46,7 +46,7 @@ def _period_type_group_format(value: Any) -> str:
     if value == EmergencyPeriodType.week:
         return "неделя"
     if value == EmergencyPeriodType.day:
-        return "день"
+        return "сутки"
 
     return value
 
@@ -62,22 +62,34 @@ class EmergencySummaryReportService:
     def __group_data(
         self,
         rows: list[EmergencySummaryReportRow],
-    ) -> list[tuple[tuple[int, str, datetime | None, datetime | None], list[EmergencySummaryReportRow]]]:
-        grouped: dict[tuple[int, str, datetime | None, datetime | None], list[EmergencySummaryReportRow]] = {}
+    ) -> list[tuple[tuple[datetime | None, datetime | None], list[tuple[tuple[int, str], list[EmergencySummaryReportRow]]]]]:
+        # First level: group by period range
+        period_groups: dict[tuple[datetime | None, datetime | None], dict[tuple[int, str], list[EmergencySummaryReportRow]]] = {}
         for row in rows:
-            key = (row.device_id, row.device_name, row.period_begin, row.period_end)
-            if key not in grouped:
-                grouped[key] = []
-            grouped[key].append(row)
+            period_key = (row.period_begin, row.period_end)
+            if period_key not in period_groups:
+                period_groups[period_key] = {}
 
-        return sorted(grouped.items(), key=lambda x: (x[0][2] or datetime.min, x[0][0] or 0))
+            device_key = (row.device_id, row.device_name)
+            if device_key not in period_groups[period_key]:
+                period_groups[period_key][device_key] = []
+            period_groups[period_key][device_key].append(row)
+
+        # Sort: first by period_begin, then by device_id within each period
+        result = []
+        for period_key in sorted(period_groups.keys(), key=lambda x: x[0] or datetime.min):
+            device_groups = period_groups[period_key]
+            sorted_device_groups = sorted(device_groups.items(), key=lambda x: x[0][0] or 0)
+            result.append((period_key, sorted_device_groups))
+
+        return result
 
     def render(self, rows: list[EmergencySummaryReportRow], period_type: EmergencyPeriodType, is_admin: bool) -> tuple[bytes | None, str]:
 
         grouped_data = self.__group_data(rows)
 
         html_content = template_env.get_template("emergency_summary_report.html").render(
-            data=dict(grouped_data),
+            data=grouped_data,
             templates_dir=templates_dir.as_uri(),
             is_admin=is_admin,
             period_type=period_type.value,
