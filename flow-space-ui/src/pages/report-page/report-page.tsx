@@ -82,8 +82,6 @@ export const ReportPage = () => {
 
     const handleApplyParams = useCallback((newPeriodType: string, newDeviceId: number) => {
         setPeriodType(newPeriodType);
-        console.log(newDeviceId);
-
         setDeviceId(newDeviceId);
         setRefreshToken(getQuickGuid());
     }, []);

@@ -87,7 +87,6 @@ export const ReportParamsDialog = ({ visible, initialPeriodType, initialDeviceId
                     formData={formData}
                     onFieldDataChanged={(e) => {
                         setFormData({ ...formData, [e.dataField as string]: e.value });
-                        console.log(formData);
                     }}
                 >
                     <Item

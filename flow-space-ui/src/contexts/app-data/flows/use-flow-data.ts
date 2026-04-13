@@ -142,8 +142,6 @@ export const useFlowData = () => {
 
     const getEmergencySummaryReportAsync = useCallback(async (periodType?: string, deviceId?: number) => {
         const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        console.log(deviceId);
-        ;
         const response = await authHttpRequest({
             url: `${routes.host}${routes.emergencySummaryReport}`,
             params: {
