@@ -15,6 +15,7 @@ router = APIRouter()
 @router.get("/emergency-summary")
 async def get_emergency_summary_report(
     period_type: EmergencyPeriodType = Query(alias="periodType", default=EmergencyPeriodType.month),
+    device_id: int | None = Query(alias="deviceId", default=None),
     time_zone: str = Query(alias="timezone", default="Europe/Moscow"),
     token_payload: dict = Depends(verify_token),
     repository: EmergencyRepository = Depends(EmergencyRepository),
@@ -33,7 +34,7 @@ async def get_emergency_summary_report(
     is_admin = token_payload.get("roleId", UserRoles.USER.value) == UserRoles.ADMIN.value
 
     try:
-        rows = await repository.get_emergency_summary_by_month(user_id, period_type, time_zone)
+        rows = await repository.get_emergency_summary_by_month(user_id, period_type, device_id, time_zone)
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -46,7 +47,7 @@ async def get_emergency_summary_report(
             detail="No emergency data found for this user",
         )
 
-    pdf_bytes, filename = service.render(rows, period_type, is_admin)
+    pdf_bytes, filename = service.render(rows, period_type, device_id, is_admin)
 
     return Response(
         content=pdf_bytes,

@@ -1,16 +1,19 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import Popup from 'devextreme-react/popup';
 import Form, { Item, Label } from 'devextreme-react/form';
 import { Button } from 'devextreme-react/button';
+import { useAppData } from '../../contexts/app-data/app-data';
 
 type ReportParamsDialogModel = {
     periodType: string;
+    deviceId: number;
 }
 
 type ReportParamsDialogProps = {
     visible: boolean;
     initialPeriodType: string;
-    onApply: (periodType: string) => void;
+    initialDeviceId: number;
+    onApply: (periodType: string, deviceId: number) => void;
     onClose: () => void;
 }
 
@@ -20,20 +23,27 @@ const periodTypeOptions = [
     { value: 'month', text: 'Месяц' },
 ];
 
-export const ReportParamsDialog = ({ visible, initialPeriodType, onApply, onClose }: ReportParamsDialogProps) => {
+type DeviceOption = {
+    id: number | undefined;
+    name: string;
+}
 
+export const ReportParamsDialog = ({ visible, initialPeriodType, initialDeviceId, onApply, onClose }: ReportParamsDialogProps) => {
+    const { getDeviceListAsync } = useAppData();
+    const [deviceList, setDeviceList] = useState<DeviceOption[]>([]);
     const [formData, setFormData] = useState<ReportParamsDialogModel>({
         periodType: initialPeriodType,
+        deviceId: initialDeviceId,
     });
 
     const handleShowing = useCallback(() => {
-        setFormData({ periodType: initialPeriodType });
-    }, [initialPeriodType]);
+        setFormData({ periodType: initialPeriodType, deviceId: initialDeviceId });
+    }, [initialPeriodType, initialDeviceId]);
 
     const handleApply = useCallback(() => {
-        onApply(formData.periodType);
+        onApply(formData.periodType, formData.deviceId);
         onClose();
-    }, [formData.periodType, onApply, onClose]);
+    }, [formData, onApply, onClose]);
 
     const handleCancel = useCallback(() => {
         onClose();
@@ -44,6 +54,18 @@ export const ReportParamsDialog = ({ visible, initialPeriodType, onApply, onClos
         valueExpr: 'value',
         displayExpr: 'text',
     }), []);
+
+    useEffect(() => {
+        (async () => {
+            const devices = await getDeviceListAsync();
+            if (devices) {
+                setDeviceList([
+                    { id: 0, name: 'Все устройства' },
+                    ...devices.map(d => ({ id: d.id, name: d.name }))
+                ]);
+            }
+        })();
+    }, [getDeviceListAsync]);
 
     return (
         <Popup
@@ -63,7 +85,10 @@ export const ReportParamsDialog = ({ visible, initialPeriodType, onApply, onClos
                 <Form
                     key={visible ? 'visible' : 'hidden'}
                     formData={formData}
-                    onFieldDataChanged={(e) => setFormData({ ...formData, [e.dataField as string]: e.value })}
+                    onFieldDataChanged={(e) => {
+                        setFormData({ ...formData, [e.dataField as string]: e.value });
+                        console.log(formData);
+                    }}
                 >
                     <Item
                         dataField="periodType"
@@ -72,9 +97,19 @@ export const ReportParamsDialog = ({ visible, initialPeriodType, onApply, onClos
                     >
                         <Label text="Тип периода" />
                     </Item>
+                    <Item
+                        dataField="deviceId"
+                        editorType="dxSelectBox"
+                        editorOptions={{
+                            items: deviceList,
+                            valueExpr: 'id',
+                            displayExpr: 'name',
+                        }}
+                    >
+                        <Label text="Устройство" />
+                    </Item>
                 </Form>
                 <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '20px' }}>
-
                     <Button
                         text="Применить"
                         type="default"

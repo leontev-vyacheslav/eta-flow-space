@@ -2,7 +2,7 @@ from typing import Annotated
 
 from fastapi.params import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import String, select, text, func, cast, Integer, true, column, literal_column
+from sqlalchemy import String, and_, or_, select, text, func, cast, Integer, true, column, literal_column
 
 from app.data_models import Device, EmergencyState, UserDeviceLink
 from app.db.database import get_db
@@ -15,7 +15,9 @@ class EmergencyRepository:
     def __init__(self, session: Annotated[AsyncSession, Depends(get_db)]):
         self._session = session
 
-    async def get_emergency_summary_by_month(self, user_id: int, period_type: EmergencyPeriodType, time_zone: str) -> list[EmergencySummaryReportRow]:
+    async def get_emergency_summary_by_month(
+        self, user_id: int, period_type: EmergencyPeriodType, device_id: int | None, time_zone: str
+    ) -> list[EmergencySummaryReportRow]:
         created_at_tz = func.timezone(time_zone, EmergencyState.created_at)
         period_begin = func.date_trunc(period_type.value, created_at_tz)
         period_end_sql = {
@@ -29,6 +31,10 @@ class EmergencyRepository:
         reasons_table = func.json_array_elements(EmergencyState.state["reasons"]).table_valued(column("reason"), name="reason").lateral("reason")
         reason_description = literal_column("reason->>'description'", String)
         reason_id = cast(literal_column("reason->>'id'", String), Integer)
+
+        conditions = [UserDeviceLink.user_id == user_id]
+        if device_id is not None:
+            conditions.append(EmergencyState.device_id == device_id)
 
         query = (
             select(
@@ -46,7 +52,7 @@ class EmergencyRepository:
             .join(Device, EmergencyState.device_id == Device.id)
             .join(UserDeviceLink, Device.id == UserDeviceLink.device_id)
             .join(reasons_table, true())
-            .where(UserDeviceLink.user_id == user_id)
+            .where(and_(*conditions))
             .group_by(
                 EmergencyState.device_id,
                 Device.name,

@@ -29,7 +29,7 @@ export type AppDataContextFlowEndpointsModel = {
     getDeviceStatesByDatesAsync: GetDeviceStatesByDatesAsyncFunc;
     getEmergencyStatesAsync: GetEmergencyStateAsyncFunc;
     getEmergencyStatesByDatesAsync: GetEmergencyStatesByDatesAsyncFunc;
-    getEmergencySummaryReportAsync: (periodType: string | undefined) => Promise<Blob | undefined>;
+    getEmergencySummaryReportAsync: (periodType?: string, deviceId?: number) => Promise<Blob | undefined>;
 };
 
 export const useFlowData = () => {
@@ -140,13 +140,15 @@ export const useFlowData = () => {
         }
     }, [authHttpRequest]);
 
-    const getEmergencySummaryReportAsync = useCallback(async (periodType: string | undefined) => {
+    const getEmergencySummaryReportAsync = useCallback(async (periodType?: string, deviceId?: number) => {
         const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-
+        console.log(deviceId);
+        ;
         const response = await authHttpRequest({
             url: `${routes.host}${routes.emergencySummaryReport}`,
             params: {
                 periodType: periodType,
+                deviceId: deviceId,
                 timezone: timezone
             },
             method: HttpConstants.Methods.Get as Method,

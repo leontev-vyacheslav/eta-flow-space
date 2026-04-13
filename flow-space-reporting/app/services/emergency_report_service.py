@@ -84,15 +84,18 @@ class EmergencySummaryReportService:
 
         return result
 
-    def render(self, rows: list[EmergencySummaryReportRow], period_type: EmergencyPeriodType, is_admin: bool) -> tuple[bytes | None, str]:
+    def render(self, rows: list[EmergencySummaryReportRow], period_type: EmergencyPeriodType, device_id: int | None, is_admin: bool) -> tuple[bytes | None, str]:
 
         grouped_data = self.__group_data(rows)
+
+        device_name = rows[0].device_name if rows and len(rows) > 0 and device_id is not None else f"все устройства"
 
         html_content = template_env.get_template("emergency_summary_report.html").render(
             data=grouped_data,
             templates_dir=templates_dir.as_uri(),
             is_admin=is_admin,
             period_type=period_type.value,
+            device_name=device_name,
         )
 
         pdf_bytes = HTML(string=html_content).write_pdf()

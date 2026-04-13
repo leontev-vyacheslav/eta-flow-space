@@ -11,13 +11,15 @@ import { ReportParamsDialog } from "./report-params-dialog";
 
 type ReportDataSourceRegistryItem = {
     description: string;
-    getDataAsync: (periodType: string | undefined) => Promise<Blob | undefined>;
+    getDataAsync: (periodType: string | undefined, deviceId: number | undefined) => Promise<Blob | undefined>;
 }
 
 export const ReportPage = () => {
     const { reportCode } = useParams();
 
     const [periodType, setPeriodType] = useState<string>('month');
+    const [deviceId, setDeviceId] = useState<number>(0);
+
     const [reportUrl, setReportUrl] = useState<string | null>(null);
     const [showParamsDialog, setShowParamsDialog] = useState<boolean>(false);
     const { getEmergencySummaryReportAsync } = useAppData();
@@ -48,7 +50,7 @@ export const ReportPage = () => {
     }, []);
 
     const reportDataSourceRegistry: Record<string, ReportDataSourceRegistryItem> = {
-        'emergency-summary': { description: 'Сводный отчёт по нештатным ситуациям', getDataAsync: (periodType: string | undefined) => getEmergencySummaryReportAsync(periodType) },
+        'emergency-summary': { description: 'Сводный отчёт по нештатным ситуациям', getDataAsync: (periodType?: string, deviceId?: number) => getEmergencySummaryReportAsync(periodType, deviceId) },
     };
 
     const getDataSourceAsyncWrapper = useCallback(async () => {
@@ -56,9 +58,9 @@ export const ReportPage = () => {
             return undefined;
         }
 
-        return await reportDataSourceRegistry[reportCode]?.getDataAsync(periodType);
+        return await reportDataSourceRegistry[reportCode]?.getDataAsync(periodType, deviceId === 0 ? undefined : deviceId);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [reportCode, periodType]);
+    }, [reportCode, periodType, deviceId]);
 
     useEffect(() => {
         let url: string | null = null;
@@ -76,11 +78,13 @@ export const ReportPage = () => {
                 URL.revokeObjectURL(url);
             }
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [refreshToken, getDataSourceAsyncWrapper]);
 
-    const handleApplyParams = useCallback((newPeriodType: string) => {
+    const handleApplyParams = useCallback((newPeriodType: string, newDeviceId: number) => {
         setPeriodType(newPeriodType);
+        console.log(newDeviceId);
+
+        setDeviceId(newDeviceId);
         setRefreshToken(getQuickGuid());
     }, []);
 
@@ -112,6 +116,7 @@ export const ReportPage = () => {
             <ReportParamsDialog
                 visible={showParamsDialog}
                 initialPeriodType={periodType}
+                initialDeviceId={deviceId}
                 onApply={handleApplyParams}
                 onClose={handleCloseParamsDialog}
             />
