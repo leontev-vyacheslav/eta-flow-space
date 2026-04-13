@@ -81,7 +81,7 @@ export const ReportParamsDialog = ({ visible, initialPeriodType, initialDeviceId
             width="400"
             height="auto"
         >
-            <div style={{ padding: '20px' }}>
+            <div style={{ padding: '20px', paddingTop: 0 }}>
                 <Form
                     key={visible ? 'visible' : 'hidden'}
                     formData={formData}
@@ -95,7 +95,7 @@ export const ReportParamsDialog = ({ visible, initialPeriodType, initialDeviceId
                         editorType="dxSelectBox"
                         editorOptions={periodTypeEditorOptions}
                     >
-                        <Label text="Тип периода" />
+                        <Label text="Тип группировки" />
                     </Item>
                     <Item
                         dataField="deviceId"
