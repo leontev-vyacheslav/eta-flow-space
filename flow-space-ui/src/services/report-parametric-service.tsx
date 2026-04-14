@@ -9,7 +9,7 @@ class ReportParametricService {
     private popupContainer?: HTMLDivElement;
     private root?: Root;
 
-    public show(reportCode: string, callback: (modalResult: PopupCallbackModel) => void) {
+    public show(reportCode: string, initialParams: any, callback: (modalResult: PopupCallbackModel) => void) {
         document.querySelector('#report-params-dialog-root')?.remove();
 
         this.popupContainer = document.createElement('div');
@@ -22,7 +22,7 @@ class ReportParametricService {
             <AuthProvider>
                 <SharedAreaProvider>
                 <AppDataProvider>
-                    <ReportParametricDialog reportCode={reportCode} callback={callback} onHidden={ () => { this.hide(); } }/>
+                    <ReportParametricDialog reportCode={reportCode} initialParams={initialParams} callback={callback} onHidden={ () => { this.hide(); } }/>
                 </AppDataProvider>
                 </SharedAreaProvider>
             </AuthProvider>

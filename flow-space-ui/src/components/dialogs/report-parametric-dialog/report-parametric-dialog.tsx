@@ -7,18 +7,19 @@ import AppModalPopup from "../app-modal-popup/app-modal-popup";
 import Button from "devextreme-react/button";
 import { EmergencySummaryReportParametric } from "./emergency-summary-report-parametric";
 
-const parametricRegister: Record<string, React.FC<{ onParamsChange: (params: any) => void }>> = {
+const parametricRegister: Record<string, React.FC<{ initialParams: any, onParamsChange: (params: any) => void }>> = {
     'emergency-summary': EmergencySummaryReportParametric,
 };
 
 export type ReportParamsDialogProps = React.PropsWithChildren<IPopupOptions> & AppModalPopupProps & {
     reportCode: string;
+    initialParams: any;
 };
 
 export const ReportParametricDialog = (props: ReportParamsDialogProps) => {
     const { isXSmall, isSmall } = useScreenSize();
     const popupRef = useRef<PopupRef>(null);
-    const [params, setParams] = useState<any>({});
+    const [params, setParams] = useState<any>();
     const Parametric = parametricRegister[props.reportCode];
 
     return (
@@ -39,7 +40,7 @@ export const ReportParametricDialog = (props: ReportParamsDialogProps) => {
         >
             <div style={{ padding: '20px', paddingTop: 0 }}>
                 {Parametric ? (
-                    <Parametric onParamsChange={(params) => {
+                    <Parametric initialParams={props.initialParams} onParamsChange={(params) => {
                         setParams(params);
                     }} />
                 ) : null}

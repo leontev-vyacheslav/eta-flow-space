@@ -18,11 +18,13 @@ type ReportParamsDialogModel = {
     deviceId: number | undefined;
 }
 
-export const EmergencySummaryReportParametric = ({ onParamsChange }: { onParamsChange: (params: ReportParamsDialogModel) => void }) => {
+export const EmergencySummaryReportParametric = ({ initialParams, onParamsChange }: { initialParams: any, onParamsChange: (params: ReportParamsDialogModel) => void }) => {
     const { getDeviceListAsync } = useAppData();
-    const [formData, setFormData] = useState<ReportParamsDialogModel>({
-        periodType: 'month',
-        deviceId: 0,
+    const [formData, setFormData] = useState<ReportParamsDialogModel>(() => {
+        return {
+            periodType: initialParams.periodType,
+            deviceId: initialParams.deviceId === undefined ? 0 : initialParams.deviceId,
+        };
     });
     const [deviceList, setDeviceList] = useState<DeviceOption[]>([]);
 

@@ -11,16 +11,37 @@ import { reportParametricService } from "../../services/report-parametric-servic
 
 type ReportDataSourceRegistryItem = {
     description: string;
+    initialParams: any;
     getDataAsync: (params: any) => Promise<Blob | undefined>;
 }
 
 export const ReportPage = () => {
     const { reportCode } = useParams();
-    const [params, setParams] = useState<any>({});
-
     const [reportUrl, setReportUrl] = useState<string | null>(null);
     const { getEmergencySummaryReportAsync } = useAppData();
     const [refreshToken, setRefreshToken] = useState<string>(getQuickGuid());
+
+    const reportDataSourceRegistry: Record<string, ReportDataSourceRegistryItem> = useMemo(() => {
+        return {
+            'emergency-summary': {
+                description: 'Сводный отчёт по нештатным ситуациям', initialParams: {
+                    periodType: 'month',
+                    deviceId: undefined,
+                }, getDataAsync: (params: any) => getEmergencySummaryReportAsync(params)
+            },
+        };
+    }, [getEmergencySummaryReportAsync]);
+
+    const [params, setParams] = useState<any>(() => {
+        if (!reportCode) {
+            return undefined;
+        }
+        const registryItem = reportDataSourceRegistry[reportCode];
+        if (!registryItem) {
+            return undefined;
+        }
+        return registryItem.initialParams;
+    });
 
     const menuItems = useMemo(() => {
         return [
@@ -30,7 +51,7 @@ export const ReportPage = () => {
                     if (!reportCode) {
                         return;
                     }
-                    reportParametricService.show(reportCode, (modalResult) => {
+                    reportParametricService.show(reportCode, params, (modalResult) => {
                         if (modalResult.modalResult === 'OK') {
                             setParams(modalResult.data);
                         }
@@ -50,13 +71,7 @@ export const ReportPage = () => {
                 ]
             }
         ] as MenuItemModel[];
-    }, [reportCode]);
-
-    const reportDataSourceRegistry: Record<string, ReportDataSourceRegistryItem> = useMemo(() => {
-        return {
-            'emergency-summary': { description: 'Сводный отчёт по нештатным ситуациям', getDataAsync: (params: any) => getEmergencySummaryReportAsync(params) },
-        };
-    }, [getEmergencySummaryReportAsync]);
+    }, [params, reportCode]);
 
     const getDataSourceAsyncWrapper = useCallback(async () => {
         if (!reportCode) {
@@ -64,8 +79,7 @@ export const ReportPage = () => {
         }
 
         return await reportDataSourceRegistry[reportCode]?.getDataAsync(params);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [reportCode, params]);
+    }, [reportCode, reportDataSourceRegistry, params]);
 
     useEffect(() => {
         let url: string | null = null;
