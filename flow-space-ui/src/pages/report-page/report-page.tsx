@@ -7,21 +7,18 @@ import { NoData } from "../../components/no-data-widget/no-data-widget";
 import { useParams } from "react-router";
 import type { MenuItemModel } from "../../models/menu-item-model";
 import { getQuickGuid } from "../../utils/uuid";
-import { ReportParamsDialog } from "./report-params-dialog";
+import { reportParametricService } from "../../services/report-parametric-service";
 
 type ReportDataSourceRegistryItem = {
     description: string;
-    getDataAsync: (periodType: string | undefined, deviceId: number | undefined) => Promise<Blob | undefined>;
+    getDataAsync: (params: any) => Promise<Blob | undefined>;
 }
 
 export const ReportPage = () => {
     const { reportCode } = useParams();
-
-    const [periodType, setPeriodType] = useState<string>('month');
-    const [deviceId, setDeviceId] = useState<number>(0);
+    const [params, setParams] = useState<any>({});
 
     const [reportUrl, setReportUrl] = useState<string | null>(null);
-    const [showParamsDialog, setShowParamsDialog] = useState<boolean>(false);
     const { getEmergencySummaryReportAsync } = useAppData();
     const [refreshToken, setRefreshToken] = useState<string>(getQuickGuid());
 
@@ -30,7 +27,14 @@ export const ReportPage = () => {
             {
                 icon: () => <SettingsIcon size={20} color="black" />,
                 onClick: () => {
-                    setShowParamsDialog(true);
+                    if (!reportCode) {
+                        return;
+                    }
+                    reportParametricService.show(reportCode, (modalResult) => {
+                        if (modalResult.modalResult === 'OK') {
+                            setParams(modalResult.data);
+                        }
+                    });
                 }
             },
             {
@@ -40,7 +44,14 @@ export const ReportPage = () => {
                         icon: () => <SettingsIcon size={20} color="black" />,
                         text: 'Параметры отчёта',
                         onClick: () => {
-                            setShowParamsDialog(true);
+                            if (!reportCode) {
+                                return;
+                            }
+                            reportParametricService.show(reportCode, (modalResult) => {
+                                if (modalResult.modalResult === 'OK') {
+                                    setParams(modalResult.data);
+                                }
+                            });
                         }
                     },
                     {
@@ -53,10 +64,10 @@ export const ReportPage = () => {
                 ]
             }
         ] as MenuItemModel[];
-    }, []);
+    }, [reportCode]);
 
     const reportDataSourceRegistry: Record<string, ReportDataSourceRegistryItem> = {
-        'emergency-summary': { description: 'Сводный отчёт по нештатным ситуациям', getDataAsync: (periodType?: string, deviceId?: number) => getEmergencySummaryReportAsync(periodType, deviceId) },
+        'emergency-summary': { description: 'Сводный отчёт по нештатным ситуациям', getDataAsync: (params: any) => getEmergencySummaryReportAsync(params) },
     };
 
     const getDataSourceAsyncWrapper = useCallback(async () => {
@@ -64,9 +75,9 @@ export const ReportPage = () => {
             return undefined;
         }
 
-        return await reportDataSourceRegistry[reportCode]?.getDataAsync(periodType, deviceId === 0 ? undefined : deviceId);
+        return await reportDataSourceRegistry[reportCode]?.getDataAsync(params);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [reportCode, periodType, deviceId]);
+    }, [reportCode, params]);
 
     useEffect(() => {
         let url: string | null = null;
@@ -85,16 +96,6 @@ export const ReportPage = () => {
             }
         }
     }, [refreshToken, getDataSourceAsyncWrapper]);
-
-    const handleApplyParams = useCallback((newPeriodType: string, newDeviceId: number) => {
-        setPeriodType(newPeriodType);
-        setDeviceId(newDeviceId);
-        setRefreshToken(getQuickGuid());
-    }, []);
-
-    const handleCloseParamsDialog = useCallback(() => {
-        setShowParamsDialog(false);
-    }, []);
 
     return (
         <>
@@ -117,13 +118,7 @@ export const ReportPage = () => {
                     }}></iframe>
                     : <NoData />}
             </div>
-            <ReportParamsDialog
-                visible={showParamsDialog}
-                initialPeriodType={periodType}
-                initialDeviceId={deviceId}
-                onApply={handleApplyParams}
-                onClose={handleCloseParamsDialog}
-            />
+
         </>
     );
 }
