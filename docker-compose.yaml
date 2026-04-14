@@ -35,9 +35,9 @@ services:
     networks:
       - eta-flow-space-network
 
-  flow-space-store:
+  eta-flow-space-store:
     image: redis:7-alpine
-    container_name: flow-space-store
+    container_name: eta-flow-space-store
     ports:
       - "6379:6379"
     volumes:
@@ -77,6 +77,22 @@ services:
     - ./flow-space-reporting/.env-reporting
     depends_on:
       - eta-flow-space-database
+    networks:
+      - eta-flow-space-network
+
+  eta-flow-space-web-api:
+    build:
+      context: ./flow-space-web-api/
+      dockerfile: Dockerfile
+    container_name: eta-flow-space-web-api
+    restart: unless-stopped
+    ports:
+      - "3002:3002"
+    env_file:
+      - ./flow-space-web-api/.env
+    depends_on:
+      - eta-flow-space-database
+      - eta-flow-space-store
     networks:
       - eta-flow-space-network
 
