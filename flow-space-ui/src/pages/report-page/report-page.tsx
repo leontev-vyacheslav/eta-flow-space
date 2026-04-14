@@ -28,7 +28,7 @@ export const ReportPage = () => {
     const menuItems = useMemo(() => {
         return [
             {
-                icon: () => <SettingsIcon size={20} />,
+                icon: () => <SettingsIcon size={20} color="black" />,
                 onClick: () => {
                     setShowParamsDialog(true);
                 }
@@ -36,7 +36,13 @@ export const ReportPage = () => {
             {
                 icon: () => <AdditionalMenuIcon size={20} color='black' />,
                 items: [
-
+                    {
+                        icon: () => <SettingsIcon size={20} color="black" />,
+                        text: 'Параметры отчёта',
+                        onClick: () => {
+                            setShowParamsDialog(true);
+                        }
+                    },
                     {
                         icon: () => <RefreshIcon size={20} />,
                         text: 'Обновить...',
