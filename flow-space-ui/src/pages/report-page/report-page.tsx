@@ -41,20 +41,6 @@ export const ReportPage = () => {
                 icon: () => <AdditionalMenuIcon size={20} color='black' />,
                 items: [
                     {
-                        icon: () => <SettingsIcon size={20} color="black" />,
-                        text: 'Параметры отчёта',
-                        onClick: () => {
-                            if (!reportCode) {
-                                return;
-                            }
-                            reportParametricService.show(reportCode, (modalResult) => {
-                                if (modalResult.modalResult === 'OK') {
-                                    setParams(modalResult.data);
-                                }
-                            });
-                        }
-                    },
-                    {
                         icon: () => <RefreshIcon size={20} />,
                         text: 'Обновить...',
                         onClick: () => {
@@ -66,9 +52,11 @@ export const ReportPage = () => {
         ] as MenuItemModel[];
     }, [reportCode]);
 
-    const reportDataSourceRegistry: Record<string, ReportDataSourceRegistryItem> = {
-        'emergency-summary': { description: 'Сводный отчёт по нештатным ситуациям', getDataAsync: (params: any) => getEmergencySummaryReportAsync(params) },
-    };
+    const reportDataSourceRegistry: Record<string, ReportDataSourceRegistryItem> = useMemo(() => {
+        return {
+            'emergency-summary': { description: 'Сводный отчёт по нештатным ситуациям', getDataAsync: (params: any) => getEmergencySummaryReportAsync(params) },
+        };
+    }, [getEmergencySummaryReportAsync]);
 
     const getDataSourceAsyncWrapper = useCallback(async () => {
         if (!reportCode) {
