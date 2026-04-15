@@ -35,6 +35,6 @@ export class DeviceStateController {
             },
         });
 
-        return deviceStates;
+        return { values: deviceStates };
     }
 }
