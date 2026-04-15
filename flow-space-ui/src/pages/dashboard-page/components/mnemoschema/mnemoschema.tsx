@@ -9,6 +9,7 @@ import routes from '../../../../constants/app-api-routes';
 import { useMnemoschemaInjectCss } from "./use-mnemoschema-inject-css";
 import { useMnemoschemaRestoreTransformState } from "./use-mnemoschema-restore-transform-state";
 import { NoData } from "../../../../components/no-data-widget/no-data-widget";
+import { kebabToCamel } from "../../../../utils/string-utils";
 
 
 export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfterMount }: { onBeforeMount?: (mnemoschemaElement: HTMLElement) => void, onAfterMount?: (mnemoschemaElement: HTMLElement) => void }) => {
@@ -96,8 +97,8 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
             doubleClick={{ step: 1 }}
             minScale={0.5}
             onTransformed={(_, transformedState) => {
-                if (isInitComplete) {
-                    localStorage.setItem(`mnemoschemaTransformedState_${flowCode}`, JSON.stringify(transformedState));
+                if (isInitComplete && flowCode) {
+                    localStorage.setItem(`mnemoschemaTransformedState_${kebabToCamel(flowCode)}`, JSON.stringify(transformedState));
                 }
             }}
         >

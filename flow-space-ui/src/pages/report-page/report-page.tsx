@@ -8,6 +8,7 @@ import { useParams } from "react-router";
 import type { MenuItemModel } from "../../models/menu-item-model";
 import { getQuickGuid } from "../../utils/uuid";
 import { reportParametricService } from "../../services/report-parametric-service";
+import { kebabToCamel } from "../../utils/string-utils";
 
 type ReportDataSourceRegistryItem = {
     description: string;
@@ -24,7 +25,8 @@ export const ReportPage = () => {
     const reportDataSourceRegistry: Record<string, ReportDataSourceRegistryItem> = useMemo(() => {
         return {
             'emergency-summary': {
-                description: 'Сводный отчёт по нештатным ситуациям', initialParams: {
+                description: 'Сводный отчёт по нештатным ситуациям',
+                initialParams: {
                     periodType: 'month',
                     deviceId: undefined,
                 }, getDataAsync: (params: any) => getEmergencySummaryReportAsync(params)
@@ -40,7 +42,16 @@ export const ReportPage = () => {
         if (!registryItem) {
             return undefined;
         }
-        return registryItem.initialParams;
+        let storedInitialParams = null;
+        const storedInitialParamsJson = localStorage.getItem(`reportParams_${kebabToCamel(reportCode)}`);
+        if (storedInitialParamsJson) {
+            try {
+                storedInitialParams = JSON.parse(storedInitialParamsJson);
+            } catch (e) {
+                console.error('Error parsing report params from local storage', e);
+            }
+        }
+        return storedInitialParams || registryItem.initialParams;
     });
 
     const menuItems = useMemo(() => {
@@ -120,7 +131,6 @@ export const ReportPage = () => {
                     }}></iframe>
                     : <NoData />}
             </div>
-
         </>
     );
 }

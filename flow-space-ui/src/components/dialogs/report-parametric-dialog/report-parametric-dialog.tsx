@@ -6,6 +6,7 @@ import { useScreenSize } from "../../../utils/media-query";
 import AppModalPopup from "../app-modal-popup/app-modal-popup";
 import Button from "devextreme-react/button";
 import { EmergencySummaryReportParametric } from "./emergency-summary-report-parametric";
+import { kebabToCamel } from "../../../utils/string-utils";
 
 const parametricRegister: Record<string, React.FC<{ initialParams: any, onParamsChange: (params: any) => void }>> = {
     'emergency-summary': EmergencySummaryReportParametric,
@@ -52,6 +53,8 @@ export const ReportParametricDialog = (props: ReportParamsDialogProps) => {
                     onClick={() => {
                         if (props.callback) {
                             props.callback({ modalResult: 'OK', data: params });
+                            // store params in local storage
+                            localStorage.setItem(`reportParams_${kebabToCamel(props.reportCode)}`, JSON.stringify(params));
                             popupRef.current?.instance.hide();
                         }
                     }}
