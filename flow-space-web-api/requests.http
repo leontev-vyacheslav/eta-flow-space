@@ -35,7 +35,7 @@ Authorization: Bearer {{ authToken }}
 
 ###
 # @name getDevice
-GET {{baseUrl}}/api/devices/1
+GET {{baseUrl}}/api/devices/6
 Authorization: Bearer {{ authToken }}
 
 ###
