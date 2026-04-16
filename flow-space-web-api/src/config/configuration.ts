@@ -20,4 +20,8 @@ export const configuration = (): Config => ({
         port: parseInt(process.env.PORT || '3002', 10),
         staticPath: process.env.STATIC_PATH || '',
     },
+    redis: {
+        host: process.env.REDIS_HOST || 'localhost',
+        port: parseInt(process.env.REDIS_PORT || '6379', 10),
+    }
 });

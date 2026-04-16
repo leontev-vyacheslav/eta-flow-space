@@ -19,9 +19,14 @@ export interface AppConfig {
     port: number;
     staticPath: string;
 }
+export interface RedisConfig {
+    host: string;
+    port: number;
+}
 
 export interface Config {
     database: DatabaseConfig;
     jwt: JwtConfig;
     app: AppConfig;
+    redis: RedisConfig;
 }
