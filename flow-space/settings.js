@@ -23,6 +23,14 @@ process.env.NODE_ENV = 'production';
 
 const { authorize } = require('./src/middleware/authorize');
 
+const { createClient } = require('redis');
+const redisClient  = createClient({
+    url: 'redis://eta-flow-space-store:6379'
+});
+
+redisClient.on('error', (err) => console.error('Redis error:', err));
+redisClient.connect().then(() => console.log('Redis connected'));
+
 module.exports = {
 
     /*******************************************************************************
@@ -541,6 +549,7 @@ module.exports = {
 
         routes: require('./src/routes'),
         services: require('./src/services'),
+        redisClient: redisClient
     },
 
     /** The maximum number of messages nodes will buffer internally as part of their

@@ -54,7 +54,7 @@ export class EmergencyStateController {
     ) {
         const { userId } = user;
 
-        const states = await EmergencyStateDataModel.findAll({
+        const emergencyStates = await EmergencyStateDataModel.findAll({
             attributes: ['id', 'deviceId', [col('device.name'), 'deviceName'], 'state', 'createdAt'],
             include: [
                 {
@@ -82,6 +82,6 @@ export class EmergencyStateController {
             },
         });
 
-        return { values: states };
+        return { values: emergencyStates };
     }
 }
