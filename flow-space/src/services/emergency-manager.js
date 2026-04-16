@@ -72,6 +72,13 @@ async function storeEmergencyStates(msg, global) {
 
         global.set(`emergencyState${device.id}`, emergencyState);
 
+        const redisClient = global.get('redisClient');
+        await redisClient.set(
+            `emergencyState:${device.id}`,
+            JSON.stringify(emergencyState),
+            { EX: 120 }
+        );
+
         if (emergencyState) {
             if (!device.emergencies.lastStateUpdate || differenceInMinutes(new Date(), device.emergencies.lastStateUpdate) >= device.emergencies.updateStateInterval) {
                 emergencyStates.push({
