@@ -6,44 +6,79 @@ async function storeStates(msg, global) {
         attributes: ['id', 'updateStateInterval', 'lastStateUpdate'],
     });
 
-    devices.forEach(async (device) => {
+    // devices.forEach(async (device) => {
+    //     const now = new Date();
+    //     const deviceState = global.get(`deviceState${device.id}`);
+    //     if (deviceState && Object.keys(deviceState).length > 0 && deviceState.timestamp) {
+    //         if (differenceInMinutes(now, deviceState.timestamp) > device.updateStateInterval * 2) {
+    //             Object.keys(deviceState).forEach(key => {
+    //                 deviceState[key] = undefined;
+    //             });
+    //             global.set(`deviceState${device.id}`, deviceState);
+    //         }
+
+    //         if (!device.lastStateUpdate || differenceInMinutes(now, device.lastStateUpdate) >= device.updateStateInterval) {
+    //             try {
+    //                 await sequelize.transaction(async t => {
+    //                     await DeviceStateDataModel.create(
+    //                         {
+    //                             deviceId: device.id,
+    //                             state: deviceState
+    //                         },
+    //                         { transaction: t }
+    //                     );
+
+    //                     await DeviceDataModel.update(
+    //                         { lastStateUpdate: now },
+    //                         {
+    //                             where: {
+    //                                 id: device.id,
+    //                             },
+    //                         },
+    //                         { transaction: t }
+    //                     );
+    //                 });
+    //             } catch (error) {
+    //                 console.log(`The device state update transaction failed due to the error: ${error}`);
+    //             }
+    //         }
+    //     }
+    // });
+
+    for (const device of devices) {
         const now = new Date();
         const deviceState = global.get(`deviceState${device.id}`);
-        if (deviceState && Object.keys(deviceState).length > 0 && deviceState.timestamp) {
-            if (differenceInMinutes(now, deviceState.timestamp) > device.updateStateInterval * 2) {
-                Object.keys(deviceState).forEach(key => {
-                    deviceState[key] = undefined;
+
+        if (!deviceState || Object.keys(deviceState).length === 0 || !deviceState.timestamp) {
+            continue;
+        }
+
+        if (differenceInMinutes(now, deviceState.timestamp) > 1) {
+            Object.keys(deviceState).forEach(key => {
+                deviceState[key] = undefined;
+            });
+            global.set(`deviceState${device.id}`, deviceState);
+            continue;
+        }
+
+        if (!device.lastStateUpdate || differenceInMinutes(now, device.lastStateUpdate) >= device.updateStateInterval) {
+            try {
+                await sequelize.transaction(async t => {
+                    await DeviceStateDataModel.create(
+                        { deviceId: device.id, state: deviceState },
+                        { transaction: t }
+                    );
+                    await DeviceDataModel.update(
+                        { lastStateUpdate: now },
+                        { where: { id: device.id } },
+                        { transaction: t }
+                    );
                 });
-                global.set(`deviceState${device.id}`, deviceState);
-            }
-
-            if (!device.lastStateUpdate || differenceInMinutes(now, device.lastStateUpdate) >= device.updateStateInterval) {
-                try {
-                    await sequelize.transaction(async t => {
-                        await DeviceStateDataModel.create(
-                            {
-                                deviceId: device.id,
-                                state: deviceState
-                            },
-                            { transaction: t }
-                        );
-
-                        await DeviceDataModel.update(
-                            { lastStateUpdate: now },
-                            {
-                                where: {
-                                    id: device.id,
-                                },
-                            },
-                            { transaction: t }
-                        );
-                    });
-                } catch (error) {
-                    console.log(`The device state update transaction failed due to the error: ${error}`);
-                }
+            } catch (error) {
+                console.log(`The device state update transaction failed due to the error: ${error}`);
             }
         }
-    });
+    }
 
     return msg;
 }
