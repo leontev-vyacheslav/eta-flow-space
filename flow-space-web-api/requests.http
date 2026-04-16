@@ -54,3 +54,11 @@ Authorization: Bearer {{ authToken }}
 GET {{baseUrl}}/api/devices/6/data-schema
 Authorization: Bearer {{ authToken }}
 
+
+###
+GET {{baseUrl}}/api/states/device/4
+Authorization: Bearer {{authToken}}
+
+###
+GET {{baseUrl}}/api/states/emergency
+Authorization: Bearer {{authToken}}

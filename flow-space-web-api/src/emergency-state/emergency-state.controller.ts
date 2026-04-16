@@ -7,6 +7,7 @@ import { Op, col } from 'sequelize';
 import { DeviceOwnershipGuard } from '../common/guards/device-ownership.guard';
 import { User } from '../common/decorators/user.decorator';
 import { RequestUser } from '../common/interfaces/request-user.interface';
+import { SharedStoreService } from '../shared-store/shared-store.service';
 
 @Controller('api/states/emergency')
 @UseGuards(JwtAuthGuard)
@@ -14,8 +15,12 @@ export class EmergencyStateController {
     constructor(
         @InjectModel(EmergencyStateDataModel)
         private readonly emergencyStateModel: typeof EmergencyStateDataModel,
+        @InjectModel(DeviceDataModel)
+        private readonly deviceModel: typeof DeviceDataModel,
         @InjectModel(UserDeviceLinkDataModel)
         private readonly userDeviceLinkModel: typeof UserDeviceLinkDataModel,
+
+        private readonly sharedStoreService: SharedStoreService,
     ) {}
 
     @Get('device/:deviceId/dates')
@@ -83,5 +88,37 @@ export class EmergencyStateController {
         });
 
         return { values: emergencyStates };
+    }
+
+    @Get()
+    async getEmergencyStates(@User() user: RequestUser) {
+        const { userId } = user;
+
+        const devices = await DeviceDataModel.findAll({
+            attributes: ['id'],
+            include: [
+                {
+                    model: UserDeviceLinkDataModel,
+                    required: true,
+                    as: 'userDeviceLinks',
+                    where: {
+                        userId: userId,
+                    },
+                    attributes: [],
+                },
+            ],
+        });
+
+        const emergencyStates: Array<{ deviceId: number } & Record<string, unknown>> = [];
+        for (const d of devices) {
+            const state = await this.sharedStoreService.getEmergencyState<Record<string, unknown>>(d.id);
+            if (state) {
+                emergencyStates.push({ deviceId: d.id, ...state });
+            }
+        }
+
+        return {
+            values: emergencyStates,
+        };
     }
 }

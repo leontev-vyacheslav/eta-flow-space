@@ -6,6 +6,8 @@ import { InjectModel } from '@nestjs/sequelize';
 import { Op, ProjectionAlias, json } from 'sequelize';
 import { Literal } from 'sequelize/lib/utils';
 import { DeviceOwnershipGuard } from '../common/guards/device-ownership.guard';
+import { DeviceStateResponse } from '../models/device-state-response.interface';
+import { DeviceStateService } from './device-state.service';
 
 @Controller('api/states/device')
 @UseGuards(JwtAuthGuard)
@@ -13,6 +15,8 @@ export class DeviceStateController {
     constructor(
         @InjectModel(DeviceStateDataModel)
         private readonly deviceStateModel: typeof DeviceStateDataModel,
+
+        private readonly deviceStateService: DeviceStateService,
     ) {}
 
     @Get(':deviceId/dates')
@@ -36,5 +40,11 @@ export class DeviceStateController {
         });
 
         return { values: deviceStates };
+    }
+
+    @Get(':deviceId')
+    @UseGuards(DeviceOwnershipGuard)
+    async getDeviceState(@Param('deviceId', ParseIntPipe) deviceId: number): Promise<DeviceStateResponse> {
+        return await this.deviceStateService.getDeviceState(deviceId);
     }
 }

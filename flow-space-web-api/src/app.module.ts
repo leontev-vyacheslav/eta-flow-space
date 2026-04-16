@@ -11,6 +11,7 @@ import { DeviceStateModule } from './device-state/device-state.module';
 import { EmergencyStateModule } from './emergency-state/emergency-state.module';
 import { FlowModule } from './flow/flow.module';
 import { DeviceModule } from './device/device.module';
+import { SharedStoreModule } from './shared-store/shared-store.module';
 
 @Module({
     imports: [
@@ -25,6 +26,7 @@ import { DeviceModule } from './device/device.module';
         DatabaseModule,
         AuthModule,
         UsersModule,
+        SharedStoreModule,
         DeviceStateModule,
         EmergencyStateModule,
         FlowModule,
