@@ -9,7 +9,7 @@ import { DeviceOwnershipGuard } from '../common/guards/device-ownership.guard';
 import { DeviceStateResponse } from '../models/device-state-response.interface';
 import { DeviceStateService } from './device-state.service';
 
-@Controller('api/states/device')
+@Controller('api/device-states')
 @UseGuards(JwtAuthGuard)
 export class DeviceStateController {
     constructor(

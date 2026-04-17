@@ -9,11 +9,18 @@ export default {
     quickHelpReference: '/api/quick-helps',
     flows: '/api/flows', //+
     devices: '/api/devices', //+
-    deviceStates: '/api/states/device', //+-
-    // dataschema: '/api/data-schemas/device', //+ -> /api/devices/:deviceId/data-schema
+    
+    // deviceStates: '/api/states/device', //+-
+    deviceStates: '/api/device-states',
+
+    // dataschema: '/api/data-schemas/device',
     dataschema: '/api/devices/:deviceId/data-schema',
-    // mnemoschemas: '/api/mnemoschemas/device', //+ -> /api/devices/:deviceId/mnemoschema
+
+    // mnemoschemas: '/api/mnemoschemas/device',
     mnemoschemas: '/api/devices/:deviceId/mnemoschema',
-    emergencyStates: '/api/states/emergency', //+
+
+    // emergencyStates: '/api/states/emergency', //+
+    emergencyStates: '/api/emergency-states/', //+
+
     emergencySummaryReport: '/api/reporting/emergency-summary', //+
 };

@@ -6,7 +6,7 @@ import { User } from '../common/decorators/user.decorator';
 import { RequestUser } from '../common/interfaces/request-user.interface';
 import { EmergencyStateService } from './emergency-state.service';
 
-@Controller('api/states/emergency')
+@Controller('api/emergency-states')
 @UseGuards(JwtAuthGuard)
 export class EmergencyStateController {
     constructor(private readonly emergencyStateService: EmergencyStateService) {}
