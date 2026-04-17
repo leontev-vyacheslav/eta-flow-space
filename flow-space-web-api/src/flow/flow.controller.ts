@@ -1,7 +1,7 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { FlowDataModel, DeviceDataModel, UserDeviceLinkDataModel } from '../database/models';
-import { RequestUser } from '../common/interfaces/request-user.interface';
+import { RequestUserModel } from '../models/request-user.model';
 import { User } from '../common/decorators/user.decorator';
 import { InjectModel } from '@nestjs/sequelize';
 import { FindOptions } from 'sequelize';
@@ -15,7 +15,7 @@ export class FlowController {
 
     @Get()
     @UseGuards(JwtAuthGuard)
-    async getFlows(@User() user: RequestUser) {
+    async getFlows(@User() user: RequestUserModel) {
         const flows = await this.flowModel.findAll({
             attributes: ['id', 'code', 'name', 'description', 'uid'],
             include: [

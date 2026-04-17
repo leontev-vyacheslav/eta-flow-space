@@ -1,17 +1,13 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-
-export interface JwtPayload {
-    userId: number;
-    roleId: number;
-}
+import { JwtPayloadModel } from '../models/jwt-payload.model';
 
 @Injectable()
 export class AuthService {
     constructor(private jwtService: JwtService) {}
 
     async signIn(payload: { login: string; userId: number; roleId: number }) {
-        const jwtPayload: JwtPayload = {
+        const jwtPayload: JwtPayloadModel = {
             userId: payload.userId,
             roleId: payload.roleId,
         };
@@ -26,7 +22,7 @@ export class AuthService {
 
     async verifyToken(token: string) {
         try {
-            return await this.jwtService.verifyAsync<JwtPayload & object>(token);
+            return await this.jwtService.verifyAsync<JwtPayloadModel & object>(token);
         } catch {
             throw new UnauthorizedException('Токен авторизации неверный.');
         }

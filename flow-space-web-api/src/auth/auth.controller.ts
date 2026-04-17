@@ -1,17 +1,9 @@
 import { Controller, Post, Body, Get, HttpCode, HttpStatus, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UsersService } from '../users/users.service';
-import { IsString } from 'class-validator';
 import { createHash } from 'crypto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
-
-class SignInModel {
-    @IsString()
-    login: string;
-
-    @IsString()
-    password: string;
-}
+import { SignInModel } from '../models/sign-in.model';
 
 @Controller()
 export class AuthController {

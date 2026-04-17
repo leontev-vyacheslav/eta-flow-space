@@ -1,8 +1,8 @@
 import { Injectable, CanActivate, ExecutionContext, ForbiddenException, BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { UserDeviceLinkDataModel } from '../../database/models';
-import { AuthenticatedRequest } from '../interfaces/authenticated-request.interface';
+import { AuthenticatedRequestModel } from '../../models/authenticated-request.model';
 
-interface DeviceParamRequest extends AuthenticatedRequest {
+interface DeviceParamRequest extends AuthenticatedRequestModel {
     params: {
         deviceId: string;
     };

@@ -6,7 +6,7 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { UsersModule } from '../users/users.module';
-import { JwtConfig } from '../config/interfaces';
+import { JwtConfigModel } from '../models/configs/jwt-config.model';
 
 @Module({
     imports: [
@@ -16,7 +16,7 @@ import { JwtConfig } from '../config/interfaces';
             imports: [ConfigModule],
             inject: [ConfigService],
             useFactory: (configService: ConfigService) => {
-                const jwtConfig = configService.get('jwt') as JwtConfig;
+                const jwtConfig = configService.get('jwt') as JwtConfigModel;
                 return {
                     secret: jwtConfig.secret,
                     signOptions: {

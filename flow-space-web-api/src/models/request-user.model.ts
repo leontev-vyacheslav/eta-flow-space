@@ -1,4 +1,4 @@
-export interface RequestUser {
+export interface RequestUserModel {
     userId: number;
     roleId: number;
 }

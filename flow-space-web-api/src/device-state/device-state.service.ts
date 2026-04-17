@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { Op, literal } from 'sequelize';
 import { SharedStoreService } from '../shared-store/shared-store.service';
 import { DeviceStateDataModel } from '../database/models';
-import { DeviceStateResponse } from '../models/device-state-response.interface';
+import { DeviceStateResponseModel } from '../models/device-state-response.model';
 
 @Injectable()
 export class DeviceStateService {
@@ -13,7 +13,7 @@ export class DeviceStateService {
         private readonly sharedStoreService: SharedStoreService,
     ) {}
 
-    async getDeviceState(deviceId: number): Promise<DeviceStateResponse> {
+    async getDeviceState(deviceId: number): Promise<DeviceStateResponseModel> {
         const redisState = await this.sharedStoreService.getDeviceState<Record<string, unknown>>(deviceId);
 
         if (this.isValidState(redisState)) {
@@ -40,7 +40,7 @@ export class DeviceStateService {
         return keys.length > 0 && keys.some((k) => state[k] !== null && state[k] !== undefined);
     }
 
-    private async getFallbackState(deviceId: number): Promise<DeviceStateResponse> {
+    private async getFallbackState(deviceId: number): Promise<DeviceStateResponseModel> {
         const deviceState = await this.deviceStateModel.findOne({
             where: {
                 deviceId,

@@ -6,7 +6,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { Op, ProjectionAlias, json } from 'sequelize';
 import { Literal } from 'sequelize/lib/utils';
 import { DeviceOwnershipGuard } from '../common/guards/device-ownership.guard';
-import { DeviceStateResponse } from '../models/device-state-response.interface';
+import { DeviceStateResponseModel } from '../models/device-state-response.model';
 import { DeviceStateService } from './device-state.service';
 
 @Controller('api/device-states')
@@ -44,7 +44,7 @@ export class DeviceStateController {
 
     @Get(':deviceId')
     @UseGuards(DeviceOwnershipGuard)
-    async getDeviceState(@Param('deviceId', ParseIntPipe) deviceId: number): Promise<DeviceStateResponse> {
+    async getDeviceState(@Param('deviceId', ParseIntPipe) deviceId: number): Promise<DeviceStateResponseModel> {
         return await this.deviceStateService.getDeviceState(deviceId);
     }
 }

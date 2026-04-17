@@ -5,10 +5,7 @@ import { DeviceDataModel, FlowDataModel, ObjectLocationDataModel, UserDeviceLink
 import { SequelizeModule } from '@nestjs/sequelize/dist/sequelize.module';
 
 @Module({
-    imports: [
-        ConfigModule,
-        SequelizeModule.forFeature([DeviceDataModel, FlowDataModel, ObjectLocationDataModel, UserDeviceLinkDataModel])
-    ],
+    imports: [ConfigModule, SequelizeModule.forFeature([DeviceDataModel, FlowDataModel, ObjectLocationDataModel, UserDeviceLinkDataModel])],
     controllers: [DeviceController],
 })
 export class DeviceModule {}

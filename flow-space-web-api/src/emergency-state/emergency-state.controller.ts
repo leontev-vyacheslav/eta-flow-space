@@ -3,7 +3,7 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { ParseDatePipe } from '../common/pipes/parse-date.pipe';
 import { DeviceOwnershipGuard } from '../common/guards/device-ownership.guard';
 import { User } from '../common/decorators/user.decorator';
-import { RequestUser } from '../common/interfaces/request-user.interface';
+import { RequestUserModel } from '../models/request-user.model';
 import { EmergencyStateService } from './emergency-state.service';
 
 @Controller('api/emergency-states')
@@ -25,7 +25,7 @@ export class EmergencyStateController {
 
     @Get('dates')
     async getUserEmergencyStatesByDates(
-        @User() user: RequestUser,
+        @User() user: RequestUserModel,
         @Query('beginDate', ParseDatePipe) beginDate: Date,
         @Query('endDate', ParseDatePipe) endDate: Date,
     ) {
@@ -36,7 +36,7 @@ export class EmergencyStateController {
     }
 
     @Get()
-    async getEmergencyStates(@User() user: RequestUser) {
+    async getEmergencyStates(@User() user: RequestUserModel) {
         const { userId } = user;
         const emergencyStates = await this.emergencyStateService.getCurrentStates(userId);
 

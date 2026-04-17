@@ -2,7 +2,7 @@ import { Controller, Get, UseGuards, Param, ParseIntPipe, Header, InternalServer
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { DeviceOwnershipGuard } from '../common/guards/device-ownership.guard';
 import { DeviceDataModel, FlowDataModel, ObjectLocationDataModel, UserDeviceLinkDataModel } from '../database/models';
-import { RequestUser } from '../common/interfaces/request-user.interface';
+import { RequestUserModel } from '../models/request-user.model';
 import { User } from '../common/decorators/user.decorator';
 import { InjectModel } from '@nestjs/sequelize';
 import { FindOptions } from 'sequelize';
@@ -24,7 +24,7 @@ export class DeviceController {
     ) {}
 
     @Get('')
-    async getDevices(@User() user: RequestUser) {
+    async getDevices(@User() user: RequestUserModel) {
         const devices = await this.deviceModel.findAll({
             include: [
                 {

@@ -1,4 +1,4 @@
-export interface DeviceStateResponse {
+export interface DeviceStateResponseModel {
     values: {
         id: number;
         deviceId: number;
