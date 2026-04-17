@@ -12,6 +12,8 @@ import { EmergencyStateModule } from './emergency-state/emergency-state.module';
 import { FlowModule } from './flow/flow.module';
 import { DeviceModule } from './device/device.module';
 import { SharedStoreModule } from './shared-store/shared-store.module';
+import { ScheduleModule } from '@nestjs/schedule';
+import { TaskScheduledService } from './common/services/task-scheduled.service';
 
 @Module({
     imports: [
@@ -23,6 +25,7 @@ import { SharedStoreModule } from './shared-store/shared-store.module';
             rootPath: join(__dirname, '..', 'static'),
             serveRoot: '/static',
         }),
+        ScheduleModule.forRoot(),
         DatabaseModule,
         AuthModule,
         UsersModule,
@@ -33,6 +36,6 @@ import { SharedStoreModule } from './shared-store/shared-store.module';
         DeviceModule,
     ],
     controllers: [AppController],
-    providers: [],
+    providers: [TaskScheduledService],
 })
 export class AppModule {}
