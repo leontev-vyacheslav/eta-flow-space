@@ -72,7 +72,8 @@ export const useFlowData = () => {
 
     const getMnemoschemaAsync = useCallback<GetMnemoschemaAsyncFunc>(async (deviceId: number) => {
         const response = await authHttpRequest({
-            url: `${routes.host}${routes.mnemoschemas}/${deviceId}`,
+            // url: `${routes.host}${routes.mnemoschemas}/${deviceId}`,
+            url: `${routes.host}${routes.mnemoschemas.replace(':deviceId', deviceId.toString())}`,
             method: HttpConstants.Methods.Get as Method,
         });
 
@@ -94,7 +95,8 @@ export const useFlowData = () => {
 
     const getDeviceStateDataschemaAsync = useCallback(async (deviceId: number) => {
         const response = await authHttpRequest({
-            url: `${routes.host}${routes.dataschema}/${deviceId}`,
+            // url: `${routes.host}${routes.dataschema}/${deviceId}`,
+            url: `${routes.host}${routes.dataschema.replace(':deviceId', deviceId.toString())}`,
             method: HttpConstants.Methods.Get as Method,
         });
 

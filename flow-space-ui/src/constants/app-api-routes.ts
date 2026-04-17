@@ -10,8 +10,10 @@ export default {
     flows: '/api/flows', //+
     devices: '/api/devices', //+
     deviceStates: '/api/states/device', //+-
-    dataschema: '/api/data-schemas/device', //+ -> /api/devices/:deviceId/data-schema
-    mnemoschemas: '/api/mnemoschemas/device', //+ -> /api/devices/:deviceId/mnemoschema
+    // dataschema: '/api/data-schemas/device', //+ -> /api/devices/:deviceId/data-schema
+    dataschema: '/api/devices/:deviceId/data-schema',
+    // mnemoschemas: '/api/mnemoschemas/device', //+ -> /api/devices/:deviceId/mnemoschema
+    mnemoschemas: '/api/devices/:deviceId/mnemoschema',
     emergencyStates: '/api/states/emergency', //+
     emergencySummaryReport: '/api/reporting/emergency-summary', //+
 };

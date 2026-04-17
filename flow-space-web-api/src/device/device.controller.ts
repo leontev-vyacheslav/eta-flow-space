@@ -10,8 +10,7 @@ import { createReadStream, promises as fs } from 'fs';
 import { join } from 'path';
 import { ConfigService } from '@nestjs/config';
 
-// @Controller('api/devices')
-@Controller('')
+@Controller('api/devices')
 @UseGuards(JwtAuthGuard)
 export class DeviceController {
     constructor(
@@ -24,7 +23,7 @@ export class DeviceController {
         private readonly configService: ConfigService,
     ) {}
 
-    @Get('api/devices')
+    @Get('')
     async getDevices(@User() user: RequestUser) {
         const devices = await this.deviceModel.findAll({
             include: [
@@ -50,7 +49,7 @@ export class DeviceController {
         return { values: devices };
     }
 
-    @Get('api/devices/:deviceId')
+    @Get(':deviceId')
     @UseGuards(DeviceOwnershipGuard)
     async getDevice(@Param('deviceId', ParseIntPipe) deviceId: number) {
         const device = await this.deviceModel.findOne({
@@ -72,8 +71,7 @@ export class DeviceController {
         return { values: device };
     }
 
-    // @Get(':deviceId/mnemoschema')
-    @Get('api/mnemoschemas/device/:deviceId')
+    @Get(':deviceId/mnemoschema')
     @UseGuards(DeviceOwnershipGuard)
     @Header('Content-Type', 'image/svg+xml')
     async getDeviceMnemoschema(@Param('deviceId', ParseIntPipe) deviceId: number) {
@@ -110,8 +108,7 @@ export class DeviceController {
         }
     }
 
-    // @Get(':deviceId/data-schema')
-    @Get('api/data-schemas/device/:deviceId')
+    @Get(':deviceId/data-schema')
     @UseGuards(DeviceOwnershipGuard)
     @Header('Content-Type', 'application/json')
     async getDeviceStateDataSchema(@Param('deviceId', ParseIntPipe) deviceId: number) {
