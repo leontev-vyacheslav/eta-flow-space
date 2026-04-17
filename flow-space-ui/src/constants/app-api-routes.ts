@@ -9,7 +9,7 @@ export default {
     quickHelpReference: '/api/quick-helps',
     flows: '/api/flows', //+
     devices: '/api/devices', //+
-    
+
     // deviceStates: '/api/states/device', //+-
     deviceStates: '/api/device-states',
 
@@ -20,7 +20,7 @@ export default {
     mnemoschemas: '/api/devices/:deviceId/mnemoschema',
 
     // emergencyStates: '/api/states/emergency', //+
-    emergencyStates: '/api/emergency-states/', //+
+    emergencyStates: '/api/emergency-states', //+
 
     emergencySummaryReport: '/api/reporting/emergency-summary', //+
 };
