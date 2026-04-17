@@ -10,6 +10,7 @@
         "**/dist": true,
         "**/build": true,
         "**/coverage": true,
+        "**/.venv": true
     },
     "svg.preview.background": "transparent",
     "[python]": {
