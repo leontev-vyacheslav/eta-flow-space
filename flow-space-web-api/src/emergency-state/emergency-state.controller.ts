@@ -11,7 +11,7 @@ import { EmergencyStateService } from './emergency-state.service';
 export class EmergencyStateController {
     constructor(private readonly emergencyStateService: EmergencyStateService) {}
 
-    @Get('device/:deviceId/dates')
+    @Get(':deviceId/dates')
     @UseGuards(DeviceOwnershipGuard)
     async getEmergencyStatesByDates(
         @Param('deviceId', ParseIntPipe) deviceId: number,
