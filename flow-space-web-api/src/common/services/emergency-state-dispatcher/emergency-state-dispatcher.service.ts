@@ -5,9 +5,8 @@ import { InjectConnection, InjectModel } from '@nestjs/sequelize';
 import { Op, literal } from 'sequelize';
 import { SharedStoreService } from '../shared-store/shared-store.service';
 import { differenceInMinutes } from 'date-fns';
-import { EmergencyReasonModel } from '../../../models/emergency-reason-model';
-import { EmergencyStateModel } from '../../../models/emergency-state.model';
 import { Sequelize } from 'sequelize-typescript';
+import { EmergencyReasonModel, EmergencyStateModel } from '../../../models';
 
 @Injectable()
 export class ScheduledTaskService {
