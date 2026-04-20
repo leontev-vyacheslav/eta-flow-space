@@ -11,7 +11,9 @@ import { DeviceStateModule } from './device-state/device-state.module';
 import { EmergencyStateModule } from './emergency-state/emergency-state.module';
 import { FlowModule } from './flow/flow.module';
 import { DeviceModule } from './device/device.module';
-import { SharedStoreModule } from './shared-store/shared-store.module';
+import { SharedStoreModule } from './common/services/shared-store/shared-store.module';
+import { ScheduleModule } from '@nestjs/schedule';
+import { ScheduledTaskModule } from './common/services/emergency-state-dispatcher/emergency-state-dispatcher.module';
 
 @Module({
     imports: [
@@ -23,6 +25,8 @@ import { SharedStoreModule } from './shared-store/shared-store.module';
             rootPath: join(__dirname, '..', 'static'),
             serveRoot: '/static',
         }),
+        ScheduleModule.forRoot(),
+        ScheduledTaskModule,
         DatabaseModule,
         AuthModule,
         UsersModule,

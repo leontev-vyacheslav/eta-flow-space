@@ -36,4 +36,20 @@ export class SharedStoreService implements OnModuleInit, OnModuleDestroy {
 
         return JSON.parse(data) as T;
     }
+
+    async deleteDeviceState(deviceId: number): Promise<void> {
+        await this.client.del(`deviceState:${deviceId}`);
+    }
+
+    async deleteEmergencyState(deviceId: number): Promise<void> {
+        await this.client.del(`emergencyState:${deviceId}`);
+    }
+
+    async setDeviceState(deviceId: number, state: Record<string, unknown>): Promise<void> {
+        await this.client.set(`deviceState:${deviceId}`, JSON.stringify(state));
+    }
+
+    async setEmergencyState(deviceId: number, state: Record<string, unknown>): Promise<void> {
+        await this.client.set(`emergencyState:${deviceId}`, JSON.stringify(state));
+    }
 }

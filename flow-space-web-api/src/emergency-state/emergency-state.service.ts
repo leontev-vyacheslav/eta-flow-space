@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { SharedStoreService } from '../shared-store/shared-store.service';
+import { SharedStoreService } from '../common/services/shared-store/shared-store.service';
 import { InjectModel } from '@nestjs/sequelize';
 import { DeviceDataModel, EmergencyStateDataModel, UserDeviceLinkDataModel } from '../database/models';
 import { Op, col } from 'sequelize';
