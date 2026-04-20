@@ -3,7 +3,7 @@ const { DeviceDataModel, DeviceStateDataModel, sequelize } = require('../orm/mod
 
 async function storeStates(msg, global) {
     const devices = await DeviceDataModel.findAll({
-        attributes: ['id', 'updateStateInterval', 'lastStateUpdate'],
+        attributes: ['id', 'updateStateInterval', 'lastStateUpdate', 'settings'],
     });
 
     for (const device of devices) {
@@ -13,8 +13,11 @@ async function storeStates(msg, global) {
         if (!deviceState || Object.keys(deviceState).length === 0 || !deviceState.timestamp) {
             continue;
         }
-
-        if (differenceInMinutes(now, deviceState.timestamp) > 1) {
+        
+        const stateTtl = device.settings && device.settings.stateTtl
+            ? parseInt(device.settings.stateTtl)
+            : 1;
+        if (differenceInMinutes(now, deviceState.timestamp) > stateTtl) {
             Object.keys(deviceState).forEach(key => {
                 deviceState[key] = undefined;
             });
