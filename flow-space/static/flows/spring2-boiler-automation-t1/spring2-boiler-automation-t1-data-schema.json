@@ -1,0 +1,1482 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "StateModel",
+  "type": "object",
+  "properties": {
+    "tempRoomAir": {
+      "type": "number",
+      "unit": "°C",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Температура в котельной"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "tempOutAir": {
+      "type": "number",
+      "unit": "°C",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Температура наружная"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "pressGas": {
+      "type": "number",
+      "unit": "бар",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Давление газа"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "tempInNet": {
+      "type": "number",
+      "unit": "°C",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Температура на обратке сетевого контура"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "pressInNet": {
+      "type": "number",
+      "unit": "бар",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Давление на обратке сетевого контура"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "tempOutNet": {
+      "type": "number",
+      "unit": "°C",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Температура на подаче сетевого контура"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "pressOutNet": {
+      "type": "number",
+      "unit": "бар",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Давление на подаче сетевого контура"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "levelDt1": {
+      "type": "number",
+      "unit": "см",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Уровень ДТ в баке 1"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "levelDt2": {
+      "type": "number",
+      "unit": "см",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Уровень ДТ в баке 2"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "pressOutSrcW": {
+      "type": "number",
+      "unit": "бар",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Давление исходной воды"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "statusTempRoomAirSensor": {
+      "$ref": "#/$defs/SensorStatus",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxSelectBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Статус датчика температуры в котельной"
+          },
+          "editorOptions": {
+            "readOnly": true,
+            "valueExpr": "id",
+            "displayExpr": "description"
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "#00FF00": [1],
+                "yellow": [2],
+                "red": [4, 8, 16, 32]
+              }
+            }
+          ]
+        }
+      }
+    },
+    "statusTempOutSensor": {
+      "$ref": "#/$defs/SensorStatus",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxSelectBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Статус датчика температуры наружной"
+          },
+          "editorOptions": {
+            "readOnly": true,
+            "valueExpr": "id",
+            "displayExpr": "description"
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "#00FF00": [1],
+                "yellow": [2],
+                "red": [4, 8, 16, 32]
+              }
+            }
+          ]
+        }
+      }
+    },
+    "statusPressGasSensor": {
+      "$ref": "#/$defs/SensorStatus",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxSelectBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Статус датчика давления газа"
+          },
+          "editorOptions": {
+            "readOnly": true,
+            "valueExpr": "id",
+            "displayExpr": "description"
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "#00FF00": [1],
+                "yellow": [2],
+                "red": [4, 8, 16, 32]
+              }
+            }
+          ]
+        }
+      }
+    },
+    "statusTempInNetSensor": {
+      "$ref": "#/$defs/SensorStatus",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxSelectBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Статус датчика температуры на обратке сетевого контура"
+          },
+          "editorOptions": {
+            "readOnly": true,
+            "valueExpr": "id",
+            "displayExpr": "description"
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "#00FF00": [1],
+                "yellow": [2],
+                "red": [4, 8, 16, 32]
+              }
+            }
+          ]
+        }
+      }
+    },
+    "statusPressInNetSensor": {
+      "$ref": "#/$defs/SensorStatus",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxSelectBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Статус датчика давления на обратке сетевого контура"
+          },
+          "editorOptions": {
+            "readOnly": true,
+            "valueExpr": "id",
+            "displayExpr": "description"
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "#00FF00": [1],
+                "yellow": [2],
+                "red": [4, 8, 16, 32]
+              }
+            }
+          ]
+        }
+      }
+    },
+    "statusTempOutNetSensor": {
+      "$ref": "#/$defs/SensorStatus",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxSelectBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Статус датчика температуры на подаче сетевого контура"
+          },
+          "editorOptions": {
+            "readOnly": true,
+            "valueExpr": "id",
+            "displayExpr": "description"
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "#00FF00": [1],
+                "yellow": [2],
+                "red": [4, 8, 16, 32]
+              }
+            }
+          ]
+        }
+      }
+    },
+    "statusPressOutNetSensor": {
+      "$ref": "#/$defs/SensorStatus",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxSelectBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Статус датчика давления на подаче сетевого контура"
+          },
+          "editorOptions": {
+            "readOnly": true,
+            "valueExpr": "id",
+            "displayExpr": "description"
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "#00FF00": [1],
+                "yellow": [2],
+                "red": [4, 8, 16, 32]
+              }
+            }
+          ]
+        }
+      }
+    },
+    "statusLevelDt1Sensor": {
+      "$ref": "#/$defs/SensorStatus",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxSelectBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Статус датчика уровня ДТ 1"
+          },
+          "editorOptions": {
+            "readOnly": true,
+            "valueExpr": "id",
+            "displayExpr": "description"
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "#00FF00": [1],
+                "yellow": [2],
+                "red": [4, 8, 16, 32]
+              }
+            }
+          ]
+        }
+      }
+    },
+    "statusLevelDt2Sensor": {
+      "$ref": "#/$defs/SensorStatus",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxSelectBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Статус датчика уровня ДТ 2"
+          },
+          "editorOptions": {
+            "readOnly": true,
+            "valueExpr": "id",
+            "displayExpr": "description"
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "#00FF00": [1],
+                "yellow": [2],
+                "red": [4, 8, 16, 32]
+              }
+            }
+          ]
+        }
+      }
+    },
+    "statusPressOutSrcWSensor": {
+      "$ref": "#/$defs/SensorStatus",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxSelectBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Статус датчика давления исходной воды"
+          },
+          "editorOptions": {
+            "readOnly": true,
+            "valueExpr": "id",
+            "displayExpr": "description"
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "#00FF00": [1],
+                "yellow": [2],
+                "red": [4, 8, 16, 32]
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isSourceWaterRelay": {
+      "type": "boolean",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Реле давления исходной воды"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isCO": {
+      "type": "boolean",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Загазованность CO"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isCH": {
+      "type": "boolean",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Загазованность CH"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isGasFlap": {
+      "type": "boolean",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Клапан отсекатель газа закрыт"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isVaporDt1": {
+      "type": "boolean",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Загазованность горючими газами 1"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isVaporDt2": {
+      "type": "boolean",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Загазованность горючими газами 2"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isOffInput1": {
+      "type": "boolean",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Питание на вводе 1"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              },
+              "stroke": {
+                "yellow": true,
+                "black": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isOffInput2": {
+      "type": "boolean",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Питание на вводе 2"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              },
+              "stroke": {
+                "yellow": true,
+                "black": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "statusSourcePump": {
+      "$ref": "#/$defs/SourcePumpStatus",
+      "ui": {
+        "group": 4,
+        "editor": {
+          "editorType": "dxSelectBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Статус насоса исходной воды"
+          },
+          "editorOptions": {
+            "readOnly": true,
+            "valueExpr": "id",
+            "displayExpr": "description"
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "#00FF00": [4],
+                "red": [8],
+                "#4D4D4D": [1, 2, 16, 32, 128, 256, 512, 1024]
+              }
+            }
+          ]
+        }
+      }
+    },
+    "boilers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/BoilerModel"
+      },
+      "minItems": 4,
+      "maxItems": 4
+    },
+    "boilerOutputValves": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/BoilerOutputValveModel"
+      },
+      "minItems": 4,
+      "maxItems": 4
+    },
+    "boilerPumps": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/BoilerPumpModel"
+      },
+      "minItems": 4,
+      "maxItems": 4
+    },
+    "networkPumps": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/NetworkPumpModel"
+      },
+      "minItems": 3,
+      "maxItems": 3
+    }
+  },
+  "required": [
+    "tempRoomAir",
+    "tempOutAir",
+    "pressGas",
+    "tempInNet",
+    "pressInNet",
+    "tempOutNet",
+    "pressOutNet",
+    "levelDt1",
+    "levelDt2",
+    "pressOutSrcW",
+    "statusTempRoomAirSensor",
+    "statusTempOutSensor",
+    "statusPressGasSensor",
+    "statusTempInNetSensor",
+    "statusPressInNetSensor",
+    "statusTempOutNetSensor",
+    "statusPressOutNetSensor",
+    "statusLevelDt1Sensor",
+    "statusLevelDt2Sensor",
+    "statusPressOutSrcWSensor",
+    "isSourceWaterRelay",
+    "isCO",
+    "isCH",
+    "isGasFlap",
+    "isVaporDt1",
+    "isVaporDt2",
+    "isOffInput1",
+    "isOffInput2",
+    "statusSourcePump",
+    "boilers",
+    "boilerOutputValves",
+    "boilerPumps",
+    "networkPumps"
+  ],
+  "$defs": {
+    "SensorStatus": {
+      "type": "integer",
+      "enum": [1, 2, 4, 8, 16, 32],
+      "enumDescriptions": {
+        "1": "NORM - Норма",
+        "2": "WARNING - Предупреждение (выход параметра за предупр. границы)",
+        "4": "ALARM - Авария (выход параметра за аварийные границы)",
+        "8": "SENSOR_FAULT - Неисправность датчика",
+        "16": "WRONG_CALIBRATION - Неправильная калибровка",
+        "32": "OVERLOAD - Перегрузка (выход сигнала датчика за установленные границы)"
+      }
+    },
+    "SourcePumpStatus": {
+      "type": "integer",
+      "enum": [1, 2, 4, 8, 16, 32, 128, 256, 512, 1024],
+      "enumDescriptions": {
+        "1": "NO_POWER - Нет питания",
+        "2": "STOPPED - Остановлен",
+        "4": "OPERATING - В работе",
+        "8": "ALARM - Авария",
+        "16": "STARTUP_ACCELERATION - Запуск (разгон)",
+        "32": "STOP - Останов",
+        "128": "REGULATION_MIN_FREQUENCY - Регулирование (мин. частота)",
+        "256": "REGULATION_MAX_FREQUENCY - Регулирование (макс. частота)",
+        "512": "WAITING_FOR_START - Ожидание включения",
+        "1024": "WAITING_FOR_READINESS - Ожидание готовности"
+      }
+    },
+    "BoilerState": {
+      "type": "integer",
+      "enum": [1, 2, 4, 8, 16, 32, 64, 128],
+      "enumDescriptions": {
+        "1": "NOT_READY - Нет готовности",
+        "2": "STOPPED - Отключен",
+        "4": "STARTING - Включается",
+        "8": "OPERATION_STAGE1 - Работа (на 1 ступени)",
+        "16": "OPERATION_STAGE2 - Работа (на 2 ступени)",
+        "32": "HOT_RESERVE - В горячем резерве",
+        "64": "STOPPING - Останавливается",
+        "128": "ALARM - Авария"
+      }
+    },
+    "BoilerOutputValveState": {
+      "type": "integer",
+      "enum": [1, 2],
+      "enumDescriptions": {
+        "1": "OPEN - Открыта",
+        "2": "CLOSED - Закрыта"
+      }
+    },
+    "BoilerPumpState": {
+      "type": "integer",
+      "enum": [1, 2],
+      "enumDescriptions": {
+        "1": "OPERATING - Работа",
+        "2": "ALARM - Авария"
+      }
+    },
+    "NetworkPumpState": {
+      "type": "integer",
+      "enum": [1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192],
+      "enumDescriptions": {
+        "1": "WAITING_FOR_READINESS - Ожидание готовности",
+        "2": "READINESS - Готовность",
+        "4": "NOT_USED_0 - Не используется",
+        "8": "NOT_USED_1 - Не используется",
+        "16": "NOT_USED_2 - Не используется",
+        "32": "START_FROM_VFD - Запуск от ЧРП",
+        "64": "OPERATING_FROM_VFD - В работе от ЧРП",
+        "128": "STOP_FROM_VFD - Останов от ЧРП",
+        "256": "NOT_USED_3 - Не используется",
+        "512": "ALARM - Авария",
+        "1024": "NOT_USED_4 - Не используется",
+        "2048": "NOT_USED_5 - Не используется",
+        "4096": "NOT_USED_6 - Не используется",
+        "8192": "NOT_USED_7 - Не используется"
+      }
+    },
+    "NetworkPumpFcStatus": {
+      "type": "integer",
+      "enum": [1, 2],
+      "enumDescriptions": {
+        "1": "FC_OPERATING - Работа ПЧ",
+        "2": "FC_ALARM - Авария ПЧ"
+      }
+    },
+    "BoilerModel": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "$ref": "#/$defs/BoilerState",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Состояние котла"
+              },
+              "editorOptions": {
+                "readOnly": true,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "#00FF00": [8, 16],
+                    "yellow": [32],
+                    "red": [128],
+                    "white": [1, 2, 4, 64]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "tempOut": {
+          "type": "number",
+          "unit": "°C",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Температура воды на подаче котла"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "chart": {}
+          }
+        },
+        "tempFlueGases": {
+          "type": "number",
+          "unit": "°C",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Температура дымовых газов котла"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "chart": {}
+          }
+        },
+        "isBurnerFailure": {
+          "type": "boolean",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Авария горелки"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isWorking": {
+          "type": "boolean",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Работа котла"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "#00FF00": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isGasRelayPressure": {
+          "type": "boolean",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Реле давления газа"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isMinWaterPressure": {
+          "type": "boolean",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Мин. давление воды"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isMaxWaterPressure": {
+          "type": "boolean",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Макс. давление воды"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isMaxWaterTemperature": {
+          "type": "boolean",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Макс. температура воды"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isFlowRelay": {
+          "type": "boolean",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Реле потока"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "statusTempOutSensor": {
+          "$ref": "#/$defs/SensorStatus",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Статус датчика температуры воды на подаче котла"
+              },
+              "editorOptions": {
+                "readOnly": true,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "#00FF00": [1],
+                    "yellow": [2],
+                    "red": [4, 8, 16, 32]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "statusTempFlueGasesSensor": {
+          "$ref": "#/$defs/SensorStatus",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Статус датчика температуры дымовых газов"
+              },
+              "editorOptions": {
+                "readOnly": true,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "#00FF00": [1],
+                    "yellow": [2],
+                    "red": [4, 8, 16, 32]
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "required": [
+        "state",
+        "tempOut",
+        "tempFlueGases",
+        "isBurnerFailure",
+        "isWorking",
+        "isGasRelayPressure",
+        "isMinWaterPressure",
+        "isMaxWaterPressure",
+        "isMaxWaterTemperature",
+        "isFlowRelay",
+        "statusTempOutSensor",
+        "statusTempFlueGasesSensor"
+      ]
+    },
+    "BoilerOutputValveModel": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "$ref": "#/$defs/BoilerOutputValveState",
+          "ui": {
+            "group": 6,
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Состояние задвижки на выходе котла"
+              },
+              "editorOptions": {
+                "readOnly": true,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "#00FF00": [1],
+                    "red": [2]
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "required": ["state"]
+    },
+    "BoilerPumpModel": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "$ref": "#/$defs/BoilerPumpState",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Состояние насоса котла"
+              },
+              "editorOptions": {
+                "readOnly": true,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "#00FF00": [1],
+                    "red": [2]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "statusCurrentSensor": {
+          "$ref": "#/$defs/SensorStatus",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Статус датчика тока насоса котла"
+              },
+              "editorOptions": {
+                "readOnly": true,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "#00FF00": [1],
+                    "yellow": [2],
+                    "red": [4, 8, 16, 32]
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "required": ["state", "statusCurrentSensor"]
+    },
+    "NetworkPumpModel": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "$ref": "#/$defs/NetworkPumpState",
+          "ui": {
+            "group": 3,
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Состояние сетевого насоса"
+              },
+              "editorOptions": {
+                "readOnly": true,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "#00FF00": [64],
+                    "red": [512],
+                    "#4D4D4D": [1, 2, 32, 128, 2048]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isDryRun": {
+          "type": "boolean",
+          "ui": {
+            "group": 3,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Сухой ход"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "statusFc": {
+          "$ref": "#/$defs/NetworkPumpFcStatus",
+          "ui": {
+            "group": 3,
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Статус ПЧ сетевого насоса"
+              },
+              "editorOptions": {
+                "readOnly": true,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "#00FF00": [1],
+                    "red": [2]
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "required": ["state", "isDryRun", "statusFc"]
+    }
+  },
+  "ui": {
+    "useTabs": true,
+    "groups": [
+      {
+        "id": 1,
+        "name": "state",
+        "caption": "Состояния",
+        "order": 100
+      },
+      {
+        "id": 2,
+        "name": "boilers",
+        "caption": "Котлы",
+        "order": 200
+      },
+      {
+        "id": 3,
+        "name": "networkPumps",
+        "caption": "Сетевые насосы",
+        "order": 300
+      },
+      {
+        "id": 4,
+        "name": "sourceWaterPumps",
+        "caption": "Насосы исходной воды",
+        "order": 400
+      },
+      {
+        "id": 5,
+        "name": "boilerPumps",
+        "caption": "Насосы котлов",
+        "order": 450
+      },
+      {
+        "id": 6,
+        "name": "valves",
+        "caption": "Задвижки",
+        "order": 500
+      },
+      {
+        "id": 7,
+        "name": "emergency",
+        "caption": "Аварии",
+        "order": 150
+      }
+    ]
+  }
+}
