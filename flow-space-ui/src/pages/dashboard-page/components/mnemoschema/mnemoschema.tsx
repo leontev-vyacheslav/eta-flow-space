@@ -49,7 +49,6 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
             }
 
             if (disposed) return;
-
             const parser = new DOMParser();
             const mnemoschemaDoc = parser.parseFromString(mnemoschema, 'image/svg+xml');
 
