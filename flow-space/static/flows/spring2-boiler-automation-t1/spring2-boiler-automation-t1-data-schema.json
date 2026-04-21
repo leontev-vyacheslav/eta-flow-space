@@ -214,9 +214,18 @@
           "styleProps": [
             {
               "fill": {
-                "#00FF00": [1],
-                "yellow": [2],
-                "red": [4, 8, 16, 32]
+                "#00FF00": [
+                  1
+                ],
+                "yellow": [
+                  2
+                ],
+                "red": [
+                  4,
+                  8,
+                  16,
+                  32
+                ]
               }
             }
           ]
@@ -244,9 +253,18 @@
           "styleProps": [
             {
               "fill": {
-                "#00FF00": [1],
-                "yellow": [2],
-                "red": [4, 8, 16, 32]
+                "#00FF00": [
+                  1
+                ],
+                "yellow": [
+                  2
+                ],
+                "red": [
+                  4,
+                  8,
+                  16,
+                  32
+                ]
               }
             }
           ]
@@ -274,9 +292,18 @@
           "styleProps": [
             {
               "fill": {
-                "#00FF00": [1],
-                "yellow": [2],
-                "red": [4, 8, 16, 32]
+                "#00FF00": [
+                  1
+                ],
+                "yellow": [
+                  2
+                ],
+                "red": [
+                  4,
+                  8,
+                  16,
+                  32
+                ]
               }
             }
           ]
@@ -304,9 +331,18 @@
           "styleProps": [
             {
               "fill": {
-                "#00FF00": [1],
-                "yellow": [2],
-                "red": [4, 8, 16, 32]
+                "#00FF00": [
+                  1
+                ],
+                "yellow": [
+                  2
+                ],
+                "red": [
+                  4,
+                  8,
+                  16,
+                  32
+                ]
               }
             }
           ]
@@ -334,9 +370,18 @@
           "styleProps": [
             {
               "fill": {
-                "#00FF00": [1],
-                "yellow": [2],
-                "red": [4, 8, 16, 32]
+                "#00FF00": [
+                  1
+                ],
+                "yellow": [
+                  2
+                ],
+                "red": [
+                  4,
+                  8,
+                  16,
+                  32
+                ]
               }
             }
           ]
@@ -364,9 +409,18 @@
           "styleProps": [
             {
               "fill": {
-                "#00FF00": [1],
-                "yellow": [2],
-                "red": [4, 8, 16, 32]
+                "#00FF00": [
+                  1
+                ],
+                "yellow": [
+                  2
+                ],
+                "red": [
+                  4,
+                  8,
+                  16,
+                  32
+                ]
               }
             }
           ]
@@ -394,9 +448,18 @@
           "styleProps": [
             {
               "fill": {
-                "#00FF00": [1],
-                "yellow": [2],
-                "red": [4, 8, 16, 32]
+                "#00FF00": [
+                  1
+                ],
+                "yellow": [
+                  2
+                ],
+                "red": [
+                  4,
+                  8,
+                  16,
+                  32
+                ]
               }
             }
           ]
@@ -424,9 +487,18 @@
           "styleProps": [
             {
               "fill": {
-                "#00FF00": [1],
-                "yellow": [2],
-                "red": [4, 8, 16, 32]
+                "#00FF00": [
+                  1
+                ],
+                "yellow": [
+                  2
+                ],
+                "red": [
+                  4,
+                  8,
+                  16,
+                  32
+                ]
               }
             }
           ]
@@ -454,9 +526,18 @@
           "styleProps": [
             {
               "fill": {
-                "#00FF00": [1],
-                "yellow": [2],
-                "red": [4, 8, 16, 32]
+                "#00FF00": [
+                  1
+                ],
+                "yellow": [
+                  2
+                ],
+                "red": [
+                  4,
+                  8,
+                  16,
+                  32
+                ]
               }
             }
           ]
@@ -484,9 +565,18 @@
           "styleProps": [
             {
               "fill": {
-                "#00FF00": [1],
-                "yellow": [2],
-                "red": [4, 8, 16, 32]
+                "#00FF00": [
+                  1
+                ],
+                "yellow": [
+                  2
+                ],
+                "red": [
+                  4,
+                  8,
+                  16,
+                  32
+                ]
               }
             }
           ]
@@ -738,9 +828,22 @@
           "styleProps": [
             {
               "fill": {
-                "#00FF00": [4],
-                "red": [8],
-                "#4D4D4D": [1, 2, 16, 32, 128, 256, 512, 1024]
+                "#00FF00": [
+                  4
+                ],
+                "red": [
+                  8
+                ],
+                "#4D4D4D": [
+                  1,
+                  2,
+                  16,
+                  32,
+                  128,
+                  256,
+                  512,
+                  1024
+                ]
               }
             }
           ]
@@ -778,6 +881,26 @@
       },
       "minItems": 3,
       "maxItems": 3
+    },
+    "timestamp": {
+      "type": "integer",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxDateBox",
+          "editorOptions": {
+            "type": "datetime",
+            "displayFormat": "dd.MM.yyyy HH:mm:ss",
+            "readOnly": true
+          },
+          "cssClass": "form-input-box",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Время опроса"
+          }
+        }
+      }
     }
   },
   "required": [
@@ -818,7 +941,14 @@
   "$defs": {
     "SensorStatus": {
       "type": "integer",
-      "enum": [1, 2, 4, 8, 16, 32],
+      "enum": [
+        1,
+        2,
+        4,
+        8,
+        16,
+        32
+      ],
       "enumDescriptions": {
         "1": "NORM - Норма",
         "2": "WARNING - Предупреждение (выход параметра за предупр. границы)",
@@ -830,7 +960,18 @@
     },
     "SourcePumpStatus": {
       "type": "integer",
-      "enum": [1, 2, 4, 8, 16, 32, 128, 256, 512, 1024],
+      "enum": [
+        1,
+        2,
+        4,
+        8,
+        16,
+        32,
+        128,
+        256,
+        512,
+        1024
+      ],
       "enumDescriptions": {
         "1": "NO_POWER - Нет питания",
         "2": "STOPPED - Остановлен",
@@ -846,7 +987,16 @@
     },
     "BoilerState": {
       "type": "integer",
-      "enum": [1, 2, 4, 8, 16, 32, 64, 128],
+      "enum": [
+        1,
+        2,
+        4,
+        8,
+        16,
+        32,
+        64,
+        128
+      ],
       "enumDescriptions": {
         "1": "NOT_READY - Нет готовности",
         "2": "STOPPED - Отключен",
@@ -860,7 +1010,10 @@
     },
     "BoilerOutputValveState": {
       "type": "integer",
-      "enum": [1, 2],
+      "enum": [
+        1,
+        2
+      ],
       "enumDescriptions": {
         "1": "OPEN - Открыта",
         "2": "CLOSED - Закрыта"
@@ -868,7 +1021,10 @@
     },
     "BoilerPumpState": {
       "type": "integer",
-      "enum": [1, 2],
+      "enum": [
+        1,
+        2
+      ],
       "enumDescriptions": {
         "1": "OPERATING - Работа",
         "2": "ALARM - Авария"
@@ -876,7 +1032,22 @@
     },
     "NetworkPumpState": {
       "type": "integer",
-      "enum": [1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192],
+      "enum": [
+        1,
+        2,
+        4,
+        8,
+        16,
+        32,
+        64,
+        128,
+        256,
+        512,
+        1024,
+        2048,
+        4096,
+        8192
+      ],
       "enumDescriptions": {
         "1": "WAITING_FOR_READINESS - Ожидание готовности",
         "2": "READINESS - Готовность",
@@ -896,7 +1067,10 @@
     },
     "NetworkPumpFcStatus": {
       "type": "integer",
-      "enum": [1, 2],
+      "enum": [
+        1,
+        2
+      ],
       "enumDescriptions": {
         "1": "FC_OPERATING - Работа ПЧ",
         "2": "FC_ALARM - Авария ПЧ"
@@ -926,10 +1100,22 @@
               "styleProps": [
                 {
                   "fill": {
-                    "#00FF00": [8, 16],
-                    "yellow": [32],
-                    "red": [128],
-                    "white": [1, 2, 4, 64]
+                    "#00FF00": [
+                      8,
+                      16
+                    ],
+                    "yellow": [
+                      32
+                    ],
+                    "red": [
+                      128
+                    ],
+                    "white": [
+                      1,
+                      2,
+                      4,
+                      64
+                    ]
                   }
                 }
               ]
@@ -1184,9 +1370,18 @@
               "styleProps": [
                 {
                   "fill": {
-                    "#00FF00": [1],
-                    "yellow": [2],
-                    "red": [4, 8, 16, 32]
+                    "#00FF00": [
+                      1
+                    ],
+                    "yellow": [
+                      2
+                    ],
+                    "red": [
+                      4,
+                      8,
+                      16,
+                      32
+                    ]
                   }
                 }
               ]
@@ -1214,9 +1409,18 @@
               "styleProps": [
                 {
                   "fill": {
-                    "#00FF00": [1],
-                    "yellow": [2],
-                    "red": [4, 8, 16, 32]
+                    "#00FF00": [
+                      1
+                    ],
+                    "yellow": [
+                      2
+                    ],
+                    "red": [
+                      4,
+                      8,
+                      16,
+                      32
+                    ]
                   }
                 }
               ]
@@ -1263,8 +1467,12 @@
               "styleProps": [
                 {
                   "fill": {
-                    "#00FF00": [1],
-                    "red": [2]
+                    "#00FF00": [
+                      1
+                    ],
+                    "red": [
+                      2
+                    ]
                   }
                 }
               ]
@@ -1272,7 +1480,9 @@
           }
         }
       },
-      "required": ["state"]
+      "required": [
+        "state"
+      ]
     },
     "BoilerPumpModel": {
       "type": "object",
@@ -1298,8 +1508,12 @@
               "styleProps": [
                 {
                   "fill": {
-                    "#00FF00": [1],
-                    "red": [2]
+                    "#00FF00": [
+                      1
+                    ],
+                    "red": [
+                      2
+                    ]
                   }
                 }
               ]
@@ -1327,9 +1541,18 @@
               "styleProps": [
                 {
                   "fill": {
-                    "#00FF00": [1],
-                    "yellow": [2],
-                    "red": [4, 8, 16, 32]
+                    "#00FF00": [
+                      1
+                    ],
+                    "yellow": [
+                      2
+                    ],
+                    "red": [
+                      4,
+                      8,
+                      16,
+                      32
+                    ]
                   }
                 }
               ]
@@ -1337,7 +1560,10 @@
           }
         }
       },
-      "required": ["state", "statusCurrentSensor"]
+      "required": [
+        "state",
+        "statusCurrentSensor"
+      ]
     },
     "NetworkPumpModel": {
       "type": "object",
@@ -1363,9 +1589,19 @@
               "styleProps": [
                 {
                   "fill": {
-                    "#00FF00": [64],
-                    "red": [512],
-                    "#4D4D4D": [1, 2, 32, 128, 2048]
+                    "#00FF00": [
+                      64
+                    ],
+                    "red": [
+                      512
+                    ],
+                    "#4D4D4D": [
+                      1,
+                      2,
+                      32,
+                      128,
+                      2048
+                    ]
                   }
                 }
               ]
@@ -1420,8 +1656,12 @@
               "styleProps": [
                 {
                   "fill": {
-                    "#00FF00": [1],
-                    "red": [2]
+                    "#00FF00": [
+                      1
+                    ],
+                    "red": [
+                      2
+                    ]
                   }
                 }
               ]
@@ -1429,7 +1669,11 @@
           }
         }
       },
-      "required": ["state", "isDryRun", "statusFc"]
+      "required": [
+        "state",
+        "isDryRun",
+        "statusFc"
+      ]
     }
   },
   "ui": {
