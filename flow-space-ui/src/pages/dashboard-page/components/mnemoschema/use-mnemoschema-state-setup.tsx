@@ -4,7 +4,7 @@ import { useScreenSize } from "../../../../utils/media-query";
 
 export const useMnemoschemaStateSetup = () => {
     const { isSmall, isXSmall, isLarge } = useScreenSize();
-    const { schemaTypeInfoPropertiesChain, dataschema } = useDashboardPage();
+    const { schemaTypeInfoPropertiesChain, dataschema, deviceState } = useDashboardPage();
 
 
     return useCallback((mnemoschemaElement: HTMLElement) => {
@@ -75,13 +75,14 @@ export const useMnemoschemaStateSetup = () => {
                             }
                         }
 
+                        const state = deviceState?.state;
                         const dataStateEvalAttr = element.getAttribute('data-state-eval');
-                        if (dataStateEvalAttr) {
+                        if (dataStateEvalAttr && state) {
                             eval(dataStateEvalAttr);
                         }
                     });
             });
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [dataschema, schemaTypeInfoPropertiesChain, isSmall, isXSmall, isLarge]);
+    }, [dataschema, schemaTypeInfoPropertiesChain, isSmall, isXSmall, isLarge, deviceState]);
 }
