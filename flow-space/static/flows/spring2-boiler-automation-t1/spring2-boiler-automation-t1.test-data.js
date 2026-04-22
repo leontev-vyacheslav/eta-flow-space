@@ -32,8 +32,8 @@ const deviceState = {
     statusPressOutSrcWSensor: 2, // Статус датчика давления исх. воды
 
     isSourceWaterRelay: false, // Реле давления исходной воды
-    isCO: false, // Загазованность CO
-    isCH: false, // Загазованность CH
+    isCO1: false, // Загазованность CO
+    isCH1: false, // Загазованность CH
     isGasFlap: false, // Клапан отсекатель газа закрыт
     isVaporDt1: false, // Загазованность горючими газами 1
     isVaporDt2: false, // Загазованность горючими газами 2

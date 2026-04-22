@@ -42,7 +42,8 @@ table.simple-grid {
   padding-left: 5px;
   padding-right: 5px;
   padding-bottom: 10px;
-  gap: 5px
+  gap: 5px;
+  flex: 1;
 }
 
 .screen-x-small .map-pop-content-location {
