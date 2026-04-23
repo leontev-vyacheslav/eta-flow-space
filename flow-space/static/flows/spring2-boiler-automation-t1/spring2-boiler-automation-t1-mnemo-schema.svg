@@ -24,10 +24,9 @@
 	</defs>
 	<defs>
 		<g id="emergencyIcon">
-			<polygon style="fill:#FCEE21;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="132.4,131.8 137.8,142.8
-		127.1,142.8 132.4,131.8" />
-			<line style="fill:none;stroke:#000000;stroke-width:0.75;stroke-miterlimit:10;" x1="132.4" y1="135.3" x2="132.4" y2="139.6" />
-			<circle style="fill:none;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" cx="132.4" cy="141" r="0.3" />
+			<rect style="fill:#606060;" width="2" height="10" transform="translate(8, 5)"/>
+			<path style="fill:#FFC107;cursor:pointer" transform="scale(0.035)" d="M479 447.77 268.43 56.64a8 8 0 0 0-14.09 0L43.73 447.77a8 8 0 0 0 7.05 11.79H472a8 8 0 0 0 7-11.79zm-197.62-36.29h-40v-40h40zm-4-63.92h-32l-6-160h44z">
+			</path>
 		</g>
 	</defs>
 
@@ -36,19 +35,21 @@
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="108.7" y1="241.8" x2="108.7" y2="253.9" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="109.3" y1="114.9" x2="56.3" y2="114.9" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="108.7" y1="210" x2="56.3" y2="210" />
-	<g>
-		<circle style="fill:none;stroke:#000000;stroke-miterlimit:10;" cx="56.3" cy="162.2" r="10.6" />
+	<g data-section="boilerPumps[0]">
+		<text transform="matrix(1 0 0 1 36.7539 146.0158)" style="font-family:'Arial'; font-size:10px;">НК1</text>
+		<circle data-state="boilerPumps[0].state" data-colorizer-hint="fill" style="fill:none;stroke:#000000;stroke-miterlimit:10;" cx="56.3" cy="162.2" r="10.6" />
 		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="56.3" cy="162.2" r="9.3" />
 		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="56.4,170.9 52.4,164.3 60.3,164.3 56.4,170.9
 		" />
 		<g>
-			<path style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M66.9,175.6h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
+			<path data-state="boilerPumps[0].state" data-colorizer-hint="stroke" style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M66.9,175.6h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
 			c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6V173C69.5,174.5,68.3,175.6,66.9,175.6z" />
 		</g>
+		<use data-state="" data-state-eval="element.style.display = (state.boilerPumps[0].state===2 ? 'initial': 'none')" href='#emergencyIcon' transform="translate(58, 130)" />
 	</g>
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="56.3" y1="114.9" x2="56.3" y2="148.9" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="56.3" y1="175.6" x2="56.3" y2="209.5" />
-	<g>
+	<g >
 		<polygon style="fill:#F2F2F2;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="108.7,267.4 103.5,259.3 114,259.3
 		108.7,267.4 	" />
 		<polygon style="fill:#F2F2F2;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="108.7,267.2 114,275.3 103.5,275.3
@@ -58,19 +59,20 @@
 			c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6v21.6C121.8,279.5,120.7,280.7,119.2,280.7z" />
 		</g>
 	</g>
-	<g>
+
+	<g data-section="boilers[0].tempOut">
 		<text transform="matrix(1 0 0 1 126.3813 111.2332)" style="font-family:'Arial'; font-size:10px;">TE1</text>
-		<polygon style="fill:#FFFFFF;stroke:#FF0000;stroke-miterlimit:10;" points="157.9,124.4 119.8,124.4 119.8,124.4 119.8,113.2
+		<polygon data-state="boilers[0].statusTempOutSensor" style="fill: none;stroke-miterlimit:10;" points="157.9,124.4 119.8,124.4 119.8,124.4 119.8,113.2
 		119.8,113.2 157.9,113.2 157.9,113.2 157.9,124.4" />
 		<text data-state="boilers[0].tempOut" transform="matrix(1 0 0 1 121 121.9492)" style="font-family:'Arial'; font-size:9px;"></text>
 		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="119.8" y1="118.8" x2="109.4" y2="118.8" />
 	</g>
-	<text transform="matrix(1 0 0 1 36.7539 146.0158)" style="font-family:'Arial'; font-size:10px;">НК1</text>
+
 	<text transform="matrix(1 0 0 1 90.8535 251.2384)" style="font-family:'Arial'; font-size:10px;">ЗК1</text>
 
 
 	<g data-section="boilers[0]">
-		<rect x="77.6" y="128.4" style="fill:#FFFFFF;stroke:#FF0000;stroke-miterlimit:10;" width="63.6" height="69.3" />
+		<rect data-state="" data-state-eval="element.style.stroke = (state.boilers[0].isBurnerFailure || state.boilers[0].isGasRelayPressure || state.boilers[0].isMinWaterPressure || state.boilers[0].isMaxWaterPressure ||  state.boilers[0].isMaxWaterTemperature  ? 'red': 'black');" x="77.6" y="128.4" style="fill:#FFFFFF;stroke:#FFFFFF;stroke-miterlimit:10;" width="63.6" height="69.3" />
 		<g>
 			<text transform="matrix(1 0 0 1 99.2257 147.8056)" style="font-family:'Arial'; font-size:10px;">TE7</text>
 			<polygon style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" points="131.6,161.1 93.5,161.1 93.5,161.1
@@ -83,28 +85,28 @@
 		</g>
 		<g data-section="boilers[0].burner">
 			<text transform="matrix(1 0 0 1 77.5861 125.3774)" style="font-family:'Arial'; font-size:10px;">К1</text>
-			<path style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" d="M125.3,194.6H95.9c-2.5,0-4.5-2-4.5-4.5v-19.9
+			<path data-state="boilers[0].isBurnerFailure" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" d="M125.3,194.6H95.9c-2.5,0-4.5-2-4.5-4.5v-19.9
 		c0-2.5,2-4.5,4.5-4.5h29.5c2.5,0,4.5,2,4.5,4.5v19.9C129.8,192.6,127.8,194.6,125.3,194.6z" />
 			<use data-state="boilers[0].isWorking" data-state-eval="element.style.display = (value ? 'initial': 'none');" href='#boilerFlame' transform="translate(94, 168) rotate(0, 25, 25) scale(0.06)" class="boiler-flame-animation" />
 		</g>
-		<use data-state="boilers[0].isBurnerFailure"
-		data-state-eval="element.style.display = (state.boilers[0].isBurnerFailure || state.boilers[0].isGasRelayPressure || state.boilers[0].isMinWaterPressure || state.boilers[0].isMaxWaterPressure ||  state.boilers[0].isMaxWaterTemperature || state.boilers[0].isFlowRelay ? 'initial': 'none')"
-		href='#emergencyIcon' transform="translate(0, 0)" />
+		<use data-state="" data-state-eval="element.style.display = (state.boilers[0].isBurnerFailure || state.boilers[0].isGasRelayPressure || state.boilers[0].isMinWaterPressure || state.boilers[0].isMaxWaterPressure ||  state.boilers[0].isMaxWaterTemperature  ? 'initial': 'none')" href='#emergencyIcon' transform="translate(120, 130)" />
 	</g>
 
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="108.7" y1="280.6" x2="108.7" y2="307.2" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="228.8" y1="94" x2="228.8" y2="128.3" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="228.8" y1="114.8" x2="175.7" y2="114.8" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="228.2" y1="209.9" x2="175.8" y2="209.9" />
-	<g>
-		<circle style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="175.8" cy="162.1" r="10.6" />
+	<g data-section="boilerPumps[1]">
+		<text transform="matrix(1 0 0 1 156.1857 145.9151)" style="font-family:'Arial'; font-size:10px;">НК2</text>
+		<circle data-state="boilerPumps[1].state" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="175.8" cy="162.1" r="10.6" />
 		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="175.7" cy="162.1" r="9.3" />
 		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="175.8,170.8 171.9,164.2 179.8,164.2
 		175.8,170.8 	" />
 		<g>
-			<path style="fill:none;stroke:#FF0000;stroke-width:2;stroke-miterlimit:10;" d="M186.3,175.5h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
+			<path data-state="boilerPumps[1].state" data-colorizer-hint="stroke" style="fill:none;stroke:#FF0000;stroke-width:2;stroke-miterlimit:10;" d="M186.3,175.5h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
 			c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6v21.6C188.9,174.4,187.7,175.5,186.3,175.5z" />
 		</g>
+		<use data-state="" data-state-eval="element.style.display = (state.boilerPumps[1].state===2 ? 'initial': 'none')" href='#emergencyIcon' transform="translate(178, 130)" />
 	</g>
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="175.7" y1="114.8" x2="175.8" y2="148.8" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="175.8" y1="175.5" x2="175.8" y2="209.4" />
@@ -118,18 +120,17 @@
 			c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6V278C241.2,279.4,240.1,280.6,238.7,280.6z" />
 		</g>
 	</g>
-	<g>
+	<g data-section="boilers[1].tempOut">
 		<text transform="matrix(1 0 0 1 245.8132 111.1325)" style="font-family:'Arial'; font-size:10px;">TE2</text>
-		<polygon style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" points="277.3,124.3 239.2,124.3
+		<polygon data-state="boilers[1].statusTempOutSensor" style="fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;" points="277.3,124.3 239.2,124.3
 		239.2,124.3 239.2,113.1 239.2,113.1 277.3,113.1 277.3,113.1 277.3,124.3 	" />
 		<text data-state="boilers[1].tempOut" transform="matrix(1 0 0 1 245.3361 121.8485)" style="font-family:'Arial'; font-size:9px;"></text>
 		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="239.2" y1="118.7" x2="228.8" y2="118.7" />
 	</g>
-	<text transform="matrix(1 0 0 1 156.1857 145.9151)" style="font-family:'Arial'; font-size:10px;">НК2</text>
 	<text transform="matrix(1 0 0 1 208.3075 251.1377)" style="font-family:'Arial'; font-size:10px;">ЗК2</text>
 
 	<g data-section="boilers[1]">
-		<rect x="197" y="128.3" style="fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;" width="63.6" height="69.3" />
+		<rect data-state="" data-state-eval="element.style.stroke = (state.boilers[1].isBurnerFailure || state.boilers[1].isGasRelayPressure || state.boilers[1].isMinWaterPressure || state.boilers[1].isMaxWaterPressure ||  state.boilers[1].isMaxWaterTemperature  ? 'red': 'black');" x="197" y="128.3" style="fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;" width="63.6" height="69.3" />
 		<g data-section="boilers[1].tempFlueGases">
 			<text transform="matrix(1 0 0 1 219.6575 147.7048)" style="font-family:'Arial'; font-size:10px;">TE8</text>
 			<polygon style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" points="251,161 212.9,161 212.9,161
@@ -142,31 +143,30 @@
 		</g>
 		<g data-section="boilers[1].burner">
 			<text transform="matrix(1 0 0 1 197.018 125.2767)" style="font-family:'Arial'; font-size:10px;">К2</text>
-			<path style="fill:#808080;stroke:#FF0000;stroke-miterlimit:10;" d="M244.7,194.5h-29.5c-2.5,0-4.5-2-4.5-4.5v-19.9
+			<path data-state="boilers[1].isBurnerFailure" style="fill:#808080;stroke:#FF0000;stroke-miterlimit:10;" d="M244.7,194.5h-29.5c-2.5,0-4.5-2-4.5-4.5v-19.9
 			c0-2.5,2-4.5,4.5-4.5h29.5c2.5,0,4.5,2,4.5,4.5v19.9C249.2,192.5,247.2,194.5,244.7,194.5z" />
 			<use data-state="boilers[1].isWorking" data-state-eval="element.style.display = (value ? 'initial': 'none');" href='#boilerFlame' transform="translate(214, 168) rotate(0, 25, 25) scale(0.06)" class="boiler-flame-animation" />
 		</g>
-		<use data-state="boilers[1].isBurnerFailure"
-		data-state-eval="element.style.display = (state.boilers[1].isBurnerFailure || state.boilers[1].isGasRelayPressure || state.boilers[1].isMinWaterPressure || state.boilers[1].isMaxWaterPressure ||  state.boilers[1].isMaxWaterTemperature || state.boilers[1].isFlowRelay ? 'initial': 'none')"
-		href='#emergencyIcon' transform="translate(120, 0)" />
+		<use data-state="" data-state-eval="element.style.display = (state.boilers[1].isBurnerFailure || state.boilers[1].isGasRelayPressure || state.boilers[1].isMinWaterPressure || state.boilers[1].isMaxWaterPressure ||  state.boilers[1].isMaxWaterTemperature  ? 'initial': 'none')" href='#emergencyIcon' transform="translate(240, 130)" />
 	</g>
 
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="228.2" y1="280.7" x2="228.2" y2="289.1" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="109.4" y1="94.1" x2="228.8" y2="94.1" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="108.7" y1="289.2" x2="228.2" y2="289.2" />
-	<rect x="316.6" y="128.2" style="fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;" width="63.6" height="69.3" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="348.4" y1="93.9" x2="348.4" y2="128.2" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="348.3" y1="114.8" x2="295.3" y2="114.8" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="347.7" y1="209.9" x2="295.3" y2="209.9" />
-	<g>
-		<circle style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="295.3" cy="162" r="10.6" />
+	<g data-section="boilerPumps[2]">
+		<text transform="matrix(1 0 0 1 275.7352 145.8647)" style="font-family:'Arial'; font-size:10px;">НК3</text>
+		<circle data-state="boilerPumps[2].state" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="295.3" cy="162" r="10.6" />
 		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="295.3" cy="162" r="9.3" />
 		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="295.4,170.7 291.4,164.1 299.3,164.1
 		295.4,170.7 	" />
 		<g>
-			<path style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M305.9,175.5h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
+			<path data-state="boilerPumps[2].state" data-colorizer-hint="stroke" style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M305.9,175.5h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
 			c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6v21.6C308.4,174.3,307.3,175.5,305.9,175.5z" />
 		</g>
+		<use data-state="" data-state-eval="element.style.display = (state.boilerPumps[2].state===2 ? 'initial': 'none')" href='#emergencyIcon' transform="translate(298, 130)" />
 	</g>
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="295.3" y1="114.8" x2="295.3" y2="148.7" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="295.3" y1="175.5" x2="295.3" y2="209.3" />
@@ -180,48 +180,55 @@
 			c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6V278C360.8,279.4,359.6,280.5,358.2,280.5z" />
 		</g>
 	</g>
-	<g>
+	<g data-section="boilers[2].tempOut">
 		<text transform="matrix(1 0 0 1 365.3627 111.0821)" style="font-family:'Arial'; font-size:10px;">TE3</text>
-		<polygon style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" points="396.9,124.2 358.8,124.2
+		<polygon data-state="boilers[2].statusTempOutSensor" style="fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;" points="396.9,124.2 358.8,124.2
 		358.8,124.2 358.8,113.1 358.8,113.1 396.9,113.1 396.9,113.1 396.9,124.2 	" />
 		<text data-state="boilers[2].tempOut" transform="matrix(1 0 0 1 360 121.7981)" style="font-family:'Arial'; font-size:9px;"></text>
 		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="358.8" y1="118.7" x2="348.4" y2="118.7" />
 	</g>
-	<text transform="matrix(1 0 0 1 275.7352 145.8647)" style="font-family:'Arial'; font-size:10px;">НК3</text>
 	<text transform="matrix(1 0 0 1 327.857 251.0874)" style="font-family:'Arial'; font-size:10px;">ЗК3</text>
-	<g>
-		<text transform="matrix(1 0 0 1 339.2071 147.6545)" style="font-family:'Arial'; font-size:10px;">TE9</text>
-		<polygon style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" points="370.6,160.9 332.5,160.9
-		332.5,160.9 332.5,149.8 332.5,149.8 370.6,149.8 370.6,149.8 370.6,160.9 	" />
-		<text data-state="boilers[2].tempFlueGases" transform="matrix(1 0 0 1 335.6505 158.492)" style="font-family:'Arial'; font-size:9px;"></text>
-		<path style="fill:none;stroke:#000000;stroke-miterlimit:10;" d="M325.1,151.2c1.2,0.7,2,1.4,2,2.2c0,1-1.6,2.1-2,3.4
-		c-0.3,1.1,0.4,1.5,1.4,2.7" />
-		<path style="fill:none;stroke:#000000;stroke-miterlimit:10;" d="M327.9,151.2c1.2,0.7,2,1.4,2,2.2c0,1-1.6,2.1-2,3.4
-		c-0.3,1.1,0.4,1.5,1.4,2.7" />
-	</g>
-	<g data-section="boilers[2].burner">
-		<text transform="matrix(1 0 0 1 316.5675 125.2263)" style="font-family:'Arial'; font-size:10px;">К3</text>
-		<path style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" d="M364.3,194.5h-29.5c-2.5,0-4.5-2-4.5-4.5v-19.9
-		c0-2.5,2-4.5,4.5-4.5h29.5c2.5,0,4.5,2,4.5,4.5V190C368.8,192.5,366.8,194.5,364.3,194.5z" />
-		<use data-state="boilers[2].isWorking" data-state-eval="element.style.display = (value ? 'initial': 'none');" href='#boilerFlame' transform="translate(333, 168) rotate(0, 25, 25) scale(0.06)" class="boiler-flame-animation" />
 
+	<g data-section="boilers[2]">
+		<rect data-state="" data-state-eval="element.style.stroke = (state.boilers[2].isBurnerFailure || state.boilers[2].isGasRelayPressure || state.boilers[2].isMinWaterPressure || state.boilers[2].isMaxWaterPressure ||  state.boilers[2].isMaxWaterTemperature  ? 'red': 'black');" x="316.6" y="128.2" style="fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;" width="63.6" height="69.3" />
+		<g data-section="boilers[2].tempFlueGases">
+			<text transform="matrix(1 0 0 1 339.2071 147.6545)" style="font-family:'Arial'; font-size:10px;">TE9</text>
+			<polygon style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" points="370.6,160.9 332.5,160.9
+			332.5,160.9 332.5,149.8 332.5,149.8 370.6,149.8 370.6,149.8 370.6,160.9 	" />
+			<text data-state="boilers[2].tempFlueGases" transform="matrix(1 0 0 1 335.6505 158.492)" style="font-family:'Arial'; font-size:9px;"></text>
+			<path style="fill:none;stroke:#000000;stroke-miterlimit:10;" d="M325.1,151.2c1.2,0.7,2,1.4,2,2.2c0,1-1.6,2.1-2,3.4
+			c-0.3,1.1,0.4,1.5,1.4,2.7" />
+			<path style="fill:none;stroke:#000000;stroke-miterlimit:10;" d="M327.9,151.2c1.2,0.7,2,1.4,2,2.2c0,1-1.6,2.1-2,3.4
+			c-0.3,1.1,0.4,1.5,1.4,2.7" />
+		</g>
+
+		<g data-section="boilers[2].burner">
+			<text transform="matrix(1 0 0 1 316.5675 125.2263)" style="font-family:'Arial'; font-size:10px;">К3</text>
+			<path data-state="boilers[2].isBurnerFailure" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" d="M364.3,194.5h-29.5c-2.5,0-4.5-2-4.5-4.5v-19.9
+			c0-2.5,2-4.5,4.5-4.5h29.5c2.5,0,4.5,2,4.5,4.5V190C368.8,192.5,366.8,194.5,364.3,194.5z" />
+			<use data-state="boilers[2].isWorking" data-state-eval="element.style.display = (value ? 'initial': 'none');" href='#boilerFlame' transform="translate(333, 168) rotate(0, 25, 25) scale(0.06)" class="boiler-flame-animation" />
+		</g>
+
+		<use data-state="" data-state-eval="element.style.display = (state.boilers[2].isBurnerFailure || state.boilers[2].isGasRelayPressure || state.boilers[2].isMinWaterPressure || state.boilers[2].isMaxWaterPressure ||  state.boilers[2].isMaxWaterTemperature ? 'initial': 'none')" href='#emergencyIcon' transform="translate(360, 130)" />
 	</g>
+
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="347.7" y1="280.5" x2="347.7" y2="289" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="228.9" y1="94" x2="348.4" y2="94" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="228.3" y1="289.1" x2="347.7" y2="289.1" />
-	<rect x="436.5" y="128.1" style="fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;" width="63.6" height="69.3" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="468.3" y1="93.8" x2="468.3" y2="128.1" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="468.3" y1="114.7" x2="415.2" y2="114.7" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="467.7" y1="209.8" x2="415.3" y2="209.8" />
-	<g>
-		<circle style="fill:none;stroke:#000000;stroke-miterlimit:10;" cx="415.3" cy="161.9" r="10.6" />
+	<g data-section="boilerPumps[3]">
+		<text transform="matrix(1 0 0 1 395.6823 145.764)" style="font-family:'Arial'; font-size:10px;">НК4</text>
+		<circle data-state="boilerPumps[3].state" data-colorizer-hint="fill" style="fill:none;stroke:#000000;stroke-miterlimit:10;" cx="415.3" cy="161.9" r="10.6" />
 		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="415.2" cy="161.9" r="9.3" />
 		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="415.3,170.6 411.4,164 419.3,164 415.3,170.6
 		" />
 		<g>
-			<path style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M425.8,175.4h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
+			<path data-state="boilerPumps[3].state" data-colorizer-hint="stroke" style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M425.8,175.4h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
 			c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6v21.6C428.4,174.2,427.2,175.4,425.8,175.4z" />
 		</g>
+		<use data-state="" data-state-eval="element.style.display = (state.boilerPumps[3].state===2 ? 'initial': 'none')" href='#emergencyIcon' transform="translate(418, 130)" />
 	</g>
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="415.2" y1="114.7" x2="415.3" y2="148.6" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="415.3" y1="175.4" x2="415.3" y2="209.2" />
@@ -235,35 +242,42 @@
 			c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6v21.6C480.7,279.3,479.6,280.4,478.2,280.4z" />
 		</g>
 	</g>
-	<g>
+	<g data-section="boilers[3].tempOut">
 		<text transform="matrix(1 0 0 1 485.3098 110.9814)" style="font-family:'Arial'; font-size:10px;">TE4</text>
-		<polygon style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" points="516.8,124.1 478.7,124.1
+		<polygon data-state="boilers[3].statusTempOutSensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" points="516.8,124.1 478.7,124.1
 		478.7,124.1 478.7,113 478.7,113 516.8,113 516.8,113 516.8,124.1 	" />
 		<text data-state="boilers[3].tempOut" transform="matrix(1 0 0 1 484.8327 121.6974)" style="font-family:'Arial'; font-size:9px;"></text>
 		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="478.7" y1="118.6" x2="468.3" y2="118.6" />
 	</g>
-	<text transform="matrix(1 0 0 1 395.6823 145.764)" style="font-family:'Arial'; font-size:10px;">НК4</text>
 	<text transform="matrix(1 0 0 1 447.8041 250.9867)" style="font-family:'Arial'; font-size:10px;">ЗК4</text>
-	<g>
-		<text transform="matrix(1 0 0 1 459.1542 147.5538)" style="font-family:'Arial'; font-size:10px;">TE10</text>
-		<polygon style="fill:#FFFFFF;stroke:#FF0000;stroke-miterlimit:10;" points="490.5,160.8 452.4,160.8 452.4,160.8 452.4,149.7
+
+	<g data-section="boilers[3]">
+		<rect data-state="" data-state-eval="element.style.stroke = (state.boilers[3].isBurnerFailure || state.boilers[3].isGasRelayPressure || state.boilers[3].isMinWaterPressure || state.boilers[3].isMaxWaterPressure ||  state.boilers[3].isMaxWaterTemperature ? 'red': 'black');" x="436.5" y="128.1" style="fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;" width="63.6" height="69.3" />
+		<g data-section="boilers[3].tempFlueGases">
+			<text transform="matrix(1 0 0 1 455 147.5538)" style="font-family:'Arial'; font-size:10px;">TE10</text>
+			<polygon style="fill:#FFFFFF;stroke:#FF0000;stroke-miterlimit:10;" points="490.5,160.8 452.4,160.8 452.4,160.8 452.4,149.7
 		452.4,149.7 490.5,149.7 490.5,149.7 490.5,160.8 	" />
-		<text data-state="boilers[3].tempFlueGases" transform="matrix(1 0 0 1 455.5977 158.3913)" style="font-family:'Arial'; font-size:9px;"></text>
-		<path style="fill:none;stroke:#000000;stroke-miterlimit:10;" d="M445,151.1c1.2,0.7,2,1.4,2,2.2c0,1-1.6,2.1-2,3.4
+			<text data-state="boilers[3].tempFlueGases" transform="matrix(1 0 0 1 455.5977 158.3913)" style="font-family:'Arial'; font-size:9px;"></text>
+			<path style="fill:none;stroke:#000000;stroke-miterlimit:10;" d="M445,151.1c1.2,0.7,2,1.4,2,2.2c0,1-1.6,2.1-2,3.4
 		c-0.3,1.1,0.4,1.5,1.4,2.7" />
-		<path style="fill:none;stroke:#000000;stroke-miterlimit:10;" d="M447.8,151.1c1.2,0.7,2,1.4,2,2.2c0,1-1.6,2.1-2,3.4
+			<path style="fill:none;stroke:#000000;stroke-miterlimit:10;" d="M447.8,151.1c1.2,0.7,2,1.4,2,2.2c0,1-1.6,2.1-2,3.4
 		c-0.3,1.1,0.4,1.5,1.4,2.7" />
+		</g>
+		<g data-section="boilers[3].burner">
+			<text transform="matrix(1 0 0 1 436.5146 125.1256)" style="font-family:'Arial'; font-size:10px;">К4</text>
+			<path data-state="boilers[3].isBurnerFailure" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" d="M484.2,194.4h-29.5c-2.5,0-4.5-2-4.5-4.5v-19.9
+			c0-2.5,2-4.5,4.5-4.5h29.5c2.5,0,4.5,2,4.5,4.5v19.9C488.7,192.4,486.7,194.4,484.2,194.4z" />
+			<use data-state="boilers[1].isWorking" data-state-eval="element.style.display = (value ? 'initial': 'none');" href='#boilerFlame' transform="translate(453, 168) rotate(0, 25, 25) scale(0.06)" class="boiler-flame-animation" />
+		</g>
+
+		<use data-state="" data-state-eval="element.style.display = (state.boilers[3].isBurnerFailure || state.boilers[3].isGasRelayPressure || state.boilers[3].isMinWaterPressure || state.boilers[3].isMaxWaterPressure ||  state.boilers[3].isMaxWaterTemperature ? 'initial': 'none')" href='#emergencyIcon' transform="translate(480, 130)" />
+
 	</g>
+
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="467.7" y1="280.4" x2="467.7" y2="288.9" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="348.9" y1="93.9" x2="468.3" y2="93.9" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="348.2" y1="289" x2="467.7" y2="289" />
-	<g data-section="boilers[3].burner">
-		<text transform="matrix(1 0 0 1 436.5146 125.1256)" style="font-family:'Arial'; font-size:10px;">К4</text>
-		<path style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" d="M484.2,194.4h-29.5c-2.5,0-4.5-2-4.5-4.5v-19.9
-			c0-2.5,2-4.5,4.5-4.5h29.5c2.5,0,4.5,2,4.5,4.5v19.9C488.7,192.4,486.7,194.4,484.2,194.4z" />
-		<use data-state="boilers[1].isWorking" data-state-eval="element.style.display = (value ? 'initial': 'none');" href='#boilerFlame' transform="translate(453, 168) rotate(0, 25, 25) scale(0.06)" class="boiler-flame-animation" />
 
-	</g>
 
 	<g>
 		<circle style="fill:none;stroke:#000000;stroke-miterlimit:10;" cx="73.2" cy="337.6" r="10.6" />
@@ -719,56 +733,59 @@
 	c0-5.2,4.2-9.4,9.4-9.4h488.2c5.2,0,9.4,4.2,9.4,9.4v71.3C574.5,522.9,570.3,527.1,565.1,527.1z" />
 	<text transform="matrix(1 0 0 1 303.4309 453.2192)" style="font-family:'Arial'; font-size:10px;">Аварийные события</text>
 
-	<g>
+	<g data-section="boilers[0].flowRelay">
+		<text transform="matrix(1 0 0 1 114.0116 212.3356)" style="font-family:'Arial'; font-size:10px;">FS1</text>
 		<g>
 			<path style="fill:none;stroke:#000000;stroke-miterlimit:10;" d="M119.3,241.8h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
 			c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6v21.6C121.9,240.6,120.7,241.8,119.3,241.8z" />
 		</g>
-		<circle style="fill:none;stroke:#000000;stroke-miterlimit:10;" cx="108.8" cy="228.6" r="10.6" />
+		<circle data-state="boilers[0].isFlowRelay" style="fill:none;stroke:#000000;stroke-miterlimit:10;" cx="108.8" cy="228.6" r="10.6" />
 		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="108.8" cy="228.6" r="9.3" />
 		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="102.6" y1="221.7" x2="108.8" y2="237.8" />
 		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="115" y1="221.7" x2="108.8" y2="237.8" />
 	</g>
-	<text transform="matrix(1 0 0 1 114.0116 212.3356)" style="font-family:'Arial'; font-size:10px;">FS1</text>
+
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="108.8" y1="215" x2="108.7" y2="197.7" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="228.3" y1="241.8" x2="228.3" y2="253.9" />
-	<g>
+	<g data-section="boilers[1].flowRelay">
+		<text transform="matrix(1 0 0 1 233.56 212.3356)" style="font-family:'Arial'; font-size:10px;">FS2</text>
 		<g>
 			<path style="fill:none;stroke:#000000;stroke-miterlimit:10;" d="M238.9,241.8h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
 			c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6v21.6C241.4,240.6,240.3,241.8,238.9,241.8z" />
 		</g>
-		<circle style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="228.4" cy="228.6" r="10.6" />
+		<circle data-state="boilers[1].isFlowRelay"  style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="228.4" cy="228.6" r="10.6" />
 		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="228.3" cy="228.6" r="9.3" />
 		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="222.1" y1="221.7" x2="228.3" y2="237.8" />
 		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="234.6" y1="221.7" x2="228.3" y2="237.8" />
 	</g>
-	<text transform="matrix(1 0 0 1 233.56 212.3356)" style="font-family:'Arial'; font-size:10px;">FS2</text>
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="228.4" y1="215" x2="228.3" y2="197.7" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="347.6" y1="241.2" x2="347.6" y2="253.4" />
-	<g>
+
+	<g data-section="boilers[2].flowRelay">
+		<text transform="matrix(1 0 0 1 352.9061 211.8015)" style="font-family:'Arial'; font-size:10px;">FS3</text>
 		<g>
 			<path style="fill:none;stroke:#000000;stroke-miterlimit:10;" d="M358.2,241.2h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
 			c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6v21.6C360.8,240.1,359.6,241.2,358.2,241.2z" />
 		</g>
-		<circle style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="347.7" cy="228.1" r="10.6" />
+		<circle data-state="boilers[2].isFlowRelay" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="347.7" cy="228.1" r="10.6" />
 		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="347.7" cy="228" r="9.3" />
 		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="341.5" y1="221.2" x2="347.7" y2="237.3" />
 		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="353.9" y1="221.2" x2="347.7" y2="237.3" />
 	</g>
-	<text transform="matrix(1 0 0 1 352.9061 211.8015)" style="font-family:'Arial'; font-size:10px;">FS3</text>
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="347.7" y1="214.5" x2="347.6" y2="197.1" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="467.6" y1="241.7" x2="467.6" y2="253.8" />
-	<g>
+
+	<g data-section="boilers[3].flowRelay">
+		<text transform="matrix(1 0 0 1 472.8532 212.2349)" style="font-family:'Arial'; font-size:10px;">FS4</text>
 		<g>
 			<path style="fill:none;stroke:#000000;stroke-miterlimit:10;" d="M478.2,241.7h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
 			c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6v21.6C480.7,240.5,479.6,241.7,478.2,241.7z" />
 		</g>
-		<circle style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="467.7" cy="228.5" r="10.6" />
+		<circle data-state="boilers[3].isFlowRelay" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="467.7" cy="228.5" r="10.6" />
 		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="467.6" cy="228.5" r="9.3" />
 		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="461.4" y1="221.6" x2="467.6" y2="237.7" />
 		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="473.9" y1="221.6" x2="467.6" y2="237.7" />
 	</g>
-	<text transform="matrix(1 0 0 1 472.8532 212.2349)" style="font-family:'Arial'; font-size:10px;">FS4</text>
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="467.7" y1="214.9" x2="467.6" y2="197.6" />
 
 </svg>
