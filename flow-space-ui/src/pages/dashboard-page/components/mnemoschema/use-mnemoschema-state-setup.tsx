@@ -67,10 +67,13 @@ export const useMnemoschemaStateSetup = () => {
                                         Object.keys(stylePropObj).forEach(k => {
                                             // "red": true
                                             if (stylePropObj[k] === value || (Array.isArray(stylePropObj[k]) && stylePropObj[k].includes(value))) {
-                                                const hint = element.getAttribute('data-colorizer-hint');
-                                                if (hint) {
-                                                    if (hint === stylePropKey) {
-                                                        ((element as SVGElement).style as any)[stylePropKey] = k;
+                                                const hints = element.getAttribute('data-colorizer-hint');
+                                                if (hints) {
+                                                    const hintArray = hints.split(';');
+                                                    for (const hint of hintArray) {
+                                                        if (hint === stylePropKey) {
+                                                            ((element as SVGElement).style as any)[stylePropKey] = k;
+                                                        }
                                                     }
                                                 } else {
                                                     ((element as SVGElement).style as any)[stylePropKey] = k;
