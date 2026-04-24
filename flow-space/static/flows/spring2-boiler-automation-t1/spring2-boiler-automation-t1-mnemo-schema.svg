@@ -49,13 +49,13 @@
 	</g>
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="56.3" y1="114.9" x2="56.3" y2="148.9" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="56.3" y1="175.6" x2="56.3" y2="209.5" />
-	<g >
-		<polygon style="fill:#F2F2F2;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="108.7,267.4 103.5,259.3 114,259.3
+	<g data-section="boilerOutputValves[0]">
+		<polygon data-state="boilerOutputValves[0].state" data-colorizer-hint="fill" style="fill:#F2F2F2;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="108.7,267.4 103.5,259.3 114,259.3
 		108.7,267.4 	" />
-		<polygon style="fill:#F2F2F2;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="108.7,267.2 114,275.3 103.5,275.3
+		<polygon data-state="boilerOutputValves[0].state" data-colorizer-hint="fill" style="fill:#F2F2F2;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="108.7,267.2 114,275.3 103.5,275.3
 		108.7,267.2 	" />
 		<g>
-			<path style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M119.2,280.7h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
+			<path data-state="boilerOutputValves[0].state" data-colorizer-hint="stroke;stroke-width" style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M119.2,280.7h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
 			c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6v21.6C121.8,279.5,120.7,280.7,119.2,280.7z" />
 		</g>
 	</g>
@@ -110,13 +110,13 @@
 	</g>
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="175.7" y1="114.8" x2="175.8" y2="148.8" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="175.8" y1="175.5" x2="175.8" y2="209.4" />
-	<g>
-		<polygon style="fill:#999999;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="228.2,267.3 222.9,259.2
-		233.4,259.2 228.2,267.3 	" />
-		<polygon style="fill:#999999;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="228.2,267.1 233.4,275.2
-		222.9,275.2 228.2,267.1 	" />
+	<g data-section="boilerOutputValves[1]">
+		<polygon data-state="boilerOutputValves[1].state" data-colorizer-hint="fill" style="fill:#999999;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="228.2,267.3 222.9,259.2
+		233.4,259.2 228.2,267.3" />
+		<polygon data-state="boilerOutputValves[1].state" data-colorizer-hint="fill" style="fill:#999999;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="228.2,267.1 233.4,275.2
+		222.9,275.2 228.2,267.1" />
 		<g>
-			<path style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M238.7,280.6h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
+			<path data-state="boilerOutputValves[1].state" data-colorizer-hint="stroke;stroke-width" style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M238.7,280.6h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
 			c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6V278C241.2,279.4,240.1,280.6,238.7,280.6z" />
 		</g>
 	</g>
@@ -170,13 +170,13 @@
 	</g>
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="295.3" y1="114.8" x2="295.3" y2="148.7" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="295.3" y1="175.5" x2="295.3" y2="209.3" />
-	<g>
-		<polygon style="fill:#999999;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="347.7,267.2 342.5,259.1 353,259.1
-		347.7,267.2 	" />
-		<polygon style="fill:#999999;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="347.7,267.1 353,275.2 342.5,275.2
-		347.7,267.1 	" />
+	<g data-section="boilerOutputValves[2]">
+		<polygon data-state="boilerOutputValves[2].state" data-colorizer-hint="fill" style="fill:#999999;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="347.7,267.2 342.5,259.1 353,259.1
+		347.7,267.2" />
+		<polygon data-state="boilerOutputValves[2].state" data-colorizer-hint="fill" style="fill:#999999;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="347.7,267.1 353,275.2 342.5,275.2
+		347.7,267.1" />
 		<g>
-			<path style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M358.2,280.5h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
+			<path data-state="boilerOutputValves[2].state" data-colorizer-hint="stroke;stroke-width" style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M358.2,280.5h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
 			c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6V278C360.8,279.4,359.6,280.5,358.2,280.5z" />
 		</g>
 	</g>
@@ -232,13 +232,13 @@
 	</g>
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="415.2" y1="114.7" x2="415.3" y2="148.6" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="415.3" y1="175.4" x2="415.3" y2="209.2" />
-	<g>
-		<polygon style="fill:#F2F2F2;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="467.7,267.1 462.4,259 472.9,259
-		467.7,267.1 	" />
-		<polygon style="fill:#F2F2F2;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="467.7,267 472.9,275.1 462.4,275.1
-		467.7,267 	" />
+	<g data-section="boilerOutputValves[3]">
+		<polygon data-state="boilerOutputValves[3].state" data-colorizer-hint="fill" style="fill:#F2F2F2;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="467.7,267.1 462.4,259 472.9,259
+		467.7,267.1" />
+		<polygon data-state="boilerOutputValves[3].state" data-colorizer-hint="fill" style="fill:#F2F2F2;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="467.7,267 472.9,275.1 462.4,275.1
+		467.7,267" />
 		<g>
-			<path style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M478.2,280.4h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
+			<path data-state="boilerOutputValves[3].state" data-colorizer-hint="stroke;stroke-width" style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M478.2,280.4h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
 			c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6v21.6C480.7,279.3,479.6,280.4,478.2,280.4z" />
 		</g>
 	</g>
@@ -279,45 +279,47 @@
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="348.2" y1="289" x2="467.7" y2="289" />
 
 
-	<g>
-		<circle style="fill:none;stroke:#000000;stroke-miterlimit:10;" cx="73.2" cy="337.6" r="10.6" />
+	<g data-section="networkPumps[0]">
+		<text transform="matrix(1 0 0 1 52.5014 320.2943)" style="font-family:'Arial'; font-size:10px;">СН1</text>
+		<circle data-state="boilerPumps[0].state1" data-colorizer-hint="fill" style="fill:none;stroke:#000000;stroke-miterlimit:10;" cx="73.2" cy="337.6" r="10.6" />
 		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="73.2" cy="337.6" r="9.3" />
 		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="73.1,328.9 77.1,335.5 69.2,335.5 73.1,328.9
 		" />
 		<g>
-			<path style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M62.7,324.2h21c1.4,0,2.6,1.2,2.6,2.6v21.6
+			<path data-state="networkPumps[0].state1" data-colorizer-hint="stroke;stroke-width" style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M62.7,324.2h21c1.4,0,2.6,1.2,2.6,2.6v21.6
 			c0,1.4-1.2,2.6-2.6,2.6h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6C60.1,325.3,61.2,324.2,62.7,324.2z" />
 		</g>
 	</g>
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="73.1" y1="307.2" x2="73.1" y2="324.2" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="72.8" y1="350.9" x2="72.8" y2="367.8" />
-	<text transform="matrix(1 0 0 1 52.5014 320.2943)" style="font-family:'Arial'; font-size:10px;">СН1</text>
-	<g>
-		<circle style="fill:#999999;stroke:#000000;stroke-miterlimit:10;" cx="108.8" cy="337.6" r="10.6" />
+
+	<g data-section="networkPumps[1]">
+		<text transform="matrix(1 0 0 1 87.1158 320.3167)" style="font-family:'Arial'; font-size:10px;">СН2</text>
+		<circle data-state="networkPumps[1].state1" data-colorizer-hint="fill" style="fill:#999999;stroke:#000000;stroke-miterlimit:10;" cx="108.8" cy="337.6" r="10.6" />
 		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="108.8" cy="337.6" r="9.3" />
 		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="108.8,328.9 112.7,335.5 104.8,335.5
 		108.8,328.9 	" />
 		<g>
-			<path style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M98.3,324.2h21c1.4,0,2.6,1.2,2.6,2.6v21.6
+			<path data-state="networkPumps[1].state1" data-colorizer-hint="stroke;stroke-width" style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M98.3,324.2h21c1.4,0,2.6,1.2,2.6,2.6v21.6
 			c0,1.4-1.2,2.6-2.6,2.6h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6C95.7,325.3,96.8,324.2,98.3,324.2z" />
 		</g>
 	</g>
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="108.7" y1="307.2" x2="108.7" y2="324.2" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="108.4" y1="350.9" x2="108.4" y2="367.8" />
-	<text transform="matrix(1 0 0 1 87.1158 320.3167)" style="font-family:'Arial'; font-size:10px;">СН2</text>
-	<g>
-		<circle style="fill:#999999;stroke:#000000;stroke-miterlimit:10;" cx="144.5" cy="337.6" r="10.6" />
+
+	<g data-section="networkPumps[2]">
+		<text transform="matrix(1 0 0 1 122.7933 320.3167)" style="font-family:'Arial'; font-size:10px;">СН3</text>
+		<circle data-state="networkPumps[2].state1" data-colorizer-hint="fill" style="fill:#999999;stroke:#000000;stroke-miterlimit:10;" cx="144.5" cy="337.6" r="10.6" />
 		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="144.5" cy="337.6" r="9.3" />
 		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="144.4,328.9 148.4,335.5 140.5,335.5
 		144.4,328.9 	" />
 		<g>
-			<path style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M133.9,324.2h21c1.4,0,2.6,1.2,2.6,2.6v21.6
+			<path data-state="networkPumps[2].state1" data-colorizer-hint="stroke;stroke-width" style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M133.9,324.2h21c1.4,0,2.6,1.2,2.6,2.6v21.6
 			c0,1.4-1.2,2.6-2.6,2.6h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6C131.4,325.3,132.5,324.2,133.9,324.2z" />
 		</g>
 	</g>
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="144.4" y1="307.2" x2="144.4" y2="324.2" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="144.1" y1="350.9" x2="144.1" y2="367.8" />
-	<text transform="matrix(1 0 0 1 122.7933 320.3167)" style="font-family:'Arial'; font-size:10px;">СН3</text>
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="108.7" y1="307.2" x2="73.1" y2="307.3" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="144.3" y1="307.2" x2="108.7" y2="307.3" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="108.4" y1="367.8" x2="72.8" y2="367.9" />
@@ -408,7 +410,7 @@
 	<text transform="matrix(1 0 0 1 372.4722 359.1944)" style="font-family:'Arial'; font-size:10px;">FE2</text>
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="402.5" y1="367.8" x2="569.2" y2="367.8" />
 	<g>
-		<text  transform="matrix(1 0 0 1 308.4973 343.4999)" style="font-family:'Arial'; font-size:10px;">TE13.2</text>
+		<text transform="matrix(1 0 0 1 308.4973 343.4999)" style="font-family:'Arial'; font-size:10px;">TE13.2</text>
 		<polygon style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" points="343.8,357.5 305.7,357.5
 		305.7,357.5 305.7,346.3 305.7,346.3 343.8,346.3 343.8,346.3 343.8,357.5 	" />
 		<text transform="matrix(1 0 0 1 311.8184 355.0416)" style="font-family:'Arial'; font-size:10px;">89,4ºC</text>

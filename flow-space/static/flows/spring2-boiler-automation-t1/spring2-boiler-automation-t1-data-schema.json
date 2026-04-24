@@ -1608,12 +1608,24 @@
             "colorizer": {
               "styleProps": [
                 {
+                  "stroke": {
+                    "black": [2],
+                    "blue": [1]
+                  }
+                },
+                      {
+                  "stroke-width": {
+                    "1": [2],
+                    "2": [1]
+                  }
+                },
+                {
                   "fill": {
-                    "#00FF00": [
-                      1
-                    ],
-                    "red": [
+                    "#808080": [
                       2
+                    ],
+                    "white": [
+                      1
                     ]
                   }
                 }
@@ -1737,6 +1749,11 @@
             },
             "colorizer": {
               "styleProps": [
+                {
+                  "stroke": {
+                    
+                  }
+                },
                 {
                   "fill": {
                     "#00FF00": [
