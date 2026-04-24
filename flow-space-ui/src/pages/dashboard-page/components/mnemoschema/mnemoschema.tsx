@@ -39,6 +39,7 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
 
         let mnemoschemaElement: HTMLElement | null = null;
         let disposed = false;
+        let timeout: NodeJS.Timeout | null = null;
 
         const run = async () => {
             let plugInModule = null;
@@ -54,6 +55,7 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
 
             try {
                 const { onBeforeMount: onBeforeMountPluggable, onAfterMount: onAfterMountPluggable } = plugInModule?.create?.() ?? {};
+                containerRef.current!.style.display = 'none';
                 containerRef.current!.innerHTML = '';
 
                 stateSetup(mnemoschemaDoc.documentElement);
@@ -63,7 +65,6 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
                 mnemoschemaElement = containerRef.current!.appendChild(
                     mnemoschemaDoc.documentElement
                 );
-
                 await injectCss(mnemoschemaElement);
 
                 onAfterMount?.(mnemoschemaElement);
@@ -72,6 +73,10 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
                     'click',
                     mnemoschemaClickHandler
                 );
+
+                timeout = setTimeout(() => {
+                    containerRef.current!.style.display = 'flex';
+                }, 100);
             } catch (error) {
                 console.error(error);
             }
@@ -85,6 +90,7 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
                 'click',
                 mnemoschemaClickHandler
             );
+            clearTimeout(timeout!);
         };
     }, [flowCode, deviceState, mnemoschema, onBeforeMount, onAfterMount, stateSetup, schemaTypeInfoPropertiesChain, dataschema, mnemoschemaClickHandler, injectCss]);
 
