@@ -362,11 +362,25 @@
         "colorizer": {
           "styleProps": [
             {
-              "fill": {
-                "#00FF00": [
+              "stroke-width": {
+                "0.25": [
                   1
                 ],
-                "yellow": [
+                "0.5": [
+                  2
+                ],
+                "1": [
+                  4,
+                  8,
+                  16,
+                  32
+                ]
+              },
+              "stroke": {
+                "#000000": [
+                  1
+                ],
+                "#FFC107": [
                   2
                 ],
                 "red": [
@@ -401,11 +415,25 @@
         "colorizer": {
           "styleProps": [
             {
-              "fill": {
-                "#00FF00": [
+              "stroke-width": {
+                "0.25": [
                   1
                 ],
-                "yellow": [
+                "0.5": [
+                  2
+                ],
+                "1": [
+                  4,
+                  8,
+                  16,
+                  32
+                ]
+              },
+              "stroke": {
+                "#000000": [
+                  1
+                ],
+                "#FFC107": [
                   2
                 ],
                 "red": [
@@ -440,11 +468,25 @@
         "colorizer": {
           "styleProps": [
             {
-              "fill": {
-                "#00FF00": [
+              "stroke-width": {
+                "0.25": [
                   1
                 ],
-                "yellow": [
+                "0.5": [
+                  2
+                ],
+                "1": [
+                  4,
+                  8,
+                  16,
+                  32
+                ]
+              },
+              "stroke": {
+                "#000000": [
+                  1
+                ],
+                "#FFC107": [
                   2
                 ],
                 "red": [
@@ -479,11 +521,25 @@
         "colorizer": {
           "styleProps": [
             {
-              "fill": {
-                "#00FF00": [
+              "stroke-width": {
+                "0.25": [
                   1
                 ],
-                "yellow": [
+                "0.5": [
+                  2
+                ],
+                "1": [
+                  4,
+                  8,
+                  16,
+                  32
+                ]
+              },
+              "stroke": {
+                "#000000": [
+                  1
+                ],
+                "#FFC107": [
                   2
                 ],
                 "red": [
@@ -596,11 +652,25 @@
         "colorizer": {
           "styleProps": [
             {
-              "fill": {
-                "#00FF00": [
+              "stroke-width": {
+                "0.25": [
                   1
                 ],
-                "yellow": [
+                "0.5": [
+                  2
+                ],
+                "1": [
+                  4,
+                  8,
+                  16,
+                  32
+                ]
+              },
+              "stroke": {
+                "#000000": [
+                  1
+                ],
+                "#FFC107": [
                   2
                 ],
                 "red": [
@@ -622,7 +692,7 @@
         "editor": {
           "editorType": "dxCheckBox",
           "label": {
-            "location": "top",
+            "location": "left",
             "showColon": true,
             "text": "Реле давления исходной воды"
           },
@@ -649,7 +719,7 @@
         "editor": {
           "editorType": "dxCheckBox",
           "label": {
-            "location": "top",
+            "location": "left",
             "showColon": true,
             "text": "Загазованность CO"
           },
@@ -676,7 +746,7 @@
         "editor": {
           "editorType": "dxCheckBox",
           "label": {
-            "location": "top",
+            "location": "left",
             "showColon": true,
             "text": "Загазованность CH"
           },
@@ -703,7 +773,7 @@
         "editor": {
           "editorType": "dxCheckBox",
           "label": {
-            "location": "top",
+            "location": "left",
             "showColon": true,
             "text": "Клапан отсекатель газа закрыт"
           },
@@ -730,7 +800,7 @@
         "editor": {
           "editorType": "dxCheckBox",
           "label": {
-            "location": "top",
+            "location": "left",
             "showColon": true,
             "text": "Загазованность горючими газами 1"
           },
@@ -757,7 +827,7 @@
         "editor": {
           "editorType": "dxCheckBox",
           "label": {
-            "location": "top",
+            "location": "left",
             "showColon": true,
             "text": "Загазованность горючими газами 2"
           },
@@ -784,7 +854,7 @@
         "editor": {
           "editorType": "dxCheckBox",
           "label": {
-            "location": "top",
+            "location": "left",
             "showColon": true,
             "text": "Питание на вводе 1"
           },
@@ -815,7 +885,7 @@
         "editor": {
           "editorType": "dxCheckBox",
           "label": {
-            "location": "top",
+            "location": "left",
             "showColon": true,
             "text": "Питание на вводе 2"
           },
@@ -925,7 +995,6 @@
             "displayFormat": "dd.MM.yyyy HH:mm:ss",
             "readOnly": true
           },
-          "cssClass": "form-input-box",
           "label": {
             "location": "top",
             "showColon": true,
@@ -1200,7 +1269,7 @@
             "editor": {
               "editorType": "dxCheckBox",
               "label": {
-                "location": "top",
+                "location": "left",
                 "showColon": true,
                 "text": "Авария горелки"
               },
@@ -1227,7 +1296,7 @@
             "editor": {
               "editorType": "dxCheckBox",
               "label": {
-                "location": "top",
+                "location": "left",
                 "showColon": true,
                 "text": "Работа котла"
               },
@@ -1254,7 +1323,7 @@
             "editor": {
               "editorType": "dxCheckBox",
               "label": {
-                "location": "top",
+                "location": "left",
                 "showColon": true,
                 "text": "Реле давления газа"
               },
@@ -1281,7 +1350,7 @@
             "editor": {
               "editorType": "dxCheckBox",
               "label": {
-                "location": "top",
+                "location": "left",
                 "showColon": true,
                 "text": "Мин. давление воды"
               },
@@ -1308,7 +1377,7 @@
             "editor": {
               "editorType": "dxCheckBox",
               "label": {
-                "location": "top",
+                "location": "left",
                 "showColon": true,
                 "text": "Макс. давление воды"
               },
@@ -1335,7 +1404,7 @@
             "editor": {
               "editorType": "dxCheckBox",
               "label": {
-                "location": "top",
+                "location": "left",
                 "showColon": true,
                 "text": "Макс. температура воды"
               },
@@ -1362,7 +1431,7 @@
             "editor": {
               "editorType": "dxCheckBox",
               "label": {
-                "location": "top",
+                "location": "left",
                 "showColon": true,
                 "text": "Реле потока"
               },
@@ -1373,9 +1442,21 @@
             "colorizer": {
               "styleProps": [
                 {
+                  "stroke-width": {
+                    "1": false,
+                    "2  ": true
+                  }
+                },
+                {
                   "fill": {
-                    "#808080": true,
-                    "white": false
+                    "#808080": false,
+                    "white": true
+                  }
+                },
+                {
+                  "stroke": {
+                    "#0000FF": true,
+                    "black": false
                   }
                 }
               ]
@@ -1403,9 +1484,18 @@
               "styleProps": [
                 {
                   "stroke-width": {
-                    "0.25": [1],
-                    "0.5": [2],
-                    "1": [4, 8, 16, 32]
+                    "0.25": [
+                      1
+                    ],
+                    "0.5": [
+                      2
+                    ],
+                    "1": [
+                      4,
+                      8,
+                      16,
+                      32
+                    ]
                   },
                   "stroke": {
                     "#000000": [
@@ -1446,11 +1536,25 @@
             "colorizer": {
               "styleProps": [
                 {
-                  "fill": {
-                    "#00FF00": [
+                  "stroke-width": {
+                    "0.25": [
                       1
                     ],
-                    "yellow": [
+                    "0.5": [
+                      2
+                    ],
+                    "1": [
+                      4,
+                      8,
+                      16,
+                      32
+                    ]
+                  },
+                  "stroke": {
+                    "#000000": [
+                      1
+                    ],
+                    "#FFC107": [
                       2
                     ],
                     "red": [
@@ -1661,7 +1765,7 @@
             "editor": {
               "editorType": "dxCheckBox",
               "label": {
-                "location": "top",
+                "location": "left",
                 "showColon": true,
                 "text": "Сухой ход"
               },
