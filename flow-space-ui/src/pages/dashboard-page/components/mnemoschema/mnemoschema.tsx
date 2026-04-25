@@ -55,7 +55,7 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
 
             try {
                 const { onBeforeMount: onBeforeMountPluggable, onAfterMount: onAfterMountPluggable } = plugInModule?.create?.() ?? {};
-                containerRef.current!.style.display = 'none';
+                // containerRef.current!.style.display = 'none';
                 containerRef.current!.innerHTML = '';
 
                 stateSetup(mnemoschemaDoc.documentElement);
@@ -74,9 +74,9 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
                     mnemoschemaClickHandler
                 );
 
-                timeout = setTimeout(() => {
-                    containerRef.current!.style.display = 'flex';
-                }, 100);
+                // timeout = setTimeout(() => {
+                //     containerRef.current!.style.display = 'flex';
+                // }, 100);
             } catch (error) {
                 console.error(error);
             }

@@ -27,7 +27,7 @@ export const EmergencyPopoverContent = ({ emergencyState }: { emergencyState: Em
                     : <EmergencyWarning data-emergency-mute-icon size={12} style={{ fill: AppConstants.colors.emergencyWarningColor, cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px' }} />
 
             );
-            
+
             const iconElement = emergencyIconContainerElement.querySelector('[data-emergency-mute-icon]');
             if (iconElement) {
                 iconElement!.remove();
@@ -83,6 +83,7 @@ export const EmergencyPopoverContent = ({ emergencyState }: { emergencyState: Em
     }, [emergencyState]);
 
     return (
+        <div style={{height: '150px'}}>
         <table className='simple-grid'>
             <thead>
                 <tr><th colSpan={2}>
@@ -135,5 +136,6 @@ export const EmergencyPopoverContent = ({ emergencyState }: { emergencyState: Em
                 }
             </tbody>
         </table>
+        </div>
     );
 }
