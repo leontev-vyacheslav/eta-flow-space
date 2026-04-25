@@ -32,10 +32,13 @@
   }
 
   .simple-grid {
+    width: 100% !important;
     margin: 0px !important;
   }
   .simple-grid-body-scroller {
-
+    &::-webkit-scrollbar {
+     scrollbar-width: none;
+    }
     tbody {
       tr:first-child {
         border-top: none !important;
@@ -46,12 +49,13 @@
     }
   }
   .simple-grid-body-scroller table {
-      border-top: none !important;
+    border-top: none !important;
   }
   .dx-popup-content {
     max-height: 250px !important;
-    margin-bottom: 22px;
+    margin-bottom: 25px;
     padding-bottom: 0px !important  ;
     overflow-y: hidden;
   }
+
 }
