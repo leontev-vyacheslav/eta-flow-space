@@ -209,7 +209,9 @@ function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
                 popoverInstance.current.hide();
                 popoverInstance.current.dispose();
             }
-            unmountEmergencyPopoverRoot();
+            queueMicrotask(() => {
+                unmountEmergencyPopoverRoot();
+            });
         };
     }, [unmountEmergencyPopoverRoot]);
 

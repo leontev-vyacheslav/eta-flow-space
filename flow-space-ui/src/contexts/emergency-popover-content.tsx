@@ -83,59 +83,63 @@ export const EmergencyPopoverContent = ({ emergencyState }: { emergencyState: Em
     }, [emergencyState]);
 
     return (
-        <div style={{height: '150px'}}>
-        <table className='simple-grid'>
-            <thead>
-                <tr><th colSpan={2}>
-                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                        <WarningLogIcon size={20} />
-                        <span style={{ flex: 1 }}>Нештатные / аварийные ситуации</span>
-                    </div>
-                </th></tr>
-            </thead>
-            <tbody>
-                {
-                    (emergencyState.reasons).map(
-                        (r, i: number) => {
-                            const muteReason = emergencyMuteManager.getReason(emergencyState.deviceId, r.id);
+        <>
+         <table className='simple-grid'>
+                <thead>
+                    <tr><th colSpan={2}>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <WarningLogIcon size={20} />
+                            <span style={{ flex: 1 }}>Нештатные / аварийные ситуации</span>
+                        </div>
+                    </th></tr>
+                </thead>
+            </table>
+        <div className="simple-grid-body-scroller" style={{overflowY: 'auto', maxHeight: '200px'}}>
+            <table className='simple-grid'>
+                <tbody>
+                    {
+                        (emergencyState.reasons).map(
+                            (r, i: number) => {
+                                const muteReason = emergencyMuteManager.getReason(emergencyState.deviceId, r.id);
 
-                            return (<tr key={i}>
-                                <td style={{ width: 0 }}>
-                                    {
-                                        unmutedEmergencies.length > 0 && unmutedEmergencies.find(() => true)!.reasons.some((unmutedReason) => unmutedReason.id === r.id)
-                                            ? <EmergencySoundUnmute size={16} />
-                                            : <EmergencySoundMute size={16} />
-                                    }
-                                </td>
-                                <td>
-                                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                                        <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
-                                            <span style={{ flex: 1, fontSize: '1em' }}>{r.description}{isAdmin() && ` [${r.id}]`}</span>
-                                            <span style={{ color: 'gray', fontSize: '0.85em', display: 'flex', alignItems: 'center', gap: 5 }}>
-                                                <IoFlashOutline size={12} />
-                                                {emergencyState.timestamp && new Date(emergencyState.timestamp).toLocaleString('ru-RU', { dateStyle: 'short', timeStyle: 'short' })}
-                                            </span>
-                                            {muteReason?.time
-                                                ? <span style={{ color: 'gray', fontSize: '0.85em', display: 'flex', alignItems: 'center', gap: 5 }}>
-                                                    <EmergencySoundUnmute size={12} />
-                                                    {
-                                                        muteReason.duration === emergencyMuteManager.oneYear ? 'До устранения' : new Date(muteReason!.time).toLocaleString('ru-RU', { dateStyle: 'short', timeStyle: 'short' })
-                                                    }
+                                return (<tr key={i}>
+                                    <td style={{ width: 0 }}>
+                                        {
+                                            unmutedEmergencies.length > 0 && unmutedEmergencies.find(() => true)!.reasons.some((unmutedReason) => unmutedReason.id === r.id)
+                                                ? <EmergencySoundUnmute size={16} />
+                                                : <EmergencySoundMute size={16} />
+                                        }
+                                    </td>
+                                    <td>
+                                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                                            <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+                                                <span style={{ flex: 1, fontSize: '1em' }}>{r.description}{isAdmin() && ` [${r.id}]`}</span>
+                                                <span style={{ color: 'gray', fontSize: '0.85em', display: 'flex', alignItems: 'center', gap: 5 }}>
+                                                    <IoFlashOutline size={12} />
+                                                    {emergencyState.timestamp && new Date(emergencyState.timestamp).toLocaleString('ru-RU', { dateStyle: 'short', timeStyle: 'short' })}
                                                 </span>
-                                                : null
-                                            }
+                                                {muteReason?.time
+                                                    ? <span style={{ color: 'gray', fontSize: '0.85em', display: 'flex', alignItems: 'center', gap: 5 }}>
+                                                        <EmergencySoundUnmute size={12} />
+                                                        {
+                                                            muteReason.duration === emergencyMuteManager.oneYear ? 'До устранения' : new Date(muteReason!.time).toLocaleString('ru-RU', { dateStyle: 'short', timeStyle: 'short' })
+                                                        }
+                                                    </span>
+                                                    : null
+                                                }
+                                            </div>
+                                            <span>
+                                                <MenuRender deviceId={emergencyState.deviceId} emergencyReason={r} />
+                                            </span>
                                         </div>
-                                        <span>
-                                            <MenuRender deviceId={emergencyState.deviceId} emergencyReason={r} />
-                                        </span>
-                                    </div>
-                                </td>
-                            </tr>);
-                        }
-                    )
-                }
-            </tbody>
-        </table>
+                                    </td>
+                                </tr>);
+                            }
+                        )
+                    }
+                </tbody>
+            </table>
         </div>
+        </>
     );
 }

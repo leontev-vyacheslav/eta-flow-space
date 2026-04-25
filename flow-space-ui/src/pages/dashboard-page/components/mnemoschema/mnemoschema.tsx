@@ -39,7 +39,7 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
 
         let mnemoschemaElement: HTMLElement | null = null;
         let disposed = false;
-        let timeout: NodeJS.Timeout | null = null;
+        // let timeout: NodeJS.Timeout | null = null;
 
         const run = async () => {
             let plugInModule = null;
@@ -90,7 +90,7 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
                 'click',
                 mnemoschemaClickHandler
             );
-            clearTimeout(timeout!);
+            // clearTimeout(timeout!);
         };
     }, [flowCode, deviceState, mnemoschema, onBeforeMount, onAfterMount, stateSetup, schemaTypeInfoPropertiesChain, dataschema, mnemoschemaClickHandler, injectCss]);
 
