@@ -139,7 +139,7 @@ export const EmergencyPopoverContent = ({ emergencyState }: { emergencyState: Em
                                                             : null
                                                         }
                                                     </div>
-                                                    <span>
+                                                    <span className="row-menu">
                                                         <MenuRender deviceId={emergencyState.deviceId} emergencyReasons={[r]} />
                                                     </span>
                                                 </div>

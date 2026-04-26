@@ -37,7 +37,7 @@
   }
   .simple-grid-body-scroller {
     &::-webkit-scrollbar {
-     scrollbar-width: none;
+      scrollbar-width: none;
     }
     tbody {
       tr:first-child {
@@ -58,4 +58,24 @@
     overflow-y: hidden;
   }
 
+  .simple-grid {
+    tr {
+      transition: background-color 0.25s;
+
+      .row-menu {
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+
+      &:hover {
+        background-color: rgba(240, 240, 240, 0.5); /* subtle highlight */
+
+        .row-menu {
+          visibility: visible;
+          opacity: 1;
+        }
+      }
+    }
+  }
 }
