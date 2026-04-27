@@ -285,49 +285,49 @@
 
 	<g data-section="networkPumps[0]" transform="translate(-10, 0)">
 		<text transform="matrix(1 0 0 1 52.5014 320.2943)" style="font-family:'Roboto'; font-size:10px;">СН1</text>
-		<circle data-state="boilerPumps[0].state1" data-colorizer-hint="fill" style="fill:none;stroke:#000000;stroke-miterlimit:10;" cx="73.2" cy="337.6" r="10.6" />
+		<circle data-state="networkPumps[0].statusFc" data-colorizer-hint="fill" style="fill:none;stroke:#000000;stroke-miterlimit:10;" cx="73.2" cy="337.6" r="10.6" />
 		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="73.2" cy="337.6" r="9.3" />
 		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="73.1,328.9 77.1,335.5 69.2,335.5 73.1,328.9
 		" />
 		<g>
-			<path data-state="networkPumps[0].state1" data-colorizer-hint="stroke;stroke-width" style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M62.7,324.2h21c1.4,0,2.6,1.2,2.6,2.6v21.6
+			<path data-state="networkPumps[0].state" data-state-eval="element.style.strokeWidth = (state.networkPumps[0].statusFc === 2 || state.networkPumps[0].isDryRun) ? '2' : '1';element.style.stroke = (state.networkPumps[0].statusFc === 2 || state.networkPumps[0].isDryRun) ? 'red' : 'black'"  data-colorizer-hint="stroke;stroke-width" style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M62.7,324.2h21c1.4,0,2.6,1.2,2.6,2.6v21.6
 			c0,1.4-1.2,2.6-2.6,2.6h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6C60.1,325.3,61.2,324.2,62.7,324.2z" />
 		</g>
 		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="72.8" y1="297.2" x2="72.8" y2="324.2" />
 		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="72.8" y1="350.9" x2="72.8" y2="367.8" />
-		<use data-state="" data-state-eval="element.style.display = (state.networkPumps[0].statusFc === 2 || state.networkPumps[0].isDryRun) ? 'initial': 'none'" href="#emergencyIcon" transform="translate(75, 304)"/>
+		<use data-state="" data-state-eval="element.style.display = (state.networkPumps[0].state === 512 || state.networkPumps[0].statusFc === 2 || state.networkPumps[0].isDryRun) ? 'initial': 'none'" href="#emergencyIcon" transform="translate(75, 304)"/>
 	</g>
 
 
 	<g data-section="networkPumps[1]">
 		<text transform="matrix(1 0 0 1 87.1158 320.3167)" style="font-family:'Roboto'; font-size:10px;">СН2</text>
-		<circle data-state="networkPumps[1].state1" data-colorizer-hint="fill" style="fill:#999999;stroke:#000000;stroke-miterlimit:10;" cx="108.8" cy="337.6" r="10.6" />
+		<circle data-state="networkPumps[1].statusFc" data-colorizer-hint="fill" style="fill:#999999;stroke:#000000;stroke-miterlimit:10;" cx="108.8" cy="337.6" r="10.6" />
 		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="108.8" cy="337.6" r="9.3" />
 		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="108.8,328.9 112.7,335.5 104.8,335.5
-		108.8,328.9 	" />
+		108.8,328.9" />
 		<g>
-			<path data-state="networkPumps[1].state1" data-colorizer-hint="stroke;stroke-width" style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M98.3,324.2h21c1.4,0,2.6,1.2,2.6,2.6v21.6
+			<path data-state="networkPumps[1].state" data-state-eval="element.style.strokeWidth = (state.networkPumps[1].statusFc === 2 || state.networkPumps[1].isDryRun) ? '2' : '1';element.style.stroke = (state.networkPumps[1].statusFc === 2 || state.networkPumps[1].isDryRun) ? 'red' : 'black'"  style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M98.3,324.2h21c1.4,0,2.6,1.2,2.6,2.6v21.6
 			c0,1.4-1.2,2.6-2.6,2.6h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6C95.7,325.3,96.8,324.2,98.3,324.2z" />
 		</g>
 		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="108.7" y1="307.2" x2="108.7" y2="324.2" />
 		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="108.4" y1="350.9" x2="108.4" y2="367.8" />
-		<use data-state="" data-state-eval="element.style.display = (state.networkPumps[1].statusFc === 2 || state.networkPumps[1].isDryRun) ? 'initial': 'none'" href="#emergencyIcon" transform="translate(111, 304)"/>
+		<use data-state="" data-state-eval="element.style.display = (state.networkPumps[1].state === 512 || state.networkPumps[1].statusFc === 2 || state.networkPumps[1].isDryRun) ? 'initial': 'none'" href="#emergencyIcon" transform="translate(111, 304)"/>
 	</g>
 
 
 	<g data-section="networkPumps[2]" transform="translate(10, 0)">
 		<text transform="matrix(1 0 0 1 122.7933 320.3167)" style="font-family:'Roboto'; font-size:10px;">СН3</text>
-		<circle data-state="networkPumps[2].state1" data-colorizer-hint="fill" style="fill:#999999;stroke:#000000;stroke-miterlimit:10;" cx="144.5" cy="337.6" r="10.6" />
+		<circle data-state="networkPumps[2].statusFc" data-colorizer-hint="fill" style="fill:#999999;stroke:#000000;stroke-miterlimit:10;" cx="144.5" cy="337.6" r="10.6" />
 		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="144.5" cy="337.6" r="9.3" />
 		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="144.4,328.9 148.4,335.5 140.5,335.5
-		144.4,328.9 	" />
+		144.4,328.9" />
 		<g>
-			<path data-state="networkPumps[2].state1" data-colorizer-hint="stroke;stroke-width" style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M133.9,324.2h21c1.4,0,2.6,1.2,2.6,2.6v21.6
+			<path data-state="networkPumps[2].state" data-state-eval="element.style.strokeWidth = (state.networkPumps[2].statusFc === 2 || state.networkPumps[2].isDryRun) ? '2' : '1'; element.style.stroke = (state.networkPumps[2].statusFc === 2 || state.networkPumps[2].isDryRun) ? 'red' : 'black'" style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M133.9,324.2h21c1.4,0,2.6,1.2,2.6,2.6v21.6
 			c0,1.4-1.2,2.6-2.6,2.6h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6C131.4,325.3,132.5,324.2,133.9,324.2z" />
 		</g>
 		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="144.4" y1="297.2" x2="144.4" y2="324.2" />
 		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="144.1" y1="350.9" x2="144.1" y2="367.8" />
-		<use data-state="" data-state-eval="element.style.display = (state.networkPumps[2].statusFc === 2 || state.networkPumps[2].isDryRun) ? 'initial': 'none'" href="#emergencyIcon" transform="translate(147, 304)" />
+		<use data-state="" data-state-eval="element.style.display = (state.networkPumps[2].state === 512 || state.networkPumps[2].statusFc === 2 || state.networkPumps[2].isDryRun) ? 'initial': 'none'" href="#emergencyIcon" transform="translate(147, 304)" />
 	</g>
 
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="108.4" y1="297.3" x2="62.5" y2="297.3" />
@@ -342,7 +342,7 @@
 	<g>
 		<polygon style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" points="574.5,191.9 536.4,191.9
 		536.4,191.9 536.4,180.8 536.4,180.8 574.5,180.8 574.5,180.8 574.5,191.9 	" />
-		<text transform="matrix(1 0 0 1 542.509 189.4861)" style="font-family:'Roboto'; font-size:10px;">79,2ºC</text>
+		<text transform="matrix(1 0 0 1 542.509 189.4861)" style="font-family:'Roboto'; font-size:9px;">79,2ºC</text>
 		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="536.4" y1="186.4" x2="526" y2="186.4" />
 	</g>
 	<text transform="matrix(1 0 0 1 542.986 178.7701)" style="font-family:'Roboto'; font-size:10px;">TE13.1</text>
@@ -372,7 +372,7 @@
 	<g>
 		<polygon style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" points="548.4,249.5 503.6,249.5
 		503.6,249.5 503.6,237.2 503.6,237.2 548.4,237.2 548.4,237.2 548.4,249.5 	" />
-		<text transform="matrix(1 0 0 1 504.9301 247.0511)" style="font-family:'Roboto'; font-size:10px;">156,1м³/ч</text>
+		<text transform="matrix(1 0 0 1 504.9301 247.0511)" style="font-family:'Roboto'; font-size:9px;">156,1м³/ч</text>
 	</g>
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="526" y1="330.6" x2="526" y2="249.5" />
 	<text transform="matrix(1 0 0 1 503.6018 234.7889)" style="font-family:'Roboto'; font-size:10px;">FE1</text>
@@ -416,7 +416,7 @@
 	<g>
 		<polygon style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" points="402.5,373.9 357.8,373.9
 		357.8,373.9 357.8,361.6 357.8,361.6 402.5,361.6 402.5,361.6 402.5,373.9 	" />
-		<text transform="matrix(1 0 0 1 359.0967 371.4565)" style="font-family:'Roboto'; font-size:10px;">156,1м³/ч</text>
+		<text transform="matrix(1 0 0 1 359.0967 371.4565)" style="font-family:'Roboto'; font-size:9px;">156,1м³/ч</text>
 	</g>
 	<text transform="matrix(1 0 0 1 372.4722 359.1944)" style="font-family:'Roboto'; font-size:10px;">FE2</text>
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="402.5" y1="367.8" x2="569.2" y2="367.8" />
@@ -424,7 +424,7 @@
 		<text transform="matrix(1 0 0 1 308.4973 343.4999)" style="font-family:'Roboto'; font-size:10px;">TE13.2</text>
 		<polygon style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" points="343.8,357.5 305.7,357.5
 		305.7,357.5 305.7,346.3 305.7,346.3 343.8,346.3 343.8,346.3 343.8,357.5 	" />
-		<text transform="matrix(1 0 0 1 311.8184 355.0416)" style="font-family:'Roboto'; font-size:10px;">89,4ºC</text>
+		<text transform="matrix(1 0 0 1 311.8184 355.0416)" style="font-family:'Roboto'; font-size:9px;">89,4ºC</text>
 		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="324.7" y1="367.7" x2="324.7" y2="357.5" />
 	</g>
 
