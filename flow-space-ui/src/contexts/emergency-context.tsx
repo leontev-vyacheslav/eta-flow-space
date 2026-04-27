@@ -92,8 +92,8 @@ function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
         popoverTitleReactRootRef.current = popoverTitleReactRoot;
 
         popoverInstance.current = new dxPopover(popoverContainer, {
-            maxWidth: 300,
-            minWidth: 300,
+            maxWidth: 320,
+            minWidth: 320,
             shading: false,
             hideOnOutsideClick: true,
             showTitle: true,
