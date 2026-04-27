@@ -909,48 +909,13 @@
         }
       }
     },
-    "statusSourcePump": {
-      "$ref": "#/$defs/SourcePumpStatus",
-      "ui": {
-        "group": 4,
-        "editor": {
-          "editorType": "dxSelectBox",
-          "label": {
-            "location": "top",
-            "showColon": true,
-            "text": "Статус насоса исходной воды"
-          },
-          "editorOptions": {
-            "readOnly": true,
-            "valueExpr": "id",
-            "displayExpr": "description"
-          }
-        },
-        "colorizer": {
-          "styleProps": [
-            {
-              "fill": {
-                "#00FF00": [
-                  4
-                ],
-                "red": [
-                  8
-                ],
-                "#4D4D4D": [
-                  1,
-                  2,
-                  16,
-                  32,
-                  128,
-                  256,
-                  512,
-                  1024
-                ]
-              }
-            }
-          ]
-        }
-      }
+    "sourceWaterPumps": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/SourceWaterPumpModel"
+      },
+      "minItems": 1,
+      "maxItems": 1
     },
     "boilers": {
       "type": "array",
@@ -1034,7 +999,7 @@
     "isVaporDt2",
     "isOffInput1",
     "isOffInput2",
-    "statusSourcePump",
+    "sourceWaterPumps",
     "boilers",
     "boilerOutputValves",
     "boilerPumps",
@@ -1060,7 +1025,7 @@
         "32": "OVERLOAD - Перегрузка (выход сигнала датчика за установленные границы)"
       }
     },
-    "SourcePumpStatus": {
+    "SourceWaterPumpState": {
       "type": "integer",
       "enum": [
         1,
@@ -1176,6 +1141,54 @@
       "enumDescriptions": {
         "1": "FC_OPERATING - Работа ПЧ",
         "2": "FC_ALARM - Авария ПЧ"
+      }
+    },
+    "SourceWaterPumpModel": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "$ref": "#/$defs/SourceWaterPumpState",
+          "ui": {
+            "group": 4,
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Состояние насоса исходной воды"
+              },
+              "editorOptions": {
+                "readOnly": true,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "#00FF00": [
+                      4
+                    ],
+                    "red": [
+                      8
+                    ],
+                    "#4D4D4D": [
+                      1,
+                      2,
+                      16,
+                      32,
+                      128,
+                      256,
+                      512,
+                      1024
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        }
       }
     },
     "BoilerModel": {
@@ -1609,14 +1622,22 @@
               "styleProps": [
                 {
                   "stroke": {
-                    "black": [2],
-                    "blue": [1]
+                    "black": [
+                      2
+                    ],
+                    "blue": [
+                      1
+                    ]
                   }
                 },
-                      {
+                {
                   "stroke-width": {
-                    "1": [2],
-                    "2": [1]
+                    "1": [
+                      2
+                    ],
+                    "2": [
+                      1
+                    ]
                   }
                 },
                 {
@@ -1749,9 +1770,7 @@
             },
             "colorizer": {
               "styleProps": [
-                {
-
-                }
+                {}
               ]
             }
           }
