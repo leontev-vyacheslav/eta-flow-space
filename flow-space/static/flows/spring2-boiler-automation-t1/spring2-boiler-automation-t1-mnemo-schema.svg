@@ -461,7 +461,7 @@
 	<g>
 		<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M164,74H98.6c-3.1,0-5.7-2.5-5.7-5.7V49.6
 		c0-3.1,2.5-5.7,5.7-5.7H164c3.1,0,5.7,2.5,5.7,5.7v18.7C169.7,71.4,167.2,74,164,74z" />
-		<text transform="matrix(1 0 0 1 112.5324 56.0185)" style="font-family:'Roboto'; font-size:10px;">Т12 (н.в.)</text>
+		<text transform="matrix(1 0 0 1 112.5324 56.0185)" style="font-family:'Roboto'; font-size:10px;">Т11 (н.в.)</text>
 		<text data-state="tempOutAir" transform="matrix(1 0 0 1 120 68.608)" style="font-family:'Roboto'; font-size:10px;"></text>
 	</g>
 	<g>
@@ -485,7 +485,7 @@
 	<g>
 		<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M79.7,74H14.3c-3.1,0-5.7-2.5-5.7-5.7V49.6
 		c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C85.4,71.4,82.8,74,79.7,74z" />
-		<text transform="matrix(1 0 0 1 23.2174 56.0721)" style="font-family:'Roboto'; font-size:10px;">Т11 (внутр.)</text>
+		<text transform="matrix(1 0 0 1 23.2174 56.0721)" style="font-family:'Roboto'; font-size:10px;">Т12 (внутр.)</text>
 		<text data-state="tempRoomAir" transform="matrix(1 0 0 1 30 68.608)" style="font-family:'Roboto'; font-size:10px;"></text>
 	</g>
 	<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M525.7,74.7h-82.9c-3.1,0-5.7-2.5-5.7-5.7
