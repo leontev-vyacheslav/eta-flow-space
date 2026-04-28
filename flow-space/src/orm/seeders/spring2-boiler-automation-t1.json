@@ -1,0 +1,142 @@
+[
+    {
+        "id": 1,
+        "expression": "state.isOffInput1 === true",
+        "description": "Ввод 1 выключен"
+    },
+    {
+        "id": 2,
+        "expression": "state.isCO1 === true",
+        "description": "Газоанализатор СО №1"
+    },
+    {
+        "id": 3,
+        "expression": "state.isCH1 === true",
+        "description": "Газоанализатор CH №1"
+    },
+    {
+        "id": 6,
+        "expression": "state.isGasFlap === true",
+        "description": "Клапан газа закрыт"
+    },
+    {
+        "id": 7,
+        "expression": "state.isVaporDt1 === true",
+        "description": "Пары ДТ 1"
+    },
+    {
+        "id": 8,
+        "expression": "state.isVaporDt2 === true",
+        "description": "Пары ДТ 2"
+    },
+    {
+        "id": 11,
+        "expression": "state.tempInNet > 110",
+        "description": "Температура на обратке сетевого контура выше предельного значение"
+    },
+    {
+        "id": 12,
+        "expression": "state.tempInNet < 30",
+        "description": "Температура на обратке сетевого контура ниже предельного значение"
+    },
+    {
+        "id": 28,
+        "expression": "state.pressOutNet > 6",
+        "description": "Высокий уровень давления на подаче сетевого контура"
+    },
+    {
+        "id": 29,
+        "expression": "state.pressOutNet < 0.5",
+        "description": "Низкий уровень давления на подаче сетевого контура"
+    },
+    {
+        "id": 30,
+        "expression": "state.pressInNet > 3",
+        "description": "Высокий уровень давления на обратке сетевого контура"
+    },
+    {
+        "id": 31,
+        "expression": "state.pressInNet < 0.5",
+        "description": "Низкий уровень давления на обратке сетевого контура"
+    },
+    {
+        "id": 32,
+        "expression": "state.networkPumps[0].isDryRun === true",
+        "description": "Сухой ход сетевого насоса 1"
+    },
+    {
+        "id": 33,
+        "expression": "state.networkPumps[1].isDryRun === true",
+        "description": "Сухой ход сетевого насоса 2"
+    },
+    {
+        "id": 34,
+        "expression": "state.networkPumps[2].isDryRun === true",
+        "description": "Сухой ход сетевого насоса 3"
+    },
+    {
+        "id": 35,
+        "expression": "state.networkPumps[0].statusFc === 2",
+        "description": "Авария ПЧ сетевого насоса 1"
+    },
+    {
+        "id": 36,
+        "expression": "state.networkPumps[1].statusFc === 2",
+        "description": "Авария ПЧ сетевого насоса 2"
+    },
+    {
+        "id": 37,
+        "expression": "state.networkPumps[2].statusFc === 2",
+        "description": "Авария ПЧ сетевого насоса 3"
+    },
+    {
+        "id": 38,
+        "expression": "state.boilers[0].isMinWaterPressure === true",
+        "description": "Минимальное давление воды в котле 1"
+    },
+    {
+        "id": 39,
+        "expression": "state.boilers[1].isMinWaterPressure === true",
+        "description": "Минимальное давление воды в котле 2"
+    },
+    {
+        "id": 40,
+        "expression": "state.boilers[2].isMinWaterPressure === true",
+        "description": "Минимальное давление воды в котле 3"
+    },
+    {
+        "id": 41,
+        "expression": "state.boilers[3].isMinWaterPressure === true",
+        "description": "Минимальное давление воды в котле 4"
+    },
+    {
+        "id": 42,
+        "expression": "state.boilers[0].isMaxWaterPressure === true",
+        "description": "Максимальное давление воды в котле 1"
+    },
+    {
+        "id": 43,
+        "expression": "state.boilers[1].isMaxWaterPressure === true",
+        "description": "Максимальное давление воды в котле 2"
+    },
+    {
+        "id": 44,
+        "expression": "state.boilers[2].isMaxWaterPressure === true",
+        "description": "Максимальное давление воды в котле 3"
+    },
+    {
+        "id": 45,
+        "expression": "state.boilers[3].isMaxWaterPressure === true",
+        "description": "Максимальное давление воды в котле 4"
+    },
+    {
+        "id": 46,
+        "expression": "state.isOffInput2 === true",
+        "description": "Ввод 2 выключен"
+    },
+    {
+        "id": 100,
+        "expression": "state.isConnected === false",
+        "description": "Связь отсутствует"
+    }
+]
