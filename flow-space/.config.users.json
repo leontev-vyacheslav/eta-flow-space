@@ -60,6 +60,8 @@
         "debug": {
             "filter": "filterCurrent"
         },
-        "menu-menu-item-sidebar": true
+        "menu-menu-item-sidebar": true,
+        "menu-deploymenu-item-flow": true,
+        "menu-deploymenu-item-full": false
     }
 }
