@@ -35,6 +35,11 @@ export const useMnemoschemaStateSetup = () => {
                                 }
                             } else {
                                 const unit = typeInfo && typeInfo.unit;
+
+                                if (typeInfo?.typeName === 'number') {
+                                    value = value.toFixed(2);
+                                }
+
                                 if (unit) {
                                     element.innerHTML = `${value} ${unit ? unit : ''}`;
                                 } else {

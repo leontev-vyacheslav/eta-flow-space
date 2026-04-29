@@ -949,6 +949,9 @@
       "minItems": 3,
       "maxItems": 3
     },
+    "gasMeter": {
+      "$ref": "#/$defs/GasMeterModel"
+    },
     "timestamp": {
       "type": "integer",
       "ui": {
@@ -1855,6 +1858,110 @@
         "isDryRun",
         "statusFc"
       ]
+    },
+    "GasMeterModel": {
+      "type": "object",
+      "properties": {
+        "timeOfWork": {
+          "type": "number",
+          "ui": {
+            "group": 8,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Время наработки счетчика газа"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "chart": {}
+          }
+        },
+        "currentPressure": {
+          "type": "number",
+          "unit": "кПа",
+          "ui": {
+            "group": 8,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Текущее давление газа"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "chart": {}
+          }
+        },
+        "currentTemp": {
+          "type": "number",
+          "unit": "°C",
+          "ui": {
+            "group": 8,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Текущая температура газа"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "chart": {}
+          }
+        },
+        "currentFlowRateNc": {
+          "type": "number",
+          "unit": "м3/ч",
+          "ui": {
+            "group": 8,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Текущий расход в н.у."
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "chart": {}
+          }
+        },
+        "currentFlowRateWc": {
+          "type": "number",
+          "unit": "м3/ч",
+          "ui": {
+            "group": 8,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Текущий расход в раб.у."
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "chart": {}
+          }
+        }
+      },
+      "required": [
+        "timeOfWork",
+        "currentPressure",
+        "currentTemp"
+      ]
     }
   },
   "ui": {
@@ -1901,6 +2008,12 @@
         "name": "emergency",
         "caption": "Аварии",
         "order": 150
+      },
+      {
+        "id": 8,
+        "name": "gasMeter",
+        "caption": "Газовый счетчик",
+        "order": 160
       }
     ]
   }

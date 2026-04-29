@@ -56,6 +56,10 @@ export const useMnemoschemaPopover = () => {
         if (propertyInfo.typeInfo?.typeName === 'boolean') {
             value = value === true ? 'Да' : 'Нет';
         }
+        if (propertyInfo.typeInfo?.typeName === 'number') {
+            value = value.toFixed(2);
+        }
+
         if (propertyInfo.typeInfo?.ui.editor.editorOptions.type === 'datetime') {
             const date = new Date(value);
             const formatAttr = target.getAttribute('data-state-format');
