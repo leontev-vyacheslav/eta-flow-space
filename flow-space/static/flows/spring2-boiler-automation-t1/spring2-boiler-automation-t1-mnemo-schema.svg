@@ -475,13 +475,15 @@
 		</g>
 		<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M525.7,74.7h-82.9c-3.1,0-5.7-2.5-5.7-5.7
 	V48.9c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7V69C531.4,72.1,528.8,74.7,525.7,74.7z" />
-		<text transform="matrix(1 0 0 1 441.5964 54.3989)" style="font-family:'Roboto'; font-size:10px;">Клапан подачи
-		ДТ</text>
+		<text transform="matrix(1 0 0 1 441.5964 54.3989)" style="font-family:'Roboto'; font-size:10px;">
+			<tspan>Клапан подачи ДТ</tspan>
+		</text>
 		<text transform="matrix(1 0 0 1 455.0727 69.6766)" style="font-family:'Roboto'; font-size:10px;">{{modeVDT}}</text>
 		<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M628.3,74.7h-82.9c-3.1,0-5.7-2.5-5.7-5.7
 	V48.9c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7V69C633.9,72.1,631.4,74.7,628.3,74.7z" />
-		<text transform="matrix(1 0 0 1 543.1044 54.3989)" style="font-family:'Roboto'; font-size:10px;">Клапан заполн.
-		ДТ</text>
+		<text transform="matrix(1 0 0 1 543.1044 54.3989)" style="font-family:'Roboto'; font-size:10px;">
+			<tspan>Клапан заполн. ДТ</tspan>
+		</text>
 		<text transform="matrix(1 0 0 1 551.2443 69.6766)" style="font-family:'Roboto'; font-size:10px;">{{modeVFillDT}}</text>
 		<path style="fill:none;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;" d="M630.6,81.5H12.5c-5.2,0-9.4-4.2-9.4-9.4V21.4
 	c0-5.2,4.2-9.4,9.4-9.4h618.1c5.2,0,9.4,4.2,9.4,9.4v50.7C640,77.3,635.8,81.5,630.6,81.5z" />
@@ -795,8 +797,7 @@
 
 	<g data-section="gasMeter" transform="translate(-75 0)">
 		<style>
-			.st6{font-family:'Roboto';}
-			.st7{font-size:9px;}
+			.st6{font-family:'Roboto';font-size:9px;}
 			.st8{fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;}
 			.st35{fill:none;stroke:#060606;stroke-width:0.7731;stroke-linecap:round;stroke-miterlimit:5.8623;}
 			.st36{fill:none;stroke:#F7931E;stroke-miterlimit:10;}
@@ -810,22 +811,22 @@
 		<line class="st36" x1="495.1" y1="190.7" x2="512" y2="190.7"/>
 		<line class="st36" x1="349.5" y1="410.5" x2="349.7" y2="370.3"/>
 		<g>
-			<rect x="171.2" y="404.6" width="58" height="12.3" class="st8" />
-			<text data-state="gasMeter.currentFlowRateWc" transform="matrix(1 0 0 1 174 414.4297)" class="st6 st7">419.8н.м³/ч</text>
-			<text transform="matrix(1 0 0 1 192.4455 400.9655)" class="st6 st7">FE3.1</text>
+			<rect x="171.2" y="404.6" width="65" height="12.3" class="st8" />
+			<text data-state="gasMeter.currentFlowRateWc" transform="matrix(1 0 0 1 174 414.4297)" class="st6">419.8н.м³/ч</text>
+			<text transform="matrix(1 0 0 1 192.4455 400.9655)" class="st6">FE3.1</text>
 		</g>
 		<g>
 			<rect x="232.5" y="389.4" width="45" height="11.2" class="st8" />
-			<text data-state="gasMeter.currentTemp" transform="matrix(1 0 0 1 235 398.1299)" class="st6 st7">9,4ºC</text>
+			<text data-state="gasMeter.currentTemp" transform="matrix(1 0 0 1 235 398.1299)" class="st6">9,4ºC</text>
 			<line class="st36" x1="251.6" y1="410.8" x2="251.6" y2="400.6"/>
-			<text transform="matrix(1 0 0 1 239.116 387.4139)" class="st6 st7">TE14</text>
+			<text transform="matrix(1 0 0 1 239.116 387.4139)" class="st6">TE14</text>
 			<circle class="st37" cx="251.6" cy="410.7" r="1.3"/>
 		</g>
 		<g transform="translate(10 0)">
 			<rect x="275.5" y="389.1" width="55" height="11.1" class="st8" />
-			<text data-state="gasMeter.currentPressure" transform="matrix(1 0 0 1 278.6857 397.7684)" class="st6 st7">374.2кПа</text>
+			<text data-state="gasMeter.currentPressure" transform="matrix(1 0 0 1 278.6857 397.7684)" class="st6">374.2кПа</text>
 			<line class="st36" x1="298" y1="410.5" x2="298" y2="400.1"/>
-			<text transform="matrix(1 0 0 1 291.7077 387.0526)" class="st6 st7">PE4</text>
+			<text transform="matrix(1 0 0 1 291.7077 387.0526)" class="st6">PE4</text>
 			<circle class="st37" cx="298" cy="410.5" r="1.3"/>
 		</g>
 

@@ -1920,7 +1920,7 @@
         },
         "currentFlowRateNc": {
           "type": "number",
-          "unit": "м3/ч",
+          "unit": "н.м3/ч",
           "ui": {
             "group": 8,
             "editor": {
@@ -1939,7 +1939,7 @@
         },
         "currentFlowRateWc": {
           "type": "number",
-          "unit": "м3/ч",
+          "unit": "р.м3/ч",
           "ui": {
             "group": 8,
             "editor": {
