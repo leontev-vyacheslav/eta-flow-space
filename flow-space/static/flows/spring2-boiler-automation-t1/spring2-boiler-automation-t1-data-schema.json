@@ -1883,6 +1883,12 @@
         "currentPressure": {
           "type": "number",
           "unit": "кПа",
+          "formatting": {
+            "options": {
+              "style": "decimal",
+              "maximumFractionDigits": 2
+            }
+          },
           "ui": {
             "group": 8,
             "editor": {
@@ -1902,6 +1908,12 @@
         "currentTemp": {
           "type": "number",
           "unit": "°C",
+          "formatting": {
+            "options": {
+              "style": "decimal",
+              "maximumFractionDigits": 2
+            }
+          },
           "ui": {
             "group": 8,
             "editor": {
@@ -1921,6 +1933,12 @@
         "currentFlowRateNc": {
           "type": "number",
           "unit": "н.м3/ч",
+          "formatting": {
+            "options": {
+              "style": "decimal",
+              "maximumFractionDigits": 2
+            }
+          },
           "ui": {
             "group": 8,
             "editor": {
@@ -1940,6 +1958,12 @@
         "currentFlowRateWc": {
           "type": "number",
           "unit": "р.м3/ч",
+          "formatting": {
+            "options": {
+              "style": "decimal",
+              "maximumFractionDigits": 2
+            }
+          },
           "ui": {
             "group": 8,
             "editor": {
