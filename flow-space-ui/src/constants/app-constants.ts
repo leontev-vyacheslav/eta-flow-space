@@ -35,7 +35,17 @@ const AppConstants = {
     },
     pageHeight: '75vh',
     formHeight: '65vh',
-    chartHeight: '50vh'
+    chartHeight: '50vh',
+    formatting: {
+        numberFormat: {
+            locale: 'en-US',
+            options: {
+                style: 'decimal',
+                groupSeparator: ' ',
+                maximumFractionDigits: 1
+            }
+        }
+    }
 };
 
 export default AppConstants;

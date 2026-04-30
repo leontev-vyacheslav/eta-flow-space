@@ -9,6 +9,7 @@ import type { SchemaTypeInfoPropertiesChainModel } from "../../../../helpers/dat
 import { showAlertDialog } from "../../../../utils/dialogs";
 
 import './mnemoschema-popover.scss';
+import AppConstants from "../../../../constants/app-constants";
 
 export const useMnemoschemaPopover = () => {
     const { isAdmin } = useAuth();
@@ -57,8 +58,19 @@ export const useMnemoschemaPopover = () => {
             value = value === true ? 'Да' : 'Нет';
         }
         if (propertyInfo.typeInfo?.typeName === 'number') {
-            value = value.toFixed(2);
+            if (propertyInfo.typeInfo?.formatting && propertyInfo.typeInfo?.formatting.options) {
+                value = new Intl.NumberFormat(
+                    propertyInfo.typeInfo.formatting.locale ?? AppConstants.formatting.numberFormat.locale,
+                    propertyInfo.typeInfo.formatting.options
+                ).format(value);
+            } else {
+                value = new Intl.NumberFormat(
+                    AppConstants.formatting.numberFormat.locale,
+                    AppConstants.formatting.numberFormat.options as any
+                ).format(value);
+            }
         }
+
 
         if (propertyInfo.typeInfo?.ui.editor.editorOptions.type === 'datetime') {
             const date = new Date(value);
@@ -144,7 +156,7 @@ export const useMnemoschemaPopover = () => {
         };
     }, []);
 
-    const EmergencyPopoverTitle = () => {
+    const PopoverTitle = () => {
         return (
             <a className="popup-close-button" onClick={() => popoverInstance.current?.hide()}>
                 <span aria-hidden="true">×</span>
@@ -239,7 +251,7 @@ export const useMnemoschemaPopover = () => {
             },
             titleTemplate: () => {
                 popoverTitleReactRoot.render(
-                    <EmergencyPopoverTitle />
+                    <PopoverTitle />
                 )
                 return popoverTitleContainer;
             },

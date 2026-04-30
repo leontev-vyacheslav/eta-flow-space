@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import { useDashboardPage } from "../../dashboard-page-context";
 import { useScreenSize } from "../../../../utils/media-query";
+import AppConstants from "../../../../constants/app-constants";
 
 export const useMnemoschemaStateSetup = () => {
     const { isSmall, isXSmall, isLarge } = useScreenSize();
@@ -34,12 +35,21 @@ export const useMnemoschemaStateSetup = () => {
                                     element.innerHTML = '<tspan style="fill: red">Ошибка</tspan>'
                                 }
                             } else {
-                                const unit = typeInfo && typeInfo.unit;
-
                                 if (typeInfo?.typeName === 'number') {
-                                    value = value.toFixed(2);
+                                    if (typeInfo?.formatting && typeInfo?.formatting.options) {
+                                        value = new Intl.NumberFormat(
+                                            typeInfo.formatting.locale ?? AppConstants.formatting.numberFormat.locale,
+                                            typeInfo.formatting.options
+                                        ).format(value);
+                                    } else {
+                                        value = new Intl.NumberFormat(
+                                            AppConstants.formatting.numberFormat.locale,
+                                            AppConstants.formatting.numberFormat.options as any
+                                        ).format(value);
+                                    }
                                 }
 
+                                const unit = typeInfo && typeInfo.unit;
                                 if (unit) {
                                     element.innerHTML = `${value} ${unit ? unit : ''}`;
                                 } else {
