@@ -72,7 +72,7 @@
 
 
 	<g data-section="boilers[0]">
-		<rect data-state="" data-state-eval="element.style.stroke = (state.boilers[0].isBurnerFailure || state.boilers[0].isGasRelayPressure || state.boilers[0].isMinWaterPressure || state.boilers[0].isMaxWaterPressure ||  state.boilers[0].isMaxWaterTemperature  ? 'red': 'black');" x="77.6" y="128.4" style="fill:#FFFFFF;stroke:#FFFFFF;stroke-miterlimit:10;" width="63.6" height="69.3" />
+		<rect data-state="boilers[0].state;boilers[0].isBurnerFailure;boilers[0].isGasRelayPressure;boilers[0].isGasRelayPressure;boilers[0].isMinWaterPressure;boilers[0].isMaxWaterPressure;boilers[0].isMaxWaterTemperature" data-state-eval="element.style.stroke = (state.boilers[0].isBurnerFailure || state.boilers[0].isGasRelayPressure || state.boilers[0].isMinWaterPressure || state.boilers[0].isMaxWaterPressure ||  state.boilers[0].isMaxWaterTemperature  ? 'red': 'black');" x="77.6" y="128.4" style="fill:#FFFFFF;stroke:#FFFFFF;stroke-miterlimit:10;" width="63.6" height="69.3" />
 		<g>
 			<text transform="matrix(1 0 0 1 99.2257 147.8056)" style="font-family:'Roboto'; font-size:10px;">TE7</text>
 			<rect x="93.5" y="149.9" width="45" height="11.2" data-state="boilers[0].statusTempFlueGasesSensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
@@ -88,9 +88,7 @@
 		c0-2.5,2-4.5,4.5-4.5h29.5c2.5,0,4.5,2,4.5,4.5v19.9C129.8,192.6,127.8,194.6,125.3,194.6z" />
 			<use data-state="boilers[0].isWorking" data-state-eval="element.style.display = (value ? 'initial': 'none');" href='#boilerFlame' transform="translate(94, 168) rotate(0, 25, 25) scale(0.06)" class="boiler-flame-animation" />
 		</g>
-		<use data-state="boilers[0].isBurnerFailure;boilers[0].isGasRelayPressure;boilers[0].isMinWaterPressure;boilers[0].isMaxWaterPressure;boilers[0].isMaxWaterTemperature"
-			data-state-eval="element.style.display = (state.boilers[0].isBurnerFailure || state.boilers[0].isGasRelayPressure || state.boilers[0].isMinWaterPressure || state.boilers[0].isMaxWaterPressure ||  state.boilers[0].isMaxWaterTemperature  ? 'initial': 'none')"
-			href='#emergencyIcon' transform="translate(120, 130)" />
+		<use data-state="boilers[0].state;boilers[0].isBurnerFailure;boilers[0].isGasRelayPressure;boilers[0].isMinWaterPressure;boilers[0].isMaxWaterPressure;boilers[0].isMaxWaterTemperature" data-state-eval="element.style.display = (state.boilers[0].isBurnerFailure || state.boilers[0].isGasRelayPressure || state.boilers[0].isMinWaterPressure || state.boilers[0].isMaxWaterPressure ||  state.boilers[0].isMaxWaterTemperature  ? 'initial': 'none')" href='#emergencyIcon' transform="translate(120, 130)" />
 	</g>
 
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="108.7" y1="280.6" x2="108.7" y2="307.2" />
@@ -130,7 +128,7 @@
 	<text transform="matrix(1 0 0 1 208.3075 251.1377)" style="font-family:'Roboto'; font-size:10px;">ЗК2</text>
 
 	<g data-section="boilers[1]">
-		<rect data-state="" data-state-eval="element.style.stroke = (state.boilers[1].isBurnerFailure || state.boilers[1].isGasRelayPressure || state.boilers[1].isMinWaterPressure || state.boilers[1].isMaxWaterPressure ||  state.boilers[1].isMaxWaterTemperature  ? 'red': 'black');" x="197" y="128.3" style="fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;" width="63.6" height="69.3" />
+		<rect data-state="boilers[1].state;boilers[1].isBurnerFailure;boilers[1].isGasRelayPressure;boilers[1].isGasRelayPressure;boilers[1].isMinWaterPressure;boilers[1].isMaxWaterPressure;boilers[1].isMaxWaterTemperature" data-state-eval="element.style.stroke = (state.boilers[1].isBurnerFailure || state.boilers[1].isGasRelayPressure || state.boilers[1].isMinWaterPressure || state.boilers[1].isMaxWaterPressure ||  state.boilers[1].isMaxWaterTemperature  ? 'red': 'black');" x="197" y="128.3" style="fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;" width="63.6" height="69.3" />
 		<g data-section="boilers[1].tempFlueGases">
 			<text transform="matrix(1 0 0 1 219.6575 147.7048)" style="font-family:'Roboto'; font-size:10px;">TE8</text>
 			<rect x="212.9" y="149.8" width="45" height="11.2" data-state="boilers[1].statusTempFlueGasesSensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
@@ -146,7 +144,7 @@
 			c0-2.5,2-4.5,4.5-4.5h29.5c2.5,0,4.5,2,4.5,4.5v19.9C249.2,192.5,247.2,194.5,244.7,194.5z" />
 			<use data-state="boilers[1].isWorking" data-state-eval="element.style.display = (value ? 'initial': 'none');" href='#boilerFlame' transform="translate(214, 168) rotate(0, 25, 25) scale(0.06)" class="boiler-flame-animation" />
 		</g>
-		<use data-state="boilers[1].isBurnerFailure;boilers[1].isGasRelayPressure;boilers[1].isMinWaterPressure;boilers[1].isMaxWaterPressure;boilers[1].isMaxWaterTemperature" data-state-eval="element.style.display = (state.boilers[1].isBurnerFailure || state.boilers[1].isGasRelayPressure || state.boilers[1].isMinWaterPressure || state.boilers[1].isMaxWaterPressure ||  state.boilers[1].isMaxWaterTemperature  ? 'initial': 'none')" href='#emergencyIcon' transform="translate(240, 130)" />
+		<use data-state="boilers[1].state;boilers[1].isBurnerFailure;boilers[1].isGasRelayPressure;boilers[1].isMinWaterPressure;boilers[1].isMaxWaterPressure;boilers[1].isMaxWaterTemperature" data-state-eval="element.style.display = (state.boilers[1].isBurnerFailure || state.boilers[1].isGasRelayPressure || state.boilers[1].isMinWaterPressure || state.boilers[1].isMaxWaterPressure ||  state.boilers[1].isMaxWaterTemperature  ? 'initial': 'none')" href='#emergencyIcon' transform="translate(240, 130)" />
 	</g>
 
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="228.2" y1="280.7" x2="228.2" y2="289.1" />
@@ -188,7 +186,7 @@
 	<text transform="matrix(1 0 0 1 327.857 251.0874)" style="font-family:'Roboto'; font-size:10px;">ЗК3</text>
 
 	<g data-section="boilers[2]">
-		<rect data-state="" data-state-eval="element.style.stroke = (state.boilers[2].isBurnerFailure || state.boilers[2].isGasRelayPressure || state.boilers[2].isMinWaterPressure || state.boilers[2].isMaxWaterPressure ||  state.boilers[2].isMaxWaterTemperature  ? 'red': 'black');" x="316.6" y="128.2" style="fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;" width="63.6" height="69.3" />
+		<rect data-state="boilers[2].state;boilers[2].isBurnerFailure;boilers[2].isGasRelayPressure;boilers[2].isGasRelayPressure;boilers[2].isMinWaterPressure;boilers[2].isMaxWaterPressure;boilers[2].isMaxWaterTemperature" data-state-eval="element.style.stroke = (state.boilers[2].isBurnerFailure || state.boilers[2].isGasRelayPressure || state.boilers[2].isMinWaterPressure || state.boilers[2].isMaxWaterPressure ||  state.boilers[2].isMaxWaterTemperature  ? 'red': 'black');" x="316.6" y="128.2" style="fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;" width="63.6" height="69.3" />
 		<g data-section="boilers[2].tempFlueGases">
 			<text transform="matrix(1 0 0 1 339.2071 147.6545)" style="font-family:'Roboto'; font-size:10px;">TE9</text>
 			<rect x="332.5" y="149.8" width="45" height="11.1" data-state="boilers[2].statusTempFlueGasesSensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
@@ -206,7 +204,7 @@
 			<use data-state="boilers[2].isWorking" data-state-eval="element.style.display = (value ? 'initial': 'none');" href='#boilerFlame' transform="translate(333, 168) rotate(0, 25, 25) scale(0.06)" class="boiler-flame-animation" />
 		</g>
 
-		<use data-state="boilers[2].isBurnerFailure;boilers[2].isGasRelayPressure;boilers[2].isMinWaterPressure;boilers[2].isMaxWaterPressure;boilers[2].isMaxWaterTemperature" data-state-eval="element.style.display = (state.boilers[2].isBurnerFailure || state.boilers[2].isGasRelayPressure || state.boilers[2].isMinWaterPressure || state.boilers[2].isMaxWaterPressure ||  state.boilers[2].isMaxWaterTemperature ? 'initial': 'none')" href='#emergencyIcon' transform="translate(360, 130)" />
+		<use data-state="boilers[2].state;boilers[2].isBurnerFailure;boilers[2].isGasRelayPressure;boilers[2].isMinWaterPressure;boilers[2].isMaxWaterPressure;boilers[2].isMaxWaterTemperature" data-state-eval="element.style.display = (state.boilers[2].isBurnerFailure || state.boilers[2].isGasRelayPressure || state.boilers[2].isMinWaterPressure || state.boilers[2].isMaxWaterPressure ||  state.boilers[2].isMaxWaterTemperature ? 'initial': 'none')" href='#emergencyIcon' transform="translate(360, 130)" />
 	</g>
 
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="347.7" y1="280.5" x2="347.7" y2="289" />
@@ -248,7 +246,7 @@
 	<text transform="matrix(1 0 0 1 447.8041 250.9867)" style="font-family:'Roboto'; font-size:10px;">ЗК4</text>
 
 	<g data-section="boilers[3]">
-		<rect data-state="" data-state-eval="element.style.stroke = (state.boilers[3].isBurnerFailure || state.boilers[3].isGasRelayPressure || state.boilers[3].isMinWaterPressure || state.boilers[3].isMaxWaterPressure ||  state.boilers[3].isMaxWaterTemperature ? 'red': 'black');" x="436.5" y="128.1" style="fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;" width="63.6" height="69.3" />
+		<rect data-state="boilers[3].state;boilers[3].isBurnerFailure;boilers[3].isGasRelayPressure;boilers[3].isGasRelayPressure;boilers[3].isMinWaterPressure;boilers[3].isMaxWaterPressure;boilers[3].isMaxWaterTemperature" data-state-eval="element.style.stroke = (state.boilers[3].isBurnerFailure || state.boilers[3].isGasRelayPressure || state.boilers[3].isMinWaterPressure || state.boilers[3].isMaxWaterPressure ||  state.boilers[3].isMaxWaterTemperature ? 'red': 'black');" x="436.5" y="128.1" style="fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;" width="63.6" height="69.3" />
 		<g data-section="boilers[3].tempFlueGases">
 			<text transform="matrix(1 0 0 1 455 147.5538)" style="font-family:'Roboto'; font-size:10px;">TE10</text>
 			<rect x="452.4" y="149.7" width="45" height="11.1" data-state="boilers[3].statusTempFlueGasesSensor" style="fill:#FFFFFF;stroke:#FF0000;stroke-miterlimit:10;" />
@@ -265,7 +263,7 @@
 			<use data-state="boilers[1].isWorking" data-state-eval="element.style.display = (value ? 'initial': 'none');" href='#boilerFlame' transform="translate(453, 168) rotate(0, 25, 25) scale(0.06)" class="boiler-flame-animation" />
 		</g>
 
-		<use data-state="boilers[3].isBurnerFailure;boilers[3].isGasRelayPressure;boilers[3].isMinWaterPressure;boilers[3].isMaxWaterPressure;boilers[3].isMaxWaterTemperature" data-state-eval="element.style.display = (state.boilers[3].isBurnerFailure || state.boilers[3].isGasRelayPressure || state.boilers[3].isMinWaterPressure || state.boilers[3].isMaxWaterPressure ||  state.boilers[3].isMaxWaterTemperature ? 'initial': 'none')" href='#emergencyIcon' transform="translate(480, 130)" />
+		<use data-state="boilers[3].state;boilers[3].isBurnerFailure;boilers[3].isGasRelayPressure;boilers[3].isMinWaterPressure;boilers[3].isMaxWaterPressure;boilers[3].isMaxWaterTemperature" data-state-eval="element.style.display = (state.boilers[3].isBurnerFailure || state.boilers[3].isGasRelayPressure || state.boilers[3].isMinWaterPressure || state.boilers[3].isMaxWaterPressure ||  state.boilers[3].isMaxWaterTemperature ? 'initial': 'none')" href='#emergencyIcon' transform="translate(480, 130)" />
 
 	</g>
 
