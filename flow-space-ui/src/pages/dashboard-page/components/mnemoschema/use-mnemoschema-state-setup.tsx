@@ -12,13 +12,15 @@ export const useMnemoschemaStateSetup = () => {
         if (!schemaTypeInfoPropertiesChain) {
             return;
         }
-        mnemoschemaElement.querySelectorAll(`[data-state=""]`).forEach(element => {
-            const state = deviceState?.state;
-            const dataStateEvalAttr = element.getAttribute('data-state-eval');
-            if (dataStateEvalAttr && state) {
-                eval(dataStateEvalAttr);
-            }
-        });
+        [...mnemoschemaElement.querySelectorAll(`[data-state]`)]
+            .filter(element => element.getAttribute('data-state-eval') && element.getAttribute('data-state')?.includes(';'))
+            .forEach(element => {
+                const state = deviceState?.state;
+                const dataStateEvalAttr = element.getAttribute('data-state-eval');
+                if (dataStateEvalAttr && state) {
+                    eval(dataStateEvalAttr);
+                }
+            });
 
         schemaTypeInfoPropertiesChain
             .forEach(({ typeInfo, propertiesChainValuePair }) => {
