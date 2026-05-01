@@ -2998,7 +2998,7 @@
         "type": "debug",
         "z": "2d15e59c76504bcb",
         "name": "debug 5",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -3045,8 +3045,80 @@
         "y": 380,
         "wires": [
             [
-                "0f713a243eed5556",
                 "8330eb212f14fc75"
+            ]
+        ]
+    },
+    {
+        "id": "a9e39bc72dfb53b7",
+        "type": "tcp request",
+        "z": "2d15e59c76504bcb",
+        "name": "vkt_7_startSession",
+        "server": "94.180.252.2",
+        "port": "505",
+        "out": "time",
+        "ret": "buffer",
+        "splitc": "5000",
+        "newline": "",
+        "trim": false,
+        "tls": "",
+        "x": 490,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "489bd6f4023297e7",
+        "type": "function",
+        "z": "2d15e59c76504bcb",
+        "name": "trigger",
+        "func": "//flow.set('addrVKT_spring_2', 1);\n//const addrVKT = flow.get('addrVKT_spring_2');\nvar addrVKT = 1;\n//msg.payload = [0xFF, 0xFF];\n//msg.payload.push(addrVKT);\nmsg.payload = [0x01, 0x10, 0x3F, 0xFF, 0x00, 0x00, 0xCC, 0x80, 0x00, 0x00, 0x00];\nvar crc16 = crc.crc16modbus(msg.payload); \nmsg.payload.push(crc16 & 0xff);\nmsg.payload.push((crc16 >> 8) & 0xff);\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "crc",
+                "module": "crc"
+            }
+        ],
+        "x": 650,
+        "y": 420,
+        "wires": [
+            [
+                "0f713a243eed5556"
+            ]
+        ]
+    },
+    {
+        "id": "2af5b428ab2a778c",
+        "type": "inject",
+        "z": "2d15e59c76504bcb",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 480,
+        "y": 420,
+        "wires": [
+            [
+                "489bd6f4023297e7"
             ]
         ]
     }

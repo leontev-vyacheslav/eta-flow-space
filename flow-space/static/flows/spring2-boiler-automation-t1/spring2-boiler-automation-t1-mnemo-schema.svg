@@ -46,7 +46,7 @@
 			<path data-state="boilerPumps[0].state" data-colorizer-hint="stroke" style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M66.9,175.6h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
 			c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6V173C69.5,174.5,68.3,175.6,66.9,175.6z" />
 		</g>
-		<use data-state="" data-state-eval="element.style.display = (state.boilerPumps[0].state===2 ? 'initial': 'none')" href='#emergencyIcon' transform="translate(58, 130)" />
+		<use data-state="boilerPumps[0].state" data-state-eval="element.style.display = (state.boilerPumps[0].state===2 ? 'initial': 'none')" href='#emergencyIcon' transform="translate(58, 130)" />
 	</g>
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="56.3" y1="114.9" x2="56.3" y2="148.9" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="56.3" y1="175.6" x2="56.3" y2="209.5" />
@@ -107,7 +107,7 @@
 			<path data-state="boilerPumps[1].state" data-colorizer-hint="stroke" style="fill:none;stroke:#FF0000;stroke-width:2;stroke-miterlimit:10;" d="M186.3,175.5h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
 			c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6v21.6C188.9,174.4,187.7,175.5,186.3,175.5z" />
 		</g>
-		<use data-state="" data-state-eval="element.style.display = (state.boilerPumps[1].state===2 ? 'initial': 'none')" href='#emergencyIcon' transform="translate(178, 130)" />
+		<use data-state="boilerPumps[1].state" data-state-eval="element.style.display = (state.boilerPumps[1].state===2 ? 'initial': 'none')" href='#emergencyIcon' transform="translate(178, 130)" />
 	</g>
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="175.7" y1="114.8" x2="175.8" y2="148.8" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="175.8" y1="175.5" x2="175.8" y2="209.4" />
@@ -165,7 +165,7 @@
 			<path data-state="boilerPumps[2].state" data-colorizer-hint="stroke" style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M305.9,175.5h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
 			c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6v21.6C308.4,174.3,307.3,175.5,305.9,175.5z" />
 		</g>
-		<use data-state="" data-state-eval="element.style.display = (state.boilerPumps[2].state===2 ? 'initial': 'none')" href='#emergencyIcon' transform="translate(298, 130)" />
+		<use data-state="boilerPumps[2].state" data-state-eval="element.style.display = (state.boilerPumps[2].state===2 ? 'initial': 'none')" href='#emergencyIcon' transform="translate(298, 130)" />
 	</g>
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="295.3" y1="114.8" x2="295.3" y2="148.7" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="295.3" y1="175.5" x2="295.3" y2="209.3" />
@@ -225,7 +225,7 @@
 			<path data-state="boilerPumps[3].state" data-colorizer-hint="stroke" style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M425.8,175.4h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
 			c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6v21.6C428.4,174.2,427.2,175.4,425.8,175.4z" />
 		</g>
-		<use data-state="" data-state-eval="element.style.display = (state.boilerPumps[3].state===2 ? 'initial': 'none')" href='#emergencyIcon' transform="translate(418, 130)" />
+		<use data-state="boilerPumps[3].state" data-state-eval="element.style.display = (state.boilerPumps[3].state===2 ? 'initial': 'none')" href='#emergencyIcon' transform="translate(418, 130)" />
 	</g>
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="415.2" y1="114.7" x2="415.3" y2="148.6" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="415.3" y1="175.4" x2="415.3" y2="209.2" />
@@ -286,7 +286,7 @@
 		</g>
 		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="72.8" y1="297.2" x2="72.8" y2="324.2" />
 		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="72.8" y1="350.9" x2="72.8" y2="367.8" />
-		<use data-state="" data-state-eval="element.style.display = (state.networkPumps[0].state === 512 || state.networkPumps[0].statusFc === 2 || state.networkPumps[0].isDryRun) ? 'initial': 'none'" href="#emergencyIcon" transform="translate(75, 304)"/>
+		<use data-state="networkPumps[0].state;networkPumps[0].statusFc;networkPumps[0].isDryRun" data-state-eval="element.style.display = (state.networkPumps[0].state === 512 || state.networkPumps[0].statusFc === 2 || state.networkPumps[0].isDryRun) ? 'initial': 'none'" href="#emergencyIcon" transform="translate(75, 304)"/>
 	</g>
 
 
@@ -302,7 +302,7 @@
 		</g>
 		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="108.7" y1="307.2" x2="108.7" y2="324.2" />
 		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="108.4" y1="350.9" x2="108.4" y2="367.8" />
-		<use data-state="" data-state-eval="element.style.display = (state.networkPumps[1].state === 512 || state.networkPumps[1].statusFc === 2 || state.networkPumps[1].isDryRun) ? 'initial': 'none'" href="#emergencyIcon" transform="translate(111, 304)"/>
+		<use data-state="networkPumps[1].state;networkPumps[1].statusFc;networkPumps[1].isDryRun" data-state-eval="element.style.display = (state.networkPumps[1].state === 512 || state.networkPumps[1].statusFc === 2 || state.networkPumps[1].isDryRun === true) ? 'initial': 'none'" href="#emergencyIcon" transform="translate(111, 304)"/>
 	</g>
 
 
@@ -318,7 +318,7 @@
 		</g>
 		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="144.4" y1="297.2" x2="144.4" y2="324.2" />
 		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="144.1" y1="350.9" x2="144.1" y2="367.8" />
-		<use data-state="" data-state-eval="element.style.display = (state.networkPumps[2].state === 512 || state.networkPumps[2].statusFc === 2 || state.networkPumps[2].isDryRun) ? 'initial': 'none'" href="#emergencyIcon" transform="translate(147, 304)" />
+		<use data-state="networkPumps[2].state;networkPumps[2].statusFc;networkPumps[2].isDryRun" data-state-eval="element.style.display = (state.networkPumps[2].state === 512 || state.networkPumps[2].statusFc === 2 || state.networkPumps[2].isDryRun) ? 'initial': 'none'" href="#emergencyIcon" transform="translate(147, 304)" />
 	</g>
 
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="108.4" y1="297.3" x2="62.5" y2="297.3" />
@@ -460,13 +460,13 @@
 		<g>
 			<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M334.3,74h-65.5c-3.1,0-5.7-2.5-5.7-5.7V49.6
 		c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C340,71.4,337.4,74,334.3,74z" />
-			<text transform="matrix(1 0 0 1 274.0237 56.0721)" style="font-family:'Roboto'; font-size:10px;">уровень ДТ1</text>
+			<text transform="matrix(1 0 0 1 274.0237 56.0721)" style="font-family:'Roboto'; font-size:10px;">Уровень ДТ1</text>
 			<text data-state="levelDt1" transform="matrix(1 0 0 1 285 68.608)" style="font-family:'Roboto'; font-size:10px;"></text>
 		</g>
 		<g>
 			<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M421.6,74h-65.5c-3.1,0-5.7-2.5-5.7-5.7V49.6
 		c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C427.3,71.4,424.7,74,421.6,74z" />
-			<text transform="matrix(1 0 0 1 361.3008 56.0721)" style="font-family:'Roboto'; font-size:10px;">уровень ДТ2</text>
+			<text transform="matrix(1 0 0 1 361.3008 56.0721)" style="font-family:'Roboto'; font-size:10px;">Уровень ДТ2</text>
 			<text data-state="levelDt2" transform="matrix(1 0 0 1 370 68.608)" style="font-family:'Roboto'; font-size:10px;"></text>
 		</g>
 		<g>
@@ -477,13 +477,13 @@
 		</g>
 		<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M525.7,74.7h-82.9c-3.1,0-5.7-2.5-5.7-5.7
 	V48.9c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7V69C531.4,72.1,528.8,74.7,525.7,74.7z" />
-		<text transform="matrix(1 0 0 1 441.5964 54.3989)" style="font-family:'Roboto'; font-size:10px;">
+		<text transform="matrix(1 0 0 1 432 54.3989)" style="font-family:'Roboto'; font-size:10px;">
 			<tspan>Клапан подачи ДТ</tspan>
 		</text>
 		<text transform="matrix(1 0 0 1 455.0727 69.6766)" style="font-family:'Roboto'; font-size:10px;">{{modeVDT}}</text>
 		<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M628.3,74.7h-82.9c-3.1,0-5.7-2.5-5.7-5.7
 	V48.9c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7V69C633.9,72.1,631.4,74.7,628.3,74.7z" />
-		<text transform="matrix(1 0 0 1 543.1044 54.3989)" style="font-family:'Roboto'; font-size:10px;">
+		<text transform="matrix(1 0 0 1 534 54.3989)" style="font-family:'Roboto'; font-size:10px;">
 			<tspan>Клапан заполн. ДТ</tspan>
 		</text>
 		<text transform="matrix(1 0 0 1 551.2443 69.6766)" style="font-family:'Roboto'; font-size:10px;">{{modeVFillDT}}</text>

@@ -549,7 +549,8 @@ module.exports = {
 
         routes: require('./src/routes'),
         services: require('./src/services'),
-        redisClient: redisClient
+        redisClient: redisClient,
+        crc: require('crc')
     },
 
     /** The maximum number of messages nodes will buffer internally as part of their
