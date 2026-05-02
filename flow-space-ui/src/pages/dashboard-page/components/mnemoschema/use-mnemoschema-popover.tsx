@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import { useDashboardPage } from "../../dashboard-page-context"
 import dxPopover from "devextreme/ui/popover";
 import { useAuth } from "../../../../contexts/auth";
-import { GraphIcon, HelpIcon } from "../../../../constants/app-icons";
+import { GraphIcon, HelpIcon, TypeIcon, VariableIcon } from "../../../../constants/app-icons";
 import { graphService } from "../../../../services/graph-service";
 import type { SchemaTypeInfoPropertiesChainModel } from "../../../../helpers/data-helper";
 import { showAlertDialog } from "../../../../utils/dialogs";
@@ -52,60 +52,52 @@ export const useMnemoschemaPopover = () => {
         });
     }, [dataschema]);
 
-    const SingleValuePropertyInfoTable = useCallback(({ propertyInfo, value }: { propertyInfo: SchemaTypeInfoPropertiesChainModel, value: any }) => {
+    const PropertyInfoTable = useCallback(({ propertyInfos, values }: { propertyInfos: SchemaTypeInfoPropertiesChainModel[], values: any[] }) => {
         return (
             <table className='simple-grid'>
                 <thead>
-                    <tr><th colSpan={2}>{propertyInfo.typeInfo?.ui.editor.label.text ?? ''}</th></tr>
-                </thead>
-                <tbody>
-                    {isAdmin() ?
-                        <>
-                            <tr>
-                                <td>Свойство:</td>
-                                <td>{propertyInfo.propertiesChainValuePair.propertiesChain}</td>
-                            </tr>
-                            <tr>
-                                <td>Тип:</td>
-                                <td>{propertyInfo.typeInfo?.typeName}</td>
-                            </tr>
-                        </>
-                        : null
-                    }
-                    <tr>
-                        <td>Значение:</td>
-                        <td>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                                <b style={{ width: '100%' }}>{value}</b>
-                                {propertyInfo.typeInfo?.ui.chart ? <GraphIcon data-state-graph={propertyInfo.propertiesChainValuePair.propertiesChain} alignmentBaseline="middle" size={16} style={{ cursor: 'pointer' }} /> : null}
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        )
-    }, [isAdmin]);
-
-    const MultipleValuePropertyInfoTable = useCallback(({ propertyInfos, values }: { propertyInfos: SchemaTypeInfoPropertiesChainModel[], values: any[] }) => {
-        return (
-            <table className='simple-grid'>
-                <thead>
-                    <tr><th colSpan={2}>Свойства</th></tr>
+                    <tr><th colSpan={2}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 5, justifyContent: 'center' }}>
+                            <VariableIcon size={16} />
+                            {propertyInfos.length > 1 ? 'Свойства' : 'Свойство'}
+                        </div>
+                    </th></tr>
                 </thead>
                 <tbody>
                     {propertyInfos.map((propertyInfo) => {
                         const value = values.find((v) => v.propertiesChain === propertyInfo.propertiesChainValuePair.propertiesChain)?.value;
                         return (
                             <tr>
-                                <td >{propertyInfo.typeInfo?.ui.editor.label.text ?? ''}</td>
-                                <td style={{ fontWeight: 'bold' }}>{value}</td>
+                                <td>
+                                    <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+                                        <span style={{ fontSize: '1em' }}>{propertyInfo.typeInfo?.ui.editor.label.text ?? ''}</span>
+                                        {isAdmin() ?
+                                            <>
+                                                <span style={{ display: 'flex', alignItems: 'center', fontSize: '0.85em', color: 'gray', gap: 5 }} >
+                                                    <VariableIcon size={12} />
+                                                    {propertyInfo.propertiesChainValuePair.propertiesChain}
+                                                </span>
+                                                <span style={{ display: 'flex', alignItems: 'center', fontSize: '0.85em', color: 'gray', gap: 5 }}>
+                                                    <TypeIcon size={12} />
+                                                    {propertyInfo.typeInfo?.typeName}
+                                                </span>
+                                            </>
+                                            : null}
+                                    </div>
+                                </td>
+                                <td >
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                                        <b style={{ width: '100%' }}>{value}</b>
+                                        {propertyInfo.typeInfo?.ui.chart ? <GraphIcon data-state-graph={propertyInfo.propertiesChainValuePair.propertiesChain} alignmentBaseline="middle" size={16} style={{ cursor: 'pointer' }} /> : null}
+                                    </div>
+                                </td>
                             </tr>
                         );
                     })}
                 </tbody>
             </table>
         );
-    }, []);
+    }, [isAdmin]);
 
 
     const popoverContentRender = useCallback((propertyInfos: SchemaTypeInfoPropertiesChainModel[], target: Element) => {
@@ -165,15 +157,9 @@ export const useMnemoschemaPopover = () => {
         }
 
         return (
-            propertyInfos.length === 1 ?
-                (
-                    <SingleValuePropertyInfoTable propertyInfo={propertyInfos[0]} value={values[0].value} />
-                ) :
-                (
-                    <MultipleValuePropertyInfoTable propertyInfos={propertyInfos} values={values} />
-                )
+            <PropertyInfoTable propertyInfos={propertyInfos} values={values} />
         );
-    }, [MultipleValuePropertyInfoTable, SingleValuePropertyInfoTable, dataschema, isAdmin, showEnumReference]);
+    }, [PropertyInfoTable, dataschema, isAdmin, showEnumReference]);
 
     useEffect(() => {
         return () => {

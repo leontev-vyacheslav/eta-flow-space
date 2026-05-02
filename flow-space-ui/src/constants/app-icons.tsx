@@ -113,6 +113,9 @@ export { HiOutlineDocumentReport as ReportIcon } from 'react-icons/hi';
 export { TbBeta as BetaIcon } from 'react-icons/tb';
 export { TbSum as SummaryReportIcon } from "react-icons/tb";
 
+export { VscSymbolParameter as TypeIcon } from 'react-icons/vsc';
+export { VscSymbolField as VariableIcon } from 'react-icons/vsc';
+
 
 
 import { MdMoreVert } from 'react-icons/md';
