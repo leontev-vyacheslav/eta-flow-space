@@ -44,10 +44,10 @@
 }
 
 .dx-toolbar.header-toolbar .dx-toolbar-items-container .dx-toolbar-after {
-  padding: 0 40px;
+  padding: 0 15px;
 
   .screen-x-small & {
-    padding: 0 20px;
+    padding: 0 15px;
   }
 }
 
@@ -75,11 +75,6 @@
   .dx-toolbar {
     padding: 10px 0;
   }
-
-  .user-button > .dx-button-content {
-    padding: 3px;
-    border-radius: 50%;
-  }
 }
 
 .app.screen-x-small .header-title {
@@ -87,8 +82,12 @@
   font-weight: bold;
 }
 
-.user-button{
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
+.user-main-menu {
+  .dx-menu-item {
+    height: initial !important;
+  }
+}
+
+.menu-item.profile {
+  line-height: 12px;
 }

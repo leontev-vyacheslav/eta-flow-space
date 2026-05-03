@@ -1,3 +1,4 @@
+import { TimeIcon } from '../../constants/app-icons';
 import { useAppSettings } from '../../contexts/app-settings';
 import type { WorkDateWidgetProps } from '../../models/work-date-widget-props';
 import { useCallback, useEffect, useState } from 'react';
@@ -36,11 +37,13 @@ export const WorkDateWidget = ({ style }: WorkDateWidgetProps) => {
         <div style={ {
              ...{
                 display: 'flex',
-                flexDirection: 'column',
+
                 lineHeight: 'initial',
-                alignItems: 'flex-start'
+                alignItems: 'flex-start',
+                gap: 5
             }, ...style,
         } }>
+            <TimeIcon size={20} />
             <div> {getFormattedWorkDate()}</div>
         </div>
     );

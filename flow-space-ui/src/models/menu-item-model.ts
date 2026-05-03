@@ -13,6 +13,8 @@ export type MenuItemModel = {
   visible?: boolean;
 
   textColor? : string;
-  
+
   textFontWeight? : string;
+
+  render?: (item: MenuItemModel) => ReactNode
 }

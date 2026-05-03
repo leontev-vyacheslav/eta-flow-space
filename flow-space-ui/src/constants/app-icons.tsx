@@ -2,14 +2,13 @@ export { IoMenuSharp as MenuIcon } from 'react-icons/io5';
 export { MdTimer as BeginDateIcon } from 'react-icons/md';
 export { MdTimerOff as EndDateIcon } from 'react-icons/md';
 export { MdDateRange as DateRangeIcon } from 'react-icons/md';
-export { MdTimer as TimeIcon } from 'react-icons/md';
 export { MdMoreVert as AdditionalMenuIcon } from 'react-icons/md';
 export { MdTimeline as TimelineIcon } from 'react-icons/md';
 export { RiCalendarLine as CurrentDateIcon } from 'react-icons/ri';
 export { RiCalendarEventLine as WorkDateIcon } from 'react-icons/ri';
 export { RiCalendarTodoLine as ScheduleIcon } from 'react-icons/ri';
 export { FiRefreshCcw as RefreshIcon } from 'react-icons/fi';
-export { RiAdminLine as AdminIcon } from 'react-icons/ri';
+
 export { HiOutlineUsers as UsersIcon } from 'react-icons/hi2';
 export { IoGridOutline as ListsIcon } from 'react-icons/io5';
 export { IoSettingsOutline as SettingsIcon } from 'react-icons/io5';
@@ -116,6 +115,11 @@ export { TbSum as SummaryReportIcon } from "react-icons/tb";
 export { VscSymbolParameter as TypeIcon } from 'react-icons/vsc';
 export { VscSymbolField as VariableIcon } from 'react-icons/vsc';
 
+export { MdOutlineAccountBox as AccountIcon } from 'react-icons/md';
+
+export { TbUserShield as AdminIcon } from 'react-icons/tb';
+export { TbUser as UserIcon } from 'react-icons/tb';
+export { IoMdTime as TimeIcon } from 'react-icons/io';
 
 
 import { MdMoreVert } from 'react-icons/md';
