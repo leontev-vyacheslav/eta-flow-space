@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { join } from 'path';
 import { configuration } from './config/configuration';
 import { AppController } from './app.controller';
 import { DatabaseModule } from './database/database.module';
@@ -19,12 +18,19 @@ import { DeviceStateDispatcherModule } from './common/services/device-state-disp
 @Module({
     imports: [
         ConfigModule.forRoot({
+            envFilePath: ['.env.local', '.env'],
             isGlobal: true,
             load: [configuration],
         }),
-        ServeStaticModule.forRoot({
-            rootPath: join(__dirname, '..', 'static'),
-            serveRoot: '/static',
+        ServeStaticModule.forRootAsync({
+            imports: [ConfigModule],
+            useFactory: (configService: ConfigService) => [
+                {
+                    rootPath: configService.get<string>('STATIC_PATH'),
+                    serveRoot: '/static',
+                },
+            ],
+            inject: [ConfigService],
         }),
         ScheduleModule.forRoot(),
         EmergencyStateDispatcherModule,
