@@ -9,7 +9,7 @@ import { UserDeviceLinkDataModel } from './user-device-link.data-model';
 @Table({
     tableName: 'device',
     freezeTableName: true,
-    timestamps: false,
+    timestamps: true,
 })
 export class DeviceDataModel extends Model {
     @PrimaryKey

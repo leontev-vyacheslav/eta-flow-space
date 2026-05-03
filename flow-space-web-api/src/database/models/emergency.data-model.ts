@@ -4,7 +4,7 @@ import { DeviceDataModel } from './device.data-model';
 @Table({
     tableName: 'emergency',
     freezeTableName: true,
-    timestamps: false,
+    timestamps: true,
 })
 export class EmergencyDataModel extends Model {
     @PrimaryKey

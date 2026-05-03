@@ -4,7 +4,7 @@ import { DeviceDataModel } from './device.data-model';
 @Table({
     tableName: 'object_location',
     freezeTableName: true,
-    timestamps: false,
+    timestamps: true,
 })
 export class ObjectLocationDataModel extends Model {
     @PrimaryKey

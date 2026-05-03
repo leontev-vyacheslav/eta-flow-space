@@ -4,7 +4,7 @@ import { DeviceDataModel } from './device.data-model';
 @Table({
     tableName: 'flow',
     freezeTableName: true,
-    timestamps: false,
+    timestamps: true,
 })
 export class FlowDataModel extends Model {
     @PrimaryKey

@@ -4,7 +4,7 @@ import { DeviceDataModel } from './device.data-model';
 @Table({
     tableName: 'device_state',
     freezeTableName: true,
-    timestamps: false,
+    timestamps: true,
 })
 export class DeviceStateDataModel extends Model {
     @PrimaryKey
