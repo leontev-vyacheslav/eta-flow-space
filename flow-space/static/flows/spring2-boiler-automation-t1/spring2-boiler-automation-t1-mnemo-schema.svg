@@ -43,7 +43,7 @@
 		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="56.4,170.9 52.4,164.3 60.3,164.3 56.4,170.9
 		" />
 		<g>
-			<path data-state="boilerPumps[0].state" data-colorizer-hint="stroke" style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M66.9,175.6h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
+			<path data-state="boilerPumps[0].state" data-colorizer-hint="stroke" style="fill:none;stroke:gray;stroke-width:2;stroke-miterlimit:10;" d="M66.9,175.6h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
 			c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6V173C69.5,174.5,68.3,175.6,66.9,175.6z" />
 		</g>
 		<use data-state="boilerPumps[0].state" data-state-eval="element.style.display = (state.boilerPumps[0].state===2 ? 'initial': 'none')" href='#emergencyIcon' transform="translate(58, 130)" />
@@ -102,7 +102,7 @@
 		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="175.8,170.8 171.9,164.2 179.8,164.2
 		175.8,170.8 	" />
 		<g>
-			<path data-state="boilerPumps[1].state" data-colorizer-hint="stroke" style="fill:none;stroke:#FF0000;stroke-width:2;stroke-miterlimit:10;" d="M186.3,175.5h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
+			<path data-state="boilerPumps[1].state" data-colorizer-hint="stroke" style="fill:none;stroke:gray;stroke-width:2;stroke-miterlimit:10;" d="M186.3,175.5h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
 			c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6v21.6C188.9,174.4,187.7,175.5,186.3,175.5z" />
 		</g>
 		<use data-state="boilerPumps[1].state" data-state-eval="element.style.display = (state.boilerPumps[1].state===2 ? 'initial': 'none')" href='#emergencyIcon' transform="translate(178, 130)" />
@@ -160,7 +160,7 @@
 		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="295.4,170.7 291.4,164.1 299.3,164.1
 		295.4,170.7 	" />
 		<g>
-			<path data-state="boilerPumps[2].state" data-colorizer-hint="stroke" style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M305.9,175.5h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
+			<path data-state="boilerPumps[2].state" data-colorizer-hint="stroke" style="fill:none;stroke:gray;stroke-width:2;stroke-miterlimit:10;" d="M305.9,175.5h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
 			c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6v21.6C308.4,174.3,307.3,175.5,305.9,175.5z" />
 		</g>
 		<use data-state="boilerPumps[2].state" data-state-eval="element.style.display = (state.boilerPumps[2].state===2 ? 'initial': 'none')" href='#emergencyIcon' transform="translate(298, 130)" />
@@ -220,7 +220,7 @@
 		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="415.3,170.6 411.4,164 419.3,164 415.3,170.6
 		" />
 		<g>
-			<path data-state="boilerPumps[3].state" data-colorizer-hint="stroke" style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M425.8,175.4h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
+			<path data-state="boilerPumps[3].state" data-colorizer-hint="stroke" style="fill:none;stroke:gray;stroke-width:2;stroke-miterlimit:10;" d="M425.8,175.4h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
 			c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6v21.6C428.4,174.2,427.2,175.4,425.8,175.4z" />
 		</g>
 		<use data-state="boilerPumps[3].state" data-state-eval="element.style.display = (state.boilerPumps[3].state===2 ? 'initial': 'none')" href='#emergencyIcon' transform="translate(418, 130)" />
