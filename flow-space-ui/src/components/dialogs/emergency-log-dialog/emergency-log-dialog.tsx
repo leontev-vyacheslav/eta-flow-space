@@ -10,6 +10,7 @@ import { getQuickGuid } from '../../../utils/uuid';
 import { EmergencyLogDialogContextProvider, useEmergencyLogDialog } from './emergency-log-dialog-context';
 import type { EmergencyLogDialogProps } from '../../../models/emergency-log-dialog-props';
 import { EmergencyLogGrid } from './emergency-log-grid';
+import { MenuItemWithSubMenu } from '../../menu/menu-item/menu-item';
 
 const EmergencyLogDialogInternal = (props: EmergencyLogDialogProps) => {
     const { isXSmall, isSmall } = useScreenSize();
@@ -35,8 +36,7 @@ const EmergencyLogDialogInternal = (props: EmergencyLogDialogProps) => {
                         }
                     },
                     {
-                        text: "Выборка",
-                        icon: () => <DateRangeIcon size={24} />,
+                        render: () => <MenuItemWithSubMenu icon={<DateRangeIcon size={24} />} text={'Выборка...'} />,
                         items: [
                             {
                                 icon: () => <OneHourIcon size={24} />,

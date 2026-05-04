@@ -121,6 +121,8 @@ export { TbUserShield as AdminIcon } from 'react-icons/tb';
 export { TbUser as UserIcon } from 'react-icons/tb';
 export { IoMdTime as TimeIcon } from 'react-icons/io';
 
+export {IoChevronForwardOutline as SubmenuIcon} from 'react-icons/io5';
+
 
 import { MdMoreVert } from 'react-icons/md';
 export const GridAdditionalMenuIcon = () => <MdMoreVert style={{ cursor: 'pointer' }} size={18} />

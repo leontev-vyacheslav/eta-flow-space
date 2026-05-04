@@ -2,7 +2,7 @@ import { Item as TabPanelItem, TabPanel } from 'devextreme-react/tab-panel';
 import { useEffect, useMemo, useRef, useState, type ComponentType } from "react";
 import PageHeader from "../../components/page-header/page-header";
 import AppConstants from "../../constants/app-constants";
-import { AdditionalMenuIcon, CircuitIcon, DashboardIcon, GraphIcon, HelpIcon, ParamsIcon, RefreshIcon, WarningLogIcon } from "../../constants/app-icons";
+import { AdditionalMenuIcon, CircuitIcon, DashboardIcon, GraphIcon, HelpIcon, ParamsIcon, RefreshIcon, ReportIcon, WarningLogIcon } from "../../constants/app-icons";
 import type { MenuItemModel } from "../../models/menu-item-model";
 import { quickHelpReferenceService } from "../../services/quick-help-reference-service";
 import { IconTab } from '../../components/tab-utils/icon-tab';
@@ -14,6 +14,8 @@ import { emergencyLogService } from '../../services/emergency-log-service';
 import { graphService } from '../../services/graph-service';
 import { emergencyMuteManager } from '../../services/emergency-mute-manager';
 import { useAuth } from '../../contexts/auth';
+import { MenuItemWithSubMenu } from '../../components/menu/menu-item/menu-item';
+import type { DeviceSettingsModel } from '../../models/flows/device-settings.model';
 
 const DashboardPageInner = () => {
     const tabPanelRef = useRef<TabPanel>(null);
@@ -25,7 +27,7 @@ const DashboardPageInner = () => {
     const [tabIndex, setTabIndex] = useState<number>(0);
 
     const menuItems = useMemo(() => {
-        return [
+        const menuItems = [
             {
                 icon: () => <AdditionalMenuIcon size={20} color='black' />,
                 items: [
@@ -35,7 +37,8 @@ const DashboardPageInner = () => {
                         onClick: () => {
                             setRefreshToken(getQuickGuid());
                         }
-                    }, {
+                    },
+                    {
                         icon: () => <GraphIcon size={20} />,
                         text: 'Графики...',
                         onClick: () => {
@@ -55,6 +58,7 @@ const DashboardPageInner = () => {
                     }, {
                         icon: () => <HelpIcon size={20} />,
                         text: 'Справка...',
+
                         onClick: () => {
                             quickHelpReferenceService.show('common/dashboard');
                         }
@@ -62,6 +66,27 @@ const DashboardPageInner = () => {
                 ]
             }
         ] as MenuItemModel[];
+
+        if (device && (device.settings as DeviceSettingsModel).reports) {
+            menuItems.find(() => true)!.items!
+                .splice(1, 0,
+                    {
+                        render: () => <MenuItemWithSubMenu icon={<ReportIcon size={20} />} text={'Отчеты...'} />,
+                        items: (device.settings as any).reports.map((report: any) => ({
+                            icon: () => <ReportIcon size={20} />,
+                            text: report.description  + '...',
+                            onClick: () => {
+                                if (device) {
+                                    alert(report.description)
+                                }
+                            }
+                        }))
+                    }
+                )
+        }
+
+        return menuItems;
+
     }, [device, schemaTypeInfoPropertiesChain, setRefreshToken]);
 
     useEffect(() => {
