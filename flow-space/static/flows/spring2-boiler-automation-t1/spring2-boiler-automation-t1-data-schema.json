@@ -1093,11 +1093,13 @@
       "type": "integer",
       "enum": [
         1,
-        2
+        2,
+        3
       ],
       "enumDescriptions": {
         "1": "OPERATING - Работа",
-        "2": "ALARM - Авария"
+        "2": "ALARM - Авария",
+        "3": "STOP - Останов"
       }
     },
     "NetworkPumpState": {
@@ -1139,11 +1141,13 @@
       "type": "integer",
       "enum": [
         1,
-        2
+        2,
+        3
       ],
       "enumDescriptions": {
         "1": "FC_OPERATING - Работа ПЧ",
-        "2": "FC_ALARM - Авария ПЧ"
+        "2": "FC_ALARM - Авария ПЧ",
+        "3": "FC_STOP - Останов ПЧ"
       }
     },
     "SourceWaterPumpModel": {
