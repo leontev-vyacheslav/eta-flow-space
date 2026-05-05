@@ -8,53 +8,17 @@ from weasyprint import HTML
 
 from app.config import settings
 from app.models.emergency_summary_report_row import EmergencySummaryReportRow
-from app.models.emergency_period_types import EmergencyPeriodType
+from app.models.period_types import PeriodTypes
 
+from app.services.formatters import locale_format_datetime, locale_format_month, period_type_group_format, period_type_title_format
 
-templates_dir = Path(__file__).parent.parent.parent / "templates/reports"
+templates_dir = Path(__file__).parent.parent.parent / "templates/common"
 template_env = Environment(loader=FileSystemLoader(templates_dir))
 
-
-def _locale_format_datetime(value: Any, format: str = "short") -> str:
-    if value is None:
-        return "N/A"
-    if isinstance(value, datetime):
-        return format_datetime(value, format, locale=settings.DEFAULT_REPORT_LOCALE)
-    return str(value)
-
-
-def _locale_format_month(value: Any) -> str:
-    if not value:
-        return "N/A"
-    return format_datetime(value, format="short", locale=settings.DEFAULT_REPORT_LOCALE)
-
-
-def _period_type_title_format(value: Any) -> str:
-    if value == EmergencyPeriodType.month:
-        return "месяц"
-    if value == EmergencyPeriodType.week:
-        return "неделя"
-    if value == EmergencyPeriodType.day:
-        return "сутки"
-
-    return value
-
-
-def _period_type_group_format(value: Any) -> str:
-    if value == EmergencyPeriodType.month:
-        return "месяц"
-    if value == EmergencyPeriodType.week:
-        return "неделя"
-    if value == EmergencyPeriodType.day:
-        return "сутки"
-
-    return value
-
-
-template_env.filters["locale_format_datetime"] = _locale_format_datetime
-template_env.filters["locale_format_month"] = _locale_format_month
-template_env.filters["period_type_title_format"] = _period_type_title_format
-template_env.filters["period_type_group_format"] = _period_type_group_format
+template_env.filters["locale_format_datetime"] = locale_format_datetime
+template_env.filters["locale_format_month"] = locale_format_month
+template_env.filters["period_type_title_format"] = period_type_title_format
+template_env.filters["period_type_group_format"] = period_type_group_format
 
 
 class EmergencySummaryReportService:
@@ -84,7 +48,11 @@ class EmergencySummaryReportService:
 
         return result
 
-    def render(self, rows: list[EmergencySummaryReportRow], period_type: EmergencyPeriodType, device_id: int | None, is_admin: bool) -> tuple[bytes | None, str]:
+    def render(self, *args: Any, **kwargs: Any) -> tuple[bytes | None, str]:
+        rows: list[EmergencySummaryReportRow] = kwargs["rows"]
+        period_type: PeriodTypes = kwargs["period_type"]
+        device_id: int | None = kwargs.get("device_id")
+        is_admin: bool = kwargs["is_admin"]
 
         grouped_data = self.__group_data(rows)
 
@@ -92,7 +60,7 @@ class EmergencySummaryReportService:
 
         html_content = template_env.get_template("emergency_summary_report.html").render(
             data=grouped_data,
-            templates_dir=templates_dir.as_uri(),
+            templates_dir=templates_dir,
             is_admin=is_admin,
             period_type=period_type.value,
             device_name=device_name,
