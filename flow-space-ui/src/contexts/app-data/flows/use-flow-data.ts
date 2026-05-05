@@ -145,7 +145,8 @@ export const useFlowData = () => {
     const getReportAsync = useCallback(async (url: string, params: any) => {
         const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
         const response = await authHttpRequest({
-            url: `http://localhost:8000/api${url}`,
+            // url: `http://localhost:8000/api${url}`,
+            url: `${routes.host}/api/reporting${url}`,
             params: {...params, timezone },
             method: HttpConstants.Methods.Get as Method,
             responseType: 'blob',
