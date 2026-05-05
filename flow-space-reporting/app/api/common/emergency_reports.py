@@ -5,9 +5,8 @@ import pytz
 from app.data_models import UserRoles
 from app.auth import verify_token
 from app.repositories.emergency_repository import EmergencyRepository
-from app.services.emergency_report_service import EmergencySummaryReportService
+from app.services.common.emergency_report_service import EmergencySummaryReportService
 from app.models.emergency_period_types import EmergencyPeriodType
-
 
 router = APIRouter()
 

@@ -13,37 +13,61 @@ import { kebabToCamel } from "../../utils/string-utils";
 type ReportDataSourceRegistryItem = {
     description: string;
     initialParams: any;
-    getDataAsync: (params: any) => Promise<Blob | undefined>;
 }
 
+const useDecodedReportUrl = () => {
+  const { reportUrl } = useParams<{ reportUrl: string }>();
+
+  const decoded = useMemo(() => {
+    if (!reportUrl) return null;
+
+    try {
+      return atob(reportUrl);
+    } catch (error) {
+      console.error('Failed to decode base64 reportUrl:', error);
+      return null;
+    }
+  }, [reportUrl]);
+
+  return decoded;
+};
+
 export const ReportPage = () => {
-    const { reportCode } = useParams();
-    const [reportUrl, setReportUrl] = useState<string | null>(null);
-    const { getEmergencySummaryReportAsync } = useAppData();
+    const reportUrl = useDecodedReportUrl();
+    const [reportBlobUrl, setReportBlobUrl] = useState<string | null>(null);
+    const { getReportAsync } = useAppData();
     const [refreshToken, setRefreshToken] = useState<string>(getQuickGuid());
 
     const reportDataSourceRegistry: Record<string, ReportDataSourceRegistryItem> = useMemo(() => {
         return {
-            'emergency-summary': {
+            '/emergency-summary': {
                 description: 'Сводный отчёт по нештатным ситуациям',
                 initialParams: {
                     periodType: 'month',
                     deviceId: undefined,
-                }, getDataAsync: (params: any) => getEmergencySummaryReportAsync(params)
+                },
             },
+            '/device/spring2/accounting-sheets/gas-meter': {
+                description: 'Ведомость учета газа',
+                initialParams: {
+                    periodType: 'month',
+                    deviceId: 9
+                },
+            }
         };
-    }, [getEmergencySummaryReportAsync]);
+    }, []);
 
     const [params, setParams] = useState<any>(() => {
-        if (!reportCode) {
+        if (!reportUrl) {
             return undefined;
         }
-        const registryItem = reportDataSourceRegistry[reportCode];
+
+        const registryItem = reportDataSourceRegistry[reportUrl];
         if (!registryItem) {
             return undefined;
         }
         let storedInitialParams = null;
-        const storedInitialParamsJson = localStorage.getItem(`reportParams_${kebabToCamel(reportCode)}`);
+        const storedInitialParamsJson = localStorage.getItem(`reportParams_${kebabToCamel(reportUrl.replaceAll('/', '-'))}`);
         if (storedInitialParamsJson) {
             try {
                 storedInitialParams = JSON.parse(storedInitialParamsJson);
@@ -59,10 +83,10 @@ export const ReportPage = () => {
             {
                 icon: () => <SettingsIcon size={20} color="black" />,
                 onClick: () => {
-                    if (!reportCode) {
+                    if (!reportUrl) {
                         return;
                     }
-                    reportParametricService.show(reportCode, params, (modalResult) => {
+                    reportParametricService.show(reportUrl, params, (modalResult) => {
                         if (modalResult.modalResult === 'OK') {
                             setParams(modalResult.data);
                         }
@@ -82,15 +106,15 @@ export const ReportPage = () => {
                 ]
             }
         ] as MenuItemModel[];
-    }, [params, reportCode]);
+    }, [params, reportUrl]);
 
     const getDataSourceAsyncWrapper = useCallback(async () => {
-        if (!reportCode) {
+        if (!reportUrl) {
             return undefined;
         }
 
-        return await reportDataSourceRegistry[reportCode]?.getDataAsync(params);
-    }, [reportCode, reportDataSourceRegistry, params]);
+        return await getReportAsync(reportUrl, params);
+    }, [reportUrl, getReportAsync, params]);
 
     useEffect(() => {
         let url: string | null = null;
@@ -100,7 +124,7 @@ export const ReportPage = () => {
                 return;
             }
             url = URL.createObjectURL(blob);
-            setReportUrl(url);
+            setReportBlobUrl(url);
         })();
 
         return () => {
@@ -116,14 +140,14 @@ export const ReportPage = () => {
                 return <div style={{ display: 'flex', flexDirection: 'column' }}>
                     <span>Отчёт</span>
                     <span style={{ fontSize: 12, fontWeight: 'normal', minHeight: 16, color: 'rgb(118, 118, 118)' }}>
-                        {reportCode ? reportDataSourceRegistry[reportCode]?.description : ''}
+                        {reportUrl ? reportDataSourceRegistry[reportUrl]?.description : ''}
                     </span>
                 </div>
             }} menuItems={menuItems} >
                 <ReportIcon size={AppConstants.headerIconSize} />
             </PageHeader>
             <div style={{ height: '100%', width: '100%', padding: 5 }}>
-                {reportUrl ? <iframe src={reportUrl}
+                {reportBlobUrl ? <iframe src={reportBlobUrl}
                     style={{
                         width: '100%',
                         height: 'calc(100% - 60px)',

@@ -9,11 +9,11 @@ import { EmergencySummaryReportParametric } from "./emergency-summary-report-par
 import { kebabToCamel } from "../../../utils/string-utils";
 
 const parametricRegister: Record<string, React.FC<{ initialParams: any, onParamsChange: (params: any) => void }>> = {
-    'emergency-summary': EmergencySummaryReportParametric,
+    '/emergency-summary': EmergencySummaryReportParametric,
 };
 
 export type ReportParamsDialogProps = React.PropsWithChildren<IPopupOptions> & AppModalPopupProps & {
-    reportCode: string;
+    reportUrl: string;
     initialParams: any;
 };
 
@@ -21,7 +21,7 @@ export const ReportParametricDialog = (props: ReportParamsDialogProps) => {
     const { isXSmall, isSmall } = useScreenSize();
     const popupRef = useRef<PopupRef>(null);
     const [params, setParams] = useState<any>();
-    const Parametric = parametricRegister[props.reportCode];
+    const Parametric = parametricRegister[props.reportUrl];
 
     return (
         <AppModalPopup
@@ -54,7 +54,7 @@ export const ReportParametricDialog = (props: ReportParamsDialogProps) => {
                         if (props.callback) {
                             props.callback({ modalResult: 'OK', data: params });
                             // store params in local storage
-                            localStorage.setItem(`reportParams_${kebabToCamel(props.reportCode)}`, JSON.stringify(params));
+                            localStorage.setItem(`reportParams_${kebabToCamel(props.reportUrl.replaceAll('/', '-'))}`, JSON.stringify(params));
                             popupRef.current?.instance.hide();
                         }
                     }}

@@ -11,7 +11,7 @@ from app.models.emergency_summary_report_row import EmergencySummaryReportRow
 from app.models.emergency_period_types import EmergencyPeriodType
 
 
-templates_dir = Path(__file__).parent.parent / "templates/reports"
+templates_dir = Path(__file__).parent.parent.parent / "templates/reports"
 template_env = Environment(loader=FileSystemLoader(templates_dir))
 
 

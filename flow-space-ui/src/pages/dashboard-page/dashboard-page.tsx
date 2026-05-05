@@ -6,7 +6,7 @@ import { AdditionalMenuIcon, CircuitIcon, DashboardIcon, GraphIcon, HelpIcon, Pa
 import type { MenuItemModel } from "../../models/menu-item-model";
 import { quickHelpReferenceService } from "../../services/quick-help-reference-service";
 import { IconTab } from '../../components/tab-utils/icon-tab';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { DashboardPageContextProvider, useDashboardPage } from './dashboard-page-context';
 import { getQuickGuid } from '../../utils/uuid';
 import { NoData } from '../../components/no-data-widget/no-data-widget';
@@ -19,6 +19,7 @@ import type { DeviceSettingsModel } from '../../models/flows/device-settings.mod
 
 const DashboardPageInner = () => {
     const tabPanelRef = useRef<TabPanel>(null);
+    const navigate = useNavigate();
     const { isAdmin } = useAuth();
     const { setRefreshToken, schemaTypeInfoPropertiesChain, device } = useDashboardPage();
     const { flowCode } = useParams();
@@ -74,10 +75,10 @@ const DashboardPageInner = () => {
                         render: () => <MenuItemWithSubMenu icon={<ReportIcon size={20} />} text={'Отчеты...'} />,
                         items: (device.settings as any).reports.map((report: any) => ({
                             icon: () => <ReportIcon size={20} />,
-                            text: report.description  + '...',
+                            text: `${report.description}...`,
                             onClick: () => {
                                 if (device) {
-                                    alert(report.description)
+                                   navigate(`/reports/${btoa(report.url)}`);
                                 }
                             }
                         }))
@@ -87,7 +88,7 @@ const DashboardPageInner = () => {
 
         return menuItems;
 
-    }, [device, schemaTypeInfoPropertiesChain, setRefreshToken]);
+    }, [device, navigate, schemaTypeInfoPropertiesChain, setRefreshToken]);
 
     useEffect(() => {
         (async () => {

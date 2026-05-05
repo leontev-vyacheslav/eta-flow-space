@@ -29,7 +29,7 @@ export type AppDataContextFlowEndpointsModel = {
     getDeviceStatesByDatesAsync: GetDeviceStatesByDatesAsyncFunc;
     getEmergencyStatesAsync: GetEmergencyStateAsyncFunc;
     getEmergencyStatesByDatesAsync: GetEmergencyStatesByDatesAsyncFunc;
-    getEmergencySummaryReportAsync: (periodType?: string, deviceId?: number) => Promise<Blob | undefined>;
+    getReportAsync: (url: string, params: any) => Promise<Blob | undefined>;
 };
 
 export const useFlowData = () => {
@@ -142,19 +142,18 @@ export const useFlowData = () => {
         }
     }, [authHttpRequest]);
 
-    const getEmergencySummaryReportAsync = useCallback(async (params: any) => {
+    const getReportAsync = useCallback(async (url: string, params: any) => {
         const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
         const response = await authHttpRequest({
-            url: `${routes.host}${routes.emergencySummaryReport}`,
+            url: `http://localhost:8000/api${url}`,
             params: {...params, timezone },
             method: HttpConstants.Methods.Get as Method,
             responseType: 'blob',
-        });
+    });
 
         if (response && response.status === HttpConstants.StatusCodes.Ok) {
             return new Blob([response.data], { type: 'application/pdf' });
         }
-
     }, [authHttpRequest]);
 
 
@@ -168,7 +167,7 @@ export const useFlowData = () => {
         getDeviceStatesByDatesAsync,
         getEmergencyStatesAsync,
         getEmergencyStatesByDatesAsync,
-        getEmergencySummaryReportAsync,
+        getReportAsync,
     };
 }
 
