@@ -1,9 +1,17 @@
-from datetime import datetime
+from datetime import date, datetime
 from typing import Any
-from babel.dates import format_datetime
+from babel.dates import format_datetime, format_date
 
 from app.config import settings
 from app.models.period_types import PeriodTypes
+
+
+def locale_format_date(value: Any) -> str:
+    if value is None:
+        return "N/A"
+    if isinstance(value, date):
+        return format_date(value, format='short', locale=settings.DEFAULT_REPORT_LOCALE)
+    return str(value)
 
 
 def locale_format_datetime(value: Any, format: str = "short") -> str:

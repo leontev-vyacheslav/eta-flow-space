@@ -2,12 +2,10 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from babel.dates import format_date, format_datetime
 from jinja2 import Environment, FileSystemLoader
 from weasyprint import HTML
 
-from app.config import settings
-from app.models.emergency_summary_report_row import EmergencySummaryReportRow
+from app.models.emergency_summary_report_row_model import EmergencySummaryReportRowModel
 from app.models.period_types import PeriodTypes
 
 from app.services.formatters import locale_format_datetime, locale_format_month, period_type_group_format, period_type_title_format
@@ -25,10 +23,10 @@ class EmergencySummaryReportService:
 
     def __group_data(
         self,
-        rows: list[EmergencySummaryReportRow],
-    ) -> list[tuple[tuple[datetime | None, datetime | None], list[tuple[tuple[int, str], list[EmergencySummaryReportRow]]]]]:
+        rows: list[EmergencySummaryReportRowModel],
+    ) -> list[tuple[tuple[datetime | None, datetime | None], list[tuple[tuple[int, str], list[EmergencySummaryReportRowModel]]]]]:
         # First level: group by period range
-        period_groups: dict[tuple[datetime | None, datetime | None], dict[tuple[int, str], list[EmergencySummaryReportRow]]] = {}
+        period_groups: dict[tuple[datetime | None, datetime | None], dict[tuple[int, str], list[EmergencySummaryReportRowModel]]] = {}
         for row in rows:
             period_key = (row.period_begin, row.period_end)
             if period_key not in period_groups:
@@ -49,7 +47,7 @@ class EmergencySummaryReportService:
         return result
 
     def render(self, *args: Any, **kwargs: Any) -> tuple[bytes | None, str]:
-        rows: list[EmergencySummaryReportRow] = kwargs["rows"]
+        rows: list[EmergencySummaryReportRowModel] = kwargs["rows"]
         period_type: PeriodTypes = kwargs["period_type"]
         device_id: int | None = kwargs.get("device_id")
         is_admin: bool = kwargs["is_admin"]

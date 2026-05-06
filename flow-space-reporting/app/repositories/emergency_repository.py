@@ -6,7 +6,7 @@ from sqlalchemy import String, and_, or_, select, text, func, cast, Integer, tru
 
 from app.data_models import Device, EmergencyState, UserDeviceLink
 from app.db.database import get_db
-from app.models.emergency_summary_report_row import EmergencySummaryReportRow
+from app.models.emergency_summary_report_row_model import EmergencySummaryReportRowModel
 from app.models.period_types import PeriodTypes
 
 
@@ -17,7 +17,7 @@ class EmergencyRepository:
 
     async def get_emergency_summary_by_month(
         self, user_id: int, period_type: PeriodTypes, device_id: int | None, time_zone: str
-    ) -> list[EmergencySummaryReportRow]:
+    ) -> list[EmergencySummaryReportRowModel]:
         created_at_tz = func.timezone(time_zone, EmergencyState.created_at)
         period_begin = func.date_trunc(period_type.value, created_at_tz)
         period_end_sql = {
@@ -73,7 +73,7 @@ class EmergencyRepository:
         rows = result.fetchall()
 
         return [
-            EmergencySummaryReportRow(
+            EmergencySummaryReportRowModel(
                 device_id=row.device_id,
                 device_name=row.device_name,
                 period_begin=row.period_begin,

@@ -3,7 +3,7 @@ from datetime import datetime
 
 
 @dataclass
-class EmergencySummaryReportRow:
+class EmergencySummaryReportRowModel:
     device_id: int
     device_name: str
     period_begin: datetime

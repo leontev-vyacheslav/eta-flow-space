@@ -99,9 +99,41 @@
     <div style="display: flex;">
         <div style="display: flex; gap: 10px; flex-direction: column; margin-top: 5px;">
             <div style="font-size: 10px;">Устройство: {{ device_name }}</div>
-            <div style="font-size: 10px;">Тип группировки: {{ period_type | period_type_title_format }}</div>
+            <div style="font-size: 10px;">Период: {{ period_type | period_type_title_format }}</div>
         </div>
     </div>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Дата</th>
+                <th>Время</th>
+                <th>Объем</th>
+                <th>Потребление</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in data %}
+            <tr>
+                <td style="width: 25px;">
+                    {{ loop.index }}.
+                </td>
+                <td>
+                    {{ row.day | locale_format_date}}
+                </td>
+                <td>
+                    {{ row.created_at | locale_format_datetime }}
+                </td>
+                <td>
+                  {{ row.volume  }}
+                </td>
+                <td>
+                    {{ row.consumption | default('-', True)}}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </body>
 
 </html>
