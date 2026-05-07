@@ -1,23 +1,23 @@
 from typing import Annotated
-
 from fastapi.params import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import String, and_, or_, select, text, func, cast, Integer, true, column, literal_column
+from sqlalchemy import String, and_, select, text, func, cast, Integer, true, column, literal_column
 
 from app.data_models import Device, EmergencyState, UserDeviceLink
 from app.db.database import get_db
-from app.models.emergency_summary_report_row_model import EmergencySummaryReportRowModel
+from app.modules.common.emergency_summary.models import EmergencySummaryReportRowModel
 from app.models.period_types import PeriodTypes
 
 
-class EmergencyRepository:
+class EmergencySummaryRepository:
 
     def __init__(self, session: Annotated[AsyncSession, Depends(get_db)]):
         self._session = session
 
-    async def get_emergency_summary_by_month(
-        self, user_id: int, period_type: PeriodTypes, device_id: int | None, time_zone: str
+    async def get_data_async(
+        self, token_payload: dict, time_zone: str, device_id: int | None, period_type: PeriodTypes, **kwargs
     ) -> list[EmergencySummaryReportRowModel]:
+        user_id = token_payload.get("userId")
         created_at_tz = func.timezone(time_zone, EmergencyState.created_at)
         period_begin = func.date_trunc(period_type.value, created_at_tz)
         period_end_sql = {

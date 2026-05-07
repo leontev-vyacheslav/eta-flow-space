@@ -5,11 +5,11 @@ from typing import Annotated
 from fastapi import HTTPException, status
 from fastapi.params import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import JSON, String, and_, desc, or_, select, text, func, cast, Integer, true, column, literal_column
+from sqlalchemy import JSON, and_, desc, select, func, cast, Integer, literal_column
 
-from app.data_models import Device, DeviceState, UserDeviceLink
+from app.data_models import DeviceState, UserDeviceLink
 from app.db.database import get_db
-from app.models.accounting_sheet_gas_meter_report_row_model import AccountingSheetGasMeterReportRowModel
+from app.modules.devices.spring2.accounting_sheet_gas_meter.models import AccountingSheetGasMeterReportRowModel
 from app.models.period_types import PeriodTypes
 
 
@@ -18,24 +18,24 @@ class AccountingSheetGasMeterRepository:
         self._session = session
 
     async def get_data_async(
-        self, user_id: int, period_type: PeriodTypes, device_id: int | None, time_zone: str
+        self, token_payload: dict, time_zone: str, device_id: int | None,  period_type: PeriodTypes
     ) -> list[AccountingSheetGasMeterReportRowModel]:
+        user_id = token_payload.get("userId")
+
         check_user_query = (
             select(UserDeviceLink.user_id).where(and_(UserDeviceLink.user_id == user_id, UserDeviceLink.device_id == device_id)).select_from(UserDeviceLink)
         )
-        # the beginning of current month
-        date_from = datetime.now().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
-        # the end of current month
-        date_to = date_to = date_from + relativedelta(months=1)
-
         check_user_query_result = await self._session.execute(check_user_query)
 
         has_access = check_user_query_result.first() is not None
         if not has_access:
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
-                detail="Access denied",
+                detail="Отсутствуют права доступа к устройству",
             )
+
+        date_from = datetime.now().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+        date_to = date_to = date_from + relativedelta(months=1)
 
         state_json = cast(DeviceState.state, JSON)
 
