@@ -10,7 +10,7 @@ router = APIRouter()
 
 @router.get("/emergency-summary")
 async def get_emergency_summary_report_async(
-    period_type: PeriodTypes = Query(alias="periodType", default=PeriodTypes.month),
+    period_type: PeriodTypes = Query(alias="periodType", default=PeriodTypes.MONTH),
     device_id: int | None = Query(alias="deviceId", default=None),
     time_zone: str = Query(alias="timezone", default="Europe/Moscow"),
     token_payload: dict = Depends(verify_token),

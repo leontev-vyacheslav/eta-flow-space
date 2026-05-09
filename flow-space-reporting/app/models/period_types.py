@@ -1,7 +1,7 @@
-from enum import Enum
+from enum import StrEnum
 
 
-class PeriodTypes(str, Enum):
-    day = "day"
-    week = "week"
-    month = "month"
+class PeriodTypes(StrEnum):
+    DAY = "day"
+    WEEK = "week"
+    MONTH = "month"

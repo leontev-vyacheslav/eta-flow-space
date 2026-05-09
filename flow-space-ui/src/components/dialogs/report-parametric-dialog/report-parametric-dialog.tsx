@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { IPopupOptions } from "devextreme-react/popup";
 import { Popup as PopupRef } from "devextreme-react/popup";
 import type { AppModalPopupProps } from "../../../models/app-modal-popup-props";
@@ -7,6 +7,7 @@ import AppModalPopup from "../app-modal-popup/app-modal-popup";
 import Button from "devextreme-react/button";
 import { EmergencySummaryReportParametric } from "./emergency-summary-report-parametric";
 import { kebabToCamel } from "../../../utils/string-utils";
+
 
 const parametricRegister: Record<string, React.FC<{ initialParams: any, onParamsChange: (params: any) => void }>> = {
     '/emergency-summary': EmergencySummaryReportParametric,
@@ -22,6 +23,24 @@ export const ReportParametricDialog = (props: ReportParamsDialogProps) => {
     const popupRef = useRef<PopupRef>(null);
     const [params, setParams] = useState<any>();
     const Parametric = parametricRegister[props.reportUrl];
+
+    // if (!Parametric) {
+    //     proclaim({
+    //         message: `Отсутствует параметрия  для данного отчёта`,
+    //         type: 'warning',
+    //     });
+
+    //     return null;
+    // }
+
+    useEffect(() => {
+        if (!Parametric) {
+            if (props.reportUrl.startsWith('/device/')) {
+                //
+            }
+
+        }
+    }, [Parametric, props.reportUrl]);
 
     return (
         <AppModalPopup

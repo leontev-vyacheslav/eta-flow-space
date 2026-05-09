@@ -22,7 +22,6 @@ filters = [
     locale_format_datetime,
     locale_format_month,
     period_type_title_format,
-    period_type_group_format,
 ]
 
 for filter in filters:

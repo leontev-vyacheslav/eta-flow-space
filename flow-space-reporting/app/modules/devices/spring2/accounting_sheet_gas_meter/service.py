@@ -12,19 +12,12 @@ from app.modules.formatters import *
 
 templates_dir = Path(__file__).parent.parent.parent.parent.parent / "templates/devices/spring2"
 template_env = Environment(loader=FileSystemLoader(templates_dir))
-# todo: apply circle
-template_env.filters["locale_format_date"] = locale_format_date
-template_env.filters["locale_format_datetime"] = locale_format_datetime
-template_env.filters["locale_format_month"] = locale_format_month
-template_env.filters["period_type_title_format"] = period_type_title_format
-template_env.filters["period_type_group_format"] = period_type_group_format
 
 filters = [
     locale_format_date,
     locale_format_datetime,
     locale_format_month,
     period_type_title_format,
-    period_type_group_format,
 ]
 
 for filter in filters:

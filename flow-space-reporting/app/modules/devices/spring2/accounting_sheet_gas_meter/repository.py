@@ -10,7 +10,7 @@ from sqlalchemy import JSON, and_, desc, select, func, cast, Integer, literal_co
 from app.data_models import DeviceState, UserDeviceLink
 from app.db.database import get_db
 from app.modules.devices.spring2.accounting_sheet_gas_meter.models import AccountingSheetGasMeterReportRowModel
-from app.models.period_types import PeriodTypes
+from app.models.accounting_period_types import AccountingPeriodTypes
 
 
 class AccountingSheetGasMeterRepository:
@@ -18,7 +18,7 @@ class AccountingSheetGasMeterRepository:
         self._session = session
 
     async def get_data_async(
-        self, token_payload: dict, time_zone: str, device_id: int | None,  period_type: PeriodTypes
+        self, token_payload: dict, time_zone: str, device_id: int | None, period_type: AccountingPeriodTypes
     ) -> list[AccountingSheetGasMeterReportRowModel]:
         user_id = token_payload.get("userId")
 
@@ -33,9 +33,15 @@ class AccountingSheetGasMeterRepository:
                 status_code=status.HTTP_403_FORBIDDEN,
                 detail="Отсутствуют права доступа к устройству",
             )
-
-        date_from = datetime.now().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
-        date_to = date_to = date_from + relativedelta(months=1)
+        
+        date_from = datetime(1970, 1, 1)
+        date_to = datetime.now()
+        if period_type == AccountingPeriodTypes.MONTH:
+            date_from = datetime.now().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+            date_to = date_to = date_from + relativedelta(months=1)
+        elif period_type == AccountingPeriodTypes.PREVIOUS_MONTH:
+            date_from = datetime.now().replace(day=1, hour=0, minute=0, second=0, microsecond=0) - relativedelta(months=1)
+            date_to = date_from + relativedelta(months=1)
 
         state_json = cast(DeviceState.state, JSON)
 
