@@ -1,4 +1,4 @@
-const { DeviceDataModel, ObjectLocationDataModel, UserDeviceLinkDataModel, FlowDataModel } = require('../orm/models');
+const { DeviceDataModel, ObjectLocationDataModel, UserDeviceLinkDataModel, FlowDataModel, ReportDataModel } = require('../orm/models');
 
 async function getDevice(msg) {
     const { userId } = msg.req.user;
@@ -19,7 +19,12 @@ async function getDevice(msg) {
     }
 
     const device = await DeviceDataModel.findOne({
-        include: [{
+        include: [
+            {
+                model: ReportDataModel,
+                as: 'reports'
+            },
+            {
             model: ObjectLocationDataModel,
             as: 'objectLocation',
         },

@@ -1,4 +1,4 @@
-const { DeviceDataModel, FlowDataModel, UserDeviceLinkDataModel, ObjectLocationDataModel } = require('../orm/models');
+const { DeviceDataModel, FlowDataModel, UserDeviceLinkDataModel, ObjectLocationDataModel, ReportDataModel } = require('../orm/models');
 
 async function getDevices(msg) {
     const { userId } = msg.req.user;
@@ -17,6 +17,9 @@ async function getDevices(msg) {
                 userId: userId
             },
             attributes: [],
+        }, {
+            model: ReportDataModel,
+            as: 'reports',
         }]
     });
 
