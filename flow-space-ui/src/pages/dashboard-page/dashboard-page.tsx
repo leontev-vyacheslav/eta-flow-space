@@ -78,7 +78,7 @@ const DashboardPageInner = () => {
                             text: `${report.description}...`,
                             onClick: () => {
                                 if (device) {
-                                   navigate(`/reports/${btoa(report.url)}`);
+                                   navigate(`/reports/${btoa(report.url)}`, { state: { deviceId: device.id } });
                                 }
                             }
                         }))

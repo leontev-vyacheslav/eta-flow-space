@@ -30,6 +30,7 @@ export type AppDataContextFlowEndpointsModel = {
     getEmergencyStatesAsync: GetEmergencyStateAsyncFunc;
     getEmergencyStatesByDatesAsync: GetEmergencyStatesByDatesAsyncFunc;
     getReportAsync: (url: string, params: any) => Promise<Blob | undefined>;
+    getReportListAsync: () => Promise<any[] | undefined>;
 };
 
 export const useFlowData = () => {
@@ -72,7 +73,6 @@ export const useFlowData = () => {
 
     const getMnemoschemaAsync = useCallback<GetMnemoschemaAsyncFunc>(async (deviceId: number) => {
         const response = await authHttpRequest({
-            // url: `${routes.host}${routes.mnemoschemas}/${deviceId}`,
             url: `${routes.host}${routes.mnemoschemas.replace(':deviceId', deviceId.toString())}`,
             method: HttpConstants.Methods.Get as Method,
         });
@@ -142,6 +142,17 @@ export const useFlowData = () => {
         }
     }, [authHttpRequest]);
 
+    const getReportListAsync = useCallback(async () => {
+        const response = await authHttpRequest({
+            url: process.env.NODE_ENV !== 'production' ? `http://localhost:8000/api/reports` : `${routes.host}/api/reporting/reports`,
+            method: HttpConstants.Methods.Get as Method,
+        });
+
+        if (response && response.status === HttpConstants.StatusCodes.Ok) {
+            return response.data as any[];
+        }
+    }, [authHttpRequest]);
+
     const getReportAsync = useCallback(async (url: string, params: any) => {
         const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
         const response = await authHttpRequest({
@@ -168,6 +179,7 @@ export const useFlowData = () => {
         getEmergencyStatesAsync,
         getEmergencyStatesByDatesAsync,
         getReportAsync,
+        getReportListAsync
     };
 }
 

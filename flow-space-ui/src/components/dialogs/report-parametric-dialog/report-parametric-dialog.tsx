@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import type { IPopupOptions } from "devextreme-react/popup";
 import { Popup as PopupRef } from "devextreme-react/popup";
 import type { AppModalPopupProps } from "../../../models/app-modal-popup-props";
@@ -24,23 +24,6 @@ export const ReportParametricDialog = (props: ReportParamsDialogProps) => {
     const [params, setParams] = useState<any>();
     const Parametric = parametricRegister[props.reportUrl];
 
-    // if (!Parametric) {
-    //     proclaim({
-    //         message: `Отсутствует параметрия  для данного отчёта`,
-    //         type: 'warning',
-    //     });
-
-    //     return null;
-    // }
-
-    useEffect(() => {
-        if (!Parametric) {
-            if (props.reportUrl.startsWith('/device/')) {
-                //
-            }
-
-        }
-    }, [Parametric, props.reportUrl]);
 
     return (
         <AppModalPopup
