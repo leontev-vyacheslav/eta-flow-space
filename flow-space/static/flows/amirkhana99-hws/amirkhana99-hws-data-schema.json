@@ -35,6 +35,82 @@
         }
       }
     },
+    "tempInNet": {
+      "type": "number",
+      "unit": "°C",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Температура на обратке сетевого контура"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "pressInNet": {
+      "type": "number",
+      "unit": "бар",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Давление на обратке сетевого контура"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "tempOutNet": {
+      "type": "number",
+      "unit": "°C",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Температура на подаче сетевого контура"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "pressOutNet": {
+      "type": "number",
+      "unit": "бар",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Давление на подаче сетевого контура"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
     "timestamp": {
       "type": "integer",
       "ui": {
@@ -59,7 +135,6 @@
   "required": [
     "isConnected"
   ],
-
   "ui": {
     "useTabs": true,
     "groups": [
