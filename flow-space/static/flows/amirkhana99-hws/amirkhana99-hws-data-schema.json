@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "StateModel",
+  "type": "object",
+  "properties": {
+    "isConnected": {
+      "type": "boolean",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "editorOptions": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "На связи"
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": false,
+                "white": true
+              },
+              "stroke": {
+                "yellow": false,
+                "black": true
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "required": [
+    "isConnected"
+  ]
+}
