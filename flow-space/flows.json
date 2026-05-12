@@ -3135,7 +3135,7 @@
         "type": "function",
         "z": "f86b501c2fcfb0fb",
         "name": "collect-device-state",
-        "func": "const [{ Op }, { FlowDataModel, DeviceDataModel }] = global.get(['sequelize', 'orm']);\nconst redisClient = global.get('redisClient');\n\nconst flowUid = node.path.split('/').find(_ => true);\n\nconst device = await DeviceDataModel.findOne({\n    attributes: ['id', 'settings'],\n    include: [{\n        model: FlowDataModel,\n        as: 'flow',\n        attributes: [],\n        where: {\n            uid: flowUid\n        }\n    }]\n});\n\nif (!device) {\n    return;\n}\n\nconst payload = msg.payload;\n\nconst deviceState = {\n    // Timestamp\n    timestamp: Date.now(),\n}\n\nglobal.set(`deviceState${device.id}`, deviceState);\n\nawait redisClient.set(\n    `deviceState:${device.id}`,\n    JSON.stringify(deviceState),\n    { EX: device.settings.stateTtl * 60 }\n);\n\nreturn msg;",
+        "func": "const [{ Op }, { FlowDataModel, DeviceDataModel }] = global.get(['sequelize', 'orm']);\nconst redisClient = global.get('redisClient');\n\nconst flowUid = node.path.split('/').find(_ => true);\n\nconst device = await DeviceDataModel.findOne({\n    attributes: ['id', 'settings'],\n    include: [{\n        model: FlowDataModel,\n        as: 'flow',\n        attributes: [],\n        where: {\n            uid: flowUid\n        }\n    }]\n});\n\nif (!device) {\n    return;\n}\n\nconst payload = msg.payload;\n\nconst deviceState = {\n    isConnected: true,\n    // Timestamp\n    timestamp: Date.now(),\n}\n\nglobal.set(`deviceState${device.id}`, deviceState);\n\nawait redisClient.set(\n    `deviceState:${device.id}`,\n    JSON.stringify(deviceState),\n    { EX: device.settings.stateTtl * 60 }\n);\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -3155,7 +3155,7 @@
         "type": "debug",
         "z": "f86b501c2fcfb0fb",
         "name": "debug 7",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -3180,14 +3180,14 @@
                 "vt": "str"
             }
         ],
-        "repeat": "",
+        "repeat": "1",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 680,
+        "x": 690,
         "y": 260,
         "wires": [
             [
