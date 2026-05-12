@@ -40,6 +40,14 @@
         "env": []
     },
     {
+        "id": "f86b501c2fcfb0fb",
+        "type": "tab",
+        "label": "amirkhana99-hws",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "b74b1a6d538c13c2",
         "type": "group",
         "z": "2dca6eed12b296f5",
@@ -3119,6 +3127,71 @@
         "wires": [
             [
                 "489bd6f4023297e7"
+            ]
+        ]
+    },
+    {
+        "id": "263e0bb65e1f4a26",
+        "type": "function",
+        "z": "f86b501c2fcfb0fb",
+        "name": "collect-device-state",
+        "func": "const [{ Op }, { FlowDataModel, DeviceDataModel }] = global.get(['sequelize', 'orm']);\nconst redisClient = global.get('redisClient');\n\nconst flowUid = node.path.split('/').find(_ => true);\n\nconst device = await DeviceDataModel.findOne({\n    attributes: ['id', 'settings'],\n    include: [{\n        model: FlowDataModel,\n        as: 'flow',\n        attributes: [],\n        where: {\n            uid: flowUid\n        }\n    }]\n});\n\nif (!device) {\n    return;\n}\n\nconst payload = msg.payload;\n\nconst deviceState = {\n    // Timestamp\n    timestamp: Date.now(),\n}\n\nglobal.set(`deviceState${device.id}`, deviceState);\n\nawait redisClient.set(\n    `deviceState:${device.id}`,\n    JSON.stringify(deviceState),\n    { EX: device.settings.stateTtl * 60 }\n);\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 890,
+        "y": 260,
+        "wires": [
+            [
+                "0732cb6b645ead38"
+            ]
+        ]
+    },
+    {
+        "id": "0732cb6b645ead38",
+        "type": "debug",
+        "z": "f86b501c2fcfb0fb",
+        "name": "debug 7",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1120,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "aa9235628412db1d",
+        "type": "inject",
+        "z": "f86b501c2fcfb0fb",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 680,
+        "y": 260,
+        "wires": [
+            [
+                "263e0bb65e1f4a26"
             ]
         ]
     }
