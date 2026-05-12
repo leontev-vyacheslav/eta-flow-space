@@ -58,5 +58,17 @@
   },
   "required": [
     "isConnected"
-  ]
+  ],
+
+  "ui": {
+    "useTabs": true,
+    "groups": [
+      {
+        "id": 1,
+        "name": "state",
+        "caption": "Состояния",
+        "order": 100
+      }
+    ]
+  }
 }
