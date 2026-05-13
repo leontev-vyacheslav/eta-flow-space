@@ -64,7 +64,7 @@
           "label": {
             "location": "top",
             "showColon": true,
-            "text": "Температура на обратке сетевого контура"
+            "text": "Температура на подаче контура ГВ"
           },
           "editorOptions": {
             "readOnly": true
@@ -83,7 +83,26 @@
           "label": {
             "location": "top",
             "showColon": true,
-            "text": "Давление на обратке сетевого контура"
+            "text": "Давление на подаче горячей воды"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "tempOutHW": {
+      "type": "number",
+      "unit": "°C",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Температура обратки ГВ"
           },
           "editorOptions": {
             "readOnly": true
@@ -102,7 +121,7 @@
           "label": {
             "location": "top",
             "showColon": true,
-            "text": "Температура на подаче сетевого контура"
+            "text": "Температура обратки в сеть"
           },
           "editorOptions": {
             "readOnly": true
@@ -121,7 +140,45 @@
           "label": {
             "location": "top",
             "showColon": true,
-            "text": "Давление на подаче сетевого контура"
+            "text": "Давление на обратке горячей воды"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "pressOutAfterPump": {
+      "type": "number",
+      "unit": "бар",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Давление на обратке после насоса"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "pressInCW": {
+      "type": "number",
+      "unit": "бар",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Давление подводящей холодной воды"
           },
           "editorOptions": {
             "readOnly": true
@@ -155,9 +212,13 @@
     "isConnected",
     "tempOutAir",
     "tempInNet",
+
     "pressInNet",
     "tempOutNet",
-    "pressOutNet"
+    "pressOutNet",
+    "pressOutAfterPump",
+    "pressInCW",
+    "tempOutHW"
   ],
   "ui": {
     "useTabs": true,

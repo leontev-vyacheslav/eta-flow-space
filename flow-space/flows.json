@@ -3135,14 +3135,14 @@
         "type": "function",
         "z": "f86b501c2fcfb0fb",
         "name": "collect-device-state",
-        "func": "const [{ Op }, { FlowDataModel, DeviceDataModel }] = global.get(['sequelize', 'orm']);\nconst redisClient = global.get('redisClient');\n\nconst flowUid = node.path.split('/').find(_ => true);\n\nconst device = await DeviceDataModel.findOne({\n    attributes: ['id', 'settings'],\n    include: [{\n        model: FlowDataModel,\n        as: 'flow',\n        attributes: [],\n        where: {\n            uid: flowUid\n        }\n    }]\n});\n\nif (!device) {\n    return;\n}\n\nconst payload = msg.payload;\n\nconst deviceState = {\n    tempOutAir: 15.5,\n    tempInNet: 80.6,        // TE12? - Температура на подаче сетевого контура (°C) \n    pressInNet: 4.65,        // PE12? - Давление на подаче сетевого контура (бар)\n    tempOutNet: 60.4,       // TE22? - Температура на обратке сетевого контура (°C)\n    pressOutNet: 4.5,       // PE22? - Давление на обратке сетевого контура (бар)\n\n    // Timestamp\n    timestamp: Date.now(),\n}\n\nglobal.set(`deviceState${device.id}`, deviceState);\n\nawait redisClient.set(\n    `deviceState:${device.id}`,\n    JSON.stringify(deviceState),\n    { EX: device.settings.stateTtl * 60 }\n);\n\nreturn msg;",
+        "func": "\n\nconst [{ Op }, { FlowDataModel, DeviceDataModel }] = global.get(['sequelize', 'orm']);\nconst redisClient = global.get('redisClient');\n\nconst flowUid = node.path.split('/').find(_ => true);\n\nconst device = await DeviceDataModel.findOne({\n    attributes: ['id', 'settings'],\n    include: [{\n        model: FlowDataModel,\n        as: 'flow',\n        attributes: [],\n        where: {\n            uid: flowUid\n        }\n    }]\n});\n\nif (!device) {\n    return;\n}\n\nconst payload = msg.payload;\n\n// временные заглушки\nconst Tair = msg.payload; // сохраняем текушую температуру в Казани\nconst Te12 = 65 + 1 * Math.random();\nconst Te22 = 55 + 1 * Math.random();\nconst Te2 = 43 + 2 * Math.random();\nconst Pe23 = 4.8 + (Math.random() - 0.5) / 4;\nconst Pe3 = Pe23 + (Math.random() - 0.5) / 10;\nconst Pe22 = Pe3 - 0.35 + (Math.random() - 0.5) / 2;\nconst Pe12 = Pe23 - 0.1 + (Math.random() - 0.5) / 10;\nconst dPtoa = (Pe12 - Pe23) * 10;  // сопротивление теплообменного аппарата\nconst dPcphw = (Pe3 - Pe22) * 10;  // располагаемый напор насоса за вычетом сопротивления фильтра\nconst dPhws = (Pe12 - Pe22) * 10;  // сопротивление системы ГВС\nconst lim_dPtoa = 2;               // граница по максимальному сопротивлению теплообменника\nconst limH_dPcphw = 8;             // граница по максимальному напору насоса\nconst limL_dPcphw = 3;             // граница по минимальному напору насоса\nconst limH_dPhws = 5;              // граница по максимальному сопротивлению системы ГВС\nconst limH_Te12 = 68;              // граница по максимальной температуре в систему ГВС\nconst limL_Te12 = 62;              // граница по минимальной температуре в систему ГВС\nconst limL_Te22 = 55;              // граница по минимальной температуре из системы ГВС\nconst limH_Te2  = 35;              // граница по максимальной температуре возвращаемого теплоносителя в сеть\n\nconst deviceState = {\n    tempOutAir: Tair,               // Тн.в.\n    // tempInNet правильнее назвать tempInHW - HotWater\n    tempInNet: Te12,                // TE12 - Температура на подаче контура ГВ (°C)\n    tempOutHW: Te22,                // TE22 - Температура обратки ГВ (°C) \n    tempOutNet: Te2,                // TE2 - Температура обратки в сеть (°C) \n    // pressInNet правильнее назвать pressInHW - HotWater\n    pressInNet:         Pe12,       // PE12 - Давление на подаче горячей воды (бар)\n    // -//-\n    pressOutNet:        Pe22,      // PE22 - Давление на обратке горячей воды (бар)\n    pressOutAfterPump:  Pe3,       // PE3 - Давление на обратке после насоса (бар)\n    pressInCW:          Pe23,      // PE23 - Давление подводящей холодной воды (бар)   \n    deltaPressTOA: dPtoa,\n    deltaPressPump: dPcphw,\n    deltaPressHWS: dPhws,\n    lim_DeltaPressTOA: lim_dPtoa,   \n    limHigh_DeltaPressPump: limH_dPcphw,\n    limLow_DeltaPressPump: limL_dPcphw,\n    limHigh_DeltaPressHWS: limH_dPhws,\n    limHigh_TempInHWS: limH_Te12,\n    limLow_TempInHWS: limL_Te12,\n    limLow_TempOutHWS: limL_Te22,\n    limHigh_TempOutNet: limH_Te2,\n    // Timestamp\n    timestamp: Date.now(),\n}\n\nglobal.set(`deviceState${device.id}`, deviceState);\n\nawait redisClient.set(\n    `deviceState:${device.id}`,\n    JSON.stringify(deviceState),\n    { EX: device.settings.stateTtl * 60 }\n);\n\nmsg.payload = deviceState;\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 890,
+        "x": 750,
         "y": 260,
         "wires": [
             [
@@ -3162,7 +3162,7 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1120,
+        "x": 1000,
         "y": 260,
         "wires": []
     },
@@ -3180,19 +3180,118 @@
                 "vt": "str"
             }
         ],
-        "repeat": "1",
+        "repeat": "10",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 690,
+        "x": 230,
         "y": 260,
+        "wires": [
+            [
+                "881f4585f6acf03b"
+            ]
+        ]
+    },
+    {
+        "id": "881f4585f6acf03b",
+        "type": "http request",
+        "z": "f86b501c2fcfb0fb",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "yandex.com/time/sync.json?geo=43",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 410,
+        "y": 140,
+        "wires": [
+            [
+                "fd0853f16e0b8aa5"
+            ]
+        ]
+    },
+    {
+        "id": "02027787ad17723c",
+        "type": "json",
+        "z": "f86b501c2fcfb0fb",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 430,
+        "y": 180,
+        "wires": [
+            [
+                "48d0ee6f2539d1ac"
+            ]
+        ]
+    },
+    {
+        "id": "48d0ee6f2539d1ac",
+        "type": "function",
+        "z": "f86b501c2fcfb0fb",
+        "name": "get Temp",
+        "func": "msg.payload = msg.payload.clocks.kazan.weather.temp;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 180,
         "wires": [
             [
                 "263e0bb65e1f4a26"
             ]
         ]
+    },
+    {
+        "id": "fd0853f16e0b8aa5",
+        "type": "change",
+        "z": "f86b501c2fcfb0fb",
+        "name": "",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "\"43\"",
+                "fromt": "str",
+                "to": "\"kazan\"",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 610,
+        "y": 140,
+        "wires": [
+            [
+                "02027787ad17723c"
+            ]
+        ]
+    },
+    {
+        "id": "feb4d848a49c9ecb",
+        "type": "comment",
+        "z": "f86b501c2fcfb0fb",
+        "name": "Заглушка. Погода по Яндексу",
+        "info": "",
+        "x": 470,
+        "y": 100,
+        "wires": []
     }
 ]
