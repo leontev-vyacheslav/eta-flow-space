@@ -35,6 +35,25 @@
         }
       }
     },
+    "tempOutAir": {
+      "type": "number",
+      "unit": "°C",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Температура наружная"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
     "tempInNet": {
       "type": "number",
       "unit": "°C",
@@ -133,7 +152,12 @@
     }
   },
   "required": [
-    "isConnected"
+    "isConnected",
+    "tempOutAir",
+    "tempInNet",
+    "pressInNet",
+    "tempOutNet",
+    "pressOutNet"
   ],
   "ui": {
     "useTabs": true,
