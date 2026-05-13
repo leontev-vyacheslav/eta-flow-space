@@ -54,7 +54,7 @@
         "chart": {}
       }
     },
-    "tempInNet": {
+    "tempInHWS": {
       "type": "number",
       "unit": "°C",
       "ui": {
@@ -92,7 +92,7 @@
         "chart": {}
       }
     },
-    "tempOutHW": {
+    "tempOutHWS": {
       "type": "number",
       "unit": "°C",
       "ui": {
@@ -187,6 +187,95 @@
         "chart": {}
       }
     },
+    "deltaPressTOA": {
+      "type": "number",
+      "unit": "м",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Сопротивление теплообменного аппарата ГВ"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "deltaPressHWS": {
+      "type": "number",
+      "unit": "м",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Сопротивление системы ГВС"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "deltaPressPump": {
+      "type": "number",
+      "unit": "м",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Располагаемый напор насоса за вычетом сопротивления фильтра"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "limDeltaPressTOA": {
+      "type": "number",
+      "unit": "бар"
+    },
+    "limHighDeltaPressPump": {
+      "type": "number",
+      "unit": "бар"
+    },
+    "limLowDeltaPressPump": {
+      "type": "number",
+      "unit": "бар"
+    },
+    "limHighDeltaPressHWS": {
+      "type": "number",
+      "unit": "бар"
+    },
+    "limHighTempInHWS": {
+      "type": "number",
+      "unit": "°C"
+    },
+    "limLowTempInHWS": {
+      "type": "number",
+      "unit": "°C"
+    },
+    "limLowTempOutHWS": {
+      "type": "number",
+      "unit": "°C"
+    },
+    "limHighTempOutNet": {
+       "type": "number",
+      "unit": "°C"
+    },
     "timestamp": {
       "type": "integer",
       "ui": {
@@ -211,14 +300,13 @@
   "required": [
     "isConnected",
     "tempOutAir",
-    "tempInNet",
-
-    "pressInNet",
+    "tempInHWS",
+    "pressInHWS",
     "tempOutNet",
     "pressOutNet",
     "pressOutAfterPump",
     "pressInCW",
-    "tempOutHW"
+    "tempOutHWS"
   ],
   "ui": {
     "useTabs": true,
