@@ -73,7 +73,7 @@
         "chart": {}
       }
     },
-    "pressInNet": {
+    "pressInHWS": {
       "type": "number",
       "unit": "бар",
       "ui": {
@@ -246,19 +246,79 @@
     },
     "limDeltaPressTOA": {
       "type": "number",
-      "unit": "бар"
+      "unit": "м",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "visible": false,
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Предел сопротивления теплообменного аппарата ГВ"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
     },
     "limHighDeltaPressPump": {
       "type": "number",
-      "unit": "бар"
+      "unit": "м",
+            "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "visible": false,
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Верхний предел располагаемого напора насоса за вычетом сопротивления фильтра"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
     },
     "limLowDeltaPressPump": {
       "type": "number",
-      "unit": "бар"
+      "unit": "м",
+            "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "visible": false,
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Нижний предел располагаемого напора насоса за вычетом сопротивления фильтра"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
     },
     "limHighDeltaPressHWS": {
       "type": "number",
-      "unit": "бар"
+      "unit": "м",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "visible": false,
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Верхний предел сопротивления системы ГВС"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
     },
     "limHighTempInHWS": {
       "type": "number",
@@ -268,13 +328,45 @@
       "type": "number",
       "unit": "°C"
     },
+
     "limLowTempOutHWS": {
       "type": "number",
-      "unit": "°C"
+      "unit": "°C",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "visible": false,
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Нижний предел температуры обратки ГВ"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
     },
+
     "limHighTempOutNet": {
-       "type": "number",
-      "unit": "°C"
+      "type": "number",
+      "unit": "°C",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "visible": false,
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Верхний предел температуры обратки в сеть"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
     },
     "timestamp": {
       "type": "integer",

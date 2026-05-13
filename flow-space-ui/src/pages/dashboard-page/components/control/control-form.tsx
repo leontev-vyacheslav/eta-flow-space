@@ -73,6 +73,7 @@ export const ControlForm = ({ onFieldDataChanged }: ControlFormProps) => {
                         editorOptions={item.editor.editorOptions ? { ...item.editor.editorOptions } : {}}
                         // , width: item.editor.editorType != 'dxSwitch' ? "100%" : undefined
                         cssClass={item.editor.cssClass}
+                        visible={item.editor.visible}
                     />
                 );
             });

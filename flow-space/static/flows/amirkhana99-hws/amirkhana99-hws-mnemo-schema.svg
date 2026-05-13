@@ -155,10 +155,11 @@
 		<text data-state='tempOutAir' transform="matrix(1 0 0 1 226.1242 39.395)" style="font-family:'MyriadPro-Regular'; font-size:10px;"> 18 ºC</text>\
 	</g>
 
-	<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M62.4,261.7h-43c-3.1,0-5.7-2.5-5.7-5.7
+	<path data-state="deltaPressTOA" data-state-eval="if(state.deltaPressTOA > state.limDeltaPressTOA) {element.style.stroke='red'; element.style.strokeWidth=1;}" style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M62.4,261.7h-43c-3.1,0-5.7-2.5-5.7-5.7
 	v-35.3c0-3.1,2.5-5.7,5.7-5.7h43c3.1,0,5.7,2.5,5.7,5.7V256C68,259.1,65.5,261.7,62.4,261.7z"/>
 	<text transform="matrix(0.9625 0 0 1 23.1781 227.1754)" style="font-family:'MyriadPro-Regular'; font-size:10px;">ΔP (ТОА)</text>
 	<text data-state="deltaPressTOA" transform="matrix(1 0 0 1 25.3061 241.1879)" style="font-family:'MyriadPro-Regular'; font-size:12px;">1,68 м</text>
+
 	<path style="fill:none;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;" d="M400.7,270.2H15.5c-5.2,0-9.4-4.2-9.4-9.4v-66.5
 	c0-5.2,4.2-9.4,9.4-9.4h385.2c5.2,0,9.4,4.2,9.4,9.4v66.5C410.2,266,406,270.2,400.7,270.2z"/>
 	<text transform="matrix(1 0 0 1 142.8844 200.1409)" style="font-family:'MyriadPro-Regular'; font-size:12px;">Контролируемые параметры</text>
@@ -257,21 +258,35 @@
 	c0-1.5,1.2-2.7,2.7-2.7h55.4c1.5,0,2.7,1.2,2.7,2.7v94C188.4,145.9,187.2,147.1,185.7,147.1z"/>
 	<text transform="matrix(1 0 0 1 25.5244 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;">(</text>
 	<text transform="matrix(0.9625 0 0 1 27.7964 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;">ΔP </text>
-	<text transform="matrix(1 0 0 1 38.2988 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;">≤ 2)м</text>
-	<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M125.6,261.7h-43c-3.1,0-5.7-2.5-5.7-5.7
+	<text transform="matrix(1 0 0 1 38.2988 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;">≤</text>
+	<text data-state="limDeltaPressTOA" transform="matrix(1 0 0 1 44.2988 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;"></text>
+	<text transform="matrix(1 0 0 1 55.2988 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;">)</text>
+
+	<g>
+		<path data-state="deltaPressPump" data-state-eval="if(state.deltaPressPump > state.limHighDeltaPressPump || state.deltaPressPump &lt; state.limLowDeltaPressPump) {element.style.stroke = 'red'; element.style.strokeWidth = 1;}" style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M125.6,261.7h-43c-3.1,0-5.7-2.5-5.7-5.7
 	v-35.3c0-3.1,2.5-5.7,5.7-5.7h43c3.1,0,5.7,2.5,5.7,5.7V256C131.3,259.1,128.8,261.7,125.6,261.7z"/>
-	<text transform="matrix(0.9625 0 0 1 83.8886 227.1754)" style="font-family:'MyriadPro-Regular'; font-size:10px;">ΔP (ЦНГВ)</text>
-	<text data-state="deltaPressPump" transform="matrix(1 0 0 1 88.5717 241.1879)" style="font-family:'MyriadPro-Regular'; font-size:12px;">3,12 м</text>
-	<text transform="matrix(1 0 0 1 82.658 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;">(3 ≤ </text>
-	<text transform="matrix(0.9625 0 0 1 97.1936 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;">ΔP </text>
-	<text transform="matrix(1 0 0 1 107.696 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;">≤ 8)м</text>
-	<path style="fill:#CCCCCC;stroke:#FF0000;stroke-miterlimit:10;" d="M188.1,261.7h-43c-3.1,0-5.7-2.5-5.7-5.7v-35.3
+		<text transform="matrix(0.9625 0 0 1 83.8886 227.1754)" style="font-family:'MyriadPro-Regular'; font-size:10px;">ΔP (ЦНГВ)</text>
+		<text data-state="deltaPressPump" transform="matrix(1 0 0 1 88.5717 241.1879)" style="font-family:'MyriadPro-Regular'; font-size:12px;">3,12 м</text>
+		<text transform="matrix(1 0 0 1 79 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;">(</text>
+		<text data-state="limLowDeltaPressPump" transform="matrix(1 0 0 1 82 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;"></text>
+		<text transform="matrix(1 0 0 1 95 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;">≤</text>
+		<text transform="matrix(0.9625 0 0 1 101 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;">ΔP</text>
+		<text transform="matrix(1 0 0 1 112 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;">≤</text>
+		<text data-state="limHighDeltaPressPump" transform="matrix(1 0 0 1 117 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;"></text>
+		<text transform="matrix(1 0 0 1 128 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;">)</text>
+	</g>
+	<g>
+		<path data-state="deltaPressHWS" data-state-eval="if(state.deltaPressHWS > state.limHighDeltaPressHWS) {element.style.stroke='red'; element.style.strokeWidth=1;}" style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M188.1,261.7h-43c-3.1,0-5.7-2.5-5.7-5.7v-35.3
 	c0-3.1,2.5-5.7,5.7-5.7h43c3.1,0,5.7,2.5,5.7,5.7V256C193.8,259.1,191.3,261.7,188.1,261.7z"/>
-	<text transform="matrix(0.9625 0 0 1 149.9076 227.1754)" style="font-family:'MyriadPro-Regular'; font-size:10px;">ΔP (ГВС)</text>
-	<text data-state="deltaPressHWS" transform="matrix(1 0 0 1 151.0681 241.1879)" style="font-family:'MyriadPro-Regular'; font-size:12px;">3,47 м</text>
-	<text transform="matrix(1 0 0 1 151.2856 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;">(</text>
-	<text transform="matrix(0.9625 0 0 1 153.5576 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;">ΔP </text>
-	<text transform="matrix(1 0 0 1 164.06 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;">≤ 1)м</text>
+		<text transform="matrix(0.9625 0 0 1 149.9076 227.1754)" style="font-family:'MyriadPro-Regular'; font-size:10px;">ΔP (ГВС)</text>
+		<text data-state="deltaPressHWS" transform="matrix(1 0 0 1 151.0681 241.1879)" style="font-family:'MyriadPro-Regular'; font-size:12px;">3,47 м</text>
+		<text transform="matrix(1 0 0 1 151.2856 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;">(</text>
+		<text transform="matrix(0.9625 0 0 1 153.5576 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;">ΔP </text>
+		<text transform="matrix(1 0 0 1 164 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;">≤</text>
+		<text transform="matrix(1 0 0 1 170 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;" data-state="limHighDeltaPressHWS">1</text>
+		<text transform="matrix(1 0 0 1 181 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;">)</text>
+	</g>
+
 	<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M258.1,261.7h-50.4c-3.1,0-5.7-2.5-5.7-5.7
 	v-35.3c0-3.1,2.5-5.7,5.7-5.7h50.4c3.1,0,5.7,2.5,5.7,5.7V256C263.7,259.1,261.2,261.7,258.1,261.7z"/>
 	<text transform="matrix(0.9625 0 0 1 223.1699 227.1754)" style="font-family:'MyriadPro-Regular'; font-size:10px;">TE12</text>
@@ -279,18 +294,26 @@
 	<text transform="matrix(1 0 0 1 206.7071 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;">(62 ≤ </text>
 	<text transform="matrix(0.9625 0 0 1 225.3467 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;">TE </text>
 	<text transform="matrix(1 0 0 1 234.5938 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;">≤ 68)ºC</text>
-	<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M328,261.7h-50.4c-3.1,0-5.7-2.5-5.7-5.7
+
+	<path data-state="tempOutHWS" data-state-eval="if(state.tempOutHWS &lt;= state.limLowTempOutHWS) {element.style.stroke='red'; element.style.strokeWidth=1;}" style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M328,261.7h-50.4c-3.1,0-5.7-2.5-5.7-5.7
 	v-35.3c0-3.1,2.5-5.7,5.7-5.7H328c3.1,0,5.7,2.5,5.7,5.7V256C333.7,259.1,331.1,261.7,328,261.7z"/>
 	<text transform="matrix(0.9625 0 0 1 293.0992 227.1754)" style="font-family:'MyriadPro-Regular'; font-size:10px;">TE22</text>
 	<text data-state="tempOutHWS" transform="matrix(1 0 0 1 286.706 241.1879)" style="font-family:'MyriadPro-Regular'; font-size:12px;">56,8ºC</text>
 	<text transform="matrix(1 0 0 1 284.82 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;">(</text>
-	<text transform="matrix(0.9625 0 0 1 287.0919 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;">TE </text>
-	<text transform="matrix(1 0 0 1 296.339 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;">≥ 55)ºC</text>
-	<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M397.4,261.7H347c-3.1,0-5.7-2.5-5.7-5.7
+
+	<text transform="matrix(0.9625 0 0 1 288.0919 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;">TE</text>
+	<text transform="matrix(1 0 0 1 300.339 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;">≥</text>
+	<text data-state="limLowTempOutHWS" transform="matrix(1 0 0 1 306.339 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;"></text>
+	<text transform="matrix(1 0 0 1 325.339 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;">)</text>
+
+	<path data-state="tempOutNet" data-state-eval="if(state.tempOutNet > state.limHighTempOutNet) {element.style.stroke = 'red'; element.style.strokeWidth = 1;}" style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M397.4,261.7H347c-3.1,0-5.7-2.5-5.7-5.7
 	v-35.3c0-3.1,2.5-5.7,5.7-5.7h50.4c3.1,0,5.7,2.5,5.7,5.7V256C403.1,259.1,400.6,261.7,397.4,261.7z"/>
+
 	<text transform="matrix(0.9625 0 0 1 362.5383 227.1754)" style="font-family:'MyriadPro-Regular'; font-size:10px;">TE2</text>
 	<text data-state="tempOutNet" transform="matrix(1 0 0 1 356.145 241.1879)" style="font-family:'MyriadPro-Regular'; font-size:12px;">47,1ºC</text>
 	<text transform="matrix(1 0 0 1 354.2595 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;">(</text>
-	<text transform="matrix(0.9625 0 0 1 356.5315 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;">TE </text>
-	<text transform="matrix(1 0 0 1 365.7786 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;">≤ 35)ºC</text>
+	<text transform="matrix(0.9625 0 0 1 356 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;">TE</text>
+	<text transform="matrix(1 0 0 1 367 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;">≤</text>
+	<text data-state="limHighTempOutNet" transform="matrix(1 0 0 1 373 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;"></text>
+	<text transform="matrix(1 0 0 1 392 253.9454)" style="font-family:'MyriadPro-Regular'; font-size:8px;">)</text>
 </svg>
