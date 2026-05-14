@@ -322,11 +322,41 @@
     },
     "limHighTempInHWS": {
       "type": "number",
-      "unit": "°C"
+      "unit": "°C",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "visible": false,
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Верхний предел температуры на подаче контура ГВ"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
     },
     "limLowTempInHWS": {
       "type": "number",
-      "unit": "°C"
+      "unit": "°C",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "visible": false,
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Нижний предел температуры на подаче контура ГВ"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
     },
 
     "limLowTempOutHWS": {
