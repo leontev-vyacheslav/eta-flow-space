@@ -9,13 +9,13 @@ POST {{baseUrl}}/sign-in/
 content-type: application/json
 
 {
-    "login": "admin-boiler-watcher",
+    "login": "amirkhana99-dispatcher",
     "password": "0987654321"
 }
 
 ###
-# @name getDeviceState
-GET {{baseUrl}}/api/devices/9
+# @name getDevice
+GET {{baseUrl}}/api/devices/12
 Authorization: Bearer {{authToken}}
 
 ###
@@ -40,13 +40,13 @@ Authorization: Bearer {{authToken}}
 
 ###
 # @name getMnemoschema
-GET {{baseUrl}}/api/devices/4/mnemoschema
+GET {{baseUrl}}/api/devices/12/mnemoschema
 Authorization: Bearer {{authToken}}
 
 
 ###
 # @name getDataschema
-GET {{baseUrl}}/api/devices/4/data-schema
+GET {{baseUrl}}/api/devices/12/data-schema
 Authorization: Bearer {{authToken}}
 
 ###

@@ -4,12 +4,13 @@ import { AppDataProvider } from "../contexts/app-data/app-data";
 import { ReportParametricDialog } from "../components/dialogs/report-parametric-dialog/report-parametric-dialog";
 import { SharedAreaProvider } from "../contexts/shared-area";
 import type { PopupCallbackModel } from "../models/popup-callback";
+import type { ReportModel } from "../models/flows/report-model";
 
 class ReportParametricService {
     private popupContainer?: HTMLDivElement;
     private root?: Root;
 
-    public show(reportUrl: string, initialParams: any, callback: (modalResult: PopupCallbackModel) => void) {
+    public show(report: ReportModel, parameterValues: any, callback: (modalResult: PopupCallbackModel) => void) {
         document.querySelector('#report-params-dialog-root')?.remove();
 
         this.popupContainer = document.createElement('div');
@@ -22,7 +23,7 @@ class ReportParametricService {
             <AuthProvider>
                 <SharedAreaProvider>
                 <AppDataProvider>
-                    <ReportParametricDialog reportUrl={reportUrl} initialParams={initialParams} callback={callback} onHidden={ () => { this.hide(); } }/>
+                    <ReportParametricDialog report={report} parameterValues={parameterValues} callback={callback} onHidden={ () => { this.hide(); } }/>
                 </AppDataProvider>
                 </SharedAreaProvider>
             </AuthProvider>

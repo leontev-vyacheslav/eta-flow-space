@@ -27,7 +27,7 @@ const routes = [
         component: MapPage,
     },
     {
-        path: '/reports/:reportUrl',
+        path: '/reports/:reportId',
         component: ReportPage,
     },
 ];

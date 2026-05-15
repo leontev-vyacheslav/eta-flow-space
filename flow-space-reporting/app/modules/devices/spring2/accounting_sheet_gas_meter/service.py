@@ -36,7 +36,7 @@ class AccountingSheetGasMeterReportService:
         if time_zone not in pytz.all_timezones:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail=f"Invalid timezone: {time_zone}",
+                detail=f"Указана неверная временная зона в запросе: {time_zone}",
             )
 
         try:
@@ -50,7 +50,10 @@ class AccountingSheetGasMeterReportService:
         if not data or len(data) == 0:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
-                detail="Нет данных для отчета",
+                detail={
+                    "message": "Отсутствуют данные в базе данных для выбранного периода",
+                    "severity": "warning",
+                },
             )
 
         html_content = template_env.get_template(f"{self.report_name}.html").render(

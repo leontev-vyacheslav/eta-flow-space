@@ -15,7 +15,6 @@ import { graphService } from '../../services/graph-service';
 import { emergencyMuteManager } from '../../services/emergency-mute-manager';
 import { useAuth } from '../../contexts/auth';
 import { MenuItemWithSubMenu } from '../../components/menu/menu-item/menu-item';
-import type { DeviceSettingsModel } from '../../models/flows/device-settings.model';
 
 const DashboardPageInner = () => {
     const tabPanelRef = useRef<TabPanel>(null);
@@ -67,18 +66,17 @@ const DashboardPageInner = () => {
                 ]
             }
         ] as MenuItemModel[];
-
-        if (device && (device.settings as DeviceSettingsModel).reports) {
+        if (device && device.reports && device.reports.length > 0) {
             menuItems.find(() => true)!.items!
                 .splice(1, 0,
                     {
                         render: () => <MenuItemWithSubMenu icon={<ReportIcon size={20} />} text={'Отчеты...'} />,
-                        items: (device.settings as any).reports.map((report: any) => ({
+                        items: device.reports.map((report: any) => ({
                             icon: () => <ReportIcon size={20} />,
                             text: `${report.description}...`,
                             onClick: () => {
                                 if (device) {
-                                   navigate(`/reports/${btoa(report.url)}`, { state: { deviceId: device.id } });
+                                   navigate(`/reports/${report.id}`);
                                 }
                             }
                         }))
@@ -126,7 +124,7 @@ const DashboardPageInner = () => {
             <PageHeader caption={() => {
                 return <div style={{ display: 'flex', flexDirection: 'column' }}>
                     <span>Приборная панель</span>
-                    <span style={{ fontSize: 12, fontWeight: 'normal', minHeight: 16, color: 'rgb(118, 118, 118)' }}>{device ? device.name + (isAdmin() ? ` [${device.id}]` : '') : ''}</span>
+                    <span style={{ fontSize: 12, fontWeight: 'normal', minHeight: 16, color: 'rgb(118, 118, 118)' }}>{device ? device.description + (isAdmin() ? ` [${device.id}]` : '') : ''}</span>
                 </div>
             }} menuItems={menuItems}>
                 <DashboardIcon size={AppConstants.headerIconSize} />

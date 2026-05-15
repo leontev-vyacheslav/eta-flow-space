@@ -19,7 +19,7 @@ async def get_emergency_summary_report_async(
     pdf_bytes, filename = await service.render_async(
         token_payload=token_payload,
         time_zone=time_zone,
-        device_id=device_id,
+        device_id=None if device_id == 0 else device_id,
         period_type=period_type,
     )
 

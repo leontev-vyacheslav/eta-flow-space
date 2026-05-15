@@ -24,7 +24,7 @@ export class AuthService {
         try {
             return await this.jwtService.verifyAsync<JwtPayloadModel & object>(token);
         } catch {
-            throw new UnauthorizedException('Токен авторизации неверный.');
+            throw new UnauthorizedException('Токен авторизации неверный или истек');
         }
     }
 }

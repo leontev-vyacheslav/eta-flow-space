@@ -23,7 +23,7 @@ function authorize(req, res, next) {
     } catch (err) {
         return res
             .status(HttpStatusCodes.Unauthorized)
-            .json({ message: 'Токен авторизации неверный.' });
+            .json({ message: 'Токен авторизации неверный или истек' });
     }
 }
 

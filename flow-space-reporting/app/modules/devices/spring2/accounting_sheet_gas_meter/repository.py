@@ -31,9 +31,12 @@ class AccountingSheetGasMeterRepository:
         if not has_access:
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
-                detail="Отсутствуют права доступа к устройству",
+                detail={
+                    "message": "Отсутствуют права доступа к устройству",
+                    "severity": "warning",
+                },
             )
-        
+
         date_from = datetime(1970, 1, 1)
         date_to = datetime.now()
         if period_type == AccountingPeriodTypes.MONTH:

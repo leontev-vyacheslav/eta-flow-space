@@ -16,5 +16,7 @@ export interface DeviceModel extends EntityModel, DescriptiveBaseModel, Timestam
 
     objectLocation?: ObjectLocationModel;
 
-    settings: DeviceSettingsModel
+    settings: DeviceSettingsModel,
+
+    reports?: any[];
 }

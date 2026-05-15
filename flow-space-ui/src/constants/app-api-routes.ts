@@ -22,5 +22,5 @@ export default {
     // emergencyStates: '/api/states/emergency', //+
     emergencyStates: '/api/emergency-states', //+
 
-    emergencySummaryReport: '/api/reporting/emergency-summary', //+
+    reporting: '/api/reporting', //+
 };

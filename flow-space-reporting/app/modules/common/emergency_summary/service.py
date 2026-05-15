@@ -70,7 +70,7 @@ class EmergencySummaryReportService:
         if time_zone not in pytz.all_timezones:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail=f"Invalid timezone: {time_zone}",
+                detail=f"Указана неверная временная зона в запросе: {time_zone}",
             )
         try:
             data = await self._repository.get_data_async(*args, **kwargs)
@@ -83,7 +83,10 @@ class EmergencySummaryReportService:
         if not data or len(data) == 0:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
-                detail="Нет данных для отчета",
+                detail={
+                    "message": "Отсутствуют данные в базе данных для выбранного периода или устройства",
+                    "severity": "warning",
+                },
             )
 
         grouped_data = self.__group_data(data)

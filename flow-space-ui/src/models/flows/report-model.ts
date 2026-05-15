@@ -1,9 +1,12 @@
 import type { ParameterModel } from "./parameter-model";
 
 export interface ReportModel {
-    id: string;
+    id: number;
     description: string;
     url: string;
-
-    parameters: ParameterModel[];
+    deviceId: number;
+    settings: {
+        initialParams: any;
+        parameters: ParameterModel[];
+    };
 }
