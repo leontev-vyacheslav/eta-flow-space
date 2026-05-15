@@ -46,7 +46,7 @@
                 "view-store-position": false,
                 "view-show-grid": true,
                 "view-snap-grid": true,
-                "view-grid-size": 20,
+                "view-grid-size": "20",
                 "view-node-status": true,
                 "view-node-info-icon": true,
                 "view-node-show-label": true,
@@ -60,7 +60,7 @@
         "debug": {
             "filter": "filterCurrent"
         },
-        "menu-menu-item-sidebar": false,
+        "menu-menu-item-sidebar": true,
         "menu-deploymenu-item-flow": true,
         "menu-deploymenu-item-full": false
     }

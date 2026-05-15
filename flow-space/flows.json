@@ -3010,11 +3010,12 @@
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "true",
+        "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 960,
-        "y": 380,
+        "x": 1440,
+        "y": 620,
         "wires": []
     },
     {
@@ -3070,7 +3071,7 @@
         "newline": "",
         "trim": false,
         "tls": "",
-        "x": 490,
+        "x": 470,
         "y": 480,
         "wires": [
             []
@@ -3096,9 +3097,7 @@
         "x": 650,
         "y": 420,
         "wires": [
-            [
-                "0f713a243eed5556"
-            ]
+            []
         ]
     },
     {
@@ -3127,6 +3126,176 @@
         "wires": [
             [
                 "489bd6f4023297e7"
+            ]
+        ]
+    },
+    {
+        "id": "970972a5d1bc9917",
+        "type": "tcp request",
+        "z": "2d15e59c76504bcb",
+        "name": "spring-2-vkt",
+        "server": "94.180.252.2",
+        "port": "505",
+        "out": "time",
+        "ret": "buffer",
+        "splitc": "500",
+        "newline": "",
+        "trim": false,
+        "tls": "",
+        "x": 1030,
+        "y": 620,
+        "wires": [
+            [
+                "69075eed7b3473c3"
+            ]
+        ]
+    },
+    {
+        "id": "9a0cd6bc24177c45",
+        "type": "function",
+        "z": "2d15e59c76504bcb",
+        "name": "WakeUp_VKT",
+        "func": "\nvar vktAddr = flow.get(\"vktAddr\");\nconst request = [vktAddr, 0x10, 0x3F, 0xFF, 0x00, 0x00, 0xCC, 0x80, 0x00, 0x00, 0x00];\nmsg.payload = request;\nflow.set(\"vktQueue\", 0);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "// Добавленный здесь код будет исполняться\n// однократно при развертывании узла.\nflow.set(\"vktAddr\", 1);\nflow.set(\"vktQueue\", 0);",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "crc",
+                "module": "crc"
+            }
+        ],
+        "x": 500,
+        "y": 620,
+        "wires": [
+            [
+                "72feebc9b316c527"
+            ]
+        ]
+    },
+    {
+        "id": "72feebc9b316c527",
+        "type": "modbus-crc16",
+        "z": "2d15e59c76504bcb",
+        "name": "",
+        "x": 800,
+        "y": 580,
+        "wires": [
+            [
+                "da5cc7175cd8dc31"
+            ]
+        ]
+    },
+    {
+        "id": "1358736b8195d963",
+        "type": "inject",
+        "z": "2d15e59c76504bcb",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 240,
+        "y": 620,
+        "wires": [
+            [
+                "9a0cd6bc24177c45"
+            ]
+        ]
+    },
+    {
+        "id": "da5cc7175cd8dc31",
+        "type": "function",
+        "z": "2d15e59c76504bcb",
+        "name": "concatHeader",
+        "func": "const head = Buffer.from([0xFF, 0xFF]);\nmsg.payload = Buffer.from([...head, ...msg.payload]);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 620,
+        "wires": [
+            [
+                "970972a5d1bc9917"
+            ]
+        ]
+    },
+    {
+        "id": "2ddb250c7b82148e",
+        "type": "function",
+        "z": "2d15e59c76504bcb",
+        "name": "serviceData_VKT",
+        "func": "var queue = flow.get(\"vktQueue\");\n\nif (queue == 1) {\n    var vktAddr = flow.get(\"vktAddr\");\n    const request = [vktAddr, 0x03, 0x3F, 0xF9, 0x00, 0x00];\n    msg.payload = request;\n    return msg;\n}\n\nreturn;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 660,
+        "wires": [
+            [
+                "72feebc9b316c527"
+            ]
+        ]
+    },
+    {
+        "id": "69075eed7b3473c3",
+        "type": "function",
+        "z": "2d15e59c76504bcb",
+        "name": "ParseAnswers",
+        "func": "var n_queue = flow.get(\"vktQueue\");\nif (n_queue == 0) {\n    flow.set(\"vktQueue\", 1);\n    return msg;\n}\nif (n_queue == 1) {\n    var serviceDataVKT7 = {};\n    const buf = Buffer.from(msg.payload);\n    // Разделяем на старший и младший ниббл (4 бита)\n    const high = (buf[3] >> 4) & 0x0F; // 2\n    const low = buf[3] & 0x0F;         // 7\n    serviceDataVKT7.AppVersiont = `${high}.${low}`;\n    serviceDataVKT7.AppVersion = buf[3];\n    serviceDataVKT7.shemeTB1 = buf.readInt16LE(4);\n    serviceDataVKT7.shemeTB2 = buf.readInt16LE(6);\n    serviceDataVKT7.identifity = buf.subarray(8,15).toString();\n    serviceDataVKT7.netAddr = msg.payload[16];\n    serviceDataVKT7.dataRep = msg.payload[17];\n    serviceDataVKT7.ExecuteModel = msg.payload[18];\n    flow.set(\"vktServivceData\", serviceDataVKT7);\n    flow.set(\"vktQueue\", 2);\n    msg.payload = serviceDataVKT7;\n    return msg;\n}\nif (n_queue == 2) {\n    flow.set(\"vktQueue\", 3);\n    return msg;\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1220,
+        "y": 620,
+        "wires": [
+            [
+                "2ddb250c7b82148e",
+                "0f713a243eed5556",
+                "8db3743e7c1c93ac"
+            ]
+        ]
+    },
+    {
+        "id": "8db3743e7c1c93ac",
+        "type": "function",
+        "z": "2d15e59c76504bcb",
+        "name": "activeElements_VKT",
+        "func": "var queue = flow.get(\"vktQueue\");\n\nif (queue == 2) {\n    var vktAddr = flow.get(\"vktAddr\");\n    const request = [vktAddr, 0x03, 0x3F, 0xFC, 0x00, 0x00];\n    msg.payload = request;\n    return msg;\n}\n\nreturn;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 700,
+        "wires": [
+            [
+                "72feebc9b316c527"
             ]
         ]
     },

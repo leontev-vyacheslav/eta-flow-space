@@ -67,7 +67,11 @@
             "text": "Температура на подаче контура ГВ"
           },
           "editorOptions": {
-            "readOnly": true
+            "readOnly": true,
+            "format": {
+              "type": "fixedPoint",
+              "precision": 2
+            }
           }
         },
         "chart": {}
@@ -86,7 +90,11 @@
             "text": "Давление на подаче горячей воды"
           },
           "editorOptions": {
-            "readOnly": true
+            "readOnly": true,
+            "format": {
+              "type": "fixedPoint",
+              "precision": 2
+            }
           }
         },
         "chart": {}
@@ -105,7 +113,11 @@
             "text": "Температура обратки ГВ"
           },
           "editorOptions": {
-            "readOnly": true
+            "readOnly": true,
+            "format": {
+              "type": "fixedPoint",
+              "precision": 2
+            }
           }
         },
         "chart": {}
@@ -124,7 +136,11 @@
             "text": "Температура обратки в сеть"
           },
           "editorOptions": {
-            "readOnly": true
+            "readOnly": true,
+            "format": {
+              "type": "fixedPoint",
+              "precision": 2
+            }
           }
         },
         "chart": {}
@@ -143,7 +159,11 @@
             "text": "Давление на обратке горячей воды"
           },
           "editorOptions": {
-            "readOnly": true
+            "readOnly": true,
+            "format": {
+              "type": "fixedPoint",
+              "precision": 2
+            }
           }
         },
         "chart": {}
@@ -162,7 +182,11 @@
             "text": "Давление на обратке после насоса"
           },
           "editorOptions": {
-            "readOnly": true
+            "readOnly": true,
+            "format": {
+              "type": "fixedPoint",
+              "precision": 2
+            }
           }
         },
         "chart": {}
@@ -181,7 +205,11 @@
             "text": "Давление подводящей холодной воды"
           },
           "editorOptions": {
-            "readOnly": true
+            "readOnly": true,
+            "format": {
+              "type": "fixedPoint",
+              "precision": 2
+            }
           }
         },
         "chart": {}
@@ -200,7 +228,11 @@
             "text": "Сопротивление теплообменного аппарата ГВ"
           },
           "editorOptions": {
-            "readOnly": true
+            "readOnly": true,
+            "format": {
+              "type": "fixedPoint",
+              "precision": 2
+            }
           }
         },
         "chart": {}
@@ -219,7 +251,11 @@
             "text": "Сопротивление системы ГВС"
           },
           "editorOptions": {
-            "readOnly": true
+            "readOnly": true,
+            "format": {
+              "type": "fixedPoint",
+              "precision": 2
+            }
           }
         },
         "chart": {}
@@ -238,7 +274,11 @@
             "text": "Располагаемый напор насоса за вычетом сопротивления фильтра"
           },
           "editorOptions": {
-            "readOnly": true
+            "readOnly": true,
+            "format": {
+              "type": "fixedPoint",
+              "precision": 2
+            }
           }
         },
         "chart": {}
@@ -258,7 +298,11 @@
             "text": "Предел сопротивления теплообменного аппарата ГВ"
           },
           "editorOptions": {
-            "readOnly": true
+            "readOnly": true,
+            "format": {
+              "type": "fixedPoint",
+              "precision": 2
+            }
           }
         }
       }
@@ -266,7 +310,7 @@
     "limHighDeltaPressPump": {
       "type": "number",
       "unit": "м",
-            "ui": {
+      "ui": {
         "group": 1,
         "editor": {
           "editorType": "dxNumberBox",
@@ -285,7 +329,7 @@
     "limLowDeltaPressPump": {
       "type": "number",
       "unit": "м",
-            "ui": {
+      "ui": {
         "group": 1,
         "editor": {
           "editorType": "dxNumberBox",
@@ -358,7 +402,6 @@
         }
       }
     },
-
     "limLowTempOutHWS": {
       "type": "number",
       "unit": "°C",
@@ -378,7 +421,6 @@
         }
       }
     },
-
     "limHighTempOutNet": {
       "type": "number",
       "unit": "°C",
