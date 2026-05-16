@@ -3014,8 +3014,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1440,
-        "y": 620,
+        "x": 1340,
+        "y": 760,
         "wires": []
     },
     {
@@ -3142,8 +3142,8 @@
         "newline": "",
         "trim": false,
         "tls": "",
-        "x": 1030,
-        "y": 620,
+        "x": 950,
+        "y": 720,
         "wires": [
             [
                 "69075eed7b3473c3"
@@ -3180,8 +3180,8 @@
         "type": "modbus-crc16",
         "z": "2d15e59c76504bcb",
         "name": "",
-        "x": 800,
-        "y": 580,
+        "x": 960,
+        "y": 640,
         "wires": [
             [
                 "da5cc7175cd8dc31"
@@ -3229,8 +3229,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 800,
-        "y": 620,
+        "x": 960,
+        "y": 680,
         "wires": [
             [
                 "970972a5d1bc9917"
@@ -3262,20 +3262,19 @@
         "type": "function",
         "z": "2d15e59c76504bcb",
         "name": "ParseAnswers",
-        "func": "var n_queue = flow.get(\"vktQueue\");\nif (n_queue == 0) {\n    flow.set(\"vktQueue\", 1);\n    return msg;\n}\nif (n_queue == 1) {\n    var serviceDataVKT7 = {};\n    const buf = Buffer.from(msg.payload);\n    // Разделяем на старший и младший ниббл (4 бита)\n    const high = (buf[3] >> 4) & 0x0F; // 2\n    const low = buf[3] & 0x0F;         // 7\n    serviceDataVKT7.AppVersiont = `${high}.${low}`;\n    serviceDataVKT7.AppVersion = buf[3];\n    serviceDataVKT7.shemeTB1 = buf.readInt16LE(4);\n    serviceDataVKT7.shemeTB2 = buf.readInt16LE(6);\n    serviceDataVKT7.identifity = buf.subarray(8,15).toString();\n    serviceDataVKT7.netAddr = msg.payload[16];\n    serviceDataVKT7.dataRep = msg.payload[17];\n    serviceDataVKT7.ExecuteModel = msg.payload[18];\n    flow.set(\"vktServivceData\", serviceDataVKT7);\n    flow.set(\"vktQueue\", 2);\n    msg.payload = serviceDataVKT7;\n    return msg;\n}\nif (n_queue == 2) {\n    flow.set(\"vktQueue\", 3);\n    return msg;\n}\n\nreturn msg;",
+        "func": "var n_queue = flow.get(\"vktQueue\");\nconst buf = Buffer.from(msg.payload);\n\nif (n_queue == 0) {\n    flow.set(\"vktQueue\", 1);\n    return msg;\n}\nif (n_queue == 1) {\n    var serviceDataVKT7 = {};\n    // Разделяем на старший и младший ниббл (4 бита)\n    const high = (buf[3] >> 4) & 0x0F; // 2\n    const low = buf[3] & 0x0F;         // 7\n    serviceDataVKT7.AppVersiont = `${high}.${low}`;\n    serviceDataVKT7.AppVersion = buf[3];\n    serviceDataVKT7.shemeTB1 = buf.readInt16LE(4);\n    serviceDataVKT7.shemeTB2 = buf.readInt16LE(6);\n    serviceDataVKT7.identifity = buf.subarray(8,15).toString();\n    serviceDataVKT7.netAddr = msg.payload[16];\n    serviceDataVKT7.dataRep = msg.payload[17];\n    serviceDataVKT7.ExecuteModel = msg.payload[18];\n    flow.set(\"vktServivceData\", serviceDataVKT7);\n    flow.set(\"vktQueue\", 2);\n    msg.payload = serviceDataVKT7;\n    return msg;\n}\nif (n_queue == 2) {\n    var actTab = flow.get(\"activeTab\");\n    //var actTab = [];\n    var qntyElements = buf[2] / 6; \n    var pointer = 0;\n    var n = 0;\n    for (n = 0; n < qntyElements; n++) {\n        pointer = buf[6 * n + 3];\n        //actTab.push(pointer);\n        actTab[pointer][1] = true;\n        actTab[pointer][2] = buf.readInt16LE(6 * n + 7);\n    }\n    flow.set(\"vktQueue\", 3);\n    msg.payload = actTab; \n    return msg;\n}\nif (n_queue == 3) {\n    flow.set(\"vktQueue\", 4);\n    return msg;\n}\nif (n_queue == 4) {\n    flow.set(\"vktQueue\", 5);\n    return msg;\n}\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
-        "initialize": "",
+        "initialize": "// Добавленный здесь код будет исполняться\n// однократно при развертывании узла.\nvar actTab = {\n    0: ['t1_1Type', false, 0],\n    1: ['t2_1Type', false, 0],\n    2: ['t3_1Type', false, 0],\n    3: ['V1_1Type', false, 0],\n    4: ['V2_1Type', false, 0],\n    5: ['V3_1Type', false, 0],\n    6: ['M1_1Type', false, 0],\n    7: ['M2_1Type', false, 0],\n    8: ['M3_1Type', false, 0],\n    9: ['P1_1Type', false, 0],\n    10: ['P2_1Type', false, 0],\n    11: ['Mg_1TypeP', false, 0],\n    12: ['Qo_1TypeP', false, 0],\n    13: ['Qg_1TypeP', false, 0],\n    14: ['dt_1TypeP', false, 0],\n    15: ['tsw_1TypeP', false, 0],\n    16: ['ta_1TypeP', false, 0],\n    17: ['Qnt_1TypeHIP', false, 0],\n    18: ['Qnt_1TypeP', false, 0],\n    19: ['G1_1Type', false, 0],\n    20: ['G2_1Type', false, 0],\n    21: ['G3_1Type', false, 0],\n    22: ['t1_2Type', false, 0],\n    23: ['t2_2Type', false, 0],\n    24: ['t3_2Type', false, 0],\n    25: ['V1_2Type', false, 0],\n    26: ['V2_2Type', false, 0],\n    27: ['V3_2Type', false, 0],\n    28: ['M1_2Type', false, 0],\n    29: ['M2_2Type', false, 0],\n    30: ['M3_2Type', false, 0],\n    31: ['P1_2Type', false, 0],\n    32: ['P2_2Type', false, 0],\n    33: ['Mg_2TypeP', false, 0],\n    34: ['Qo_2TypeP', false, 0],\n    35: ['Qg_2TypeP', false, 0],\n    36: ['dt_2TypeP', false, 0],\n    37: ['tsw_2TypeP', false, 0],\n    38: ['ta_2TypeP', false, 0],\n    39: ['Qnt_2TypeHIP', false, 0],\n    40: ['Qnt_2TypeP', false, 0],\n    41: ['G1_2Type', false, 0],\n    42: ['G2_2Type', false, 0],\n    43: ['G3_2Type', false, 0],\n    77: ['NSPrint_1Type', false, 0],\n    78: ['NSPrint_2Type', false, 0],\n};\nflow.set(\"activeTab\", actTab);\n\n",
         "finalize": "",
         "libs": [],
-        "x": 1220,
-        "y": 620,
+        "x": 1160,
+        "y": 720,
         "wires": [
             [
-                "2ddb250c7b82148e",
                 "0f713a243eed5556",
-                "8db3743e7c1c93ac"
+                "447db0dd3ce09370"
             ]
         ]
     },
@@ -3293,6 +3292,78 @@
         "libs": [],
         "x": 500,
         "y": 700,
+        "wires": [
+            [
+                "72feebc9b316c527"
+            ]
+        ]
+    },
+    {
+        "id": "aa4c199c2ea32741",
+        "type": "function",
+        "z": "2d15e59c76504bcb",
+        "name": "query_mesuarementUnitsAndFract_VKT",
+        "func": "var queue = flow.get(\"vktQueue\");\n\nif (queue == 3) {\n    var vktAddr = flow.get(\"vktAddr\");\n    const request = [vktAddr, 0x10, 0x3F, 0xFF, 0x00, 0x00, 0xC6];\n    var n = 0;\n    for (n = 0; n < 33; n++) {\n        request.push(n + 44, 0x00, 0x00, 0x40);\n        if (n < 13) request.push(0x07, 0x00);\n        else request.push(0x01, 0x00);\n    }\n    msg.payload = request;\n    return msg;\n}\n\nreturn;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 740,
+        "wires": [
+            [
+                "72feebc9b316c527"
+            ]
+        ]
+    },
+    {
+        "id": "11d3dd60ea16b70b",
+        "type": "link in",
+        "z": "2d15e59c76504bcb",
+        "name": "link in 2",
+        "links": [
+            "447db0dd3ce09370"
+        ],
+        "x": 305,
+        "y": 680,
+        "wires": [
+            [
+                "2ddb250c7b82148e",
+                "8db3743e7c1c93ac",
+                "aa4c199c2ea32741",
+                "f175c37eec15ad82"
+            ]
+        ]
+    },
+    {
+        "id": "447db0dd3ce09370",
+        "type": "link out",
+        "z": "2d15e59c76504bcb",
+        "name": "link out 1",
+        "mode": "link",
+        "links": [
+            "11d3dd60ea16b70b"
+        ],
+        "x": 1295,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "f175c37eec15ad82",
+        "type": "function",
+        "z": "2d15e59c76504bcb",
+        "name": "read_mesuarementUnitsAndFract_VKT",
+        "func": "var queue = flow.get(\"vktQueue\");\n\nif (queue == 4) {\n    var vktAddr = flow.get(\"vktAddr\");\n    const request = [vktAddr, 0x03, 0x3F, 0xFE, 0x00, 0x00];\n    msg.payload = request;\n    return msg;\n}\n\nreturn;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 780,
         "wires": [
             [
                 "72feebc9b316c527"
