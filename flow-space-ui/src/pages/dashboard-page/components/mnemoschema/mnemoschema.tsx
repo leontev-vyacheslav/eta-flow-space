@@ -22,7 +22,6 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
     const stateSetup = useMnemoschemaStateSetup();
     const injectCss = useMnemoschemaInjectCss();
 
-
     const longPressBinder = useLongPress(
         () => {
             transformComponentRef.current!.setTransform(0, 0, 1);
@@ -37,9 +36,10 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
             return;
         }
 
+        const abortController = new AbortController();
+        const { signal } = abortController;
         let mnemoschemaElement: HTMLElement | null = null;
         let disposed = false;
-        // let timeout: NodeJS.Timeout | null = null;
 
         const run = async () => {
             let plugInModule = null;
@@ -48,35 +48,29 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
             } catch (error) {
                 console.error(error);
             }
-
             if (disposed) return;
+
             const parser = new DOMParser();
             const mnemoschemaDoc = parser.parseFromString(mnemoschema, 'image/svg+xml');
 
             try {
-                const { onBeforeMount: onBeforeMountPluggable, onAfterMount: onAfterMountPluggable } = plugInModule?.create?.() ?? {};
-                // containerRef.current!.style.display = 'none';
-                containerRef.current!.innerHTML = '';
+                const { onBeforeMount: onBeforeMountPluggable, onAfterMount: onAfterMountPluggable } =
+                    plugInModule?.create?.({ signal }) ?? {};
 
+                containerRef.current!.innerHTML = '';
                 stateSetup(mnemoschemaDoc.documentElement);
                 onBeforeMount?.(mnemoschemaDoc.documentElement);
                 onBeforeMountPluggable?.(mnemoschemaDoc.documentElement, deviceState);
 
-                mnemoschemaElement = containerRef.current!.appendChild(
-                    mnemoschemaDoc.documentElement
-                );
+                mnemoschemaElement = containerRef.current!.appendChild(mnemoschemaDoc.documentElement);
+
                 await injectCss(mnemoschemaElement);
+                if (disposed) return; // ← guard after async
 
                 onAfterMount?.(mnemoschemaElement);
                 onAfterMountPluggable?.(mnemoschemaElement, deviceState);
-                mnemoschemaElement.addEventListener(
-                    'click',
-                    mnemoschemaClickHandler
-                );
 
-                // timeout = setTimeout(() => {
-                //     containerRef.current!.style.display = 'flex';
-                // }, 100);
+                mnemoschemaElement.addEventListener('click', mnemoschemaClickHandler, { signal });
             } catch (error) {
                 console.error(error);
             }
@@ -86,11 +80,7 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
 
         return () => {
             disposed = true;
-            mnemoschemaElement?.removeEventListener(
-                'click',
-                mnemoschemaClickHandler
-            );
-            // clearTimeout(timeout!);
+            abortController.abort();
         };
     }, [flowCode, deviceState, mnemoschema, onBeforeMount, onAfterMount, stateSetup, schemaTypeInfoPropertiesChain, dataschema, mnemoschemaClickHandler, injectCss]);
 
