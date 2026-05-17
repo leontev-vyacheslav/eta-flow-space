@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useAppData } from "../../contexts/app-data/app-data";
 import PageHeader from "../../components/page-header/page-header";
 import { AdditionalMenuIcon, RefreshIcon, ReportIcon, SettingsIcon } from "../../constants/app-icons";
@@ -13,37 +13,10 @@ import type { ReportModel } from "../../models/flows/report-model";
 export const ReportPage = () => {
     const { reportId } = useParams<{ reportId: string }>();
     const { getReportDefinitionAsync, getReportAsync } = useAppData();
-
     const [reportBlobUrl, setReportBlobUrl] = useState<string | null>(null);
     const [reportParameterValues, setReportParameterValues] = useState<any>();
     const [refreshToken, setRefreshToken] = useState<string>(getQuickGuid());
     const [reportDefinition, setReportDefinition] = useState<ReportModel>();
-
-    useEffect(() => {
-        (async () => {
-            if (!reportId || isNaN(Number(reportId))) {
-                return;
-            }
-            const reportDefinition = await getReportDefinitionAsync(Number(reportId));
-
-            if (!reportDefinition) {
-                return;
-            }
-
-            let storedInitialParams = null;
-            const storedInitialParamsJson = localStorage.getItem(`reportParams_${reportDefinition.id}`);
-            if (storedInitialParamsJson) {
-                try {
-                    storedInitialParams = JSON.parse(storedInitialParamsJson);
-                } catch (e) {
-                    console.error('Error parsing report params from local storage', e);
-                }
-            }
-
-            setReportDefinition(reportDefinition);
-            setReportParameterValues(storedInitialParams || { ...reportDefinition.settings.initialParams });
-        })();
-    }, [getReportDefinitionAsync, reportId]);
 
     const menuItems = useMemo(() => {
         return [
@@ -75,18 +48,41 @@ export const ReportPage = () => {
         ] as MenuItemModel[];
     }, [reportDefinition, reportParameterValues]);
 
-    const getDataSourceAsyncWrapper = useCallback(async () => {
-        if (!reportDefinition || !reportParameterValues) {
-            return undefined;
-        }
+    useEffect(() => {
+        (async () => {
+            if (!reportId || isNaN(Number(reportId))) {
+                return;
+            }
+            const reportDefinition = await getReportDefinitionAsync(Number(reportId));
 
-        return await getReportAsync(reportDefinition.url, reportParameterValues);
-    }, [getReportAsync, reportDefinition, reportParameterValues]);
+            if (!reportDefinition) {
+                return;
+            }
+
+            let storedInitialParams = null;
+            const storedInitialParamsJson = localStorage.getItem(`reportParams_${reportDefinition.id}`);
+            if (storedInitialParamsJson) {
+                try {
+                    storedInitialParams = JSON.parse(storedInitialParamsJson);
+                } catch (e) {
+                    console.error('Error parsing report params from local storage', e);
+                }
+            }
+
+            setReportDefinition(reportDefinition);
+            setReportParameterValues(storedInitialParams || { ...reportDefinition.settings.initialParams });
+
+
+        })();
+    }, [getReportDefinitionAsync, reportId]);
 
     useEffect(() => {
         let url: string | null = null;
         (async () => {
-            const blob = await getDataSourceAsyncWrapper();
+            if (!reportDefinition || !reportParameterValues) {
+                return;
+            }
+            const blob = await getReportAsync(reportDefinition.url, reportParameterValues);
             if (!blob) {
                 return;
             }
@@ -99,7 +95,7 @@ export const ReportPage = () => {
                 URL.revokeObjectURL(url);
             }
         }
-    }, [refreshToken, getDataSourceAsyncWrapper]);
+    }, [refreshToken, reportDefinition, reportParameterValues, getReportAsync]);
 
     return (
         <>
