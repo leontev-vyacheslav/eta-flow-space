@@ -89,9 +89,11 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
     return mnemoschema && schemaTypeInfoPropertiesChain && deviceState?.state && Object.keys(deviceState.state).length !== 0
         ?
         <TransformWrapper ref={transformComponentRef}
+            smooth={true}
+            wheel={{ step: 0.0025, }}
             doubleClick={{ step: 1 }}
             minScale={0.5}
-            onTransformed={(_, transformedState) => {
+            onTransform={(_, transformedState) => {
                 if (isInitComplete && flowCode) {
                     localStorage.setItem(`mnemoschemaTransformedState_${kebabToCamel(flowCode)}`, JSON.stringify(transformedState));
                 }
@@ -103,3 +105,5 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
         </TransformWrapper>
         : <NoData />
 }
+
+export default Mnemoschema;

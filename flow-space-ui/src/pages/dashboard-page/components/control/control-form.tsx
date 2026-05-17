@@ -134,3 +134,5 @@ export const ControlForm = ({ onFieldDataChanged }: ControlFormProps) => {
         <div className='dx-nodata' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}><div>{formatMessage('noDataText')}</div></div>
     );
 }
+
+export default ControlForm;

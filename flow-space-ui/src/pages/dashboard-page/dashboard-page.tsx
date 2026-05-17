@@ -91,8 +91,8 @@ const DashboardPageInner = () => {
     useEffect(() => {
         (async () => {
             const results = await Promise.allSettled([
-                import(`./flows/${flowCode}/control/control-tab-content.tsx`),
-                import(`./flows/${flowCode}/mnemoschema/mnemoschema-tab-content.tsx`),
+                import(`./components/control/control-form.tsx`),
+                import(`./components/mnemoschema/mnemoschema.tsx`),
             ]);
 
             const [controlModule, mnemoschemaModule] = results.map(result =>

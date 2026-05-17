@@ -28,9 +28,9 @@ export function useMnemoschemaRestoreTransformState(
                     console.error('Failed to restore transform state', e);
                 }
             }
+            onInitComplete?.();
         }
 
-        onInitComplete?.();
     }, [flowCode, transformComponentRef, onInitComplete]);
 
     useEffect(() => {
@@ -38,13 +38,13 @@ export function useMnemoschemaRestoreTransformState(
             restore();
         }, delay);
 
-        const timer2 = setTimeout(() => {
-            restore();
-        }, delay * 2);
+        // const timer2 = setTimeout(() => {
+        //     restore();
+        // }, delay * 2);
 
         return () => {
             clearTimeout(timer1);
-            clearTimeout(timer2);
+           //  clearTimeout(timer2);
         };
     }, [delay, restore]);
 }
