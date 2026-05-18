@@ -1,7 +1,7 @@
 import Toolbar, { Item } from 'devextreme-react/toolbar';
 import Button from 'devextreme-react/button';
 import AppLogo from '../../assets/app-logo.svg?react';
-import { AccountIcon, AdminIcon, ExitIcon, MenuIcon, UserIcon } from '../../constants/app-icons';
+import { AccountIcon, AdminIcon, ExitIcon, MenuIcon, SettingsIcon, UserIcon } from '../../constants/app-icons';
 import type { HeaderProps } from '../../models/header-props';
 import { useAuth } from '../../contexts/auth';
 import { MainMenu } from '../menu/main-menu/main-menu';
@@ -42,7 +42,7 @@ const Header = ({ title, menuToggleEnabled, toggleMenu }: HeaderProps) => {
                             items: [
                                 {
                                     render: () => (
-                                        <div className={'menu-item profile'} style={{ display: 'flex' }}>
+                                        <div className={'menu-item profile'} style={{ display: 'flex', borderBottom: '1px solid #e0e0e0', paddingBottom: 10 }}    >
                                             <div >
                                                 {(isAdmin() ? <AdminIcon size={24} /> : <UserIcon size={24} />)}
                                             </div>
@@ -53,6 +53,14 @@ const Header = ({ title, menuToggleEnabled, toggleMenu }: HeaderProps) => {
                                             </span>
                                         </div>
                                     ),
+                                },
+                                {
+                                    text: 'Настройки...',
+                                    visible: isAdmin(),
+                                    icon: () => (<SettingsIcon size={20} />),
+                                    onClick: () => {
+                                        
+                                    }
                                 },
                                 {
                                     text: 'Выход',

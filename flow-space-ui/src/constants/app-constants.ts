@@ -38,11 +38,12 @@ const AppConstants = {
     chartHeight: '50vh',
     formatting: {
         numberFormat: {
-            locale: 'en-US',
+            locale: 'ru-RU',
             options: {
                 style: 'decimal',
                 groupSeparator: ' ',
-                maximumFractionDigits: 1
+                maximumFractionDigits: 2,
+                minimumFractionDigits: 2
             }
         }
     }

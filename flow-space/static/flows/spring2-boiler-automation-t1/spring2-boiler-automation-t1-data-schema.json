@@ -1890,7 +1890,8 @@
           "formatting": {
             "options": {
               "style": "decimal",
-              "maximumFractionDigits": 2
+              "maximumFractionDigits": 2,
+              "minimumFractionDigits": 2
             }
           },
           "ui": {
@@ -1915,7 +1916,8 @@
           "formatting": {
             "options": {
               "style": "decimal",
-              "maximumFractionDigits": 2
+              "maximumFractionDigits": 2,
+              "minimumFractionDigits": 2
             }
           },
           "ui": {
@@ -1940,7 +1942,8 @@
           "formatting": {
             "options": {
               "style": "decimal",
-              "maximumFractionDigits": 2
+              "maximumFractionDigits": 2,
+              "minimumFractionDigits": 2
             }
           },
           "ui": {
@@ -1965,7 +1968,8 @@
           "formatting": {
             "options": {
               "style": "decimal",
-              "maximumFractionDigits": 2
+              "maximumFractionDigits": 2,
+              "minimumFractionDigits": 2
             }
           },
           "ui": {

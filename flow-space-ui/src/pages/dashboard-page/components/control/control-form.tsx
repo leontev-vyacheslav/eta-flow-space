@@ -64,6 +64,19 @@ export const ControlForm = ({ onFieldDataChanged }: ControlFormProps) => {
     const controlsRender = useCallback((groupKey: string) => {
         if (controlDefinitions) {
             return controlDefinitions[groupKey].map((item: any) => {
+                // set default format for dxNumberBox
+                if (item.editor.editorType === 'dxNumberBox') {
+                    item.editor.editorOptions = {
+                        ...{
+                            format: {
+                                type: "fixedPoint",
+                                precision: 2
+                            }
+                        },
+                        ...item.editor.editorOptions,
+                    }
+                }
+
                 return (
                     <SimpleItem
                         key={item.id}
@@ -71,7 +84,6 @@ export const ControlForm = ({ onFieldDataChanged }: ControlFormProps) => {
                         label={item.editor.label}
                         editorType={item.editor.editorType}
                         editorOptions={item.editor.editorOptions ? { ...item.editor.editorOptions } : {}}
-                        // , width: item.editor.editorType != 'dxSwitch' ? "100%" : undefined
                         cssClass={item.editor.cssClass}
                         visible={item.editor.visible}
                     />
