@@ -122,7 +122,7 @@ export const ReportPage = () => {
                 {reportBlobUrl ? <iframe src={reportBlobUrl}
                     style={{
                         width: '100%',
-                        height: 'calc(100% - 60px)',
+                        height: 'calc(100vh - 150px)',
                         border: 'none',
                     }}></iframe>
                     : <NoData />
