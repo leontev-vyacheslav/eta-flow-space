@@ -9,10 +9,12 @@ import { getQuickGuid } from "../../utils/uuid";
 import { reportParametricService } from "../../services/report-parametric-service";
 import { NoData } from "../../components/no-data-widget/no-data-widget";
 import type { ReportModel } from "../../models/flows/report-model";
+import { useSharedArea } from "../../contexts/shared-area";
 
 export const ReportPage = () => {
     const { reportId } = useParams<{ reportId: string }>();
     const { getReportDefinitionAsync, getReportAsync } = useAppData();
+    const { showLoader, hideLoader } = useSharedArea();
     const [reportBlobUrl, setReportBlobUrl] = useState<string | null>(null);
     const [reportParameterValues, setReportParameterValues] = useState<any>();
     const [refreshToken, setRefreshToken] = useState<string>(getQuickGuid());
@@ -71,8 +73,6 @@ export const ReportPage = () => {
 
             setReportDefinition(reportDefinition);
             setReportParameterValues(storedInitialParams || { ...reportDefinition.settings.initialParams });
-
-
         })();
     }, [getReportDefinitionAsync, reportId]);
 
@@ -82,7 +82,15 @@ export const ReportPage = () => {
             if (!reportDefinition || !reportParameterValues) {
                 return;
             }
-            const blob = await getReportAsync(reportDefinition.url, reportParameterValues);
+            let blob = null;
+            try {
+                setTimeout(async () => {
+                    showLoader();
+                }, 200);
+                blob = await getReportAsync(reportDefinition.url, reportParameterValues);
+            } finally {
+                hideLoader();
+            }
             if (!blob) {
                 return;
             }

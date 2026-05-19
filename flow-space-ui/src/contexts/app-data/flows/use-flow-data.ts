@@ -219,7 +219,7 @@ export const useFlowData = () => {
         params: { ...params, timezone },
         method: HttpConstants.Methods.Get as Method,
         responseType: "blob",
-      });
+      }, true);
       if (response && response.status === HttpConstants.StatusCodes.Ok) {
         return new Blob([response.data], { type: "application/pdf" });
       }
