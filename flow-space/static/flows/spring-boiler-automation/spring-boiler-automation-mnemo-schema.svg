@@ -328,23 +328,20 @@
 		V49.6c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C381.4,71.4,378.8,74,375.7,74z" />
 		<text transform="matrix(1 0 0 1 322.1674 56.0185)" style="font-family:'Arial'; font-size:10px;">Т12
 			(н.в.)</text>
-		<text transform="matrix(1 0 0 1 314.193 68.608)" style="font-family:'Arial'; font-size:9px;">{{tempOutAir}}
-			ºC</text>
+		<text data-state="tempOutAir" transform="matrix(1 0 0 1 325 68.608)" style="font-family:'Arial'; font-size:9px;">20,56ºC</text>
 	</g>
 
 	<g>
 		<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M459.7,74h-65.5c-3.1,0-5.7-2.5-5.7-5.7
 		V49.6c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C465.4,71.4,462.8,74,459.7,74z" />
 		<text transform="matrix(1 0 0 1 413.7932 56.0721)" style="font-family:'Arial'; font-size:10px;">Ргаза</text>
-		<text transform="matrix(1 0 0 1 398.2146 68.608)" style="font-family:'Arial'; font-size:9px;">{{pressGas}}кПа</text>
+		<text data-state="pressGas" transform="matrix(1 0 0 1 410 68.608)" style="font-family:'Arial'; font-size:9px;">2,45 кПа</text>
 	</g>
 	<g>
 		<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M291.3,74h-65.5c-3.1,0-5.7-2.5-5.7-5.7
 		V49.6c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C297,71.4,294.5,74,291.3,74z" />
-		<text transform="matrix(1 0 0 1 233.8525 56.0721)" style="font-family:'Arial'; font-size:10px;">Т11
-			(внутр.)</text>
-		<text transform="matrix(1 0 0 1 227.2848 68.608)" style="font-family:'Arial'; font-size:9px;">{{tempRoomAir}}
-			ºC</text>
+		<text transform="matrix(1 0 0 1 233.8525 56.0721)" style="font-family:'Arial'; font-size:10px;">Т11	(внутр.)</text>
+		<text data-state="tempRoomAir" transform="matrix(1 0 0 1 245 68.608)" style="font-family:'Arial'; font-size:9px;">29,1 ºC</text>
 	</g>
 	<path style="fill:none;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;" d="M580.5,83.5H104c-5.2,0-9.4-4.2-9.4-9.4V23.4
 	c0-5.2,4.2-9.4,9.4-9.4h476.4c5.2,0,9.4,4.2,9.4,9.4v50.7C589.9,79.3,585.7,83.5,580.5,83.5z" />
