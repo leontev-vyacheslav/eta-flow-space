@@ -43,7 +43,7 @@ const AppConstants = {
                 style: 'decimal',
                 groupSeparator: ' ',
                 maximumFractionDigits: 2,
-                minimumFractionDigits: 2
+                minimumFractionDigits: 1
             }
         }
     }

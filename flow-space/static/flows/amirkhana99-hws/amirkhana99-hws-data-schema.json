@@ -287,6 +287,12 @@
     "limDeltaPressTOA": {
       "type": "number",
       "unit": "м",
+      "formatting": {
+        "options": {
+          "style": "decimal",
+          "maximumFractionDigits": 1
+        }
+      },
       "ui": {
         "group": 1,
         "editor": {
@@ -310,6 +316,12 @@
     "limHighDeltaPressPump": {
       "type": "number",
       "unit": "м",
+      "formatting": {
+        "options": {
+          "style": "decimal",
+          "maximumFractionDigits": 1
+        }
+      },
       "ui": {
         "group": 1,
         "editor": {
@@ -329,6 +341,12 @@
     "limLowDeltaPressPump": {
       "type": "number",
       "unit": "м",
+      "formatting": {
+        "options": {
+          "style": "decimal",
+          "maximumFractionDigits": 1
+        }
+      },
       "ui": {
         "group": 1,
         "editor": {
@@ -348,6 +366,12 @@
     "limHighDeltaPressHWS": {
       "type": "number",
       "unit": "м",
+      "formatting": {
+        "options": {
+          "style": "decimal",
+          "maximumFractionDigits": 1
+        }
+      },
       "ui": {
         "group": 1,
         "editor": {
@@ -367,6 +391,12 @@
     "limHighTempInHWS": {
       "type": "number",
       "unit": "°C",
+      "formatting": {
+        "options": {
+          "style": "decimal",
+          "maximumFractionDigits": 1
+        }
+      },
       "ui": {
         "group": 1,
         "editor": {
@@ -386,6 +416,12 @@
     "limLowTempInHWS": {
       "type": "number",
       "unit": "°C",
+      "formatting": {
+        "options": {
+          "style": "decimal",
+          "maximumFractionDigits": 1
+        }
+      },
       "ui": {
         "group": 1,
         "editor": {
@@ -405,6 +441,12 @@
     "limLowTempOutHWS": {
       "type": "number",
       "unit": "°C",
+      "formatting": {
+        "options": {
+          "style": "decimal",
+          "maximumFractionDigits": 1
+        }
+      },
       "ui": {
         "group": 1,
         "editor": {
@@ -424,6 +466,12 @@
     "limHighTempOutNet": {
       "type": "number",
       "unit": "°C",
+      "formatting": {
+        "options": {
+          "style": "decimal",
+          "maximumFractionDigits": 1
+        }
+      },
       "ui": {
         "group": 1,
         "editor": {
