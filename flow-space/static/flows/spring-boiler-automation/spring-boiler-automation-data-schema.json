@@ -168,44 +168,7 @@
         "chart": {}
       }
     },
-    "levelDt1": {
-      "type": "number",
-      "unit": "см",
-      "ui": {
-        "group": 1,
-        "editor": {
-          "editorType": "dxNumberBox",
-          "label": {
-            "location": "top",
-            "showColon": true,
-            "text": "Уровень ДТ в баке 1"
-          },
-          "editorOptions": {
-            "readOnly": true
-          }
-        },
-        "chart": {}
-      }
-    },
-    "levelDt2": {
-      "type": "number",
-      "unit": "см",
-      "ui": {
-        "group": 1,
-        "editor": {
-          "editorType": "dxNumberBox",
-          "label": {
-            "location": "top",
-            "showColon": true,
-            "text": "Уровень ДТ в баке 2"
-          },
-          "editorOptions": {
-            "readOnly": true
-          }
-        },
-        "chart": {}
-      }
-    },
+
     "pressOutSrcW": {
       "type": "number",
       "unit": "бар",
@@ -554,84 +517,6 @@
         }
       }
     },
-    "statusLevelDt1Sensor": {
-      "$ref": "#/$defs/SensorStatus",
-      "ui": {
-        "group": 1,
-        "editor": {
-          "editorType": "dxSelectBox",
-          "label": {
-            "location": "top",
-            "showColon": true,
-            "text": "Статус датчика уровня ДТ 1"
-          },
-          "editorOptions": {
-            "readOnly": true,
-            "valueExpr": "id",
-            "displayExpr": "description"
-          }
-        },
-        "colorizer": {
-          "styleProps": [
-            {
-              "fill": {
-                "#00FF00": [
-                  1
-                ],
-                "yellow": [
-                  2
-                ],
-                "red": [
-                  4,
-                  8,
-                  16,
-                  32
-                ]
-              }
-            }
-          ]
-        }
-      }
-    },
-    "statusLevelDt2Sensor": {
-      "$ref": "#/$defs/SensorStatus",
-      "ui": {
-        "group": 1,
-        "editor": {
-          "editorType": "dxSelectBox",
-          "label": {
-            "location": "top",
-            "showColon": true,
-            "text": "Статус датчика уровня ДТ 2"
-          },
-          "editorOptions": {
-            "readOnly": true,
-            "valueExpr": "id",
-            "displayExpr": "description"
-          }
-        },
-        "colorizer": {
-          "styleProps": [
-            {
-              "fill": {
-                "#00FF00": [
-                  1
-                ],
-                "yellow": [
-                  2
-                ],
-                "red": [
-                  4,
-                  8,
-                  16,
-                  32
-                ]
-              }
-            }
-          ]
-        }
-      }
-    },
     "statusPressOutSrcWSensor": {
       "$ref": "#/$defs/SensorStatus",
       "ui": {
@@ -793,60 +678,6 @@
         }
       }
     },
-    "isVaporDt1": {
-      "type": "boolean",
-      "ui": {
-        "group": 7,
-        "editor": {
-          "editorType": "dxCheckBox",
-          "label": {
-            "location": "left",
-            "showColon": true,
-            "text": "Загазованность горючими газами 1"
-          },
-          "editorOptions": {
-            "readOnly": true
-          }
-        },
-        "colorizer": {
-          "styleProps": [
-            {
-              "fill": {
-                "red": true,
-                "white": false
-              }
-            }
-          ]
-        }
-      }
-    },
-    "isVaporDt2": {
-      "type": "boolean",
-      "ui": {
-        "group": 7,
-        "editor": {
-          "editorType": "dxCheckBox",
-          "label": {
-            "location": "left",
-            "showColon": true,
-            "text": "Загазованность горючими газами 2"
-          },
-          "editorOptions": {
-            "readOnly": true
-          }
-        },
-        "colorizer": {
-          "styleProps": [
-            {
-              "fill": {
-                "red": true,
-                "white": false
-              }
-            }
-          ]
-        }
-      }
-    },
     "isOffInput1": {
       "type": "boolean",
       "ui": {
@@ -981,8 +812,6 @@
     "pressInNet",
     "tempOutNet",
     "pressOutNet",
-    "levelDt1",
-    "levelDt2",
     "pressOutSrcW",
     "statusTempRoomAirSensor",
     "statusTempOutSensor",
@@ -991,8 +820,6 @@
     "statusPressInNetSensor",
     "statusTempOutNetSensor",
     "statusPressOutNetSensor",
-    "statusLevelDt1Sensor",
-    "statusLevelDt2Sensor",
     "statusPressOutSrcWSensor",
     "isSourceWaterRelay",
     "isCO1",
