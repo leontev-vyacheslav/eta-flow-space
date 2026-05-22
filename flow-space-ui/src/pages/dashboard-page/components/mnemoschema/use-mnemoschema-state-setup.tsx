@@ -7,7 +7,6 @@ export const useMnemoschemaStateSetup = () => {
     const { isSmall, isXSmall, isLarge } = useScreenSize();
     const { schemaTypeInfoPropertiesChain, dataschema, deviceState } = useDashboardPage();
 
-
     const applyStateToMultiStateElements = useCallback((mnemoschemaElement: HTMLElement) => {
         [...mnemoschemaElement.querySelectorAll(`[data-state]`)]
             .filter(element => element.getAttribute('data-state-eval') && element.getAttribute('data-state')?.includes(';'))
