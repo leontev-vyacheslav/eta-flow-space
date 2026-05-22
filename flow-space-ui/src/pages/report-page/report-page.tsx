@@ -82,20 +82,19 @@ export const ReportPage = () => {
             if (!reportDefinition || !reportParameterValues) {
                 return;
             }
-            let blob = null;
             try {
                 setTimeout(async () => {
                     showLoader();
                 }, 200);
-                blob = await getReportAsync(reportDefinition.url, reportParameterValues);
+                const blob = await getReportAsync(reportDefinition.url, reportParameterValues);
+                if (!blob) {
+                    return;
+                }
+                url = URL.createObjectURL(blob);
+                setReportBlobUrl(url);
             } finally {
                 hideLoader();
             }
-            if (!blob) {
-                return;
-            }
-            url = URL.createObjectURL(blob);
-            setReportBlobUrl(url);
         })();
 
         return () => {
@@ -103,7 +102,7 @@ export const ReportPage = () => {
                 URL.revokeObjectURL(url);
             }
         }
-    }, [refreshToken, reportDefinition, reportParameterValues, getReportAsync]);
+    }, [refreshToken, reportDefinition, reportParameterValues, getReportAsync, showLoader, hideLoader]);
 
     return (
         <>
