@@ -142,6 +142,7 @@ export function SideNavigationMenu(props: SideNavigationMenuProps) {
                         if (treeViewRef.current) {
                             setTimeout(() => {
                                 treeViewRef.current!.instance.selectItem(event.itemData!);
+                                localStorage.setItem('lastNavigationPath', event.itemData!.path);
                             }, 100)
                         }
                     }}

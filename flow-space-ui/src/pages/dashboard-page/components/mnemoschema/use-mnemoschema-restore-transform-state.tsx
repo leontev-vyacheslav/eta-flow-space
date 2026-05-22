@@ -38,13 +38,8 @@ export function useMnemoschemaRestoreTransformState(
             restore();
         }, delay);
 
-        // const timer2 = setTimeout(() => {
-        //     restore();
-        // }, delay * 2);
-
         return () => {
             clearTimeout(timer1);
-           //  clearTimeout(timer2);
         };
     }, [delay, restore]);
 }
