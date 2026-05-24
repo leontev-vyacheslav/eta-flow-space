@@ -7,3 +7,4 @@ export { FlowDataModel } from './flow.data-model';
 export { ObjectLocationDataModel } from './object-location.data-model';
 export { UserDataModel } from './user.data-model';
 export { UserDeviceLinkDataModel } from './user-device-link.data-model';
+export { ReportDataModel } from './report-data-model';

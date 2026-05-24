@@ -5,6 +5,7 @@ import { DeviceStateDataModel } from './device-state.data-model';
 import { EmergencyStateDataModel } from './emergency-state.data-model';
 import { EmergencyDataModel } from './emergency.data-model';
 import { UserDeviceLinkDataModel } from './user-device-link.data-model';
+import { ReportDataModel } from './report-data-model';
 
 @Table({
     tableName: 'device',
@@ -78,4 +79,7 @@ export class DeviceDataModel extends Model {
 
     @HasOne(() => EmergencyDataModel, 'deviceId')
     declare emergencies?: EmergencyDataModel;
+
+     @HasMany(() => ReportDataModel, 'deviceId')
+    declare reports?: ReportDataModel[];
 }

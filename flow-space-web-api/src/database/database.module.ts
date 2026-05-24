@@ -9,6 +9,7 @@ import { FlowDataModel } from './models/flow.data-model';
 import { ObjectLocationDataModel } from './models/object-location.data-model';
 import { UserDataModel } from './models/user.data-model';
 import { UserDeviceLinkDataModel } from './models/user-device-link.data-model';
+import { ReportDataModel } from './models';
 
 const models = [
     DeviceDataModel,
@@ -19,6 +20,7 @@ const models = [
     ObjectLocationDataModel,
     UserDataModel,
     UserDeviceLinkDataModel,
+    ReportDataModel
 ];
 
 @Global()

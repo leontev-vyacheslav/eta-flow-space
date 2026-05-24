@@ -1,7 +1,7 @@
 import { Controller, Get, UseGuards, Param, ParseIntPipe, Header, InternalServerErrorException, NotFoundException, StreamableFile } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { DeviceOwnershipGuard } from '../common/guards/device-ownership.guard';
-import { DeviceDataModel, FlowDataModel, ObjectLocationDataModel, UserDeviceLinkDataModel } from '../database/models';
+import { DeviceDataModel, FlowDataModel, ObjectLocationDataModel, UserDeviceLinkDataModel, ReportDataModel } from '../database/models';
 import { RequestUserModel } from '../models/request-user.model';
 import { User } from '../common/decorators/user.decorator';
 import { InjectModel } from '@nestjs/sequelize';
@@ -16,10 +16,16 @@ export class DeviceController {
     constructor(
         @InjectModel(DeviceDataModel)
         private readonly deviceModel: typeof DeviceDataModel,
+
         @InjectModel(UserDeviceLinkDataModel)
         private readonly userDeviceLinkModel: typeof UserDeviceLinkDataModel,
+
         @InjectModel(FlowDataModel)
         private readonly flowModel: typeof FlowDataModel,
+
+        @InjectModel(ReportDataModel)
+        private readonly reportModel: typeof ReportDataModel,
+
         private readonly configService: ConfigService,
     ) {}
 
@@ -43,6 +49,10 @@ export class DeviceController {
                     },
                     attributes: [],
                 },
+                {
+                    model: ReportDataModel,
+                    as: 'reports',
+                }
             ],
         } as FindOptions);
 
@@ -54,6 +64,10 @@ export class DeviceController {
     async getDevice(@Param('deviceId', ParseIntPipe) deviceId: number) {
         const device = await this.deviceModel.findOne({
             include: [
+                {
+                    model: ReportDataModel,
+                    as: 'reports'
+                },
                 {
                     model: ObjectLocationDataModel,
                     as: 'objectLocation',
