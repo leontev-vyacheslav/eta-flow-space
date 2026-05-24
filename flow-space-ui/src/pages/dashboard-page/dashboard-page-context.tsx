@@ -199,8 +199,6 @@ function DashboardPageContextProvider(props: any) {
                 });
 
             setRegistryEnums(registryEnums);
-
-
         }
     }, [dataschema]);
 
