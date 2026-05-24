@@ -10,16 +10,12 @@ export default {
     flows: '/api/flows', //+
     devices: '/api/devices', //+
 
-    // deviceStates: '/api/states/device', //+-
     deviceStates: '/api/device-states',
 
-    // dataschema: '/api/data-schemas/device',
     dataschema: '/api/devices/:deviceId/data-schema',
 
-    // mnemoschemas: '/api/mnemoschemas/device',
     mnemoschemas: '/api/devices/:deviceId/mnemoschema',
 
-    // emergencyStates: '/api/states/emergency', //+
     emergencyStates: '/api/emergency-states', //+
 
     reporting: '/api/reporting', //+

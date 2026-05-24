@@ -5,7 +5,7 @@
 
 ###
 # @name signIn
-POST {{baseUrl}}/sign-in/
+POST {{baseUrl}}/sign-in
 content-type: application/json
 
 {

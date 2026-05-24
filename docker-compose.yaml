@@ -107,6 +107,7 @@ services:
       - eta-flow-space
       - eta-flow-space-ui
       - eta-flow-space-reporting
+      - eta-flow-space-web-api
     restart: unless-stopped
     networks:
       - eta-flow-space-network
