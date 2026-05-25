@@ -3,7 +3,7 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RequestUserModel } from '../models/request-user.model';
 import { User } from '../common/decorators/user.decorator';
 import { join } from 'path';
-import { createReadStream, promises as fs } from 'fs';
+import { promises as fs } from 'fs';
 import { ConfigService } from '@nestjs/config/dist/config.service';
 
 @Controller('api/quick-helps')
@@ -25,8 +25,11 @@ export class QuickHelpController {
         }
 
         try {
-            const stream = createReadStream(filePath, { encoding: 'utf8' });
-            return new StreamableFile(stream);
+            const content = await fs.readFile(filePath, { encoding: 'utf8' });
+            return {
+                key: referenceKey,
+                content: content
+            };
         } catch (error: unknown) {
             const message = error instanceof Error ? error.message : 'Внутренняя ошибка сервера.';
             throw new InternalServerErrorException(message);
