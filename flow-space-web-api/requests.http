@@ -46,12 +46,12 @@ Authorization: Bearer {{ authToken }}
 
 ###
 # @name getDeviceMnemoschema
-GET {{baseUrl}}/api/devices/4/mnemoschema
+GET {{baseUrl}}/api/devices/12/mnemoschema
 Authorization: Bearer {{ authToken }}
 
 ###
 # @name getDeviceSchema
-GET {{baseUrl}}/api/devices/6/data-schema
+GET {{baseUrl}}/api/devices/13/data-schema
 Authorization: Bearer {{ authToken }}
 
 
@@ -75,3 +75,7 @@ Authorization: Bearer {{authToken}}
 ###
 GET {{baseUrl}}/api/quick-helps/Y29tbW9uL2ludHJvZHVjdGlvbg==
 Authorization: Bearer {{authToken}}
+
+
+###
+GET {{baseUrl}}/static/flows/spring-boiler-automation/spring-boiler-automation-mnemo-schema.svg
