@@ -67,3 +67,11 @@ Authorization: Bearer {{authToken}}
 ###
 GET {{baseUrl}}/api/emergency-states
 Authorization: Bearer {{authToken}}
+
+###
+GET {{baseUrl}}/api/quick-helps/Y29tbW9uL2Rhc2hib2FyZA==
+Authorization: Bearer {{authToken}}
+
+###
+GET {{baseUrl}}/api/quick-helps/Y29tbW9uL2ludHJvZHVjdGlvbg==
+Authorization: Bearer {{authToken}}

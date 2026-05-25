@@ -52,7 +52,7 @@ export class DeviceController {
                 {
                     model: ReportDataModel,
                     as: 'reports',
-                }
+                },
             ],
         } as FindOptions);
 
@@ -66,7 +66,7 @@ export class DeviceController {
             include: [
                 {
                     model: ReportDataModel,
-                    as: 'reports'
+                    as: 'reports',
                 },
                 {
                     model: ObjectLocationDataModel,
