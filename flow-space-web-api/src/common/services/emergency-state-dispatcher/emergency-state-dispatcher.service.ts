@@ -1,8 +1,8 @@
 import { Cron } from '@nestjs/schedule';
 import { Injectable, Logger } from '@nestjs/common';
-import { DeviceDataModel, EmergencyDataModel, EmergencyStateDataModel } from '../../../database/models';
+import { DeviceDataModel, DeviceStateDataModel, EmergencyDataModel, EmergencyStateDataModel } from '../../../database/models';
 import { InjectConnection, InjectModel } from '@nestjs/sequelize';
-import { Op } from 'sequelize';
+import { Op, literal } from 'sequelize';
 import { SharedStoreService } from '../shared-store/shared-store.service';
 import { differenceInMinutes } from 'date-fns';
 import { Sequelize } from 'sequelize-typescript';
@@ -18,6 +18,10 @@ export class EmergencyStateDispatcherService {
 
         @InjectModel(DeviceDataModel)
         private readonly deviceDataModel: DeviceDataModel,
+
+        @InjectModel(DeviceStateDataModel)
+        private readonly deviceStateDataModel: DeviceStateDataModel,
+
         @InjectModel(EmergencyDataModel)
         private readonly emergencyDataModel: EmergencyDataModel,
         @InjectModel(EmergencyStateDataModel)
@@ -61,24 +65,40 @@ export class EmergencyStateDispatcherService {
             }
 
             if (stateIsMissing) {
-                state = {
-                    isConnected: false,
-                    timestamp: new Date(),
-                };
+                const deviceState = await DeviceStateDataModel.findOne({
+                    where: {
+                        deviceId: device.id,
+                        [Op.and]: [literal(`state::text <> '{}'`), { state: { [Op.ne]: null } }],
+                    },
+                    order: [['createdAt', 'DESC']],
+                });
+
+                if (deviceState) {
+                    state = deviceState.state;
+                }
+
+                if (!state) {
+                    state = {
+                        isConnected: false,
+                        timestamp: new Date(),
+                    };
+                } else {
+                    state.isConnected = false;
+                    state.timestamp = new Date();
+                }
 
                 emergencyReasons.push({
                     id: 100,
                     expression: 'state.isConnected === false',
                     description: 'Связь отсутствует',
                 });
-            } else {
-                (device.emergencies.reasons as EmergencyReasonModel[]).forEach((emergencyReason) => {
-                    const result = Boolean(eval(emergencyReason.expression));
-                    if (result === true) {
-                        emergencyReasons.push(emergencyReason);
-                    }
-                });
             }
+            (device.emergencies.reasons as EmergencyReasonModel[]).forEach((emergencyReason) => {
+                const result = Boolean(eval(emergencyReason.expression));
+                if (result === true) {
+                    emergencyReasons.push(emergencyReason);
+                }
+            });
 
             const emergencyState =
                 emergencyReasons.length === 0
