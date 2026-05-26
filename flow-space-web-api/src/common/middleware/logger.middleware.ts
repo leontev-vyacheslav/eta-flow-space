@@ -9,10 +9,11 @@ export class LoggerMiddleware implements NestMiddleware {
 
     use(req: Request, res: Response, next: NextFunction) {
         const { method, originalUrl } = req;
+        const start = Date.now();
 
         res.on('finish', () => {
-            // logs AFTER the response is sent, so you get the status code too
-            this.logger.log(`${method} ${originalUrl} ${res.statusCode} ${STATUS_CODES[res.statusCode] || ''}`.trim());
+            const duration = `\x1b[33m+${Date.now() - start}ms\x1b[0m`;
+            this.logger.log(`${method} ${originalUrl} ${res.statusCode} ${(STATUS_CODES[res.statusCode] || '').trim()} ${duration}`);
         });
 
         next();

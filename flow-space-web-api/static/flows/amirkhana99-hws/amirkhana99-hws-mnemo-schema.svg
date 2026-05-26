@@ -331,7 +331,7 @@
 		<text data-state="limLowDeltaPressPump;limHighDeltaPressPump"
 			data-state-eval="element.innerHTML = `(${state.limLowDeltaPressPump} ≤ ΔP ≤ ${state.limHighDeltaPressPump}) м`"
 			transform="matrix(1 0 0 1 85 253.9454)"
-			style="font-family:Roboto,RobotoFallback,Helvetica,Arial,sans-serif; font-size:7px;">(</text>
+			style="font-family:Roboto,RobotoFallback,Helvetica,Arial,sans-serif; font-size:7px;"></text>
 	</g>
 
 	<g data-section="deltaPressHWS">
