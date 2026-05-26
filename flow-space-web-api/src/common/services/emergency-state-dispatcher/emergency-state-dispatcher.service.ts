@@ -142,5 +142,7 @@ export class EmergencyStateDispatcherService {
                 this.logger.error(`The devices emergency states update failed due to the error: ${error}`);
             }
         }
+
+         this.logger.log(`Emergency state dispatcher job has been executed`);
     }
 }
