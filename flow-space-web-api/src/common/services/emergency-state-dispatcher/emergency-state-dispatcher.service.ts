@@ -1,4 +1,4 @@
-import { Cron } from '@nestjs/schedule';
+import { Cron, CronExpression } from '@nestjs/schedule';
 import { Injectable, Logger } from '@nestjs/common';
 import { DeviceDataModel, DeviceStateDataModel, EmergencyDataModel, EmergencyStateDataModel } from '../../../database/models';
 import { InjectConnection, InjectModel } from '@nestjs/sequelize';
@@ -29,7 +29,8 @@ export class EmergencyStateDispatcherService {
     ) {}
     private readonly logger = new Logger(EmergencyStateDispatcherService.name);
 
-    @Cron('0 */1 * * * *') // <- every minute
+    // @Cron('0 */1 * * * *') // <- every minute
+    @Cron(CronExpression.EVERY_MINUTE)
     async storeEmergencyState() {
         const devices = await DeviceDataModel.findAll({
             attributes: ['id'],

@@ -1,5 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { Cron } from '@nestjs/schedule';
+import { Cron, CronExpression } from '@nestjs/schedule';
+
 import { InjectConnection, InjectModel } from '@nestjs/sequelize';
 import { DeviceDataModel, DeviceStateDataModel } from '../../../database/models';
 import { SharedStoreService } from '../shared-store/shared-store.service';
@@ -22,7 +23,7 @@ export class DeviceStateDispatcherService {
         private readonly deviceStateDataModel: DeviceStateDataModel,
     ) {}
 
-    @Cron('*/1 * * * *')
+    @Cron(CronExpression.EVERY_MINUTE)
     async storeDeviceState() {
         const devices = await DeviceDataModel.findAll({
             attributes: ['id', 'updateStateInterval', 'lastStateUpdate'],
@@ -31,7 +32,6 @@ export class DeviceStateDispatcherService {
         for (const device of devices) {
             const now = new Date();
             const deviceState = await this.sharedStoreService.getDeviceState<Record<string, unknown> & { timestamp: Date }>(device.id);
-            // const deviceState = global.get(`deviceState${device.id}`);
 
             if (!deviceState || Object.keys(deviceState).length === 0 || !deviceState.timestamp) {
                 continue;
