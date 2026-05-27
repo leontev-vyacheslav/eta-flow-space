@@ -19,7 +19,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
     validate(payload: { userId: number; roleId: number }) {
         if (!payload.userId && !payload.roleId) {
-            throw new UnauthorizedException();
+            throw new UnauthorizedException('Токен авторизации неверный или истек');
         }
         return { userId: payload.userId, roleId: payload.roleId };
     }
