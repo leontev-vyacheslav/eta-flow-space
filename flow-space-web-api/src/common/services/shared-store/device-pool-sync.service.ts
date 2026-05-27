@@ -1,13 +1,9 @@
+import Redis from 'ioredis';
+import { Injectable, OnModuleDestroy, OnModuleInit, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { DeviceDataModel } from '../../../database/models';
-import Redis from 'ioredis/built/Redis';
+import { Cron, CronExpression } from '@nestjs/schedule';
 import { ConfigService } from '@nestjs/config';
-import { Cron } from '@nestjs/schedule/dist/decorators';
-import { CronExpression } from '@nestjs/schedule/dist/enums/cron-expression.enum';
-import { Injectable } from '@nestjs/common/decorators/core/injectable.decorator';
-import { OnModuleDestroy } from '@nestjs/common/interfaces/hooks/on-destroy.interface';
-import { OnModuleInit } from '@nestjs/common/interfaces/hooks';
-import { Logger } from '@nestjs/common';
+import { DeviceDataModel, FlowDataModel } from '../../../database/models';
 
 @Injectable()
 export class DevicePoolSyncService implements OnModuleInit, OnModuleDestroy {
@@ -16,16 +12,14 @@ export class DevicePoolSyncService implements OnModuleInit, OnModuleDestroy {
 
     constructor(
         @InjectModel(DeviceDataModel)
-        private readonly deviceDataModel: DeviceDataModel,
+        private readonly deviceDataModel: typeof DeviceDataModel,
         private readonly configService: ConfigService,
     ) {}
 
     async onModuleInit(): Promise<void> {
         const host = this.configService.get<string>('redis.host');
         const port = this.configService.get<number>('redis.port');
-
         this.client = new Redis({ host, port });
-
         await this.syncAll();
     }
 
@@ -33,24 +27,47 @@ export class DevicePoolSyncService implements OnModuleInit, OnModuleDestroy {
         await this.client.quit();
     }
 
-    private async syncAll(): Promise<void> {
-        this.logger.log('Running scheduled devices sync...');
-
-        const devices = await DeviceDataModel.findAll();
-        const pipeline = this.client.pipeline();
-
-        devices.forEach((device) => {
-            pipeline.set(`device:${device.id}`, JSON.stringify(device));
-        });
-
-        await pipeline.exec();
-        await this.client.set('device:last-sync', new Date().toISOString());
-
-        this.logger.log(`Devices sync complete. Synced ${devices.length} devices`);
+    @Cron(CronExpression.EVERY_5_MINUTES)
+    async scheduledSync(): Promise<void> {
+        await this.syncAll();
     }
 
-    @Cron(CronExpression.EVERY_5_MINUTES)
-    private async scheduledSync() {
-        await this.syncAll();
+    private async syncAll(): Promise<void> {
+        try {
+            this.logger.log('Running scheduled devices sync...');
+
+            const devices = await this.deviceDataModel.findAll({
+                attributes: ['id', 'code', 'name', 'description', 'updateStateInterval', 'lastStateUpdate', 'settings', 'flowId', 'objectLocationId'],
+                include: [
+                    {
+                        model: FlowDataModel,
+                        as: 'flow',
+                        attributes: ['uid'],
+                    },
+                ],
+            });
+
+            const freshIds = new Set(devices.map((d) => String(d.id)));
+            const existingIds = await this.client.smembers('device:ids');
+            const staleIds = existingIds.filter((id) => !freshIds.has(id));
+
+            const pipeline = this.client.pipeline();
+
+            staleIds.forEach((id) => {
+                pipeline.del(`device:${id}`);
+            });
+
+            pipeline.del('device:ids');
+            devices.forEach((device) => {
+                pipeline.set(`device:${device.id}`, JSON.stringify(device.toJSON()));
+                pipeline.sadd('device:ids', String(device.id));
+            });
+
+            await pipeline.exec();
+            await this.client.set('device:last-sync', new Date().toISOString());
+            this.logger.log(`Sync complete. Synced ${devices.length} devices`);
+        } catch (error) {
+            this.logger.error('Devices sync failed', error);
+        }
     }
 }

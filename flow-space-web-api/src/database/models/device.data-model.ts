@@ -80,6 +80,6 @@ export class DeviceDataModel extends Model {
     @HasOne(() => EmergencyDataModel, 'deviceId')
     declare emergencies?: EmergencyDataModel;
 
-     @HasMany(() => ReportDataModel, 'deviceId')
+    @HasMany(() => ReportDataModel, 'deviceId')
     declare reports?: ReportDataModel[];
 }

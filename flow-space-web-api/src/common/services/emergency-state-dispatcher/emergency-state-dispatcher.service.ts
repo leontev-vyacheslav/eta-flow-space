@@ -144,6 +144,6 @@ export class EmergencyStateDispatcherService {
             }
         }
 
-         this.logger.log(`Emergency state dispatcher job has been executed`);
+        this.logger.log(`Emergency state dispatcher job has been executed`);
     }
 }
