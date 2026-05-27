@@ -541,11 +541,8 @@ module.exports = {
      *    global.get("os")
      */
     functionGlobalContext: {
-        sequelize: require('sequelize'),
-        orm: require('./src/orm/models'),
-        helpers: require('./src/helpers'),
-
         redisClient: redisClient,
+        helpers: require('./src/helpers'),
         crc: require('crc')
     },
 
