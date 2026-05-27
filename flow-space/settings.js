@@ -21,8 +21,6 @@
  **/
 process.env.NODE_ENV = 'production';
 
-const { authorize } = require('./src/middleware/authorize');
-
 const { createClient } = require('redis');
 const redisClient  = createClient({
     url: 'redis://eta-flow-space-store:6379'
@@ -228,7 +226,6 @@ module.exports = {
      * It can be a single function or an array of middleware functions.
      */
     httpNodeMiddleware: [
-        authorize
     ],
 
     /** When httpAdminRoot is used to move the UI to a different root path, the
@@ -546,9 +543,8 @@ module.exports = {
     functionGlobalContext: {
         sequelize: require('sequelize'),
         orm: require('./src/orm/models'),
+        helpers: require('./src/helpers'),
 
-        routes: require('./src/routes'),
-        services: require('./src/services'),
         redisClient: redisClient,
         crc: require('crc')
     },
