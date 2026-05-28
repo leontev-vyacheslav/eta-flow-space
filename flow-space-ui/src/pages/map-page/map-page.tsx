@@ -15,6 +15,8 @@ import { useLongPress } from "use-long-press";
 import { isSuppressedForLongPress } from "../../helpers/map-helpers";
 import { createMapMarkerIcon } from "./map-marker-icon";
 import { getQuickGuid } from "../../utils/uuid";
+import routes from "../../constants/app-api-routes";
+
 
 import 'leaflet/dist/leaflet.css';
 import './map-page.scss';
@@ -25,7 +27,7 @@ import { useSharedArea } from "../../contexts/shared-area";
 export const MapPage = () => {
     const navigate = useNavigate();
     const { deviceId } = useParams();
-    const { getDeviceListAsync, getDeviceStateAsync, getDeviceStateDataschemaAsync, getEmergencyStatesAsync } = useAppData();
+    const { getDeviceListAsync, getDeviceStateAsync, getEmergencyStatesAsync } = useAppData();
     const [refreshToken, setRefreshToken] = useState<string>(getQuickGuid());
     const mapRef = useRef<L.Map>(null);
     const markersGroupRef = useRef<L.FeatureGroup | null>(null);
@@ -88,13 +90,13 @@ export const MapPage = () => {
         if (!rootsRef.current.has(device.id)) {
             rootsRef.current.set(device.id, createRoot(container));
         }
-
+        // debugger;
         const root = rootsRef.current.get(device.id)!;
         root.render(<MapPagePopupSkeleton device={device} />);
 
         const [deviceState, dataschema] = await Promise.all([
             getDeviceStateAsync(device.id),
-            getDeviceStateDataschemaAsync(device.id),
+            fetch(`${routes.host}/static/flows/${device.flow!.code}/${device.flow!.code}-data-schema.json?v=${Date.now()}`).then(res => res.ok ? res.json() : null),
         ]);
 
         if (!deviceState || !dataschema) {
@@ -106,7 +108,7 @@ export const MapPage = () => {
                 <MapPagePopupContent device={device} deviceState={deviceState} dataschema={dataschema} emergencyState={emergencyState} />
             </AuthProvider>
         );
-    }, [getDeviceStateAsync, getDeviceStateDataschemaAsync]);
+    }, [getDeviceStateAsync]);
 
     const markerPopupCloseHandler = useCallback((deviceId: number) => {
         const root = rootsRef.current.get(deviceId);
