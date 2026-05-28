@@ -103,6 +103,7 @@ services:
       - "3000:80"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./flow-space-statics:/var/www/static:ro 
     depends_on:
       - eta-flow-space
       - eta-flow-space-ui
