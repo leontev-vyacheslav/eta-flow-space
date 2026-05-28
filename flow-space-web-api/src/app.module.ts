@@ -14,7 +14,6 @@ import { SharedStoreModule } from './common/services/shared-store/shared-store.m
 import { ScheduleModule } from '@nestjs/schedule';
 import { EmergencyStateDispatcherModule } from './common/services/emergency-state-dispatcher/emergency-state-dispatcher.module';
 import { DeviceStateDispatcherModule } from './common/services/device-state-dispatcher/device-state-dispatcher.module';
-import { QuickHelpModule } from './quick-help/quick-help.module';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 
 @Module({
@@ -45,7 +44,6 @@ import { LoggerMiddleware } from './common/middleware/logger.middleware';
         EmergencyStateModule,
         FlowModule,
         DeviceModule,
-        QuickHelpModule,
     ],
     controllers: [AppController],
     providers: [],
