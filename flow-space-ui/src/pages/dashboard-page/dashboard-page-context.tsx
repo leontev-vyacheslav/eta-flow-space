@@ -9,6 +9,7 @@ import { getQuickGuid } from '../../utils/uuid';
 import { getKeyValuePairs, getSchemaTypeInfo, type SchemaTypeInfoPropertiesChainModel } from '../../helpers/data-helper';
 import type { DictionaryBaseModel } from '../../models/abstractions/dictionary-base-model';
 import { jsonInfoViewService } from '../../services/json-info-view-service';
+import routes from "../../constants/app-api-routes";
 
 import './dashboard-page-content.scss';
 import { useAuth } from '../../contexts/auth';
@@ -29,7 +30,7 @@ export type DashboardPageContextModel = {
 const DashboardPageContext = createContext({} as DashboardPageContextModel);
 
 function DashboardPageContextProvider(props: any) {
-    const { getDeviceAsync, getDeviceStateAsync, getMnemoschemaAsync, getDeviceStateDataschemaAsync } = useAppData();
+    const { getDeviceAsync, getDeviceStateAsync } = useAppData();
     const { deviceId, flowCode } = useParams();
     const { isAdmin } = useAuth();
 
@@ -69,11 +70,13 @@ function DashboardPageContextProvider(props: any) {
         (async () => {
 
             if (deviceId) {
+                const prefetchedDevice = await getDeviceAsync(parseInt(deviceId));
+
                 const results = await Promise.allSettled([
-                    getDeviceAsync(parseInt(deviceId)),
+                    Promise.resolve(prefetchedDevice),
                     getDeviceStateAsync(parseInt(deviceId)),
-                    getMnemoschemaAsync(parseInt(deviceId)),
-                    getDeviceStateDataschemaAsync(parseInt(deviceId)),
+                    fetch(`${routes.host}/static/flows/${flowCode}/${flowCode}-mnemo-schema.svg?v=${Date.now()}`).then(res => res.ok ? res.text() : null),
+                    fetch(`${routes.host}/static/flows/${flowCode}/${flowCode}-data-schema.json?v=${Date.now()}`).then(res => res.ok ? res.json() : null),
                 ])
                 const [device, deviceState, mnemoschema, dataschema] = results.map(r => {
                     return r.status === 'fulfilled' ? r.value : null
@@ -87,7 +90,7 @@ function DashboardPageContextProvider(props: any) {
                 setDataschema(dataschema);
             }
         })();
-    }, [deviceId, flowCode, getDeviceAsync, getDeviceStateAsync, getDeviceStateDataschemaAsync, getMnemoschemaAsync, applyDimensionsToState, refreshToken]);
+    }, [deviceId, flowCode, getDeviceAsync, getDeviceStateAsync, applyDimensionsToState, refreshToken]);
 
     useEffect(() => {
         if (!dataschema) {
