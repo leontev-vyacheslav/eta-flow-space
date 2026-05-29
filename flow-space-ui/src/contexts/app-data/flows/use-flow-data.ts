@@ -42,6 +42,7 @@ export type GetEmergencyStatesByDatesAsyncFunc = (
 ) => Promise<EmergencyStateModel[] | undefined>;
 
 export type AppDataContextFlowEndpointsModel = {
+  getStaticFilesManifest: () => Promise<any>;
   getFlowListAsync: GetFlowListAsyncFunc;
   getDeviceListAsync: GetDeviceListAsyncFunc;
   getDeviceStateAsync: GetDeviceStateAsyncFunc;
@@ -56,11 +57,12 @@ export type AppDataContextFlowEndpointsModel = {
 };
 
 export const useFlowData = () => {
-
-    const getStaticFilesManifest = async () => {
-        const res = await fetch(`${routes.host}/static/manifest.json?v=${Date.now()}`);
-        return res.ok ? res.json() : {};
-    };
+  const getStaticFilesManifest = async () => {
+    const res = await fetch(
+      `${routes.host}/static/manifest.json?v=${Date.now()}`,
+    );
+    return res.ok ? res.json() : {};
+  };
 
   const authHttpRequest = useAuthHttpRequest();
 
@@ -217,15 +219,18 @@ export const useFlowData = () => {
   const getReportAsync = useCallback(
     async (url: string, params: any) => {
       const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      const response = await authHttpRequest({
-        url:
-          process.env.NODE_ENV !== "production"
-            ? `http://localhost:8000/api${url}`
-            : `${routes.host}${routes.reporting}${url}`,
-        params: { ...params, timezone },
-        method: HttpConstants.Methods.Get as Method,
-        responseType: "blob",
-      }, true);
+      const response = await authHttpRequest(
+        {
+          url:
+            process.env.NODE_ENV !== "production"
+              ? `http://localhost:8000/api${url}`
+              : `${routes.host}${routes.reporting}${url}`,
+          params: { ...params, timezone },
+          method: HttpConstants.Methods.Get as Method,
+          responseType: "blob",
+        },
+        true,
+      );
       if (response && response.status === HttpConstants.StatusCodes.Ok) {
         return new Blob([response.data], { type: "application/pdf" });
       }
@@ -234,6 +239,7 @@ export const useFlowData = () => {
   );
 
   return {
+    getStaticFilesManifest,
     getFlowListAsync,
     getDeviceListAsync,
     getDeviceStateAsync,

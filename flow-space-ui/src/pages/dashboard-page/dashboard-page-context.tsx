@@ -13,6 +13,7 @@ import routes from "../../constants/app-api-routes";
 
 import './dashboard-page-content.scss';
 import { useAuth } from '../../contexts/auth';
+import { useAppSettings } from '../../contexts/app-settings';
 
 export type DashboardPageContextModel = {
     device?: DeviceModel;
@@ -30,6 +31,7 @@ export type DashboardPageContextModel = {
 const DashboardPageContext = createContext({} as DashboardPageContextModel);
 
 function DashboardPageContextProvider(props: any) {
+    const { appSettingsData } = useAppSettings();
     const { getDeviceAsync, getDeviceStateAsync } = useAppData();
     const { deviceId, flowCode } = useParams();
     const { isAdmin } = useAuth();
@@ -75,8 +77,8 @@ function DashboardPageContextProvider(props: any) {
                 const results = await Promise.allSettled([
                     Promise.resolve(prefetchedDevice),
                     getDeviceStateAsync(parseInt(deviceId)),
-                    fetch(`${routes.host}/static/flows/${flowCode}/${flowCode}-mnemo-schema.svg?v=${Date.now()}`).then(res => res.ok ? res.text() : null),
-                    fetch(`${routes.host}/static/flows/${flowCode}/${flowCode}-data-schema.json?v=${Date.now()}`).then(res => res.ok ? res.json() : null),
+                    fetch(`${routes.host}/static/flows/${flowCode}/${flowCode}-mnemo-schema.svg?v=${appSettingsData.staticFilesManifest['mnemo-schema'] ?? Date.now()}`).then(res => res.ok ? res.text() : null),
+                    fetch(`${routes.host}/static/flows/${flowCode}/${flowCode}-data-schema.json?v=${appSettingsData.staticFilesManifest['data-schema'] ?? Date.now()}`).then(res => res.ok ? res.json() : null),
                 ])
                 const [device, deviceState, mnemoschema, dataschema] = results.map(r => {
                     return r.status === 'fulfilled' ? r.value : null

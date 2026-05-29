@@ -12,18 +12,23 @@ const useAppSettings = () => useContext(AppSettingsContext);
 
 function AppSettingsProvider(props: AppBaseProviderProps) {
     const { user } = useAuth();
-    const { getFlowListAsync } = useAppData();
+    const {getStaticFilesManifest, getFlowListAsync } = useAppData();
     const [flows, setFlows] = useState<FlowModel[] | undefined>([]);
     const [appSettingsData, setAppSettingsData] = useState<AppSettingsDataContextModel>({
         isShowFooter: true,
+        staticFilesManifest: {},
     });
 
     useEffect(() => {
         (async () => {
+            const staticFilesManifest = await getStaticFilesManifest();
+            setAppSettingsData(previous => {
+                return { ...previous, staticFilesManifest: staticFilesManifest };
+            });
             const flows = await getFlowListAsync();
             setFlows(flows);
         })();
-    }, [getFlowListAsync, user]);
+    }, [getFlowListAsync, getStaticFilesManifest, user]);
 
     useEffect(() => {
         setAppSettingsData(previous => {
