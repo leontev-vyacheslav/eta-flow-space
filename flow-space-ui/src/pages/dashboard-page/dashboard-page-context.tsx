@@ -9,9 +9,11 @@ import { getQuickGuid } from '../../utils/uuid';
 import { getKeyValuePairs, getSchemaTypeInfo, type SchemaTypeInfoPropertiesChainModel } from '../../helpers/data-helper';
 import type { DictionaryBaseModel } from '../../models/abstractions/dictionary-base-model';
 import { jsonInfoViewService } from '../../services/json-info-view-service';
+import routes from "../../constants/app-api-routes";
 
 import './dashboard-page-content.scss';
 import { useAuth } from '../../contexts/auth';
+import { useAppSettings } from '../../contexts/app-settings';
 
 export type DashboardPageContextModel = {
     device?: DeviceModel;
@@ -29,7 +31,8 @@ export type DashboardPageContextModel = {
 const DashboardPageContext = createContext({} as DashboardPageContextModel);
 
 function DashboardPageContextProvider(props: any) {
-    const { getDeviceAsync, getDeviceStateAsync, getMnemoschemaAsync, getDeviceStateDataschemaAsync } = useAppData();
+    const { appSettingsData } = useAppSettings();
+    const { getDeviceAsync, getDeviceStateAsync } = useAppData();
     const { deviceId, flowCode } = useParams();
     const { isAdmin } = useAuth();
 
@@ -68,12 +71,15 @@ function DashboardPageContextProvider(props: any) {
     useEffect(() => {
         (async () => {
 
-            if (deviceId) {
+            if (deviceId && appSettingsData.staticFilesManifest && flowCode && appSettingsData.staticFilesManifest[flowCode]) {
+                const prefetchedDevice = await getDeviceAsync(parseInt(deviceId));
+                const manifest = appSettingsData.staticFilesManifest[flowCode];
+
                 const results = await Promise.allSettled([
-                    getDeviceAsync(parseInt(deviceId)),
+                    Promise.resolve(prefetchedDevice),
                     getDeviceStateAsync(parseInt(deviceId)),
-                    getMnemoschemaAsync(parseInt(deviceId)),
-                    getDeviceStateDataschemaAsync(parseInt(deviceId)),
+                    fetch(`${routes.host}/static/flows/${flowCode}/${flowCode}-mnemo-schema.svg?v=${manifest['mnemo-schema'] ?? Date.now()}`).then(res => res.ok ? res.text() : null),
+                    fetch(`${routes.host}/static/flows/${flowCode}/${flowCode}-data-schema.json?v=${manifest['data-schema'] ?? Date.now()}`).then(res => res.ok ? res.json() : null),
                 ])
                 const [device, deviceState, mnemoschema, dataschema] = results.map(r => {
                     return r.status === 'fulfilled' ? r.value : null
@@ -87,7 +93,7 @@ function DashboardPageContextProvider(props: any) {
                 setDataschema(dataschema);
             }
         })();
-    }, [deviceId, flowCode, getDeviceAsync, getDeviceStateAsync, getDeviceStateDataschemaAsync, getMnemoschemaAsync, applyDimensionsToState, refreshToken]);
+    }, [deviceId, flowCode, getDeviceAsync, getDeviceStateAsync, applyDimensionsToState, refreshToken, appSettingsData.staticFilesManifest]);
 
     useEffect(() => {
         if (!dataschema) {
@@ -199,8 +205,6 @@ function DashboardPageContextProvider(props: any) {
                 });
 
             setRegistryEnums(registryEnums);
-
-
         }
     }, [dataschema]);
 

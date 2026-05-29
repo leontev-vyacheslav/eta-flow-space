@@ -1,17 +1,22 @@
 export default {
-    host: process.env.NODE_ENV !== 'production' ? 'http://localhost:3001' : `http://${window.location.hostname}:3000`,
+    host: process.env.NODE_ENV !== 'production' ? 'http://localhost:3002' : `http://${window.location.hostname}:3000`,
 
-    accountSignIn: '/sign-in',
+    accountSignIn: '/sign-in', //+
     accountSignOut: '/sign-out',
 
-    healthCheck: '/health-check',
+    healthCheck: '/health-check', // +
 
     quickHelpReference: '/api/quick-helps',
-    flows: '/api/flows',
-    devices: '/api/devices',
-    deviceStates: '/api/states/device',
-    dataschema: '/api/data-schemas/device',
-    mnemoschemas: '/api/mnemoschemas/device',
-    emergencyStates: '/api/states/emergency',
-    emergencySummaryReport: '/api/reporting/emergency-summary',
+    flows: '/api/flows', //+
+    devices: '/api/devices', //+
+
+    deviceStates: '/api/device-states',
+
+    dataschema: '/api/devices/:deviceId/data-schema',
+
+    mnemoschemas: '/api/devices/:deviceId/mnemoschema',
+
+    emergencyStates: '/api/emergency-states', //+
+
+    reporting: '/api/reporting', //+
 };

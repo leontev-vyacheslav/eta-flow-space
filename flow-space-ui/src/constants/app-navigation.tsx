@@ -21,19 +21,18 @@ export const useSideNavigationMenuItems = () => {
 
     return useMemo<TreeViewItemModel[]>(() => {
         return [
-            ...(flows?.map(f => ({
-                id: f.code,
-                text: f.name,
+            {
+                id: 'objects',
+                text: 'Объекты',
                 iconRender: (props: IconBaseProps) => <FlowIcon size={22} {...props} />,
-                entity: { typeName: 'FlowModel', id: f.id },
-                items: f.devices.map(d => ({
-                    id: `${f.code}/device/${d.id}`,
+                items: flows?.flatMap(f => f.devices.map((d: any) => ({ ...d, flowCode: f.code }))).map(d => ({
+                    id: `${d.flowCode}/device/${d.id}`,
                     text: d.name,
                     iconRender: (props: IconBaseProps) => <DeviceIcon size={22} {...props} />,
-                    path: `/${f.code}/device/${d.id}`,
+                    path: `/${d.flowCode}/device/${d.id}`,
                     entity: { typeName: 'DeviceModel', id: d.id },
-                }))
-            })) || []),
+                })) || []
+            },
             {
                 //id: 'map',
                 id: '/map',
@@ -62,17 +61,18 @@ export const useSideNavigationMenuItems = () => {
             },
             {
                 id: 'reports',
-                text: 'Отчеты',
+                text: 'Отчёты',
                 iconRender: (props: IconBaseProps) => <ReportIcon size={20} {...props} />,
                 items: [
                     {
-                        id: '/reports/emergency-summary',
+                        id: `/reports/1`,
                         text: 'Нештатные ситуации',
-                        iconRender: (props: IconBaseProps) => <div style={{ position: 'relative' }}><WarningLogIcon size={20} {...props} /> <SummaryReportIcon size={16} {...props} style={{ position: 'absolute', top: '-5px', right: '-10px' }} /></div>,
-                        path: '/reports/emergency-summary',
-                    },
+                        iconRender: (props: IconBaseProps) => <div style={{ position: 'relative' }}><WarningLogIcon size={20} {...props} /> <div> <SummaryReportIcon size={14} {...props} style={{ position: 'absolute', top: '-5px', right: '-8px' }} /></div></div>,
+                        path: `/reports/1`,
+                    }
                 ]
             },
+
             {
                 id: 'about',
                 text: 'О программе',

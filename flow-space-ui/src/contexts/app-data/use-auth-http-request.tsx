@@ -21,7 +21,7 @@ export const useAuthHttpRequest = () => {
     const axiosWithCredentials = useCallback<AxiosWithCredentialsFunc>(
 
         async (config: AxiosRequestConfig, suppressLoader: boolean = false, suppressShowUnauthorized: boolean = false, suppressShowError: boolean = false) => {
-            let response: AxiosResponse<any, any> | null | AxiosResponse<unknown, any> | undefined = null;
+            let response: AxiosResponse<any, any> | null | AxiosResponse<unknown, any> | undefined;
             const userAuthData = getUserAuthDataFromStorage();
             config = config || {};
             config.headers = config.headers || {};

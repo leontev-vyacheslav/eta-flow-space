@@ -14,25 +14,14 @@ content-type: application/json
 }
 
 ###
-# @name getDeviceState
-GET {{baseUrl}}/api/states/device/4
+# @name getDevice
+GET {{baseUrl}}/api/devices/13
 Authorization: Bearer {{authToken}}
 
 ###
 # @name getDeviceStatesByDateRange
-GET {{baseUrl}}/api/states/device/4/dates?beginDate=2026-02-11T00:00:00&endDate=2026-02-11T23:59:59&fields=tempRoomAir;tempOutAir;pressGas;levelDt2;boilers[0].status;networkPumps[3].statusFc
+GET {{baseUrl}}/api/device-states/4/dates?beginDate=2026-02-11T00:00:00&endDate=2026-02-11T23:59:59&fields=tempRoomAir;tempOutAir;pressGas;levelDt2;boilers[0].status;networkPumps[3].statusFc
 Authorization: Bearer {{authToken}}
-
-###
-# @name postDeviceStateValue
-POST {{baseUrl}}/api/states/device/1  HTTP/1.1
-Authorization: Bearer {{authToken}}
-Content-Type: application/json
-
-{
-    "address": 7,
-    "value": true
-}
 
 ###
 # @name getDevices
@@ -51,13 +40,13 @@ Authorization: Bearer {{authToken}}
 
 ###
 # @name getMnemoschema
-GET {{baseUrl}}/api/mnemoschemas/device/4
+GET {{baseUrl}}/api/devices/13/mnemoschema
 Authorization: Bearer {{authToken}}
 
 
 ###
 # @name getDataschema
-GET {{baseUrl}}/api/data-schemas/device/4
+GET {{baseUrl}}/api/devices/12/data-schema
 Authorization: Bearer {{authToken}}
 
 ###
@@ -70,9 +59,6 @@ Authorization: Bearer {{authToken}}
 GET {{baseUrl}}/api/quick-helps/Y29tbW9uL2ludHJvZHVjdGlvbg==
 Authorization: Bearer {{authToken}}
 
-###
-GET {{baseUrl}}/api/states/device/4
-Authorization: Bearer {{authToken}}
 
 ###
 GET {{baseUrl}}/api/states/emergency/device/4
@@ -80,18 +66,18 @@ Authorization: Bearer {{authToken}}
 
 
 ###
-GET {{baseUrl}}/api/states/emergency
+GET {{baseUrl}}/api/emergency-states
 Authorization: Bearer {{authToken}}
 
 ###
 # @name getEmergencyStatesByDates
-GET {{baseUrl}}/api/states/emergency/6/dates?beginDate=2026-03-05T00:00:00&endDate=2026-03-05T23:59:59
+GET {{baseUrl}}/api/states//6/dates?beginDate=2026-03-05T00:00:00&endDate=2026-03-05T23:59:59
 Authorization: Bearer {{authToken}}
 
 
 ###
 # @name getUserEmergencyStatesByDates
-GET {{baseUrl}}/api/states/emergency/dates?beginDate=2026-03-10T00:00:00&endDate=2026-03-10T23:59:59
+GET {{baseUrl}}/api/emergency-states/dates?beginDate=2026-03-10T00:00:00&endDate=2026-03-10T23:59:59
 Authorization: Bearer {{authToken}}
 
 

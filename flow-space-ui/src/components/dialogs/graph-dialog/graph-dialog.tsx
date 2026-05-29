@@ -10,6 +10,7 @@ import { Popup as PopupRef } from "devextreme-react/popup";
 import { GraphDialogTitle } from './graph-dialog-title';
 import { GraphDialogContextProvider, useGraphDialog } from './graph-dialog-context';
 import { getQuickGuid } from '../../../utils/uuid';
+import { MenuItemWithSubMenu } from '../../menu/menu-item/menu-item';
 
 const GraphDialogInternal = (props: GraphDialogProps) => {
     const { isXSmall, isSmall } = useScreenSize();
@@ -29,8 +30,7 @@ const GraphDialogInternal = (props: GraphDialogProps) => {
                         }
                     },
                     {
-                        text: "Выборка",
-                        icon: () => <DateRangeIcon size={24} />,
+                        render: () => <MenuItemWithSubMenu icon={<DateRangeIcon size={24} />} text={'Выборка...'} />,
                         items: [
                             {
                                 icon: () => <DayIcon size={24} />,

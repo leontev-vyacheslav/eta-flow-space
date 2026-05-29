@@ -25,6 +25,7 @@ services:
     container_name: eta-flow-space-database
     ports:
       - "35432:5432"
+    command: ["postgres", "-c", "shared_preload_libraries=pg_stat_statements"]
     environment:
       - POSTGRES_DB=eta_flow_space_database
     env_file:
@@ -32,6 +33,18 @@ services:
     volumes:
       - ./flow-space-data:/var/lib/postgresql/data
     restart: unless-stopped
+    networks:
+      - eta-flow-space-network
+
+  eta-flow-space-store:
+    image: redis:7-alpine
+    container_name: eta-flow-space-store
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./flow-space-store:/data
+    restart: unless-stopped
+    command: redis-server --appendonly yes
     networks:
       - eta-flow-space-network
 
@@ -68,6 +81,22 @@ services:
     networks:
       - eta-flow-space-network
 
+  eta-flow-space-web-api:
+    build:
+      context: ./flow-space-web-api/
+      dockerfile: Dockerfile
+    container_name: eta-flow-space-web-api
+    restart: unless-stopped
+    ports:
+      - "3002:3002"
+    env_file:
+      - ./flow-space-web-api/.env
+    depends_on:
+      - eta-flow-space-database
+      - eta-flow-space-store
+    networks:
+      - eta-flow-space-network
+
   eta-flow-space-gateway:
     image: nginx:alpine
     container_name: eta-flow-space-gateway
@@ -75,10 +104,12 @@ services:
       - "3000:80"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./flow-space-statics:/var/www/static:ro
     depends_on:
       - eta-flow-space
       - eta-flow-space-ui
       - eta-flow-space-reporting
+      - eta-flow-space-web-api
     restart: unless-stopped
     networks:
       - eta-flow-space-network

@@ -27,10 +27,9 @@ const routes = [
         component: MapPage,
     },
     {
-        path: '/reports/:reportCode',
+        path: '/reports/:reportId',
         component: ReportPage,
     },
-
 ];
 
 export default routes.map((route) => {

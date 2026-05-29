@@ -1,0 +1,81 @@
+@baseUrl = http://localhost:3002
+
+###
+@authToken = {{signIn.response.body.token}}
+
+###
+# @name signIn
+POST {{baseUrl}}/sign-in
+content-type: application/json
+
+{
+    "login": "admin-boiler-watcher",
+    "password": "0987654321"
+}
+
+###
+# @name getDeviceStatesByDates
+GET {{baseUrl}}/api/device-states/6/dates?beginDate=2026-04-11T00:00:00Z&endDate=2026-04-11T23:59:59Z&fields=tempRoomAir;tempOutAir;pressGas;levelDt2;boilers[0].status;networkPumps[3].statusFc
+Authorization: Bearer {{ authToken }}
+
+###
+# @name getEmergencyStatesByDates
+GET {{baseUrl}}/api/emergency-states/4/dates?beginDate=2026-04-11T00:00:00Z&endDate=2026-04-11T23:59:59Z
+Authorization: Bearer {{ authToken }}
+
+###
+# @name getFlows
+GET {{baseUrl}}/api/flows
+Authorization: Bearer {{ authToken }}
+
+###
+# @name getDevices
+GET {{baseUrl}}/api/devices
+Authorization: Bearer {{ authToken }}
+
+###
+# @name getDevice
+GET {{baseUrl}}/api/devices/6
+Authorization: Bearer {{ authToken }}
+
+###
+# @name healthCheck
+GET {{baseUrl}}/health-check
+Authorization: Bearer {{ authToken }}
+
+
+###
+# @name getDeviceMnemoschema
+GET {{baseUrl}}/api/devices/12/mnemoschema
+Authorization: Bearer {{ authToken }}
+
+###
+# @name getDeviceSchema
+GET {{baseUrl}}/api/devices/13/data-schema
+Authorization: Bearer {{ authToken }}
+
+
+###
+GET {{baseUrl}}/api/device-states/4
+Authorization: Bearer {{authToken}}
+
+###
+GET {{baseUrl}}/api/emergency-states/dates?beginDate=2026-05-01T00:00:00&endDate=2026-05-01T23:59:59
+Authorization: Bearer {{authToken}}
+
+
+###
+GET {{baseUrl}}/api/emergency-states
+Authorization: Bearer {{authToken}}
+
+###
+GET {{baseUrl}}/api/quick-helps/Y29tbW9uL2Rhc2hib2FyZA==
+Authorization: Bearer {{authToken}}
+
+###
+GET {{baseUrl}}/api/quick-helps/Y29tbW9uL2ludHJvZHVjdGlvbg==
+Authorization: Bearer {{authToken}}
+
+
+###
+GET {{baseUrl}}/static/flows/spring-boiler-automation/spring-boiler-automation-mnemo-schema.svg

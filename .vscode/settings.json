@@ -7,8 +7,12 @@
         "**/Thumbs.db": true,
         "**/node_modules": true,
         "**/__pycache__": true,
+        "**/dist": true,
+        "**/build": true,
+        "**/coverage": true,
+        "**/.venv": true
     },
-    "svg.preview.background": "transparent",
+    "svg.preview.background": "white",
     "[python]": {
         "editor.defaultFormatter": "ms-python.black-formatter",
         "editor.formatOnSave": true
@@ -16,5 +20,5 @@
     "black-formatter.args": [
         "--line-length",
         "160",
-    ]
+    ],
 }

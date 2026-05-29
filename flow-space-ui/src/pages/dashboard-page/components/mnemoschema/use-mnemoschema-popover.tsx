@@ -3,10 +3,11 @@ import { createRoot } from "react-dom/client";
 import { useDashboardPage } from "../../dashboard-page-context"
 import dxPopover from "devextreme/ui/popover";
 import { useAuth } from "../../../../contexts/auth";
-import { GraphIcon, HelpIcon } from "../../../../constants/app-icons";
+import { GraphIcon, HelpIcon, TypeIcon, VariableIcon } from "../../../../constants/app-icons";
 import { graphService } from "../../../../services/graph-service";
 import type { SchemaTypeInfoPropertiesChainModel } from "../../../../helpers/data-helper";
 import { showAlertDialog } from "../../../../utils/dialogs";
+import AppConstants from "../../../../constants/app-constants";
 
 import './mnemoschema-popover.scss';
 
@@ -51,75 +52,114 @@ export const useMnemoschemaPopover = () => {
         });
     }, [dataschema]);
 
-    const popoverContentRender = useCallback((propertyInfo: SchemaTypeInfoPropertiesChainModel, target: Element) => {
-        let value = propertyInfo.propertiesChainValuePair.value;
-        if (propertyInfo.typeInfo?.typeName === 'boolean') {
-            value = value === true ? 'Да' : 'Нет';
-        }
-        if (propertyInfo.typeInfo?.ui.editor.editorOptions.type === 'datetime') {
-            const date = new Date(value);
-            const formatAttr = target.getAttribute('data-state-format');
-            if (formatAttr === 'date') {
-                value = date.toLocaleDateString('ru-RU');
-            } else if (formatAttr === 'time') {
-                value = date.toLocaleTimeString('ru-RU');
-            } else {
-                value = date.toLocaleString('ru-RU');
-            }
-        } else if (propertyInfo.typeInfo?.isEnum) {
-
-            const enumDescription = dataschema.$defs[propertyInfo.typeInfo?.typeName].enumDescriptions[value]?.split(' - ').pop();
-            if (isAdmin()) {
-                value = enumDescription ? enumDescription + ' (' + value + ')' : <span style={{ color: 'red' }}>Ошибка ({value})</span>
-                value = (
-                    <div style={{ display: 'flex', gap: 5 }}>
-                        <span>{value}</span>
-                        <HelpIcon style={{ cursor: 'pointer' }} size={14} onClick={() => {
-                            popoverInstance.current!.hide();
-                            showEnumReference(propertyInfo);
-                        }} />
-                    </div>
-                );
-            } else {
-                value = enumDescription ? enumDescription : <span style={{ color: 'red' }}>Ошибка ({value})</span>
-            }
-        } else {
-            const unit = propertyInfo.typeInfo?.unit;
-            value = `${value}${unit ? ' ' + unit : ''}`;
-        }
-
+    const PropertyInfoTable = useCallback(({ propertyInfos, values }: { propertyInfos: SchemaTypeInfoPropertiesChainModel[], values: any[] }) => {
         return (
             <table className='simple-grid'>
                 <thead>
-                    <tr><th colSpan={2}>{propertyInfo.typeInfo?.ui.editor.label.text ?? ''}</th></tr>
+                    <tr><th colSpan={2}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 5, justifyContent: 'center' }}>
+                            <VariableIcon size={16} />
+                            {propertyInfos.length > 1 ? 'Свойства' : 'Свойство'}
+                        </div>
+                    </th></tr>
                 </thead>
                 <tbody>
-                    {isAdmin() ?
-                        <>
+                    {propertyInfos.map((propertyInfo) => {
+                        const value = values.find((v) => v.propertiesChain === propertyInfo.propertiesChainValuePair.propertiesChain)?.value;
+                        return (
                             <tr>
-                                <td>Свойство:</td>
-                                <td>{propertyInfo.propertiesChainValuePair.propertiesChain}</td>
+                                <td>
+                                    <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+                                        <span style={{ fontSize: '1em' }}>{propertyInfo.typeInfo?.ui.editor.label.text ?? ''}</span>
+                                        {isAdmin() ?
+                                            <>
+                                                <span style={{ display: 'flex', alignItems: 'center', fontSize: '0.85em', color: 'gray', gap: 5 }} >
+                                                    <VariableIcon size={12} />
+                                                    {propertyInfo.propertiesChainValuePair.propertiesChain}
+                                                </span>
+                                                <span style={{ display: 'flex', alignItems: 'center', fontSize: '0.85em', color: 'gray', gap: 5 }}>
+                                                    <TypeIcon size={12} />
+                                                    {propertyInfo.typeInfo?.typeName}
+                                                </span>
+                                            </>
+                                            : null}
+                                    </div>
+                                </td>
+                                <td >
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                                        <b style={{ width: '100%' }}>{value}</b>
+                                        {propertyInfo.typeInfo?.ui.chart ? <GraphIcon data-state-graph={propertyInfo.propertiesChainValuePair.propertiesChain} alignmentBaseline="middle" size={16} style={{ cursor: 'pointer' }} /> : null}
+                                    </div>
+                                </td>
                             </tr>
-                            <tr>
-                                <td>Тип:</td>
-                                <td>{propertyInfo.typeInfo?.typeName}</td>
-                            </tr>
-                        </>
-                        : null
-                    }
-                    <tr>
-                        <td>Значение:</td>
-                        <td>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                                <b style={{ width: '100%' }}>{value}</b>
-                                {propertyInfo.typeInfo?.ui.chart ? <GraphIcon data-state-graph={propertyInfo.propertiesChainValuePair.propertiesChain} alignmentBaseline="middle" size={16} style={{ cursor: 'pointer' }} /> : null}
-                            </div>
-                        </td>
-                    </tr>
+                        );
+                    })}
                 </tbody>
             </table>
         );
-    }, [dataschema, isAdmin, showEnumReference]);
+    }, [isAdmin]);
+
+
+    const popoverContentRender = useCallback((propertyInfos: SchemaTypeInfoPropertiesChainModel[], target: Element) => {
+        const values: { propertiesChain: string, value: any }[] = [];
+
+        for (const propertyInfo of propertyInfos) {
+            let value = propertyInfo.propertiesChainValuePair.value;
+            if (propertyInfo.typeInfo?.typeName === 'boolean') {
+                value = value === true ? 'Да' : 'Нет';
+            }
+            if (propertyInfo.typeInfo?.typeName === 'number') {
+                if (propertyInfo.typeInfo?.formatting && propertyInfo.typeInfo?.formatting.options) {
+                    value = new Intl.NumberFormat(
+                        propertyInfo.typeInfo.formatting.locale ?? AppConstants.formatting.numberFormat.locale,
+                        propertyInfo.typeInfo.formatting.options
+                    ).format(value);
+                } else {
+                    value = new Intl.NumberFormat(
+                        AppConstants.formatting.numberFormat.locale,
+                        AppConstants.formatting.numberFormat.options as any
+                    ).format(value);
+                }
+            }
+
+            if (propertyInfo.typeInfo?.ui.editor.editorOptions.type === 'datetime') {
+                const date = new Date(value);
+                const formatAttr = target.getAttribute('data-state-format');
+                if (formatAttr === 'date') {
+                    value = date.toLocaleDateString('ru-RU');
+                } else if (formatAttr === 'time') {
+                    value = date.toLocaleTimeString('ru-RU');
+                } else {
+                    value = date.toLocaleString('ru-RU');
+                }
+            } else if (propertyInfo.typeInfo?.isEnum) {
+
+                const enumDescription = dataschema.$defs[propertyInfo.typeInfo?.typeName].enumDescriptions[value]?.split(' - ').pop();
+                if (isAdmin()) {
+                    value = enumDescription ? enumDescription + ' (' + value + ')' : <span style={{ color: 'red' }}>Ошибка ({value})</span>
+                    value = (
+                        <div style={{ display: 'flex', gap: 5 }}>
+                            <span>{value}</span>
+                            <HelpIcon style={{ cursor: 'pointer' }} size={14} onClick={() => {
+                                popoverInstance.current!.hide();
+                                showEnumReference(propertyInfo);
+                            }} />
+                        </div>
+                    );
+                } else {
+                    value = enumDescription ? enumDescription : <span style={{ color: 'red' }}>Ошибка ({value})</span>
+                }
+            } else {
+                const unit = propertyInfo.typeInfo?.unit;
+                value = `${value}${unit ? ' ' + unit : ''}`;
+            }
+            values.push({ propertiesChain: propertyInfo.propertiesChainValuePair.propertiesChain, value });
+        }
+
+        return (
+            <PropertyInfoTable propertyInfos={propertyInfos} values={values} />
+        );
+    }, [PropertyInfoTable, dataschema, isAdmin, showEnumReference]);
 
     useEffect(() => {
         return () => {
@@ -140,7 +180,7 @@ export const useMnemoschemaPopover = () => {
         };
     }, []);
 
-    const EmergencyPopoverTitle = () => {
+    const PopoverTitle = () => {
         return (
             <a className="popup-close-button" onClick={() => popoverInstance.current?.hide()}>
                 <span aria-hidden="true">×</span>
@@ -162,10 +202,11 @@ export const useMnemoschemaPopover = () => {
         if (popoverInstance.current) {
             popoverInstance.current.dispose();
         }
+        const propertyNames = dataStateAttr.split(';');
 
-        const propertyInfo = schemaTypeInfoPropertiesChain?.find(({ propertiesChainValuePair }) => (propertiesChainValuePair.propertiesChain === dataStateAttr));
+        const propertyInfos = schemaTypeInfoPropertiesChain?.filter(({ propertiesChainValuePair }) => propertyNames.includes(propertiesChainValuePair.propertiesChain));
 
-        if (!propertyInfo) {
+        if (!propertyInfos || propertyInfos.length === 0) {
             return;
         }
 
@@ -230,12 +271,12 @@ export const useMnemoschemaPopover = () => {
                 });
             },
             contentTemplate: () => {
-                popoverContentReactRoot.render(popoverContentRender(propertyInfo, target));
+                popoverContentReactRoot.render(popoverContentRender(propertyInfos, target));
                 return popoverContentContainer;
             },
             titleTemplate: () => {
                 popoverTitleReactRoot.render(
-                    <EmergencyPopoverTitle />
+                    <PopoverTitle />
                 )
                 return popoverTitleContainer;
             },
@@ -253,27 +294,29 @@ export const useMnemoschemaPopover = () => {
                 collision: 'flipfit'
             },
             onContentReady: () => {
-                if (!propertyInfo.typeInfo?.ui.chart) {
-                    return;
+                for (const propertyInfo of propertyInfos) {
+                    if (!propertyInfo.typeInfo?.ui.chart) {
+                        return;
+                    }
+                    queueMicrotask(() => {
+                        document.querySelector(`[data-state-graph="${propertyInfo.propertiesChainValuePair.propertiesChain}"]`)
+                            ?.addEventListener('click', () => {
+                                popoverInstance.current?.hide();
+                                popoverInstance.current?.dispose();
+                                popoverInstance.current = null;
+                                queueMicrotask(() => {
+                                    popoverContainer.remove();
+                                });
+                                if (!device) {
+                                    return;
+                                }
+                                graphService.show({
+                                    device: device,
+                                    schemaTypeInfos: [propertyInfo]
+                                });
+                            });
+                    });
                 }
-                queueMicrotask(() => {
-                    document.querySelector(`[data-state-graph="${propertyInfo.propertiesChainValuePair.propertiesChain}"]`)
-                        ?.addEventListener('click', () => {
-                            popoverInstance.current?.hide();
-                            popoverInstance.current?.dispose();
-                            popoverInstance.current = null;
-                            queueMicrotask(() => {
-                                popoverContainer.remove();
-                            });
-                            if (!device) {
-                                return;
-                            }
-                            graphService.show({
-                                device: device,
-                                schemaTypeInfos: [propertyInfo]
-                            });
-                        });
-                });
             }
         });
 

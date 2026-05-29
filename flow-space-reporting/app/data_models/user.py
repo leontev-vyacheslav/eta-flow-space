@@ -20,3 +20,5 @@ class User(Base, TimestampMixin):
     user_device_links: Mapped[list["UserDeviceLink"]] = relationship(
         back_populates="user"
     )
+
+

@@ -2,11 +2,11 @@ import { Item as TabPanelItem, TabPanel } from 'devextreme-react/tab-panel';
 import { useEffect, useMemo, useRef, useState, type ComponentType } from "react";
 import PageHeader from "../../components/page-header/page-header";
 import AppConstants from "../../constants/app-constants";
-import { AdditionalMenuIcon, CircuitIcon, DashboardIcon, GraphIcon, HelpIcon, ParamsIcon, RefreshIcon, WarningLogIcon } from "../../constants/app-icons";
+import { AdditionalMenuIcon, CircuitIcon, DashboardIcon, GraphIcon, HelpIcon, ParamsIcon, RefreshIcon, ReportIcon, WarningLogIcon } from "../../constants/app-icons";
 import type { MenuItemModel } from "../../models/menu-item-model";
 import { quickHelpReferenceService } from "../../services/quick-help-reference-service";
 import { IconTab } from '../../components/tab-utils/icon-tab';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { DashboardPageContextProvider, useDashboardPage } from './dashboard-page-context';
 import { getQuickGuid } from '../../utils/uuid';
 import { NoData } from '../../components/no-data-widget/no-data-widget';
@@ -14,9 +14,11 @@ import { emergencyLogService } from '../../services/emergency-log-service';
 import { graphService } from '../../services/graph-service';
 import { emergencyMuteManager } from '../../services/emergency-mute-manager';
 import { useAuth } from '../../contexts/auth';
+import { MenuItemWithSubMenu } from '../../components/menu/menu-item/menu-item';
 
 const DashboardPageInner = () => {
     const tabPanelRef = useRef<TabPanel>(null);
+    const navigate = useNavigate();
     const { isAdmin } = useAuth();
     const { setRefreshToken, schemaTypeInfoPropertiesChain, device } = useDashboardPage();
     const { flowCode } = useParams();
@@ -25,7 +27,7 @@ const DashboardPageInner = () => {
     const [tabIndex, setTabIndex] = useState<number>(0);
 
     const menuItems = useMemo(() => {
-        return [
+        const menuItems = [
             {
                 icon: () => <AdditionalMenuIcon size={20} color='black' />,
                 items: [
@@ -35,7 +37,8 @@ const DashboardPageInner = () => {
                         onClick: () => {
                             setRefreshToken(getQuickGuid());
                         }
-                    }, {
+                    },
+                    {
                         icon: () => <GraphIcon size={20} />,
                         text: 'Графики...',
                         onClick: () => {
@@ -55,6 +58,7 @@ const DashboardPageInner = () => {
                     }, {
                         icon: () => <HelpIcon size={20} />,
                         text: 'Справка...',
+
                         onClick: () => {
                             quickHelpReferenceService.show('common/dashboard');
                         }
@@ -62,13 +66,33 @@ const DashboardPageInner = () => {
                 ]
             }
         ] as MenuItemModel[];
-    }, [device, schemaTypeInfoPropertiesChain, setRefreshToken]);
+        if (device && device.reports && device.reports.length > 0) {
+            menuItems.find(() => true)!.items!
+                .splice(1, 0,
+                    {
+                        render: () => <MenuItemWithSubMenu icon={<ReportIcon size={20} />} text={'Отчеты...'} />,
+                        items: device.reports.map((report: any) => ({
+                            icon: () => <ReportIcon size={20} />,
+                            text: `${report.description}...`,
+                            onClick: () => {
+                                if (device) {
+                                   navigate(`/reports/${report.id}`);
+                                }
+                            }
+                        }))
+                    }
+                )
+        }
+
+        return menuItems;
+
+    }, [device, navigate, schemaTypeInfoPropertiesChain, setRefreshToken]);
 
     useEffect(() => {
         (async () => {
             const results = await Promise.allSettled([
-                import(`./flows/${flowCode}/control/control-tab-content.tsx`),
-                import(`./flows/${flowCode}/mnemoschema/mnemoschema-tab-content.tsx`),
+                import(`./components/control/control-form.tsx`),
+                import(`./components/mnemoschema/mnemoschema.tsx`),
             ]);
 
             const [controlModule, mnemoschemaModule] = results.map(result =>
@@ -100,7 +124,7 @@ const DashboardPageInner = () => {
             <PageHeader caption={() => {
                 return <div style={{ display: 'flex', flexDirection: 'column' }}>
                     <span>Приборная панель</span>
-                    <span style={{ fontSize: 12, fontWeight: 'normal', minHeight: 16, color: 'rgb(118, 118, 118)' }}>{device ? device.name + (isAdmin() ? ` [${device.id}]` : '') : ''}</span>
+                    <span style={{ fontSize: 12, fontWeight: 'normal', minHeight: 16, color: 'rgb(118, 118, 118)' }}>{device ? device.description + (isAdmin() ? ` [${device.id}]` : '') : ''}</span>
                 </div>
             }} menuItems={menuItems}>
                 <DashboardIcon size={AppConstants.headerIconSize} />

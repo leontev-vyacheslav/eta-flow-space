@@ -142,6 +142,7 @@ export function SideNavigationMenu(props: SideNavigationMenuProps) {
                         if (treeViewRef.current) {
                             setTimeout(() => {
                                 treeViewRef.current!.instance.selectItem(event.itemData!);
+                                localStorage.setItem('lastNavigationPath', event.itemData!.path);
                             }, 100)
                         }
                     }}
@@ -149,6 +150,7 @@ export function SideNavigationMenu(props: SideNavigationMenuProps) {
                         onMenuReady();
                     }}
                     width={'100%'}
+                    height={'calc(100vh - 75px)'}
                 />
             </div>
         </div>

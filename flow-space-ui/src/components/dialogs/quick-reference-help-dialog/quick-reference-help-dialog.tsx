@@ -9,6 +9,7 @@ import { useAppData } from '../../../contexts/app-data/app-data';
 import type { QuickHelpReferenceModel } from '../../../models/quick-help-reference-model';
 import { formatMessage } from 'devextreme/localization';
 import { useScreenSize } from '../../../utils/media-query';
+import routes from "../../../constants/app-api-routes";
 
 import './quick-reference-help-dialog.scss'
 
@@ -23,9 +24,13 @@ export const QuickReferenceHelpDialog = (props: QuickReferenceHelpDialogProps) =
 
     useEffect(() => {
         (async () => {
-            const quickHelpReference = await getQuickHelpReferenceAsync(props.referenceKey);
-            if (quickHelpReference) {
-                setQuickHelpReference(quickHelpReference);
+            // const quickHelpReference =  await getQuickHelpReferenceAsync(props.referenceKey);
+            const quickHelpContent = await fetch(`${routes.host}/static/quick-help/content/${props.referenceKey}.md`).then(res => res.ok ? res.text() : null);
+            if (quickHelpContent) {
+                setQuickHelpReference({
+                    content: quickHelpContent,
+                    key: btoa(props.referenceKey)
+                });
             }
         })();
     }, [getQuickHelpReferenceAsync, props.referenceKey]);

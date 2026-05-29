@@ -1,26 +1,40 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useAppData } from "../../contexts/app-data/app-data";
 import PageHeader from "../../components/page-header/page-header";
-import { AdditionalMenuIcon, RefreshIcon, ReportIcon } from "../../constants/app-icons";
+import { AdditionalMenuIcon, RefreshIcon, ReportIcon, SettingsIcon } from "../../constants/app-icons";
 import AppConstants from "../../constants/app-constants";
-import { NoData } from "../../components/no-data-widget/no-data-widget";
 import { useParams } from "react-router";
 import type { MenuItemModel } from "../../models/menu-item-model";
 import { getQuickGuid } from "../../utils/uuid";
-
-type ReportDataSourceRegistryItem = {
-    description: string;
-    getDataAsync: () => Promise<Blob | undefined>;
-}
+import { reportParametricService } from "../../services/report-parametric-service";
+import { NoData } from "../../components/no-data-widget/no-data-widget";
+import type { ReportModel } from "../../models/flows/report-model";
+import { useSharedArea } from "../../contexts/shared-area";
 
 export const ReportPage = () => {
-    const { reportCode } = useParams();
-    const [reportUrl, setReportUrl] = useState<string | null>(null);
-    const { getEmergencySummaryReportAsync } = useAppData();
+    const { reportId } = useParams<{ reportId: string }>();
+    const { getReportDefinitionAsync, getReportAsync } = useAppData();
+    const { showLoader, hideLoader } = useSharedArea();
+    const [reportBlobUrl, setReportBlobUrl] = useState<string | null>(null);
+    const [reportParameterValues, setReportParameterValues] = useState<any>();
     const [refreshToken, setRefreshToken] = useState<string>(getQuickGuid());
+    const [reportDefinition, setReportDefinition] = useState<ReportModel>();
 
     const menuItems = useMemo(() => {
         return [
+            {
+                icon: () => <SettingsIcon size={20} color="black" />,
+                onClick: () => {
+                    if (!reportDefinition) {
+                        return;
+                    }
+                    reportParametricService.show(reportDefinition, reportParameterValues, (modalResult) => {
+                        if (modalResult.modalResult === 'OK') {
+                            setReportParameterValues(modalResult.data);
+                        }
+                    });
+                }
+            },
             {
                 icon: () => <AdditionalMenuIcon size={20} color='black' />,
                 items: [
@@ -34,29 +48,53 @@ export const ReportPage = () => {
                 ]
             }
         ] as MenuItemModel[];
-    }, []);
+    }, [reportDefinition, reportParameterValues]);
 
-    const reportDataSourceRegistry: Record<string, ReportDataSourceRegistryItem> = {
-        'emergency-summary': { description: 'Сводный отчёт по нештатным ситуациям', getDataAsync: getEmergencySummaryReportAsync },
-    };
+    useEffect(() => {
+        (async () => {
+            if (!reportId || isNaN(Number(reportId))) {
+                return;
+            }
+            const reportDefinition = await getReportDefinitionAsync(Number(reportId));
 
-    const getDataSourceAsyncWrapper = useCallback(async () => {
-        if (!reportCode) {
-            return undefined;
-        }
-        return await reportDataSourceRegistry[reportCode]?.getDataAsync();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+            if (!reportDefinition) {
+                return;
+            }
+
+            let storedInitialParams = null;
+            const storedInitialParamsJson = localStorage.getItem(`reportParams_${reportDefinition.id}`);
+            if (storedInitialParamsJson) {
+                try {
+                    storedInitialParams = JSON.parse(storedInitialParamsJson);
+                } catch (e) {
+                    console.error('Error parsing report params from local storage', e);
+                }
+            }
+
+            setReportDefinition(reportDefinition);
+            setReportParameterValues(storedInitialParams || { ...reportDefinition.settings.initialParams });
+        })();
+    }, [getReportDefinitionAsync, reportId]);
 
     useEffect(() => {
         let url: string | null = null;
         (async () => {
-            const blob = await getDataSourceAsyncWrapper();
-            if (!blob) {
+            if (!reportDefinition || !reportParameterValues) {
                 return;
             }
-            url = URL.createObjectURL(blob);
-            setReportUrl(url);
+            try {
+                setTimeout(async () => {
+                    showLoader();
+                }, 200);
+                const blob = await getReportAsync(reportDefinition.url, reportParameterValues);
+                if (!blob) {
+                    return;
+                }
+                url = URL.createObjectURL(blob);
+                setReportBlobUrl(url);
+            } finally {
+                hideLoader();
+            }
         })();
 
         return () => {
@@ -64,27 +102,30 @@ export const ReportPage = () => {
                 URL.revokeObjectURL(url);
             }
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [refreshToken]);
+    }, [refreshToken, reportDefinition, reportParameterValues, getReportAsync, showLoader, hideLoader]);
 
     return (
         <>
             <PageHeader caption={() => {
                 return <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <span>Отчет</span>
-                    <span style={{ fontSize: 12, fontWeight: 'normal', minHeight: 16, color: 'rgb(118, 118, 118)' }}>{reportCode ? reportDataSourceRegistry[reportCode]?.description : ''}</span>
+                    <span>Отчёт</span>
+                    <span style={{ fontSize: 12, fontWeight: 'normal', minHeight: 16, color: 'rgb(118, 118, 118)' }}>
+                        {reportDefinition ? reportDefinition.description : ''}
+                    </span>
                 </div>
             }} menuItems={menuItems} >
                 <ReportIcon size={AppConstants.headerIconSize} />
             </PageHeader>
+
             <div style={{ height: '100%', width: '100%', padding: 5 }}>
-                {reportUrl ? <iframe src={reportUrl}
+                {reportBlobUrl ? <iframe src={reportBlobUrl}
                     style={{
                         width: '100%',
-                        height: 'calc(100% - 60px)',
+                        height: 'calc(100vh - 150px)',
                         border: 'none',
                     }}></iframe>
-                    : <NoData />}
+                    : <NoData />
+                }
             </div>
         </>
     );

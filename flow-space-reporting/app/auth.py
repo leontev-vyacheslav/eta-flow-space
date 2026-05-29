@@ -3,7 +3,6 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from jose import JWTError, jwt
 from app.config import settings
 
-
 bearer_scheme = HTTPBearer()
 
 
@@ -16,6 +15,9 @@ def verify_token(credentials: HTTPAuthorizationCredentials = Depends(bearer_sche
     except JWTError:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Токен авторизации неверный.",
+            detail={
+                "message": "Токен авторизации неверный или истек",
+                "severity": "error",
+            },
             headers={"WWW-Authenticate": "Bearer"},
         )

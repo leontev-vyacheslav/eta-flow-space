@@ -26,7 +26,9 @@ export const HomePage = () => {
             }
 
             const path = `/${flow.code}/device/${device.id}`;
-            navigate(path, { replace: true });
+            const lastNavigationPath = localStorage.getItem('lastNavigationPath');
+
+            navigate(lastNavigationPath ? lastNavigationPath : path, { replace: true });
         })();
     }, [getFlowListAsync, navigate, treeViewRef]);
 

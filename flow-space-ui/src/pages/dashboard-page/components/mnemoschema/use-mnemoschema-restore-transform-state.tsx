@@ -1,4 +1,5 @@
 import { useEffect, useCallback } from 'react';
+import { kebabToCamel } from '../../../../utils/string-utils';
 
 type TransformRef = {
     setTransform: (x: number, y: number, scale: number) => void;
@@ -11,24 +12,25 @@ export function useMnemoschemaRestoreTransformState(
     delay = 500
 ) {
     const restore = useCallback(() => {
-        const savedState = localStorage.getItem(
-            `mnemoschemaTransformedState_${flowCode}`
-        );
-
-        if (savedState && transformComponentRef?.current) {
-            try {
-                const { scale, positionX, positionY } = JSON.parse(savedState);
-                transformComponentRef.current.setTransform(
-                    positionX,
-                    positionY,
-                    scale
-                );
-            } catch (e) {
-                console.error('Failed to restore transform state', e);
+        if (flowCode) {
+            const savedState = localStorage.getItem(
+                `mnemoschemaTransformedState_${kebabToCamel(flowCode)}`
+            );
+            if (savedState && transformComponentRef?.current) {
+                try {
+                    const { scale, positionX, positionY } = JSON.parse(savedState);
+                    transformComponentRef.current.setTransform(
+                        positionX,
+                        positionY,
+                        scale
+                    );
+                } catch (e) {
+                    console.error('Failed to restore transform state', e);
+                }
             }
+            onInitComplete?.();
         }
 
-        onInitComplete?.();
     }, [flowCode, transformComponentRef, onInitComplete]);
 
     useEffect(() => {
@@ -36,13 +38,8 @@ export function useMnemoschemaRestoreTransformState(
             restore();
         }, delay);
 
-        const timer2 = setTimeout(() => {
-            restore();
-        }, delay * 2);
-
         return () => {
             clearTimeout(timer1);
-            clearTimeout(timer2);
         };
     }, [delay, restore]);
 }

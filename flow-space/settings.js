@@ -21,7 +21,13 @@
  **/
 process.env.NODE_ENV = 'production';
 
-const { authorize } = require('./src/middleware/authorize');
+const { createClient } = require('redis');
+const redisClient  = createClient({
+    url: 'redis://eta-flow-space-store:6379'
+});
+
+redisClient.on('error', (err) => console.error('Redis error:', err));
+redisClient.connect().then(() => console.log('Redis connected'));
 
 module.exports = {
 
@@ -220,7 +226,6 @@ module.exports = {
      * It can be a single function or an array of middleware functions.
      */
     httpNodeMiddleware: [
-        authorize
     ],
 
     /** When httpAdminRoot is used to move the UI to a different root path, the
@@ -536,11 +541,9 @@ module.exports = {
      *    global.get("os")
      */
     functionGlobalContext: {
-        sequelize: require('sequelize'),
-        orm: require('./src/orm/models'),
-
-        routes: require('./src/routes'),
-        services: require('./src/services'),
+        redisClient: redisClient,
+        helpers: require('./src/helpers'),
+        crc: require('crc')
     },
 
     /** The maximum number of messages nodes will buffer internally as part of their

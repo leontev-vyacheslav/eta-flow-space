@@ -28,13 +28,15 @@ function withNavigationWatcher(Component: ElementType, path: string) {
 
         const location = useLocation();
         const { treeViewRef } = useSharedArea();
-
         useEffect(() => {
             // treeViewRef.current?.instance.expandAll();
-            const navigationItem = document.querySelector(`li[data-item-id="${location.pathname}"]`);
-            if (navigationItem) {
-                treeViewRef.current?.instance.selectItem(navigationItem);
-            }
+
+            setTimeout(() => {
+                const navigationItem = document.querySelector(`li[data-item-id="${location.pathname}"]`);
+                if (navigationItem) {
+                    treeViewRef.current?.instance.selectItem(navigationItem);
+                }
+            }, 10);
         }, [location, treeViewRef]);
 
         useEffect(

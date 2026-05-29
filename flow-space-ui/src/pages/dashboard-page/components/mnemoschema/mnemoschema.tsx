@@ -9,10 +9,13 @@ import routes from '../../../../constants/app-api-routes';
 import { useMnemoschemaInjectCss } from "./use-mnemoschema-inject-css";
 import { useMnemoschemaRestoreTransformState } from "./use-mnemoschema-restore-transform-state";
 import { NoData } from "../../../../components/no-data-widget/no-data-widget";
+import { kebabToCamel } from "../../../../utils/string-utils";
+import { useAppSettings } from "../../../../contexts/app-settings";
 
 
 export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfterMount }: { onBeforeMount?: (mnemoschemaElement: HTMLElement) => void, onAfterMount?: (mnemoschemaElement: HTMLElement) => void }) => {
     const { flowCode } = useParams();
+    const { appSettingsData } = useAppSettings();
     const { mnemoschema, dataschema, schemaTypeInfoPropertiesChain, deviceState } = useDashboardPage();
     const containerRef = useRef<HTMLDivElement>(null);
     const transformComponentRef = useRef<ReactZoomPanPinchRef | null>(null);
@@ -20,7 +23,6 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
     const mnemoschemaClickHandler = useMnemoschemaPopover();
     const stateSetup = useMnemoschemaStateSetup();
     const injectCss = useMnemoschemaInjectCss();
-
 
     const longPressBinder = useLongPress(
         () => {
@@ -36,42 +38,44 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
             return;
         }
 
+        const abortController = new AbortController();
+        const { signal } = abortController;
         let mnemoschemaElement: HTMLElement | null = null;
         let disposed = false;
 
         const run = async () => {
             let plugInModule = null;
             try {
-                plugInModule = await import(/* @vite-ignore */`${routes.host}/static/flows/${flowCode}/${flowCode}-mnemo-schema.js?v=${Date.now()}`);
+                if (flowCode) {
+                    const manifest = appSettingsData.staticFilesManifest[flowCode];
+                    plugInModule = await import(/* @vite-ignore */`${routes.host}/static/flows/${flowCode}/${flowCode}-mnemo-schema.js?v=${manifest['mnemo-schema'] ?? Date.now()}`);
+                }
             } catch (error) {
                 console.error(error);
             }
-
             if (disposed) return;
 
             const parser = new DOMParser();
             const mnemoschemaDoc = parser.parseFromString(mnemoschema, 'image/svg+xml');
 
             try {
-                const { onBeforeMount: onBeforeMountPluggable, onAfterMount: onAfterMountPluggable } = plugInModule?.create?.() ?? {};
-                containerRef.current!.innerHTML = '';
+                const { onBeforeMount: onBeforeMountPluggable, onAfterMount: onAfterMountPluggable } =
+                    plugInModule?.create?.({ signal }) ?? {};
 
+                containerRef.current!.innerHTML = '';
                 stateSetup(mnemoschemaDoc.documentElement);
                 onBeforeMount?.(mnemoschemaDoc.documentElement);
                 onBeforeMountPluggable?.(mnemoschemaDoc.documentElement, deviceState);
 
-                mnemoschemaElement = containerRef.current!.appendChild(
-                    mnemoschemaDoc.documentElement
-                );
+                mnemoschemaElement = containerRef.current!.appendChild(mnemoschemaDoc.documentElement);
 
                 await injectCss(mnemoschemaElement);
+                if (disposed) return; // ← guard after async
 
                 onAfterMount?.(mnemoschemaElement);
                 onAfterMountPluggable?.(mnemoschemaElement, deviceState);
-                mnemoschemaElement.addEventListener(
-                    'click',
-                    mnemoschemaClickHandler
-                );
+
+                mnemoschemaElement.addEventListener('click', mnemoschemaClickHandler, { signal });
             } catch (error) {
                 console.error(error);
             }
@@ -81,23 +85,22 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
 
         return () => {
             disposed = true;
-            mnemoschemaElement?.removeEventListener(
-                'click',
-                mnemoschemaClickHandler
-            );
+            abortController.abort();
         };
-    }, [flowCode, deviceState, mnemoschema, onBeforeMount, onAfterMount, stateSetup, schemaTypeInfoPropertiesChain, dataschema, mnemoschemaClickHandler, injectCss]);
+    }, [flowCode, deviceState, mnemoschema, onBeforeMount, onAfterMount, stateSetup, schemaTypeInfoPropertiesChain, dataschema, mnemoschemaClickHandler, injectCss, appSettingsData.staticFilesManifest]);
 
     useMnemoschemaRestoreTransformState(flowCode, transformComponentRef, () => setIsInitComplete(true));
 
     return mnemoschema && schemaTypeInfoPropertiesChain && deviceState?.state && Object.keys(deviceState.state).length !== 0
         ?
         <TransformWrapper ref={transformComponentRef}
+            smooth={true}
+            wheel={{ step: 0.0025, }}
             doubleClick={{ step: 1 }}
             minScale={0.5}
-            onTransformed={(_, transformedState) => {
-                if (isInitComplete) {
-                    localStorage.setItem(`mnemoschemaTransformedState_${flowCode}`, JSON.stringify(transformedState));
+            onTransform={(_, transformedState) => {
+                if (isInitComplete && flowCode) {
+                    localStorage.setItem(`mnemoschemaTransformedState_${kebabToCamel(flowCode)}`, JSON.stringify(transformedState));
                 }
             }}
         >
@@ -107,3 +110,5 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
         </TransformWrapper>
         : <NoData />
 }
+
+export default Mnemoschema;

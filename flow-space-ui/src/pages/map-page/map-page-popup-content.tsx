@@ -7,10 +7,11 @@ import { graphService } from "../../services/graph-service";
 import type { MapPagePopupContentProps } from "../../models/map-page-popup-content-props";
 import { emergencyMuteManager } from "../../services/emergency-mute-manager";
 import { useAuth } from "../../contexts/auth";
+import AppConstants from "../../constants/app-constants";
 
 export const MapPagePopupContent = ({ device, deviceState, dataschema, emergencyState }: MapPagePopupContentProps) => {
     const { isXSmall } = useScreenSize();
-    const {isAdmin } = useAuth();
+    const { isAdmin } = useAuth();
 
     const schemaTypeInfoPropertiesChain = useMemo(() => {
         if (deviceState && dataschema) {
@@ -24,7 +25,7 @@ export const MapPagePopupContent = ({ device, deviceState, dataschema, emergency
     }, [dataschema, deviceState]);
 
     const renderStateValueByPropertiesChain = useCallback((typeInfo: SchemaTypeInfoModel, propertiesChain: PropertiesChainValuePairModel) => {
-        const value = propertiesChain.value;
+        let value = propertiesChain.value;
 
         if (typeInfo.typeName === 'boolean') {
             if (value === true) {
@@ -53,7 +54,20 @@ export const MapPagePopupContent = ({ device, deviceState, dataschema, emergency
             }
         }
 
+
         if (['integer', 'float', 'number'].includes(typeInfo.typeName)) {
+            if (typeInfo?.formatting && typeInfo.formatting.options) {
+                value = new Intl.NumberFormat(
+                    typeInfo.formatting.locale ?? AppConstants.formatting.numberFormat.locale,
+                    typeInfo.formatting.options
+                ).format(value);
+            } else {
+                value = new Intl.NumberFormat(
+                    AppConstants.formatting.numberFormat.locale,
+                    AppConstants.formatting.numberFormat.options as any
+                ).format(value);
+            }
+
             if (typeInfo?.unit) {
                 return `${value} ${typeInfo?.unit}`;
             }
@@ -141,7 +155,7 @@ export const MapPagePopupContent = ({ device, deviceState, dataschema, emergency
                 <div className="map-pop-content-location-wrapper" style={{}}>
                     <LocationIcon size={22} />
                     <div className="map-pop-content-location">
-                        <div style={{ fontWeight: 'bold' }}>{ device.description }{isAdmin() && ` [${device.id}]`}</div>
+                        <div style={{ fontWeight: 'bold' }}>{device.description}{isAdmin() && ` [${device.id}]`}</div>
                         <div>{device && device.objectLocation ? device.objectLocation.address : 'Нет данных'}</div>
                     </div>
 

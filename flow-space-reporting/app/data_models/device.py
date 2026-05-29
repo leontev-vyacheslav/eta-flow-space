@@ -13,6 +13,7 @@ if TYPE_CHECKING:
     from app.data_models.device_state import DeviceState
     from app.data_models.emergency_state import EmergencyState
     from app.data_models.emergency import Emergency
+    from app.data_models.report import Report
 
 class Device(Base, TimestampMixin):
     __tablename__ = "device"
@@ -45,3 +46,5 @@ class Device(Base, TimestampMixin):
         back_populates="device"
     )
     emergencies: Mapped[Optional["Emergency"]] = relationship(back_populates="device")
+
+    reports: Mapped[list["Report"]] = relationship(back_populates="device")

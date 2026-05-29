@@ -1,7 +1,8 @@
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 from fastapi.security import HTTPBearer
-from app.api.router import router
+from app.modules.router import router as modules_router
+from app.api.router import router as api_router
 from fastapi.openapi.docs import get_swagger_ui_html
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
@@ -23,7 +24,8 @@ app.add_middleware(
 
 bearer_scheme = HTTPBearer()
 
-app.include_router(router, prefix="/api")
+app.include_router(modules_router, prefix="/api")
+app.include_router(api_router, prefix="/api")
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 

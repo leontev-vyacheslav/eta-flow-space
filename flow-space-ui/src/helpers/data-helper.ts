@@ -9,6 +9,7 @@ export type SchemaTypeInfoModel = {
     unit?: string;
     dimension?: number;
     label?: string;
+    formatting?: any;
     ui?: any;
     isEnum?: boolean;
 };
@@ -52,7 +53,7 @@ export const getSchemaTypeInfo = (propertiesChain: string, subschema: any, schem
     if (prop) {
         schema = schema || subschema;
         if (['number', 'integer', 'string', 'boolean'].includes(prop.type)) {
-            return { typeName: prop.type, unit: prop.unit, dimension: prop.dimension, label: prop.label, ui: prop.ui };
+            return { typeName: prop.type, unit: prop.unit, formatting: prop.formatting, dimension: prop.dimension, label: prop.label, ui: prop.ui };
         } else if (prop.type === 'array') {
             const typeRef = prop.items.$ref;
             if (typeRef) {
@@ -65,7 +66,8 @@ export const getSchemaTypeInfo = (propertiesChain: string, subschema: any, schem
                 return {
                     typeName: prop.items.type,
                     unit: prop.items.unit,
-                    dimension: prop.items.dimension
+                    dimension: prop.items.dimension,
+                    formatting: prop.items.formatting,
                 };
             }
         } else if (!prop.type && prop.$ref) {
@@ -80,6 +82,7 @@ export const getSchemaTypeInfo = (propertiesChain: string, subschema: any, schem
                     typeName: typeName,
                     unit: prop.unit,
                     dimension: prop.dimension,
+                    formatting: prop.formatting,
                     label: prop.label,
                     ui: prop.ui,
                     isEnum: isEnum
