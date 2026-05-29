@@ -30,22 +30,6 @@ function AppSettingsProvider(props: AppBaseProviderProps) {
         })();
     }, [getFlowListAsync, getStaticFilesManifest, user]);
 
-    useEffect(() => {
-        setAppSettingsData(previous => {
-            return { ...previous, workDate: new Date() };
-        });
-
-        const timer = setInterval(async () => {
-            setAppSettingsData(previous => {
-                return { ...previous, workDate: new Date() };
-            });
-        }, 60000);
-
-        return () => {
-            clearInterval(timer);
-        };
-    }, []);
-
     return <AppSettingsContext.Provider value={{
         appSettingsData,
         setAppSettingsData,
