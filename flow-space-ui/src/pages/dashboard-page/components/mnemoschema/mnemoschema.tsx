@@ -10,10 +10,12 @@ import { useMnemoschemaInjectCss } from "./use-mnemoschema-inject-css";
 import { useMnemoschemaRestoreTransformState } from "./use-mnemoschema-restore-transform-state";
 import { NoData } from "../../../../components/no-data-widget/no-data-widget";
 import { kebabToCamel } from "../../../../utils/string-utils";
+import { useAppSettings } from "../../../../contexts/app-settings";
 
 
 export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfterMount }: { onBeforeMount?: (mnemoschemaElement: HTMLElement) => void, onAfterMount?: (mnemoschemaElement: HTMLElement) => void }) => {
     const { flowCode } = useParams();
+    const { appSettingsData } = useAppSettings();
     const { mnemoschema, dataschema, schemaTypeInfoPropertiesChain, deviceState } = useDashboardPage();
     const containerRef = useRef<HTMLDivElement>(null);
     const transformComponentRef = useRef<ReactZoomPanPinchRef | null>(null);
@@ -44,7 +46,10 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
         const run = async () => {
             let plugInModule = null;
             try {
-                plugInModule = await import(/* @vite-ignore */`${routes.host}/static/flows/${flowCode}/${flowCode}-mnemo-schema.js?v=${Date.now()}`);
+                if (flowCode) {
+                    const manifest = appSettingsData.staticFilesManifest[flowCode];
+                    plugInModule = await import(/* @vite-ignore */`${routes.host}/static/flows/${flowCode}/${flowCode}-mnemo-schema.js?v=${manifest['mnemo-schema'] ?? Date.now()}`);
+                }
             } catch (error) {
                 console.error(error);
             }
@@ -82,7 +87,7 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
             disposed = true;
             abortController.abort();
         };
-    }, [flowCode, deviceState, mnemoschema, onBeforeMount, onAfterMount, stateSetup, schemaTypeInfoPropertiesChain, dataschema, mnemoschemaClickHandler, injectCss]);
+    }, [flowCode, deviceState, mnemoschema, onBeforeMount, onAfterMount, stateSetup, schemaTypeInfoPropertiesChain, dataschema, mnemoschemaClickHandler, injectCss, appSettingsData.staticFilesManifest]);
 
     useMnemoschemaRestoreTransformState(flowCode, transformComponentRef, () => setIsInitComplete(true));
 

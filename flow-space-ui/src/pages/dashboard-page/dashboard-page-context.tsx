@@ -71,14 +71,15 @@ function DashboardPageContextProvider(props: any) {
     useEffect(() => {
         (async () => {
 
-            if (deviceId && appSettingsData.staticFilesManifest) {
+            if (deviceId && appSettingsData.staticFilesManifest && flowCode && appSettingsData.staticFilesManifest[flowCode]) {
                 const prefetchedDevice = await getDeviceAsync(parseInt(deviceId));
+                const manifest = appSettingsData.staticFilesManifest[flowCode];
 
                 const results = await Promise.allSettled([
                     Promise.resolve(prefetchedDevice),
                     getDeviceStateAsync(parseInt(deviceId)),
-                    fetch(`${routes.host}/static/flows/${flowCode}/${flowCode}-mnemo-schema.svg?v=${appSettingsData.staticFilesManifest[flowCode!]['mnemo-schema'] ?? Date.now()}`).then(res => res.ok ? res.text() : null),
-                    fetch(`${routes.host}/static/flows/${flowCode}/${flowCode}-data-schema.json?v=${appSettingsData.staticFilesManifest[flowCode!]['data-schema'] ?? Date.now()}`).then(res => res.ok ? res.json() : null),
+                    fetch(`${routes.host}/static/flows/${flowCode}/${flowCode}-mnemo-schema.svg?v=${manifest['mnemo-schema'] ?? Date.now()}`).then(res => res.ok ? res.text() : null),
+                    fetch(`${routes.host}/static/flows/${flowCode}/${flowCode}-data-schema.json?v=${manifest['data-schema'] ?? Date.now()}`).then(res => res.ok ? res.json() : null),
                 ])
                 const [device, deviceState, mnemoschema, dataschema] = results.map(r => {
                     return r.status === 'fulfilled' ? r.value : null
