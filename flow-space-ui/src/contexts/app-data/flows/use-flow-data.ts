@@ -56,6 +56,12 @@ export type AppDataContextFlowEndpointsModel = {
 };
 
 export const useFlowData = () => {
+
+    const getStaticFilesManifest = async () => {
+        const res = await fetch(`${routes.host}/static/manifest.json?v=${Date.now()}`);
+        return res.ok ? res.json() : {};
+    };
+
   const authHttpRequest = useAuthHttpRequest();
 
   const getFlowListAsync = useCallback<GetFlowListAsyncFunc>(async () => {
