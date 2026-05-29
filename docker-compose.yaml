@@ -25,6 +25,7 @@ services:
     container_name: eta-flow-space-database
     ports:
       - "35432:5432"
+    command: ["postgres", "-c", "shared_preload_libraries=pg_stat_statements"]
     environment:
       - POSTGRES_DB=eta_flow_space_database
     env_file:
@@ -103,7 +104,7 @@ services:
       - "3000:80"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./flow-space-statics:/var/www/static:ro 
+      - ./flow-space-statics:/var/www/static:ro
     depends_on:
       - eta-flow-space
       - eta-flow-space-ui
