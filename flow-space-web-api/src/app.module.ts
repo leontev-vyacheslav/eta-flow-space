@@ -1,6 +1,5 @@
 import { Module, MiddlewareConsumer } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { ServeStaticModule } from '@nestjs/serve-static';
+import { ConfigModule } from '@nestjs/config';
 import { configuration } from './config/configuration';
 import { AppController } from './app.controller';
 import { DatabaseModule } from './database/database.module';
@@ -22,16 +21,6 @@ import { LoggerMiddleware } from './common/middleware/logger.middleware';
             envFilePath: ['.env.local', '.env'],
             isGlobal: true,
             load: [configuration],
-        }),
-        ServeStaticModule.forRootAsync({
-            imports: [ConfigModule],
-            useFactory: (configService: ConfigService) => [
-                {
-                    rootPath: configService.get<string>('STATIC_PATH'),
-                    serveRoot: '/static',
-                },
-            ],
-            inject: [ConfigService],
         }),
         ScheduleModule.forRoot(),
         EmergencyStateDispatcherModule,

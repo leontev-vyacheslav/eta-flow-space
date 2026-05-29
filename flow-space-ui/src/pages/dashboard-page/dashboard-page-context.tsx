@@ -71,14 +71,14 @@ function DashboardPageContextProvider(props: any) {
     useEffect(() => {
         (async () => {
 
-            if (deviceId) {
+            if (deviceId && appSettingsData.staticFilesManifest) {
                 const prefetchedDevice = await getDeviceAsync(parseInt(deviceId));
 
                 const results = await Promise.allSettled([
                     Promise.resolve(prefetchedDevice),
                     getDeviceStateAsync(parseInt(deviceId)),
-                    fetch(`${routes.host}/static/flows/${flowCode}/${flowCode}-mnemo-schema.svg?v=${appSettingsData.staticFilesManifest['mnemo-schema'] ?? Date.now()}`).then(res => res.ok ? res.text() : null),
-                    fetch(`${routes.host}/static/flows/${flowCode}/${flowCode}-data-schema.json?v=${appSettingsData.staticFilesManifest['data-schema'] ?? Date.now()}`).then(res => res.ok ? res.json() : null),
+                    fetch(`${routes.host}/static/flows/${flowCode}/${flowCode}-mnemo-schema.svg?v=${appSettingsData.staticFilesManifest[flowCode!]['mnemo-schema'] ?? Date.now()}`).then(res => res.ok ? res.text() : null),
+                    fetch(`${routes.host}/static/flows/${flowCode}/${flowCode}-data-schema.json?v=${appSettingsData.staticFilesManifest[flowCode!]['data-schema'] ?? Date.now()}`).then(res => res.ok ? res.json() : null),
                 ])
                 const [device, deviceState, mnemoschema, dataschema] = results.map(r => {
                     return r.status === 'fulfilled' ? r.value : null
@@ -92,7 +92,7 @@ function DashboardPageContextProvider(props: any) {
                 setDataschema(dataschema);
             }
         })();
-    }, [deviceId, flowCode, getDeviceAsync, getDeviceStateAsync, applyDimensionsToState, refreshToken]);
+    }, [deviceId, flowCode, getDeviceAsync, getDeviceStateAsync, applyDimensionsToState, refreshToken, appSettingsData.staticFilesManifest]);
 
     useEffect(() => {
         if (!dataschema) {
