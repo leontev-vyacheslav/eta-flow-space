@@ -4,7 +4,7 @@ import type { AppBaseProviderProps } from '../models/app-base-provider-props';
 import { createContext, useContext, useState, useEffect, type ElementType } from 'react';
 import { useLocation } from 'react-router';
 import { useSharedArea } from './shared-area';
-// import { useScreenSize } from '../utils/media-query';
+import { useAppSettings } from './app-settings';
 
 const NavigationContext = createContext<NavigationContextModel>({} as NavigationContextModel);
 const useNavigation = () => useContext(NavigationContext);
@@ -24,20 +24,46 @@ function NavigationProvider(props: AppBaseProviderProps) {
 function withNavigationWatcher(Component: ElementType, path: string) {
     const WrappedComponent = function (props: Record<string, unknown>) {
         const { setNavigationData } = useNavigation();
-        // const { isSmall, isXSmall, isLarge } = useScreenSize();
-
         const location = useLocation();
         const { treeViewRef } = useSharedArea();
-        useEffect(() => {
-            // treeViewRef.current?.instance.expandAll();
+        const { flows } = useAppSettings();
 
-            setTimeout(() => {
-                const navigationItem = document.querySelector(`li[data-item-id="${location.pathname}"]`);
-                if (navigationItem) {
-                    treeViewRef.current?.instance.selectItem(navigationItem);
+        useEffect(() => {
+            let locationPath = location.pathname;
+
+            if (locationPath === '/') {
+                locationPath = localStorage.getItem('lastNavigationPath') || locationPath;
+            }
+
+            if (locationPath === '/') {
+                if (flows) {
+
+                    const flow = flows.find(() => true)
+                    if (flow) {
+
+                        const device = flow.devices.find(() => true);
+                        if (device) {
+                            locationPath = `/${flow.code}/device/${device.id}`;
+                        }
+                    }
                 }
-            }, 10);
-        }, [location, treeViewRef]);
+            }
+
+            let counter = 0;
+            const interval = setInterval(() => {
+                const navigationItem = document.querySelector(`li[data-item-id="${locationPath}"]`);
+                if (navigationItem && treeViewRef && treeViewRef.current) {
+                    const isSelected = treeViewRef.current?.instance.selectItem(navigationItem);
+                    if (isSelected || counter > 10) {
+                        clearInterval(interval);
+                    }
+                }
+                counter++;
+            }, 100);
+
+            return () => clearInterval(interval);
+
+        }, [flows, location, treeViewRef]);
 
         useEffect(
             () => {
