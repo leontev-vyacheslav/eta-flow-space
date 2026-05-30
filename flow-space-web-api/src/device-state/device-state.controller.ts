@@ -1,10 +1,6 @@
 import { Controller, Get, UseGuards, Param, ParseIntPipe, Query } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { DeviceStateDataModel } from '../database/models';
 import { ParseDatePipe } from '../common/pipes/parse-date.pipe';
-import { InjectModel } from '@nestjs/sequelize';
-import { Op, ProjectionAlias, json } from 'sequelize';
-import { Literal } from 'sequelize/lib/utils';
 import { DeviceOwnershipGuard } from '../common/guards/device-ownership.guard';
 import { DeviceStateResponseModel } from '../models/device-state-response.model';
 import { DeviceStateService } from './device-state.service';
@@ -12,12 +8,7 @@ import { DeviceStateService } from './device-state.service';
 @Controller('api/device-states')
 @UseGuards(JwtAuthGuard)
 export class DeviceStateController {
-    constructor(
-        @InjectModel(DeviceStateDataModel)
-        private readonly deviceStateModel: typeof DeviceStateDataModel,
-
-        private readonly deviceStateService: DeviceStateService,
-    ) {}
+    constructor(private readonly deviceStateService: DeviceStateService) {}
 
     @Get(':deviceId/dates')
     @UseGuards(DeviceOwnershipGuard)
@@ -27,19 +18,7 @@ export class DeviceStateController {
         @Query('endDate', ParseDatePipe) endDate: Date,
         @Query('fields') fields: string,
     ) {
-        const deviceStateFields: ProjectionAlias[] = fields ? fields.split(';').map((f): ProjectionAlias => [json(`state.${f}`) as unknown as Literal, f]) : [];
-
-        const deviceStates = await DeviceStateDataModel.findAll({
-            attributes: ['id', 'deviceId', ...deviceStateFields, 'createdAt'],
-            where: {
-                deviceId: deviceId,
-                createdAt: {
-                    [Op.between]: [beginDate, endDate],
-                },
-            },
-        });
-
-        return { values: deviceStates };
+        return await this.deviceStateService.getDeviceStatesByDates(deviceId, beginDate, endDate, fields);
     }
 
     @Get(':deviceId')

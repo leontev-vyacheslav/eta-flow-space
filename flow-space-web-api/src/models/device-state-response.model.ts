@@ -1,3 +1,5 @@
+import { DeviceStateDataModel } from '../database/models';
+
 export interface DeviceStateResponseModel {
     values: {
         id: number;
@@ -6,4 +8,8 @@ export interface DeviceStateResponseModel {
         createdAt: Date;
         updatedAt: Date;
     };
+}
+
+export interface DeviceStatesResponseModel {
+    values: DeviceStateDataModel[];
 }

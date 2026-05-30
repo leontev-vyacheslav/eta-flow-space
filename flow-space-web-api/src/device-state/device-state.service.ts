@@ -1,9 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { Op, literal } from 'sequelize';
+import { Op, literal, ProjectionAlias, json } from 'sequelize';
+import { Literal } from 'sequelize/lib/utils';
 import { SharedStoreService } from '../common/services/shared-store/shared-store.service';
 import { DeviceStateDataModel } from '../database/models';
-import { DeviceStateResponseModel } from '../models/device-state-response.model';
+import { DeviceStateResponseModel, DeviceStatesResponseModel } from '../models/device-state-response.model';
 
 @Injectable()
 export class DeviceStateService {
@@ -12,6 +13,22 @@ export class DeviceStateService {
         private readonly deviceStateModel: typeof DeviceStateDataModel,
         private readonly sharedStoreService: SharedStoreService,
     ) {}
+
+    async getDeviceStatesByDates(deviceId: number, beginDate: Date, endDate: Date, fields: string): Promise<DeviceStatesResponseModel> {
+        const deviceStateFields: ProjectionAlias[] = fields ? fields.split(';').map((f): ProjectionAlias => [json(`state.${f}`) as unknown as Literal, f]) : [];
+
+        const deviceStates = await this.deviceStateModel.findAll({
+            attributes: ['id', 'deviceId', ...deviceStateFields, 'createdAt'],
+            where: {
+                deviceId: deviceId,
+                createdAt: {
+                    [Op.between]: [beginDate, endDate],
+                },
+            },
+        });
+
+        return { values: deviceStates };
+    }
 
     async getDeviceState(deviceId: number): Promise<DeviceStateResponseModel> {
         const redisState = await this.sharedStoreService.getDeviceState<Record<string, unknown>>(deviceId);
