@@ -4,11 +4,11 @@ import { Cron, CronExpression } from '@nestjs/schedule';
 import { InjectConnection, InjectModel } from '@nestjs/sequelize';
 import { DeviceDataModel, DeviceStateDataModel } from '../../../database/models';
 import { SharedStoreService } from '../shared-store/shared-store.service';
-import { differenceInMinutes } from 'date-fns';
-import { Sequelize } from 'sequelize';
+import { Sequelize, Op } from 'sequelize';
 
 @Injectable()
 export class DeviceStateDispatcherService {
+    private isRunning = false;
     private readonly logger = new Logger(DeviceStateDispatcherService.name);
 
     constructor(
@@ -18,47 +18,59 @@ export class DeviceStateDispatcherService {
         private readonly sequelize: Sequelize,
 
         @InjectModel(DeviceDataModel)
-        private readonly deviceDataModel: DeviceDataModel,
+        private readonly deviceDataModel: typeof DeviceDataModel,
         @InjectModel(DeviceStateDataModel)
-        private readonly deviceStateDataModel: DeviceStateDataModel,
+        private readonly deviceStateDataModel: typeof DeviceStateDataModel,
     ) {}
 
     @Cron(CronExpression.EVERY_MINUTE)
     async storeDeviceState() {
-        const devices = await DeviceDataModel.findAll({
-            attributes: ['id', 'updateStateInterval', 'lastStateUpdate'],
-        });
+        if (this.isRunning) {
+            return;
+        }
+        this.isRunning = true;
+        try {
+            const devices = await this.deviceDataModel.findAll({
+                attributes: ['id', 'updateStateInterval', 'lastStateUpdate'],
+                where: {
+                    lastStateUpdate: {
+                        [Op.or]: [
+                            {
+                                [Op.eq]: null,
+                            },
+                            {
+                                [Op.lt]: Sequelize.literal(`NOW() - "updateStateInterval" * INTERVAL '1 minute'`),
+                            },
+                        ],
+                    },
+                },
+            });
 
-        for (const device of devices) {
             const now = new Date();
-            const deviceState = await this.sharedStoreService.getDeviceState<Record<string, unknown> & { timestamp: Date }>(device.id);
+            let updated = 0,
+                failed = 0;
+            for (const device of devices) {
+                const deviceState = await this.sharedStoreService.getDeviceState<Record<string, unknown> & { timestamp: unknown }>(device.id);
 
-            if (!deviceState || Object.keys(deviceState).length === 0 || !deviceState.timestamp) {
-                continue;
-            }
+                if (!deviceState || Object.keys(deviceState).length === 0 || !deviceState.timestamp) {
+                    continue;
+                }
 
-            // if (differenceInMinutes(now, deviceState.timestamp) > 1) {
-            //     Object.keys(deviceState).forEach((key) => {
-            //         deviceState[key] = undefined;
-            //     });
-
-            //     // global.set(`deviceState${device.id}`, deviceState);
-            //     await this.sharedStoreService.setDeviceState(device.id, deviceState, 60);
-            //     continue;
-            // }
-
-            if (!device.lastStateUpdate || differenceInMinutes(now, device.lastStateUpdate) >= device.updateStateInterval) {
                 try {
                     await this.sequelize.transaction(async (t) => {
-                        await DeviceStateDataModel.create({ deviceId: device.id, state: deviceState }, { transaction: t });
-                        await DeviceDataModel.update({ lastStateUpdate: now }, { where: { id: device.id }, transaction: t });
+                        await this.deviceStateDataModel.create({ deviceId: device.id, state: deviceState }, { transaction: t });
+                        await this.deviceDataModel.update({ lastStateUpdate: now }, { where: { id: device.id }, transaction: t });
                     });
+                    updated++;
                 } catch (error) {
+                    failed++;
                     this.logger.error(`The device state update transaction failed due to the error: ${error}`);
                 }
             }
-        }
 
-        this.logger.log(`Device state  dispatcher job has been executed`);
+            this.logger.log(`Device state dispatcher completed: ${updated} updated, ${failed} failed`);
+        } finally {
+            this.isRunning = false;
+        }
     }
 }
