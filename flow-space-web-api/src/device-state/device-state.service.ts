@@ -4,7 +4,7 @@ import { Op, literal, ProjectionAlias, json } from 'sequelize';
 import { Literal } from 'sequelize/lib/utils';
 import { SharedStoreService } from '../common/services/shared-store/shared-store.service';
 import { DeviceStateDataModel } from '../database/models';
-import { DeviceStateResponseModel, DeviceStatesResponseModel } from '../models/device-state-response.model';
+import { DeviceStateResponseModel } from '../models/device-state-response.model';
 
 @Injectable()
 export class DeviceStateService {
@@ -14,7 +14,7 @@ export class DeviceStateService {
         private readonly sharedStoreService: SharedStoreService,
     ) {}
 
-    async getDeviceStatesByDates(deviceId: number, beginDate: Date, endDate: Date, fields: string): Promise<DeviceStatesResponseModel> {
+    async getDeviceStatesByDates(deviceId: number, beginDate: Date, endDate: Date, fields: string): Promise<DeviceStateDataModel[]> {
         const deviceStateFields: ProjectionAlias[] = fields ? fields.split(';').map((f): ProjectionAlias => [json(`state.${f}`) as unknown as Literal, f]) : [];
 
         const deviceStates = await this.deviceStateModel.findAll({
@@ -27,7 +27,7 @@ export class DeviceStateService {
             },
         });
 
-        return { values: deviceStates };
+        return deviceStates;
     }
 
     async getDeviceState(deviceId: number): Promise<DeviceStateResponseModel> {
@@ -35,13 +35,11 @@ export class DeviceStateService {
 
         if (this.isValidState(redisState)) {
             return {
-                values: {
-                    id: 0,
-                    deviceId,
-                    state: { isConnected: true, ...redisState },
-                    createdAt: new Date(),
-                    updatedAt: new Date(),
-                },
+                id: 0,
+                deviceId,
+                state: { isConnected: true, ...redisState },
+                createdAt: new Date(),
+                updatedAt: new Date(),
             };
         }
 
@@ -71,10 +69,8 @@ export class DeviceStateService {
         }
 
         return {
-            values: {
-                ...deviceState.toJSON(),
-                state: { isConnected: false, ...deviceState.state },
-            },
-        };
+            ...deviceState.toJSON(),
+            state: { isConnected: false, ...deviceState.state },
+        } as DeviceStateResponseModel;
     }
 }

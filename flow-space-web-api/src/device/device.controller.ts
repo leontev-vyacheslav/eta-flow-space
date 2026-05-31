@@ -54,7 +54,7 @@ export class DeviceController {
             ],
         } as FindOptions);
 
-        return { values: devices };
+        return devices;
     }
 
     @Get(':deviceId')
@@ -80,6 +80,6 @@ export class DeviceController {
             },
         } as FindOptions);
 
-        return { values: device };
+        return device;
     }
 }

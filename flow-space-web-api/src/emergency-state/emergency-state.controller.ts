@@ -20,7 +20,7 @@ export class EmergencyStateController {
     ) {
         const emergencyStates = await this.emergencyStateService.getDeviceStoredStatesByDates(deviceId, beginDate, endDate);
 
-        return { values: emergencyStates };
+        return emergencyStates;
     }
 
     @Get('dates')
@@ -32,7 +32,7 @@ export class EmergencyStateController {
         const { userId } = user;
         const emergencyStates = await this.emergencyStateService.getUserStoredStatesByDates(userId, beginDate, endDate);
 
-        return { values: emergencyStates };
+        return emergencyStates;
     }
 
     @Get()
@@ -40,8 +40,6 @@ export class EmergencyStateController {
         const { userId } = user;
         const emergencyStates = await this.emergencyStateService.getCurrentStates(userId);
 
-        return {
-            values: emergencyStates,
-        };
+        return emergencyStates;
     }
 }

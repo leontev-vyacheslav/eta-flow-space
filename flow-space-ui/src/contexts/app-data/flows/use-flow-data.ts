@@ -99,7 +99,7 @@ export const useFlowData = () => {
       );
 
       if (response && response.status === HttpConstants.StatusCodes.Ok) {
-        return response.data.values as DeviceStateModel;
+        return response.data as DeviceStateModel;
       }
     },
     [authHttpRequest],
@@ -127,7 +127,7 @@ export const useFlowData = () => {
       });
 
       if (response && response.status === HttpConstants.StatusCodes.Ok) {
-        return response.data.values as DeviceModel;
+        return response.data as DeviceModel;
       }
     },
     [authHttpRequest],
@@ -161,7 +161,7 @@ export const useFlowData = () => {
       });
 
       if (response && response.status === HttpConstants.StatusCodes.Ok) {
-        return response.data.values as DeviceStatePropertiesModel[];
+        return response.data as DeviceStatePropertiesModel[];
       }
     },
     [authHttpRequest],
@@ -177,7 +177,7 @@ export const useFlowData = () => {
     );
 
     if (response && response.status === HttpConstants.StatusCodes.Ok) {
-      return response.data.values as EmergencyModel[];
+      return response.data as EmergencyModel[];
     }
   }, [authHttpRequest]);
 
@@ -193,7 +193,7 @@ export const useFlowData = () => {
       });
 
       if (response && response.status === HttpConstants.StatusCodes.Ok) {
-        return response.data.values as EmergencyStateModel[];
+        return response.data as EmergencyStateModel[];
       }
     },
     [authHttpRequest],
