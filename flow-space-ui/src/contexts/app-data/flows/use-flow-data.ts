@@ -84,7 +84,7 @@ export const useFlowData = () => {
     });
 
     if (response && response.status === HttpConstants.StatusCodes.Ok) {
-      return response.data.values as DeviceModel[];
+      return response.data as DeviceModel[];
     }
   }, [authHttpRequest]);
 
