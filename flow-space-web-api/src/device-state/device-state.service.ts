@@ -1,10 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { Op, literal, ProjectionAlias, json } from 'sequelize';
-import { Literal } from 'sequelize/lib/utils';
+import { Op, literal } from 'sequelize';
 import { SharedStoreService } from '../common/services/shared-store/shared-store.service';
 import { DeviceStateDataModel } from '../database/models';
-import { DeviceStateResponseModel } from '../models/device-state-response.model';
 
 @Injectable()
 export class DeviceStateService {
@@ -14,11 +12,9 @@ export class DeviceStateService {
         private readonly sharedStoreService: SharedStoreService,
     ) {}
 
-    async getDeviceStatesByDates(deviceId: number, beginDate: Date, endDate: Date, fields: string): Promise<DeviceStateDataModel[]> {
-        const deviceStateFields: ProjectionAlias[] = fields ? fields.split(';').map((f): ProjectionAlias => [json(`state.${f}`) as unknown as Literal, f]) : [];
-
+    async getDeviceStatesByDates(deviceId: number, beginDate: Date, endDate: Date, fields: string[]): Promise<DeviceStateDataModel[]> {
         const deviceStates = await this.deviceStateModel.findAll({
-            attributes: ['id', 'deviceId', ...deviceStateFields, 'createdAt'],
+            attributes: ['id', 'deviceId', ...fields, 'createdAt'],
             where: {
                 deviceId: deviceId,
                 createdAt: {
@@ -30,7 +26,7 @@ export class DeviceStateService {
         return deviceStates;
     }
 
-    async getDeviceState(deviceId: number): Promise<DeviceStateResponseModel> {
+    async getDeviceState(deviceId: number): Promise<Partial<DeviceStateDataModel>> {
         const redisState = await this.sharedStoreService.getDeviceState<Record<string, unknown>>(deviceId);
 
         if (this.isValidState(redisState)) {
@@ -40,7 +36,7 @@ export class DeviceStateService {
                 state: { isConnected: true, ...redisState },
                 createdAt: new Date(),
                 updatedAt: new Date(),
-            };
+            } as Partial<DeviceStateDataModel>;
         }
 
         return this.getFallbackState(deviceId);
@@ -55,7 +51,7 @@ export class DeviceStateService {
         return keys.length > 0 && keys.some((k) => state[k] !== null && state[k] !== undefined);
     }
 
-    private async getFallbackState(deviceId: number): Promise<DeviceStateResponseModel> {
+    private async getFallbackState(deviceId: number): Promise<Partial<DeviceStateDataModel>> {
         const deviceState = await this.deviceStateModel.findOne({
             where: {
                 deviceId,
@@ -71,6 +67,6 @@ export class DeviceStateService {
         return {
             ...deviceState.toJSON(),
             state: { isConnected: false, ...deviceState.state },
-        } as DeviceStateResponseModel;
+        } as Partial<DeviceStateDataModel>;
     }
 }
