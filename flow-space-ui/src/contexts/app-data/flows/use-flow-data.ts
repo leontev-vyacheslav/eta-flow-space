@@ -73,7 +73,7 @@ export const useFlowData = () => {
     });
 
     if (response && response.status === HttpConstants.StatusCodes.Ok) {
-      return response.data.values as FlowModel[];
+      return response.data as FlowModel[];
     }
   }, [authHttpRequest]);
 

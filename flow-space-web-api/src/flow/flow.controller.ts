@@ -37,6 +37,6 @@ export class FlowController {
             ],
         } as FindOptions);
 
-        return { values: flows };
+        return flows;
     }
 }
