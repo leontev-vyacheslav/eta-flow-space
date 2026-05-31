@@ -1,8 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { Op, literal } from 'sequelize';
+import { Op, ProjectionAlias, json, literal } from 'sequelize';
 import { SharedStoreService } from '../common/services/shared-store/shared-store.service';
 import { DeviceStateDataModel } from '../database/models';
+import { Literal } from 'sequelize/lib/utils';
 
 @Injectable()
 export class DeviceStateService {
@@ -13,8 +14,10 @@ export class DeviceStateService {
     ) {}
 
     async getDeviceStatesByDates(deviceId: number, beginDate: Date, endDate: Date, fields: string[]): Promise<DeviceStateDataModel[]> {
+        const deviceStateFields: ProjectionAlias[] = fields.map((f): ProjectionAlias => [json(`state.${f}`) as unknown as Literal, f]);
+
         const deviceStates = await this.deviceStateModel.findAll({
-            attributes: ['id', 'deviceId', ...fields, 'createdAt'],
+            attributes: ['id', 'deviceId', ...deviceStateFields, 'createdAt'],
             where: {
                 deviceId: deviceId,
                 createdAt: {
