@@ -7,7 +7,7 @@ export class ParseFieldsPipe implements PipeTransform {
     transform(value: unknown): string[] | undefined {
         if (value === undefined || value === null) return undefined;
         if (typeof value !== 'string' || !this.VALID_FIELDS.test(value)) {
-            throw new BadRequestException('Invalid fields parameter');
+            throw new BadRequestException('Указан неверный параметр в запросе');
         }
         return value.split(';');
     }
