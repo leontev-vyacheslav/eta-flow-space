@@ -2,7 +2,7 @@ import { BadRequestException, Injectable, PipeTransform } from '@nestjs/common';
 
 @Injectable()
 export class ParseFieldsPipe implements PipeTransform {
-    private readonly VALID_FIELDS = /^[a-zA-Z0-9_;]+$/;
+    private readonly VALID_FIELDS = /^[a-zA-Z0-9_;.\[\]]+$/;
 
     transform(value: unknown): string[] | undefined {
         if (value === undefined || value === null) return undefined;
