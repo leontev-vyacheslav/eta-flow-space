@@ -88,6 +88,8 @@ export const ReportPage = () => {
                 }, 200);
                 const blob = await getReportAsync(reportDefinition.url, reportParameterValues);
                 if (!blob) {
+                    hideLoader();
+
                     return;
                 }
                 url = URL.createObjectURL(blob);
