@@ -12,12 +12,10 @@ export class EmergencyStateService {
         private readonly emergencyStateModel: typeof EmergencyStateDataModel,
         @InjectModel(DeviceDataModel)
         private readonly deviceModel: typeof DeviceDataModel,
-        @InjectModel(UserDeviceLinkDataModel)
-        private readonly userDeviceLinkModel: typeof UserDeviceLinkDataModel,
     ) {}
 
     public async getUserStoredStatesByDates(userId: number, beginDate: Date, endDate: Date) {
-        const emergencyStates = await EmergencyStateDataModel.findAll({
+        const emergencyStates = await this.emergencyStateModel.findAll({
             attributes: ['id', 'deviceId', [col('device.name'), 'deviceName'], 'state', 'createdAt'],
             include: [
                 {
@@ -49,7 +47,7 @@ export class EmergencyStateService {
     }
 
     public async getDeviceStoredStatesByDates(deviceId: number, beginDate: Date, endDate: Date) {
-        const emergencyStates = await EmergencyStateDataModel.findAll({
+        const emergencyStates = await this.emergencyStateModel.findAll({
             attributes: ['id', 'deviceId', [col('device.name'), 'deviceName'], 'state', 'createdAt'],
             include: [
                 {
@@ -71,7 +69,7 @@ export class EmergencyStateService {
     }
 
     public async getCurrentStates(userId: number) {
-        const devices = await DeviceDataModel.findAll({
+        const devices = await this.deviceModel.findAll({
             attributes: ['id'],
             include: [
                 {
