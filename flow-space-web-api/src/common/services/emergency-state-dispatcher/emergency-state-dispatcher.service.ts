@@ -37,6 +37,8 @@ export class EmergencyStateDispatcherService {
         if (this.isRunning) {
             return;
         }
+
+        const start = Date.now();
         this.isRunning = true;
         try {
             const devices = await this.deviceDataModel.findAll({
@@ -155,7 +157,7 @@ export class EmergencyStateDispatcherService {
                 }
             }
 
-            this.logger.log(`Emergency state dispatcher completed: ${emergencyStates.length} states stored`);
+            this.logger.log(`Emergency state dispatcher completed: ${emergencyStates.length} states stored ${`\x1b[33m+${Date.now() - start}ms\x1b[0m`}`);
         } finally {
             this.isRunning = false;
         }

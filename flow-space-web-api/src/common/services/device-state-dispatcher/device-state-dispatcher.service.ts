@@ -28,6 +28,8 @@ export class DeviceStateDispatcherService {
         if (this.isRunning) {
             return;
         }
+
+        const start = Date.now();
         this.isRunning = true;
         try {
             const devices = await this.deviceDataModel.findAll({
@@ -68,7 +70,7 @@ export class DeviceStateDispatcherService {
                 }
             }
 
-            this.logger.log(`Device state dispatcher completed: ${updated} updated, ${failed} failed`);
+            this.logger.log(`Device state dispatcher completed: ${updated} updated, ${failed} failed ${`\x1b[33m+${Date.now() - start}ms\x1b[0m`}`);
         } finally {
             this.isRunning = false;
         }
