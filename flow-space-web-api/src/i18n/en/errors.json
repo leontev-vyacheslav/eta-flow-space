@@ -1,0 +1,13 @@
+{
+  "SESSION_EXPIRED": "Session expired, please log in again",
+  "INVALID_AUTH_TOKEN": "Invalid authorization token",
+  "TOKEN_EXPIRED_OR_INVALID": "Authorization token is invalid or expired",
+  "USER_NOT_FOUND_OR_WRONG_PASSWORD": "User not found or incorrect password provided",
+  "USER_NOT_AUTHORIZED": "User is not authorized",
+  "DEVICE_ID_MISSING_OR_NOT_NUMBER": "Parameter deviceId is missing or is not a number",
+  "DEVICE_NOT_BELONGS_TO_USER": "The requested device does not belong to user with ID {userId}",
+  "INVALID_DATE_VALUE": "Value \"{value}\" is not a valid date",
+  "INVALID_QUERY_PARAMETER": "Invalid parameter specified in the request",
+  "DEVICE_NOT_FOUND": "Device with ID {deviceId} not found",
+  "DEVICE_STATE_NOT_EXISTS": "State of device with ID {deviceId does not exist"
+}

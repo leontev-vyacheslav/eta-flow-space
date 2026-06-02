@@ -33,6 +33,7 @@
     "class-validator": "^0.15.1",
     "date-fns": "^4.1.0",
     "ioredis": "^5.10.1",
+    "nestjs-i18n": "^10.8.4",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "pg": "^8.20.0",

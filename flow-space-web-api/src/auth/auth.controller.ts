@@ -4,12 +4,14 @@ import { UsersService } from '../users/users.service';
 import { createHash } from 'crypto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { SignInModel } from '../models/sign-in.model';
+import { I18nService } from 'nestjs-i18n';
 
 @Controller()
 export class AuthController {
     constructor(
         private authService: AuthService,
         private usersService: UsersService,
+        private readonly i18n: I18nService,
     ) {}
 
     @Post('sign-in')
@@ -20,7 +22,7 @@ export class AuthController {
         const user = await this.usersService.findByName(signIn.login);
 
         if (!user || user.password !== hashedPassword) {
-            throw new UnauthorizedException('Пользователь не найден или указан неверный пароль.');
+            throw new UnauthorizedException(this.i18n.t('errors.USER_NOT_FOUND_OR_WRONG_PASSWORD'));
         }
 
         return this.authService.signIn({

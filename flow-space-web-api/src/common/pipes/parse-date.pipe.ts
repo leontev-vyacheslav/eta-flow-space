@@ -6,7 +6,10 @@ export class ParseDatePipe implements PipeTransform<string, Date> {
     transform(value: string, metadata: ArgumentMetadata): Date {
         const date = new Date(value);
         if (isNaN(date.getTime())) {
-            throw new BadRequestException(`"${value}" is not a valid date`);
+            throw new BadRequestException({
+                key: 'errors.INVALID_DATE_VALUE',
+                args: { value },
+            });
         }
         return date;
     }

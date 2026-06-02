@@ -1,10 +1,14 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayloadModel } from '../models/jwt-payload.model';
+import { I18nService } from 'nestjs-i18n';
 
 @Injectable()
 export class AuthService {
-    constructor(private jwtService: JwtService) {}
+    constructor(
+        private jwtService: JwtService,
+        private readonly i18n: I18nService,
+    ) {}
 
     async signIn(payload: { login: string; userId: number; roleId: number }) {
         const jwtPayload: JwtPayloadModel = {
@@ -24,7 +28,7 @@ export class AuthService {
         try {
             return await this.jwtService.verifyAsync<JwtPayloadModel & object>(token);
         } catch {
-            throw new UnauthorizedException('Токен авторизации неверный или истек');
+            throw new UnauthorizedException(this.i18n.t('errors.TOKEN_EXPIRED_OR_INVALID'));
         }
     }
 }

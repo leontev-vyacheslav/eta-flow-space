@@ -4,6 +4,7 @@ import { Op, ProjectionAlias, json, literal } from 'sequelize';
 import { SharedStoreService } from '../common/services/shared-store/shared-store.service';
 import { DeviceStateDataModel } from '../database/models';
 import { Literal } from 'sequelize/lib/utils';
+import { I18nService } from 'nestjs-i18n';
 
 @Injectable()
 export class DeviceStateService {
@@ -11,6 +12,7 @@ export class DeviceStateService {
         @InjectModel(DeviceStateDataModel)
         private readonly deviceStateModel: typeof DeviceStateDataModel,
         private readonly sharedStoreService: SharedStoreService,
+        private readonly i18n: I18nService,
     ) {}
 
     async getDeviceStatesByDates(deviceId: number, beginDate: Date, endDate: Date, fields: string[]): Promise<DeviceStateDataModel[]> {
@@ -64,7 +66,11 @@ export class DeviceStateService {
         });
 
         if (!deviceState) {
-            throw new NotFoundException(`Состояние устройства с ID: ${deviceId} не существует.`);
+            throw new NotFoundException(
+                this.i18n.t('errors.DEVICE_STATE_NOT_EXISTS', {
+                    args: { deviceId },
+                }),
+            );
         }
 
         return {

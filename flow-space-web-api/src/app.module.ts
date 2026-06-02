@@ -14,6 +14,8 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { EmergencyStateDispatcherModule } from './common/services/emergency-state-dispatcher/emergency-state-dispatcher.module';
 import { DeviceStateDispatcherModule } from './common/services/device-state-dispatcher/device-state-dispatcher.module';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
+import { AcceptLanguageResolver, HeaderResolver, I18nModule, QueryResolver } from 'nestjs-i18n';
+import * as path from 'path';
 
 @Module({
     imports: [
@@ -21,6 +23,19 @@ import { LoggerMiddleware } from './common/middleware/logger.middleware';
             envFilePath: ['.env.local', '.env'],
             isGlobal: true,
             load: [configuration],
+        }),
+        I18nModule.forRoot({
+            fallbackLanguage: 'en',
+            loaderOptions: {
+                path: path.join(__dirname, '/i18n/'),
+                watch: true, // auto-reload on file change (dev only)
+            },
+            resolvers: [
+                // Priority order — first match wins:
+                { use: QueryResolver, options: ['lang'] },
+                AcceptLanguageResolver,
+                new HeaderResolver(['x-lang']),
+            ],
         }),
         ScheduleModule.forRoot(),
         EmergencyStateDispatcherModule,

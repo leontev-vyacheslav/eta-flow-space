@@ -1,0 +1,13 @@
+{
+  "SESSION_EXPIRED": "Сессия истекла, пожалуйста, войдите снова",
+  "INVALID_AUTH_TOKEN": "Неверный токен авторизации",
+  "TOKEN_EXPIRED_OR_INVALID": "Токен авторизации неверный или истек",
+  "USER_NOT_FOUND_OR_WRONG_PASSWORD": "Пользователь не найден или указан неверный пароль",
+  "USER_NOT_AUTHORIZED": "Пользователь не авторизован",
+  "DEVICE_ID_MISSING_OR_NOT_NUMBER": "Параметр deviceId отсутствует или не является числом",
+  "DEVICE_NOT_BELONGS_TO_USER": "Запрашиваемое устройство не принадлежит пользователю с ID {userId}",
+  "INVALID_DATE_VALUE": "Значение \"{value}\" не является валидной датой",
+  "INVALID_QUERY_PARAMETER": "Указан неверный параметр в запросе",
+  "DEVICE_NOT_FOUND": "Устройство с ID {deviceId} не найдено",
+  "DEVICE_STATE_NOT_EXISTS": "Состояние устройства с ID {deviceId} не существует"
+}
