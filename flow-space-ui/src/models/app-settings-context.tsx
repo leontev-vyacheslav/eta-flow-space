@@ -5,7 +5,6 @@ export type AppSettingsModel = {
     workDate?: Date;
 
     isShowFooter: boolean;
-    staticFilesManifest: any;
 }
 
 export type AppSettingsDataContextModel = AppSettingsModel;

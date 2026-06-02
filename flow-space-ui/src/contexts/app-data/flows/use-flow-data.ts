@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { Method } from "axios";
 import { HttpConstants } from "../../../constants/app-http-constants";
 import routes from "../../../constants/app-api-routes";
@@ -21,13 +21,13 @@ export type GetEmergencyStateAsyncFunc = () => Promise<
   EmergencyModel[] | undefined
 >;
 export type GetMnemoschemaAsyncFunc = (
-  deviceId: number,
-) => Promise<string | undefined>;
+  flowCode: string,
+) => Promise<string | null | undefined>;
 export type GetDeviceAsyncFunc = (
   deviceId: number,
 ) => Promise<DeviceModel | undefined>;
 export type GetDeviceStateDataschemaAsyncFunc = (
-  deviceId: number,
+  flowCode: string,
 ) => Promise<any | undefined>;
 export type GetDeviceStatesByDatesAsyncFunc = (
   deviceId: number,
@@ -40,6 +40,9 @@ export type GetEmergencyStatesByDatesAsyncFunc = (
   beginDate: Date,
   endDate: Date,
 ) => Promise<EmergencyStateModel[] | undefined>;
+export type GetMnemoschemaStylesheetsAsyncFunc = (
+  flowCode: string,
+) => Promise<string | null | undefined>;
 
 export type AppDataContextFlowEndpointsModel = {
   getStaticFilesManifest: () => Promise<any>;
@@ -54,17 +57,20 @@ export type AppDataContextFlowEndpointsModel = {
   getEmergencyStatesByDatesAsync: GetEmergencyStatesByDatesAsyncFunc;
   getReportAsync: (url: string, params: any) => Promise<Blob | undefined>;
   getReportDefinitionAsync: (reportId: number) => Promise<any | undefined>;
+  getMnemoschemaStylesheetsAsync: GetMnemoschemaStylesheetsAsyncFunc;
+  staticFilesManifest: any;
 };
 
 export const useFlowData = () => {
-  const getStaticFilesManifest = async () => {
+  const [staticFilesManifest, setStaticFilesManifest] = useState<any>();
+  const authHttpRequest = useAuthHttpRequest();
+
+  const getStaticFilesManifest = useCallback(async () => {
     const res = await fetch(
       `${routes.host}/static/manifest.json?v=${Date.now()}`,
     );
     return res.ok ? res.json() : {};
-  };
-
-  const authHttpRequest = useAuthHttpRequest();
+  }, []);
 
   const getFlowListAsync = useCallback<GetFlowListAsyncFunc>(async () => {
     const response = await authHttpRequest({
@@ -106,17 +112,31 @@ export const useFlowData = () => {
   );
 
   const getMnemoschemaAsync = useCallback<GetMnemoschemaAsyncFunc>(
-    async (deviceId: number) => {
-      const response = await authHttpRequest({
-        url: `${routes.host}${routes.mnemoschemas.replace(":deviceId", deviceId.toString())}`,
-        method: HttpConstants.Methods.Get as Method,
-      });
-
-      if (response && response.status === HttpConstants.StatusCodes.Ok) {
-        return response.data as string;
-      }
+    async (flowCode: string) => {
+      return await fetch(
+        `${routes.host}/static/flows/${flowCode}/${flowCode}-mnemo-schema.svg?v=${staticFilesManifest["mnemo-schema"] ?? Date.now()}`,
+      ).then((res) => (res.ok ? res.text() : null));
     },
-    [authHttpRequest],
+    [staticFilesManifest],
+  );
+
+  const getDeviceStateDataschemaAsync =
+    useCallback<GetDeviceStateDataschemaAsyncFunc>(
+      async (flowCode: string) => {
+        return fetch(
+          `${routes.host}/static/flows/${flowCode}/${flowCode}-data-schema.json?v=${staticFilesManifest["data-schema"] ?? Date.now()}`,
+        ).then((res) => (res.ok ? res.json() : null));
+      },
+      [staticFilesManifest],
+    );
+
+  const getMnemoschemaStylesheetsAsync = useCallback<GetMnemoschemaStylesheetsAsyncFunc>(
+    async (flowCode: string) => {
+      return await fetch(
+        `${routes.host}/static/flows/${flowCode}/${flowCode}-mnemo-schema.css?v=${staticFilesManifest["mnemo-schema"] ?? Date.now()}`,
+      ).then((res) => (res.ok ? res.text() : null));
+    },
+    [staticFilesManifest],
   );
 
   const getDeviceAsync = useCallback(
@@ -128,21 +148,6 @@ export const useFlowData = () => {
 
       if (response && response.status === HttpConstants.StatusCodes.Ok) {
         return response.data as DeviceModel;
-      }
-    },
-    [authHttpRequest],
-  );
-
-  const getDeviceStateDataschemaAsync = useCallback(
-    async (deviceId: number) => {
-      const response = await authHttpRequest({
-        // url: `${routes.host}${routes.dataschema}/${deviceId}`,
-        url: `${routes.host}${routes.dataschema.replace(":deviceId", deviceId.toString())}`,
-        method: HttpConstants.Methods.Get as Method,
-      });
-
-      if (response && response.status === HttpConstants.StatusCodes.Ok) {
-        return response.data as any;
       }
     },
     [authHttpRequest],
@@ -238,12 +243,20 @@ export const useFlowData = () => {
     [authHttpRequest],
   );
 
+  useEffect(() => {
+    (async () => {
+      const staticFilesManifest = await getStaticFilesManifest();
+      setStaticFilesManifest(staticFilesManifest);
+    })();
+  }, [getStaticFilesManifest]);
+
   return {
     getStaticFilesManifest,
     getFlowListAsync,
     getDeviceListAsync,
     getDeviceStateAsync,
     getMnemoschemaAsync,
+    getMnemoschemaStylesheetsAsync,
     getDeviceAsync,
     getDeviceStateDataschemaAsync,
     getDeviceStatesByDatesAsync,
@@ -251,5 +264,6 @@ export const useFlowData = () => {
     getEmergencyStatesByDatesAsync,
     getReportAsync,
     getReportDefinitionAsync,
+    staticFilesManifest,
   };
 };

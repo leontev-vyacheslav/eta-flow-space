@@ -1,11 +1,10 @@
 import { useCallback } from "react";
 import { useParams } from "react-router";
-import routes from '../../../../constants/app-api-routes';
-import { useAppSettings } from "../../../../contexts/app-settings";
+import { useAppData } from "../../../../contexts/app-data/app-data";
 
 export const useMnemoschemaInjectCss = () => {
     const { flowCode } = useParams();
-    const { appSettingsData } = useAppSettings();
+    const { getMnemoschemaStylesheetsAsync } = useAppData();
 
     return useCallback(async (mnemoschemaElement: HTMLElement | null) => {
         if (!mnemoschemaElement || !flowCode) {
@@ -14,9 +13,7 @@ export const useMnemoschemaInjectCss = () => {
 
         let cssModule = null;
         try {
-            const manifest = appSettingsData.staticFilesManifest[flowCode];
-            const cssModuleRequest = await fetch(`${routes.host}/static/flows/${flowCode}/${flowCode}-mnemo-schema.css?v=${manifest['mnemo-schema'] ?? Date.now()}`);
-            cssModule = await cssModuleRequest.text();
+            cssModule = await getMnemoschemaStylesheetsAsync(flowCode);
         } catch (error) {
             console.error(error);
         }
@@ -26,5 +23,5 @@ export const useMnemoschemaInjectCss = () => {
             style.textContent = cssModule;
             mnemoschemaElement.prepend(style);
         }
-    }, [flowCode, appSettingsData]);
+    }, [flowCode, getMnemoschemaStylesheetsAsync]);
 }

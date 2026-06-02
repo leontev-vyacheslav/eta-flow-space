@@ -15,7 +15,6 @@ import { useLongPress } from "use-long-press";
 import { isSuppressedForLongPress } from "../../helpers/map-helpers";
 import { createMapMarkerIcon } from "./map-marker-icon";
 import { getQuickGuid } from "../../utils/uuid";
-import routes from "../../constants/app-api-routes";
 
 
 import 'leaflet/dist/leaflet.css';
@@ -23,12 +22,11 @@ import './map-page.scss';
 import { AuthProvider } from "../../contexts/auth";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSharedArea } from "../../contexts/shared-area";
-import { useAppSettings } from "../../contexts/app-settings";
 
 export const MapPage = () => {
     const navigate = useNavigate();
     const { deviceId } = useParams();
-    const { getDeviceListAsync, getDeviceStateAsync, getEmergencyStatesAsync } = useAppData();
+    const { getDeviceListAsync, getDeviceStateAsync, getEmergencyStatesAsync, getDeviceStateDataschemaAsync } = useAppData();
     const [refreshToken, setRefreshToken] = useState<string>(getQuickGuid());
     const mapRef = useRef<L.Map>(null);
     const markersGroupRef = useRef<L.FeatureGroup | null>(null);
@@ -36,7 +34,6 @@ export const MapPage = () => {
     const markersRef = useRef<Map<number, L.Marker>>(new Map());
     const latestRequestRef = useRef<number>(0);
     const { treeViewRef } = useSharedArea();
-    const { appSettingsData } = useAppSettings();
 
     const longPressBinder = useLongPress(
         () => {
@@ -98,11 +95,10 @@ export const MapPage = () => {
         if (!flowCode) {
             return;
         }
-        const manifest = appSettingsData.staticFilesManifest[flowCode];
 
         const [deviceState, dataschema] = await Promise.all([
             getDeviceStateAsync(device.id),
-            fetch(`${routes.host}/static/flows/${flowCode}/${flowCode}-data-schema.json?v=${manifest['data-schema'] ?? Date.now()}`).then(res => res.ok ? res.json() : null),
+            getDeviceStateDataschemaAsync(flowCode),
         ]);
 
         if (!deviceState || !dataschema) {
@@ -114,7 +110,7 @@ export const MapPage = () => {
                 <MapPagePopupContent device={device} deviceState={deviceState} dataschema={dataschema} emergencyState={emergencyState} />
             </AuthProvider>
         );
-    }, [appSettingsData.staticFilesManifest, getDeviceStateAsync]);
+    }, [getDeviceStateAsync, getDeviceStateDataschemaAsync]);
 
     const markerPopupCloseHandler = useCallback((deviceId: number) => {
         const root = rootsRef.current.get(deviceId);
