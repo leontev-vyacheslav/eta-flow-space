@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { UserDataModel } from '../database/models/user.data-model';
 import { I18nService } from 'nestjs-i18n';
+import { AuthUserModel } from '../models/sign-in.model';
 
 @Injectable()
 export class UsersService {
@@ -11,8 +12,8 @@ export class UsersService {
         private userModel: typeof UserDataModel,
     ) {}
 
-    async getByName(name: string): Promise<Partial<UserDataModel> | null> {
-        return this.userModel.findOne({ attributes: ['id', 'name', 'password', 'roleId'], where: { name } });
+    async getByName(name: string): Promise<AuthUserModel | null> {
+        return this.userModel.findOne({ attributes: ['id', 'name', 'password', 'roleId'], where: { name } }) as AuthUserModel;
     }
 
     async getSettings(userId: number): Promise<Record<string, unknown>> {
