@@ -13,7 +13,7 @@ export class UsersService {
     ) {}
 
     async getByName(name: string): Promise<AuthUserModel | null> {
-        return this.userModel.findOne({ attributes: ['id', 'name', 'password', 'roleId'], where: { name } }) as AuthUserModel;
+        return (await this.userModel.findOne({ attributes: ['id', 'name', 'password', 'roleId'], where: { name } })) as AuthUserModel;
     }
 
     async getSettings(userId: number): Promise<Record<string, unknown>> {
