@@ -6,10 +6,10 @@ import AppConstants from "../../constants/app-constants";
 import { useParams } from "react-router";
 import type { MenuItemModel } from "../../models/menu-item-model";
 import { getQuickGuid } from "../../utils/uuid";
-import { reportParametricService } from "../../services/report-parametric-service";
 import { NoData } from "../../components/no-data-widget/no-data-widget";
 import type { ReportModel } from "../../models/flows/report-model";
 import { useSharedArea } from "../../contexts/shared-area";
+import { reportParametricService } from "../../components/dialogs/report-parametric-dialog/report-parametric-dialog";
 
 export const ReportPage = () => {
     const { reportId } = useParams<{ reportId: string }>();
@@ -28,9 +28,14 @@ export const ReportPage = () => {
                     if (!reportDefinition) {
                         return;
                     }
-                    reportParametricService.show(reportDefinition, reportParameterValues, (modalResult) => {
-                        if (modalResult.modalResult === 'OK') {
-                            setReportParameterValues(modalResult.data);
+
+                    reportParametricService.show({
+                        report: reportDefinition,
+                        parameterValues: reportParameterValues,
+                        callback: (modalResult) => {
+                            if (modalResult.modalResult === 'OK') {
+                                setReportParameterValues(modalResult.data);
+                            }
                         }
                     });
                 }

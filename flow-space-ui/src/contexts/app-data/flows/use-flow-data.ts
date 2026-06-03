@@ -11,6 +11,7 @@ import type {
 } from "../../../models/flows/device-state-model";
 import type { EmergencyStateModel } from "../../../models/flows/emergency-state-model";
 import type { EmergencyModel } from "../../../models/flows/emergency-model";
+import type { UserSettingsModel } from "../../../models/flows/user-settings-model";
 
 export type GetFlowListAsyncFunc = () => Promise<FlowModel[] | undefined>;
 export type GetDeviceListAsyncFunc = () => Promise<DeviceModel[] | undefined>;
@@ -58,6 +59,7 @@ export type AppDataContextFlowEndpointsModel = {
   getReportAsync: (url: string, params: any) => Promise<Blob | undefined>;
   getReportDefinitionAsync: (reportId: number) => Promise<any | undefined>;
   getMnemoschemaStylesheetsAsync: GetMnemoschemaStylesheetsAsyncFunc;
+  getUserSettingsAsync: () => Promise<UserSettingsModel | undefined>;
   staticFilesManifest: any;
 };
 
@@ -243,6 +245,17 @@ export const useFlowData = () => {
     [authHttpRequest],
   );
 
+  const getUserSettingsAsync = useCallback(async () => {
+    const response = await authHttpRequest({
+      url: `${routes.host}${routes.users}/settings`,
+      method: HttpConstants.Methods.Get as Method,
+    });
+
+    if (response && response.status === HttpConstants.StatusCodes.Ok) {
+      return response.data as UserSettingsModel;
+    }
+  }, [authHttpRequest]);
+
   useEffect(() => {
     (async () => {
       const staticFilesManifest = await getStaticFilesManifest();
@@ -264,6 +277,7 @@ export const useFlowData = () => {
     getEmergencyStatesByDatesAsync,
     getReportAsync,
     getReportDefinitionAsync,
+    getUserSettingsAsync,
     staticFilesManifest,
   };
 };

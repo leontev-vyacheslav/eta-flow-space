@@ -126,7 +126,7 @@ export const MapPage = () => {
     const markerClickHandler = useCallback(({ device, latitude, longitude }: { device: DeviceModel, latitude: number, longitude: number }) => {
         if (mapRef.current) {
             const map = mapRef.current;
-            map.setView([latitude, longitude], AppConstants.mapDefaultZoom, { animate: true });
+            map.setView([latitude, longitude], AppConstants.mapDefaultZoom, { animate: false });
             // Wait for setView animation to finish, then shift down
             map.once('moveend', () => {
                 map.panBy([0, -50], { animate: true });
@@ -138,7 +138,7 @@ export const MapPage = () => {
         if (navigationItem) {
             treeViewRef.current?.instance.selectItem(navigationItem);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [treeViewRef]);
 
     const showPopup = useCallback((deviceId: string | undefined) => {

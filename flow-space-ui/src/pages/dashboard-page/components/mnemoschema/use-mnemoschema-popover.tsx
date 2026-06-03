@@ -4,12 +4,12 @@ import { useDashboardPage } from "../../dashboard-page-context"
 import dxPopover from "devextreme/ui/popover";
 import { useAuth } from "../../../../contexts/auth";
 import { GraphIcon, HelpIcon, TypeIcon, VariableIcon } from "../../../../constants/app-icons";
-import { graphService } from "../../../../services/graph-service";
 import type { SchemaTypeInfoPropertiesChainModel } from "../../../../helpers/data-helper";
 import { showAlertDialog } from "../../../../utils/dialogs";
 import AppConstants from "../../../../constants/app-constants";
 
 import './mnemoschema-popover.scss';
+import { graphService } from "../../../../components/dialogs/graph-dialog/graph-dialog";
 
 export const useMnemoschemaPopover = () => {
     const { isAdmin } = useAuth();

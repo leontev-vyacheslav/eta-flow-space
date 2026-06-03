@@ -5,7 +5,7 @@ import { I18nService } from 'nestjs-i18n';
 export class ParseFieldsPipe implements PipeTransform {
     constructor(private readonly i18n: I18nService) {}
 
-    private readonly VALID_FIELDS = /^[a-zA-Z0-9_;.\[\]]+$/;
+    private readonly VALID_FIELDS = /^[a-zA-Z0-9_;.[\]]+$/;
 
     transform(value: unknown): string[] | undefined {
         if (value === undefined || value === null) return undefined;

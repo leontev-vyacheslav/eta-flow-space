@@ -8,6 +8,7 @@ import { MainMenu } from '../menu/main-menu/main-menu';
 import { useSharedArea } from '../../contexts/shared-area';
 
 import './header.scss';
+import { userSettingsService } from '../dialogs/user-settings-doalog/user-settings-dialog';
 
 const Header = ({ title, menuToggleEnabled, toggleMenu }: HeaderProps) => {
     const { user, isAdmin } = useAuth();
@@ -59,7 +60,7 @@ const Header = ({ title, menuToggleEnabled, toggleMenu }: HeaderProps) => {
                                     visible: isAdmin(),
                                     icon: () => (<SettingsIcon size={20} />),
                                     onClick: () => {
-                                        
+                                        userSettingsService.show();
                                     }
                                 },
                                 {

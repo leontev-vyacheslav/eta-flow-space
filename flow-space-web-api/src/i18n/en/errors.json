@@ -9,5 +9,6 @@
   "INVALID_DATE_VALUE": "Value \"{value}\" is not a valid date",
   "INVALID_QUERY_PARAMETER": "Invalid parameter specified in the request",
   "DEVICE_NOT_FOUND": "Device with ID {deviceId} not found",
-  "DEVICE_STATE_NOT_EXISTS": "State of device with ID {deviceId does not exist"
+  "DEVICE_STATE_NOT_EXISTS": "State of device with ID {deviceId does not exist",
+  "USERS_SETTINGS_NOT_FOUND": "User settings not found"
 }

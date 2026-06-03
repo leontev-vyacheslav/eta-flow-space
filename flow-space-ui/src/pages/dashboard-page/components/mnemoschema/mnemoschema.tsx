@@ -47,7 +47,7 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
             let plugInModule = null;
             try {
                 if (flowCode) {
-                    plugInModule = await import(`${routes.host}/static/flows/${flowCode}/${flowCode}-mnemo-schema.js?v=${staticFilesManifest['mnemo-schema'] ?? Date.now()}`);
+                    plugInModule = await import(/* @vite-ignore */ `${routes.host}/static/flows/${flowCode}/${flowCode}-mnemo-schema.js?v=${staticFilesManifest['mnemo-schema'] ?? Date.now()}`);
                 }
             } catch (error) {
                 console.error(error);

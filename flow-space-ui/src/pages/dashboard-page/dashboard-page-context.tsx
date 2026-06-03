@@ -8,10 +8,10 @@ import { proclaim } from '../../utils/proclaim';
 import { getQuickGuid } from '../../utils/uuid';
 import { getKeyValuePairs, getSchemaTypeInfo, type SchemaTypeInfoPropertiesChainModel } from '../../helpers/data-helper';
 import type { DictionaryBaseModel } from '../../models/abstractions/dictionary-base-model';
-import { jsonInfoViewService } from '../../services/json-info-view-service';
 
 import './dashboard-page-content.scss';
 import { useAuth } from '../../contexts/auth';
+import { jsonInfoViewService } from '../../components/dialogs/json-info-view-dialog/json-info-view-dialog';
 
 export type DashboardPageContextModel = {
     device?: DeviceModel;
@@ -147,14 +147,15 @@ function DashboardPageContextProvider(props: any) {
                             const jsonInfoViewDialogRoot = document.querySelector('#json-info-view-dialog-root');
 
                             if (!jsonInfoViewDialogRoot && validateFn.errors) {
-                                jsonInfoViewService.show('Ошибки валидации',
-                                    validateFn.errors.map(({ data, message, params, ...rest }) => ({
+                                jsonInfoViewService.show({
+                                    title: 'Ошибки валидации',
+                                    content: validateFn.errors.map(({ data, message, params, ...rest }) => ({
                                         data,
                                         message,
                                         params,
                                         ...rest
                                     }))
-                                );
+                                });
                             }
                         })
                     },

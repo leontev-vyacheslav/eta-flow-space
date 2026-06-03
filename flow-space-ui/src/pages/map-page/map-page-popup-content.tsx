@@ -3,11 +3,11 @@ import { Fragment, useCallback, useMemo } from "react";
 import { getKeyValuePairs, getSchemaTypeInfo, type PropertiesChainValuePairModel, type SchemaTypeInfoModel, type SchemaTypeInfoPropertiesChainModel } from "../../helpers/data-helper";
 import { useScreenSize } from "../../utils/media-query";
 import { CheckedIcon, ConnectionOff, EmergencyWarning, EmergencyWarningOff, GraphIcon, LocationIcon, UncheckedIcon, WarningIcon } from "../../constants/app-icons";
-import { graphService } from "../../services/graph-service";
 import type { MapPagePopupContentProps } from "../../models/map-page-popup-content-props";
 import { emergencyMuteManager } from "../../services/emergency-mute-manager";
 import { useAuth } from "../../contexts/auth";
 import AppConstants from "../../constants/app-constants";
+import { graphService } from "../../components/dialogs/graph-dialog/graph-dialog";
 
 export const MapPagePopupContent = ({ device, deviceState, dataschema, emergencyState }: MapPagePopupContentProps) => {
     const { isXSmall } = useScreenSize();

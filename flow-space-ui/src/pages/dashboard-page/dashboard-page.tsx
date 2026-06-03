@@ -4,17 +4,17 @@ import PageHeader from "../../components/page-header/page-header";
 import AppConstants from "../../constants/app-constants";
 import { AdditionalMenuIcon, CircuitIcon, DashboardIcon, GraphIcon, HelpIcon, ParamsIcon, RefreshIcon, ReportIcon, WarningLogIcon } from "../../constants/app-icons";
 import type { MenuItemModel } from "../../models/menu-item-model";
-import { quickHelpReferenceService } from "../../services/quick-help-reference-service";
 import { IconTab } from '../../components/tab-utils/icon-tab';
 import { useNavigate, useParams } from 'react-router';
 import { DashboardPageContextProvider, useDashboardPage } from './dashboard-page-context';
 import { getQuickGuid } from '../../utils/uuid';
 import { NoData } from '../../components/no-data-widget/no-data-widget';
-import { emergencyLogService } from '../../services/emergency-log-service';
-import { graphService } from '../../services/graph-service';
 import { emergencyMuteManager } from '../../services/emergency-mute-manager';
 import { useAuth } from '../../contexts/auth';
 import { MenuItemWithSubMenu } from '../../components/menu/menu-item/menu-item';
+import { quickHelpReferenceService } from '../../components/dialogs/quick-reference-help-dialog/quick-reference-help-dialog.tsx';
+import { graphService } from '../../components/dialogs/graph-dialog/graph-dialog.tsx';
+import { emergencyLogService } from '../../components/dialogs/emergency-log-dialog/emergency-log-dialog.tsx';
 
 const DashboardPageInner = () => {
     const tabPanelRef = useRef<TabPanel>(null);
@@ -60,7 +60,7 @@ const DashboardPageInner = () => {
                         text: 'Справка...',
 
                         onClick: () => {
-                            quickHelpReferenceService.show('common/dashboard');
+                            quickHelpReferenceService.show({ referenceKey: 'common/dashboard' });
                         }
                     },
                 ]
@@ -76,7 +76,7 @@ const DashboardPageInner = () => {
                             text: `${report.description}...`,
                             onClick: () => {
                                 if (device) {
-                                   navigate(`/reports/${report.id}`);
+                                    navigate(`/reports/${report.id}`);
                                 }
                             }
                         }))

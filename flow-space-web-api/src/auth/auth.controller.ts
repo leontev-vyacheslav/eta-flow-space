@@ -19,7 +19,7 @@ export class AuthController {
     async signIn(@Body() signIn: SignInModel) {
         const hashedPassword = createHash('sha256').update(signIn.password).digest('base64');
 
-        const user = await this.usersService.findByName(signIn.login);
+        const user = await this.usersService.getByName(signIn.login);
 
         if (!user || user.password !== hashedPassword) {
             throw new UnauthorizedException(this.i18n.t('errors.USER_NOT_FOUND_OR_WRONG_PASSWORD'));

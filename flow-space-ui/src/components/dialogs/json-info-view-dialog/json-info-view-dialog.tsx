@@ -8,13 +8,17 @@ import { useScreenSize } from '../../../utils/media-query';
 import ReactJson from "react-json-view";
 
 import './json-info-view-dialog.scss'
+import { RootDialogService } from '../root-dialog-service';
+import { AuthProvider } from '../../../contexts/auth';
+import { SharedAreaProvider } from '../../../contexts/shared-area';
+import { AppDataProvider } from '../../../contexts/app-data/app-data';
 
 export type JsonInfoViewDialogProps = React.PropsWithChildren<IPopupOptions> & AppModalPopupProps & {
     title: string,
     content: object
 };
 
-export const JsonInfoViewDialog = (props: JsonInfoViewDialogProps) => {
+const JsonInfoViewDialog = (props: JsonInfoViewDialogProps) => {
     const { isXSmall, isSmall } = useScreenSize();
 
     useEffect(() => {
@@ -50,3 +54,29 @@ export const JsonInfoViewDialog = (props: JsonInfoViewDialogProps) => {
         /> : null
     );
 }
+
+
+class JsonInfoViewDialogService extends RootDialogService {
+    protected readonly dialogId = 'json-info-view-dialog-root';
+
+    public show({ title, content }: { title: string, content: object }) {
+        super.show(() => {
+            this.root.render(
+                <AuthProvider>
+                    <SharedAreaProvider>
+                        <AppDataProvider>
+                            <JsonInfoViewDialog
+                                title={title}
+                                content={content}
+                                callback={() => { }}
+                                onHidden={() => { this.hide(); }}
+                            />
+                        </AppDataProvider>
+                    </SharedAreaProvider>
+                </AuthProvider>
+            );
+        });
+    }
+}
+
+export const jsonInfoViewService = new JsonInfoViewDialogService();

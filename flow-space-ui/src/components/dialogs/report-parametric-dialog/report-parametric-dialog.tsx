@@ -8,14 +8,19 @@ import Button from "devextreme-react/button";
 import type { ReportModel } from "../../../models/flows/report-model";
 import { ReportParametric } from "./report-parametric";
 import type { ParameterModel } from "../../../models/flows/parameter-model";
-import { useAppData } from "../../../contexts/app-data/app-data";
+import { AppDataProvider, useAppData } from "../../../contexts/app-data/app-data";
+import { AuthProvider } from "../../../contexts/auth";
+import { SharedAreaProvider } from "../../../contexts/shared-area";
+import type { PopupCallbackModel } from "../../../models/popup-callback";
+import { RootDialogService } from "../root-dialog-service";
+
 
 export type ReportParamsDialogProps = React.PropsWithChildren<IPopupOptions> & AppModalPopupProps & {
     report: ReportModel;
     parameterValues: any;
 };
 
-export const ReportParametricDialog = (props: ReportParamsDialogProps) => {
+const ReportParametricDialog = (props: ReportParamsDialogProps) => {
     const { isXSmall, isSmall } = useScreenSize();
     const popupRef = useRef<PopupRef>(null);
     const [parameterValues, setParameterValues] = useState<any>();
@@ -82,3 +87,24 @@ export const ReportParametricDialog = (props: ReportParamsDialogProps) => {
         </AppModalPopup>
         : null;
 }
+
+class ReportParametricDialogService extends RootDialogService {
+    protected readonly dialogId: string = 'report-params-dialog-root';
+
+    public show({ report, parameterValues, callback }: { report: ReportModel, parameterValues: any, callback: (modalResult: PopupCallbackModel) => void}) {
+
+        super.show(() => {
+            this.root.render(
+                <AuthProvider>
+                    <SharedAreaProvider>
+                        <AppDataProvider>
+                            <ReportParametricDialog report={report} parameterValues={parameterValues} callback={callback} onHidden={() => { this.hide(); }} />
+                        </AppDataProvider>
+                    </SharedAreaProvider>
+                </AuthProvider>
+            );
+        });
+    }
+}
+
+export const reportParametricService = new ReportParametricDialogService();

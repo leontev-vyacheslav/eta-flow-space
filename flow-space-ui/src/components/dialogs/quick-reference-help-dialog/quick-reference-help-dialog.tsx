@@ -5,19 +5,22 @@ import { useEffect, useState } from 'react';
 import { type AppModalPopupProps } from '../../../models/app-modal-popup-props';
 import AppModalPopup from '../app-modal-popup/app-modal-popup';
 import type { IPopupOptions } from 'devextreme-react/popup';
-import { useAppData } from '../../../contexts/app-data/app-data';
+import { AppDataProvider, useAppData } from '../../../contexts/app-data/app-data';
 import type { QuickHelpReferenceModel } from '../../../models/quick-help-reference-model';
 import { formatMessage } from 'devextreme/localization';
 import { useScreenSize } from '../../../utils/media-query';
 import routes from "../../../constants/app-api-routes";
 
 import './quick-reference-help-dialog.scss'
+import { AuthProvider } from '../../../contexts/auth';
+import { SharedAreaProvider } from '../../../contexts/shared-area';
+import { RootDialogService } from '../root-dialog-service';
 
 export type QuickReferenceHelpDialogProps = React.PropsWithChildren<IPopupOptions> & AppModalPopupProps & {
     referenceKey: string
 };
 
-export const QuickReferenceHelpDialog = (props: QuickReferenceHelpDialogProps) => {
+const QuickReferenceHelpDialog = (props: QuickReferenceHelpDialogProps) => {
     const { getQuickHelpReferenceAsync } = useAppData();
     const [quickHelpReference, setQuickHelpReference] = useState<QuickHelpReferenceModel | null>(null);
     const { isXSmall, isSmall } = useScreenSize();
@@ -43,25 +46,60 @@ export const QuickReferenceHelpDialog = (props: QuickReferenceHelpDialogProps) =
     return (quickHelpReference ?
         <AppModalPopup
             title='Краткая справка'
-            width={ isXSmall || isSmall ? '95%' : '60%' }
-            height={ isXSmall || isSmall ? '80%' : '450' }
-            dragEnabled={ !(isXSmall || isSmall) }
-            { ...props }
-            callback={ (modalResult) => {
+            width={isXSmall || isSmall ? '95%' : '60%'}
+            height={isXSmall || isSmall ? '80%' : '450'}
+            dragEnabled={!(isXSmall || isSmall)}
+            {...props}
+            callback={(modalResult) => {
                 if (props.callback) {
                     props.callback(modalResult);
                 }
-            } }
+            }}
 
-            contentRender={ () => {
+            contentRender={() => {
                 return quickHelpReference && quickHelpReference.content
                     ? <div className='quick-help-reference-container'>
-                        <Markdown remarkPlugins={ [remarkGfm] } rehypePlugins={ [rehypeRaw] } skipHtml={ false } >
+                        <Markdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]} skipHtml={false} >
                             {quickHelpReference?.content}
                         </Markdown>
                     </div>
-                    : <div className='dx-datagrid-nodata'>{ formatMessage('dxDataGrid-noDataText') }</div>
-            } }
+                    : <div className='dx-datagrid-nodata'>{formatMessage('dxDataGrid-noDataText')}</div>
+            }}
         /> : null
     );
 }
+
+
+class QuickHelpReferenceDialogService extends RootDialogService {
+    protected readonly dialogId: string = 'quick-help-reference-dialog-root';
+
+    public show({ referenceKey }: { referenceKey: string }) {
+        super.show(() => {
+            this.root.render(
+                <AuthProvider>
+                    <SharedAreaProvider>
+                        <AppDataProvider>
+                            <QuickReferenceHelpDialog
+                                referenceKey={referenceKey}
+                                callback={() => { }}
+                                onHidden={() => { this.hide(); }}
+                            />
+                        </AppDataProvider>
+                    </SharedAreaProvider>
+                </AuthProvider>
+            );
+        })
+
+    }
+
+    public hide() {
+        if (this.root) {
+            this.root!.unmount();
+        }
+        if (this.popupContainer) {
+            this.popupContainer.remove();
+        }
+    }
+}
+
+export const quickHelpReferenceService = new QuickHelpReferenceDialogService();
