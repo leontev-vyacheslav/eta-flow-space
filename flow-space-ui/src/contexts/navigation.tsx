@@ -4,7 +4,7 @@ import type { AppBaseProviderProps } from '../models/app-base-provider-props';
 import { createContext, useContext, useState, useEffect, type ElementType } from 'react';
 import { useLocation } from 'react-router';
 import { useSharedArea } from './shared-area';
-import { useAppSettings } from './app-settings';
+import { useAppSettingsStore } from './app-settings-store';
 
 const NavigationContext = createContext<NavigationContextModel>({} as NavigationContextModel);
 const useNavigation = () => useContext(NavigationContext);
@@ -26,7 +26,7 @@ function withNavigationWatcher(Component: ElementType, path: string) {
         const { setNavigationData } = useNavigation();
         const location = useLocation();
         const { treeViewRef } = useSharedArea();
-        const { flows } = useAppSettings();
+        const flows = useAppSettingsStore((s) => s.flows);
 
         useEffect(() => {
             let locationPath = location.pathname;

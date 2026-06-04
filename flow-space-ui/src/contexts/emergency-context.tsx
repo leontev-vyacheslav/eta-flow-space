@@ -4,7 +4,6 @@ import { EmergencyWarning, EmergencyWarningOff, WarningIcon } from "../constants
 import { createRoot } from "react-dom/client";
 import { renderToStaticMarkup } from "react-dom/server";
 import { useAppData } from "./app-data/app-data";
-import { useAppSettings } from "./app-settings";
 import { EmergencyPopoverContent } from "./emergency-popover-content";
 import { emergencyMuteManager } from "../services/emergency-mute-manager";
 import type { EmergencyModel } from "../models/flows/emergency-model";
@@ -12,6 +11,7 @@ import AppConstants from "../constants/app-constants";
 
 import "./emergency-popover.scss";
 import { AuthProvider } from "./auth";
+import { useAppSettingsStore } from "./app-settings-store";
 
 export interface EmergencyContextModel {
     refreshEmergencyStates: () => Promise<void>;
@@ -28,7 +28,7 @@ const EmergencyContext = createContext<EmergencyContextModel | undefined>(undefi
 function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
     const popoverInstance = useRef<dxPopover<any>>(null);
     const { getEmergencyStatesAsync } = useAppData();
-    const { flows, appSettingsData } = useAppSettings();
+    const { flows, appSettingsData } = useAppSettingsStore();
     const [emergencyStates] = useState<EmergencyModel[]>([]);
     const popoverContentContainerRef = useRef<HTMLDivElement>(null);
     const popoverContentReactRootRef = useRef<ReturnType<typeof createRoot> | null>(null);
@@ -159,9 +159,8 @@ function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
         if (!emergencyStates) {
             return;
         }
-        console.log(appSettingsData);
 
-        emergencyMuteManager.processEmergencyStates(emergencyStates, appSettingsData?.userSettings?.notifications?.web.enabled);
+        emergencyMuteManager.processEmergencyStates(emergencyStates, appSettingsData?.userSettings?.notifications?.web.enabled, appSettingsData?.userSettings?.notifications?.web.soundType);
 
         const emergencyIconContainerElements = Array.from(document.querySelectorAll('[data-emergency-icon-container]'));
 

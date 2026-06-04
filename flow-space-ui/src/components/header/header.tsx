@@ -57,7 +57,6 @@ const Header = ({ title, menuToggleEnabled, toggleMenu }: HeaderProps) => {
                                 },
                                 {
                                     text: 'Настройки...',
-                                    visible: isAdmin(),
                                     icon: () => (<SettingsIcon size={20} />),
                                     onClick: () => {
                                         userSettingsService.show();

@@ -1,11 +1,12 @@
 import { TimeIcon } from '../../constants/app-icons';
-import { useAppSettings } from '../../contexts/app-settings';
+import { useAppSettingsStore } from '../../contexts/app-settings-store';
 import type { WorkDateWidgetProps } from '../../models/work-date-widget-props';
 import { useCallback, useEffect, useState } from 'react';
 
 
 export const WorkDateWidget = ({ style }: WorkDateWidgetProps) => {
-    const { appSettingsData } = useAppSettings();
+    const workDate = useAppSettingsStore( (s) => s.appSettingsData.workDate);
+
     const [isShowColon, setIsShowColon] = useState<boolean>(true);
 
     useEffect(() => {
@@ -17,11 +18,10 @@ export const WorkDateWidget = ({ style }: WorkDateWidgetProps) => {
     }, []);
 
     const getFormattedWorkDate = useCallback(() => {
-        if (!appSettingsData.workDate)
+        if (!workDate)
             return null;
 
-        const formattedWorkDate = appSettingsData
-            .workDate
+        const formattedWorkDate = workDate
             .toLocaleDateString('ru-RU', {
                 day: '2-digit',
                 month: 'long',
@@ -31,7 +31,7 @@ export const WorkDateWidget = ({ style }: WorkDateWidgetProps) => {
             });
 
         return isShowColon ? formattedWorkDate : formattedWorkDate.replaceAll(':', ' ');
-    }, [appSettingsData.workDate, isShowColon]);
+    }, [isShowColon, workDate]);
 
     return (
         <div style={ {

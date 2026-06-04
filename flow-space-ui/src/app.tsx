@@ -7,7 +7,6 @@ import { HashRouter as BrowserRouter } from 'react-router-dom';
 import { NavigationProvider } from './contexts/navigation';
 import { AuthProvider, useAuth } from './contexts/auth';
 import { useScreenSizeClass } from './utils/media-query';
-import { AppSettingsProvider } from './contexts/app-settings';
 import { AppDataProvider } from './contexts/app-data/app-data';
 import { SharedAreaProvider } from './contexts/shared-area';
 import ruMessages from 'devextreme/localization/messages/ru.json';
@@ -16,6 +15,7 @@ import ContentAuth from './content-auth';
 import ContentNonAuth from './content-non-auth';
 import Loader from './components/loader/loader';
 import { EmergencyContextProvider } from './contexts/emergency-context';
+import { AppSettingsInitializer } from './contexts/app-settings-initializer';
 
 
 function App() {
@@ -61,16 +61,15 @@ function Main() {
             <AuthProvider>
                 <SharedAreaProvider>
                     <AppDataProvider>
-                        <AppSettingsProvider>
-                            <EmergencyContextProvider>
-                                <NavigationProvider>
-                                    <div className={`app ${screenSizeClass}`}>
-                                        <App />
-                                        <Loader />
-                                    </div>
-                                </NavigationProvider>
-                            </EmergencyContextProvider>
-                        </AppSettingsProvider>
+                        <AppSettingsInitializer />
+                        <EmergencyContextProvider>
+                            <NavigationProvider>
+                                <div className={`app ${screenSizeClass}`}>
+                                    <App />
+                                    <Loader />
+                                </div>
+                            </NavigationProvider>
+                        </EmergencyContextProvider>
                     </AppDataProvider>
                 </SharedAreaProvider>
             </AuthProvider>

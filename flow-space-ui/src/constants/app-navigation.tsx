@@ -14,10 +14,10 @@ import {
 } from './app-icons';
 import type { TreeViewItemModel } from '../models/tree-view-item';
 import type { IconBaseProps } from 'react-icons';
-import { useAppSettings } from '../contexts/app-settings';
+import { useAppSettingsStore } from '../contexts/app-settings-store';
 
 export const useSideNavigationMenuItems = () => {
-    const { flows } = useAppSettings();
+    const flows = useAppSettingsStore((s) => s.flows);
 
     return useMemo<TreeViewItemModel[]>(() => {
         return [

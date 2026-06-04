@@ -2,10 +2,10 @@ import { useEffect } from 'react';
 import { formatMessage } from 'devextreme/localization';
 import { useNavigate } from 'react-router';
 import { useSharedArea } from '../../contexts/shared-area';
-import { useAppSettings } from '../../contexts/app-settings';
+import { useAppSettingsStore } from '../../contexts/app-settings-store';
 
 export const HomePage = () => {
-    const { flows  } = useAppSettings();
+    const flows = useAppSettingsStore((s) => s.flows);
     const navigate = useNavigate();
     const { treeViewRef } = useSharedArea();
 
