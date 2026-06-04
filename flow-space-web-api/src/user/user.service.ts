@@ -2,10 +2,11 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { UserDataModel } from '../database/models/user.data-model';
 import { I18nService } from 'nestjs-i18n';
-import { AuthUserModel } from '../models/sign-in.model';
+import { AuthUserModel } from '../models/auth-user.model';
+import { UserSettingsModel } from '../models/user-settings.model';
 
 @Injectable()
-export class UsersService {
+export class UserService {
     constructor(
         private readonly i18n: I18nService,
         @InjectModel(UserDataModel)
@@ -25,5 +26,15 @@ export class UsersService {
         }
 
         return user.settings;
+    }
+
+    async postSettings(userId: number, settings: UserSettingsModel) {
+        const user = await this.userModel.findByPk(userId);
+        if (!user) {
+            throw new NotFoundException(this.i18n.t('errors.USER_NOT_FOUND'));
+        }
+
+        user.settings = settings;
+        return user.save();
     }
 }

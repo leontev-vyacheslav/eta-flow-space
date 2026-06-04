@@ -1,6 +1,6 @@
 import { Controller, Post, Body, Get, HttpCode, HttpStatus, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { UsersService } from '../users/users.service';
+import { UserService } from '../user/user.service';
 import { createHash } from 'crypto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { SignInModel } from '../models/sign-in.model';
@@ -10,7 +10,7 @@ import { I18nService } from 'nestjs-i18n';
 export class AuthController {
     constructor(
         private authService: AuthService,
-        private usersService: UsersService,
+        private usersService: UserService,
         private readonly i18n: I18nService,
     ) {}
 

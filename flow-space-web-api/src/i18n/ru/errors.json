@@ -10,5 +10,6 @@
   "INVALID_QUERY_PARAMETER": "Указан неверный параметр в запросе",
   "DEVICE_NOT_FOUND": "Устройство с ID {deviceId} не найдено",
   "DEVICE_STATE_NOT_EXISTS": "Состояние устройства с ID {deviceId} не существует",
-  "USERS_SETTINGS_NOT_FOUND": "Настройки пользователя не найдены"
+  "USERS_SETTINGS_NOT_FOUND": "Настройки пользователя не найдены",
+  "USER_NOT_FOUND": "Пользователь не найден"
 }

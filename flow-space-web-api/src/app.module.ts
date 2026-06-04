@@ -4,7 +4,7 @@ import { configuration } from './config/configuration';
 import { AppController } from './app.controller';
 import { DatabaseModule } from './database/database.module';
 import { AuthModule } from './auth/auth.module';
-import { UsersModule } from './users/users.module';
+import { UserModule } from './user/user.module';
 import { DeviceStateModule } from './device-state/device-state.module';
 import { EmergencyStateModule } from './emergency-state/emergency-state.module';
 import { FlowModule } from './flow/flow.module';
@@ -42,7 +42,7 @@ import * as path from 'path';
         DeviceStateDispatcherModule,
         DatabaseModule,
         AuthModule,
-        UsersModule,
+        UserModule,
         SharedStoreModule,
         DeviceStateModule,
         EmergencyStateModule,

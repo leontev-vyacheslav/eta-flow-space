@@ -19,6 +19,22 @@ GET {{baseUrl}}/api/users/settings
 Authorization: Bearer {{ authToken }}
 
 ###
+# @name getUserSettings
+POST {{baseUrl}}/api/users/settings
+Authorization: Bearer {{ authToken }}
+Content-Type: application/json
+
+{
+  "notifications": {
+    "web":{
+      "enabled": false,
+      "soundType": "test"
+    }
+  }
+}
+
+
+###
 # @name getDeviceStatesByDates
 GET {{baseUrl}}/api/device-states/9/dates?beginDate=2026-04-11T00:00:00Z&endDate=2026-04-11T23:59:59Z&fields=boilers[2].tempFlueGases
 Authorization: Bearer {{ authToken }}

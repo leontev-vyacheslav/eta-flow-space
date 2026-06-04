@@ -10,5 +10,6 @@
   "INVALID_QUERY_PARAMETER": "Invalid parameter specified in the request",
   "DEVICE_NOT_FOUND": "Device with ID {deviceId} not found",
   "DEVICE_STATE_NOT_EXISTS": "State of device with ID {deviceId does not exist",
-  "USERS_SETTINGS_NOT_FOUND": "User settings not found"
+  "USERS_SETTINGS_NOT_FOUND": "User settings not found",
+  "USER_NOT_FOUND": "User not found"
 }

@@ -7,13 +7,3 @@ export class SignInModel {
     @IsString()
     password: string;
 }
-
-export class AuthUserModel {
-    id: number;
-
-    name: string;
-
-    roleId: number;
-
-    password: string;
-}
