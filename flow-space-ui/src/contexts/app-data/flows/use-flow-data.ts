@@ -60,6 +60,7 @@ export type AppDataContextFlowEndpointsModel = {
   getReportDefinitionAsync: (reportId: number) => Promise<any | undefined>;
   getMnemoschemaStylesheetsAsync: GetMnemoschemaStylesheetsAsyncFunc;
   getUserSettingsAsync: () => Promise<UserSettingsModel | undefined>;
+  postUserSettingsAsync: (userSettings: UserSettingsModel) => Promise<void>;
   staticFilesManifest: any;
 };
 
@@ -132,14 +133,15 @@ export const useFlowData = () => {
       [staticFilesManifest],
     );
 
-  const getMnemoschemaStylesheetsAsync = useCallback<GetMnemoschemaStylesheetsAsyncFunc>(
-    async (flowCode: string) => {
-      return await fetch(
-        `${routes.host}/static/flows/${flowCode}/${flowCode}-mnemo-schema.css?v=${staticFilesManifest["mnemo-schema"] ?? Date.now()}`,
-      ).then((res) => (res.ok ? res.text() : null));
-    },
-    [staticFilesManifest],
-  );
+  const getMnemoschemaStylesheetsAsync =
+    useCallback<GetMnemoschemaStylesheetsAsyncFunc>(
+      async (flowCode: string) => {
+        return await fetch(
+          `${routes.host}/static/flows/${flowCode}/${flowCode}-mnemo-schema.css?v=${staticFilesManifest["mnemo-schema"] ?? Date.now()}`,
+        ).then((res) => (res.ok ? res.text() : null));
+      },
+      [staticFilesManifest],
+    );
 
   const getDeviceAsync = useCallback(
     async (deviceId: number) => {
@@ -256,6 +258,14 @@ export const useFlowData = () => {
     }
   }, [authHttpRequest]);
 
+  const postUserSettingsAsync = useCallback(async (settings: UserSettingsModel) => {
+    await authHttpRequest({
+      url: `${routes.host}${routes.users}/settings`,
+      method: HttpConstants.Methods.Post as Method,
+      data: settings,
+    });
+  }, [authHttpRequest]);
+
   useEffect(() => {
     (async () => {
       const staticFilesManifest = await getStaticFilesManifest();
@@ -278,6 +288,7 @@ export const useFlowData = () => {
     getReportAsync,
     getReportDefinitionAsync,
     getUserSettingsAsync,
+    postUserSettingsAsync,
     staticFilesManifest,
   };
 };

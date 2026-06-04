@@ -163,9 +163,9 @@ class EmergencyMuteManager {
         return this.getUnmutedEmergencies(emergencyState).length > 0;
     }
 
-    processEmergencyStates(emergencyStates: EmergencyModel[]): void {
+    processEmergencyStates(emergencyStates: EmergencyModel[], enabledSound: boolean = true): void {
         const hasUnmuted = this.hasUnmutedEmergencies(emergencyStates);
-        if (hasUnmuted) {
+        if (hasUnmuted && enabledSound === true) {
             this.playAlertSound();
         }
         this.purgeExpiredMutes(emergencyStates);

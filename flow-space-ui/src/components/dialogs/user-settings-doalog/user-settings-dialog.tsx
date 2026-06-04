@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { Popup as PopupRef } from "devextreme-react/popup";
 import { AppDataProvider, useAppData } from "../../../contexts/app-data/app-data";
 import { AuthProvider } from "../../../contexts/auth";
@@ -8,22 +8,13 @@ import { RootDialogService } from "../root-dialog-service";
 import { useScreenSize } from "../../../utils/media-query";
 import Form, { Item, Label } from "devextreme-react/form";
 import { Button } from "devextreme-react/button";
+import { AppSettingsProvider, useAppSettings } from "../../../contexts/app-settings";
 
 const UserSettingsDialog = (props: any) => {
     const { isXSmall, isSmall } = useScreenSize();
     const popupRef = useRef<PopupRef>(null);
-    const { getUserSettingsAsync } = useAppData();
-    const [userSettings, setUserSettings] = useState<any>();
-
-    useEffect(() => {
-        (async () => {
-            const userSettings = await getUserSettingsAsync();
-
-            setUserSettings(userSettings);
-            console.log(userSettings);
-
-        })();
-    }, [getUserSettingsAsync]);
+    const { appSettingsData, setAppSettingsData } = useAppSettings();
+    const { postUserSettingsAsync } = useAppData();
 
     return (
         <AppModalPopup
@@ -42,15 +33,11 @@ const UserSettingsDialog = (props: any) => {
             }}
         >
             <Form
-                formData={userSettings}
-                onFieldDataChanged={(e) => {
-                    const formData = { [e.dataField as keyof any]: e.value };
+                formData={appSettingsData.userSettings}
 
-                    return formData;
-                }}
             >
                 <Item
-                    dataField="notifications.web.allow"
+                    dataField="notifications.web.enabled"
                     editorType="dxCheckBox"
                 >
                     <Label text="Уведомления" />
@@ -60,9 +47,12 @@ const UserSettingsDialog = (props: any) => {
                 <Button
                     text="Применить"
                     type="default"
-                    onClick={() => {
+                    onClick={async () => {
                         if (props.callback) {
-
+                            if (appSettingsData.userSettings) {
+                                await postUserSettingsAsync(appSettingsData.userSettings);
+                                setAppSettingsData({ ...appSettingsData, ...{ userSettings: appSettingsData.userSettings } });
+                            }
                             popupRef.current?.instance.hide();
                         }
                     }}
@@ -81,10 +71,12 @@ class UserSettingsDialogService extends RootDialogService {
                 <AuthProvider>
                     <SharedAreaProvider>
                         <AppDataProvider>
-                            <UserSettingsDialog
-                                callback={() => { }}
-                                onHidden={() => { this.hide(); }}
-                            />
+                            <AppSettingsProvider>
+                                    <UserSettingsDialog
+                                        callback={() => { }}
+                                        onHidden={() => { this.hide(); }}
+                                    />
+                            </AppSettingsProvider>
                         </AppDataProvider>
                     </SharedAreaProvider>
                 </AuthProvider>

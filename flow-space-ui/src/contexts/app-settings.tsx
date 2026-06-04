@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import type { AppSettingsContextModel, AppSettingsDataContextModel } from '../models/app-settings-context';
 import type { AppBaseProviderProps } from '../models/app-base-provider-props';
 import type { FlowModel } from '../models/flows/flow-model';
@@ -12,7 +12,7 @@ const useAppSettings = () => useContext(AppSettingsContext);
 
 function AppSettingsProvider(props: AppBaseProviderProps) {
     const { user } = useAuth();
-    const { getFlowListAsync } = useAppData();
+    const { getFlowListAsync, getUserSettingsAsync } = useAppData();
     const [flows, setFlows] = useState<FlowModel[] | undefined>([]);
     const [appSettingsData, setAppSettingsData] = useState<AppSettingsDataContextModel>({
         isShowFooter: true,
@@ -22,8 +22,13 @@ function AppSettingsProvider(props: AppBaseProviderProps) {
         (async () => {
             const flows = await getFlowListAsync();
             setFlows(flows);
+            const userSettings = await getUserSettingsAsync();
+            if (userSettings) {
+                setAppSettingsData(p => ({ ...p, userSettings }));
+            }
         })();
-    }, [getFlowListAsync, user]);
+    }, [getFlowListAsync, getUserSettingsAsync, user]);
+
 
     return <AppSettingsContext.Provider value={{
         appSettingsData,

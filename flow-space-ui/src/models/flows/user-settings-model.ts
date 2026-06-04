@@ -1,1 +1,8 @@
-export type UserSettingsModel = object
+export class UserSettingsModel {
+    notifications: {
+        web: {
+            enabled: boolean;
+            soundType: string;
+        };
+    } | undefined;
+}
