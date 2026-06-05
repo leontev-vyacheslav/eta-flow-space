@@ -61,7 +61,7 @@ class JsonInfoViewDialogService extends RootDialogService {
 
     public show({ title, content }: { title: string, content: object }) {
         super.show(() => {
-            this.root.render(
+            this.root!.render(
                 <AuthProvider>
                     <SharedAreaProvider>
                         <AppDataProvider>
