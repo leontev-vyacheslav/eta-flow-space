@@ -230,7 +230,7 @@ class EmergencyMuteManager {
 
   processEmergencyStates(
     emergencyStates: EmergencyModel[],
-    enabledSound: boolean = true,
+    enabledSound: boolean = false,
     soundType: string = "buzzer",
   ): void {
     const hasUnmuted = this.hasUnmutedEmergencies(emergencyStates);

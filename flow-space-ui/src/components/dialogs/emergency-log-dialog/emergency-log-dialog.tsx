@@ -138,7 +138,7 @@ class EmergencyLogDialogService extends RootDialogService {
 
     public show({ device }: { device?: DeviceModel }) {
         super.show(() => {
-            this.root.render(
+            this.root!.render(
                 <AuthProvider>
                     <SharedAreaProvider>
                         <AppDataProvider>

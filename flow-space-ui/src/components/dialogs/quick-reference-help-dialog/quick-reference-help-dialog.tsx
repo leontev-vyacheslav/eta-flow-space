@@ -27,7 +27,6 @@ const QuickReferenceHelpDialog = (props: QuickReferenceHelpDialogProps) => {
 
     useEffect(() => {
         (async () => {
-            // const quickHelpReference =  await getQuickHelpReferenceAsync(props.referenceKey);
             const quickHelpContent = await fetch(`${routes.host}/static/quick-help/content/${props.referenceKey}.md`).then(res => res.ok ? res.text() : null);
             if (quickHelpContent) {
                 setQuickHelpReference({
@@ -75,7 +74,7 @@ class QuickHelpReferenceDialogService extends RootDialogService {
 
     public show({ referenceKey }: { referenceKey: string }) {
         super.show(() => {
-            this.root.render(
+            this.root!.render(
                 <AuthProvider>
                     <SharedAreaProvider>
                         <AppDataProvider>

@@ -165,7 +165,6 @@ function DashboardPageContextProvider(props: any) {
         });
     }, [dataschema, device, deviceState, isAdmin]);
 
-
     useEffect(() => {
         const timer = setInterval(async () => {
             if (!deviceId) {

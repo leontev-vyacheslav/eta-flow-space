@@ -140,7 +140,7 @@ class GraphDialogService extends RootDialogService {
     public show({ device, schemaTypeInfos, beginDate, endDate }: GraphDialogProps) {
 
         super.show(() => {
-            this.root.render(
+            this.root!.render(
                 <AuthProvider>
                     <SharedAreaProvider>
                         <AppDataProvider>

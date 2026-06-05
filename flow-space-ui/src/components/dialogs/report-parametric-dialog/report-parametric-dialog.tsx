@@ -94,7 +94,7 @@ class ReportParametricDialogService extends RootDialogService {
     public show({ report, parameterValues, callback }: { report: ReportModel, parameterValues: any, callback: (modalResult: PopupCallbackModel) => void}) {
 
         super.show(() => {
-            this.root.render(
+            this.root!.render(
                 <AuthProvider>
                     <SharedAreaProvider>
                         <AppDataProvider>

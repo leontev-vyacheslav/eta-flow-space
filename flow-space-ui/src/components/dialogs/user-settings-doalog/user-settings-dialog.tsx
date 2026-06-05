@@ -66,13 +66,12 @@ const UserSettingsDialog = (props: any) => {
                     text="Применить"
                     type="default"
                     onClick={async () => {
-                        if (props.callback) {
-                            if (appSettingsData.userSettings) {
-                                await postUserSettingsAsync(appSettingsData.userSettings);
-                                setAppSettingsData({ ...appSettingsData, ...{ userSettings: appSettingsData.userSettings } });
-                            }
-                            popupRef.current?.instance.hide();
+                        if (appSettingsData.userSettings) {
+                            await postUserSettingsAsync(appSettingsData.userSettings);
+                            setAppSettingsData({ ...appSettingsData, userSettings: { ...appSettingsData.userSettings } });
                         }
+                        popupRef.current?.instance.hide();
+                        props.callback?.();
                     }}
                 />
             </div>
@@ -85,7 +84,7 @@ class UserSettingsDialogService extends RootDialogService {
 
     show() {
         super.show(() => {
-            this.root.render(
+            this.root!.render(
                 <AuthProvider>
                     <SharedAreaProvider>
                         <AppDataProvider>

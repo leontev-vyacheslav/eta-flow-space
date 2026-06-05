@@ -58,7 +58,6 @@ const DashboardPageInner = () => {
                     }, {
                         icon: () => <HelpIcon size={20} />,
                         text: 'Справка...',
-
                         onClick: () => {
                             quickHelpReferenceService.show({ referenceKey: 'common/dashboard' });
                         }
@@ -120,7 +119,6 @@ const DashboardPageInner = () => {
 
     return (
         <>
-
             <PageHeader caption={() => {
                 return <div style={{ display: 'flex', flexDirection: 'column' }}>
                     <span>Приборная панель</span>
