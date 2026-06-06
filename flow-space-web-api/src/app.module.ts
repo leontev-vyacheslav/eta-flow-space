@@ -67,7 +67,7 @@ import { UserCacheInterceptor } from './common/interceptors/user-cache.intercept
         DeviceModule,
     ],
     controllers: [AppController],
-    providers: [{ provide: APP_INTERCEPTOR, useClass: UserCacheInterceptor }],
+    providers: [],
 })
 export class AppModule {
     configure(consumer: MiddlewareConsumer) {
