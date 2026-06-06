@@ -17,9 +17,7 @@ import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { AcceptLanguageResolver, HeaderResolver, I18nModule, QueryResolver } from 'nestjs-i18n';
 import { CacheModule } from '@nestjs/cache-manager';
 import KeyvRedis from '@keyv/redis';
-import { APP_INTERCEPTOR } from '@nestjs/core';
 import * as path from 'path';
-import { UserCacheInterceptor } from './common/interceptors/user-cache.interceptor';
 
 @Module({
     imports: [
