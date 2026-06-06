@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards, Param, ParseIntPipe, NotFoundException } from '@nestjs/common';
+import { Controller, Get, UseGuards, Param, ParseIntPipe, NotFoundException, UseInterceptors } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { DeviceOwnershipGuard } from '../common/guards/device-ownership.guard';
 import { RequestUserModel } from '../models/request-user.model';
@@ -6,9 +6,13 @@ import { User } from '../common/decorators/user.decorator';
 import { DeviceService } from './device.service';
 import { DeviceDataModel } from '../database/models';
 import { I18nService } from 'nestjs-i18n';
+import { UserCacheInterceptor } from '../common/interceptors/user-cache.interceptor';
+import { CacheTTL } from '@nestjs/cache-manager';
 
 @Controller('api/devices')
 @UseGuards(JwtAuthGuard)
+@UseInterceptors(UserCacheInterceptor)
+@CacheTTL(300_000)
 export class DeviceController {
     constructor(
         private readonly deviceService: DeviceService,

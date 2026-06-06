@@ -15,13 +15,17 @@ import { EmergencyStateDispatcherModule } from './common/services/emergency-stat
 import { DeviceStateDispatcherModule } from './common/services/device-state-dispatcher/device-state-dispatcher.module';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { AcceptLanguageResolver, HeaderResolver, I18nModule, QueryResolver } from 'nestjs-i18n';
+import { CacheModule } from '@nestjs/cache-manager';
+import KeyvRedis from '@keyv/redis';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 import * as path from 'path';
+import { UserCacheInterceptor } from './common/interceptors/user-cache.interceptor';
 
 @Module({
     imports: [
         ConfigModule.forRoot({
-            envFilePath: ['.env.local', '.env'],
             isGlobal: true,
+            envFilePath: ['.env.local', '.env'],
             load: [configuration],
         }),
         I18nModule.forRoot({
@@ -37,6 +41,13 @@ import * as path from 'path';
                 new HeaderResolver(['x-lang']),
             ],
         }),
+        CacheModule.registerAsync({
+            isGlobal: true,
+            useFactory: () => ({
+                stores: [new KeyvRedis('redis://localhost:6379')],
+                ttl: 30_000,
+            }),
+        }),
         ScheduleModule.forRoot(),
         EmergencyStateDispatcherModule,
         DeviceStateDispatcherModule,
@@ -50,7 +61,7 @@ import * as path from 'path';
         DeviceModule,
     ],
     controllers: [AppController],
-    providers: [],
+    providers: [{ provide: APP_INTERCEPTOR, useClass: UserCacheInterceptor }],
 })
 export class AppModule {
     configure(consumer: MiddlewareConsumer) {
