@@ -1,5 +1,5 @@
 import { Module, MiddlewareConsumer } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { configuration } from './config/configuration';
 import { AppController } from './app.controller';
 import { DatabaseModule } from './database/database.module';
@@ -43,10 +43,16 @@ import { UserCacheInterceptor } from './common/interceptors/user-cache.intercept
         }),
         CacheModule.registerAsync({
             isGlobal: true,
-            useFactory: () => ({
-                stores: [new KeyvRedis('redis://localhost:6379')],
-                ttl: 30_000,
-            }),
+            inject: [ConfigService],
+            useFactory: (config: ConfigService) => {
+                const host = config.getOrThrow<string>('REDIS_HOST');
+                const port = config.getOrThrow<number>('REDIS_PORT');
+
+                return {
+                    stores: [new KeyvRedis(`redis://${host}:${port}`)],
+                    ttl: 30_000,
+                };
+            },
         }),
         ScheduleModule.forRoot(),
         EmergencyStateDispatcherModule,
