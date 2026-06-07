@@ -107,6 +107,7 @@ export class EmergencyStateDispatcherService {
                     try {
                         const result = Boolean(eval(emergencyReason.expression));
                         if (result) {
+                            emergencyReason.description = eval(emergencyReason.description) as string;
                             emergencyReasons.push(emergencyReason);
                         }
                     } catch (error) {
