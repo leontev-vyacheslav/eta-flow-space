@@ -52,7 +52,7 @@ export class DataSchemasService {
             throw new InternalServerErrorException(`Invalid JSON schema for device: ${deviceCode}`);
         }
 
-        await this.cacheManager.set(`schema:${deviceCode}`, parsed, 60_000);
+        await this.cacheManager.set(`schema:${deviceCode}`, parsed, 300_000);
 
         return parsed;
     }
