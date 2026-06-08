@@ -1,6 +1,6 @@
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { Injectable, Logger } from '@nestjs/common';
-import { DeviceDataModel, DeviceStateDataModel, EmergencyDataModel, EmergencyStateDataModel } from '../../../database/models';
+import { DeviceDataModel, DeviceStateDataModel, EmergencyDataModel, EmergencyStateDataModel, FlowDataModel } from '../../../database/models';
 import { InjectConnection, InjectModel } from '@nestjs/sequelize';
 import { Op, literal } from 'sequelize';
 import { SharedStoreService } from '../shared-store/shared-store.service';
@@ -50,6 +50,11 @@ export class EmergencyStateDispatcherService {
                         model: EmergencyDataModel,
                         as: 'emergencies',
                         attributes: ['reasons', 'updateStateInterval', 'lastStateUpdate'],
+                    },
+                    {
+                        model: FlowDataModel,
+                        as: 'flow',
+                        attributes: ['code'],
                     },
                 ],
             });
@@ -107,8 +112,8 @@ export class EmergencyStateDispatcherService {
                 }
 
                 /* eslint-disable @typescript-eslint/no-unused-vars */
-                const ds = this.dataSchemasService.aliases;
-                const dc = device.code;
+                const dss = this.dataSchemasService;
+                const flowCode = device.flow?.code;
                 /* eslint-enable @typescript-eslint/no-unused-vars */
 
                 for (const emergencyReason of device.emergencies.reasons as EmergencyReasonModel[]) {

@@ -22,13 +22,6 @@ export class DataSchemasService {
         @Inject(CACHE_MANAGER) private cacheManager: Cache,
     ) {}
 
-    get aliases() {
-        return {
-            ed: this.getEnumDescription.bind(this) as typeof this.getEnumDescription,
-            fn: this.formatNumber.bind(this) as typeof this.formatNumber,
-        };
-    }
-
     private async getDataschema(deviceCode: string): Promise<Dataschema> {
         const cachedSchema = await this.cacheManager.get<Dataschema>(`schema:${deviceCode}`);
         if (cachedSchema) {
