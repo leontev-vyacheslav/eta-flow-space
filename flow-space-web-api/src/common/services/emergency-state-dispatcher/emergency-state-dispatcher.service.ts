@@ -116,7 +116,7 @@ export class EmergencyStateDispatcherService {
                         const result = Boolean(await eval(emergencyReason.expression));
                         if (result) {
                             if (emergencyReason.description.includes('`')) {
-                                emergencyReason.description = (await eval(emergencyReason.description)) as string;
+                                emergencyReason.description = (await eval(`(async () => { return ${emergencyReason.description}; })()`)) as string;
                             }
                             emergencyReasons.push(emergencyReason);
                         }
