@@ -91,6 +91,8 @@ services:
       - "3002:3002"
     env_file:
       - ./flow-space-web-api/.env
+    volumes:
+      - ./flow-space-statics:/app/dist/statics:ro
     depends_on:
       - eta-flow-space-database
       - eta-flow-space-store

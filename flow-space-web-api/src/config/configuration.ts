@@ -18,7 +18,7 @@ export const configuration = (): ConfigModel => ({
     app: {
         nodeEnv: process.env.NODE_ENV || 'development',
         port: parseInt(process.env.PORT || '3002', 10),
-        staticPath: process.env.STATIC_PATH || '',
+        staticsPath: process.env.STATICS_PATH || '',
     },
     redis: {
         host: process.env.REDIS_HOST || 'localhost',

@@ -7,6 +7,7 @@ import { SharedStoreService } from '../shared-store/shared-store.service';
 import { differenceInMinutes } from 'date-fns';
 import { Sequelize } from 'sequelize-typescript';
 import { EmergencyReasonModel, EmergencyStateModel } from '../../../models';
+import { DataSchemasService } from '../data-schemas/data-schemas.service';
 
 @Injectable()
 export class EmergencyStateDispatcherService {
@@ -14,6 +15,7 @@ export class EmergencyStateDispatcherService {
     private readonly logger = new Logger(EmergencyStateDispatcherService.name);
 
     constructor(
+        private readonly dataSchemasService: DataSchemasService,
         private readonly sharedStoreService: SharedStoreService,
 
         @InjectConnection()
@@ -103,19 +105,25 @@ export class EmergencyStateDispatcherService {
                         description: 'Связь отсутствует',
                     });
                 }
-                (device.emergencies.reasons as EmergencyReasonModel[]).forEach((emergencyReason) => {
+
+                /* eslint-disable @typescript-eslint/no-unused-vars */
+                const ds = this.dataSchemasService.aliases;
+                const dc = device.code;
+                /* eslint-enable @typescript-eslint/no-unused-vars */
+
+                for (const emergencyReason of device.emergencies.reasons as EmergencyReasonModel[]) {
                     try {
-                        const result = Boolean(eval(emergencyReason.expression));
+                        const result = Boolean(await eval(emergencyReason.expression));
                         if (result) {
                             if (emergencyReason.description.includes('`')) {
-                                emergencyReason.description = eval(emergencyReason.description) as string;
+                                emergencyReason.description = (await eval(emergencyReason.description)) as string;
                             }
                             emergencyReasons.push(emergencyReason);
                         }
                     } catch (error) {
                         this.logger.error(`Failed to evaluate expression for reason ${emergencyReason.id}: ${error}`);
                     }
-                });
+                }
 
                 const emergencyState =
                     emergencyReasons.length === 0
