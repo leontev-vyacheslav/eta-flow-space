@@ -29,7 +29,8 @@ class EmergencySummaryRepository:
         period_end = literal_column(f"({period_end_sql})")
 
         reasons_table = func.json_array_elements(EmergencyState.state["reasons"]).table_valued(column("reason"), name="reason").lateral("reason")
-        reason_description = literal_column("reason->>'description'", String)
+        # reason_description = literal_column("reason->>'description'", String)
+        reason_description = literal_column("COALESCE(reason->>'title', reason->>'description')", String)
         reason_id = cast(literal_column("reason->>'id'", String), Integer)
 
         conditions = [UserDeviceLink.user_id == user_id]
