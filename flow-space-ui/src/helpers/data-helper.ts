@@ -18,6 +18,7 @@ export type SchemaTypeInfoPropertiesChainModel = {
     typeInfo?: SchemaTypeInfoModel;
     propertiesChainValuePair: PropertiesChainValuePairModel
 }
+
 export function getKeyValuePairs(data: any): PropertiesChainValuePairModel[] {
     const propertiesChainValuePairs: PropertiesChainValuePairModel[] = [];
 
@@ -44,7 +45,13 @@ export function getKeyValuePairs(data: any): PropertiesChainValuePairModel[] {
     return propertiesChainValuePairs;
 }
 
+const PRIMITIVE_TYPES = new Set(['number', 'integer', 'string', 'boolean']);
+
 export const getSchemaTypeInfo = (propertiesChain: string, subschema: any, schema?: any): SchemaTypeInfoModel | undefined => {
+    if (!subschema.properties) {
+        return undefined
+    };
+
     // eslint-disable-next-line prefer-const
     let [propName, ...restProps] = propertiesChain.split('.');
     const restChain = restProps.join('.');
@@ -52,7 +59,7 @@ export const getSchemaTypeInfo = (propertiesChain: string, subschema: any, schem
     const prop = subschema.properties[propName];
     if (prop) {
         schema = schema || subschema;
-        if (['number', 'integer', 'string', 'boolean'].includes(prop.type)) {
+        if (PRIMITIVE_TYPES.has(prop.type)) {
             return { typeName: prop.type, unit: prop.unit, formatting: prop.formatting, dimension: prop.dimension, label: prop.label, ui: prop.ui };
         } else if (prop.type === 'array') {
             const typeRef = prop.items.$ref;
