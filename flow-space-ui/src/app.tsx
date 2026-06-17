@@ -50,7 +50,11 @@ function App() {
     });
     locale('ru-RU');
 
-    return user === null ? <ContentNonAuth /> : <ContentAuth />
+    return user === null
+        ? <ContentNonAuth />
+        : <EmergencyContextProvider>
+            <ContentAuth />
+        </EmergencyContextProvider>
 }
 
 function Main() {
@@ -62,14 +66,12 @@ function Main() {
                 <SharedAreaProvider>
                     <AppDataProvider>
                         <AppSettingsInitializer />
-                        <EmergencyContextProvider>
-                            <NavigationProvider>
-                                <div className={`app ${screenSizeClass}`}>
-                                    <App />
-                                    <Loader />
-                                </div>
-                            </NavigationProvider>
-                        </EmergencyContextProvider>
+                        <NavigationProvider>
+                            <div className={`app ${screenSizeClass}`}>
+                                <App />
+                                <Loader />
+                            </div>
+                        </NavigationProvider>
                     </AppDataProvider>
                 </SharedAreaProvider>
             </AuthProvider>

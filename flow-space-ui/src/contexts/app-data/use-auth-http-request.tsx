@@ -23,6 +23,10 @@ export const useAuthHttpRequest = () => {
         async (config: AxiosRequestConfig, suppressLoader: boolean = false, suppressShowUnauthorized: boolean = false, suppressShowError: boolean = false) => {
             let response: AxiosResponse<any, any> | null | AxiosResponse<unknown, any> | undefined;
             const userAuthData = getUserAuthDataFromStorage();
+            if (!userAuthData) {
+                await signOut();
+                return undefined;
+            }
             config = config || {};
             config.headers = config.headers || {};
             config.headers = { ...config.headers, ...HttpConstants.Headers.AcceptJson };
