@@ -12,7 +12,9 @@ export const configuration = (): ConfigModel => ({
     },
     jwt: {
         secret: process.env.JWT_SECRET || 'secret-key',
-        expiresIn: process.env.JWT_EXPIRES_IN || '24h',
+        refreshSecret: process.env.JWT_REFRESH_SECRET || 'refresh-secret-key',
+        expiresIn: process.env.JWT_EXPIRES_IN || '1h',
+        refreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN || '7d',
         algorithm: (process.env.JWT_ALGORITHM || 'HS256') as ConfigModel['jwt']['algorithm'],
     },
     app: {

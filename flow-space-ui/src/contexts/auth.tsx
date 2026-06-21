@@ -6,17 +6,18 @@ import type {
     AuthContextModel,
     GetUserAuthDataFromStorageFunc,
     SignInAsyncFunc,
-    SignOutAsyncFunc
+    SignOutAsyncFunc,
+    RefreshAccessTokenFunc
 } from '../models/auth-context';
 import type { AuthUserModel } from '../models/auth-user-model';
 import type { AppBaseProviderProps } from '../models/app-base-provider-props';
 import type { SignInModel } from '../models/signin-model';
 import { UserRoles } from '../models/enums/user-role-model';
 
-const AuthContext = createContext<AuthContextModel>({ } as AuthContextModel);
+const AuthContext = createContext<AuthContextModel>({} as AuthContextModel);
 const useAuth = () => useContext(AuthContext);
 
-function AuthProvider (props: AppBaseProviderProps) {
+function AuthProvider(props: AppBaseProviderProps) {
     const [user, setUser] = useState<AuthUserModel | null>(null);
 
     const getUserAuthDataFromStorage = useCallback<GetUserAuthDataFromStorageFunc>(() => {
@@ -36,9 +37,13 @@ function AuthProvider (props: AppBaseProviderProps) {
 
     useEffect(() => {
         const userAuthData = getUserAuthDataFromStorage();
-
         setUser(userAuthData);
     }, [getUserAuthDataFromStorage]);
+
+    const updateStoredAuth = useCallback((authData: AuthUserModel) => {
+        localStorage.setItem('@userAuthData', JSON.stringify(authData));
+        setUser(authData);
+    }, []);
 
     const signIn = useCallback<SignInAsyncFunc>(async (signIn: SignInModel) => {
         let userAuthData = null;
@@ -61,6 +66,33 @@ function AuthProvider (props: AppBaseProviderProps) {
         }
     }, []);
 
+    const refreshAccessToken = useCallback<RefreshAccessTokenFunc>(async () => {
+        const userAuthData = getUserAuthDataFromStorage();
+        if (!userAuthData?.refreshToken) {
+            return null;
+        }
+        try {
+            const response = await axios.post(
+                `${routes.host}${routes.accountRefresh}`,
+                { refreshToken: userAuthData.refreshToken }
+            );
+
+            if (response && response.status === HttpConstants.StatusCodes.Ok && response.data) {
+                const updatedAuth: AuthUserModel = {
+                    ...userAuthData,
+                    accessToken: response.data.accessToken,
+                    refreshToken: response.data.refreshToken,
+                };
+                updateStoredAuth(updatedAuth);
+                return updatedAuth.accessToken;
+            }
+        } catch (error) {
+            console.log(`Token refresh failed: ${(error as Error).message}`);
+        }
+
+        return null;
+    }, [getUserAuthDataFromStorage, updateStoredAuth]);
+
     const signOut = useCallback<SignOutAsyncFunc>(async () => {
         const userAuthData = getUserAuthDataFromStorage();
         if (userAuthData) {
@@ -68,13 +100,13 @@ function AuthProvider (props: AppBaseProviderProps) {
                 const signoutResponse = await axios.post(`${routes.host}${routes.accountSignOut}`, userAuthData, {
                     headers: {
                         ...HttpConstants.Headers.ContentTypeJson,
-                        'Authorization': `Bearer ${userAuthData.token}`,
+                        'Authorization': `Bearer ${userAuthData.accessToken}`,
                     },
                 });
 
                 console.log(signoutResponse);
 
-            } catch  {
+            } catch {
                 console.log('It was happened error during a process of an user security token revoke!');
             }
         }
@@ -97,8 +129,8 @@ function AuthProvider (props: AppBaseProviderProps) {
 
     return (
         <AuthContext.Provider
-            value={ { user, signIn, signOut, getUserAuthDataFromStorage, isAdmin, isOperator, isGuest } }
-            { ...props }
+            value={{ user, signIn, signOut, getUserAuthDataFromStorage, refreshAccessToken, isAdmin, isOperator, isGuest }}
+            {...props}
         />
     );
 }

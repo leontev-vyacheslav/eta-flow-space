@@ -7,11 +7,14 @@ import { AuthController } from './auth.controller';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { UserModule } from '../user/user.module';
 import { JwtConfigModel } from '../models/configs/jwt-config.model';
+import { SharedStoreModule } from '../common/services/shared-store/shared-store.module';
+import type { StringValue } from 'ms';
 
 @Module({
     imports: [
         UserModule,
         PassportModule,
+        SharedStoreModule,
         JwtModule.registerAsync({
             imports: [ConfigModule],
             inject: [ConfigService],
@@ -20,7 +23,7 @@ import { JwtConfigModel } from '../models/configs/jwt-config.model';
                 return {
                     secret: jwtConfig.secret,
                     signOptions: {
-                        expiresIn: jwtConfig.expiresIn as `${number}`,
+                        expiresIn: jwtConfig.expiresIn as StringValue,
                         algorithm: jwtConfig.algorithm as 'HS256',
                     },
                 };

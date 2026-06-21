@@ -4,6 +4,7 @@ import type { SignInModel } from './signin-model';
 export type SignInAsyncFunc = (singIn: SignInModel) => Promise<void>;
 export type SignOutAsyncFunc = () => Promise<void>;
 export type GetUserAuthDataFromStorageFunc = () => AuthUserModel | null;
+export type RefreshAccessTokenFunc = () => Promise<string | null>;
 
 export type AuthContextModel = {
   user: AuthUserModel | null;
@@ -13,6 +14,8 @@ export type AuthContextModel = {
   signOut: SignOutAsyncFunc;
 
   getUserAuthDataFromStorage: GetUserAuthDataFromStorageFunc;
+
+  refreshAccessToken: RefreshAccessTokenFunc;
 
   isAdmin: () => boolean;
 

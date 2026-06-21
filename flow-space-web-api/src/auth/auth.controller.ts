@@ -32,6 +32,19 @@ export class AuthController {
         });
     }
 
+    @Post('refresh')
+    @HttpCode(HttpStatus.OK)
+    async refresh(@Body('refreshToken') refreshToken: string) {
+        if (!refreshToken) {
+            throw new UnauthorizedException(this.i18n.t('errors.TOKEN_EXPIRED_OR_INVALID'));
+        }
+        const userAuthData = await this.authService.refresh(refreshToken);
+        if (!userAuthData) {
+            throw new UnauthorizedException(this.i18n.t('errors.TOKEN_EXPIRED_OR_INVALID'));
+        }
+        return userAuthData;
+    }
+
     @Get('health-check')
     @UseGuards(JwtAuthGuard)
     @HttpCode(HttpStatus.OK)

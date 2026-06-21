@@ -52,4 +52,17 @@ export class SharedStoreService implements OnModuleInit, OnModuleDestroy {
     async setEmergencyState(deviceId: number, state: Record<string, unknown>, ttl: number): Promise<void> {
         await this.client.set(`emergencyState:${deviceId}`, JSON.stringify(state), 'EX', ttl);
     }
+
+    async saveRefreshToken(token: string, userId: number, ttlSeconds: number): Promise<void> {
+        await this.client.set(`refreshToken:${token}`, userId.toString(), 'EX', ttlSeconds);
+    }
+
+    async getRefreshTokenUserId(token: string): Promise<number | null> {
+        const data = await this.client.get(`refreshToken:${token}`);
+        return data ? parseInt(data, 10) : null;
+    }
+
+    async deleteRefreshToken(token: string): Promise<void> {
+        await this.client.del(`refreshToken:${token}`);
+    }
 }
