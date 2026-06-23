@@ -3,10 +3,11 @@ import type { DeviceModel } from "../../../models/flows/device-model";
 import type { MenuItemModel } from "../../../models/menu-item-model";
 import { MainMenu } from "../../menu/main-menu/main-menu";
 import { Popup as PopupRef } from "devextreme-react/popup";
-import { useAuth } from "../../../contexts/auth";
+import { selectIsAdmin } from "../../../contexts/auth-selectors";
+import { useAuthStore } from "../../../contexts/auth-store";
 
 export const EmergencyLogDialogTitle = ({ device, popupRef, menuItems }: { device?: DeviceModel, popupRef: React.RefObject<PopupRef | null>, menuItems: MenuItemModel[] }) => {
-    const { isAdmin } = useAuth();
+    const isAdmin = useAuthStore(selectIsAdmin);
 
     return (
         <div style={{
@@ -18,7 +19,7 @@ export const EmergencyLogDialogTitle = ({ device, popupRef, menuItems }: { devic
         }}>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <span style={{ fontSize: '20px', fontWeight: 500 }}>Журнал аварий</span>
-                <span style={{ fontSize: '12px', color: 'rgb(118, 118, 118)'}}>{device ? device.name + (isAdmin() ? ` [${device.id}]` : '') :  'Все устройства'}</span>
+                <span style={{ fontSize: '12px', color: 'rgb(118, 118, 118)' }}>{device ? device.name + (isAdmin ? ` [${device.id}]` : '') : 'Все устройства'}</span>
             </div>
             <div style={{ display: 'flex' }}>
                 <MainMenu items={menuItems} />

@@ -3,9 +3,9 @@ import { AxiosError, type AxiosRequestConfig, type AxiosResponse } from 'axios';
 import { HttpConstants } from '../../constants/app-http-constants';
 import { useSharedArea } from '../shared-area';
 import type { SharedAreaContextModel } from '../../models/shared-area-context';
-import { useAuth } from '../auth';
 import { httpClientBase } from './http-client-base';
 import { proclaim, proclaimError } from '../../utils/proclaim';
+import { useAuthStore } from '../auth-store';
 
 export type AxiosWithCredentialsFunc = (
     config: AxiosRequestConfig,
@@ -15,7 +15,9 @@ export type AxiosWithCredentialsFunc = (
 ) => Promise<AxiosResponse | undefined>;
 
 export const useAuthHttpRequest = () => {
-    const { getUserAuthDataFromStorage, signOut, refreshAccessToken } = useAuth();
+    const getUserAuthDataFromStorage = useAuthStore((s) => s.getUserAuthDataFromStorage);
+    const signOut = useAuthStore((s) => s.signOut);
+    const refreshAccessToken = useAuthStore((s) => s.refreshAccessToken);
     const { showLoader, hideLoader }: SharedAreaContextModel = useSharedArea();
 
     const axiosWithCredentials = useCallback<AxiosWithCredentialsFunc>(

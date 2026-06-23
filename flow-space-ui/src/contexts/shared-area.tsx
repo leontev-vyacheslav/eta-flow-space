@@ -1,6 +1,5 @@
 import { createContext, useCallback, useContext, useRef, createElement } from 'react';
 import { confirm } from 'devextreme/ui/dialog';
-import { useAuth } from './auth';
 import ReactDOMServer from 'react-dom/server';
 import AppConstants from '../constants/app-constants';
 import type { ProcFunc } from '../models/primitive-type';
@@ -8,6 +7,7 @@ import type { SharedAreaContextModel } from '../models/shared-area-context';
 import type { AppBaseProviderProps } from '../models/app-base-provider-props';
 import TreeView from 'devextreme-react/tree-view';
 import type { TreeViewItemModel } from '../models/tree-view-item';
+import { useAuthStore } from './auth-store';
 
 const SharedAreaContext = createContext<SharedAreaContextModel>({} as SharedAreaContextModel);
 const useSharedArea = () => useContext(SharedAreaContext);
@@ -15,7 +15,7 @@ const useSharedArea = () => useContext(SharedAreaContext);
 
 function SharedAreaProvider(props: AppBaseProviderProps) {
     const { children } = props;
-    const { signOut } = useAuth();
+    const signOut = useAuthStore((s) => s.signOut);
     const treeViewRef = useRef<TreeView<TreeViewItemModel>>(null);
 
     const signOutWithConfirm = useCallback<ProcFunc>(() => {

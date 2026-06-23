@@ -7,11 +7,12 @@ import type { EmergencyModel } from "../models/flows/emergency-model";
 import { IoFlashOutline } from "react-icons/io5";
 import { renderToStaticMarkup } from "react-dom/server";
 import AppConstants from "../constants/app-constants";
-import { useAuth } from "./auth";
 import type { EmergencyReasonModel } from "../models/flows/emergency-reason-model";
+import { selectIsAdmin } from "./auth-selectors";
+import { useAuthStore } from "./auth-store";
 
 export const EmergencyPopoverContent = ({ emergencyState }: { emergencyState: EmergencyModel, popoverInstance: React.RefObject<dxPopover<any> | null> }) => {
-    const { isAdmin } = useAuth();
+    const isAdmin = useAuthStore(selectIsAdmin);
     const [unmutedEmergencies, setUnmutedEmergencies] = useState<EmergencyModel[]>([]);
 
     const toggleEmergencyIcon = useCallback((deviceId: number) => {
@@ -125,7 +126,7 @@ export const EmergencyPopoverContent = ({ emergencyState }: { emergencyState: Em
                                         <td>
                                             <div style={{ display: 'flex', alignItems: 'center' }}>
                                                 <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
-                                                    <span style={{ flex: 1, fontSize: '1em' }}>{r.description}{isAdmin() && ` [${r.id}]`}</span>
+                                                    <span style={{ flex: 1, fontSize: '1em' }}>{r.description}{isAdmin && ` [${r.id}]`}</span>
                                                     <span style={{ color: 'gray', fontSize: '0.85em', display: 'flex', alignItems: 'center', gap: 5 }}>
                                                         <IoFlashOutline size={12} />
                                                         {emergencyState.timestamp && new Date(emergencyState.timestamp).toLocaleString('ru-RU', { dateStyle: 'short', timeStyle: 'short' })}

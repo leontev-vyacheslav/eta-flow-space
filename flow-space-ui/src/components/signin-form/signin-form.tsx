@@ -2,13 +2,13 @@ import './signin-form.scss';
 import { useState, useCallback, type FormEvent, useMemo } from 'react';
 import Form, { Item, Label, ButtonItem, ButtonOptions, RequiredRule } from 'devextreme-react/form';
 import LoadIndicator from 'devextreme-react/load-indicator';
-import { useAuth } from '../../contexts/auth';
 import { proclaim, proclaimError } from '../../utils/proclaim';
 import type { SignInModel } from '../../models/signin-model';
+import { useAuthStore } from '../../contexts/auth-store';
 
 export const SigninForm = () => {
     const [loading, setLoading] = useState<boolean>(false);
-    const { signIn } = useAuth();
+    const signIn = useAuthStore((state) => state.signIn);
 
     const formData = useMemo<SignInModel>( () => {
         return {} as SignInModel

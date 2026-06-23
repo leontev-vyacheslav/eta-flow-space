@@ -2,7 +2,6 @@ import { useCallback, useEffect, useRef } from "react";
 import { createRoot } from "react-dom/client";
 import { useDashboardPage } from "../../dashboard-page-context"
 import dxPopover from "devextreme/ui/popover";
-import { useAuth } from "../../../../contexts/auth";
 import { GraphIcon, HelpIcon, TypeIcon, VariableIcon } from "../../../../constants/app-icons";
 import type { SchemaTypeInfoPropertiesChainModel } from "../../../../helpers/data-helper";
 import { showAlertDialog } from "../../../../utils/dialogs";
@@ -10,9 +9,11 @@ import AppConstants from "../../../../constants/app-constants";
 
 import './mnemoschema-popover.scss';
 import { graphService } from "../../../../components/dialogs/graph-dialog/graph-dialog";
+import { selectIsAdmin } from "../../../../contexts/auth-selectors";
+import { useAuthStore } from "../../../../contexts/auth-store";
 
 export const useMnemoschemaPopover = () => {
-    const { isAdmin } = useAuth();
+    const isAdmin = useAuthStore(selectIsAdmin);
     const { schemaTypeInfoPropertiesChain, dataschema, device } = useDashboardPage();
     const popoverInstance = useRef<dxPopover<any>>(null);
     const escapeHandlerRef = useRef<((e: KeyboardEvent) => void) | null>(null); // Track the handler
@@ -71,7 +72,7 @@ export const useMnemoschemaPopover = () => {
                                 <td>
                                     <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
                                         <span style={{ fontSize: '1em' }}>{propertyInfo.typeInfo?.ui.editor.label.text ?? ''}</span>
-                                        {isAdmin() ?
+                                        {isAdmin ?
                                             <>
                                                 <span style={{ display: 'flex', alignItems: 'center', fontSize: '0.85em', color: 'gray', gap: 5 }} >
                                                     <VariableIcon size={12} />
@@ -135,7 +136,7 @@ export const useMnemoschemaPopover = () => {
             } else if (propertyInfo.typeInfo?.isEnum) {
 
                 const enumDescription = dataschema.$defs[propertyInfo.typeInfo?.typeName].enumDescriptions[value]?.split(' - ').pop();
-                if (isAdmin()) {
+                if (isAdmin) {
                     value = enumDescription ? enumDescription + ' (' + value + ')' : <span style={{ color: 'red' }}>Ошибка ({value})</span>
                     value = (
                         <div style={{ display: 'flex', gap: 5 }}>

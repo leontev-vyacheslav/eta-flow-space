@@ -1,10 +1,10 @@
 import {  Route, Routes } from 'react-router-dom';
-import { useAuth } from '../../contexts/auth';
 import { useEffect } from 'react';
+import { useAuthStore } from '../../contexts/auth-store';
 
 
 export const SignOutPage = function () {
-    const { signOut } = useAuth();
+    const signOut = useAuthStore((s) => s.signOut);
 
     useEffect(() => {
         (async () => {

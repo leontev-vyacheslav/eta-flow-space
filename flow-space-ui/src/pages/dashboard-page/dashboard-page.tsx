@@ -10,16 +10,18 @@ import { DashboardPageContextProvider, useDashboardPage } from './dashboard-page
 import { getQuickGuid } from '../../utils/uuid';
 import { NoData } from '../../components/no-data-widget/no-data-widget';
 import { emergencyMuteManager } from '../../services/emergency-mute-manager';
-import { useAuth } from '../../contexts/auth';
 import { MenuItemWithSubMenu } from '../../components/menu/menu-item/menu-item';
 import { quickHelpReferenceService } from '../../components/dialogs/quick-reference-help-dialog/quick-reference-help-dialog.tsx';
 import { graphService } from '../../components/dialogs/graph-dialog/graph-dialog.tsx';
 import { emergencyLogService } from '../../components/dialogs/emergency-log-dialog/emergency-log-dialog.tsx';
+import { useAuthStore } from '../../contexts/auth-store.tsx';
+import { selectIsAdmin } from '../../contexts/auth-selectors.ts';
 
 const DashboardPageInner = () => {
     const tabPanelRef = useRef<TabPanel>(null);
     const navigate = useNavigate();
-    const { isAdmin } = useAuth();
+    const isAdmin = useAuthStore(selectIsAdmin);
+
     const { setRefreshToken, schemaTypeInfoPropertiesChain, device } = useDashboardPage();
     const { flowCode } = useParams();
     const [ControlTabContent, setControlTabContent] = useState<ComponentType<any> | null>(null);
@@ -122,7 +124,7 @@ const DashboardPageInner = () => {
             <PageHeader caption={() => {
                 return <div style={{ display: 'flex', flexDirection: 'column' }}>
                     <span>Приборная панель</span>
-                    <span style={{ fontSize: 12, fontWeight: 'normal', minHeight: 16, color: 'rgb(118, 118, 118)' }}>{device ? device.description + (isAdmin() ? ` [${device.id}]` : '') : ''}</span>
+                    <span style={{ fontSize: 12, fontWeight: 'normal', minHeight: 16, color: 'rgb(118, 118, 118)' }}>{device ? device.description + (isAdmin ? ` [${device.id}]` : '') : ''}</span>
                 </div>
             }} menuItems={menuItems}>
                 <DashboardIcon size={AppConstants.headerIconSize} />
