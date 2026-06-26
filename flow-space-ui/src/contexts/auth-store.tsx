@@ -19,6 +19,8 @@ export interface AuthState {
   getUserAuthDataFromStorage: () => AuthUserModel | null;
 }
 
+let refreshPromise: Promise<string | null> | null = null;
+
 export const useAuthStore = create<AuthState>((set, get) => ({
   user: null,
 
@@ -51,30 +53,42 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   },
 
   refreshAccessToken: async () => {
-    const stored = get().getUserAuthDataFromStorage();
-    if (!stored?.refreshToken) return null;
-
-    try {
-      const response = await axios.post(
-        `${routes.host}${routes.accountRefresh}`,
-        { refreshToken: stored.refreshToken }
-      );
-
-      if (response?.status === HttpConstants.StatusCodes.Ok && response.data) {
-        const updated: AuthUserModel = {
-          ...stored,
-          accessToken: response.data.accessToken,
-          refreshToken: response.data.refreshToken,
-        };
-        localStorage.setItem('@userAuthData', JSON.stringify(updated));
-        set({ user: updated });
-        return updated.accessToken;
-      }
-    } catch (e) {
-      console.error('Token refresh failed:', e);
+    if (refreshPromise) {
+      return refreshPromise;
     }
 
-    return null;
+    refreshPromise = (async () => {
+      const stored = get().getUserAuthDataFromStorage();
+      if (!stored?.refreshToken) return null;
+
+      try {
+        const response = await axios.post(
+          `${routes.host}${routes.accountRefresh}`,
+          { refreshToken: stored.refreshToken }
+        );
+
+        if (response?.status === HttpConstants.StatusCodes.Ok && response.data) {
+          const updated: AuthUserModel = {
+            ...stored,
+            accessToken: response.data.accessToken,
+            refreshToken: response.data.refreshToken,
+          };
+          localStorage.setItem('@userAuthData', JSON.stringify(updated));
+          set({ user: updated });
+          return updated.accessToken;
+        }
+      } catch (e) {
+        console.error('Token refresh failed:', e);
+      }
+
+      return null;
+    })();
+
+    try {
+      return await refreshPromise;
+    } finally {
+      refreshPromise = null;
+    }
   },
 
   signOut: async () => {
