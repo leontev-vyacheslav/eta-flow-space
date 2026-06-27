@@ -3,15 +3,18 @@ import Button from 'devextreme-react/button';
 import AppLogo from '../../assets/app-logo.svg?react';
 import { AccountIcon, AdminIcon, ExitIcon, MenuIcon, SettingsIcon, UserIcon } from '../../constants/app-icons';
 import type { HeaderProps } from '../../models/header-props';
-import { useAuth } from '../../contexts/auth';
 import { MainMenu } from '../menu/main-menu/main-menu';
 import { useSharedArea } from '../../contexts/shared-area';
 
 import './header.scss';
 import { userSettingsService } from '../dialogs/user-settings-doalog/user-settings-dialog';
+import { selectIsAdmin, selectUser } from '../../contexts/auth-selectors';
+import { useAuthStore } from '../../contexts/auth-store';
 
 const Header = ({ title, menuToggleEnabled, toggleMenu }: HeaderProps) => {
-    const { user, isAdmin } = useAuth();
+    const user = useAuthStore(selectUser);
+    const isAdmin = useAuthStore(selectIsAdmin);
+
     const { signOutWithConfirm } = useSharedArea();
 
     return (
@@ -45,11 +48,11 @@ const Header = ({ title, menuToggleEnabled, toggleMenu }: HeaderProps) => {
                                     render: () => (
                                         <div className={'menu-item profile'} style={{ display: 'flex', borderBottom: '1px solid #e0e0e0', paddingBottom: 10 }}    >
                                             <div >
-                                                {(isAdmin() ? <AdminIcon size={24} /> : <UserIcon size={24} />)}
+                                                {(isAdmin ? <AdminIcon size={24} /> : <UserIcon size={24} />)}
                                             </div>
 
                                             <span className={'dx-menu-item-text'} style={{ display: 'flex', flexDirection: 'column', gap: 7 }} >
-                                                <span>{isAdmin() ? 'Администратор' : 'Пользователь'}</span>
+                                                <span>{isAdmin ? 'Администратор' : 'Пользователь'}</span>
                                                 <span style={{ fontSize: '0.8em', color: 'grey' }}>{user?.login}</span>
                                             </span>
                                         </div>

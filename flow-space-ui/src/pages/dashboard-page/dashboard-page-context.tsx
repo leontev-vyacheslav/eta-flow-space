@@ -8,10 +8,11 @@ import { proclaim } from '../../utils/proclaim';
 import { getQuickGuid } from '../../utils/uuid';
 import { getKeyValuePairs, getSchemaTypeInfo, type SchemaTypeInfoPropertiesChainModel } from '../../helpers/data-helper';
 import type { DictionaryBaseModel } from '../../models/abstractions/dictionary-base-model';
+import { jsonInfoViewService } from '../../components/dialogs/json-info-view-dialog/json-info-view-dialog';
+import { selectIsAdmin } from '../../contexts/auth-selectors';
+import { useAuthStore } from '../../contexts/auth-store';
 
 import './dashboard-page-content.scss';
-import { useAuth } from '../../contexts/auth';
-import { jsonInfoViewService } from '../../components/dialogs/json-info-view-dialog/json-info-view-dialog';
 
 export type DashboardPageContextModel = {
     device?: DeviceModel;
@@ -31,7 +32,7 @@ const DashboardPageContext = createContext({} as DashboardPageContextModel);
 function DashboardPageContextProvider(props: any) {
     const { getDeviceAsync, getDeviceStateAsync, getMnemoschemaAsync, getDeviceStateDataschemaAsync } = useAppData();
     const { deviceId, flowCode } = useParams();
-    const { isAdmin } = useAuth();
+    const isAdmin = useAuthStore(selectIsAdmin);
 
     const [device, setDevice] = useState<DeviceModel | undefined>();
     const [deviceState, setDeviceState] = useState<DeviceStateModel | undefined>();
@@ -134,12 +135,12 @@ function DashboardPageContextProvider(props: any) {
                         div.style.flexDirection = 'column';
                         div.innerHTML = `
                             <div>Не было получено валидное состояние устройства <i>${device?.name}</i>.</div>
-                            ${isAdmin() ? `<a data-link='${uid}' href='javascript:void(0)'>Ошибки валидации</a>` : ''}
+                            ${isAdmin ? `<a data-link='${uid}' href='javascript:void(0)'>Ошибки валидации</a>` : ''}
                         `;
                         return div;
                     },
                     onContentReady: () => {
-                        if (!isAdmin()) {
+                        if (!isAdmin) {
                             return;
                         }
                         document.querySelector(`[data-link="${uid}"]`)?.addEventListener('click', () => {

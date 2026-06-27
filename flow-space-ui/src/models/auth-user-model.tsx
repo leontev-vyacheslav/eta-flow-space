@@ -5,5 +5,7 @@ export type AuthUserModel = {
 
   login: string;
 
-  token: string;
+  accessToken: string;
+
+  refreshToken: string;
 };

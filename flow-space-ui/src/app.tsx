@@ -5,7 +5,6 @@ import './dx-styles.scss';
 
 import { HashRouter as BrowserRouter } from 'react-router-dom';
 import { NavigationProvider } from './contexts/navigation';
-import { AuthProvider, useAuth } from './contexts/auth';
 import { useScreenSizeClass } from './utils/media-query';
 import { AppDataProvider } from './contexts/app-data/app-data';
 import { SharedAreaProvider } from './contexts/shared-area';
@@ -16,11 +15,13 @@ import ContentNonAuth from './content-non-auth';
 import Loader from './components/loader/loader';
 import { EmergencyContextProvider } from './contexts/emergency-context';
 import { AppSettingsInitializer } from './contexts/app-settings-initializer';
+import { AuthInitializer } from './contexts/auth-initializer';
+import { selectUser } from './contexts/auth-selectors';
+import { useAuthStore } from './contexts/auth-store';
 
 
 function App() {
-    const { user } = useAuth();
-
+    const user = useAuthStore(selectUser);
     if (user === undefined) {
         return null;
     }
@@ -62,19 +63,18 @@ function Main() {
 
     return (
         <BrowserRouter>
-            <AuthProvider>
-                <SharedAreaProvider>
-                    <AppDataProvider>
-                        <AppSettingsInitializer />
-                        <NavigationProvider>
-                            <div className={`app ${screenSizeClass}`}>
-                                <App />
-                                <Loader />
-                            </div>
-                        </NavigationProvider>
-                    </AppDataProvider>
-                </SharedAreaProvider>
-            </AuthProvider>
+            <AuthInitializer />
+            <SharedAreaProvider>
+                <AppDataProvider>
+                    <AppSettingsInitializer />
+                    <NavigationProvider>
+                        <div className={`app ${screenSizeClass}`}>
+                            <App />
+                            <Loader />
+                        </div>
+                    </NavigationProvider>
+                </AppDataProvider>
+            </SharedAreaProvider>
         </BrowserRouter>
     );
 }

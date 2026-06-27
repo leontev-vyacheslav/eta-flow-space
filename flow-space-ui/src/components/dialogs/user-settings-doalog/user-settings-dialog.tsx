@@ -1,7 +1,6 @@
 import { useRef } from "react";
 import { Popup as PopupRef } from "devextreme-react/popup";
 import { AppDataProvider, useAppData } from "../../../contexts/app-data/app-data";
-import { AuthProvider, useAuth } from "../../../contexts/auth";
 import { SharedAreaProvider } from "../../../contexts/shared-area";
 import AppModalPopup from "../app-modal-popup/app-modal-popup";
 import { RootDialogService } from "../root-dialog-service";
@@ -9,10 +8,12 @@ import { useScreenSize } from "../../../utils/media-query";
 import Form, { Item, Label } from "devextreme-react/form";
 import { Button } from "devextreme-react/button";
 import { useAppSettingsStore } from "../../../contexts/app-settings-store";
+import { selectIsAdmin } from "../../../contexts/auth-selectors";
+import { useAuthStore } from "../../../contexts/auth-store";
 
 const UserSettingsDialog = (props: any) => {
     const { isXSmall, isSmall } = useScreenSize();
-    const { isAdmin } = useAuth();
+    const isAdmin = useAuthStore(selectIsAdmin);
     const popupRef = useRef<PopupRef>(null);
     const { appSettingsData, setAppSettingsData } = useAppSettingsStore();
     const { postUserSettingsAsync } = useAppData();
@@ -41,7 +42,7 @@ const UserSettingsDialog = (props: any) => {
                     dataField="notifications.web.enabled"
                     editorType="dxCheckBox"
                     editorOptions={{
-                        disabled: !isAdmin()
+                        disabled: !isAdmin
                     }}
                 >
                     <Label text="Уведомления в браузере" />
@@ -85,16 +86,14 @@ class UserSettingsDialogService extends RootDialogService {
     show() {
         super.show(() => {
             this.root!.render(
-                <AuthProvider>
-                    <SharedAreaProvider>
-                        <AppDataProvider>
-                            <UserSettingsDialog
-                                callback={() => { }}
-                                onHidden={() => { this.hide(); }}
-                            />
-                        </AppDataProvider>
-                    </SharedAreaProvider>
-                </AuthProvider>
+                <SharedAreaProvider>
+                    <AppDataProvider>
+                        <UserSettingsDialog
+                            callback={() => { }}
+                            onHidden={() => { this.hide(); }}
+                        />
+                    </AppDataProvider>
+                </SharedAreaProvider>
             );
         });
     }

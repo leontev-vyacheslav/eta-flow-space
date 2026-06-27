@@ -9,7 +9,6 @@ import type { ReportModel } from "../../../models/flows/report-model";
 import { ReportParametric } from "./report-parametric";
 import type { ParameterModel } from "../../../models/flows/parameter-model";
 import { AppDataProvider, useAppData } from "../../../contexts/app-data/app-data";
-import { AuthProvider } from "../../../contexts/auth";
 import { SharedAreaProvider } from "../../../contexts/shared-area";
 import type { PopupCallbackModel } from "../../../models/popup-callback";
 import { RootDialogService } from "../root-dialog-service";
@@ -91,17 +90,15 @@ const ReportParametricDialog = (props: ReportParamsDialogProps) => {
 class ReportParametricDialogService extends RootDialogService {
     protected readonly dialogId: string = 'report-params-dialog-root';
 
-    public show({ report, parameterValues, callback }: { report: ReportModel, parameterValues: any, callback: (modalResult: PopupCallbackModel) => void}) {
+    public show({ report, parameterValues, callback }: { report: ReportModel, parameterValues: any, callback: (modalResult: PopupCallbackModel) => void }) {
 
         super.show(() => {
             this.root!.render(
-                <AuthProvider>
-                    <SharedAreaProvider>
-                        <AppDataProvider>
-                            <ReportParametricDialog report={report} parameterValues={parameterValues} callback={callback} onHidden={() => { this.hide(); }} />
-                        </AppDataProvider>
-                    </SharedAreaProvider>
-                </AuthProvider>
+                <SharedAreaProvider>
+                    <AppDataProvider>
+                        <ReportParametricDialog report={report} parameterValues={parameterValues} callback={callback} onHidden={() => { this.hide(); }} />
+                    </AppDataProvider>
+                </SharedAreaProvider>
             );
         });
     }

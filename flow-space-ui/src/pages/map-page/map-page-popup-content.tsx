@@ -5,13 +5,14 @@ import { useScreenSize } from "../../utils/media-query";
 import { CheckedIcon, ConnectionOff, EmergencyWarning, EmergencyWarningOff, GraphIcon, LocationIcon, UncheckedIcon, WarningIcon } from "../../constants/app-icons";
 import type { MapPagePopupContentProps } from "../../models/map-page-popup-content-props";
 import { emergencyMuteManager } from "../../services/emergency-mute-manager";
-import { useAuth } from "../../contexts/auth";
 import AppConstants from "../../constants/app-constants";
 import { graphService } from "../../components/dialogs/graph-dialog/graph-dialog";
+import { useAuthStore } from "../../contexts/auth-store";
+import { selectIsAdmin } from "../../contexts/auth-selectors";
 
 export const MapPagePopupContent = ({ device, deviceState, dataschema, emergencyState }: MapPagePopupContentProps) => {
     const { isXSmall } = useScreenSize();
-    const { isAdmin } = useAuth();
+    const isAdmin = useAuthStore(selectIsAdmin);
 
     const schemaTypeInfoPropertiesChain = useMemo(() => {
         if (deviceState && dataschema) {
@@ -155,7 +156,7 @@ export const MapPagePopupContent = ({ device, deviceState, dataschema, emergency
                 <div className="map-pop-content-location-wrapper" style={{}}>
                     <LocationIcon size={22} />
                     <div className="map-pop-content-location">
-                        <div style={{ fontWeight: 'bold' }}>{device.description}{isAdmin() && ` [${device.id}]`}</div>
+                        <div style={{ fontWeight: 'bold' }}>{device.description}{isAdmin && ` [${device.id}]`}</div>
                         <div>{device && device.objectLocation ? device.objectLocation.address : 'Нет данных'}</div>
                     </div>
 

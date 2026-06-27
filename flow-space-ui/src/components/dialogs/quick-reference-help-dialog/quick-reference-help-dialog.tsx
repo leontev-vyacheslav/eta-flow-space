@@ -10,11 +10,10 @@ import type { QuickHelpReferenceModel } from '../../../models/quick-help-referen
 import { formatMessage } from 'devextreme/localization';
 import { useScreenSize } from '../../../utils/media-query';
 import routes from "../../../constants/app-api-routes";
-
-import './quick-reference-help-dialog.scss'
-import { AuthProvider } from '../../../contexts/auth';
 import { SharedAreaProvider } from '../../../contexts/shared-area';
 import { RootDialogService } from '../root-dialog-service';
+
+import './quick-reference-help-dialog.scss'
 
 export type QuickReferenceHelpDialogProps = React.PropsWithChildren<IPopupOptions> & AppModalPopupProps & {
     referenceKey: string
@@ -75,17 +74,15 @@ class QuickHelpReferenceDialogService extends RootDialogService {
     public show({ referenceKey }: { referenceKey: string }) {
         super.show(() => {
             this.root!.render(
-                <AuthProvider>
-                    <SharedAreaProvider>
-                        <AppDataProvider>
-                            <QuickReferenceHelpDialog
-                                referenceKey={referenceKey}
-                                callback={() => { }}
-                                onHidden={() => { this.hide(); }}
-                            />
-                        </AppDataProvider>
-                    </SharedAreaProvider>
-                </AuthProvider>
+                <SharedAreaProvider>
+                    <AppDataProvider>
+                        <QuickReferenceHelpDialog
+                            referenceKey={referenceKey}
+                            callback={() => { }}
+                            onHidden={() => { this.hide(); }}
+                        />
+                    </AppDataProvider>
+                </SharedAreaProvider>
             );
         })
 

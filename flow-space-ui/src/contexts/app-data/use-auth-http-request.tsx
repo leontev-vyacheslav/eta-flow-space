@@ -3,9 +3,9 @@ import { AxiosError, type AxiosRequestConfig, type AxiosResponse } from 'axios';
 import { HttpConstants } from '../../constants/app-http-constants';
 import { useSharedArea } from '../shared-area';
 import type { SharedAreaContextModel } from '../../models/shared-area-context';
-import { useAuth } from '../auth';
 import { httpClientBase } from './http-client-base';
 import { proclaim, proclaimError } from '../../utils/proclaim';
+import { useAuthStore } from '../auth-store';
 
 export type AxiosWithCredentialsFunc = (
     config: AxiosRequestConfig,
@@ -15,7 +15,9 @@ export type AxiosWithCredentialsFunc = (
 ) => Promise<AxiosResponse | undefined>;
 
 export const useAuthHttpRequest = () => {
-    const { getUserAuthDataFromStorage, signOut } = useAuth();
+    const getUserAuthDataFromStorage = useAuthStore((s) => s.getUserAuthDataFromStorage);
+    const signOut = useAuthStore((s) => s.signOut);
+    const refreshAccessToken = useAuthStore((s) => s.refreshAccessToken);
     const { showLoader, hideLoader }: SharedAreaContextModel = useSharedArea();
 
     const axiosWithCredentials = useCallback<AxiosWithCredentialsFunc>(
@@ -30,10 +32,9 @@ export const useAuthHttpRequest = () => {
             config = config || {};
             config.headers = config.headers || {};
             config.headers = { ...config.headers, ...HttpConstants.Headers.AcceptJson };
-            // config.timeout = 10000
             config.timeoutErrorMessage = 'Сервер не ответил в установленный период времени 10 сек.'
             if (userAuthData) {
-                config.headers.Authorization = `Bearer ${userAuthData.token}`;
+                config.headers.Authorization = `Bearer ${userAuthData.accessToken}`;
                 config.headers['X-Requested-User'] = userAuthData.login
             }
 
@@ -44,16 +45,35 @@ export const useAuthHttpRequest = () => {
 
                 response = await httpClientBase.request(config) as AxiosResponse;
             } catch (error) {
-                response = (error as AxiosError).response;
-                if (response?.status === 401) {
-                    await signOut();
+                const axiosError = error as AxiosError;
+                response = axiosError.response;
 
-                    if (!suppressShowUnauthorized) {
-                        proclaim({
-                            type: 'error',
-                            message: response.data.message,
-                            // displayTime: 30000000,
-                        });
+                if (response?.status === HttpConstants.StatusCodes.Unauthorized) {
+                    const newAccessToken = await refreshAccessToken();
+                    if (newAccessToken) {
+                        config.headers.Authorization = `Bearer ${newAccessToken}`;
+                        try {
+                            response = await httpClientBase.request(config) as AxiosResponse;
+                        } catch (retryError) {
+                            response = (retryError as AxiosError).response;
+                            await signOut();
+                            if (!suppressShowUnauthorized) {
+                                proclaim({
+                                    type: 'error',
+                                    message: response?.data?.message || 'Сессия истекла',
+                                });
+                            }
+                            return response;
+                        }
+                    } else {
+                        await signOut();
+                        if (!suppressShowUnauthorized) {
+                            proclaim({
+                                type: 'error',
+                                message: response?.data?.message || 'Сессия истекла',
+                            });
+                        }
+                        return response;
                     }
                 } else {
                     if (!suppressShowError) {
@@ -70,7 +90,7 @@ export const useAuthHttpRequest = () => {
 
             return response;
         },
-        [getUserAuthDataFromStorage, hideLoader, showLoader, signOut],
+        [getUserAuthDataFromStorage, hideLoader, showLoader, signOut, refreshAccessToken],
     );
 
     return axiosWithCredentials

@@ -21,7 +21,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         });
     }
 
-    validate(payload: { userId: number; roleId: number }) {
+    validate(payload: { userId: number; roleId: number; type: string }) {
+        if (payload.type !== 'access') {
+            throw new UnauthorizedException(this.i18n.t('errors.TOKEN_EXPIRED_OR_INVALID'));
+        }
         if (!payload.userId && !payload.roleId) {
             throw new UnauthorizedException(this.i18n.t('errors.TOKEN_EXPIRED_OR_INVALID'));
         }

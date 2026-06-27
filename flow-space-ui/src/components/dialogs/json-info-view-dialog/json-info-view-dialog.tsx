@@ -1,4 +1,3 @@
-
 import { useEffect } from 'react';
 import { type AppModalPopupProps } from '../../../models/app-modal-popup-props';
 import AppModalPopup from '../app-modal-popup/app-modal-popup';
@@ -6,12 +5,11 @@ import type { IPopupOptions } from 'devextreme-react/popup';
 import { formatMessage } from 'devextreme/localization';
 import { useScreenSize } from '../../../utils/media-query';
 import ReactJson from "react-json-view";
-
-import './json-info-view-dialog.scss'
 import { RootDialogService } from '../root-dialog-service';
-import { AuthProvider } from '../../../contexts/auth';
 import { SharedAreaProvider } from '../../../contexts/shared-area';
 import { AppDataProvider } from '../../../contexts/app-data/app-data';
+
+import './json-info-view-dialog.scss'
 
 export type JsonInfoViewDialogProps = React.PropsWithChildren<IPopupOptions> & AppModalPopupProps & {
     title: string,
@@ -62,18 +60,16 @@ class JsonInfoViewDialogService extends RootDialogService {
     public show({ title, content }: { title: string, content: object }) {
         super.show(() => {
             this.root!.render(
-                <AuthProvider>
-                    <SharedAreaProvider>
-                        <AppDataProvider>
-                            <JsonInfoViewDialog
-                                title={title}
-                                content={content}
-                                callback={() => { }}
-                                onHidden={() => { this.hide(); }}
-                            />
-                        </AppDataProvider>
-                    </SharedAreaProvider>
-                </AuthProvider>
+                <SharedAreaProvider>
+                    <AppDataProvider>
+                        <JsonInfoViewDialog
+                            title={title}
+                            content={content}
+                            callback={() => { }}
+                            onHidden={() => { this.hide(); }}
+                        />
+                    </AppDataProvider>
+                </SharedAreaProvider>
             );
         });
     }
