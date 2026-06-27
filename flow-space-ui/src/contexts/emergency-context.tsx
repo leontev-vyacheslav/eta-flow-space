@@ -8,10 +8,9 @@ import { EmergencyPopoverContent } from "./emergency-popover-content";
 import { emergencyMuteManager } from "../services/emergency-mute-manager";
 import type { EmergencyModel } from "../models/flows/emergency-model";
 import AppConstants from "../constants/app-constants";
+import { useAppSettingsStore } from "./app-settings-store";
 
 import "./emergency-popover.scss";
-import { AuthProvider } from "./auth";
-import { useAppSettingsStore } from "./app-settings-store";
 
 export interface EmergencyContextModel {
     refreshEmergencyStates: () => Promise<void>;
@@ -102,9 +101,7 @@ function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
             },
             contentTemplate: () => {
                 popoverContentReactRoot.render(
-                    <AuthProvider>
-                        <EmergencyPopoverContent popoverInstance={popoverInstance} emergencyState={emergencyState} />
-                    </AuthProvider>
+                    <EmergencyPopoverContent popoverInstance={popoverInstance} emergencyState={emergencyState} />
                 );
                 return popoverContentContainer;
             },

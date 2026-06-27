@@ -1,7 +1,6 @@
 import { useRef } from "react";
 import { Popup as PopupRef } from "devextreme-react/popup";
 import { AppDataProvider, useAppData } from "../../../contexts/app-data/app-data";
-import { AuthProvider } from "../../../contexts/auth";
 import { SharedAreaProvider } from "../../../contexts/shared-area";
 import AppModalPopup from "../app-modal-popup/app-modal-popup";
 import { RootDialogService } from "../root-dialog-service";
@@ -87,16 +86,14 @@ class UserSettingsDialogService extends RootDialogService {
     show() {
         super.show(() => {
             this.root!.render(
-                <AuthProvider>
-                    <SharedAreaProvider>
-                        <AppDataProvider>
-                            <UserSettingsDialog
-                                callback={() => { }}
-                                onHidden={() => { this.hide(); }}
-                            />
-                        </AppDataProvider>
-                    </SharedAreaProvider>
-                </AuthProvider>
+                <SharedAreaProvider>
+                    <AppDataProvider>
+                        <UserSettingsDialog
+                            callback={() => { }}
+                            onHidden={() => { this.hide(); }}
+                        />
+                    </AppDataProvider>
+                </SharedAreaProvider>
             );
         });
     }

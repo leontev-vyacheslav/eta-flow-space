@@ -13,7 +13,6 @@ import { EmergencyLogGrid } from './emergency-log-grid';
 import { MenuItemWithSubMenu } from '../../menu/menu-item/menu-item';
 import { RootDialogService } from '../root-dialog-service';
 import type { DeviceModel } from '../../../models/flows/device-model';
-import { AuthProvider } from '../../../contexts/auth';
 import { SharedAreaProvider } from '../../../contexts/shared-area';
 import { AppDataProvider } from '../../../contexts/app-data/app-data';
 
@@ -128,7 +127,7 @@ const EmergencyLogDialogInternal = (props: EmergencyLogDialogProps) => {
 
 export const EmergencyLogDialog = (props: EmergencyLogDialogProps) => {
     return <EmergencyLogDialogContextProvider {...props} >
-            <EmergencyLogDialogInternal {...props} />
+        <EmergencyLogDialogInternal {...props} />
     </EmergencyLogDialogContextProvider>
 }
 
@@ -139,17 +138,15 @@ class EmergencyLogDialogService extends RootDialogService {
     public show({ device }: { device?: DeviceModel }) {
         super.show(() => {
             this.root!.render(
-                <AuthProvider>
-                    <SharedAreaProvider>
-                        <AppDataProvider>
-                            <EmergencyLogDialog
-                                device={device}
-                                callback={() => { }}
-                                onHidden={() => { this.hide(); }}
-                            />
-                        </AppDataProvider>
-                    </SharedAreaProvider>
-                </AuthProvider>
+                <SharedAreaProvider>
+                    <AppDataProvider>
+                        <EmergencyLogDialog
+                            device={device}
+                            callback={() => { }}
+                            onHidden={() => { this.hide(); }}
+                        />
+                    </AppDataProvider>
+                </SharedAreaProvider>
             );
         });
     }

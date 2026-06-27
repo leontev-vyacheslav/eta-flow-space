@@ -11,7 +11,6 @@ import { GraphDialogTitle } from './graph-dialog-title';
 import { GraphDialogContextProvider, useGraphDialog } from './graph-dialog-context';
 import { getQuickGuid } from '../../../utils/uuid';
 import { MenuItemWithSubMenu } from '../../menu/menu-item/menu-item';
-import { AuthProvider } from '../../../contexts/auth';
 import { SharedAreaProvider } from '../../../contexts/shared-area';
 import { AppDataProvider } from '../../../contexts/app-data/app-data';
 import { RootDialogService } from '../root-dialog-service';
@@ -141,20 +140,18 @@ class GraphDialogService extends RootDialogService {
 
         super.show(() => {
             this.root!.render(
-                <AuthProvider>
-                    <SharedAreaProvider>
-                        <AppDataProvider>
-                            <GraphDialog
-                                device={device}
-                                beginDate={beginDate}
-                                endDate={endDate}
-                                schemaTypeInfos={schemaTypeInfos}
-                                callback={() => { }}
-                                onHidden={() => { this.hide(); }}
-                            />
-                        </AppDataProvider>
-                    </SharedAreaProvider>
-                </AuthProvider>
+                <SharedAreaProvider>
+                    <AppDataProvider>
+                        <GraphDialog
+                            device={device}
+                            beginDate={beginDate}
+                            endDate={endDate}
+                            schemaTypeInfos={schemaTypeInfos}
+                            callback={() => { }}
+                            onHidden={() => { this.hide(); }}
+                        />
+                    </AppDataProvider>
+                </SharedAreaProvider>
             );
         });
     }

@@ -15,13 +15,12 @@ import { useLongPress } from "use-long-press";
 import { isSuppressedForLongPress } from "../../helpers/map-helpers";
 import { createMapMarkerIcon } from "./map-marker-icon";
 import { getQuickGuid } from "../../utils/uuid";
+import { useNavigate, useParams } from "react-router-dom";
+import { useSharedArea } from "../../contexts/shared-area";
 
 
 import 'leaflet/dist/leaflet.css';
 import './map-page.scss';
-import { AuthProvider } from "../../contexts/auth";
-import { useNavigate, useParams } from "react-router-dom";
-import { useSharedArea } from "../../contexts/shared-area";
 
 export const MapPage = () => {
     const navigate = useNavigate();
@@ -106,9 +105,7 @@ export const MapPage = () => {
         }
 
         rootsRef.current.get(device.id)?.render(
-            <AuthProvider>
-                <MapPagePopupContent device={device} deviceState={deviceState} dataschema={dataschema} emergencyState={emergencyState} />
-            </AuthProvider>
+            <MapPagePopupContent device={device} deviceState={deviceState} dataschema={dataschema} emergencyState={emergencyState} />
         );
     }, [getDeviceStateAsync, getDeviceStateDataschemaAsync]);
 
@@ -138,7 +135,7 @@ export const MapPage = () => {
         if (navigationItem) {
             treeViewRef.current?.instance.selectItem(navigationItem);
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [treeViewRef]);
 
     const showPopup = useCallback((deviceId: string | undefined) => {
