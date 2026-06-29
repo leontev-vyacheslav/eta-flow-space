@@ -56,10 +56,13 @@ class AccountingSheetGasMeterReportService:
                 },
             )
 
+        total_consumption = sum(row.consumption for row in data if row.consumption is not None)
+
         html_content = template_env.get_template(f"{self.report_name}.html").render(
             *args,
             **kwargs,
             data=data,
+            total_consumption=total_consumption,
             templates_dir=templates_dir,
         )
 

@@ -10,7 +10,7 @@ def locale_format_date(value: Any) -> str:
     if value is None:
         return "Нет данных"
     if isinstance(value, date):
-        return format_date(value, format='short', locale=settings.DEFAULT_REPORT_LOCALE)
+        return format_date(value, format="short", locale=settings.DEFAULT_REPORT_LOCALE)
     return str(value)
 
 
@@ -35,6 +35,9 @@ def period_type_title_format(value: Any) -> str:
         return "неделя"
     if value == PeriodTypes.DAY:
         return "сутки"
+    if value == PeriodTypes.PREVIOUS_MONTH:
+        return "предыдущий месяц"
+    if value == PeriodTypes.ALL_TIME:
+        return "весь период"
 
     return "Нет данных"
-
