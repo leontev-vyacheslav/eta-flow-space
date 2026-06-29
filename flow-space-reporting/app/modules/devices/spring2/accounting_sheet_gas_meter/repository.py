@@ -5,7 +5,7 @@ from typing import Annotated
 from fastapi import HTTPException, status
 from fastapi.params import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import JSON, and_, desc, select, func, cast, Integer, literal_column
+from sqlalchemy import and_, desc, select, func, cast, Integer, literal_column
 
 from app.data_models import DeviceState, UserDeviceLink
 from app.db.database import get_db
@@ -46,10 +46,8 @@ class AccountingSheetGasMeterRepository:
             date_from = datetime.now().replace(day=1, hour=0, minute=0, second=0, microsecond=0) - relativedelta(months=1)
             date_to = date_from + relativedelta(months=1)
 
-        state_json = cast(DeviceState.state, JSON)
-
         accumulated_volume = cast(
-            literal_column("state::json -> 'gasMeter' ->> 'accumulatedVolume'"),
+            literal_column("state -> 'gasMeter' ->> 'accumulatedVolume'"),
             Integer,
         )
         created_at_tz = func.timezone(time_zone, DeviceState.created_at).label("created_at")
@@ -65,7 +63,7 @@ class AccountingSheetGasMeterRepository:
                 DeviceState.device_id == device_id,
                 DeviceState.created_at >= date_from,
                 DeviceState.created_at < date_to,
-                state_json["gasMeter"]["accumulatedVolume"] != None,
+                DeviceState.state["gasMeter"]["accumulatedVolume"] != None,
             )
             .distinct(day_expr)
             .order_by(day_expr, desc(created_at_tz))

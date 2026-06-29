@@ -20,7 +20,7 @@ export class EmergencyStateDataModel extends Model {
     declare device?: DeviceDataModel;
 
     @Column({
-        type: DataType.JSON,
+        type: DataType.JSONB,
         allowNull: true,
     })
     declare state: Record<string, any>;
