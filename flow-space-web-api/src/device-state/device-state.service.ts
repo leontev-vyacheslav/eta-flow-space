@@ -5,6 +5,22 @@ import { SharedStoreService } from '../common/services/shared-store/shared-store
 import { DeviceStateDataModel } from '../database/models';
 import { I18nService } from 'nestjs-i18n';
 
+function fieldToJsonbPath(field: string): string {
+    const parts = field.split('.');
+    return parts
+        .map((part, i) => {
+            const arrayMatch = part.match(/^(\w+)\[(\d+)\]$/);
+            if (arrayMatch) {
+                const [, key, index] = arrayMatch;
+                const op = i === parts.length - 1 ? '->>' : '->';
+                return `-> '${key}' ${op} ${index}`;
+            }
+            const op = i === parts.length - 1 ? '->>' : '->';
+            return `${op} '${part}'`;
+        })
+        .join(' ');
+}
+
 @Injectable()
 export class DeviceStateService {
     constructor(
@@ -15,7 +31,7 @@ export class DeviceStateService {
     ) {}
 
     async getDeviceStatesByDates(deviceId: number, beginDate: Date, endDate: Date, fields: string[]): Promise<DeviceStateDataModel[]> {
-        const deviceStateFields: ProjectionAlias[] = fields.map((f): ProjectionAlias => [literal(`"DeviceStateDataModel"."state" ->> '${f}'`), f]);
+        const deviceStateFields: ProjectionAlias[] = fields.map((f): ProjectionAlias => [literal(`"DeviceStateDataModel"."state" ${fieldToJsonbPath(f)}`), f]);
 
         const deviceStates = await this.deviceStateModel.findAll({
             attributes: ['id', 'deviceId', ...deviceStateFields, 'createdAt'],

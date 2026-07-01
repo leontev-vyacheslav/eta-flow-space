@@ -28,6 +28,12 @@ def locale_format_month(value: Any) -> str:
     return format_datetime(value, format="short", locale=settings.DEFAULT_REPORT_LOCALE)
 
 
+def locale_format_month_name(value: Any) -> str:
+    if not value:
+        return "Нет данных"
+    return format_datetime(value, "LLLL yyyy", locale=settings.DEFAULT_REPORT_LOCALE)
+
+
 def period_type_title_format(value: Any) -> str:
     if value == PeriodTypes.MONTH:
         return "месяц"
