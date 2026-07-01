@@ -23,10 +23,12 @@ export const EmergencyPopoverContent = ({ emergencyState }: { emergencyState: Em
             }
 
             const isDeviceMuted = emergencyMuteManager.isDeviceMuted(emergencyState);
+            const isConnected = emergencyState.reasons.some(r => r.id === 100);
+
             const emergencyMutedIcon = renderToStaticMarkup(
                 isDeviceMuted
-                    ? <EmergencyWarningOff data-emergency-mute-icon size={12} style={{ fill: AppConstants.colors.emergencyWarningColor, cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px' }} />
-                    : <EmergencyWarning data-emergency-mute-icon size={12} style={{ fill: AppConstants.colors.emergencyWarningColor, cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px' }} />
+                    ? <EmergencyWarningOff data-emergency-mute-icon size={12} style={{ fill: isConnected ? AppConstants.colors.emergencyCriticalColor : AppConstants.colors.emergencyWarningColor, cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px' }} />
+                    : <EmergencyWarning data-emergency-mute-icon size={12} style={{ fill: isConnected ? AppConstants.colors.emergencyCriticalColor : AppConstants.colors.emergencyWarningColor, cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px' }} />
             );
 
             const iconElement = emergencyIconContainerElement.querySelector('[data-emergency-mute-icon]');
@@ -99,7 +101,7 @@ export const EmergencyPopoverContent = ({ emergencyState }: { emergencyState: Em
                             <span style={{ flex: 1, position: 'relative' }}>Нештатные / аварийные ситуации
                                 <span style={{ position: 'absolute', top: '-10px', right: '-10px', background: AppConstants.colors.baseDarkgreyTextColor, borderRadius: '50%', width: '15px', height: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '8px' }}>{emergencyState.reasons.length}</span>
                             </span>
-                            <span style={{paddingLeft: 10}}>
+                            <span style={{ paddingLeft: 10 }}>
                                 <MenuRender deviceId={emergencyState.deviceId} emergencyReasons={emergencyState.reasons} />
                             </span>
                         </div>
