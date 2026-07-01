@@ -57,17 +57,17 @@ function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
         );
     }
 
-    const EmergencyMutedIcon = () => (
+    const EmergencyMutedIcon = ({color}: {color: string}) => (
         <div>
-            <WarningIcon size={18} style={{ fill: AppConstants.colors.emergencyWarningColor, cursor: 'pointer' }} />
-            <EmergencyWarningOff data-emergency-mute-icon size={12} style={{ fill: AppConstants.colors.emergencyWarningColor, cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px' }} />
+            <WarningIcon size={18} style={{ fill: color, cursor: 'pointer' }} />
+            <EmergencyWarningOff data-emergency-mute-icon size={12} style={{ fill: color, cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px' }} />
         </div>
     );
 
-    const EmergencyUnmutedIcon = () => (
+    const EmergencyUnmutedIcon = ({color}: { color: string }) => (
         <div>
-            <WarningIcon size={18} style={{ fill: AppConstants.colors.emergencyWarningColor, cursor: 'pointer' }} />
-            <EmergencyWarning data-emergency-mute-icon size={12} style={{ fill: AppConstants.colors.emergencyWarningColor, cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px' }} />
+            <WarningIcon size={18} style={{ fill: color, cursor: 'pointer' }} />
+            <EmergencyWarning data-emergency-mute-icon size={12} style={{ fill: color, cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px' }} />
         </div>
     );
 
@@ -173,11 +173,13 @@ function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
                 if (!emergencyState) {
                     return;
                 }
+                console.log('emergencyState', emergencyState);
+                const isConnected = emergencyState.reasons.some(r => r.id === 100);
 
                 const emergencyIconDom = new DOMParser().parseFromString(
                     emergencyMuteManager.isDeviceMuted(emergencyState)
-                        ? renderToStaticMarkup(<EmergencyMutedIcon />)
-                        : renderToStaticMarkup(<EmergencyUnmutedIcon />),
+                        ? renderToStaticMarkup(<EmergencyMutedIcon color={isConnected ? AppConstants.colors.emergencyCriticalColor : AppConstants.colors.emergencyWarningColor} />)
+                        : renderToStaticMarkup(<EmergencyUnmutedIcon color={isConnected ? AppConstants.colors.emergencyCriticalColor : AppConstants.colors.emergencyWarningColor} />),
                     'text/html'
                 );
 
