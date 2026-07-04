@@ -136,7 +136,7 @@ const DashboardPageInner = () => {
                         swipeEnabled={false}
                         animationEnabled={false}
                         width={'100%'}
-                        height={AppConstants.pageHeight}
+                        height={'calc(100vh - 210px)'}
                         loop
                         className='dashboard-tabs'
                         deferRendering

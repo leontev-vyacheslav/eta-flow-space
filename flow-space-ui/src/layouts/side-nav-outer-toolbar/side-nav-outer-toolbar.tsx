@@ -1,7 +1,7 @@
 import Drawer from 'devextreme-react/drawer';
 import ScrollView from 'devextreme-react/scroll-view';
 import React, { type ReactElement, useCallback, useRef, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router';
+import { matchPath, useLocation, useNavigate } from 'react-router';
 import { Footer, Header, SideNavigationMenu } from '../../components';
 import { useScreenSize } from '../../utils/media-query';
 import { useMenuPatch } from '../../utils/patches';
@@ -12,9 +12,9 @@ import type { ClickEvent } from 'devextreme/ui/button';
 import './side-nav-outer-toolbar.scss';
 
 export function SideNavOuterToolbar({ title, children }: SideNavProps) {
-    const ROUTES_WITHOUT_SCROLL = ['/map', '/reports/'];
+    const ROUTES_WITHOUT_SCROLL = ['/map', '/reports/', '/:flowCode/device/:deviceId'];
     const location = useLocation();
-    const disableScroll = ROUTES_WITHOUT_SCROLL.some(route => location.pathname.startsWith(route));
+    const disableScroll = ROUTES_WITHOUT_SCROLL.some(route => matchPath({ path: route, end: false }, location.pathname));
 
     const scrollViewRef = useRef<ScrollView>(null);
     const history = useNavigate();

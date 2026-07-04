@@ -57,14 +57,14 @@ function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
         );
     }
 
-    const EmergencyMutedIcon = ({color}: {color: string}) => (
+    const EmergencyMutedIcon = ({ color }: { color: string }) => (
         <div>
             <WarningIcon size={18} style={{ fill: color, cursor: 'pointer' }} />
             <EmergencyWarningOff data-emergency-mute-icon size={12} style={{ fill: color, cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px' }} />
         </div>
     );
 
-    const EmergencyUnmutedIcon = ({color}: { color: string }) => (
+    const EmergencyUnmutedIcon = ({ color }: { color: string }) => (
         <div>
             <WarningIcon size={18} style={{ fill: color, cursor: 'pointer' }} />
             <EmergencyWarning data-emergency-mute-icon size={12} style={{ fill: color, cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px' }} />
@@ -173,7 +173,6 @@ function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
                 if (!emergencyState) {
                     return;
                 }
-                console.log('emergencyState', emergencyState);
                 const isConnected = emergencyState.reasons.some(r => r.id === 100);
 
                 const emergencyIconDom = new DOMParser().parseFromString(
