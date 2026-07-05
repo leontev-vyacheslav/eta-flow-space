@@ -150,7 +150,7 @@ export function SideNavigationMenu(props: SideNavigationMenuProps) {
                         onMenuReady();
                     }}
                     width={'100%'}
-                    height={'calc(100vh - 75px)'}
+                    height={'calc(100vh - 77px)'}
                 />
             </div>
         </div>
