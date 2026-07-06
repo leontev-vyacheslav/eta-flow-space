@@ -75,6 +75,10 @@
         .section {
             margin-bottom: 25px;
         }
+
+        .page-break {
+            page-break-before: always;
+        }
     </style>
 </head>
 
@@ -102,42 +106,52 @@
             <div style="font-size: 10px;">Период: {{ period_type | period_type_title_format }}</div>
         </div>
     </div>
-    <table>
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Дата</th>
-                <th>Время</th>
-                <th>Объем</th>
-                <th>Потребление</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for row in data %}
-            <tr>
-                <td style="width: 25px;">
-                    {{ loop.index }}.
-                </td>
-                <td>
-                    {{ row.day | locale_format_date}}
-                </td>
-                <td>
-                    {{ row.created_at | locale_format_datetime }}
-                </td>
-                <td>
-                  {{ row.volume  }}
-                </td>
-                <td>
-                    {{ row.consumption | default('-', True)}}
-                </td>
-            </tr>
-            {% endfor %}
-            <tr style="font-weight: bold;">
-                <td colspan="4" style="text-align: right;">Итого:</td>
-                <td>{{ total_consumption }}</td>
-            </tr>
-        </tbody>
-    </table>
+
+    {% for month_key, rows in monthly_data.items() %}
+    <div{% if not loop.first %} class="page-break"{% endif %}>
+        <h2>{{ rows[0].day | locale_format_month_name }}</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Дата</th>
+                    <th>Время</th>
+                    <th>Объем</th>
+                    <th>Потребление</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in rows %}
+                <tr>
+                    <td style="width: 25px;">
+                        {{ loop.index }}.
+                    </td>
+                    <td>
+                        {{ row.day | locale_format_date }}
+                    </td>
+                    <td>
+                        {{ row.created_at | locale_format_datetime }}
+                    </td>
+                    <td>
+                        {{ row.volume if row.volume is not none else '-' }}
+                    </td>
+                    <td>
+                        {{ row.consumption if row.consumption is not none else '-' }}
+                    </td>
+                </tr>
+                {% endfor %}
+                <tr style="font-weight: bold;">
+                    <td colspan="4" style="text-align: right;">Итого за период:</td>
+                    <td>{{ monthly_totals[month_key] }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    {% endfor %}
+
+    <div class="page-break">
+        <h2>Итого за весь период: {{ total_consumption }}</h2>
+    </div>
 </body>
 
 </html>

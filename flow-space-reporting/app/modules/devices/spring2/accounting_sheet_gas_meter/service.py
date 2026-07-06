@@ -1,3 +1,4 @@
+from collections import OrderedDict
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Annotated, Any
@@ -17,6 +18,7 @@ filters = [
     locale_format_date,
     locale_format_datetime,
     locale_format_month,
+    locale_format_month_name,
     period_type_title_format,
 ]
 
@@ -58,10 +60,22 @@ class AccountingSheetGasMeterReportService:
 
         total_consumption = sum(row.consumption for row in data if row.consumption is not None)
 
+        monthly_data: OrderedDict[str, list] = OrderedDict()
+        monthly_totals: dict[str, int] = {}
+        for row in data:
+            month_key = row.day.strftime("%Y-%m")
+            if month_key not in monthly_data:
+                monthly_data[month_key] = []
+                monthly_totals[month_key] = 0
+            monthly_data[month_key].append(row)
+            if row.consumption is not None:
+                monthly_totals[month_key] += row.consumption
+
         html_content = template_env.get_template(f"{self.report_name}.html").render(
             *args,
             **kwargs,
-            data=data,
+            monthly_data=monthly_data,
+            monthly_totals=monthly_totals,
             total_consumption=total_consumption,
             templates_dir=templates_dir,
         )

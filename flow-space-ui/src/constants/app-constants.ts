@@ -33,9 +33,6 @@ const AppConstants = {
         padding: [40, 40],
         maxZoom: 14,
     },
-    pageHeight: '75vh',
-    formHeight: '65vh',
-    chartHeight: '50vh',
     formatting: {
         numberFormat: {
             locale: 'ru-RU',

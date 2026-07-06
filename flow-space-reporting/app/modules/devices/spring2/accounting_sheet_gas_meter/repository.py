@@ -1,11 +1,11 @@
-from datetime import datetime
+from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
 from typing import Annotated
 
 from fastapi import HTTPException, status
 from fastapi.params import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import and_, desc, select, func, cast, Integer, literal_column
+from sqlalchemy import and_, desc, select, func, cast, Integer, literal_column, text
 
 from app.data_models import DeviceState, UserDeviceLink
 from app.db.database import get_db
@@ -37,14 +37,17 @@ class AccountingSheetGasMeterRepository:
                 },
             )
 
-        date_from = datetime(1970, 1, 1)
+        today = date.today()
         date_to = datetime.now()
         if period_type == AccountingPeriodTypes.MONTH:
             date_from = datetime.now().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
-            date_to = date_to = date_from + relativedelta(months=1)
+            date_to = today + relativedelta(days=1)
         elif period_type == AccountingPeriodTypes.PREVIOUS_MONTH:
             date_from = datetime.now().replace(day=1, hour=0, minute=0, second=0, microsecond=0) - relativedelta(months=1)
             date_to = date_from + relativedelta(months=1)
+        elif period_type == AccountingPeriodTypes.ALL_TIME:
+            date_from = datetime.now().replace(day=1, hour=0, minute=0, second=0, microsecond=0) - relativedelta(months=3)
+            date_to = date_from + relativedelta(months=4)
 
         accumulated_volume = cast(
             literal_column("state -> 'gasMeter' ->> 'accumulatedVolume'"),
@@ -70,14 +73,28 @@ class AccountingSheetGasMeterRepository:
             .cte("daily_last")
         )
 
-        lag_volume = func.lag(daily_last.c.volume).over(order_by=daily_last.c.day)
+        date_series = select(
+            func.generate_series(func.date(date_from), func.date(date_to) - text("INTERVAL '1 day'"), text("INTERVAL '1 day'")).label("day")
+        ).cte("date_series")
+
+        all_days_with_data = (
+            select(
+                date_series.c.day,
+                daily_last.c.created_at,
+                daily_last.c.volume,
+            )
+            .outerjoin(daily_last, date_series.c.day == daily_last.c.day)
+            .order_by(date_series.c.day)
+        ).cte("all_days_with_data")
+
+        lag_volume = func.lag(all_days_with_data.c.volume).over(order_by=all_days_with_data.c.day)
 
         query = select(
-            daily_last.c.day,
-            daily_last.c.created_at,
-            daily_last.c.volume,
-            (daily_last.c.volume - lag_volume).label("consumption"),
-        ).order_by(daily_last.c.day)
+            all_days_with_data.c.day,
+            all_days_with_data.c.created_at,
+            all_days_with_data.c.volume,
+            (all_days_with_data.c.volume - lag_volume).label("consumption"),
+        ).order_by(all_days_with_data.c.day)
 
         result = await self._session.execute(query)
         rows = result.fetchall()

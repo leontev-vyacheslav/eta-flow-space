@@ -1,6 +1,5 @@
 import 'devextreme-react/switch';
 import Form, { GroupItem, SimpleItem, Tab, TabbedItem } from 'devextreme-react/form';
-import AppConstants from '../../../../constants/app-constants';
 import { formatMessage } from 'devextreme/localization';
 import { useCallback, useMemo, useRef } from 'react';
 import { useDashboardPage } from '../../dashboard-page-context';
@@ -120,7 +119,7 @@ export const ControlForm = ({ onFieldDataChanged }: ControlFormProps) => {
     return (controlDefinitions && dataschema && deviceState && deviceState.state && Object.keys(deviceState.state).length > 0 ?
         <Form
             className='app-form control-form'
-            height={AppConstants.formHeight}
+            height={'calc(100% - 20px)'}
             scrollingEnabled={true}
             colCount={1}
             formData={deviceState?.state}
