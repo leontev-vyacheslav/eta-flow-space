@@ -1,12 +1,13 @@
 import { Controller, Post, Body, Get, HttpCode, HttpStatus, UnauthorizedException, UseGuards, Logger } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UserService } from '../user/user.service';
-import { createHash } from 'crypto';
+import { createHash, timingSafeEqual } from 'crypto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { SignInModel } from '../models/sign-in.model';
 import { I18nService } from 'nestjs-i18n';
 import * as bcrypt from 'bcrypt';
 import { UserDataModel } from '../database/models';
+import { seconds, Throttle } from '@nestjs/throttler';
 
 @Controller()
 export class AuthController {
@@ -20,6 +21,7 @@ export class AuthController {
 
     @Post('sign-in')
     @HttpCode(HttpStatus.OK)
+    @Throttle({ default: { limit: 5, ttl: seconds(60) } })
     async signIn(@Body() signIn: SignInModel) {
         const user = await this.usersService.getByName(signIn.login);
 
@@ -38,7 +40,9 @@ export class AuthController {
         } else {
             // Password is hashed with SHA-256
             const hashedPassword = createHash('sha256').update(signIn.password).digest('base64');
-            if (hashedPassword !== user.password) {
+            const hashedBuf = Buffer.from(hashedPassword);
+            const storedBuf = Buffer.from(user.password);
+            if (hashedBuf.length !== storedBuf.length || !timingSafeEqual(hashedBuf, storedBuf)) {
                 throw new UnauthorizedException(this.i18n.t('errors.USER_NOT_FOUND_OR_WRONG_PASSWORD'));
             }
             // Update password with bcrypt
@@ -62,6 +66,7 @@ export class AuthController {
 
     @Post('refresh')
     @HttpCode(HttpStatus.OK)
+    @Throttle({ default: { limit: 5, ttl: seconds(60) } })
     async refresh(@Body('refreshToken') refreshToken: string) {
         if (!refreshToken) {
             throw new UnauthorizedException(this.i18n.t('errors.TOKEN_EXPIRED_OR_INVALID'));

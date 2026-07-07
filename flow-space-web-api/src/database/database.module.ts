@@ -20,7 +20,7 @@ const models = [
     ObjectLocationDataModel,
     UserDataModel,
     UserDeviceLinkDataModel,
-    ReportDataModel
+    ReportDataModel,
 ];
 
 @Global()

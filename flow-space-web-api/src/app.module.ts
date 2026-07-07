@@ -16,8 +16,11 @@ import { DeviceStateDispatcherModule } from './common/services/device-state-disp
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { AcceptLanguageResolver, HeaderResolver, I18nModule, QueryResolver } from 'nestjs-i18n';
 import { CacheModule } from '@nestjs/cache-manager';
+import { ThrottlerGuard, ThrottlerModule, seconds } from '@nestjs/throttler';
+
 import KeyvRedis from '@keyv/redis';
 import * as path from 'path';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
     imports: [
@@ -37,6 +40,14 @@ import * as path from 'path';
                 { use: QueryResolver, options: ['lang'] },
                 AcceptLanguageResolver,
                 new HeaderResolver(['x-lang']),
+            ],
+        }),
+        ThrottlerModule.forRoot({
+            throttlers: [
+                {
+                    ttl: seconds(60),
+                    limit: 10,
+                },
             ],
         }),
         CacheModule.registerAsync({
@@ -65,7 +76,12 @@ import * as path from 'path';
         DeviceModule,
     ],
     controllers: [AppController],
-    providers: [],
+    providers: [
+        {
+            provide: APP_GUARD,
+            useClass: ThrottlerGuard,
+        },
+    ],
 })
 export class AppModule {
     configure(consumer: MiddlewareConsumer) {
