@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayloadModel } from '../models/jwt-payload.model';
 import { I18nService } from 'nestjs-i18n';
@@ -13,6 +13,7 @@ export class AuthService {
     private readonly accessExpiresIn: string;
     private readonly refreshExpiresIn: string;
     private readonly refreshTtlSeconds: number;
+    private readonly logger = new Logger(AuthService.name);
 
     constructor(
         private jwtService: JwtService,
@@ -66,7 +67,7 @@ export class AuthService {
                 secret: this.refreshSecret,
             });
         } catch (error) {
-            console.error(error);
+            this.logger.error(error);
             throw new UnauthorizedException(this.i18n.t('errors.TOKEN_EXPIRED_OR_INVALID'));
         }
 
@@ -88,6 +89,7 @@ export class AuthService {
         try {
             return await this.jwtService.verifyAsync<JwtPayloadModel & object>(token);
         } catch {
+            this.logger.error('Invalid token');
             throw new UnauthorizedException(this.i18n.t('errors.TOKEN_EXPIRED_OR_INVALID'));
         }
     }
