@@ -53,6 +53,27 @@ describe('ExpressionEvaluatorService', () => {
             expect(context.dss.getEnumDescription).toHaveBeenCalledWith('boiler-1', 'Mode', 1);
         });
 
+        it('should evaluate chained member access', async () => {
+            const ctx = {
+                state: { networkPumps: [{ status: 512, alarm: 3 }] },
+                dss: { getEnumDescription: jest.fn().mockResolvedValue('Overheat'), formatNumber: jest.fn() },
+                flowCode: 'boiler-1',
+            };
+            const result = await service.evaluateExpression('state.networkPumps[0].status === 512', ctx);
+            expect(result).toBe(true);
+        });
+
+        it('should evaluate chained member access in dss call arguments', async () => {
+            const ctx = {
+                state: { networkPumps: [{ status: 512, alarm: 3 }] },
+                dss: { getEnumDescription: jest.fn().mockResolvedValue('Overheat'), formatNumber: jest.fn() },
+                flowCode: 'boiler-1',
+            };
+            const result = await service.evaluateExpression('await dss.getEnumDescription(flowCode, "NetworkPumpAlarm", state.networkPumps[0].alarm)', ctx);
+            expect(result).toBe(true);
+            expect(ctx.dss.getEnumDescription).toHaveBeenCalledWith('boiler-1', 'NetworkPumpAlarm', 3);
+        });
+
         it('should throw on assignment', async () => {
             await expect(service.evaluateExpression('state.x = 5', context)).rejects.toThrow('Forbidden');
         });

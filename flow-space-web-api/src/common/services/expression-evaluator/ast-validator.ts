@@ -70,10 +70,16 @@ function validateNode(node: AstNode): void {
         }
 
         case 'MemberExpression': {
-            const obj = node.object as AstNode;
-            if (obj.type !== 'Identifier' || !ALLOWED_MEMBER_OBJECTS.has(obj.name as string)) {
+            // Walk up the chain to find the root Identifier
+            let current = node.object as AstNode;
+            while (current.type === 'MemberExpression') {
+                current = current.object as AstNode;
+            }
+            if (current.type !== 'Identifier' || !ALLOWED_MEMBER_OBJECTS.has(current.name as string)) {
                 throw new Error('Forbidden: MemberExpression on non-whitelisted object');
             }
+            // Validate property (e.g. .foo or [expr])
+            validateNode(node.property as AstNode);
             break;
         }
 
