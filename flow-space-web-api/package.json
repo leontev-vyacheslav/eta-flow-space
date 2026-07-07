@@ -32,6 +32,8 @@
     "@nestjs/sequelize": "^11.0.1",
     "@nestjs/serve-static": "^5.0.5",
     "@nestjs/throttler": "^6.5.0",
+    "@types/acorn": "^4.0.6",
+    "acorn": "^8.17.0",
     "bcrypt": "^6.0.0",
     "cache-manager": "^7.2.8",
     "class-transformer": "^0.5.1",
