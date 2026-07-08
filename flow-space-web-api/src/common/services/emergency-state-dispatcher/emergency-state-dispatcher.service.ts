@@ -8,6 +8,7 @@ import { differenceInMinutes } from 'date-fns';
 import { Sequelize } from 'sequelize-typescript';
 import { EmergencyReasonModel, EmergencyStateModel } from '../../../models';
 import { DataSchemasService } from '../data-schemas/data-schemas.service';
+import { ExpressionEvaluatorService } from '../expression-evaluator/expression-evaluator.service';
 
 @Injectable()
 export class EmergencyStateDispatcherService {
@@ -16,6 +17,7 @@ export class EmergencyStateDispatcherService {
 
     constructor(
         private readonly dataSchemasService: DataSchemasService,
+        private readonly expressionEvaluatorService: ExpressionEvaluatorService,
         private readonly sharedStoreService: SharedStoreService,
 
         @InjectConnection()
@@ -111,18 +113,13 @@ export class EmergencyStateDispatcherService {
                     });
                 }
 
-                /* eslint-disable @typescript-eslint/no-unused-vars */
-                const dss = this.dataSchemasService;
-                const flowCode = device.flow?.code;
-                /* eslint-enable @typescript-eslint/no-unused-vars */
+                const context = { state, dss: this.dataSchemasService, flowCode: device.flow?.code };
 
                 for (const emergencyReason of device.emergencies.reasons as EmergencyReasonModel[]) {
                     try {
-                        const result = Boolean(await eval(emergencyReason.expression));
+                        const result = await this.expressionEvaluatorService.evaluateExpression(emergencyReason.expression, context);
                         if (result) {
-                            if (emergencyReason.description.includes('`')) {
-                                emergencyReason.description = (await eval(`(async () => { return ${emergencyReason.description}; })()`)) as string;
-                            }
+                            emergencyReason.description = await this.expressionEvaluatorService.evaluateDescription(emergencyReason.description, context);
                             emergencyReasons.push(emergencyReason);
                         }
                     } catch (error) {

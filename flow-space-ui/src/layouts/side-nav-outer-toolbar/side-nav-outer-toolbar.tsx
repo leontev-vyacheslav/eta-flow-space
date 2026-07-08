@@ -118,9 +118,7 @@ export function SideNavOuterToolbar({ title, children }: SideNavProps) {
                         content
                         :
                         <ScrollView ref={scrollViewRef} className={'layout-body with-footer'}
-                            height={() => {
-                                return window.innerHeight - 76;
-                            }}
+                            height={'calc(100vh - 50px)'}
                         >
                             {content}
                         </ScrollView>
