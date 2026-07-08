@@ -3,11 +3,22 @@ import { AppModule } from './app.module';
 import { I18nValidationExceptionFilter, I18nValidationPipe } from 'nestjs-i18n';
 import { join } from 'path/win32';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import helmet from 'helmet';
 
 async function bootstrap() {
     const app = await NestFactory.create<NestExpressApplication>(AppModule, {
         logger: ['log', 'error', 'warn'],
     });
+
+    app.use(helmet({ hsts: false }));
+
+    app.use(
+        '/static',
+        helmet({
+            contentSecurityPolicy: false,
+            crossOriginEmbedderPolicy: false,
+        }),
+    );
 
     app.enableCors({
         origin: '*',
