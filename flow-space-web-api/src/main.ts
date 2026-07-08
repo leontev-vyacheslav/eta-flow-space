@@ -21,7 +21,7 @@ async function bootstrap() {
     );
 
     app.enableCors({
-        origin: '*',
+        origin: ['http://eta24.ru:3000', 'http://localhost:3000'],
         methods: '*',
         allowedHeaders: 'Authorization,content-type,x-requested-user',
     });
