@@ -35,7 +35,7 @@ export class ExpressionEvaluatorService {
                 const value = await this.evaluateRaw(inner, context);
                 result += String(value);
             } catch (error) {
-                this.logger.error(`Failed to evaluate template expression "${inner}": ${error}`);
+                this.logger.error(`Failed to evaluate template expression "${inner}"`, error);
                 result += match[0];
             }
             lastIndex = match.index + match[0].length;
