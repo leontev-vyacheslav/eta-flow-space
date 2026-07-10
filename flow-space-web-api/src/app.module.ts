@@ -33,7 +33,7 @@ import { APP_GUARD } from '@nestjs/core';
             fallbackLanguage: 'en',
             loaderOptions: {
                 path: path.join(__dirname, '/i18n/'),
-                watch: true, // auto-reload on file change (dev only)
+                watch: process.env.NODE_ENV !== 'production',
             },
             resolvers: [
                 // Priority order — first match wins:

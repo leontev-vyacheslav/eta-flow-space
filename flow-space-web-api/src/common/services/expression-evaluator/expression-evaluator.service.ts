@@ -17,15 +17,6 @@ export class ExpressionEvaluatorService {
         return Boolean(value);
     }
 
-    async evaluateRaw(expression: string, context: ExpressionContext): Promise<unknown> {
-        validateAst(expression);
-
-        const argNames = Object.keys(context);
-        const argValues: unknown[] = Object.values(context);
-        const fn = new AsyncFunction(...argNames, `return (${expression})`);
-        return await fn(...argValues);
-    }
-
     async evaluateDescription(description: string, context: ExpressionContext): Promise<string> {
         if (!description.includes('${')) {
             return description;
@@ -44,7 +35,7 @@ export class ExpressionEvaluatorService {
                 const value = await this.evaluateRaw(inner, context);
                 result += String(value);
             } catch (error) {
-                this.logger.error(`Failed to evaluate template expression "${inner}": ${error}`);
+                this.logger.error(`Failed to evaluate template expression "${inner}"`, error);
                 result += match[0];
             }
             lastIndex = match.index + match[0].length;
@@ -52,5 +43,14 @@ export class ExpressionEvaluatorService {
 
         result += template.slice(lastIndex);
         return result;
+    }
+
+    private async evaluateRaw(expression: string, context: ExpressionContext): Promise<unknown> {
+        validateAst(expression);
+
+        const argNames = Object.keys(context);
+        const argValues: unknown[] = Object.values(context);
+        const fn = new AsyncFunction(...argNames, `return (${expression})`);
+        return await fn(...argValues);
     }
 }

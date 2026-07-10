@@ -67,7 +67,7 @@ export class AuthService {
                 secret: this.refreshSecret,
             });
         } catch (error) {
-            this.logger.error(error);
+            this.logger.error('Refresh token verification failed', error);
             throw new UnauthorizedException(this.i18n.t('errors.TOKEN_EXPIRED_OR_INVALID'));
         }
 
@@ -88,8 +88,8 @@ export class AuthService {
     async verifyToken(token: string) {
         try {
             return await this.jwtService.verifyAsync<JwtPayloadModel & object>(token);
-        } catch {
-            this.logger.error('Invalid token');
+        } catch (error) {
+            this.logger.error('Invalid token', error);
             throw new UnauthorizedException(this.i18n.t('errors.TOKEN_EXPIRED_OR_INVALID'));
         }
     }

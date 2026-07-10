@@ -52,7 +52,7 @@ export class AuthController {
                 await (user as UserDataModel).save();
             } catch (error) {
                 // Log error but don't block login
-                this.logger.error(`Failed to migrate password for user ${user.id}: ${error}`);
+                this.logger.error(`Failed to migrate password for user ${user.id}`, error);
                 // User is still authenticated, just not migrated yet
             }
         }

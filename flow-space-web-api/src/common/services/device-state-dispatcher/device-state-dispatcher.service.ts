@@ -66,7 +66,7 @@ export class DeviceStateDispatcherService {
                     updated++;
                 } catch (error) {
                     failed++;
-                    this.logger.error(`The device state update transaction failed due to the error: ${error}`);
+                    this.logger.error('The device state update transaction failed', error);
                 }
             }
 

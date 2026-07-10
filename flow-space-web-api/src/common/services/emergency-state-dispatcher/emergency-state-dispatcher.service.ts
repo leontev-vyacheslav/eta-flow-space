@@ -123,7 +123,7 @@ export class EmergencyStateDispatcherService {
                             emergencyReasons.push(emergencyReason);
                         }
                     } catch (error) {
-                        this.logger.error(`Failed to evaluate expression for reason ${emergencyReason.id}: ${error}`);
+                        this.logger.error(`Failed to evaluate expression for reason ${emergencyReason.id}`, error);
                     }
                 }
 
@@ -166,7 +166,7 @@ export class EmergencyStateDispatcherService {
                         await this.emergencyStateDataModel.bulkCreate(emergencyStates as Partial<EmergencyStateDataModel>[], { transaction: t });
                     });
                 } catch (error) {
-                    this.logger.error(`The devices emergency states update failed due to the error: ${error}`);
+                    this.logger.error('The devices emergency states update failed', error);
                 }
             }
 
