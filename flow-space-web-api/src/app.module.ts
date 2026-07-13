@@ -49,6 +49,7 @@ import { APP_GUARD } from '@nestjs/core';
                     limit: parseInt(process.env.THROTTLE_LIMIT || '20'),
                 },
             ],
+            errorMessage: 'Слишком много запросов. Пожалуйста, попробуйте позже.',
         }),
         CacheModule.registerAsync({
             isGlobal: true,
