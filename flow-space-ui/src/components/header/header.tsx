@@ -1,7 +1,7 @@
 import Toolbar, { Item } from 'devextreme-react/toolbar';
 import Button from 'devextreme-react/button';
 import AppLogo from '../../assets/app-logo.svg?react';
-import { AccountIcon, AdminIcon, ExitIcon, MenuIcon, SettingsIcon, UserIcon } from '../../constants/app-icons';
+import { AccountIcon, AdminIcon, ExitIcon, MenuIcon, SettingsIcon, UserIcon, WideScreenExitIcon, WideScreenIcon } from '../../constants/app-icons';
 import type { HeaderProps } from '../../models/header-props';
 import { MainMenu } from '../menu/main-menu/main-menu';
 import { useSharedArea } from '../../contexts/shared-area';
@@ -10,10 +10,12 @@ import './header.scss';
 import { userSettingsService } from '../dialogs/user-settings-doalog/user-settings-dialog';
 import { selectIsAdmin, selectUser } from '../../contexts/auth-selectors';
 import { useAuthStore } from '../../contexts/auth-store';
+import { useState } from 'react';
 
 const Header = ({ title, menuToggleEnabled, toggleMenu }: HeaderProps) => {
     const user = useAuthStore(selectUser);
     const isAdmin = useAuthStore(selectIsAdmin);
+    const [isFullScreen, setIsFullScreen] = useState<boolean>(!!document.fullscreenElement);
 
     const { signOutWithConfirm } = useSharedArea();
 
@@ -57,6 +59,25 @@ const Header = ({ title, menuToggleEnabled, toggleMenu }: HeaderProps) => {
                                             </span>
                                         </div>
                                     ),
+                                },
+                                {
+                                    text: 'Полноэкранный режим',
+                                    render: () => (
+                                        <div className={'menu-item profile'} style={{ display: 'flex', borderBottom: '1px solid #e0e0e0', paddingBottom: 10 }}    >
+                                            <div >
+                                                {(isFullScreen ? (<WideScreenExitIcon size={20} />) : (<WideScreenIcon size={20} />))}
+                                            </div>
+                                            <span>{isFullScreen ? 'Нормальный режим' : 'Полноэкранный режим'}</span>
+                                        </div>
+                                    ),
+                                    onClick: () => {
+                                        if (isFullScreen) {
+                                            document.exitFullscreen();
+                                        } else {
+                                            document.documentElement.requestFullscreen();
+                                        }
+                                        setIsFullScreen(!isFullScreen);
+                                    },
                                 },
                                 {
                                     text: 'Настройки...',

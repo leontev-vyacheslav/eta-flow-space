@@ -2,7 +2,7 @@ import { Item as TabPanelItem, TabPanel } from 'devextreme-react/tab-panel';
 import { useEffect, useMemo, useRef, useState, type ComponentType } from "react";
 import PageHeader from "../../components/page-header/page-header";
 import AppConstants from "../../constants/app-constants";
-import { AdditionalMenuIcon, CircuitIcon, DashboardIcon, GraphIcon, HelpIcon, ParamsIcon, RefreshIcon, ReportIcon, WarningLogIcon } from "../../constants/app-icons";
+import { AdditionalMenuIcon, CircuitIcon, DashboardIcon, WideScreenIcon, GraphIcon, HelpIcon, ParamsIcon, RefreshIcon, ReportIcon, WarningLogIcon, WideScreenExitIcon } from "../../constants/app-icons";
 import type { MenuItemModel } from "../../models/menu-item-model";
 import { IconTab } from '../../components/tab-utils/icon-tab';
 import { useNavigate, useParams } from 'react-router';
@@ -21,6 +21,10 @@ const DashboardPageInner = () => {
     const tabPanelRef = useRef<TabPanel>(null);
     const navigate = useNavigate();
     const isAdmin = useAuthStore(selectIsAdmin);
+    const [ isWideScreen, setIsWideScreen ] = useState<boolean>(() => {
+        const storedValue = localStorage.getItem('isMnemoschemaWideScreen');
+        return storedValue ? JSON.parse(storedValue) : false;
+    });
 
     const { setRefreshToken, schemaTypeInfoPropertiesChain, device } = useDashboardPage();
     const { flowCode } = useParams();
@@ -29,7 +33,18 @@ const DashboardPageInner = () => {
     const [tabIndex, setTabIndex] = useState<number>(0);
 
     const menuItems = useMemo(() => {
+
         const menuItems = [
+            {
+               icon: () => isWideScreen ? <WideScreenExitIcon size={20} color='black' /> : <WideScreenIcon size={20} color='black' /> ,
+                onClick: () => {
+                    setIsWideScreen(prev =>  {
+                        const newValue = !prev;
+                        localStorage.setItem('isMnemoschemaWideScreen', JSON.stringify(newValue));
+                        return newValue;
+                    });
+                },
+            },
             {
                 icon: () => <AdditionalMenuIcon size={20} color='black' />,
                 items: [
@@ -65,10 +80,11 @@ const DashboardPageInner = () => {
                         }
                     },
                 ]
-            }
+            },
+
         ] as MenuItemModel[];
         if (device && device.reports && device.reports.length > 0) {
-            menuItems.find(() => true)!.items!
+            menuItems[1].items!
                 .splice(1, 0,
                     {
                         render: () => <MenuItemWithSubMenu icon={<ReportIcon size={20} />} text={'Отчеты...'} />,
@@ -87,7 +103,7 @@ const DashboardPageInner = () => {
 
         return menuItems;
 
-    }, [device, navigate, schemaTypeInfoPropertiesChain, setRefreshToken]);
+    }, [device, isWideScreen, navigate, schemaTypeInfoPropertiesChain, setRefreshToken]);
 
     useEffect(() => {
         (async () => {
@@ -129,39 +145,47 @@ const DashboardPageInner = () => {
             }} menuItems={menuItems}>
                 <DashboardIcon size={AppConstants.headerIconSize} />
             </PageHeader>
-            <div className={'content-block'}>
-                <div className={'dx-card responsive-paddings dashboard-page-content'}>
-                    <TabPanel
-                        ref={tabPanelRef}
-                        swipeEnabled={false}
-                        animationEnabled={false}
-                        width={'100%'}
-                        height={'calc(100vh - 210px)'}
-                        loop
-                        className='dashboard-tabs'
-                        deferRendering
-                        onSelectedIndexChange={(value: number) => {
-                            setTabIndex(value);
-                        }}>
+            {!isWideScreen ?
+                <div className={'content-block'}>
+                    <div className={'dx-card responsive-paddings dashboard-page-content'}>
+                        <TabPanel
+                            ref={tabPanelRef}
+                            swipeEnabled={false}
+                            animationEnabled={false}
+                            width={'100%'}
+                            height={'calc(100vh - 210px)'}
+                            loop
+                            className='dashboard-tabs'
+                            deferRendering
+                            onSelectedIndexChange={(value: number) => {
+                                setTabIndex(value);
+                            }}>
 
-                        <TabPanelItem title='Мнемосхема' tabRender={(e) => <IconTab tab={e} icon={<CircuitIcon size={18} />} />}>
-                            {
-                                MnemoschemaTabContent && tabIndex === 0 ?
-                                    <MnemoschemaTabContent />
-                                    : <NoData />
-                            }
-                        </TabPanelItem>
+                            <TabPanelItem title='Мнемосхема' tabRender={(e) => <IconTab tab={e} icon={<CircuitIcon size={18} />} />}>
+                                {
+                                    MnemoschemaTabContent && tabIndex === 0 ?
+                                        <MnemoschemaTabContent />
+                                        : <NoData />
+                                }
+                            </TabPanelItem>
 
-                        <TabPanelItem title='Управление' tabRender={(e) => <IconTab tab={e} icon={<ParamsIcon size={18} />} />}>
-                            {
-                                ControlTabContent && tabIndex === 1
-                                    ? <ControlTabContent />
-                                    : <NoData />
-                            }
-                        </TabPanelItem>
-                    </TabPanel>
+                            <TabPanelItem title='Управление' tabRender={(e) => <IconTab tab={e} icon={<ParamsIcon size={18} />} />}>
+                                {
+                                    ControlTabContent && tabIndex === 1
+                                        ? <ControlTabContent />
+                                        : <NoData />
+                                }
+                            </TabPanelItem>
+                        </TabPanel>
+                    </div>
                 </div>
-            </div>
+                : <div style={{ height: '100%', width: '100%', margin: '10px' }} className={'content-block'}>
+                    {
+                        MnemoschemaTabContent ?
+                            <MnemoschemaTabContent />
+                            : <NoData />
+                    }
+                </div>}
         </>
     );
 }

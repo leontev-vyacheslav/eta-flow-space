@@ -122,6 +122,8 @@ export { TbUser as UserIcon } from 'react-icons/tb';
 export { IoMdTime as TimeIcon } from 'react-icons/io';
 
 export {IoChevronForwardOutline as SubmenuIcon} from 'react-icons/io5';
+export {MdOutlineFitScreen as WideScreenIcon} from 'react-icons/md';
+export {MdOutlineFullscreenExit as WideScreenExitIcon} from 'react-icons/md';
 
 
 import { MdMoreVert } from 'react-icons/md';
