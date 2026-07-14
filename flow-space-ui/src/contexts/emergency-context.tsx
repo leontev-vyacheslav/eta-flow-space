@@ -173,7 +173,7 @@ function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
                 if (!emergencyState) {
                     return;
                 }
-                const isConnected = emergencyState.reasons.some(r => r.id === 100);
+                const isConnected = emergencyState.reasons.some(r => r.id === AppConstants.connectedEmergencyReasonId);
 
                 const emergencyIconDom = new DOMParser().parseFromString(
                     emergencyMuteManager.isDeviceMuted(emergencyState)

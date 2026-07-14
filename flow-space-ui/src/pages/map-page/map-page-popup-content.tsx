@@ -2,7 +2,7 @@ import { Fragment, useCallback, useMemo } from "react";
 
 import { getKeyValuePairs, getSchemaTypeInfo, type PropertiesChainValuePairModel, type SchemaTypeInfoModel, type SchemaTypeInfoPropertiesChainModel } from "../../helpers/data-helper";
 import { useScreenSize } from "../../utils/media-query";
-import { CheckedIcon, ConnectionOff, EmergencyWarning, EmergencyWarningOff, GraphIcon, LocationIcon, UncheckedIcon, WarningIcon } from "../../constants/app-icons";
+import { CheckedIcon, EmergencyWarning, EmergencyWarningOff, GraphIcon, LocationIcon, UncheckedIcon, WarningIcon } from "../../constants/app-icons";
 import type { MapPagePopupContentProps } from "../../models/map-page-popup-content-props";
 import { emergencyMuteManager } from "../../services/emergency-mute-manager";
 import AppConstants from "../../constants/app-constants";
@@ -137,18 +137,21 @@ export const MapPagePopupContent = ({ device, deviceState, dataschema, emergency
         );
     }, [graphIconClickHandler, isXSmall, renderStateValueByPropertiesChain]);
 
-    const EmergencyMutedIcon = () => (
+    const EmergencyMutedIcon = ({ color }: { color: string }) => (
         <div>
-            <WarningIcon size={18} style={{ fill: '#FFC107' }} />
-            <EmergencyWarningOff data-emergency-mute-icon size={12} style={{ fill: '#FFC107', position: 'absolute', top: '-5px', right: '-5px' }} />
+            <WarningIcon size={18} style={{ fill: color, cursor: 'pointer' }} />
+            <EmergencyWarningOff data-emergency-mute-icon size={12} style={{ fill: color, cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px' }} />
         </div>
     );
-    const EmergencyUnmutedIcon = () => (
+
+    const EmergencyUnmutedIcon = ({ color }: { color: string }) => (
         <div>
-            <WarningIcon size={18} style={{ fill: '#FFC107' }} />
-            <EmergencyWarning data-emergency-mute-icon size={12} style={{ fill: '#FFC107', position: 'absolute', top: '-5px', right: '-5px' }} />
+            <WarningIcon size={18} style={{ fill: color, cursor: 'pointer' }} />
+            <EmergencyWarning data-emergency-mute-icon size={12} style={{ fill: color, cursor: 'pointer', position: 'absolute', top: '-5px', right: '-5px' }} />
         </div>
     );
+
+    const isConnected = emergencyState && emergencyState.reasons.some(r => r.id === AppConstants.connectedEmergencyReasonId);
 
     return (
         deviceState ?
@@ -162,16 +165,9 @@ export const MapPagePopupContent = ({ device, deviceState, dataschema, emergency
 
                     {emergencyState
                         ? <div style={{ position: 'relative' }} data-emergency-icon-container={device.id}>
-                            {emergencyMuteManager.isDeviceMuted(emergencyState) ? EmergencyMutedIcon() : EmergencyUnmutedIcon()}
+                            {emergencyMuteManager.isDeviceMuted(emergencyState) ? EmergencyMutedIcon({ color: isConnected ? AppConstants.colors.emergencyCriticalColor : AppConstants.colors.emergencyWarningColor }) : EmergencyUnmutedIcon({ color: isConnected ? AppConstants.colors.emergencyCriticalColor : AppConstants.colors.emergencyWarningColor })}
                         </div>
                         : null
-                    }
-                    {
-                        emergencyState && emergencyState.reasons.find(r => r.id === 100) ?
-                            <div style={{ marginLeft: '10px' }}>
-                                <ConnectionOff size={20} color={'#F44336'} />
-                            </div>
-                            : null
                     }
                 </div>
                 <div className="map-pop-content-wrapper">

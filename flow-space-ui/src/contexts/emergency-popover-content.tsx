@@ -23,7 +23,7 @@ export const EmergencyPopoverContent = ({ emergencyState }: { emergencyState: Em
             }
 
             const isDeviceMuted = emergencyMuteManager.isDeviceMuted(emergencyState);
-            const isConnected = emergencyState.reasons.some(r => r.id === 100);
+            const isConnected = emergencyState.reasons.some(r => r.id === AppConstants.connectedEmergencyReasonId);
 
             const emergencyMutedIcon = renderToStaticMarkup(
                 isDeviceMuted

@@ -267,7 +267,6 @@ export const useMnemoschemaPopover = () => {
                     if (popoverContainerRef.current) {
                         popoverContainerRef.current.remove();
                         popoverContainerRef.current = null;
-
                     }
                 });
             },

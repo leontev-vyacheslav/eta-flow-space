@@ -7,16 +7,15 @@ import { MainMenu } from '../menu/main-menu/main-menu';
 import { useSharedArea } from '../../contexts/shared-area';
 
 import './header.scss';
-import { userSettingsService } from '../dialogs/user-settings-doalog/user-settings-dialog';
+import { userSettingsService } from '../dialogs/user-settings-dialog/user-settings-dialog';
 import { selectIsAdmin, selectUser } from '../../contexts/auth-selectors';
 import { useAuthStore } from '../../contexts/auth-store';
-import { useState } from 'react';
+import { useFullScreen } from '../../helpers/use-fullscreen';
 
 const Header = ({ title, menuToggleEnabled, toggleMenu }: HeaderProps) => {
     const user = useAuthStore(selectUser);
     const isAdmin = useAuthStore(selectIsAdmin);
-    const [isFullScreen, setIsFullScreen] = useState<boolean>(!!document.fullscreenElement);
-
+    const { isFullScreen, toggleFullScreen } = useFullScreen();
     const { signOutWithConfirm } = useSharedArea();
 
     return (
@@ -71,12 +70,7 @@ const Header = ({ title, menuToggleEnabled, toggleMenu }: HeaderProps) => {
                                         </div>
                                     ),
                                     onClick: () => {
-                                        if (isFullScreen) {
-                                            document.exitFullscreen();
-                                        } else {
-                                            document.documentElement.requestFullscreen();
-                                        }
-                                        setIsFullScreen(!isFullScreen);
+                                        toggleFullScreen();
                                     },
                                 },
                                 {
