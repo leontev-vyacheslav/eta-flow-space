@@ -12,7 +12,7 @@
         "**/coverage": true,
         "**/.venv": true
     },
-    "svg.preview.background": "white",
+    "svg.preview.background": "transparent",
     "[python]": {
         "editor.defaultFormatter": "ms-python.black-formatter",
         "editor.formatOnSave": true
