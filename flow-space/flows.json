@@ -8,6 +8,14 @@
         "env": []
     },
     {
+        "id": "a03807f6777b0746",
+        "type": "tab",
+        "label": "spring-boiler-automation",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "7ada8f3f5d804ee5",
         "type": "tab",
         "label": "statum-boiler-automation-t1",
@@ -27,14 +35,6 @@
         "id": "f86b501c2fcfb0fb",
         "type": "tab",
         "label": "amirkhana99-hws",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
-        "id": "a03807f6777b0746",
-        "type": "tab",
-        "label": "spring-boiler-automation",
         "disabled": false,
         "info": "",
         "env": []
@@ -160,6 +160,66 @@
         "showLogs": true
     },
     {
+        "id": "d4d92c869a13980d",
+        "type": "modbus-client",
+        "name": "spring-boilers",
+        "clienttype": "tcp",
+        "bufferCommands": true,
+        "stateLogEnabled": false,
+        "queueLogEnabled": false,
+        "failureLogEnabled": true,
+        "tcpHost": "94.180.248.157",
+        "tcpPort": "5003",
+        "tcpType": "DEFAULT",
+        "serialPort": "/dev/ttyUSB",
+        "serialType": "RTU-BUFFERD",
+        "serialBaudrate": 9600,
+        "serialDatabits": 8,
+        "serialStopbits": 1,
+        "serialParity": "none",
+        "serialConnectionDelay": 100,
+        "serialAsciiResponseStartDelimiter": "0x3A",
+        "unit_id": 1,
+        "commandDelay": 1,
+        "clientTimeout": 5000,
+        "reconnectOnTimeout": true,
+        "reconnectTimeout": 4000,
+        "parallelUnitIdsAllowed": true,
+        "showErrors": false,
+        "showWarnings": true,
+        "showLogs": true
+    },
+    {
+        "id": "ab8bf754f8d07509",
+        "type": "modbus-client",
+        "name": "spring-pumps",
+        "clienttype": "tcp",
+        "bufferCommands": true,
+        "stateLogEnabled": false,
+        "queueLogEnabled": false,
+        "failureLogEnabled": true,
+        "tcpHost": "94.180.248.157",
+        "tcpPort": "5002",
+        "tcpType": "DEFAULT",
+        "serialPort": "/dev/ttyUSB",
+        "serialType": "RTU-BUFFERD",
+        "serialBaudrate": 9600,
+        "serialDatabits": 8,
+        "serialStopbits": 1,
+        "serialParity": "none",
+        "serialConnectionDelay": 100,
+        "serialAsciiResponseStartDelimiter": "0x3A",
+        "unit_id": 1,
+        "commandDelay": 1,
+        "clientTimeout": 5000,
+        "reconnectOnTimeout": true,
+        "reconnectTimeout": 4000,
+        "parallelUnitIdsAllowed": true,
+        "showErrors": false,
+        "showWarnings": true,
+        "showLogs": true
+    },
+    {
         "id": "a71506f1fa21dd08",
         "type": "modbus-read",
         "z": "30c8a42fdf53c9ea",
@@ -189,7 +249,8 @@
             [],
             [
                 "bbaeb93817d64273",
-                "8149acd4b893f7ae"
+                "8149acd4b893f7ae",
+                "2a70679cca400c2b"
             ]
         ]
     },
@@ -779,6 +840,264 @@
         "wires": [
             []
         ]
+    },
+    {
+        "id": "2a70679cca400c2b",
+        "type": "debug",
+        "z": "30c8a42fdf53c9ea",
+        "name": "debug 8",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 470,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "541e40da0fbab5bd",
+        "type": "function",
+        "z": "a03807f6777b0746",
+        "name": "collect-device-state",
+        "func": "const { storeDeviceStateToCacheAsync } = global.get('helpers');\n\nconst payload = msg.payload;\n\nconst getStateByWorkAlarmFlags = (workFlag, alarmFlag) => {\n    const work = Boolean(workFlag);\n    const alarm = Boolean(alarmFlag);\n\n    if (work && !alarm) {\n        return 1; // OPERATING\n    };\n    if (alarm && !work) {\n        return 2; // ALARM\n    }\n    if (!work && !alarm) {\n        return 3; // STOP\n    }\n\n    return 4; // invalid\n}\n\nconst deviceState = {\n    // tempRoomAir: (20 * Math.random() + 10).toFixed(2),\n    tempOutAir: payload['tempOutAir'],\n    tempInNet: payload[\"tempInNet\"],     // Температура на обратке сетевого контура (°C)\n    pressInNet: payload[\"pressInNet\"],    // Давление на обратке сетевого контура (бар)\n\n    tempOutNet: payload[\"tempOutNet\"],    // температура на подаче сетевого контура (°C)\n    pressOutNet: payload[\"pressOutNet\"],   // Давление на подаче сетевого контура (бар)\n\n    // pressGas: (2 * Math.random() + 1).toFixed(2),\n\n\n    // isCO1: Boolean(Math.round(Math.random())),                  // Загазованность CO\n    // isCH1: Boolean(Math.round(Math.random())),                  // Загазованность CH\n    // isGasFlap: Boolean(Math.round(Math.random())),              // Клапан отсекатель газа закрыт\n    // isOffInput1: Boolean(Math.round(Math.random())),            // Питание на вводе 1\n    // isOffInput2: Boolean(Math.round(Math.random())),            // Питание на вводе 2\n\n    // Timestamp\n    timestamp: Date.now(),\n};\n\n// const deviceState = {\n//     tempRoomAir: payload[\"TE12\"],  // Температура в котельной (°C)\n//     tempOutAir: payload[\"TE11\"],   // Температура наружная (°C)\n//     pressGas: payload[\"PE4\"],      // Давление газа (бар)\n//     tempInNet: payload[\"TE6\"],     // Температура на обратке сетевого контура (°C)\n//     pressInNet: payload[\"PE2\"],    // Давление на обратке сетевого контура (бар)\n//     tempOutNet: payload[\"TE5\"],    // температура на подаче сетевого контура (°C)\n//     pressOutNet: payload[\"PE1\"],   // Давление на подаче сетевого контура (бар)\n//     levelDt1: payload[\"LE1\"],      // Уровень в баке ДТ 1 (см)\n//     levelDt2: payload[\"LE2\"],      // Уровень в баке ДТ 2 (см)\n//     pressOutSrcW: payload[\"PE3\"],  // Давление исх. воды (бар)\n\n//     // enums (SensorStatus): \"Норма\"=1, \"Предупреждение (выход параметра за предупр. границы)\"=2, \"Авария (выход параметра за аварийные границы)\"=4, \"Неисправность датчика\"=8, \"Неправильная калибровка\"=16, \"Перегрузка (выход сигнала датчика за установленные границы)\"=32\n//     statusTempRoomAirSensor: payload['statusTE12'], // Статус датчика температуры в котельной\n//     // enums (SensorStatus\n//     statusTempOutSensor: payload['statusTE11'],  // Статус датчика температуры наружная\n//     // enums (SensorStatus)\n//     statusPressGasSensor: payload['statusPE4'], // Статус датчика давления газа\n//     // enums (SensorStatus)\n//     statusTempInNetSensor: payload['statusTE6'], // Статус датчика температуры на обратке сетевого контура\n//     // enums (SensorStatus)\n//     statusPressInNetSensor: payload['statusPE2'], // Статус датчика давления на обратке сетевого контура\n//     // enums (SensorStatus)\n//     statusTempOutNetSensor: payload['statusTE5'], // Статус датчика температуры на подаче сетевого контура\n//     // enums (SensorStatus)\n//     statusPressOutNetSensor: payload['statusPE1'], // Статус датчика давления на подаче сетевого контура\n//     // enums (SensorStatus)\n//     statusLevelDt1Sensor: payload['statusLE1'], // Статус датчика уровня ДТ 1\n//     // enums (SensorStatus)\n//     statusLevelDt2Sensor: payload['statusLE2'], // Статус датчика уровня ДТ 2\n//     // enums (SensorStatus)\n//     statusPressOutSrcWSensor: payload['statusPE3'], // Статус датчика давления исх. воды\n\n//     isSourceWaterRelay: Boolean(payload[\"isSourceWaterRelay\"]),       // Реле давления исходной воды\n//     isCO1: Boolean(payload[\"isCO\"]),            // Загазованность CO\n//     isCH1: Boolean(payload[\"isCH\"]),            // Загазованность CH\n//     isGasFlap: Boolean(payload[\"isGasFlap\"]),   // Клапан отсекатель газа закрыт\n//     isVaporDt1: Boolean(payload[\"isVaporDt1\"]), // Загазованность горючими газами 1\n//     isVaporDt2: Boolean(payload[\"isVaporDt2\"]), // Загазованность горючими газами 2\n//     isOffInput1: Boolean(payload[\"isOffInput1\"]), // Питание на вводе 1\n//     isOffInput2: Boolean(payload[\"isOffInput2\"]), // Питание на вводе 2\n\n//     gasMeter: {\n//         ...payload.gasMeter\n//     },         // Газовый счетчик \n\n//     sourceWaterPumps: [\n//         {\n//             // enums (SourceWaterPumpState): \"Нет питания\"=1, \"Остановлен\"=2, \"В работе\"=4, \"Авария\"=8, \"Запуск (разгон)\"=16, \"Останов\"=32, \"Регулирование (мин. частота)\"=128, \"Регулирование (макс. частота)\"=256, \"Ожидание включения\"=512, \"Ожидание готовности\"=1024\n//             state: payload[\"statusSourcePump\"] // Состояние насоса исходной воды\n//         }\n//     ], // Насосы питательной воды\n\n//     boilers: [\n//         {\n//             // enum (BoilerState) :  \"Нет готовности\"=1, \"Отключен\"=2, \"Включается\"=4, \"Работа (на 1 ступени)\"=8, \"Работа( на 2 ступени)\"=16, \"В горячем резерве\"=32,\"Останавливается\"=64, \"Авария\"=128\n//             state: payload[\"StatusBoiler_1\"],      // Состояние котла\n//             tempOut: payload[\"TE1\"], // Температура воды на подаче котла (°C)\n//             tempFlueGases: payload[\"TE7\"], // Температура дымовых газов котла (°C)\n\n//             isBurnerFailure: Boolean(payload[\"AlarmBurner_1\"]), // Авария горелки\n//             isWorking: Boolean(payload[\"WorkingBoiler_1\"]),        // Работа котла\n//             isGasRelayPressure: Boolean(payload[\"GasRelayBoiler_1\"]), // Реле давления газа\n//             isMinWaterPressure: Boolean(payload[\"MinPressBoiler_1\"]), // Мин. давление воды\n//             isMaxWaterPressure: Boolean(payload[\"MaxPressBoiler_1\"]), // Макс. давление воды\n//             isMaxWaterTemperature: Boolean(payload[\"MaxTempBoiler_1\"]), // Макс. температура воды\n//             isFlowRelay: Boolean(payload[\"FlowRelayBoiler_1\"]), // Реле потока\n\n//             // enums (SensorStatus)\n//             statusTempOutSensor: payload['statusTE1'], // Статус датчика температуры воды на подаче котла\n//             // enums (SensorStatus)\n//             statusTempFlueGasesSensor: payload['statusTE7'], // Статус датчика температуры дымовых газов\n\n//         },\n//         {\n//             state: payload[\"StatusBoiler_2\"],\n//             tempOut: payload[\"TE2\"],\n//             tempFlueGases: payload[\"TE8\"],\n//             isBurnerFailure: Boolean(payload[\"AlarmBurner_2\"]),\n//             isWorking: Boolean(payload[\"WorkingBoiler_2\"]),\n//             isGasRelayPressure: Boolean(payload[\"GasRelayBoiler_2\"]),\n//             isMinWaterPressure: Boolean(payload[\"MinPressBoiler_2\"]),\n//             isMaxWaterPressure: Boolean(payload[\"MaxPressBoiler_2\"]),\n//             isMaxWaterTemperature: Boolean(payload[\"MaxTempBoiler_2\"]),\n//             isFlowRelay: Boolean(payload[\"FlowRelayBoiler_2\"]),\n\n//             // enums (SensorStatus)\n//             statusTempOutSensor: payload['statusTE2'],\n//             // enums (SensorStatus)\n//             statusTempFlueGasesSensor: payload['statusTE8'],\n//         },\n//         {\n//             state: payload[\"StatusBoiler_3\"],\n//             tempOut: payload[\"TE3\"],\n//             tempFlueGases: payload[\"TE9\"],\n//             isBurnerFailure: Boolean(payload[\"AlarmBurner_3\"]),\n//             isWorking: Boolean(payload[\"WorkingBoiler_3\"]),\n//             isGasRelayPressure: Boolean(payload[\"GasRelayBoiler_3\"]),\n//             isMinWaterPressure: Boolean(payload[\"MinPressBoiler_3\"]),\n//             isMaxWaterPressure: Boolean(payload[\"MaxPressBoiler_3\"]),\n//             isMaxWaterTemperature: Boolean(payload[\"MaxTempBoiler_3\"]),\n//             isFlowRelay: Boolean(payload[\"FlowRelayBoiler_3\"]),\n\n//             statusTempOutSensor: payload['statusTE3'],\n//             statusTempFlueGasesSensor: payload['statusTE9'],\n//         },\n//         {\n//             state: payload[\"StatusBoiler_4\"],\n//             tempOut: payload[\"TE4\"],\n//             tempFlueGases: payload[\"TE10\"],\n//             isBurnerFailure: Boolean(payload[\"AlarmBurner_4\"]),\n//             isWorking: Boolean(payload[\"WorkingBoiler_4\"]),\n//             isGasRelayPressure: Boolean(payload[\"GasRelayBoiler_4\"]),\n//             isMinWaterPressure: Boolean(payload[\"MinPressBoiler_4\"]),\n//             isMaxWaterPressure: Boolean(payload[\"MaxPressBoiler_4\"]),\n//             isMaxWaterTemperature: Boolean(payload[\"MaxTempBoiler_4\"]),\n//             isFlowRelay: Boolean(payload[\"FlowRelayBoiler_4\"]),\n\n//             statusTempOutSensor: payload['statusTE4'],\n//             statusTempFlueGasesSensor: payload['statusTE10'],\n//         }\n//     ], // Котлы\n\n\n//     boilerOutputValves: [\n//         {\n//             // enums (BoilerOutputValveState): \"Открыта\"=1, \"Закрыта\"=2\n//             state: Boolean(payload['ClosedValveBoiler_1']) === true && Boolean(payload['OpenedValveBoiler_1']) === false\n//                 ? 2\n//                 : (Boolean(payload['OpenedValveBoiler_1']) === true && Boolean(payload['ClosedValveBoiler_1']) === false ? 1 : 3), // Состояние задвижки на выходе котла\n\n//         },\n//         {\n//             state: Boolean(payload['ClosedValveBoiler_2']) === true && Boolean(payload['OpenedValveBoiler_2']) === false\n//                 ? 2\n//                 : (Boolean(payload['OpenedValveBoiler_2']) === true && Boolean(payload['ClosedValveBoiler_2']) === false ? 1 : 3),\n//         },\n//         {\n//             state: Boolean(payload['ClosedValveBoiler_3']) === true && Boolean(payload['OpenedValveBoiler_3']) === false\n//                 ? 2\n//                 : (Boolean(payload['OpenedValveBoiler_3']) === true && Boolean(payload['ClosedValveBoiler_3']) === false ? 1 : 3),\n//         },\n//         {\n//             state: Boolean(payload['ClosedValveBoiler_4']) === true && Boolean(payload['OpenedValveBoiler_4']) === false\n//                 ? 2\n//                 : (Boolean(payload['OpenedValveBoiler_4']) === true && Boolean(payload['ClosedValveBoiler_4']) === false ? 1 : 3),\n//         }\n//     ], // Задвижки на выходе котлов\n\n//     boilerPumps: [\n//         {\n//             // enums (BoilerPumpState): \"Работа\"=1, \"Авария\"=2, \"Останов=3\"\n//             state: getStateByWorkAlarmFlags(payload['WorkPumpBoiler_1'], payload['AlarmPumpBoiler_1']), // Состояние насоса котла\n//             // enums (SensorStatus)\n//             statusCurrentSensor: 1 // Статус датчика тока\n//         },\n//         {\n//             state: getStateByWorkAlarmFlags(payload['WorkPumpBoiler_2'], payload['AlarmPumpBoiler_2']),\n//             statusCurrentSensor: 1\n//         },\n//         {\n//             state: getStateByWorkAlarmFlags(payload['WorkPumpBoiler_3'], payload['AlarmPumpBoiler_3']),\n//             statusCurrentSensor: 2\n//         },\n//         {\n//             state: getStateByWorkAlarmFlags(payload['WorkPumpBoiler_4'], payload['AlarmPumpBoiler_4']),\n//             statusCurrentSensor: 8\n//         }\n//     ], //  Насосы котлов\n//     networkPumps: [\n//         {\n//             // enum (NetworkPumpState): \"Ожидание готовности\"=1, \"Готовность\"=2, \"Не используется\"=4, \"Не используется\"=8, \"Не используется\"=16, \"Запуск от ЧРП\"=32, \"В работе от ЧРП\"=64, \"Останов от ЧРП\"=128, \"Не используется\"=256, \"Авария\"=512, \"Не используется\"=1024, \"Не используется\"=2048, \"Не используется\"=4096, \"Не используется\"=8192\n//             state: payload.StatusNetPump_1, // Состояние сетевого насоса\n//             isDryRun: Boolean(payload.IsDryNetPump_1), // Сухой ход\n\n//             //  enum (NetworkPumpFrequencyConvertorStatus): \"Работа ПЧ\"=1, \"Авария ПЧ\"=2, \"Останов ПЧ\"=3,\n//             statusFc: getStateByWorkAlarmFlags(payload['WorkNetPump_1'], payload['AlarmNetPump_1']),               // Статус ПЧ сетевого насоса\n//         },\n//         {\n//             state: payload.StatusNetPump_2,\n//             isDryRun: Boolean(payload.IsDryNetPump_2),\n//             statusFc: getStateByWorkAlarmFlags(payload['WorkNetPump_2'], payload['AlarmNetPump_2']),               // Статус ПЧ сетевого насоса\n//         },\n//         {\n//             state: payload.StatusNetPump_3,\n//             isDryRun: Boolean(payload.IsDryNetPump_3),\n//             statusFc: getStateByWorkAlarmFlags(payload['WorkNetPump_3'], payload['AlarmNetPump_3']),               // Статус ПЧ сетевого насоса\n\n//         }\n//     ] // Сетевые насосы\n//     ,\n//     // Timestamp\n//     timestamp: Date.now(),\n// }\n\nconst flowUid = node.path.split('/').find(_ => true);\nawait storeDeviceStateToCacheAsync(global, flowUid, deviceState);\nmsg.deviceState = deviceState;\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 990,
+        "y": 160,
+        "wires": [
+            [
+                "0fab756745b27ea6"
+            ]
+        ]
+    },
+    {
+        "id": "0fab756745b27ea6",
+        "type": "debug",
+        "z": "a03807f6777b0746",
+        "name": "debug 2",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "deviceState",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1220,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "42e17f3da680a52d",
+        "type": "modbus-read",
+        "z": "a03807f6777b0746",
+        "name": "reader",
+        "topic": "",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "HoldingRegister",
+        "adr": "44",
+        "quantity": "6",
+        "rate": "10",
+        "rateUnit": "s",
+        "delayOnStart": false,
+        "enableDeformedMessages": false,
+        "startDelayTime": "",
+        "server": "d4d92c869a13980d",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "x": 230,
+        "y": 80,
+        "wires": [
+            [],
+            [
+                "739e4dcf6f0d9904",
+                "ba48a12786b5e209",
+                "e3f1330c94d6415d"
+            ]
+        ]
+    },
+    {
+        "id": "739e4dcf6f0d9904",
+        "type": "function",
+        "z": "a03807f6777b0746",
+        "name": "data-convert",
+        "func": "const buffer = Buffer.from(msg.payload.buffer);\nconst payload = {};\n\nbuffer.swap16();\n\n\npayload['tempInNet'] = buffer.readFloatLE(0);    // Температура подачи, °С\npayload['tempOutNet'] = buffer.readFloatLE(4);  // Температура обратки, °С\n\npayload['tempOutAir'] = buffer.readFloatLE(8);  // Температура наружнего воздуха, °С\n\nmsg.payload = payload;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 80,
+        "wires": [
+            [
+                "458b8544654139a3"
+            ]
+        ]
+    },
+    {
+        "id": "ba48a12786b5e209",
+        "type": "function",
+        "z": "a03807f6777b0746",
+        "name": "trigger",
+        "func": "const buffer_array = msg.payload.buffer;\nif (buffer_array.length > 0) {\n    msg.payload = 1;\n\n    return msg;\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 140,
+        "wires": [
+            [
+                "8f732c53378a35c9"
+            ]
+        ]
+    },
+    {
+        "id": "8f732c53378a35c9",
+        "type": "modbus-getter",
+        "z": "a03807f6777b0746",
+        "name": "reader",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "logIOActivities": false,
+        "unitid": "",
+        "dataType": "HoldingRegister",
+        "adr": "40",
+        "quantity": "4",
+        "server": "ab8bf754f8d07509",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "enableDeformedMessages": false,
+        "startDelayTime": "",
+        "x": 230,
+        "y": 260,
+        "wires": [
+            [],
+            [
+                "478c5f060f31c8a4",
+                "7868e2548f744ce3"
+            ]
+        ]
+    },
+    {
+        "id": "478c5f060f31c8a4",
+        "type": "function",
+        "z": "a03807f6777b0746",
+        "name": "data-convert",
+        "func": "const buffer = Buffer.from(msg.payload.buffer);\nconst payload = {};\n\nbuffer.swap16();\n\npayload['pressInNet'] = buffer.readFloatLE(0);    // Давление подачи, Бар\npayload['pressOutNet'] = buffer.readFloatLE(4);  // Давление обратки, Бар\n\nmsg.payload = payload;\nmsg.complete = true;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 260,
+        "wires": [
+            [
+                "458b8544654139a3"
+            ]
+        ]
+    },
+    {
+        "id": "458b8544654139a3",
+        "type": "join",
+        "z": "a03807f6777b0746",
+        "name": "joinData",
+        "mode": "custom",
+        "build": "merged",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "useparts": false,
+        "accumulate": false,
+        "timeout": "",
+        "count": "",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 760,
+        "y": 160,
+        "wires": [
+            [
+                "97a37cff24eab2ec",
+                "541e40da0fbab5bd"
+            ]
+        ]
+    },
+    {
+        "id": "97a37cff24eab2ec",
+        "type": "debug",
+        "z": "a03807f6777b0746",
+        "name": "debug 10",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 920,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "e3f1330c94d6415d",
+        "type": "debug",
+        "z": "a03807f6777b0746",
+        "name": "debug 9",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 380,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "7868e2548f744ce3",
+        "type": "debug",
+        "z": "a03807f6777b0746",
+        "name": "debug 12",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 360,
+        "y": 220,
+        "wires": []
     },
     {
         "id": "13bfc5999f0041c0",
@@ -2245,71 +2564,6 @@
         "info": "",
         "x": 470,
         "y": 100,
-        "wires": []
-    },
-    {
-        "id": "541e40da0fbab5bd",
-        "type": "function",
-        "z": "a03807f6777b0746",
-        "name": "collect-device-state",
-        "func": "const { storeDeviceStateToCacheAsync } = global.get('helpers');\n\nconst payload = msg.payload;\n\nconst getStateByWorkAlarmFlags = (workFlag, alarmFlag) => {\n    const work = Boolean(workFlag);\n    const alarm = Boolean(alarmFlag);\n\n    if (work && !alarm) {\n        return 1; // OPERATING\n    };\n    if (alarm && !work) {\n        return 2; // ALARM\n    }\n    if (!work && !alarm) {\n        return 3; // STOP\n    }\n\n    return 4; // invalid\n}\n\nconst deviceState = {\n    isConnected: Boolean(Math.round(Math.random())),\n    tempRoomAir: (20 * Math.random() + 10).toFixed(2),\n    tempOutAir: (20 * Math.random() + 10).toFixed(2),\n    pressGas: (2 * Math.random() + 1).toFixed(2),\n\n\n    isCO1: Boolean(Math.round(Math.random())),                  // Загазованность CO\n    isCH1: Boolean(Math.round(Math.random())),                  // Загазованность CH\n    isGasFlap: Boolean(Math.round(Math.random())),              // Клапан отсекатель газа закрыт\n    isOffInput1: Boolean(Math.round(Math.random())),            // Питание на вводе 1\n    isOffInput2: Boolean(Math.round(Math.random())),            // Питание на вводе 2\n\n    // Timestamp\n    timestamp: Date.now(),\n};\n\n// const deviceState = {\n//     tempRoomAir: payload[\"TE12\"],  // Температура в котельной (°C)\n//     tempOutAir: payload[\"TE11\"],   // Температура наружная (°C)\n//     pressGas: payload[\"PE4\"],      // Давление газа (бар)\n//     tempInNet: payload[\"TE6\"],     // Температура на обратке сетевого контура (°C)\n//     pressInNet: payload[\"PE2\"],    // Давление на обратке сетевого контура (бар)\n//     tempOutNet: payload[\"TE5\"],    // температура на подаче сетевого контура (°C)\n//     pressOutNet: payload[\"PE1\"],   // Давление на подаче сетевого контура (бар)\n//     levelDt1: payload[\"LE1\"],      // Уровень в баке ДТ 1 (см)\n//     levelDt2: payload[\"LE2\"],      // Уровень в баке ДТ 2 (см)\n//     pressOutSrcW: payload[\"PE3\"],  // Давление исх. воды (бар)\n\n//     // enums (SensorStatus): \"Норма\"=1, \"Предупреждение (выход параметра за предупр. границы)\"=2, \"Авария (выход параметра за аварийные границы)\"=4, \"Неисправность датчика\"=8, \"Неправильная калибровка\"=16, \"Перегрузка (выход сигнала датчика за установленные границы)\"=32\n//     statusTempRoomAirSensor: payload['statusTE12'], // Статус датчика температуры в котельной\n//     // enums (SensorStatus\n//     statusTempOutSensor: payload['statusTE11'],  // Статус датчика температуры наружная\n//     // enums (SensorStatus)\n//     statusPressGasSensor: payload['statusPE4'], // Статус датчика давления газа\n//     // enums (SensorStatus)\n//     statusTempInNetSensor: payload['statusTE6'], // Статус датчика температуры на обратке сетевого контура\n//     // enums (SensorStatus)\n//     statusPressInNetSensor: payload['statusPE2'], // Статус датчика давления на обратке сетевого контура\n//     // enums (SensorStatus)\n//     statusTempOutNetSensor: payload['statusTE5'], // Статус датчика температуры на подаче сетевого контура\n//     // enums (SensorStatus)\n//     statusPressOutNetSensor: payload['statusPE1'], // Статус датчика давления на подаче сетевого контура\n//     // enums (SensorStatus)\n//     statusLevelDt1Sensor: payload['statusLE1'], // Статус датчика уровня ДТ 1\n//     // enums (SensorStatus)\n//     statusLevelDt2Sensor: payload['statusLE2'], // Статус датчика уровня ДТ 2\n//     // enums (SensorStatus)\n//     statusPressOutSrcWSensor: payload['statusPE3'], // Статус датчика давления исх. воды\n\n//     isSourceWaterRelay: Boolean(payload[\"isSourceWaterRelay\"]),       // Реле давления исходной воды\n//     isCO1: Boolean(payload[\"isCO\"]),            // Загазованность CO\n//     isCH1: Boolean(payload[\"isCH\"]),            // Загазованность CH\n//     isGasFlap: Boolean(payload[\"isGasFlap\"]),   // Клапан отсекатель газа закрыт\n//     isVaporDt1: Boolean(payload[\"isVaporDt1\"]), // Загазованность горючими газами 1\n//     isVaporDt2: Boolean(payload[\"isVaporDt2\"]), // Загазованность горючими газами 2\n//     isOffInput1: Boolean(payload[\"isOffInput1\"]), // Питание на вводе 1\n//     isOffInput2: Boolean(payload[\"isOffInput2\"]), // Питание на вводе 2\n\n//     gasMeter: {\n//         ...payload.gasMeter\n//     },         // Газовый счетчик \n\n//     sourceWaterPumps: [\n//         {\n//             // enums (SourceWaterPumpState): \"Нет питания\"=1, \"Остановлен\"=2, \"В работе\"=4, \"Авария\"=8, \"Запуск (разгон)\"=16, \"Останов\"=32, \"Регулирование (мин. частота)\"=128, \"Регулирование (макс. частота)\"=256, \"Ожидание включения\"=512, \"Ожидание готовности\"=1024\n//             state: payload[\"statusSourcePump\"] // Состояние насоса исходной воды\n//         }\n//     ], // Насосы питательной воды\n\n//     boilers: [\n//         {\n//             // enum (BoilerState) :  \"Нет готовности\"=1, \"Отключен\"=2, \"Включается\"=4, \"Работа (на 1 ступени)\"=8, \"Работа( на 2 ступени)\"=16, \"В горячем резерве\"=32,\"Останавливается\"=64, \"Авария\"=128\n//             state: payload[\"StatusBoiler_1\"],      // Состояние котла\n//             tempOut: payload[\"TE1\"], // Температура воды на подаче котла (°C)\n//             tempFlueGases: payload[\"TE7\"], // Температура дымовых газов котла (°C)\n\n//             isBurnerFailure: Boolean(payload[\"AlarmBurner_1\"]), // Авария горелки\n//             isWorking: Boolean(payload[\"WorkingBoiler_1\"]),        // Работа котла\n//             isGasRelayPressure: Boolean(payload[\"GasRelayBoiler_1\"]), // Реле давления газа\n//             isMinWaterPressure: Boolean(payload[\"MinPressBoiler_1\"]), // Мин. давление воды\n//             isMaxWaterPressure: Boolean(payload[\"MaxPressBoiler_1\"]), // Макс. давление воды\n//             isMaxWaterTemperature: Boolean(payload[\"MaxTempBoiler_1\"]), // Макс. температура воды\n//             isFlowRelay: Boolean(payload[\"FlowRelayBoiler_1\"]), // Реле потока\n\n//             // enums (SensorStatus)\n//             statusTempOutSensor: payload['statusTE1'], // Статус датчика температуры воды на подаче котла\n//             // enums (SensorStatus)\n//             statusTempFlueGasesSensor: payload['statusTE7'], // Статус датчика температуры дымовых газов\n\n//         },\n//         {\n//             state: payload[\"StatusBoiler_2\"],\n//             tempOut: payload[\"TE2\"],\n//             tempFlueGases: payload[\"TE8\"],\n//             isBurnerFailure: Boolean(payload[\"AlarmBurner_2\"]),\n//             isWorking: Boolean(payload[\"WorkingBoiler_2\"]),\n//             isGasRelayPressure: Boolean(payload[\"GasRelayBoiler_2\"]),\n//             isMinWaterPressure: Boolean(payload[\"MinPressBoiler_2\"]),\n//             isMaxWaterPressure: Boolean(payload[\"MaxPressBoiler_2\"]),\n//             isMaxWaterTemperature: Boolean(payload[\"MaxTempBoiler_2\"]),\n//             isFlowRelay: Boolean(payload[\"FlowRelayBoiler_2\"]),\n\n//             // enums (SensorStatus)\n//             statusTempOutSensor: payload['statusTE2'],\n//             // enums (SensorStatus)\n//             statusTempFlueGasesSensor: payload['statusTE8'],\n//         },\n//         {\n//             state: payload[\"StatusBoiler_3\"],\n//             tempOut: payload[\"TE3\"],\n//             tempFlueGases: payload[\"TE9\"],\n//             isBurnerFailure: Boolean(payload[\"AlarmBurner_3\"]),\n//             isWorking: Boolean(payload[\"WorkingBoiler_3\"]),\n//             isGasRelayPressure: Boolean(payload[\"GasRelayBoiler_3\"]),\n//             isMinWaterPressure: Boolean(payload[\"MinPressBoiler_3\"]),\n//             isMaxWaterPressure: Boolean(payload[\"MaxPressBoiler_3\"]),\n//             isMaxWaterTemperature: Boolean(payload[\"MaxTempBoiler_3\"]),\n//             isFlowRelay: Boolean(payload[\"FlowRelayBoiler_3\"]),\n\n//             statusTempOutSensor: payload['statusTE3'],\n//             statusTempFlueGasesSensor: payload['statusTE9'],\n//         },\n//         {\n//             state: payload[\"StatusBoiler_4\"],\n//             tempOut: payload[\"TE4\"],\n//             tempFlueGases: payload[\"TE10\"],\n//             isBurnerFailure: Boolean(payload[\"AlarmBurner_4\"]),\n//             isWorking: Boolean(payload[\"WorkingBoiler_4\"]),\n//             isGasRelayPressure: Boolean(payload[\"GasRelayBoiler_4\"]),\n//             isMinWaterPressure: Boolean(payload[\"MinPressBoiler_4\"]),\n//             isMaxWaterPressure: Boolean(payload[\"MaxPressBoiler_4\"]),\n//             isMaxWaterTemperature: Boolean(payload[\"MaxTempBoiler_4\"]),\n//             isFlowRelay: Boolean(payload[\"FlowRelayBoiler_4\"]),\n\n//             statusTempOutSensor: payload['statusTE4'],\n//             statusTempFlueGasesSensor: payload['statusTE10'],\n//         }\n//     ], // Котлы\n\n\n//     boilerOutputValves: [\n//         {\n//             // enums (BoilerOutputValveState): \"Открыта\"=1, \"Закрыта\"=2\n//             state: Boolean(payload['ClosedValveBoiler_1']) === true && Boolean(payload['OpenedValveBoiler_1']) === false\n//                 ? 2\n//                 : (Boolean(payload['OpenedValveBoiler_1']) === true && Boolean(payload['ClosedValveBoiler_1']) === false ? 1 : 3), // Состояние задвижки на выходе котла\n\n//         },\n//         {\n//             state: Boolean(payload['ClosedValveBoiler_2']) === true && Boolean(payload['OpenedValveBoiler_2']) === false\n//                 ? 2\n//                 : (Boolean(payload['OpenedValveBoiler_2']) === true && Boolean(payload['ClosedValveBoiler_2']) === false ? 1 : 3),\n//         },\n//         {\n//             state: Boolean(payload['ClosedValveBoiler_3']) === true && Boolean(payload['OpenedValveBoiler_3']) === false\n//                 ? 2\n//                 : (Boolean(payload['OpenedValveBoiler_3']) === true && Boolean(payload['ClosedValveBoiler_3']) === false ? 1 : 3),\n//         },\n//         {\n//             state: Boolean(payload['ClosedValveBoiler_4']) === true && Boolean(payload['OpenedValveBoiler_4']) === false\n//                 ? 2\n//                 : (Boolean(payload['OpenedValveBoiler_4']) === true && Boolean(payload['ClosedValveBoiler_4']) === false ? 1 : 3),\n//         }\n//     ], // Задвижки на выходе котлов\n\n//     boilerPumps: [\n//         {\n//             // enums (BoilerPumpState): \"Работа\"=1, \"Авария\"=2, \"Останов=3\"\n//             state: getStateByWorkAlarmFlags(payload['WorkPumpBoiler_1'], payload['AlarmPumpBoiler_1']), // Состояние насоса котла\n//             // enums (SensorStatus)\n//             statusCurrentSensor: 1 // Статус датчика тока\n//         },\n//         {\n//             state: getStateByWorkAlarmFlags(payload['WorkPumpBoiler_2'], payload['AlarmPumpBoiler_2']),\n//             statusCurrentSensor: 1\n//         },\n//         {\n//             state: getStateByWorkAlarmFlags(payload['WorkPumpBoiler_3'], payload['AlarmPumpBoiler_3']),\n//             statusCurrentSensor: 2\n//         },\n//         {\n//             state: getStateByWorkAlarmFlags(payload['WorkPumpBoiler_4'], payload['AlarmPumpBoiler_4']),\n//             statusCurrentSensor: 8\n//         }\n//     ], //  Насосы котлов\n//     networkPumps: [\n//         {\n//             // enum (NetworkPumpState): \"Ожидание готовности\"=1, \"Готовность\"=2, \"Не используется\"=4, \"Не используется\"=8, \"Не используется\"=16, \"Запуск от ЧРП\"=32, \"В работе от ЧРП\"=64, \"Останов от ЧРП\"=128, \"Не используется\"=256, \"Авария\"=512, \"Не используется\"=1024, \"Не используется\"=2048, \"Не используется\"=4096, \"Не используется\"=8192\n//             state: payload.StatusNetPump_1, // Состояние сетевого насоса\n//             isDryRun: Boolean(payload.IsDryNetPump_1), // Сухой ход\n\n//             //  enum (NetworkPumpFrequencyConvertorStatus): \"Работа ПЧ\"=1, \"Авария ПЧ\"=2, \"Останов ПЧ\"=3,\n//             statusFc: getStateByWorkAlarmFlags(payload['WorkNetPump_1'], payload['AlarmNetPump_1']),               // Статус ПЧ сетевого насоса\n//         },\n//         {\n//             state: payload.StatusNetPump_2,\n//             isDryRun: Boolean(payload.IsDryNetPump_2),\n//             statusFc: getStateByWorkAlarmFlags(payload['WorkNetPump_2'], payload['AlarmNetPump_2']),               // Статус ПЧ сетевого насоса\n//         },\n//         {\n//             state: payload.StatusNetPump_3,\n//             isDryRun: Boolean(payload.IsDryNetPump_3),\n//             statusFc: getStateByWorkAlarmFlags(payload['WorkNetPump_3'], payload['AlarmNetPump_3']),               // Статус ПЧ сетевого насоса\n\n//         }\n//     ] // Сетевые насосы\n//     ,\n//     // Timestamp\n//     timestamp: Date.now(),\n// }\n\nconst flowUid = node.path.split('/').find(_ => true);\nawait storeDeviceStateToCacheAsync(global, flowUid, deviceState);\n\nreturn msg;\n",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 690,
-        "y": 220,
-        "wires": [
-            [
-                "0fab756745b27ea6"
-            ]
-        ]
-    },
-    {
-        "id": "902b80350eadcb74",
-        "type": "inject",
-        "z": "a03807f6777b0746",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "60",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 450,
-        "y": 340,
-        "wires": [
-            [
-                "541e40da0fbab5bd"
-            ]
-        ]
-    },
-    {
-        "id": "0fab756745b27ea6",
-        "type": "debug",
-        "z": "a03807f6777b0746",
-        "name": "debug 2",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 930,
-        "y": 320,
         "wires": []
     }
 ]
