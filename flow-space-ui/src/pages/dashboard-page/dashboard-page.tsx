@@ -179,7 +179,7 @@ const DashboardPageInner = () => {
                         </TabPanel>
                     </div>
                 </div>
-                : <div style={{ height: 'calc(99% - 70px)', width: '99%' }} className={'content-block'}>
+                : <div style={{ backgroundColor: 'white', height: 'calc(99% - 70px)', width: '99%' }} className={'content-block'}>
                     {
                         MnemoschemaTabContent ?
                             <MnemoschemaTabContent />
