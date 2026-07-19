@@ -382,8 +382,8 @@
 		 M64.5,108.4c0.3-0.3,0.8-0.3,1.1,0c0.3,0.3,0.3,0.8,0,1.1l-15.2,15.2c-0.3,0.3-0.8,0.3-1.1,0c-0.3-0.3-0.3-0.8,0-1.1L64.5,108.4z" />
 		</g>
 
-		<g data-section="isCO1">
-			<path data-colorizer="fill" data-state="isCO1"
+		<g data-section="isCO">
+			<path data-colorizer="fill" data-state="isCO"
 				style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;" d="M69.4,311.2h-26c-6.6,0-12-5.4-12-12v-26
 		c0-6.6,5.4-12,12-12h26c6.6,0,12,5.4,12,12v26C81.4,305.8,76,311.2,69.4,311.2z" />
 			<g id="g3517-3" transform="matrix(0.93449242,0,0,0.93449242,-75.04396,-3.2503739)">
@@ -423,15 +423,15 @@
 				<path id="path3489-3"
 					d="M144,290.5c-0.4,0-0.7,0.3-0.7,0.6s0.3,0.6,0.7,0.6s0.7-0.3,0.7-0.6S144.4,290.5,144,290.5z" />
 			</g>
-			<text transform="matrix(1 0 0 1 45.8608 303.373)" style="font-family:'Arial'; font-size:9px;">CO 1</text>
+			<text transform="matrix(1 0 0 1 49 303.373)" style="font-family:'Arial'; font-size:9px;">CO</text>
 		</g>
 
-		<g data-section="isCH1">
-			<path data-colorizer-hint="fill" data-state="isCH1"
+		<g data-section="isCH">
+			<path data-colorizer-hint="fill" data-state="isCH"
 				style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;" d="M68.6,365.9h-26c-6.6,0-12-5.4-12-12v-26
 		c0-6.6,5.4-12,12-12h26c6.6,0,12,5.4,12,12v26C80.6,360.5,75.2,365.9,68.6,365.9z" />
 
-			<text transform="matrix(1 0 0 1 45.3139 358.1533)" style="font-family:'Arial'; font-size:9px;">CH 1</text>
+			<text transform="matrix(1 0 0 1 49 358.1533)" style="font-family:'Arial'; font-size:9px;">CH</text>
 			<g id="g3517-3_1_" transform="matrix(0.93449242,0,0,0.93449242,-75.04396,-3.2503739)">
 				<path id="path3513-9_1_" d="M155.3,368.9C155.2,368.9,155.2,368.9,155.3,368.9l-3-2.6c-0.3-0.3-0.9-0.5-2-0.1l-2.2-2
 			c0.7-0.9,0.8-0.9,1.1-1.3l0.6,0.5c0.8,0.7,2.1,0.7,2.9,0c0.8-0.7,0.8-1.9,0-2.6l-1.6-1.4c0.3-1,0.5-2,0.5-3c0-0.9-0.1-1.7-0.4-2.6

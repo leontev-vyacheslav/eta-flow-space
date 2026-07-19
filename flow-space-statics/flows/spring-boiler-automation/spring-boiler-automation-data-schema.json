@@ -597,7 +597,7 @@
         }
       }
     },
-    "isCO1": {
+    "isCO": {
       "type": "boolean",
       "ui": {
         "group": 7,
@@ -624,7 +624,7 @@
         }
       }
     },
-    "isCH1": {
+    "isCH": {
       "type": "boolean",
       "ui": {
         "group": 7,
@@ -672,68 +672,6 @@
               "fill": {
                 "red": true,
                 "white": false
-              }
-            }
-          ]
-        }
-      }
-    },
-    "isOffInput1": {
-      "type": "boolean",
-      "ui": {
-        "group": 7,
-        "editor": {
-          "editorType": "dxCheckBox",
-          "label": {
-            "location": "left",
-            "showColon": true,
-            "text": "Питание на вводе 1"
-          },
-          "editorOptions": {
-            "readOnly": true
-          }
-        },
-        "colorizer": {
-          "styleProps": [
-            {
-              "fill": {
-                "red": true,
-                "white": false
-              },
-              "stroke": {
-                "yellow": true,
-                "black": false
-              }
-            }
-          ]
-        }
-      }
-    },
-    "isOffInput2": {
-      "type": "boolean",
-      "ui": {
-        "group": 7,
-        "editor": {
-          "editorType": "dxCheckBox",
-          "label": {
-            "location": "left",
-            "showColon": true,
-            "text": "Питание на вводе 2"
-          },
-          "editorOptions": {
-            "readOnly": true
-          }
-        },
-        "colorizer": {
-          "styleProps": [
-            {
-              "fill": {
-                "red": true,
-                "white": false
-              },
-              "stroke": {
-                "yellow": true,
-                "black": false
               }
             }
           ]
@@ -822,13 +760,9 @@
     "statusPressOutNetSensor",
     "statusPressOutSrcWSensor",
     "isSourceWaterRelay",
-    "isCO1",
-    "isCH1",
+    "isCO",
+    "isCH",
     "isGasFlap",
-    "isVaporDt1",
-    "isVaporDt2",
-    "isOffInput1",
-    "isOffInput2",
     "sourceWaterPumps",
     "boilers",
     "boilerOutputValves",
