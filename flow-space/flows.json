@@ -862,15 +862,15 @@
         "type": "function",
         "z": "a03807f6777b0746",
         "name": "collect-device-state",
-        "func": "const { storeDeviceStateToCacheAsync } = global.get('helpers');\n\nconst payload = msg.payload;\n\nconst getStateByWorkAlarmFlags = (workFlag, alarmFlag) => {\n    const work = Boolean(workFlag);\n    const alarm = Boolean(alarmFlag);\n\n    if (work && !alarm) {\n        return 1; // OPERATING\n    };\n    if (alarm && !work) {\n        return 2; // ALARM\n    }\n    if (!work && !alarm) {\n        return 3; // STOP\n    }\n\n    return 4; // invalid\n}\n\nconst deviceState = {\n    // tempRoomAir: (20 * Math.random() + 10).toFixed(2),\n    tempOutAir: payload['tempOutAir'],\n    tempInNet: payload[\"tempInNet\"],     // Температура на обратке сетевого контура (°C)\n    pressInNet: payload[\"pressInNet\"],   // Давление на обратке сетевого контура (бар)\n\n    tempOutNet: payload[\"tempOutNet\"],    // температура на подаче сетевого контура (°C)\n    pressOutNet: payload[\"pressOutNet\"],  // Давление на подаче сетевого контура (бар)\n\n    isCO: payload['isCO'],                // Загазованность CO\n    isCH: payload['isCH'],                // Загазованность CH\n    isFireAlarm: payload['isFireAlarm'],                // Загазованность CH\n    isSecurityAlarm: payload['isSecurityAlarm'],        // Загазованность CH\n\n    boilers: [\n        {\n            isBurnerFailure: payload[\"alarmBurnerBoiler1\"], // Авария горелки\n            isWorking: payload[\"workingBoiler1\"],\n        },\n        {\n            isBurnerFailure: payload[\"alarmBurnerBoiler2\"], // Авария горелки\n            isWorking: payload[\"workingBoiler2\"],\n        },\n        {\n            isBurnerFailure: payload[\"alarmBurnerBoiler3\"], // Авария горелки\n            isWorking: payload[\"workingBoiler3\"],\n        },\n        {\n            isBurnerFailure: payload[\"alarmBurnerBoiler4\"], // Авария горелки\n            isWorking: payload[\"workingBoiler4\"],\n        }\n    ],\n    boilerPumps: [\n        {\n            isFailure: payload[\"alarmPumpBoiler1\"], // Авария\n        },\n        {\n            isFailure: payload[\"alarmPumpBoiler1\"], // Авария\n        },\n        {\n            isFailure: payload[\"alarmPumpBoiler1\"], // Авария\n        },\n        {\n            isFailure: payload[\"alarmPumpBoiler1\"], // Авария\n        }\n    ],\n    networkPumps: [\n        {\n            state: payload['networkPumpState1'],\n            operatingTime: payload['networkPumpOperatingTime1'],\n            current: payload['networkPumpOperatingCurrent1'],\n            frequency: payload['networkPumpOperatingFrequency1'],\n        },\n        {\n            state: payload['networkPumpState2'],\n            operatingTime: payload['networkPumpOperatingTime2'],\n            current: payload['networkPumpOperatingCurrent2'],\n            frequency: payload['networkPumpOperatingFrequency2'],\n\n        },\n        {\n            state: payload['networkPumpState3'],\n            operatingTime: payload['networkPumpOperatingTime3'],\n            current: payload['networkPumpOperatingCurrent3'],\n            frequency: payload['networkPumpOperatingFrequency3'],\n\n        }\n    ],\n\n    // Timestamp\n    timestamp: Date.now(),\n};\n\n\nconst flowUid = node.path.split('/').find(_ => true);\nawait storeDeviceStateToCacheAsync(global, flowUid, deviceState);\nmsg.deviceState = deviceState;\n\nreturn msg;\n",
+        "func": "const { storeDeviceStateToCacheAsync } = global.get('helpers');\n\nconst payload = msg.payload;\n\nconst getStateByWorkAlarmFlags = (workFlag, alarmFlag) => {\n    const work = Boolean(workFlag);\n    const alarm = Boolean(alarmFlag);\n\n    if (work && !alarm) {\n        return 1; // OPERATING\n    };\n    if (alarm && !work) {\n        return 2; // ALARM\n    }\n    if (!work && !alarm) {\n        return 3; // STOP\n    }\n\n    return 4; // invalid\n}\n\nconst deviceState = {\n    // tempRoomAir: (20 * Math.random() + 10).toFixed(2),\n    tempOutAir: payload['tempOutAir'],\n    tempInNet: payload[\"tempInNet\"],     // Температура на обратке сетевого контура (°C)\n    pressInNet: payload[\"pressInNet\"],   // Давление на обратке сетевого контура (бар)\n\n    tempOutNet: payload[\"tempOutNet\"],    // температура на подаче сетевого контура (°C)\n    pressOutNet: payload[\"pressOutNet\"],  // Давление на подаче сетевого контура (бар)\n\n    isCO: payload['isCO'],                // Загазованность CO\n    isCH: payload['isCH'],                // Загазованность CH\n    isFireAlarm: payload['isFireAlarm'],\n    isSecurityAlarm: payload['isSecurityAlarm'],\n\n    isAlarmStopAsmNetworkPumps: payload[\"isAlarmStopAsmNetworkPumps\"],\n    isAlarmAsmNetworkPumps: payload[\"isAlarmAsmNetworkPumps\"],\n    isWorkingAsmNetworkPumps: payload[\"isWorkingAsmNetworkPumps\"],\n\n\n    isAlarmThreeWayValve: payload[\"isAlarmThreeWayValve\"],\n\n    boilers: [\n        {\n            isBurnerFailure: payload[\"isAlarmBurnerBoiler1\"], // Авария горелки\n            isWorking: payload[\"isWorkingBoiler1\"],\n        },\n        {\n            isBurnerFailure: payload[\"isAlarmBurnerBoiler2\"], // Авария горелки\n            isWorking: payload[\"isWorkingBoiler2\"],\n        },\n        {\n            isBurnerFailure: payload[\"isAlarmBurnerBoiler3\"], // Авария горелки\n            isWorking: payload[\"isWorkingBoiler3\"],\n        },\n        {\n            isBurnerFailure: payload[\"isAlarmBurnerBoiler4\"], // Авария горелки\n            isWorking: payload[\"isWorkingBoiler4\"],\n        }\n    ],\n    boilerPumps: [\n        {\n            isFailure: payload[\"isAlarmPumpBoiler1\"], // Авария\n        },\n        {\n            isFailure: payload[\"isAlarmPumpBoiler1\"], // Авария\n        },\n        {\n            isFailure: payload[\"isAlarmPumpBoiler1\"], // Авария\n        },\n        {\n            isFailure: payload[\"isAlarmPumpBoiler1\"], // Авария\n        }\n    ],\n    sensors: {\n        isPressInNetSensorError: payload['isPressInNetSensorError'],\n        isPressOutNetSensorError: payload['isPressOutNetSensorError'],\n        isPressInNetHighLevel: payload[\"isPressInNetHighLevel\"],\n        isPressInNetPreHighLevel: payload[\"isPressInNetPreHighLevel\"],\n        isPressInNetPreLowLevel: payload[\"isPressInNetPreLowLevel\"],\n        isPressInNetLowLevel: payload[\"isPressInNetLowLevel\"],\n        isPressOutHighLevel: payload[\"isPressOutHighLevel\"],\n        isPressOutPreHighLevel: payload[\"isPressOutPreHighLevel\"],\n        isPressOutPreLowLevel: payload[\"isPressOutPreLowLevel\"],\n        isPressOutLowLevel: payload[\"isPressOutLowLevel\"],\n\n        isTempInNetSensorError: payload[\"isTempInNetSensorError\"],\n        isTempOutNetSensorError: payload[\"isTempOutNetSensorError\"],\n        isTempInNetPreHighLevel: payload[\"isTempInNetPreHighLevel\"],\n        isTempInNetPreLowLevel: payload[\"isTempInNetPreLowLevel\"],\n        isTempInNetLowLevel: payload[\"isTempInNetLowLevel\"],\n        isTempOutNetHighLevel: payload[\"isTempOutNetHighLevel\"],\n        isTempOutNetPreHighLevel: payload[\"isTempOutNetPreHighLevel\"],\n        isTempOutNetPreLowLevel: payload[\"isTempOutNetPreLowLevel\"],\n        isTempOutNetLowLevel: payload[\"isTempOutNetLowLevel\"],\n    },\n    threewayValve: {\n        status: payload['threewayValveStatus'],\n    },\n    networkPumps: [\n        {\n            state: payload['networkPumpState1'],\n            operatingTime: payload['networkPumpOperatingTime1'],\n            current: payload['networkPumpOperatingCurrent1'],\n            frequency: payload['networkPumpOperatingFrequency1'],\n            isDryRun: payload['isDryRunNetworkPump1'],\n            isAlarm: payload[\"isAlarmNetworkPump1\"],\n            mode: payload[\"networkPumpMode1\"],\n            status: payload[\"networkPumpStatus1\"],\n        },\n        {\n            state: payload['networkPumpState2'],\n            operatingTime: payload['networkPumpOperatingTime2'],\n            current: payload['networkPumpOperatingCurrent2'],\n            frequency: payload['networkPumpOperatingFrequency2'],\n            isDryRun: payload['isDryRunNetworkPump2'],\n            isAlarm: payload[\"isAlarmNetworkPump2\"],\n            mode: payload[\"networkPumpMode2\"],\n            status: payload[\"networkPumpStatus2\"],\n        },\n        {\n            state: payload['networkPumpState3'],\n            operatingTime: payload['networkPumpOperatingTime3'],\n            current: payload['networkPumpOperatingCurrent3'],\n            frequency: payload['networkPumpOperatingFrequency3'],\n            isDryRun: payload['isDryRunNetworkPump3'],\n            isAlarm: payload[\"isAlarmNetworkPump3\"],\n            mode: payload[\"networkPumpMode3\"],\n            status: payload[\"networkPumpStatus3\"],\n        }\n    ],\n    sourceWaterPumps: [\n        { isAlarm: payload[\"isAlarmSourceWaterPump1\"] },\n        { isAlarm: payload[\"isAlarmSourceWaterPump2\"] },\n    ],\n\n    // Timestamp\n    timestamp: Date.now(),\n};\n\n\nconst flowUid = node.path.split('/').find(_ => true);\nawait storeDeviceStateToCacheAsync(global, flowUid, deviceState);\nmsg.deviceState = deviceState;\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 910,
-        "y": 380,
+        "x": 1010,
+        "y": 440,
         "wires": [
             [
                 "0fab756745b27ea6"
@@ -890,7 +890,7 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1100,
+        "x": 1180,
         "y": 380,
         "wires": []
     },
@@ -898,7 +898,7 @@
         "id": "42e17f3da680a52d",
         "type": "modbus-read",
         "z": "a03807f6777b0746",
-        "name": "boiler-temperatures-reader",
+        "name": "boiler-temperatures",
         "topic": "",
         "showStatusActivities": false,
         "logIOActivities": false,
@@ -918,7 +918,7 @@
         "ioFile": "",
         "useIOForPayload": false,
         "emptyMsgOnFail": false,
-        "x": 170,
+        "x": 150,
         "y": 80,
         "wires": [
             [],
@@ -973,7 +973,7 @@
         "id": "8f732c53378a35c9",
         "type": "modbus-getter",
         "z": "a03807f6777b0746",
-        "name": "pumps-preasures-reader",
+        "name": "pumps-preasures",
         "showStatusActivities": false,
         "showErrors": false,
         "showWarnings": true,
@@ -991,8 +991,8 @@
         "delayOnStart": false,
         "enableDeformedMessages": false,
         "startDelayTime": "",
-        "x": 170,
-        "y": 640,
+        "x": 150,
+        "y": 820,
         "wires": [
             [],
             [
@@ -1014,7 +1014,7 @@
         "finalize": "",
         "libs": [],
         "x": 490,
-        "y": 640,
+        "y": 820,
         "wires": [
             [
                 "458b8544654139a3"
@@ -1043,7 +1043,7 @@
         "reduceInitType": "",
         "reduceFixup": "",
         "x": 740,
-        "y": 320,
+        "y": 440,
         "wires": [
             [
                 "97a37cff24eab2ec",
@@ -1064,7 +1064,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 920,
-        "y": 260,
+        "y": 360,
         "wires": []
     },
     {
@@ -1096,14 +1096,14 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 380,
-        "y": 600,
+        "y": 780,
         "wires": []
     },
     {
         "id": "41441d8783f11816",
         "type": "modbus-getter",
         "z": "a03807f6777b0746",
-        "name": "boiler-alarms-reader",
+        "name": "boiler-alarms",
         "showStatusActivities": false,
         "showErrors": false,
         "showWarnings": true,
@@ -1121,7 +1121,7 @@
         "delayOnStart": false,
         "enableDeformedMessages": false,
         "startDelayTime": "",
-        "x": 160,
+        "x": 130,
         "y": 280,
         "wires": [
             [],
@@ -1137,7 +1137,7 @@
         "type": "function",
         "z": "a03807f6777b0746",
         "name": "data-convert",
-        "func": "const buffer = Buffer.from(msg.payload.buffer);\nconst payload = {};\n\npayload['partBits0'] = buffer.readInt16BE(0);     // биты состояний по карте 0\npayload['partBits1'] = buffer.readInt16BE(2);     // биты состояний по карте 1\npayload['partBits3'] = buffer.readInt16BE(6);     // биты состояний по карте 3\npayload['partBits5'] = buffer.readInt16BE(10);     // биты состояний по карте 5\n\n\npayload[\"isCO\"] = Boolean((payload['partBits0'] >> 5) & 1);\npayload[\"isCH\"] = Boolean((payload['partBits0'] >> 6) & 1);\npayload[\"isSecurityAlarm\"] = Boolean((payload['partBits0'] >> 7) & 1);\npayload[\"isFireAlarm\"] = Boolean((payload['partBits0'] >> 8) & 1);\n\npayload[\"alarmBurnerBoiler1\"] = Boolean((payload['partBits1'] >> 0) & 1);\npayload[\"alarmBurnerBoiler2\"] = Boolean((payload['partBits1'] >> 1) & 1);\npayload[\"alarmBurnerBoiler3\"] = Boolean((payload['partBits1'] >> 2) & 1);\npayload[\"alarmBurnerBoiler4\"] = Boolean((payload['partBits1'] >> 3) & 1);\n\npayload[\"alarmPumpBoiler1\"] = Boolean((payload['partBits1'] >> 4) & 1);\npayload[\"alarmPumpBoiler2\"] = Boolean((payload['partBits1'] >> 5) & 1);\npayload[\"alarmPumpBoiler3\"] = Boolean((payload['partBits1'] >> 6) & 1);\npayload[\"alarmPumpBoiler4\"] = Boolean((payload['partBits1'] >> 7) & 1);\n\n\npayload[\"workingBoiler1\"] = Boolean((payload['partBits5'] >> 1) & 1);\npayload[\"workingBoiler2\"] = Boolean((payload['partBits5'] >> 2) & 1);\npayload[\"workingBoiler3\"] = Boolean((payload['partBits5'] >> 3) & 1);\npayload[\"workingBoiler4\"] = Boolean((payload['partBits5'] >> 4) & 1);\n\n\nmsg.payload = payload;\n\nreturn msg;",
+        "func": "const buffer = Buffer.from(msg.payload.buffer);\nconst payload = {};\n\npayload['partBits0'] = buffer.readInt16BE(0);     // биты состояний по карте 0\npayload['partBits1'] = buffer.readInt16BE(2);     // биты состояний по карте 1\npayload['partBits3'] = buffer.readInt16BE(6);     // биты состояний по карте 3\npayload['partBits5'] = buffer.readInt16BE(10);     // биты состояний по карте 5\n\n\npayload[\"isCO\"] = Boolean((payload['partBits0'] >> 5) & 1);\npayload[\"isCH\"] = Boolean((payload['partBits0'] >> 6) & 1);\npayload[\"isSecurityAlarm\"] = Boolean((payload['partBits0'] >> 7) & 1);\npayload[\"isFireAlarm\"] = Boolean((payload['partBits0'] >> 8) & 1);\n\npayload[\"isAlarmBurnerBoiler1\"] = Boolean((payload['partBits1'] >> 0) & 1);\npayload[\"isAlarmBurnerBoiler2\"] = Boolean((payload['partBits1'] >> 1) & 1);\npayload[\"isAlarmBurnerBoiler3\"] = Boolean((payload['partBits1'] >> 2) & 1);\npayload[\"isAlarmBurnerBoiler4\"] = Boolean((payload['partBits1'] >> 3) & 1);\n\npayload[\"isAlarmPumpBoiler1\"] = Boolean((payload['partBits1'] >> 4) & 1);\npayload[\"isAlarmPumpBoiler2\"] = Boolean((payload['partBits1'] >> 5) & 1);\npayload[\"isAlarmPumpBoiler3\"] = Boolean((payload['partBits1'] >> 6) & 1);\npayload[\"isAlarmPumpBoiler4\"] = Boolean((payload['partBits1'] >> 7) & 1);\n\npayload[\"isTempInNetSensorError\"] = Boolean((payload['partBits1'] >> 10) & 1);\npayload[\"isTempOutNetSensorError\"] = Boolean((payload['partBits1'] >> 11) & 1);\n\npayload[\"isTempInNetHighLevel\"] = Boolean((payload['partBits3'] >> 8) & 1);\npayload[\"isTempInNetPreHighLevel\"] = Boolean((payload['partBits3'] >> 9) & 1);\npayload[\"isTempInNetPreLowLevel\"] = Boolean((payload['partBits3'] >> 10) & 1);\npayload[\"isTempInNetLowLevel\"] = Boolean((payload['partBits3'] >> 11) & 1);\npayload[\"isTempOutNetHighLevel\"] = Boolean((payload['partBits3'] >> 12) & 1);\npayload[\"isTempOutNetPreHighLevel\"] = Boolean((payload['partBits3'] >> 13) & 1);\npayload[\"isTempOutNetPreLowLevel\"] = Boolean((payload['partBits3'] >> 14) & 1);\npayload[\"isTempOutNetLowLevel\"] = Boolean((payload['partBits3'] >> 15) & 1);\n\npayload[\"isWorkingBoiler1\"] = Boolean((payload['partBits5'] >> 1) & 1);\npayload[\"isWorkingBoiler2\"] = Boolean((payload['partBits5'] >> 2) & 1);\npayload[\"isWorkingBoiler3\"] = Boolean((payload['partBits5'] >> 3) & 1);\npayload[\"isWorkingBoiler4\"] = Boolean((payload['partBits5'] >> 4) & 1);\n\n\nmsg.payload = payload;\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -1168,7 +1168,7 @@
         "y": 320,
         "wires": [
             [
-                "fe6cb4d10ba3253a"
+                "6e8c7bbc11db4dc4"
             ]
         ]
     },
@@ -1192,7 +1192,7 @@
         "id": "fe6cb4d10ba3253a",
         "type": "modbus-getter",
         "z": "a03807f6777b0746",
-        "name": "pumps-values-reader",
+        "name": "pumps-values",
         "showStatusActivities": false,
         "showErrors": false,
         "showWarnings": true,
@@ -1210,8 +1210,8 @@
         "delayOnStart": false,
         "enableDeformedMessages": false,
         "startDelayTime": "",
-        "x": 160,
-        "y": 440,
+        "x": 140,
+        "y": 620,
         "wires": [
             [],
             [
@@ -1234,7 +1234,7 @@
         "finalize": "",
         "libs": [],
         "x": 490,
-        "y": 440,
+        "y": 620,
         "wires": [
             [
                 "458b8544654139a3"
@@ -1254,7 +1254,7 @@
         "finalize": "",
         "libs": [],
         "x": 370,
-        "y": 500,
+        "y": 680,
         "wires": [
             [
                 "8f732c53378a35c9"
@@ -1274,7 +1274,113 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 360,
-        "y": 400,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "6e8c7bbc11db4dc4",
+        "type": "modbus-getter",
+        "z": "a03807f6777b0746",
+        "name": "pumps-alarms",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "logIOActivities": false,
+        "unitid": "",
+        "dataType": "HoldingRegister",
+        "adr": "0",
+        "quantity": "10",
+        "server": "ab8bf754f8d07509",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "enableDeformedMessages": false,
+        "startDelayTime": "",
+        "x": 140,
+        "y": 440,
+        "wires": [
+            [],
+            [
+                "373658751b02edc1",
+                "4650bdacf628e110",
+                "ffacd2ccc5a183c1"
+            ]
+        ]
+    },
+    {
+        "id": "373658751b02edc1",
+        "type": "function",
+        "z": "a03807f6777b0746",
+        "name": "data-convert",
+        "func": "const buffer = Buffer.from(msg.payload.buffer);\nconst payload = {};\n\npayload['partBits0'] = buffer.readInt16BE(0);\npayload['partBits1'] = buffer.readInt16BE(2);\npayload['partBits3'] = buffer.readInt16BE(6);\npayload['partBits5'] = buffer.readInt16BE(10);\npayload['partBits6'] = buffer.readInt16BE(12);\npayload['partBits9'] = buffer.readInt16BE(18);\n\n\n\n\npayload[\"isAlarmStopAsmNetworkPumps\"] = Boolean((payload['partBits0'] >> 0) & 1);\npayload[\"isAlarmAsmNetworkPumps\"] = Boolean((payload['partBits0'] >> 1) & 1);\npayload[\"isDryRunNetworkPump1\"] = Boolean((payload['partBits0'] >> 2) & 1);\npayload[\"isDryRunNetworkPump2\"] = Boolean((payload['partBits0'] >> 3) & 1);\npayload[\"isDryRunNetworkPump3\"] = Boolean((payload['partBits0'] >> 4) & 1);\n\npayload[\"isAlarmNetworkPump1\"] = Boolean((payload['partBits0'] >> 9) & 1);      // 9 Сетевой насос 1. Авария\npayload[\"isAlarmNetworkPump2\"] = Boolean((payload['partBits0'] >> 10) & 1);     // 10 Сетевой насос 2. Авария\npayload[\"isAlarmNetworkPump3\"] = Boolean((payload['partBits0'] >> 11) & 1);     // 11 Сетевой насос 3. Авария\npayload[\"isAlarmThreeWayValve\"] = Boolean((payload['partBits0'] >> 12) & 1);    // 12 Авария 3-х ходового клапана\npayload[\"isAlarmSourceWaterPump1\"] = Boolean((payload['partBits0'] >> 13) & 1); // 13 Насос подпитки 1. Авария\npayload[\"isAlarmSourceWaterPump2\"] = Boolean((payload['partBits0'] >> 14) & 1); // 14 Насос подпитки 2. Авария\n\n\npayload['isPressInNetSensorError'] = Boolean((payload['partBits1'] >> 8) & 1); // 8 Давление подачи. Ошибка датчика.\npayload['isPressOutNetSensorError'] = Boolean((payload['partBits1'] >> 9) & 1); // 9 Давление обратки. Ошибка датчика.\n\n\npayload[\"isPressInNetHighLevel\"] = Boolean((payload['partBits3'] >> 0) & 1);\npayload[\"isPressInNetPreHighLevel\"] = Boolean((payload['partBits3'] >> 1) & 1);\npayload[\"isPressInNetPreLowLevel\"] = Boolean((payload['partBits3'] >> 2) & 1);\npayload[\"isPressInNetLowLevel\"] = Boolean((payload['partBits3'] >> 3) & 1);\npayload[\"isPressOutHighLevel\"] = Boolean((payload['partBits3'] >> 4) & 1);\npayload[\"isPressOutPreHighLevel\"] = Boolean((payload['partBits3'] >> 6) & 1);\npayload[\"isPressOutPreLowLevel\"] = Boolean((payload['partBits3'] >> 6) & 1);\npayload[\"isPressOutLowLevel\"] = Boolean((payload['partBits3'] >> 7) & 1);\n\npayload[\"isWorkingAsmNetworkPumps\"] = Boolean((payload['partBits5'] >> 0) & 1);\n\n\npayload[\"networkPumpMode1\"] = ((payload['partBits6'] >> 0) & 1);     // 0 Сетевой насос 1. Режим управления(0 - ручной, 1 - автоматический)\npayload[\"networkPumpStatus1\"] = ((payload['partBits6'] >> 1) & 1);   // 1 Сетевой насос 1. Статус(0 - резервный, 1 - основной)\n\npayload[\"networkPumpMode2\"] = ((payload['partBits6'] >> 2) & 1);     // 2 Сетевой насос 2. Режим управления(0 - ручной, 1 - автоматический)\npayload[\"networkPumpStatus2\"] = ((payload['partBits6'] >> 3) & 1);   // 3 Сетевой насос 2. Статус(0 - резервный, 1 - основной)\n\npayload[\"networkPumpMode3\"] = ((payload['partBits6'] >> 4) & 1);     // 4 Сетевой насос 3. Режим управления(0 - ручной, 1 - автоматический)\npayload[\"networkPumpStatus3\"] = ((payload['partBits6'] >> 5) & 1);   // 5 Сетевой насос 3. Статус(0 - резервный, 1 - основной)\n\n\nbuffer.swap16();\npayload['threewayValveStatus'] = buffer.readInt32LE(16);// 9\tСостояние 3 - х ходового клапана(0 - промежут., 1 - закрыт, 2 - открыт)\n\nmsg.payload = payload;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 440,
+        "wires": [
+            [
+                "458b8544654139a3",
+                "0212465cbf8efe29"
+            ]
+        ]
+    },
+    {
+        "id": "4650bdacf628e110",
+        "type": "function",
+        "z": "a03807f6777b0746",
+        "name": "trigger",
+        "func": "const buffer_array = msg.payload.buffer;\nif (buffer_array.length > 0) {\n    msg.payload = 1;\n\n    return msg;\n}\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 500,
+        "wires": [
+            [
+                "fe6cb4d10ba3253a"
+            ]
+        ]
+    },
+    {
+        "id": "ffacd2ccc5a183c1",
+        "type": "debug",
+        "z": "a03807f6777b0746",
+        "name": "debug 13",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 360,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "0212465cbf8efe29",
+        "type": "debug",
+        "z": "a03807f6777b0746",
+        "name": "debug 14",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 730,
+        "y": 560,
         "wires": []
     },
     {
