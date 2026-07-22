@@ -35,25 +35,6 @@
         }
       }
     },
-    "tempRoomAir": {
-      "type": "number",
-      "unit": "°C",
-      "ui": {
-        "group": 1,
-        "editor": {
-          "editorType": "dxNumberBox",
-          "label": {
-            "location": "top",
-            "showColon": true,
-            "text": "Температура в котельной"
-          },
-          "editorOptions": {
-            "readOnly": true
-          }
-        },
-        "chart": {}
-      }
-    },
     "tempOutAir": {
       "type": "number",
       "unit": "°C",
@@ -168,7 +149,6 @@
         "chart": {}
       }
     },
-
     "pressOutSrcW": {
       "type": "number",
       "unit": "бар",
@@ -651,6 +631,60 @@
         }
       }
     },
+     "isSecurityAlarm": {
+      "type": "boolean",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Охранная сигнализация"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isFireAlarm": {
+      "type": "boolean",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Пожарная сигнализация"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              }
+            }
+          ]
+        }
+      }
+    },
     "isGasFlap": {
       "type": "boolean",
       "ui": {
@@ -743,7 +777,6 @@
   },
   "required": [
     "isConnected",
-    "tempRoomAir",
     "tempOutAir",
     "pressGas",
     "tempInNet",
@@ -762,6 +795,8 @@
     "isSourceWaterRelay",
     "isCO",
     "isCH",
+    "isFireAlarm",
+    "isSecurityAlarm",
     "isGasFlap",
     "sourceWaterPumps",
     "boilers",
