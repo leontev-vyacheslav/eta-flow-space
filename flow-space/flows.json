@@ -846,7 +846,7 @@
         "type": "debug",
         "z": "30c8a42fdf53c9ea",
         "name": "debug 8",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -1388,7 +1388,7 @@
         "type": "function",
         "z": "a03807f6777b0746",
         "name": "get-mercury230-mearurements",
-        "func": "// device ID = 1805, Mercury230-29930705, ул. Габдуллы Тукая, 12, с. Новое Шигалеево \nconst HOST = '78.138.175.183';\nconst PORT = 5022;\nconst ADDRESS = 0x05;\nconst SOCKET_TIMEOUT = 8000;\n\nconst fields = ['Psum', 'P1', 'P2', 'P3', 'Qsum', 'Q1', 'Q2', 'Q3', 'Ssum', 'S1', 'S2', 'S3',\n    'U1', 'U2', 'U3', 'Fab', 'Fac', 'Fbc', 'I1', 'I2', 'I3',\n    'cosFsum', 'cosF1', 'cosF2', 'cosF3', 'Hz'];\n\nfunction crc16modbus(buffer) {\n    let crc = 0xFFFF;\n    for (let pos = 0; pos < buffer.length; pos++) {\n        crc ^= buffer[pos];\n        for (let i = 0; i < 8; i++) {\n            crc = (crc & 1) ? (crc >> 1) ^ 0xA001 : crc >> 1;\n        }\n    }\n    return Buffer.from([crc & 0xFF, (crc >> 8) & 0xFF]);\n}\n\nfunction buildFrame(address, codeBytes) {\n    const body = Buffer.concat([Buffer.from([address]), Buffer.from(codeBytes)]);\n    return Buffer.concat([body, crc16modbus(body)]);\n}\n\nfunction decode3ByteValues(buf, count) {\n    const out = [];\n    for (let i = 0; i < count; i++) {\n        const o = i * 3;\n        const b0 = buf[o], b1 = buf[o + 1], b2 = buf[o + 2];\n        out.push(((b0 & 0x0F) << 16) | (b2 << 8) | b1);\n    }\n    return out;\n}\n\nfunction decode4ByteEnergy(buf, offset) {\n    const b0 = buf[offset], b1 = buf[offset + 1], b2 = buf[offset + 2], b3 = buf[offset + 3];\n    if (b0 === 0xFF && b1 === 0xFF && b2 === 0xFF && b3 === 0xFF) return null;\n    return (b1 << 24) | (b0 << 16) | (b3 << 8) | b2;\n}\n\nfunction sendCommand(socket, codeBytes, timeoutMs = 5000) {\n    return new Promise((resolve, reject) => {\n        const frame = buildFrame(ADDRESS, codeBytes);\n        let buffer = Buffer.alloc(0);\n        let quietTimer = null;\n        let overallTimer = null;\n\n        function cleanup() {\n            socket.removeListener('data', onData);\n            if (quietTimer) clearTimeout(quietTimer);\n            if (overallTimer) clearTimeout(overallTimer);\n        }\n\n        function finish() {\n            cleanup();\n            if (buffer.length < 3) { reject(new Error('Empty/short response')); return; }\n            const received = buffer.slice(0, -2);\n            const crcReceived = buffer.slice(-2);\n            if (!crc16modbus(received).equals(crcReceived)) {\n                reject(new Error('CRC mismatch')); return;\n            }\n            resolve(received.slice(1)); // strip echoed address byte\n        }\n\n        function onData(chunk) {\n            buffer = Buffer.concat([buffer, chunk]);\n            if (quietTimer) clearTimeout(quietTimer);\n            quietTimer = setTimeout(finish, 300);\n        }\n\n        overallTimer = setTimeout(() => {\n            cleanup();\n            reject(new Error('No response (timeout)'));\n        }, timeoutMs);\n\n        socket.on('data', onData);\n        socket.write(frame);\n    });\n}\n\n(async () => {\n    const socket = new net.Socket();\n    socket.setTimeout(SOCKET_TIMEOUT);\n\n    try {\n        await new Promise((resolve, reject) => {\n            socket.once('error', reject);\n            socket.connect(PORT, HOST, resolve);\n        });\n\n        await sendCommand(socket, [0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01]); // open channel\n\n        const moment = await sendCommand(socket, [0x08, 0x16, 0xA0]);\n        const values = decode3ByteValues(moment, fields.length);\n        const momentData = {};\n        fields.forEach((name, i) => momentData[name] = values[i]);\n\n        const activeEnergy = await sendCommand(socket, [0x05, 0x00, 0x00]);\n        const activeWh = decode4ByteEnergy(activeEnergy, 0);\n\n        const reactiveEnergy = await sendCommand(socket, [0x05, 0x00, 0x02]);\n        const reactiveWh = decode4ByteEnergy(reactiveEnergy, 0);\n\n        await sendCommand(socket, [0x02]); // close channel\n\n        node.send({\n            payload: {\n                ...momentData,\n                energy_active_total_kWh: activeWh !== null ? activeWh / 1000 : null,\n                energy_reactive_total_kVArh: reactiveWh !== null ? reactiveWh / 1000 : null\n            }\n        });\n        node.status({ fill: 'green', shape: 'dot', text: 'ok ' + new Date().toLocaleTimeString() });\n    } catch (err) {\n        node.error('Mercury230 read failed: ' + err.message);\n        node.status({ fill: 'red', shape: 'ring', text: 'error' });\n    } finally {\n        socket['destroy']();\n    }\n})();\n\nreturn null;",
+        "func": "// device ID = 1805, Mercury230-29930705, ул. Габдуллы Тукая, 12, с. Новое Шигалеево \n\nconst HOST = '78.138.175.183';\nconst PORT = 5022;\nconst ADDRESS = 0x05;\nconst SOCKET_TIMEOUT = 8000;\n\nconst fields = ['Psum', 'P1', 'P2', 'P3', 'Qsum', 'Q1', 'Q2', 'Q3', 'Ssum', 'S1', 'S2', 'S3',\n    'U1', 'U2', 'U3', 'Fab', 'Fac', 'Fbc', 'I1', 'I2', 'I3',\n    'cosFsum', 'cosF1', 'cosF2', 'cosF3', 'Hz'];\n\nfunction crc16modbus(buffer) {\n    let crc = 0xFFFF;\n    for (let pos = 0; pos < buffer.length; pos++) {\n        crc ^= buffer[pos];\n        for (let i = 0; i < 8; i++) {\n            crc = (crc & 1) ? (crc >> 1) ^ 0xA001 : crc >> 1;\n        }\n    }\n    return Buffer.from([crc & 0xFF, (crc >> 8) & 0xFF]);\n}\n\nfunction buildFrame(address, codeBytes) {\n    const body = Buffer.concat([Buffer.from([address]), Buffer.from(codeBytes)]);\n    return Buffer.concat([body, crc16modbus(body)]);\n}\n\nfunction decode3ByteValues(buf, count) {\n    const out = [];\n    for (let i = 0; i < count; i++) {\n        const o = i * 3;\n        const b0 = buf[o], b1 = buf[o + 1], b2 = buf[o + 2];\n        out.push(((b0 & 0x0F) << 16) | (b2 << 8) | b1);\n    }\n    return out;\n}\n\nfunction decode4ByteEnergy(buf, offset) {\n    const b0 = buf[offset], b1 = buf[offset + 1], b2 = buf[offset + 2], b3 = buf[offset + 3];\n    if (b0 === 0xFF && b1 === 0xFF && b2 === 0xFF && b3 === 0xFF) return null;\n    return (b1 << 24) | (b0 << 16) | (b3 << 8) | b2;\n}\n\nfunction sendCommand(socket, codeBytes, timeoutMs = 5000) {\n    return new Promise((resolve, reject) => {\n        const frame = buildFrame(ADDRESS, codeBytes);\n        let buffer = Buffer.alloc(0);\n        let quietTimer = null;\n        let overallTimer = null;\n\n        function cleanup() {\n            socket.removeListener('data', onData);\n            if (quietTimer) clearTimeout(quietTimer);\n            if (overallTimer) clearTimeout(overallTimer);\n        }\n\n        function finish() {\n            cleanup();\n            if (buffer.length < 3) { reject(new Error('Empty/short response')); return; }\n            const received = buffer.slice(0, -2);\n            const crcReceived = buffer.slice(-2);\n            if (!crc16modbus(received).equals(crcReceived)) {\n                reject(new Error('CRC mismatch')); return;\n            }\n            resolve(received.slice(1)); // strip echoed address byte\n        }\n\n        function onData(chunk) {\n            buffer = Buffer.concat([buffer, chunk]);\n            if (quietTimer) clearTimeout(quietTimer);\n            quietTimer = setTimeout(finish, 300);\n        }\n\n        overallTimer = setTimeout(() => {\n            cleanup();\n            reject(new Error('No response (timeout)'));\n        }, timeoutMs);\n\n        socket.on('data', onData);\n        socket.write(frame);\n    });\n}\n\n(async () => {\n    const socket = new net.Socket();\n    socket.setTimeout(SOCKET_TIMEOUT);\n\n    try {\n        await new Promise((resolve, reject) => {\n            socket.once('error', reject);\n            socket.connect(PORT, HOST, resolve);\n        });\n\n        // open channel\n        await sendCommand(socket, [0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01]); \n\n        // step 1. getting some instant parameters \n        const moment = await sendCommand(socket, [0x08, 0x16, 0xA0]);\n        const values = decode3ByteValues(moment, fields.length);\n        const momentData = {};\n        fields.forEach((name, i) => momentData[name] = values[i]);\n\n        // step 2. getting also active energy\n        const activeEnergy = await sendCommand(socket, [0x05, 0x00, 0x00]);\n        const activeWh = decode4ByteEnergy(activeEnergy, 0);\n\n        // step 3. getting  reactive energy\n        const reactiveEnergy = await sendCommand(socket, [0x05, 0x00, 0x02]);\n        const reactiveWh = decode4ByteEnergy(reactiveEnergy, 0);\n        \n        // close channel\n        await sendCommand(socket, [0x02]); \n\n        // trying to make output payload manually   \n        node.send({\n            payload: {\n                ...momentData,\n                energy_active_total_kWh: activeWh !== null ? activeWh / 1000 : null,\n                energy_reactive_total_kVArh: reactiveWh !== null ? reactiveWh / 1000 : null\n            }\n        });\n\n        // it's a game with node statuses\n        node.status({ fill: 'green', shape: 'dot', text: 'ok ' + new Date().toLocaleTimeString() });\n    } catch (err) {\n        node.error('Mercury230 read failed: ' + err.message);\n        node.status({ fill: 'red', shape: 'ring', text: 'error' });\n    } finally {\n        // nodejs failure, it didn't see this documented method \n        socket['destroy']();\n    }\n})();\n\nreturn null;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -1401,10 +1401,10 @@
             }
         ],
         "x": 430,
-        "y": 960,
+        "y": 1000,
         "wires": [
             [
-                "0155e63221e70dc8"
+                "f5834bfdba1a9afa"
             ]
         ]
     },
@@ -1413,14 +1413,15 @@
         "type": "debug",
         "z": "a03807f6777b0746",
         "name": "debug 15",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "deviceState",
+        "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 720,
+        "x": 1040,
         "y": 1000,
         "wires": []
     },
@@ -1438,7 +1439,7 @@
                 "vt": "str"
             }
         ],
-        "repeat": "10800",
+        "repeat": "1200",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
@@ -1452,6 +1453,46 @@
                 "6b7e4a754cae0a9b"
             ]
         ]
+    },
+    {
+        "id": "f5834bfdba1a9afa",
+        "type": "function",
+        "z": "a03807f6777b0746",
+        "name": "collect-device-state",
+        "func": "const { storeDeviceStateToCacheAsync } = global.get('helpers');\n\nconst payload = msg.payload;\n\nconst deviceState = {\n    activePowerTotal: payload.Psum,  // суммарная активная мощность\n    activePowerL1: payload.P1,        // активная мощность, фаза A\n    activePowerL2: payload.P2,        // активная мощность, фаза B\n    activePowerL3: payload.P3,        // активная мощность, фаза C\n\n    reactivePowerTotal: payload.Qsum, // суммарная реактивная мощность\n    reactivePowerL1: payload.Q1,      // реактивная мощность, фаза A\n    reactivePowerL2: payload.Q2,      // реактивная мощность, фаза B\n    reactivePowerL3: payload.Q3,      // реактивная мощность, фаза C\n\n    apparentPowerTotal: payload.Ssum, // суммарная полная мощность\n    apparentPowerL1: payload.S1,      // полная мощность, фаза A\n    apparentPowerL2: payload.S2,      // полная мощность, фаза B\n    apparentPowerL3: payload.S3,      // полная мощность, фаза C\n\n    voltageL1: payload.U1,            // напряжение, фаза A\n    voltageL2: payload.U2,            // напряжение, фаза B\n    voltageL3: payload.U3,            // напряжение, фаза C\n\n    phaseAngleAB: payload.Fab,        // угол между фазами A и B\n    phaseAngleAC: payload.Fac,        // угол между фазами A и C\n    phaseAngleBC: payload.Fbc,        // угол между фазами B и C\n\n    currentL1: payload.I1,            // ток, фаза A\n    currentL2: payload.I2,            // ток, фаза B\n    currentL3: payload.I3,            // ток, фаза C\n\n    powerFactorTotal: payload.cosFsum, // суммарный коэффициент мощности (cos φ)\n    powerFactorL1: payload.cosF1,      // коэффициент мощности, фаза A\n    powerFactorL2: payload.cosF2,      // коэффициент мощности, фаза B\n    powerFactorL3: payload.cosF3,      // коэффициент мощности, фаза C\n\n    frequency: payload.Hz,             // частота сети\n\n    energyActiveTotal: payload.energy_active_total_kWh,     // суммарная активная энергия (кВт·ч)\n    energyReactiveTotal: payload.energy_reactive_total_kVArh, // суммарная реактивная энергия (кВАр·ч)\n\n    // Timestamp\n    timestamp: Date.now(),\n};\n\nconst flowUid = node.path.split('/').find(_ => true);\nawait storeDeviceStateToCacheAsync(global, flowUid, deviceState, 1);\nmsg.deviceState = deviceState;\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 1000,
+        "wires": [
+            [
+                "0155e63221e70dc8"
+            ]
+        ]
+    },
+    {
+        "id": "a3504a2937f5a981",
+        "type": "comment",
+        "z": "a03807f6777b0746",
+        "name": "device-13",
+        "info": "This is a combined boiler room with boilers and pumps.",
+        "x": 100,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "41a39b2e29612148",
+        "type": "comment",
+        "z": "a03807f6777b0746",
+        "name": "device-14",
+        "info": "",
+        "x": 120,
+        "y": 960,
+        "wires": []
     },
     {
         "id": "13bfc5999f0041c0",
@@ -2295,7 +2336,7 @@
         "type": "debug",
         "z": "2d15e59c76504bcb",
         "name": "debug 6",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -2392,7 +2433,7 @@
         "type": "debug",
         "z": "2d15e59c76504bcb",
         "name": "debug 5",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -2781,7 +2822,7 @@
         "type": "debug",
         "z": "f86b501c2fcfb0fb",
         "name": "debug 7",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
