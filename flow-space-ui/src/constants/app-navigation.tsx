@@ -63,14 +63,31 @@ export const useSideNavigationMenuItems = () => {
                     text: 'Все объекты',
                     iconRender: (props: IconBaseProps) => <LocationAllIcon size={22} {...props} />,
                     path: '/map',
-                }, ...(flows?.flatMap(f => f.devices.map((d: any) => ({ ...d, flowCode: f.code })))
-                    .map((d: any) => ({
-                        id: `/map/${d.flowCode}/device/${d.id}`,
-                        text: d.name,
-                        iconRender: (props: IconBaseProps) => <LocationIcon size={22} {...props} />,
-                        entity: { typeName: 'DeviceModel', id: d.id },
-                        path: `/map/${d.flowCode}/device/${d.id}`,
-                    })) || []),]
+                }, ...(flows?.flatMap<TreeViewItemModel>(f => {
+                    if (f.devices.length === 1) {
+                        const d = f.devices[0] as any;
+                        return [{
+                            id: `/map/${f.code}/device/${d.id}`,
+                            text: d.name,
+                            iconRender: (props: IconBaseProps) => <LocationIcon size={22} {...props} />,
+                            entity: { typeName: 'DeviceModel', id: d.id },
+                            path: `/map/${f.code}/device/${d.id}`,
+                        }];
+                    }
+                    return [{
+                        id: `map-flow/${f.code}`,
+                        text: f.name,
+                        iconRender: (props: IconBaseProps) => <FlowDevicesGroupIcon size={22} {...props} />,
+                        expanded: true,
+                        items: f.devices.map((d: any) => ({
+                            id: `/map/${f.code}/device/${d.id}`,
+                            text: d.name,
+                            iconRender: (props: IconBaseProps) => <LocationIcon size={22} {...props} />,
+                            entity: { typeName: 'DeviceModel', id: d.id },
+                            path: `/map/${f.code}/device/${d.id}`,
+                        })),
+                    }];
+                }) || []),]
             },
             {
                 id: 'emergency-log',
