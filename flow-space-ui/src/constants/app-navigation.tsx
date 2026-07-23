@@ -11,6 +11,7 @@ import {
     LocationAllIcon,
     ReportIcon,
     SummaryReportIcon,
+    FlowDevicesGroupIcon,
 } from './app-icons';
 import type { TreeViewItemModel } from '../models/tree-view-item';
 import type { IconBaseProps } from 'react-icons';
@@ -25,13 +26,31 @@ export const useSideNavigationMenuItems = () => {
                 id: 'objects',
                 text: 'Объекты',
                 iconRender: (props: IconBaseProps) => <FlowIcon size={22} {...props} />,
-                items: flows?.flatMap(f => f.devices.map((d: any) => ({ ...d, flowCode: f.code }))).map(d => ({
-                    id: `${d.flowCode}/device/${d.id}`,
-                    text: d.name,
-                    iconRender: (props: IconBaseProps) => <DeviceIcon size={22} {...props} />,
-                    path: `/${d.flowCode}/device/${d.id}`,
-                    entity: { typeName: 'DeviceModel', id: d.id },
-                })) || []
+                items: flows?.flatMap<TreeViewItemModel>(f => {
+                    if (f.devices.length === 1) {
+                        const d = f.devices[0] as any;
+                        return [{
+                            id: `${f.code}/device/${d.id}`,
+                            text: d.name,
+                            iconRender: (props: IconBaseProps) => <DeviceIcon size={22} {...props} />,
+                            path: `/${f.code}/device/${d.id}`,
+                            entity: { typeName: 'DeviceModel', id: d.id },
+                        }];
+                    }
+                    return [{
+                        id: `flow/${f.code}`,
+                        text: `${f.name} (${f.devices.length})`,
+                        iconRender: (props: IconBaseProps) => <FlowDevicesGroupIcon size={22} {...props} />,
+                        expanded: true,
+                        items: f.devices.map((d: any) => ({
+                            id: `${f.code}/device/${d.id}`,
+                            text: d.name,
+                            iconRender: (props: IconBaseProps) => <DeviceIcon size={22} {...props} />,
+                            path: `/${f.code}/device/${d.id}`,
+                            entity: { typeName: 'DeviceModel', id: d.id },
+                        })),
+                    }];
+                }) || []
             },
             {
                 //id: 'map',
