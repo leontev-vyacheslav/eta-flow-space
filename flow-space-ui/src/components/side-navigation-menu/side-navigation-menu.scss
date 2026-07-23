@@ -66,8 +66,12 @@
           font-weight: normal;
           padding: 0 15px;
         }
-      }
 
+        &[aria-level='3'] .dx-treeview-item-content {
+          font-weight: normal;
+          padding: 0 30px;
+        }
+      }
       // ##
     }
 

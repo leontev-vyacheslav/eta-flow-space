@@ -124,6 +124,8 @@ export { IoMdTime as TimeIcon } from 'react-icons/io';
 export {IoChevronForwardOutline as SubmenuIcon} from 'react-icons/io5';
 export {MdOutlineFitScreen as WideScreenIcon} from 'react-icons/md';
 export {MdOutlineFullscreenExit as WideScreenExitIcon} from 'react-icons/md';
+// import { HiOutlineRectangleGroup } from "react-icons/hi2";
+export { HiRectangleGroup as FlowDevicesGroupIcon } from "react-icons/hi2";
 
 
 import { MdMoreVert } from 'react-icons/md';
