@@ -1,0 +1,622 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DeviceState",
+  "type": "object",
+  "properties": {
+    "activePowerTotal": {
+      "type": "number",
+      "unit": "kW",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Суммарная активная мощность"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "activePowerL1": {
+      "type": "number",
+      "unit": "kW",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Активная мощность, фаза A"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "activePowerL2": {
+      "type": "number",
+      "unit": "kW",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Активная мощность, фаза B"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "activePowerL3": {
+      "type": "number",
+      "unit": "kW",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Активная мощность, фаза C"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "reactivePowerTotal": {
+      "type": "number",
+      "unit": "kVAr",
+      "ui": {
+        "group": 2,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Суммарная реактивная мощность"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "reactivePowerL1": {
+      "type": "number",
+      "unit": "kVAr",
+      "ui": {
+        "group": 2,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Реактивная мощность, фаза A"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "reactivePowerL2": {
+      "type": "number",
+      "unit": "kVAr",
+      "ui": {
+        "group": 2,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Реактивная мощность, фаза B"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "reactivePowerL3": {
+      "type": "number",
+      "unit": "kVAr",
+      "ui": {
+        "group": 2,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Реактивная мощность, фаза C"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "apparentPowerTotal": {
+      "type": "number",
+      "unit": "kVA",
+      "ui": {
+        "group": 3,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Суммарная полная мощность"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "apparentPowerL1": {
+      "type": "number",
+      "unit": "kVA",
+      "ui": {
+        "group": 3,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Полная мощность, фаза A"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "apparentPowerL2": {
+      "type": "number",
+      "unit": "kVA",
+      "ui": {
+        "group": 3,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Полная мощность, фаза B"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "apparentPowerL3": {
+      "type": "number",
+      "unit": "kVA",
+      "ui": {
+        "group": 3,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Полная мощность, фаза C"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "voltageL1": {
+      "type": "number",
+      "unit": "V",
+      "ui": {
+        "group": 4,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Напряжение, фаза A"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "voltageL2": {
+      "type": "number",
+      "unit": "V",
+      "ui": {
+        "group": 4,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Напряжение, фаза B"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "voltageL3": {
+      "type": "number",
+      "unit": "V",
+      "ui": {
+        "group": 4,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Напряжение, фаза C"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "currentL1": {
+      "type": "number",
+      "unit": "A",
+      "ui": {
+        "group": 5,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Ток, фаза A"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "currentL2": {
+      "type": "number",
+      "unit": "A",
+      "ui": {
+        "group": 5,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Ток, фаза B"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "currentL3": {
+      "type": "number",
+      "unit": "A",
+      "ui": {
+        "group": 5,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Ток, фаза C"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "phaseAngleAB": {
+      "type": "number",
+      "unit": "°",
+      "ui": {
+        "group": 6,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Угол между фазами A и B"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "phaseAngleAC": {
+      "type": "number",
+      "unit": "°",
+      "ui": {
+        "group": 6,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Угол между фазами A и C"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "phaseAngleBC": {
+      "type": "number",
+      "unit": "°",
+      "ui": {
+        "group": 6,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Угол между фазами B и C"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "powerFactorTotal": {
+      "type": "number",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Суммарный коэффициент мощности (cos φ)"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "powerFactorL1": {
+      "type": "number",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Коэффициент мощности, фаза A"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "powerFactorL2": {
+      "type": "number",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Коэффициент мощности, фаза B"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "powerFactorL3": {
+      "type": "number",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Коэффициент мощности, фаза C"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "frequency": {
+      "type": "number",
+      "unit": "Hz",
+      "ui": {
+        "group": 8,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Частота сети"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "energyActiveTotal": {
+      "type": "number",
+      "unit": "kWh",
+      "ui": {
+        "group": 9,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Суммарная активная энергия"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "energyReactiveTotal": {
+      "type": "number",
+      "unit": "kVArh",
+      "ui": {
+        "group": 9,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Суммарная реактивная энергия"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "timestamp": {
+      "type": "integer",
+      "ui": {
+        "group": 10,
+        "editor": {
+          "editorType": "dxDateBox",
+          "editorOptions": {
+            "type": "datetime",
+            "displayFormat": "dd.MM.yyyy HH:mm:ss",
+            "readOnly": true
+          },
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Время измерения"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "activePowerTotal",
+    "activePowerL1",
+    "activePowerL2",
+    "activePowerL3",
+    "reactivePowerTotal",
+    "reactivePowerL1",
+    "reactivePowerL2",
+    "reactivePowerL3",
+    "apparentPowerTotal",
+    "apparentPowerL1",
+    "apparentPowerL2",
+    "apparentPowerL3",
+    "voltageL1",
+    "voltageL2",
+    "voltageL3",
+    "currentL1",
+    "currentL2",
+    "currentL3",
+    "phaseAngleAB",
+    "phaseAngleAC",
+    "phaseAngleBC",
+    "powerFactorTotal",
+    "powerFactorL1",
+    "powerFactorL2",
+    "powerFactorL3",
+    "frequency",
+    "energyActiveTotal",
+    "energyReactiveTotal",
+    "timestamp"
+  ],
+  "ui": {
+    "useTabs": true,
+    "groups": [
+      {
+        "id": 1,
+        "name": "activePower",
+        "caption": "Активная мощность",
+        "order": 100
+      },
+      {
+        "id": 2,
+        "name": "reactivePower",
+        "caption": "Реактивная мощность",
+        "order": 110
+      },
+      {
+        "id": 3,
+        "name": "apparentPower",
+        "caption": "Полная мощность",
+        "order": 120
+      },
+      {
+        "id": 4,
+        "name": "voltage",
+        "caption": "Напряжения",
+        "order": 200
+      },
+      {
+        "id": 5,
+        "name": "current",
+        "caption": "Токи",
+        "order": 210
+      },
+      {
+        "id": 6,
+        "name": "phaseAngles",
+        "caption": "Углы фаз",
+        "order": 300
+      },
+      {
+        "id": 7,
+        "name": "powerFactor",
+        "caption": "Коэффициенты мощности",
+        "order": 310
+      },
+      {
+        "id": 8,
+        "name": "frequency",
+        "caption": "Частота",
+        "order": 400
+      },
+      {
+        "id": 9,
+        "name": "energy",
+        "caption": "Энергия",
+        "order": 500
+      },
+      {
+        "id": 10,
+        "name": "timestamp",
+        "caption": "Время",
+        "order": 600
+      }
+    ]
+  }
+}
