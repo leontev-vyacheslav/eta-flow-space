@@ -10,6 +10,7 @@ import { ObjectLocationDataModel } from './models/object-location.data-model';
 import { UserDataModel } from './models/user.data-model';
 import { UserDeviceLinkDataModel } from './models/user-device-link.data-model';
 import { ReportDataModel } from './models';
+import { MnemoSchemaDataModel } from './models/mnemo-schema.data-model';
 
 const models = [
     DeviceDataModel,
@@ -21,6 +22,7 @@ const models = [
     UserDataModel,
     UserDeviceLinkDataModel,
     ReportDataModel,
+    MnemoSchemaDataModel,
 ];
 
 @Global()

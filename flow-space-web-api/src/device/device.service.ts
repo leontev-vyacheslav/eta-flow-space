@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { DeviceDataModel, FlowDataModel, ObjectLocationDataModel, ReportDataModel, UserDeviceLinkDataModel } from '../database/models';
+import { DeviceDataModel, FlowDataModel, MnemoSchemaDataModel, ObjectLocationDataModel, ReportDataModel, UserDeviceLinkDataModel } from '../database/models';
 import { InjectModel } from '@nestjs/sequelize';
 import { Includeable } from 'sequelize';
 
@@ -8,6 +8,7 @@ export class DeviceService {
     private readonly BASE_DEVICE_INCLUDES: Includeable[] = [
         { model: FlowDataModel, as: 'flow' },
         { model: ObjectLocationDataModel, as: 'objectLocation' },
+        { model: MnemoSchemaDataModel, as: 'mnemoSchema' },
         { model: ReportDataModel, as: 'reports', limit: 10 },
     ];
 
