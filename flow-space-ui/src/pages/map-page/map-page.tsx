@@ -179,6 +179,7 @@ export const MapPage = () => {
         markersGroupRef.current = markersFeatureGroup;
 
         markersRef.current.clear();
+        console.log('Building markers for devices:', devices);
         devices.forEach(device => {
             if (!device.objectLocation) {
                 return;
@@ -187,8 +188,10 @@ export const MapPage = () => {
             const { latitude, longitude } = device.objectLocation;
             const emergencyState = emergencyStates?.find(s => s.deviceId === device.id);
 
+            const hasSiblings = devices.filter(d => d.flowId === device.flowId).length > 1;
+
             const marker = L.marker([latitude, longitude], {
-                icon: createMapMarkerIcon(emergencyState)
+                icon: createMapMarkerIcon(emergencyState, hasSiblings)
             }).addTo(markersFeatureGroup);
 
             // Store marker reference by device ID
