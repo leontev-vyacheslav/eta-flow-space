@@ -115,32 +115,33 @@ export const useFlowData = () => {
   );
 
   const getMnemoschemaAsync = useCallback<GetMnemoschemaAsyncFunc>(
-    async (flowCode: string) => {
+    async (deviceCode: string) => {
       return await fetch(
-        `${routes.host}/static/flows/${flowCode}/${flowCode}-mnemo-schema.svg?v=${staticFilesManifest["mnemo-schema"] ?? Date.now()}`,
+        `${routes.host}/static/devices/${deviceCode}/mnemo-schema.svg?v=${Date.now()}`,
       ).then((res) => (res.ok ? res.text() : null));
     },
-    [staticFilesManifest],
+    [],
   );
 
   const getDeviceStateDataschemaAsync =
     useCallback<GetDeviceStateDataschemaAsyncFunc>(
-      async (flowCode: string) => {
+      async (deviceCode: string) => {
         return fetch(
-          `${routes.host}/static/flows/${flowCode}/${flowCode}-data-schema.json?v=${staticFilesManifest["data-schema"] ?? Date.now()}`,
+          // `${routes.host}/static/devices/${deviceCode}/data-schema.json?v=${staticFilesManifest["data-schema"] ?? Date.now()}`,
+          `${routes.host}/static/devices/${deviceCode}/data-schema.json?v=${Date.now()}`,
         ).then((res) => (res.ok ? res.json() : null));
       },
-      [staticFilesManifest],
+      [],
     );
 
   const getMnemoschemaStylesheetsAsync =
     useCallback<GetMnemoschemaStylesheetsAsyncFunc>(
-      async (flowCode: string) => {
+      async (deviceCode: string) => {
         return await fetch(
-          `${routes.host}/static/flows/${flowCode}/${flowCode}-mnemo-schema.css?v=${staticFilesManifest["mnemo-schema"] ?? Date.now()}`,
+          `${routes.host}/static/devices/${deviceCode}/mnemo-schema.css?v=${Date.now()}`,
         ).then((res) => (res.ok ? res.text() : null));
       },
-      [staticFilesManifest],
+      [],
     );
 
   const getDeviceAsync = useCallback(

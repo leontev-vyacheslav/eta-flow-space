@@ -1,19 +1,19 @@
 import { useCallback } from "react";
-import { useParams } from "react-router";
 import { useAppData } from "../../../../contexts/app-data/app-data";
+import { useDashboardPage } from "../../dashboard-page-context";
 
 export const useMnemoschemaInjectCss = () => {
-    const { flowCode } = useParams();
     const { getMnemoschemaStylesheetsAsync } = useAppData();
+    const { device } = useDashboardPage();
 
     return useCallback(async (mnemoschemaElement: HTMLElement | null) => {
-        if (!mnemoschemaElement || !flowCode) {
+        if (!mnemoschemaElement || !device) {
             return;
         }
 
         let cssModule = null;
         try {
-            cssModule = await getMnemoschemaStylesheetsAsync(flowCode);
+            cssModule = await getMnemoschemaStylesheetsAsync(device.code);
         } catch (error) {
             console.error(error);
         }
@@ -23,5 +23,5 @@ export const useMnemoschemaInjectCss = () => {
             style.textContent = cssModule;
             mnemoschemaElement.prepend(style);
         }
-    }, [flowCode, getMnemoschemaStylesheetsAsync]);
+    }, [device, getMnemoschemaStylesheetsAsync]);
 }

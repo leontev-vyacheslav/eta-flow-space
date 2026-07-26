@@ -71,12 +71,18 @@ function DashboardPageContextProvider(props: any) {
 
             if (deviceId && flowCode) {
                 const prefetchedDevice = await getDeviceAsync(parseInt(deviceId));
-
+                if (!prefetchedDevice) {
+                    proclaim({
+                        type: 'error',
+                        message: `Не удалось получить данные устройства с идентификатором ${deviceId}.`,
+                    });
+                    return;
+                }
                 const results = await Promise.allSettled([
                     Promise.resolve(prefetchedDevice),
                     getDeviceStateAsync(parseInt(deviceId)),
-                    getMnemoschemaAsync(flowCode),
-                    getDeviceStateDataschemaAsync(flowCode),
+                    getMnemoschemaAsync(prefetchedDevice.code),
+                    getDeviceStateDataschemaAsync(prefetchedDevice.code),
                 ])
                 const [device, deviceState, mnemoschema, dataschema] = results.map(r => {
                     return r.status === 'fulfilled' ? r.value : null

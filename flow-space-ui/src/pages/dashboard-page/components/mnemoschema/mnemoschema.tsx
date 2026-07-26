@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { useLongPress } from "use-long-press";
 import { useDashboardPage } from "../../dashboard-page-context";
 import { TransformWrapper, TransformComponent, type ReactZoomPanPinchRef } from "react-zoom-pan-pinch";
-import { useParams } from "react-router";
 import { useMnemoschemaPopover } from "./use-mnemoschema-popover";
 import { useMnemoschemaStateSetup } from "./use-mnemoschema-state-setup";
 import routes from '../../../../constants/app-api-routes';
@@ -14,9 +13,8 @@ import { useAppData } from "../../../../contexts/app-data/app-data";
 
 
 export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfterMount }: { onBeforeMount?: (mnemoschemaElement: HTMLElement) => void, onAfterMount?: (mnemoschemaElement: HTMLElement) => void }) => {
-    const { flowCode } = useParams();
     const { staticFilesManifest } = useAppData();
-    const { mnemoschema, dataschema, schemaTypeInfoPropertiesChain, deviceState } = useDashboardPage();
+    const { mnemoschema, dataschema, schemaTypeInfoPropertiesChain, deviceState, device } = useDashboardPage();
     const containerRef = useRef<HTMLDivElement>(null);
     const transformComponentRef = useRef<ReactZoomPanPinchRef | null>(null);
     const [isInitComplete, setIsInitComplete] = useState<boolean>(false);
@@ -46,8 +44,8 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
         const run = async () => {
             let plugInModule = null;
             try {
-                if (flowCode) {
-                    plugInModule = await import(/* @vite-ignore */ `${routes.host}/static/flows/${flowCode}/${flowCode}-mnemo-schema.js?v=${staticFilesManifest['mnemo-schema'] ?? Date.now()}`);
+                if (device) {
+                    plugInModule = await import(/* @vite-ignore */ `${routes.host}/static/devices/${device.code}/mnemo-schema.js?v=${Date.now()}`);
                 }
             } catch (error) {
                 console.error(error);
@@ -86,9 +84,9 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
             disposed = true;
             abortController.abort();
         };
-    }, [flowCode, deviceState, mnemoschema, onBeforeMount, onAfterMount, stateSetup, schemaTypeInfoPropertiesChain, dataschema, mnemoschemaClickHandler, injectCss, staticFilesManifest]);
+    }, [device, deviceState, mnemoschema, onBeforeMount, onAfterMount, stateSetup, schemaTypeInfoPropertiesChain, dataschema, mnemoschemaClickHandler, injectCss, staticFilesManifest]);
 
-    useMnemoschemaRestoreTransformState(flowCode, transformComponentRef, () => setIsInitComplete(true));
+    useMnemoschemaRestoreTransformState(device?.code, transformComponentRef, () => setIsInitComplete(true));
 
     return mnemoschema && schemaTypeInfoPropertiesChain && deviceState?.state && Object.keys(deviceState.state).length !== 0
         ?
@@ -98,8 +96,8 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
             doubleClick={{ step: 1 }}
             minScale={0.5}
             onTransform={(_, transformedState) => {
-                if (isInitComplete && flowCode) {
-                    localStorage.setItem(`mnemoschemaTransformedState_${kebabToCamel(flowCode)}`, JSON.stringify(transformedState));
+                if (isInitComplete && device) {
+                    localStorage.setItem(`mnemoschemaTransformedState_${kebabToCamel(device.code)}`, JSON.stringify(transformedState));
                 }
             }}
         >
