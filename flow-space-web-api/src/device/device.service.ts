@@ -20,8 +20,8 @@ export class DeviceService {
             model: MnemoschemaSelectorDataModel,
             as: 'mnemoschemaSelector',
             include: [
-                { model: DeviceDataModel, as: 'device', attributes: ['code'] },
-                { model: DeviceDataModel, as: 'sourceDevice', attributes: ['code'] },
+                { model: DeviceDataModel, as: 'device', attributes: ['id', 'code', 'description'] },
+                { model: DeviceDataModel, as: 'sourceDevice', attributes: ['id', 'code', 'description'] },
             ],
         },
     ];

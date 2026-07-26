@@ -78,10 +78,14 @@ function DashboardPageContextProvider(props: any) {
                     });
                     return;
                 }
+                const mnemoschemaSelectorDeviceCode = prefetchedDevice.mnemoschemaSelector.sourceDeviceId == prefetchedDevice.id
+                    ? prefetchedDevice.code
+                    : prefetchedDevice.mnemoschemaSelector.sourceDevice.code;
+
                 const results = await Promise.allSettled([
                     Promise.resolve(prefetchedDevice),
                     getDeviceStateAsync(parseInt(deviceId)),
-                    getMnemoschemaAsync(prefetchedDevice.code),
+                    getMnemoschemaAsync(mnemoschemaSelectorDeviceCode),
                     getDeviceStateDataschemaAsync(prefetchedDevice.code),
                 ])
                 const [device, deviceState, mnemoschema, dataschema] = results.map(r => {
