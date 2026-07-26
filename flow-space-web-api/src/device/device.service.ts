@@ -1,5 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { DeviceDataModel, FlowDataModel, MnemoschemaSelectorDataModel, ObjectLocationDataModel, ReportDataModel, UserDeviceLinkDataModel } from '../database/models';
+import {
+    DeviceDataModel,
+    FlowDataModel,
+    MnemoschemaSelectorDataModel,
+    ObjectLocationDataModel,
+    ReportDataModel,
+    UserDeviceLinkDataModel,
+} from '../database/models';
 import { InjectModel } from '@nestjs/sequelize';
 import { Includeable } from 'sequelize';
 
@@ -11,7 +18,7 @@ export class DeviceService {
         { model: ReportDataModel, as: 'reports', limit: 10 },
         {
             model: MnemoschemaSelectorDataModel,
-            as: 'mnemoSchema',
+            as: 'mnemoschemaSelector',
             include: [
                 { model: DeviceDataModel, as: 'device', attributes: ['code'] },
                 { model: DeviceDataModel, as: 'sourceDevice', attributes: ['code'] },
