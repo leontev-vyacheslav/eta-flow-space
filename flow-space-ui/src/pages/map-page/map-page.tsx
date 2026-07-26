@@ -97,7 +97,7 @@ export const MapPage = () => {
 
         const [deviceState, dataschema] = await Promise.all([
             getDeviceStateAsync(device.id),
-            getDeviceStateDataschemaAsync(flowCode),
+            getDeviceStateDataschemaAsync(device.code),
         ]);
 
         if (!deviceState || !dataschema) {
