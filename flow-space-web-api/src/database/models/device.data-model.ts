@@ -72,9 +72,6 @@ export class DeviceDataModel extends Model {
     @HasOne(() => MnemoschemaSelectorDataModel, 'deviceId')
     declare mnemoSchemaSelector?: MnemoschemaSelectorDataModel;
 
-    @HasOne(() => MnemoschemaSelectorDataModel, 'sourceDeviceId')
-    declare mnemoSchemaSource?: MnemoschemaSelectorDataModel;
-
     @HasMany(() => DeviceStateDataModel, 'deviceId')
     declare states?: DeviceStateDataModel[];
 
