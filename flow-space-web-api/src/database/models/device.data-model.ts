@@ -70,7 +70,7 @@ export class DeviceDataModel extends Model {
     declare lastStateUpdate: Date;
 
     @HasOne(() => MnemoschemaSelectorDataModel, 'deviceId')
-    declare mnemoSchemaSelector?: MnemoschemaSelectorDataModel;
+    declare mnemoschemaSelector?: MnemoschemaSelectorDataModel;
 
     @HasMany(() => DeviceStateDataModel, 'deviceId')
     declare states?: DeviceStateDataModel[];
