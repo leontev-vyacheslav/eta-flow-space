@@ -924,8 +924,7 @@
             [],
             [
                 "739e4dcf6f0d9904",
-                "ba48a12786b5e209",
-                "e3f1330c94d6415d"
+                "ba48a12786b5e209"
             ]
         ]
     },
@@ -996,8 +995,7 @@
         "wires": [
             [],
             [
-                "478c5f060f31c8a4",
-                "7868e2548f744ce3"
+                "478c5f060f31c8a4"
             ]
         ]
     },
@@ -1068,38 +1066,6 @@
         "wires": []
     },
     {
-        "id": "e3f1330c94d6415d",
-        "type": "debug",
-        "z": "a03807f6777b0746",
-        "name": "debug 9",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 380,
-        "y": 40,
-        "wires": []
-    },
-    {
-        "id": "7868e2548f744ce3",
-        "type": "debug",
-        "z": "a03807f6777b0746",
-        "name": "debug 12",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 380,
-        "y": 780,
-        "wires": []
-    },
-    {
         "id": "41441d8783f11816",
         "type": "modbus-getter",
         "z": "a03807f6777b0746",
@@ -1127,8 +1093,7 @@
             [],
             [
                 "8f34a4c7e99847a6",
-                "494474668d2233e1",
-                "0a553b3f279584d1"
+                "494474668d2233e1"
             ]
         ]
     },
@@ -1173,22 +1138,6 @@
         ]
     },
     {
-        "id": "0a553b3f279584d1",
-        "type": "debug",
-        "z": "a03807f6777b0746",
-        "name": "debug 3",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 360,
-        "y": 240,
-        "wires": []
-    },
-    {
         "id": "fe6cb4d10ba3253a",
         "type": "modbus-getter",
         "z": "a03807f6777b0746",
@@ -1216,8 +1165,7 @@
             [],
             [
                 "402e8478a46fc420",
-                "b62eab991ea292c5",
-                "43ea0e59ee20e6d0"
+                "b62eab991ea292c5"
             ]
         ]
     },
@@ -1262,22 +1210,6 @@
         ]
     },
     {
-        "id": "43ea0e59ee20e6d0",
-        "type": "debug",
-        "z": "a03807f6777b0746",
-        "name": "debug 11",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 360,
-        "y": 580,
-        "wires": []
-    },
-    {
         "id": "6e8c7bbc11db4dc4",
         "type": "modbus-getter",
         "z": "a03807f6777b0746",
@@ -1305,8 +1237,7 @@
             [],
             [
                 "373658751b02edc1",
-                "4650bdacf628e110",
-                "ffacd2ccc5a183c1"
+                "4650bdacf628e110"
             ]
         ]
     },
@@ -1350,22 +1281,6 @@
                 "fe6cb4d10ba3253a"
             ]
         ]
-    },
-    {
-        "id": "ffacd2ccc5a183c1",
-        "type": "debug",
-        "z": "a03807f6777b0746",
-        "name": "debug 13",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 360,
-        "y": 380,
-        "wires": []
     },
     {
         "id": "0212465cbf8efe29",
