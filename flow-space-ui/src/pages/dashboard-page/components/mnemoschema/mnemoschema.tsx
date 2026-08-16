@@ -14,7 +14,7 @@ import { useAppData } from "../../../../contexts/app-data/app-data";
 
 export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfterMount }: { onBeforeMount?: (mnemoschemaElement: HTMLElement) => void, onAfterMount?: (mnemoschemaElement: HTMLElement) => void }) => {
     const { staticFilesManifest } = useAppData();
-    const { mnemoschema, dataschema, schemaTypeInfoPropertiesChain, deviceState, device } = useDashboardPage();
+    const { mnemoschema, dataschemas, schemasTypeInfoPropertiesChain, deviceStates, device } = useDashboardPage();
     const containerRef = useRef<HTMLDivElement>(null);
     const transformComponentRef = useRef<ReactZoomPanPinchRef | null>(null);
     const [isInitComplete, setIsInitComplete] = useState<boolean>(false);
@@ -65,7 +65,7 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
                 containerRef.current!.innerHTML = '';
                 stateSetup(mnemoschemaDoc.documentElement);
                 onBeforeMount?.(mnemoschemaDoc.documentElement);
-                onBeforeMountPluggable?.(mnemoschemaDoc.documentElement, deviceState);
+                onBeforeMountPluggable?.(mnemoschemaDoc.documentElement, deviceStates);
 
                 mnemoschemaElement = containerRef.current!.appendChild(mnemoschemaDoc.documentElement);
 
@@ -73,7 +73,7 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
                 if (disposed) return; // ← guard after async
 
                 onAfterMount?.(mnemoschemaElement);
-                onAfterMountPluggable?.(mnemoschemaElement, deviceState);
+                onAfterMountPluggable?.(mnemoschemaElement, deviceStates);
 
                 mnemoschemaElement.addEventListener('click', mnemoschemaClickHandler, { signal });
             } catch (error) {
@@ -87,11 +87,11 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
             disposed = true;
             abortController.abort();
         };
-    }, [device, deviceState, mnemoschema, onBeforeMount, onAfterMount, stateSetup, schemaTypeInfoPropertiesChain, dataschema, mnemoschemaClickHandler, injectCss, staticFilesManifest]);
+    }, [device, deviceStates, mnemoschema, onBeforeMount, onAfterMount, stateSetup, schemasTypeInfoPropertiesChain, dataschemas, mnemoschemaClickHandler, injectCss, staticFilesManifest]);
 
     useMnemoschemaRestoreTransformState(device?.code, transformComponentRef, () => setIsInitComplete(true));
 
-    return mnemoschema && schemaTypeInfoPropertiesChain && deviceState?.state && Object.keys(deviceState.state).length !== 0
+    return mnemoschema && schemasTypeInfoPropertiesChain && deviceStates && Object.keys(deviceStates).length !== 0
         ?
         <TransformWrapper ref={transformComponentRef}
             smooth={true}

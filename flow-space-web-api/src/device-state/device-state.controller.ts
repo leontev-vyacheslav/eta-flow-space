@@ -24,7 +24,7 @@ export class DeviceStateController {
 
     @Get(':deviceId')
     @UseGuards(DeviceOwnershipGuard)
-    async getDeviceState(@Param('deviceId', ParseIntPipe) deviceId: number): Promise<Partial<DeviceStateDataModel>> {
-        return await this.deviceStateService.getDeviceState(deviceId);
+    async getDeviceStates(@Param('deviceId', ParseIntPipe) deviceId: number): Promise<Record<string, Partial<DeviceStateDataModel>>> {
+        return await this.deviceStateService.getDeviceStates(deviceId);
     }
 }

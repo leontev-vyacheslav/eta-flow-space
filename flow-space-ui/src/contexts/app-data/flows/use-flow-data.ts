@@ -15,15 +15,15 @@ import type { UserSettingsModel } from "../../../models/flows/user-settings-mode
 
 export type GetFlowListAsyncFunc = () => Promise<FlowModel[] | undefined>;
 export type GetDeviceListAsyncFunc = () => Promise<DeviceModel[] | undefined>;
-export type GetDeviceStateAsyncFunc = (
+export type GetDeviceStatesAsyncFunc = (
   deviceId: number,
-) => Promise<DeviceStateModel | undefined>;
+) => Promise<Record<string, DeviceStateModel> | undefined>;
 export type GetEmergencyStateAsyncFunc = () => Promise<
   EmergencyModel[] | undefined
 >;
 export type GetMnemoschemaAsyncFunc = (
   flowCode: string,
-) => Promise<string | null | undefined>;
+) => Promise<string | undefined>;
 export type GetDeviceAsyncFunc = (
   deviceId: number,
 ) => Promise<DeviceModel | undefined>;
@@ -49,9 +49,10 @@ export type AppDataContextFlowEndpointsModel = {
   getStaticFilesManifest: () => Promise<any>;
   getFlowListAsync: GetFlowListAsyncFunc;
   getDeviceListAsync: GetDeviceListAsyncFunc;
-  getDeviceStateAsync: GetDeviceStateAsyncFunc;
+  getDeviceStatesAsync: GetDeviceStatesAsyncFunc;
   getMnemoschemaAsync: GetMnemoschemaAsyncFunc;
   getDeviceAsync: GetDeviceAsyncFunc;
+  getDeviceByCodeAsync: (deviceCode: string) => Promise<DeviceModel | undefined>;
   getDeviceStateDataschemaAsync: GetDeviceStateDataschemaAsyncFunc;
   getDeviceStatesByDatesAsync: GetDeviceStatesByDatesAsyncFunc;
   getEmergencyStatesAsync: GetEmergencyStateAsyncFunc;
@@ -97,7 +98,7 @@ export const useFlowData = () => {
     }
   }, [authHttpRequest]);
 
-  const getDeviceStateAsync = useCallback<GetDeviceStateAsyncFunc>(
+  const getDeviceStatesAsync = useCallback<GetDeviceStatesAsyncFunc>(
     async (deviceId: number) => {
       const response = await authHttpRequest(
         {
@@ -108,7 +109,7 @@ export const useFlowData = () => {
       );
 
       if (response && response.status === HttpConstants.StatusCodes.Ok) {
-        return response.data as DeviceStateModel;
+        return response.data as Record<string, DeviceStateModel>;
       }
     },
     [authHttpRequest],
@@ -118,7 +119,7 @@ export const useFlowData = () => {
     async (deviceCode: string) => {
       return await fetch(
         `${routes.host}/static/devices/${deviceCode}/mnemo-schema.svg?v=${Date.now()}`,
-      ).then((res) => (res.ok ? res.text() : null));
+      ).then((res) => (res.ok ? res.text() : undefined));
     },
     [],
   );
@@ -129,7 +130,7 @@ export const useFlowData = () => {
         return fetch(
           // `${routes.host}/static/devices/${deviceCode}/data-schema.json?v=${staticFilesManifest["data-schema"] ?? Date.now()}`,
           `${routes.host}/static/devices/${deviceCode}/data-schema.json?v=${Date.now()}`,
-        ).then((res) => (res.ok ? res.json() : null));
+        ).then((res) => (res.ok ? res.json() : undefined));
       },
       [],
     );
@@ -139,7 +140,7 @@ export const useFlowData = () => {
       async (deviceCode: string) => {
         return await fetch(
           `${routes.host}/static/devices/${deviceCode}/mnemo-schema.css?v=${Date.now()}`,
-        ).then((res) => (res.ok ? res.text() : null));
+        ).then((res) => (res.ok ? res.text() : undefined));
       },
       [],
     );
@@ -148,6 +149,20 @@ export const useFlowData = () => {
     async (deviceId: number) => {
       const response = await authHttpRequest({
         url: `${routes.host}${routes.devices}/${deviceId}`,
+        method: HttpConstants.Methods.Get as Method,
+      });
+
+      if (response && response.status === HttpConstants.StatusCodes.Ok) {
+        return response.data as DeviceModel;
+      }
+    },
+    [authHttpRequest],
+  );
+
+  const getDeviceByCodeAsync = useCallback(
+    async (deviceCode: string) => {
+      const response = await authHttpRequest({
+        url: `${routes.host}${routes.devices}/by-code/${deviceCode}`,
         method: HttpConstants.Methods.Get as Method,
       });
 
@@ -259,13 +274,16 @@ export const useFlowData = () => {
     }
   }, [authHttpRequest]);
 
-  const postUserSettingsAsync = useCallback(async (settings: UserSettingsModel) => {
-    await authHttpRequest({
-      url: `${routes.host}${routes.users}/settings`,
-      method: HttpConstants.Methods.Post as Method,
-      data: settings,
-    });
-  }, [authHttpRequest]);
+  const postUserSettingsAsync = useCallback(
+    async (settings: UserSettingsModel) => {
+      await authHttpRequest({
+        url: `${routes.host}${routes.users}/settings`,
+        method: HttpConstants.Methods.Post as Method,
+        data: settings,
+      });
+    },
+    [authHttpRequest],
+  );
 
   useEffect(() => {
     (async () => {
@@ -278,10 +296,11 @@ export const useFlowData = () => {
     getStaticFilesManifest,
     getFlowListAsync,
     getDeviceListAsync,
-    getDeviceStateAsync,
+    getDeviceStatesAsync,
     getMnemoschemaAsync,
     getMnemoschemaStylesheetsAsync,
     getDeviceAsync,
+    getDeviceByCodeAsync,
     getDeviceStateDataschemaAsync,
     getDeviceStatesByDatesAsync,
     getEmergencyStatesAsync,

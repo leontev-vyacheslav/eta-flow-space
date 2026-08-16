@@ -90,23 +90,23 @@
 					d="M27.64,31.07c-0.78,0-1.54-0.2-2.22-0.59c-0.38-0.22-0.51-0.71-0.3-1.09   c0.22-0.38,0.71-0.51,1.09-0.3c0.43,0.25,0.92,0.38,1.42,0.38c0.75,0,1.47-0.29,2.01-0.82   c0.32-0.31,0.82-0.3,1.13,0.01c0.31,0.32,0.3,0.82-0.01,1.13C29.92,30.62,28.81,31.07,27.64,31.07z    M31.25,28.05c-0.05,0-0.09-0-0.14-0.01c-0.43-0.08-0.72-0.49-0.64-0.92c0.01-0.06,0.02-0.12,0.03-0.19   c0.05-0.44,0.44-0.75,0.88-0.7c0.44,0.05,0.75,0.44,0.7,0.88c-0.01,0.1-0.02,0.19-0.04,0.29   C31.97,27.78,31.63,28.05,31.25,28.05z">
 				</path>
 				<g transform="translate(4, 0)">
-				<path style="fill:#000000;"
-					d="M14.48,14.97c-1,0-1.56,0.53-1.56,1.68v3.79c0,1.15,0.56,1.68,1.59,1.68   c1.33,0,1.45-0.9,1.5-1.47c0.03-0.34,0.3-0.46,0.68-0.46c0.48,0,0.7,0.14,0.7,0.72   c0,1.43-1.19,2.44-2.97,2.44c-1.58,0-2.88-0.79-2.88-2.9v-3.79c0-2.11,1.32-2.9,2.89-2.9   c1.78,0,2.96,0.98,2.96,2.36c0,0.59-0.22,0.72-0.69,0.72c-0.42,0-0.68-0.14-0.69-0.46   C15.97,15.91,15.82,14.97,14.48,14.97z">
-				</path>
-				<path style="fill:#000000;"
-					d="M18.58,20.44v-3.79c0-2.11,1.26-2.9,2.92-2.9   c1.64,0,2.93,0.79,2.93,2.9v3.79c0,2.11-1.29,2.9-2.93,2.9   C19.84,23.35,18.58,22.55,18.58,20.44z M23.04,16.65c0-1.15-0.59-1.68-1.55-1.68   c-0.98,0-1.54,0.53-1.54,1.68v3.79c0,1.15,0.56,1.68,1.54,1.68c0.96,0,1.55-0.53,1.55-1.68V16.65z">
-				</path>
+					<path style="fill:#000000;"
+						d="M14.48,14.97c-1,0-1.56,0.53-1.56,1.68v3.79c0,1.15,0.56,1.68,1.59,1.68   c1.33,0,1.45-0.9,1.5-1.47c0.03-0.34,0.3-0.46,0.68-0.46c0.48,0,0.7,0.14,0.7,0.72   c0,1.43-1.19,2.44-2.97,2.44c-1.58,0-2.88-0.79-2.88-2.9v-3.79c0-2.11,1.32-2.9,2.89-2.9   c1.78,0,2.96,0.98,2.96,2.36c0,0.59-0.22,0.72-0.69,0.72c-0.42,0-0.68-0.14-0.69-0.46   C15.97,15.91,15.82,14.97,14.48,14.97z">
+					</path>
+					<path style="fill:#000000;"
+						d="M18.58,20.44v-3.79c0-2.11,1.26-2.9,2.92-2.9   c1.64,0,2.93,0.79,2.93,2.9v3.79c0,2.11-1.29,2.9-2.93,2.9   C19.84,23.35,18.58,22.55,18.58,20.44z M23.04,16.65c0-1.15-0.59-1.68-1.55-1.68   c-0.98,0-1.54,0.53-1.54,1.68v3.79c0,1.15,0.56,1.68,1.54,1.68c0.96,0,1.55-0.53,1.55-1.68V16.65z">
+					</path>
 				</g>
 			</g>
 		</g>
 	</defs>
 
-	<g transform="matrix(1 0 0 1 13 24)" style="letter-spacing: 1px" data-state="timestamp"
-		data-state-eval="if(state.isConnected === false) {element.style.fill = 'red'}">
-		<text data-state="timestamp" data-state-format="date"
+	<g transform="matrix(1 0 0 1 13 24)" style="letter-spacing: 1px" data-state="states['spring-boiler-room'].timestamp"
+		data-state-eval="if(states['spring-boiler-room'].isConnected === false) {element.style.fill = 'red'}">
+		<text data-state="states['spring-boiler-room'].timestamp" data-state-format="date"
 			style="font-family:'Roboto'; font-size:9px;">{{timestamp}}</text>
-		<text data-state="timestamp" data-state-format="time" transform="matrix(1 0 0 1 5 13)"
-			style="font-family:'Roboto'; font-size:9px;">{{timestamp}}</text>
+		<text data-state="states['spring-boiler-room'].timestamp" data-state-format="time"
+			transform="matrix(1 0 0 1 5 13)" style="font-family:'Roboto'; font-size:9px;">{{timestamp}}</text>
 	</g>
 
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="173.3" y1="94.1" x2="173.3" y2="128.4" />
@@ -329,7 +329,7 @@
 		<text transform="matrix(1 0 0 1 617.4741 344.3259)" style="font-family:'Arial'; font-size:10px;">TE1</text>
 		<polygon style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" points="648.5,357.5 603.5,357.5
 		603.5,357.5 603.5,346.4 603.5,346.4 648.5,346.4 648.5,346.4 648.5,357.5 	" />
-		<text data-state="tempOutNet" transform="matrix(1 0 0 1 613.1149 355.0663)"
+		<text data-state="states['spring-boiler-room'].tempOutNet" transform="matrix(1 0 0 1 613.1149 355.0663)"
 			style="font-family:'Arial'; font-size:9px;">89,4ºC</text>
 	</g>
 
@@ -339,7 +339,7 @@
 		<text transform="matrix(1 0 0 1 570.0966 342.7905)" style="font-family:'Arial'; font-size:10px;">PE1</text>
 		<polygon style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" points="600.1,357.5 555.1,357.5
 		555.1,357.5 555.1,346.3 555.1,346.3 600.1,346.3 600.1,346.3 600.1,357.5 	" />
-		<text data-state="pressOutNet" transform="matrix(1 0 0 1 560 355.041)"
+		<text data-state="states['spring-boiler-room'].pressOutNet" transform="matrix(1 0 0 1 560 355.041)"
 			style="font-family:'Arial'; font-size:9px;">3,0 бар</text>
 	</g>
 
@@ -381,7 +381,7 @@
 		<text transform="matrix(1 0 0 1 618.5919 289.8109)" style="font-family:'Arial'; font-size:10px;">TE2</text>
 		<polygon style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" points="648.5,303 603.5,303 603.5,303
 		603.5,291.8 603.5,291.8 648.5,291.8 648.5,291.8 648.5,303 	" />
-		<text data-state="tempInNet" transform="matrix(1 0 0 1 613.1149 300.5269)"
+		<text data-state="states['spring-boiler-room'].tempInNet" transform="matrix(1 0 0 1 613.1149 300.5269)"
 			style="font-family:'Arial'; font-size:9px;">89,4ºC</text>
 	</g>
 
@@ -390,7 +390,7 @@
 	<g>
 		<rect x="554.7" y="291.8" width="45" height="11.2"
 			style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-		<text data-state="pressInNet" transform="matrix(1 0 0 1 560 300.5271)"
+		<text data-state="states['spring-boiler-room'].pressInNet" transform="matrix(1 0 0 1 560 300.5271)"
 			style="font-family:'Arial'; font-size:9px;">3,0 бар</text>
 		<text transform="matrix(1 0 0 1 569.3263 289.8113)" style="font-family:'Arial'; font-size:10px;">PE2</text>
 	</g>
@@ -415,15 +415,15 @@
 		V49.6c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C381.4,71.4,378.8,74,375.7,74z" />
 			<text transform="matrix(1 0 0 1 322.1674 56.0185)"
 				style="font-family:'Arial'; font-size:10px;">Т12&#160;(н.в.)</text>
-			<text data-state="tempOutAir" transform="matrix(1 0 0 1 325 68.608)"
-				style="font-family:'Arial'; font-size:9px;">20,56ºC</text>
+			<text data-state="states['spring-boiler-room'].tempOutAir"
+				transform="matrix(1 0 0 1 325 68.608)" style="font-family:'Arial'; font-size:9px;">20,56ºC</text>
 		</g>
 
 		<g>
 			<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M459.7,74h-65.5c-3.1,0-5.7-2.5-5.7-5.7
 		V49.6c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C465.4,71.4,462.8,74,459.7,74z" />
 			<text transform="matrix(1 0 0 1 413.7932 56.0721)" style="font-family:'Arial'; font-size:10px;">Ргаза</text>
-			<text data-state="pressGas" transform="matrix(1 0 0 1 410 68.608)"
+			<text data-state="states['spring-boiler-room'].pressGas" transform="matrix(1 0 0 1 410 68.608)"
 				style="font-family:'Arial'; font-size:9px;"></text>
 		</g>
 		<g>
@@ -431,7 +431,7 @@
 		V49.6c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C297,71.4,294.5,74,291.3,74z" />
 			<text transform="matrix(1 0 0 1 233.8525 56.0721)"
 				style="font-family:'Arial'; font-size:10px;">Т11&#160;(внутр.)</text>
-			<text data-state="tempRoomAir" transform="matrix(1 0 0 1 245 68.608)"
+			<text data-state="states['spring-boiler-room'].tempRoomAir" transform="matrix(1 0 0 1 245 68.608)"
 				style="font-family:'Arial'; font-size:9px;"></text>
 		</g>
 		<path style="fill:none;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;" d="M580.5,83.5H104c-5.2,0-9.4-4.2-9.4-9.4V23.4
@@ -442,7 +442,7 @@
 	</g>
 	<g data-section="emergency">
 		<g data-section="isConnected">
-			<path data-colorizer-hint="fill" data-state="isConnected"
+			<path data-colorizer-hint="fill" data-state="states['spring-boiler-room'].isConnected"
 				style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;" d="M69.5,146.3h-26c-6.6,0-12-5.4-12-12v-26
 		c0-6.6,5.4-12,12-12h26c6.6,0,12,5.4,12,12v26C81.5,140.9,76.1,146.3,69.5,146.3z" />
 			<text transform="matrix(1 0 0 1 44.0624 138.5239)" style="font-family:'Arial'; font-size:9px;">Связь</text>
@@ -458,7 +458,7 @@
 		</g>
 
 		<g data-section="isCO">
-			<path data-colorizer="fill" data-state="isCO"
+			<path data-colorizer="fill" data-state="states['spring-boiler-room'].isCO"
 				style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;" d="M69.4,311.2h-26c-6.6,0-12-5.4-12-12v-26
 		c0-6.6,5.4-12,12-12h26c6.6,0,12,5.4,12,12v26C81.4,305.8,76,311.2,69.4,311.2z" />
 			<use href="#carbonMonoxideAlarmIcon" transform=" translate(42 265) scale(0.7)" />
@@ -466,7 +466,7 @@
 		</g>
 
 		<g data-section="isCH">
-			<path data-colorizer-hint="fill" data-state="isCH"
+			<path data-colorizer-hint="fill" data-state="states['spring-boiler-room'].isCH"
 				style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;" d="M68.6,365.9h-26c-6.6,0-12-5.4-12-12v-26
 		c0-6.6,5.4-12,12-12h26c6.6,0,12,5.4,12,12v26C80.6,360.5,75.2,365.9,68.6,365.9z" />
 
@@ -513,7 +513,7 @@
 		</g>
 
 		<g data-section="isFireAlarm">
-			<path data-colorizer-hint="fill" data-state="isFireAlarm"
+			<path data-colorizer-hint="fill" data-state="states['spring-boiler-room'].isFireAlarm"
 				style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;" d="M69.5,201.6h-26c-6.6,0-12-5.4-12-12v-26
 		c0-6.6,5.4-12,12-12h26c6.6,0,12,5.4,12,12v26C81.5,196.2,76.1,201.6,69.5,201.6z" />
 
@@ -522,7 +522,7 @@
 		</g>
 
 		<g data-section="isSecurityAlarm">
-			<path data-colorizer-hint="fill" data-state="isSecurityAlarm"
+			<path data-colorizer-hint="fill" data-state="states['spring-boiler-room'].isSecurityAlarm"
 				style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;" d="M69.5,256.9h-26c-6.6,0-12-5.4-12-12v-26
 		c0-6.6,5.4-12,12-12h26c6.6,0,12,5.4,12,12v26C81.5,251.5,76.1,256.9,69.5,256.9z" />
 			<use href="#securityAlarmIcon" x="0" y="0" transform="translate(41, 208), scale(0.15)" />
@@ -530,7 +530,7 @@
 		</g>
 
 		<g data-section="isGasFlap">
-			<path data-colorizer-hint="fill" data-state="isGasFlap"
+			<path data-colorizer-hint="fill" data-state="states['spring-boiler-room'].isGasFlap"
 				style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;" d="M69.1,421.7h-26c-6.6,0-12-5.4-12-12v-26
 		c0-6.6,5.4-12,12-12h26c6.6,0,12,5.4,12,12v26C81.1,416.3,75.7,421.7,69.1,421.7z" />
 			<text transform="matrix(1 0 0 1 41.5478 407.6738)">
@@ -570,6 +570,16 @@
 		c0-5.2,4.2-9.4,9.4-9.4h62.1c5.2,0,9.4,4.2,9.4,9.4v320.5C89.1,423.6,84.8,427.8,79.6,427.8z" />
 		<text transform="matrix(0 -1 1 0 21.7044 308.4746)" style="font-family:'Arial'; font-size:10px;">Аварийные
 			события</text>
+	</g>
+
+	<g data-section="electroPowerMeters" transform="translate(-50, -50)">
+		<g>
+			<rect x="650" y="150" width="60" height="11.2"
+				style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
+			<text data-state="states['mercury230-26077096'].activePowerTotal" transform="matrix(1 0 0 1 655 159)"
+				style="font-family:'Arial'; font-size:9px;">3,0 кВт</text>
+			<text transform="matrix(1 0 0 1 670 148)" style="font-family:'Arial'; font-size:10px;">EP1</text>
+		</g>
 	</g>
 
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="172.7" y1="228.2" x2="172.7" y2="197.7" />

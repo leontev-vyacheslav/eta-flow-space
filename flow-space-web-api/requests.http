@@ -1,7 +1,7 @@
 @baseUrl = http://localhost:3001
 
 ###
-@authToken = {{signIn.response.body.token}}
+@authToken = {{signIn.response.body.accessToken}}
 
 ###
 # @name signIn
@@ -9,7 +9,7 @@ POST {{baseUrl}}/sign-in
 content-type: application/json
 
 {
-    "login": "boiler-watcher",
+    "login": "admin-boiler-watcher",
     "password": "0987654321"
 }
 
@@ -40,6 +40,11 @@ GET {{baseUrl}}/api/device-states/9/dates?beginDate=2026-04-11T00:00:00Z&endDate
 Authorization: Bearer {{ authToken }}
 
 ###
+# @name getDeviceStates
+GET {{baseUrl}}/api/device-states/14
+Authorization: Bearer {{ authToken }}
+
+###
 # @name getEmergencyStatesByDates
 GET {{baseUrl}}/api/emergency-states/4/dates?beginDate=2026-04-11T00:00:00Z&endDate=2026-04-11T23:59:59Z
 Authorization: Bearer {{ authToken }}
@@ -56,7 +61,7 @@ Authorization: Bearer {{ authToken }}
 
 ###
 # @name getDevice
-GET {{baseUrl}}/api/devices/6
+GET {{baseUrl}}/api/devices/13
 Authorization: Bearer {{ authToken }}
 
 ###
@@ -67,7 +72,7 @@ Authorization: Bearer {{ authToken }}
 
 ###
 # @name getDeviceMnemoschema
-GET {{baseUrl}}/api/devices/12/mnemoschema
+GET {{baseUrl}}/api/devices/13/mnemoschema
 Authorization: Bearer {{ authToken }}
 
 ###

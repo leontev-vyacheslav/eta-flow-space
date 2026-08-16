@@ -19,11 +19,11 @@ export function create({ signal } = {}) {
     }
 
     return {
-        onBeforeMount(mnemoschemaElement, deviceState) {
+        onBeforeMount(mnemoschemaElement, deviceStates) {
             applyMnemoschemaSize(mnemoschemaElement);
         },
 
-        onAfterMount(mnemoschemaElement, deviceState) {
+        onAfterMount(mnemoschemaElement, deviceStates) {
             const resizeHandler = () => applyMnemoschemaSize(mnemoschemaElement);
             xSmallMedia.addEventListener('change', resizeHandler, { signal });
             smallMedia.addEventListener('change', resizeHandler, { signal });
