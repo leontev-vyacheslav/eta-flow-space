@@ -1,0 +1,185 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "StateModel",
+    "type": "object",
+    "properties": {
+        "isConnected": {
+            "type": "boolean",
+            "ui": {
+                "group": 1,
+                "editor": {
+                    "editorType": "dxCheckBox",
+                    "editorOptions": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "left",
+                        "showColon": true,
+                        "text": "На связи"
+                    }
+                },
+                "colorizer": {
+                    "styleProps": [
+                        {
+                            "fill": {
+                                "red": false,
+                                "white": true
+                            },
+                            "stroke": {
+                                "yellow": false,
+                                "black": true
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        "timeOfWork": {
+            "type": "number",
+            "ui": {
+                "group": 2,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Время наработки счетчика газа"
+                    },
+                    "editorOptions": {
+                        "readOnly": true
+                    }
+                },
+                "chart": {}
+            }
+        },
+        "currentPressure": {
+            "type": "number",
+            "unit": "кПа",
+            "formatting": {
+                "options": {
+                    "style": "decimal",
+                    "maximumFractionDigits": 2,
+                    "minimumFractionDigits": 2
+                }
+            },
+            "ui": {
+                "group": 2,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Текущее давление газа"
+                    },
+                    "editorOptions": {
+                        "readOnly": true
+                    }
+                },
+                "chart": {}
+            }
+        },
+        "currentTemp": {
+            "type": "number",
+            "unit": "°C",
+            "formatting": {
+                "options": {
+                    "style": "decimal",
+                    "maximumFractionDigits": 2,
+                    "minimumFractionDigits": 2
+                }
+            },
+            "ui": {
+                "group": 2,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Текущая температура газа"
+                    },
+                    "editorOptions": {
+                        "readOnly": true
+                    }
+                },
+                "chart": {}
+            }
+        },
+        "currentFlowRateNc": {
+            "type": "number",
+            "unit": "н.м3/ч",
+            "formatting": {
+                "options": {
+                    "style": "decimal",
+                    "maximumFractionDigits": 2,
+                    "minimumFractionDigits": 2
+                }
+            },
+            "ui": {
+                "group": 2,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Текущий расход в н.у."
+                    },
+                    "editorOptions": {
+                        "readOnly": true
+                    }
+                },
+                "chart": {}
+            }
+        },
+        "currentFlowRateWc": {
+            "type": "number",
+            "unit": "р.м3/ч",
+            "formatting": {
+                "options": {
+                    "style": "decimal",
+                    "maximumFractionDigits": 2,
+                    "minimumFractionDigits": 2
+                }
+            },
+            "ui": {
+                "group": 2,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Текущий расход в раб.у."
+                    },
+                    "editorOptions": {
+                        "readOnly": true
+                    }
+                },
+                "chart": {}
+            }
+        }
+    },
+    "required": [
+        "isConnected",
+        "timeOfWork",
+        "currentPressure",
+        "currentTemp"
+    ],
+    "additionalProperties": false,
+    "ui": {
+        "useTabs": true,
+        "groups": [
+            {
+                "id": 1,
+                "name": "state",
+                "caption": "Состояния",
+                "order": 100
+            },
+            {
+                "id": 2,
+                "name": "mainIndicators",
+                "caption": "Основные показатели",
+                "order": 160
+            }
+        ]
+    }
+}

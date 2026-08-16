@@ -5,9 +5,10 @@ import { DeviceStateController } from './device-state.controller';
 import { DeviceStateService } from './device-state.service';
 import { DeviceStateDataModel } from '../database/models/device-state.data-model';
 import { SharedStoreModule } from '../common/services/shared-store/shared-store.module';
+import { DeviceDataModel, MnemoschemaSelectorDataModel } from '../database/models';
 
 @Module({
-    imports: [SequelizeModule.forFeature([DeviceStateDataModel]), SharedStoreModule],
+    imports: [SequelizeModule.forFeature([DeviceStateDataModel, MnemoschemaSelectorDataModel, DeviceDataModel]), SharedStoreModule],
     controllers: [DeviceStateController],
     providers: [DeviceStateService],
 })

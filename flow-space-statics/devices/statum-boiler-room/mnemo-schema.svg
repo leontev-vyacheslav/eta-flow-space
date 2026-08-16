@@ -91,7 +91,7 @@
 
 			<rect x="76.8" y="316.9" style="fill:url(#SVGID_00000094583040126221797310000005490882232740583864_);stroke:#000000;stroke-miterlimit:10;" width="14.2" height="8.5" />
 
-			<use data-state="boilers[1].status" data-state-eval="element.style.display = ([2, 3, 4].includes(value) ? 'initial': 'none');" href='#boilerFlame' transform="translate(85, 297) rotate(90, 25, 25) scale(0.1)" class="boiler-flame-animation" />
+			<use data-state="states['statum-boiler-room'].boilers[1].status" data-state-eval="element.style.display = ([2, 3, 4].includes(value) ? 'initial': 'none');" href='#boilerFlame' transform="translate(85, 297) rotate(90, 25, 25) scale(0.1)" class="boiler-flame-animation" />
 
 			<linearGradient id="SVGID_00000127753590520987566690000018284565486127008650_" gradientUnits="userSpaceOnUse" x1="149.9801" y1="288.2948" x2="149.9801" y2="285.2067">
 				<stop offset="5.586592e-03" style="stop-color:#FF653F" />
@@ -172,7 +172,7 @@
 				<stop offset="0.9637" style="stop-color:#B3B3B3" />
 			</linearGradient>
 
-			<circle data-state="boilers[1].status" style="fill:none;stroke:#000000;stroke-miterlimit:10;" cx="49.9" cy="331.9" r="6.4" />
+			<circle data-state="states['statum-boiler-room'].boilers[1].status" style="fill:none;stroke:#000000;stroke-miterlimit:10;" cx="49.9" cy="331.9" r="6.4" />
 
 			<linearGradient id="SVGID_00000083056559014121563010000018387170311554909830_" gradientUnits="userSpaceOnUse" x1="172.5878" y1="623.9261" x2="172.5878" y2="602.0184" gradientTransform="matrix(0 -1 1 0 -397.9659 538.7399)">
 				<stop offset="5.586592e-03" style="stop-color:#B3B3B3" />
@@ -295,7 +295,7 @@
 
 			<rect x="77.2" y="502.4" style="fill:url(#SVGID_00000023993083919486139030000015713913565937374100_);stroke:#000000;stroke-miterlimit:10;" width="14.2" height="8.5" />
 
-			<use data-state="boilers[2].status" data-state-eval="element.style.display = ([2, 3, 4].includes(value) ? 'initial': 'none');" href='#boilerFlame' transform="translate(85, 483) rotate(90, 25, 25) scale(0.1)" class="boiler-flame-animation" />
+			<use data-state="states['statum-boiler-room'].boilers[2].status" data-state-eval="element.style.display = ([2, 3, 4].includes(value) ? 'initial': 'none');" href='#boilerFlame' transform="translate(85, 483) rotate(90, 25, 25) scale(0.1)" class="boiler-flame-animation" />
 
 			<linearGradient id="SVGID_00000054261019960959635890000005583618866535404209_" gradientUnits="userSpaceOnUse" x1="150.3951" y1="473.7686" x2="150.3951" y2="470.6805">
 				<stop offset="5.586592e-03" style="stop-color:#FF653F" />
@@ -376,7 +376,7 @@
 				<stop offset="0.9637" style="stop-color:#B3B3B3" />
 			</linearGradient>
 
-			<circle data-state="boilers[2].status" style="fill:url(#SVGID_00000009587861037623141540000000701063293321873281_);stroke:#000000;stroke-miterlimit:10;" cx="50.3" cy="517.4" r="6.4" />
+			<circle data-state="states['statum-boiler-room'].boilers[2].status" style="fill:url(#SVGID_00000009587861037623141540000000701063293321873281_);stroke:#000000;stroke-miterlimit:10;" cx="50.3" cy="517.4" r="6.4" />
 
 			<linearGradient id="SVGID_00000152230505691718368020000007778737049001435312_" gradientUnits="userSpaceOnUse" x1="-12.886" y1="624.3411" x2="-12.886" y2="602.4334" gradientTransform="matrix(0 -1 1 0 -397.9659 538.7399)">
 				<stop offset="5.586592e-03" style="stop-color:#B3B3B3" />
@@ -492,7 +492,7 @@
 
 			<rect x="76.6" y="125.8" style="fill:url(#SVGID_00000141428092963949809920000012797258209694531230_);stroke:#000000;stroke-miterlimit:10;" width="10.5" height="21.9" />
 
-			<use data-state="boilers[0].status" data-state-eval="element.style.display = ([2, 3, 4].includes(value) ? 'initial': 'none');" href='#boilerFlame' transform="translate(85, 113) rotate(90, 25, 25) scale(0.1)" class="boiler-flame-animation" />
+			<use data-state="states['statum-boiler-room'].boilers[0].status" data-state-eval="element.style.display = ([2, 3, 4].includes(value) ? 'initial': 'none');" href='#boilerFlame' transform="translate(85, 113) rotate(90, 25, 25) scale(0.1)" class="boiler-flame-animation" />
 
 			<linearGradient id="SVGID_00000115512119133304774110000017454417272676044429_" gradientUnits="userSpaceOnUse" x1="83.7068" y1="141.0267" x2="83.7068" y2="132.52">
 				<stop offset="5.586592e-03" style="stop-color:#B3B3B3" />
@@ -581,7 +581,7 @@
 				<stop offset="0.9637" style="stop-color:#B3B3B3" />
 			</linearGradient>
 
-			<circle data-state="boilers[0].status" style="fill:none;stroke:#000000;stroke-miterlimit:10;" cx="49.7" cy="147.6" r="6.4" />
+			<circle data-state="states['statum-boiler-room'].boilers[0].status" style="fill:none;stroke:#000000;stroke-miterlimit:10;" cx="49.7" cy="147.6" r="6.4" />
 
 			<linearGradient id="SVGID_00000053532427269635475710000009381009429917831556_" gradientUnits="userSpaceOnUse" x1="356.9707" y1="623.7271" x2="356.9707" y2="601.8194" gradientTransform="matrix(0 -1 1 0 -397.9659 538.7399)">
 				<stop offset="5.586592e-03" style="stop-color:#B3B3B3" />
@@ -728,10 +728,10 @@
 		<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M93.1,122.6H10.2c-3.1,0-5.7-2.5-5.7-5.7
 		V72.1c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v44.8C98.8,120,96.2,122.6,93.1,122.6z" />
 		<text transform="matrix(1 0 0 1 31.3067 76.697)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Котел №1</text>
-		<text data-state="boilers[0].mode" transform="matrix(1 0 0 1 16.9818 88.4922)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeBoiler_1}}</text>
-		<text data-state="boilers[0].status" transform="matrix(1 0 0 1 16.8068 101.2963)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusBoiler_1}}</text>
-		<text data-state="boilers[0].powerBurner" transform="matrix(1 0 0 1 15.6437 191.3998)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{powerBurner_1}} %</text>
-		<text data-state="boilers[0].alarm" transform="matrix(1 0 0 1 17.0869 114.4408)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmBoiler_1}}</text>
+		<text data-state="states['statum-boiler-room'].boilers[0].mode" transform="matrix(1 0 0 1 16.9818 88.4922)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeBoiler_1}}</text>
+		<text data-state="states['statum-boiler-room'].boilers[0].status" transform="matrix(1 0 0 1 16.8068 101.2963)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusBoiler_1}}</text>
+		<text data-state="states['statum-boiler-room'].boilers[0].powerBurner" transform="matrix(1 0 0 1 15.6437 191.3998)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{powerBurner_1}} %</text>
+		<text data-state="states['statum-boiler-room'].boilers[0].alarm" transform="matrix(1 0 0 1 17.0869 114.4408)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmBoiler_1}}</text>
 		<g>
 
 			<linearGradient id="SVGID_00000044147159865473309760000014548854808333217155_" gradientUnits="userSpaceOnUse" x1="-90.0818" y1="181.4184" x2="-90.0818" y2="165.9781" gradientTransform="matrix(0 1 -1 0 381.1376 129.35)">
@@ -758,15 +758,15 @@
 
 			<circle style="fill:url(#SVGID_00000023999209208862473100000017439408399869727619_);stroke:#808080;stroke-width:0.25;stroke-miterlimit:10;" cx="231.6" cy="46.4" r="12.4" />
 			<line style="fill:none;stroke:#4D4D4D;stroke-width:0.5;stroke-miterlimit:10;" x1="207.4" y1="46.4" x2="219.2" y2="46.4" />
-			<polygon data-state="boilerValves[0].status" data-state-eval="if(value === 2) {element.style.fill = 'none'}" style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="231.6,54.8 227,47 236.3,47
+			<polygon data-state="states['statum-boiler-room'].boilerValves[0].status" data-state-eval="if(value === 2) {element.style.fill = 'none'}" style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="231.6,54.8 227,47 236.3,47
 			231.6,54.8" />
-			<polygon data-state="boilerValves[0].status" data-state-eval="if(value === 1) {element.style.fill = 'none'}" style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="231.6,38.4 236.3,46.2 227,46.2
+			<polygon data-state="states['statum-boiler-room'].boilerValves[0].status" data-state-eval="if(value === 1) {element.style.fill = 'none'}" style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="231.6,38.4 236.3,46.2 227,46.2
 			231.6,38.4" />
 		</g>
 		<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M335.2,63.3h-82.9c-3.1,0-5.7-2.5-5.7-5.7
 		V35.1c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v22.5C340.9,60.8,338.3,63.3,335.2,63.3z" />
 		<text transform="matrix(1 0 0 1 252.7273 39.7241)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Задвижка котла №1</text>
-		<text data-state="boilerValves[0].status" transform="matrix(1 0 0 1 252 54.6985)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusValve_1}}</text>
+		<text data-state="states['statum-boiler-room'].boilerValves[0].status" transform="matrix(1 0 0 1 252 54.6985)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusValve_1}}</text>
 
 		<linearGradient id="SVGID_00000134937162387679004110000005699637183612159658_" gradientUnits="userSpaceOnUse" x1="203.8741" y1="25.8264" x2="211.0045" y2="25.8264">
 			<stop offset="5.586592e-03" style="stop-color:#2A97FF" />
@@ -903,10 +903,10 @@
 		<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M92.6,307.3H9.7c-3.1,0-5.7-2.5-5.7-5.7
 		v-44.8c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v44.8C98.3,304.8,95.8,307.3,92.6,307.3z" />
 		<text transform="matrix(1 0 0 1 30.8458 261.4527)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Котел №2</text>
-		<text data-state="boilers[1].mode" transform="matrix(1 0 0 1 16.5209 273.2479)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeBoiler_2}}</text>
-		<text data-state="boilers[1].status" transform="matrix(1 0 0 1 16.3459 286.052)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusBoiler_2}}</text>
-		<text data-state="boilers[1].powerBurner" transform="matrix(1 0 0 1 16.9227 375.0345)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{powerBurner_2}} %</text>
-		<text data-state="boilers[1].alarm" transform="matrix(1 0 0 1 16.6259 299.1965)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmBoiler_2}}</text>
+		<text data-state="states['statum-boiler-room'].boilers[1].mode" transform="matrix(1 0 0 1 16.5209 273.2479)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeBoiler_2}}</text>
+		<text data-state="states['statum-boiler-room'].boilers[1].status" transform="matrix(1 0 0 1 16.3459 286.052)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusBoiler_2}}</text>
+		<text data-state="states['statum-boiler-room'].boilers[1].powerBurner" transform="matrix(1 0 0 1 16.9227 375.0345)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{powerBurner_2}} %</text>
+		<text data-state="states['statum-boiler-room'].boilers[1].alarm" transform="matrix(1 0 0 1 16.6259 299.1965)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmBoiler_2}}</text>
 		<g>
 
 			<linearGradient id="SVGID_00000090293874181604938700000017901629551166905783_" gradientUnits="userSpaceOnUse" x1="94.6739" y1="181.8793" x2="94.6739" y2="166.439" gradientTransform="matrix(0 1 -1 0 381.1376 129.35)">
@@ -933,15 +933,15 @@
 
 			<circle style="fill:url(#SVGID_00000093141047209036581050000016557255744542247813_);stroke:#808080;stroke-width:0.25;stroke-miterlimit:10;" cx="231.2" cy="231.1" r="12.4" />
 			<line style="fill:none;stroke:#4D4D4D;stroke-width:0.5;stroke-miterlimit:10;" x1="207" y1="231.1" x2="218.8" y2="231.1" />
-			<polygon data-state="boilerValves[1].status" data-state-eval="if(value === 2) {element.style.fill = 'none'}" style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="231.2,239.5 226.5,231.7
+			<polygon data-state="states['statum-boiler-room'].boilerValves[1].status" data-state-eval="if(value === 2) {element.style.fill = 'none'}" style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="231.2,239.5 226.5,231.7
 			235.8,231.7 231.2,239.5 		" />
-			<polygon data-state="boilerValves[1].status" data-state-eval="if(value === 1) {element.style.fill = 'none'}" style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="231.2,223.1 235.8,230.9
+			<polygon data-state="states['statum-boiler-room'].boilerValves[1].status" data-state-eval="if(value === 1) {element.style.fill = 'none'}" style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="231.2,223.1 235.8,230.9
 			226.5,230.9 231.2,223.1 		" />
 		</g>
 		<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M334.7,248.1h-82.9c-3.1,0-5.7-2.5-5.7-5.7
 		v-22.5c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v22.5C340.4,245.5,337.9,248.1,334.7,248.1z" />
 		<text transform="matrix(1 0 0 1 252.2664 224.4798)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Задвижка котла №2</text>
-		<text data-state="boilerValves[1].status" transform="matrix(1 0 0 1 252 239.4542)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusValve_2}}</text>
+		<text data-state="states['statum-boiler-room'].boilerValves[1].status" transform="matrix(1 0 0 1 252 239.4542)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusValve_2}}</text>
 
 		<linearGradient id="SVGID_00000087381517463672922280000012892793884056366765_" gradientUnits="userSpaceOnUse" x1="203.4132" y1="210.5821" x2="210.5435" y2="210.5821">
 			<stop offset="5.586592e-03" style="stop-color:#2A97FF" />
@@ -1046,10 +1046,10 @@
 		<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M92.4,492.4H9.5c-3.1,0-5.7-2.5-5.7-5.7
 		v-44.8c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v44.8C98.1,489.8,95.5,492.4,92.4,492.4z" />
 		<text transform="matrix(1 0 0 1 30.6153 446.485)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Котел №3</text>
-		<text data-state="boilers[2].mode" transform="matrix(1 0 0 1 16.2904 458.2803)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeBoiler_3}}</text>
-		<text data-state="boilers[2].status" transform="matrix(1 0 0 1 16.1155 471.0844)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusBoiler_3}}</text>
-		<text data-state="boilers[2].powerBurner" transform="matrix(1 0 0 1 15.8427 560.5082)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{powerBurner_3}} %</text>
-		<text data-state="boilers[2].alarm" transform="matrix(1 0 0 1 16.3955 484.2289)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmBoiler_3}}</text>
+		<text data-state="states['statum-boiler-room'].boilers[2].mode" transform="matrix(1 0 0 1 16.2904 458.2803)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeBoiler_3}}</text>
+		<text data-state="states['statum-boiler-room'].boilers[2].status" transform="matrix(1 0 0 1 16.1155 471.0844)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusBoiler_3}}</text>
+		<text data-state="states['statum-boiler-room'].boilers[2].powerBurner" transform="matrix(1 0 0 1 15.8427 560.5082)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{powerBurner_3}} %</text>
+		<text data-state="states['statum-boiler-room'].boilers[2].alarm" transform="matrix(1 0 0 1 16.3955 484.2289)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmBoiler_3}}</text>
 		<g>
 
 			<linearGradient id="SVGID_00000117666915971975737180000017401807769203408287_" gradientUnits="userSpaceOnUse" x1="279.7063" y1="182.1098" x2="279.7063" y2="166.6695" gradientTransform="matrix(0 1 -1 0 381.1376 129.35)">
@@ -1076,15 +1076,15 @@
 
 			<circle style="fill:url(#SVGID_00000062898581940589769800000013793425230633967502_);stroke:#808080;stroke-width:0.25;stroke-miterlimit:10;" cx="230.9" cy="416.2" r="12.4" />
 			<line style="fill:none;stroke:#4D4D4D;stroke-width:0.5;stroke-miterlimit:10;" x1="206.7" y1="416.2" x2="218.5" y2="416.2" />
-			<polygon data-state="boilerValves[2].status" data-state-eval="if(value === 2) {element.style.fill = 'none'}" style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="230.9,424.5 226.3,416.7
+			<polygon data-state="states['statum-boiler-room'].boilerValves[2].status" data-state-eval="if(value === 2) {element.style.fill = 'none'}" style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="230.9,424.5 226.3,416.7
 			235.6,416.7 230.9,424.5 		" />
-			<polygon data-state="boilerValves[2].status" data-state-eval="if(value === 1) {element.style.fill = 'none'}" style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="230.9,408.2 235.6,416 226.3,416
+			<polygon data-state="states['statum-boiler-room'].boilerValves[2].status" data-state-eval="if(value === 1) {element.style.fill = 'none'}" style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="230.9,408.2 235.6,416 226.3,416
 			230.9,408.2 		" />
 		</g>
 		<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M334.5,433.1h-82.9c-3.1,0-5.7-2.5-5.7-5.7
 		v-22.5c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v22.5C340.2,430.6,337.6,433.1,334.5,433.1z" />
 		<text transform="matrix(1 0 0 1 252.0359 409.5121)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Задвижка котла №3</text>
-		<text data-state="boilerValves[2].status" transform="matrix(1 0 0 1 252 424.4866)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusValve_3}}</text>
+		<text data-state="states['statum-boiler-room'].boilerValves[2].status" transform="matrix(1 0 0 1 252 424.4866)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusValve_3}}</text>
 
 		<linearGradient id="SVGID_00000016783601886572885550000016225782024021560207_" gradientUnits="userSpaceOnUse" x1="203.1828" y1="395.6145" x2="210.3131" y2="395.6145">
 			<stop offset="5.586592e-03" style="stop-color:#2A97FF" />
@@ -1523,17 +1523,17 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 			V224.5c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v105.6C548.3,333.3,545.8,335.8,542.6,335.8z" />
 
 			<text transform="matrix(1 0 0 1 464 230)" style="font-family:'MyriadPro-Regular'; font-size:10px;"><tspan>Сетевой насос №1</tspan></text>
-			<text data-state="networkPumps[0].setPower" transform="matrix(1 0 0 1 467 245)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{setPowerNP_1}}</text>
+			<text data-state="states['statum-boiler-room'].networkPumps[0].setPower" transform="matrix(1 0 0 1 467 245)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{setPowerNP_1}}</text>
 
 			<text transform="matrix(1 0 0 1 467 257)" style="font-family:'MyriadPro-Regular';font-size:10px;fill:blue">Чрп:</text>
-			<text data-state="networkPumps[0].modeFc" transform="matrix(1 0 0 1 467 267)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeFCNP_1}}</text>
-			<text data-state="networkPumps[0].statusFc" transform="matrix(1 0 0 1 467 277)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusFCNP_1}}</text>
-			<text data-state="networkPumps[0].alarmFc" transform="matrix(1 0 0 1 467 287)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmFCNP_1}}</text>
+			<text data-state="states['statum-boiler-room'].networkPumps[0].modeFc" transform="matrix(1 0 0 1 467 267)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeFCNP_1}}</text>
+			<text data-state="states['statum-boiler-room'].networkPumps[0].statusFc" transform="matrix(1 0 0 1 467 277)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusFCNP_1}}</text>
+			<text data-state="states['statum-boiler-room'].networkPumps[0].alarmFc" transform="matrix(1 0 0 1 467 287)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmFCNP_1}}</text>
 
 			<text transform="matrix(1 0 0 1 467 300)" style="font-family:'MyriadPro-Regular'; font-size:10px;fill:blue">Насос:</text>
-			<text data-state="networkPumps[0].mode" transform="matrix(1 0 0 1 467 310)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeNP_1}}</text>
-			<text data-state="networkPumps[0].status" transform="matrix(1 0 0 1 467 320)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusNP_1}}</text>
-			<text data-state="networkPumps[0].alarm" transform="matrix(1 0 0 1 467 330)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmNP_1}}</text>
+			<text data-state="states['statum-boiler-room'].networkPumps[0].mode" transform="matrix(1 0 0 1 467 310)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeNP_1}}</text>
+			<text data-state="states['statum-boiler-room'].networkPumps[0].status" transform="matrix(1 0 0 1 467 320)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusNP_1}}</text>
+			<text data-state="states['statum-boiler-room'].networkPumps[0].alarm" transform="matrix(1 0 0 1 467 330)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmNP_1}}</text>
 		</g>
 
 		<linearGradient id="SVGID_00000022538951116766006230000017838574046413611399_" gradientUnits="userSpaceOnUse" x1="242.4094" y1="-12.3937" x2="249.5397" y2="-12.3937" gradientTransform="matrix(1 0 0 1 188.2928 250.4688)">
@@ -1567,7 +1567,7 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 		</linearGradient>
 
 		<circle style="fill:url(#SVGID_00000021805601613474564560000005048136326169594020_);stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="434.3" cy="277.3" r="10.9" />
-		<polygon data-state="networkPumps[0].status" style="fill:#4D4D4D;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="434.4,287.6 429.7,279.8 439,279.8
+		<polygon data-state="states['statum-boiler-room'].networkPumps[0].status" style="fill:#4D4D4D;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="434.4,287.6 429.7,279.8 439,279.8
 		434.4,287.6 	" />
 
 		<linearGradient id="SVGID_00000107552235618519600220000011088668710159003785_" gradientUnits="userSpaceOnUse" x1="178.5923" y1="21.3741" x2="185.7226" y2="21.3741" gradientTransform="matrix(-1 0 0 -1 749.9521 338.7599)">
@@ -1590,17 +1590,17 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 			<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M676.2,335.8h-82.9c-3.1,0-5.7-2.5-5.7-5.7
 			V224.5c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v105.6C681.8,333.3,679.3,335.8,676.2,335.8z" />
 			<text transform="matrix(1 0 0 1 597 230)" style="font-family:'MyriadPro-Regular'; font-size:10px;"><tspan>Сетевой насос №2</tspan></text>
-			<text data-state="networkPumps[1].setPower" transform="matrix(1 0 0 1 600 245)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{setPowerNP_2}}</text>
+			<text data-state="states['statum-boiler-room'].networkPumps[1].setPower" transform="matrix(1 0 0 1 600 245)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{setPowerNP_2}}</text>
 
 			<text transform="matrix(1 0 0 1 600 257)" style="font-family:'MyriadPro-Regular';font-size:10px;fill:blue">Чрп:</text>
-			<text data-state="networkPumps[1].modeFc" transform="matrix(1 0 0 1 600 267)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeFCNP_2}}</text>
-			<text data-state="networkPumps[1].statusFc" transform="matrix(1 0 0 1 600 277)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusFCNP_2}}</text>
-			<text data-state="networkPumps[1].alarmFc" transform="matrix(1 0 0 1 600 287)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmFCNP_2}}</text>
+			<text data-state="states['statum-boiler-room'].networkPumps[1].modeFc" transform="matrix(1 0 0 1 600 267)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeFCNP_2}}</text>
+			<text data-state="states['statum-boiler-room'].networkPumps[1].statusFc" transform="matrix(1 0 0 1 600 277)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusFCNP_2}}</text>
+			<text data-state="states['statum-boiler-room'].networkPumps[1].alarmFc" transform="matrix(1 0 0 1 600 287)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmFCNP_2}}</text>
 
 			<text transform="matrix(1 0 0 1 600 300)" style="font-family:'MyriadPro-Regular'; font-size:10px;fill:blue">Насос:</text>
-			<text data-state="networkPumps[1].mode" transform="matrix(1 0 0 1 600 310)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeNP_2}}</text>
-			<text data-state="networkPumps[1].status" transform="matrix(1 0 0 1 600 320)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusNP_2}}</text>
-			<text data-state="networkPumps[1].alarm" transform="matrix(1 0 0 1 600 330)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmNP_2}}</text>
+			<text data-state="states['statum-boiler-room'].networkPumps[1].mode" transform="matrix(1 0 0 1 600 310)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeNP_2}}</text>
+			<text data-state="states['statum-boiler-room'].networkPumps[1].status" transform="matrix(1 0 0 1 600 320)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusNP_2}}</text>
+			<text data-state="states['statum-boiler-room'].networkPumps[1].alarm" transform="matrix(1 0 0 1 600 330)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmNP_2}}</text>
 		</g>
 
 		<linearGradient id="SVGID_00000051351124424122252340000016375909856861598137_" gradientUnits="userSpaceOnUse" x1="375.9367" y1="-12.3937" x2="383.067" y2="-12.3937" gradientTransform="matrix(1 0 0 1 188.2928 250.4688)">
@@ -1634,7 +1634,7 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 		</linearGradient>
 
 		<circle style="fill:url(#SVGID_00000044863082690546990600000011649556364558739613_);stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="567.8" cy="277.3" r="10.9" />
-		<polygon data-state="networkPumps[1].status" style="fill:#4D4D4D;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="567.9,287.6 563.3,279.8
+		<polygon data-state="states['statum-boiler-room'].networkPumps[1].status" style="fill:#4D4D4D;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="567.9,287.6 563.3,279.8
 		572.5,279.8 567.9,287.6 	" />
 
 		<linearGradient id="SVGID_00000049935269315415071180000013980766884205594498_" gradientUnits="userSpaceOnUse" x1="44.8554" y1="21.3741" x2="51.9857" y2="21.3741" gradientTransform="matrix(-1 0 0 -1 749.9521 338.7599)">
@@ -1657,17 +1657,17 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 			<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M809.9,335.8H727c-3.1,0-5.7-2.5-5.7-5.7
 			V224.5c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v105.6C815.6,333.3,813,335.8,809.9,335.8z" />
 			<text transform="matrix(1 0 0 1 732 230)" style="font-family:'MyriadPro-Regular'; font-size:10px;"><tspan>Сетевой насос №3</tspan></text>
-			<text data-state="networkPumps[2].setPower" transform="matrix(1 0 0 1 735 245)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{setPowerNP_3}}</text>
+			<text data-state="states['statum-boiler-room'].networkPumps[2].setPower" transform="matrix(1 0 0 1 735 245)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{setPowerNP_3}}</text>
 
 			<text transform="matrix(1 0 0 1 735 257)" style="font-family:'MyriadPro-Regular';font-size:10px;fill:blue">Чрп:</text>
-			<text data-state="networkPumps[2].modeFc" transform="matrix(1 0 0 1 735 267)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeFCNP_3}}</text>
-			<text data-state="networkPumps[2].statusFc" transform="matrix(1 0 0 1 735 277)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusFCNP_3}}</text>
-			<text data-state="networkPumps[2].alarmFc" transform="matrix(1 0 0 1 735 287)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmFCNP_3}}</text>
+			<text data-state="states['statum-boiler-room'].networkPumps[2].modeFc" transform="matrix(1 0 0 1 735 267)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeFCNP_3}}</text>
+			<text data-state="states['statum-boiler-room'].networkPumps[2].statusFc" transform="matrix(1 0 0 1 735 277)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusFCNP_3}}</text>
+			<text data-state="states['statum-boiler-room'].networkPumps[2].alarmFc" transform="matrix(1 0 0 1 735 287)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmFCNP_3}}</text>
 
 			<text transform="matrix(1 0 0 1 735 300)" style="font-family:'MyriadPro-Regular'; font-size:10px;fill:blue">Насос:</text>
-			<text data-state="networkPumps[2].mode" transform="matrix(1 0 0 1 735 310)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeNP_3}}</text>
-			<text data-state="networkPumps[2].status" transform="matrix(1 0 0 1 735 320)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusNP_3}}</text>
-			<text data-state="networkPumps[2].alarm" transform="matrix(1 0 0 1 735 330)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmNP_3}}</text>
+			<text data-state="states['statum-boiler-room'].networkPumps[2].mode" transform="matrix(1 0 0 1 735 310)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeNP_3}}</text>
+			<text data-state="states['statum-boiler-room'].networkPumps[2].status" transform="matrix(1 0 0 1 735 320)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusNP_3}}</text>
+			<text data-state="states['statum-boiler-room'].networkPumps[2].alarm" transform="matrix(1 0 0 1 735 330)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmNP_3}}</text>
 		</g>
 
 		<linearGradient id="SVGID_00000126299408124272457220000011517154543920201122_" gradientUnits="userSpaceOnUse" x1="509.6736" y1="-12.3937" x2="516.8039" y2="-12.3937" gradientTransform="matrix(1 0 0 1 188.2928 250.4688)">
@@ -1701,7 +1701,7 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 		</linearGradient>
 
 		<circle style="fill:url(#SVGID_00000112604843927210347020000017649416156918978206_);stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="701.5" cy="277.3" r="10.9" />
-		<polygon data-state="networkPumps[2].status" style="fill:#4D4D4D;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="701.6,287.6 697,279.8 706.3,279.8
+		<polygon data-state="states['statum-boiler-room'].networkPumps[2].status" style="fill:#4D4D4D;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="701.6,287.6 697,279.8 706.3,279.8
 		701.6,287.6 	" />
 
 		<linearGradient id="SVGID_00000000203761490584941530000007505940617937990322_" gradientUnits="userSpaceOnUse" x1="-88.6719" y1="21.3741" x2="-81.5416" y2="21.3741" gradientTransform="matrix(-1 0 0 -1 749.9521 338.7599)">
@@ -1725,17 +1725,17 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 		V224.5c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v105.6C949.1,333.3,946.6,335.8,943.4,335.8z" />
 			<text transform="matrix(1 0 0 1 865 230)" style="font-family:'MyriadPro-Regular'; font-size:10px;"><tspan>Сетевой насос №4</tspan></text>
 
-			<text data-state="networkPumps[3].setPower" transform="matrix(1 0 0 1 868 245)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{setPowerNP_4}}</text>
+			<text data-state="states['statum-boiler-room'].networkPumps[3].setPower" transform="matrix(1 0 0 1 868 245)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{setPowerNP_4}}</text>
 
 			<text transform="matrix(1 0 0 1 868 257)" style="font-family:'MyriadPro-Regular';font-size:10px;fill:blue">Чрп:</text>
-			<text data-state="networkPumps[3].modeFc" transform="matrix(1 0 0 1 868 267)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeFCNP_4}}</text>
-			<text data-state="networkPumps[3].statusFc" transform="matrix(1 0 0 1 868 277)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusFCNP_4}}</text>
-			<text data-state="networkPumps[3].alarmFc" transform="matrix(1 0 0 1 868 287)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmFCNP_4}}</text>
+			<text data-state="states['statum-boiler-room'].networkPumps[3].modeFc" transform="matrix(1 0 0 1 868 267)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeFCNP_4}}</text>
+			<text data-state="states['statum-boiler-room'].networkPumps[3].statusFc" transform="matrix(1 0 0 1 868 277)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusFCNP_4}}</text>
+			<text data-state="states['statum-boiler-room'].networkPumps[3].alarmFc" transform="matrix(1 0 0 1 868 287)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmFCNP_4}}</text>
 
 			<text transform="matrix(1 0 0 1 868 300)" style="font-family:'MyriadPro-Regular'; font-size:10px;fill:blue">Насос:</text>
-			<text data-state="networkPumps[3].mode" transform="matrix(1 0 0 1 868 310)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeNP_4}}</text>
-			<text data-state="networkPumps[3].status" transform="matrix(1 0 0 1 868 320)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusNP_4}}</text>
-			<text data-state="networkPumps[3].alarm" transform="matrix(1 0 0 1 868 330)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmNP_4}}</text>
+			<text data-state="states['statum-boiler-room'].networkPumps[3].mode" transform="matrix(1 0 0 1 868 310)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeNP_4}}</text>
+			<text data-state="states['statum-boiler-room'].networkPumps[3].status" transform="matrix(1 0 0 1 868 320)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusNP_4}}</text>
+			<text data-state="states['statum-boiler-room'].networkPumps[3].alarm" transform="matrix(1 0 0 1 868 330)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmNP_4}}</text>
 		</g>
 
 		<linearGradient id="SVGID_00000131333346553724260060000003825267574279999384_" gradientUnits="userSpaceOnUse" x1="643.2008" y1="-12.3937" x2="650.3311" y2="-12.3937" gradientTransform="matrix(1 0 0 1 188.2928 250.4688)">
@@ -1769,15 +1769,15 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 		</linearGradient>
 
 		<circle style="fill:url(#SVGID_00000118387995114790626030000007125147395666852277_);stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="835.1" cy="277.3" r="10.9" />
-		<polygon data-state="networkPumps[3].status" style="fill:#4D4D4D;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="835.2,287.6 830.5,279.8
+		<polygon data-state="states['statum-boiler-room'].networkPumps[3].status" style="fill:#4D4D4D;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="835.2,287.6 830.5,279.8
 		839.8,279.8 835.2,287.6 	" />
 		<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M978.3,124.4h-65.5c-3.1,0-5.7-2.5-5.7-5.7
 		V100c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C983.9,121.8,981.4,124.4,978.3,124.4z" />
-		<text data-state="tempOutNet" transform="matrix(1 0 0 1 935 118.2395)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{tempOutNet}} ºC</text>
+		<text data-state="states['statum-boiler-room'].tempOutNet" transform="matrix(1 0 0 1 935 118.2395)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{tempOutNet}} ºC</text>
 		<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M874,124.4h-65.5c-3.1,0-5.7-2.5-5.7-5.7
 		V100c0-3.1,2.5-5.7,5.7-5.7H874c3.1,0,5.7,2.5,5.7,5.7v18.7C879.6,121.8,877.1,124.4,874,124.4z" />
 		<text transform="matrix(1 0 0 1 823.4235 105.7036)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Рподачи</text>
-		<text data-state="pressOutNet" transform="matrix(1 0 0 1 830 118.2395)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{pressOutNet}} бар</text>
+		<text data-state="states['statum-boiler-room'].pressOutNet" transform="matrix(1 0 0 1 830 118.2395)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{pressOutNet}} бар</text>
 
 		<linearGradient id="SVGID_00000031178680862100717090000001107882823616698033_" gradientUnits="userSpaceOnUse" x1="985.674" y1="111.4116" x2="993.0195" y2="111.4116">
 			<stop offset="8.379889e-03" style="stop-color:#808080" />
@@ -1840,11 +1840,11 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 		v-18.7c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C984.1,202.5,981.5,205,978.4,205z" />
 		<text transform="matrix(1 0 0 1 925.6754 105.7033)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Тподачи</text>
 		<text transform="matrix(1 0 0 1 925.6754 187.478)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Тобратки</text>
-		<text data-state="tempInNet" transform="matrix(1 0 0 1 935 198.8877)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{tempInNet}} ºC</text>
+		<text data-state="states['statum-boiler-room'].tempInNet" transform="matrix(1 0 0 1 935 198.8877)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{tempInNet}} ºC</text>
 		<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M874.1,205h-65.5c-3.1,0-5.7-2.5-5.7-5.7
 		v-18.7c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C879.8,202.5,877.3,205,874.1,205z" />
 		<text transform="matrix(1 0 0 1 823.5717 186.3518)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Робратки</text>
-		<text data-state="pressInNet" transform="matrix(1 0 0 1 830 198.8877)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{pressInNet}} бар</text>
+		<text data-state="states['statum-boiler-room'].pressInNet" transform="matrix(1 0 0 1 830 198.8877)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{pressInNet}} бар</text>
 
 		<linearGradient id="SVGID_00000134929321783903621140000008810266501241585034_" gradientUnits="userSpaceOnUse" x1="985.8223" y1="192.0598" x2="993.1677" y2="192.0598">
 			<stop offset="8.379889e-03" style="stop-color:#808080" />
@@ -1906,25 +1906,25 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 		<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M669.3,75.5h-65.5c-3.1,0-5.7-2.5-5.7-5.7
 		V51.1c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C675,73,672.5,75.5,669.3,75.5z" />
 		<text transform="matrix(1 0 0 1 627.4408 57.6312)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Тн.в.</text>
-		<text data-state="tempOutAir" transform="matrix(1 0 0 1 623 70.1671)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{tempOutAir}} ºC</text>
+		<text data-state="states['statum-boiler-room'].tempOutAir" transform="matrix(1 0 0 1 623 70.1671)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{tempOutAir}} ºC</text>
 
 		<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M753.4,75.5h-65.5c-3.1,0-5.7-2.5-5.7-5.7
 		V51.1c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C759,73,756.5,75.5,753.4,75.5z" />
 		<text transform="matrix(1 0 0 1 711.4624 57.6312)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Ргаза</text>
-		<text data-state="pressGas" transform="matrix(1 0 0 1 710 70.1671)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{pressGas}} кПа</text>
+		<text data-state="states['statum-boiler-room'].pressGas" transform="matrix(1 0 0 1 710 70.1671)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{pressGas}} кПа</text>
 
 		<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M839.6,75.5h-65.5c-3.1,0-5.7-2.5-5.7-5.7
 		V51.1c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C845.3,73,842.7,75.5,839.6,75.5z" />
 		<text transform="matrix(1 0 0 1 779.3279 57.6312)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Уровень ДТ1</text>
-		<text data-state="levelDt1" transform="matrix(1 0 0 1 800 70.1671)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{levelDT_1}} %</text>
+		<text data-state="states['statum-boiler-room'].levelDt1" transform="matrix(1 0 0 1 800 70.1671)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{levelDT_1}} %</text>
 		<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M926.9,75.5h-65.5c-3.1,0-5.7-2.5-5.7-5.7
 		V51.1c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C932.6,73,930,75.5,926.9,75.5z" />
 		<text transform="matrix(1 0 0 1 866.605 57.6312)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Уровень ДТ2</text>
-		<text data-state="levelDt2" transform="matrix(1 0 0 1 885 70.1671)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{levelDT_2}} %</text>
+		<text data-state="states['statum-boiler-room'].levelDt2" transform="matrix(1 0 0 1 885 70.1671)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{levelDT_2}} %</text>
 		<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M585,75.5h-65.5c-3.1,0-5.7-2.5-5.7-5.7
 		V51.1c0-3.1,2.5-5.7,5.7-5.7H585c3.1,0,5.7,2.5,5.7,5.7v18.7C590.7,73,588.1,75.5,585,75.5z" />
 		<text transform="matrix(1 0 0 1 541.7527 57.6312)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Тпом.</text>
-		<text data-state="tempRoomAir" transform="matrix(1 0 0 1 540 70.1671)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{tempRoomAir}} ºC</text>
+		<text data-state="states['statum-boiler-room'].tempRoomAir" transform="matrix(1 0 0 1 540 70.1671)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{tempRoomAir}} ºC</text>
 
 		<linearGradient id="SVGID_00000034066932443557695660000001516347545508789692_" gradientUnits="userSpaceOnUse" x1="202.7239" y1="-554.512" x2="209.8542" y2="-554.512" gradientTransform="matrix(1 0 0 1 274.0056 1018.7068)">
 			<stop offset="5.586592e-03" style="stop-color:#2A97FF" />
@@ -1947,17 +1947,17 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 			V450.7c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v105.6C594.2,559.4,591.7,562,588.6,562z" />
 			<text transform="matrix(1 0 0 1 509 457)" style="font-family:'MyriadPro-Regular'; font-size:10px;"><tspan>Насос исх.вод. №1</tspan></text>
 
-			<text data-state="sourceWaterPumps[0].setPower" transform="matrix(1 0 0 1 513 470)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{setPowerPW_1}}</text>
+			<text data-state="states['statum-boiler-room'].sourceWaterPumps[0].setPower" transform="matrix(1 0 0 1 513 470)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{setPowerPW_1}}</text>
 
 			<text transform="matrix(1 0 0 1 513 482)" style="font-family:'MyriadPro-Regular';font-size:10px;fill:blue">Чрп:</text>
-			<text data-state="sourceWaterPumps[0].modeFc" transform="matrix(1 0 0 1 513 492)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeFCPW_1}}</text>
-			<text data-state="sourceWaterPumps[0].statusFc" transform="matrix(1 0 0 1 513 502)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusFCPW_1}}</text>
-			<text data-state="sourceWaterPumps[0].alarmFc" transform="matrix(1 0 0 1 513 512)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmFCPW_1}}</text>
+			<text data-state="states['statum-boiler-room'].sourceWaterPumps[0].modeFc" transform="matrix(1 0 0 1 513 492)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeFCPW_1}}</text>
+			<text data-state="states['statum-boiler-room'].sourceWaterPumps[0].statusFc" transform="matrix(1 0 0 1 513 502)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusFCPW_1}}</text>
+			<text data-state="states['statum-boiler-room'].sourceWaterPumps[0].alarmFc" transform="matrix(1 0 0 1 513 512)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmFCPW_1}}</text>
 
 			<text transform="matrix(1 0 0 1 513 525)" style="font-family:'MyriadPro-Regular'; font-size:10px;fill:blue">Насос:</text>
-			<text data-state="sourceWaterPumps[0].mode" transform="matrix(1 0 0 1 513 535)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modePW_1}}</text>
-			<text data-state="sourceWaterPumps[0].status" transform="matrix(1 0 0 1 513 545)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusPW_1}}</text>
-			<text data-state="sourceWaterPumps[0].alarm" transform="matrix(1 0 0 1 513 555)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmPW_1}}</text>
+			<text data-state="states['statum-boiler-room'].sourceWaterPumps[0].mode" transform="matrix(1 0 0 1 513 535)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modePW_1}}</text>
+			<text data-state="states['statum-boiler-room'].sourceWaterPumps[0].status" transform="matrix(1 0 0 1 513 545)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusPW_1}}</text>
+			<text data-state="states['statum-boiler-room'].sourceWaterPumps[0].alarm" transform="matrix(1 0 0 1 513 555)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmPW_1}}</text>
 		</g>
 
 		<g>
@@ -1965,17 +1965,17 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 			V450.7c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v105.6C727.6,559.4,725,562,721.9,562z" />
 			<text transform="matrix(1 0 0 1 641.0889 457.1738)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Насос исх.воды №2</text>
 
-			<text data-state="sourceWaterPumps[1].setPower" transform="matrix(1 0 0 1 646 470)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{setPowerPW_2}}</text>
+			<text data-state="states['statum-boiler-room'].sourceWaterPumps[1].setPower" transform="matrix(1 0 0 1 646 470)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{setPowerPW_2}}</text>
 
 			<text transform="matrix(1 0 0 1 646 482)" style="font-family:'MyriadPro-Regular';font-size:10px;fill:blue">Чрп:</text>
-			<text data-state="sourceWaterPumps[1].modeFc" transform="matrix(1 0 0 1 646 492)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeFCPW_2}}</text>
-			<text data-state="sourceWaterPumps[1].statusFc" transform="matrix(1 0 0 1 646 502)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusFCPW_2}}</text>
-			<text data-state="sourceWaterPumps[1].alarmFc" transform="matrix(1 0 0 1 646 512)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmFCPW_2}}</text>
+			<text data-state="states['statum-boiler-room'].sourceWaterPumps[1].modeFc" transform="matrix(1 0 0 1 646 492)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeFCPW_2}}</text>
+			<text data-state="states['statum-boiler-room'].sourceWaterPumps[1].statusFc" transform="matrix(1 0 0 1 646 502)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusFCPW_2}}</text>
+			<text data-state="states['statum-boiler-room'].sourceWaterPumps[1].alarmFc" transform="matrix(1 0 0 1 646 512)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmFCPW_2}}</text>
 
 			<text transform="matrix(1 0 0 1 646 525)" style="font-family:'MyriadPro-Regular'; font-size:10px;fill:blue">Насос:</text>
-			<text data-state="sourceWaterPumps[1].mode" transform="matrix(1 0 0 1 646 535)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modePW_2}}</text>
-			<text data-state="sourceWaterPumps[1].status" transform="matrix(1 0 0 1 646 545)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusPW_2}}</text>
-			<text data-state="sourceWaterPumps[1].alarm" transform="matrix(1 0 0 1 646 555)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmPW_2}}</text>
+			<text data-state="states['statum-boiler-room'].sourceWaterPumps[1].mode" transform="matrix(1 0 0 1 646 535)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modePW_2}}</text>
+			<text data-state="states['statum-boiler-room'].sourceWaterPumps[1].status" transform="matrix(1 0 0 1 646 545)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusPW_2}}</text>
+			<text data-state="states['statum-boiler-room'].sourceWaterPumps[1].alarm" transform="matrix(1 0 0 1 646 555)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmPW_2}}</text>
 		</g>
 
 		<linearGradient id="SVGID_00000091005043422797722080000010984031617304834455_" gradientUnits="userSpaceOnUse" x1="351.805" y1="563.4923" x2="358.9353" y2="563.4923" gradientTransform="matrix(-1 0 0 -1 835.6649 1106.9979)">
@@ -2009,7 +2009,7 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 		</linearGradient>
 
 		<circle style="fill:url(#SVGID_00000008865026603949603140000001606653494224271807_);stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="480.3" cy="504.3" r="10.9" />
-		<polygon data-state="sourceWaterPumps[0].status" style="fill:#4D4D4D;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="480.2,494 484.8,501.8 475.6,501.8
+		<polygon data-state="states['statum-boiler-room'].sourceWaterPumps[0].status" style="fill:#4D4D4D;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="480.2,494 484.8,501.8 475.6,501.8
 		480.2,494 	" />
 
 		<linearGradient id="SVGID_00000083061479849192831790000003758985285858554034_" gradientUnits="userSpaceOnUse" x1="69.1967" y1="-554.512" x2="76.327" y2="-554.512" gradientTransform="matrix(1 0 0 1 541.0602 1018.7068)">
@@ -2059,7 +2059,7 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 		</linearGradient>
 
 		<circle style="fill:url(#SVGID_00000057128623712711564390000005882684439845767078_);stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="613.8" cy="504.3" r="10.9" />
-		<polygon data-state="sourceWaterPumps[1].status" style="fill:#4D4D4D;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="613.7,494 618.4,501.8 609.1,501.8
+		<polygon data-state="states['statum-boiler-room'].sourceWaterPumps[1].status" style="fill:#4D4D4D;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="613.7,494 618.4,501.8 609.1,501.8
 		613.7,494 	" />
 		<g>
 
@@ -2255,15 +2255,15 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 		<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M1118.7,551.3h-82.9c-3.1,0-5.7-2.5-5.7-5.7
 		v-51.5c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v51.5C1124.4,548.8,1121.9,551.3,1118.7,551.3z" />
 		<text transform="matrix(1 0 0 1 1036.2524 500.629)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Насос подпит. №1</text>
-		<text data-state="supplyPumps[0].status" transform="matrix(1 0 0 1 1045.5374 529.3026)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusPH_1}}</text>
-		<text data-state="supplyPumps[0].mode" transform="matrix(1 0 0 1 1045.7118 515.9067)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modePH_1}}</text>
-		<text data-state="supplyPumps[0].alarm" transform="matrix(1 0 0 1 1046.1266 543.0701)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmPH_1}}</text>
+		<text data-state="states['statum-boiler-room'].supplyPumps[0].status" transform="matrix(1 0 0 1 1045.5374 529.3026)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusPH_1}}</text>
+		<text data-state="states['statum-boiler-room'].supplyPumps[0].mode" transform="matrix(1 0 0 1 1045.7118 515.9067)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modePH_1}}</text>
+		<text data-state="states['statum-boiler-room'].supplyPumps[0].alarm" transform="matrix(1 0 0 1 1046.1266 543.0701)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmPH_1}}</text>
 		<path style="fill:#CCCCCC;stroke:#mode0;stroke-width:0.25;stroke-miterlimit:10;" d="M1256.2,551.3h-82.9c-3.1,0-5.7-2.5-5.7-5.7
 		v-51.5c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v51.5C1261.8,548.8,1259.3,551.3,1256.2,551.3z" />
 		<text transform="matrix(1 0 0 1 1173.6854 500.629)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Насос подпит. №2</text>
-		<text data-state="supplyPumps[1].status" transform="matrix(1 0 0 1 1182.9702 529.3026)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusPH_2}}</text>
-		<text data-state="supplyPumps[1].mode" transform="matrix(1 0 0 1 1183.1447 515.9067)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modePH_2}}</text>
-		<text data-state="supplyPumps[1].alarm" transform="matrix(1 0 0 1 1183.5596 543.0701)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmPH_2}}</text>
+		<text data-state="states['statum-boiler-room'].supplyPumps[1].status" transform="matrix(1 0 0 1 1182.9702 529.3026)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{statusPH_2}}</text>
+		<text data-state="states['statum-boiler-room'].supplyPumps[1].mode" transform="matrix(1 0 0 1 1183.1447 515.9067)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modePH_2}}</text>
+		<text data-state="states['statum-boiler-room'].supplyPumps[1].alarm" transform="matrix(1 0 0 1 1183.5596 543.0701)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{alarmPH_2}}</text>
 
 		<linearGradient id="SVGID_00000109742058346943895570000000716654038366457515_" gradientUnits="userSpaceOnUse" x1="733.2512" y1="-555.1609" x2="740.3815" y2="-555.1609" gradientTransform="matrix(1 0 0 1 274.0056 1018.7068)">
 			<stop offset="5.586592e-03" style="stop-color:#2A97FF" />
@@ -2312,7 +2312,7 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 		</linearGradient>
 
 		<circle style="fill:url(#SVGID_00000183230736472739676060000011297497255133774227_);stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="1147" cy="522.2" r="10.9" />
-		<polygon data-state="supplyPumps[1].status" style="fill:#4D4D4D;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="1146.9,511.9 1151.5,519.7
+		<polygon data-state="states['statum-boiler-room'].supplyPumps[1].status" style="fill:#4D4D4D;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="1146.9,511.9 1151.5,519.7
 		1142.3,519.7 1146.9,511.9 	" />
 
 		<linearGradient id="SVGID_00000096058170742938943170000008560665669321962639_" gradientUnits="userSpaceOnUse" x1="771.8461" y1="-191.4136" x2="778.9764" y2="-191.4136" gradientTransform="matrix(0 1 -1 0 887.9763 -296.1563)">
@@ -2386,20 +2386,20 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 
 			<circle style="fill:url(#SVGID_00000045618601284623113700000010119985236290479013_);stroke:#808080;stroke-width:0.25;stroke-miterlimit:10;" cx="1035" cy="399.2" r="12.4" />
 			<line style="fill:none;stroke:#4D4D4D;stroke-width:0.5;stroke-miterlimit:10;" x1="1010.8" y1="399.2" x2="1022.6" y2="399.2" />
-			<circle data-state="flapHn.mode" style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" cx="1035" cy="399.2" r="10.6" />
+			<circle data-state="states['statum-boiler-room'].flapHn.mode" style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" cx="1035" cy="399.2" r="10.6" />
 		</g>
 		<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M1138.9,414.7H1056c-3.1,0-5.7-2.5-5.7-5.7
 		V389c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v20.1C1144.6,412.2,1142,414.7,1138.9,414.7z" />
 		<text transform="matrix(1 0 0 1 1058.3992 394.4821)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Клапан подп. сети</text>
-		<text data-state="flapHn.mode" transform="matrix(1 0 0 1 1083 409.7598)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeVHN}}</text>
+		<text data-state="states['statum-boiler-room'].flapHn.mode" transform="matrix(1 0 0 1 1083 409.7598)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeVHN}}</text>
 		<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M1031,76.2h-82.9c-3.1,0-5.7-2.5-5.7-5.7
 		V50.4c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v20.1C1036.7,73.7,1034.2,76.2,1031,76.2z" />
 		<text transform="matrix(1 0 0 1 950.4548 55.9579)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Клапан подачи ДТ</text>
-		<text data-state="flapDt.mode" transform="matrix(1 0 0 1 970 71.2357)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeVDT}}</text>
+		<text data-state="states['statum-boiler-room'].flapDt.mode" transform="matrix(1 0 0 1 970 71.2357)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeVDT}}</text>
 		<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M1133.6,76.2h-82.9c-3.1,0-5.7-2.5-5.7-5.7
 		V50.4c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v20.1C1139.2,73.7,1136.7,76.2,1133.6,76.2z" />
 		<text transform="matrix(1 0 0 1 1052.5477 55.9579)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Клапан заполн. ДТ</text>
-		<text data-state="flapDtFill.mode" transform="matrix(1 0 0 1 1075 71.2357)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeVFillDT}}</text>
+		<text data-state="states['statum-boiler-room'].flapDtFill.mode" transform="matrix(1 0 0 1 1075 71.2357)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeVFillDT}}</text>
 		<g>
 
 			<linearGradient id="SVGID_00000173160880007325790030000013281660455478855057_" gradientUnits="userSpaceOnUse" x1="353.7784" y1="-502.3019" x2="353.7784" y2="-517.7422" gradientTransform="matrix(1 0 0 1 461.0017 946.7943)">
@@ -2426,12 +2426,12 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 
 			<circle style="fill:url(#SVGID_00000042738304664220667510000001173451433332340382_);stroke:#808080;stroke-width:0.25;stroke-miterlimit:10;" cx="821.9" cy="412.6" r="12.4" />
 			<line style="fill:none;stroke:#4D4D4D;stroke-width:0.5;stroke-miterlimit:10;" x1="821.9" y1="436.8" x2="821.9" y2="425" />
-			<circle data-state="flapHt.mode" style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" cx="821.9" cy="412.6" r="10.6" />
+			<circle data-state="states['statum-boiler-room'].flapHt.mode" style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" cx="821.9" cy="412.6" r="10.6" />
 		</g>
 		<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M868.2,394.5h-82.9c-3.1,0-5.7-2.5-5.7-5.7
 		v-20.1c0-3.1,2.5-5.7,5.7-5.7h82.9c3.1,0,5.7,2.5,5.7,5.7v20.1C873.8,391.9,871.3,394.5,868.2,394.5z" />
 		<text transform="matrix(1 0 0 1 787.3953 375.2244)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Клапан подп. бака</text>
-		<text data-state="flapHt.mode" transform="matrix(1 0 0 1 810 390.5021)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeVHT}}</text>
+		<text data-state="states['statum-boiler-room'].flapHt.mode" transform="matrix(1 0 0 1 810 390.5021)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{modeVHT}}</text>
 		<path style="fill:#999999;" d="M961.6,580.5h-86.2c-9.3,0-16.8-7.5-16.8-16.8V426.2c0-9.3,7.5-16.8,16.8-16.8h86.2
 		c9.3,0,16.8,7.5,16.8,16.8v137.5C978.4,573,970.9,580.5,961.6,580.5z" />
 
@@ -2529,7 +2529,7 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 		</linearGradient>
 
 		<circle style="fill:url(#SVGID_00000117665231534314158050000000299828228945351830_);stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="1010.6" cy="522.5" r="10.9" />
-		<polygon data-state="supplyPumps[0].status" style="fill:#4D4D4D;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="1010.5,512.2 1015.1,520
+		<polygon data-state="states['statum-boiler-room'].supplyPumps[0].status" style="fill:#4D4D4D;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="1010.5,512.2 1015.1,520
 		1005.9,520 1010.5,512.2 	" />
 
 		<linearGradient id="SVGID_00000143611690034841994770000006542747489526302899_" gradientUnits="userSpaceOnUse" x1="451.5915" y1="-474.5744" x2="458.7218" y2="-474.5744" gradientTransform="matrix(0 1 -1 0 319.9986 -18.4278)">
@@ -2553,25 +2553,25 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 		</text>
 
 		<text transform="matrix(1 0 0 1 873 410)">
-			<tspan data-state="isSupplyWaterLevelEmergencyMax" x="10" y="12" style="display: none;font-family:'MyriadPro-Regular'; font-size:10px;">Аварийный макс.</tspan>
+			<tspan data-state="states['statum-boiler-room'].isSupplyWaterLevelEmergencyMax" x="10" y="12" style="display: none;font-family:'MyriadPro-Regular'; font-size:10px;">Аварийный макс.</tspan>
 		</text>
 
 		<text transform="matrix(1 0 0 1 873 450)">
-			<tspan data-state="isSupplyWaterLevelWorkingMax" x="12" y="12" style="display: none;font-family:'MyriadPro-Regular'; font-size:10px;">Рабочий макс.</tspan>
+			<tspan data-state="states['statum-boiler-room'].isSupplyWaterLevelWorkingMax" x="12" y="12" style="display: none;font-family:'MyriadPro-Regular'; font-size:10px;">Рабочий макс.</tspan>
 		</text>
 
 		<text transform="matrix(1 0 0 1 873 500)">
-			<tspan data-state="isSupplyWaterLevelWorkingMin" x="12" y="12" style="display: none;font-family:'MyriadPro-Regular'; font-size:10px;">Рабочий мин.</tspan>
+			<tspan data-state="states['statum-boiler-room'].isSupplyWaterLevelWorkingMin" x="12" y="12" style="display: none;font-family:'MyriadPro-Regular'; font-size:10px;">Рабочий мин.</tspan>
 		</text>
 
 		<text transform="matrix(1 0 0 1 873 550)">
-			<tspan data-state="isSupplyWaterLevelEmergencyMin" x="10" y="12" style="display: none;font-family:'MyriadPro-Regular'; font-size:10px;">Аварийный мин.</tspan>
+			<tspan data-state="states['statum-boiler-room'].isSupplyWaterLevelEmergencyMin" x="10" y="12" style="display: none;font-family:'MyriadPro-Regular'; font-size:10px;">Аварийный мин.</tspan>
 		</text>
 
 		<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M646.8,429.9h-65.5c-3.1,0-5.7-2.5-5.7-5.7
 		v-18.7c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C652.5,427.4,650,429.9,646.8,429.9z" />
 		<text transform="matrix(1 0 0 1 583.2741 409.7596)" style="font-family:'MyriadPro-Regular'; font-size:10px;">Рвых.исх.воды</text>
-		<text data-state="pressOutSrcW" transform="matrix(1 0 0 1 602 423)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{pressOutSrcW}} бар</text>
+		<text data-state="states['statum-boiler-room'].pressOutSrcW" transform="matrix(1 0 0 1 602 423)" style="font-family:'MyriadPro-Regular'; font-size:8px;">{{pressOutSrcW}} бар</text>
 
 		<radialGradient id="SVGID_00000061455499762677690960000013399016040191865532_" cx="663.5219" cy="417.1263" r="7.4034" gradientUnits="userSpaceOnUse">
 			<stop offset="0" style="stop-color:#E6E6E6" />
@@ -2611,9 +2611,9 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 		<line style="fill:none;stroke:#4D4D4D;stroke-width:0.5;stroke-miterlimit:10;" x1="663.5" y1="431.2" x2="663.5" y2="433.1" />
 		<path style="fill:none;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;" d="M1135.9,83.1H517.8c-5.2,0-9.4-4.2-9.4-9.4V22.9
 		c0-5.2,4.2-9.4,9.4-9.4h618.1c5.2,0,9.4,4.2,9.4,9.4v50.7C1145.3,78.8,1141.1,83.1,1135.9,83.1z" />
-		<g transform="matrix(1 0 0 1 10 20)" style="font-weight:bold; letter-spacing: 1px" data-state="timestamp" data-state-eval="if(schemaTypeInfoPropertiesChain.find(s => s.propertiesChainValuePair.propertiesChain === 'isConnected')?.propertiesChainValuePair.value === false) {element.style.fill = 'red'}">
-			<text data-state="timestamp" data-state-format="date" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{timestamp}}</text>
-			<text data-state="timestamp" data-state-format="time" transform="matrix(1 0 0 1 5 15)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{timestamp}}</text>
+		<g transform="matrix(1 0 0 1 10 20)" style="font-weight:bold; letter-spacing: 1px" data-state="states['statum-boiler-room'].timestamp" data-state-eval="if(schemaTypeInfoPropertiesChain.find(s => s.propertiesChainValuePair.propertiesChain === 'isConnected')?.propertiesChainValuePair.value === false) {element.style.fill = 'red'}">
+			<text data-state="states['statum-boiler-room'].timestamp" data-state-format="date" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{timestamp}}</text>
+			<text data-state="states['statum-boiler-room'].timestamp" data-state-format="time" transform="matrix(1 0 0 1 5 15)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{timestamp}}</text>
 		</g>
 		<text transform="matrix(1 0 0 1 735.3401 33.26)" style="font-family:'MyriadPro-Regular'; font-size:12px;"><tspan>Прочие параметры работы котельной</tspan></text>
 
@@ -2624,7 +2624,7 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 			<text transform="matrix(1 0 0 1 638.8081 654.7033)" style="font-family:'MyriadPro-Regular'; font-size:12px;">Нештатные ситуации</text>
 
 			<g transform="matrix(1, 0, 0, 1, -63, 0)">
-				<path data-colorizer-hint="fill" data-state="isConnected" style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;" d="M485.8,724H452c-6.6,0-12-5.4-12-12v-33.8
+				<path data-colorizer-hint="fill" data-state="states['statum-boiler-room'].isConnected" style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;" d="M485.8,724H452c-6.6,0-12-5.4-12-12v-33.8
 				c0-6.6,5.4-12,12-12h33.8c6.6,0,12,5.4,12,12V712C497.8,718.6,492.4,724,485.8,724z" />
 				<text transform="matrix(1 0 0 1 453 715)" style="font-family:'MyriadPro-Regular'; font-size:12px;">Связь</text>
 				<g transform="matrix(1 0 0 1 457 675),scale(1.5, 1.5)">
@@ -2634,7 +2634,7 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 			</g>
 
 			<g>
-				<path data-colorizer-hint="fill" data-state="isOffInput1" style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;" d="M485.8,724H452c-6.6,0-12-5.4-12-12v-33.8
+				<path data-colorizer-hint="fill" data-state="states['statum-boiler-room'].isOffInput1" style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;" d="M485.8,724H452c-6.6,0-12-5.4-12-12v-33.8
 				c0-6.6,5.4-12,12-12h33.8c6.6,0,12,5.4,12,12V712C497.8,718.6,492.4,724,485.8,724z" />
 				<text transform="matrix(1 0 0 1 451.8282 714.9435)" style="font-family:'MyriadPro-Regular'; font-size:12px;">Ввод 1</text>
 				<g transform="translate(-394.74965,-227.9771)" style="fill:none;stroke:#060606;stroke-width:1.7921;stroke-linecap:round;">
@@ -2652,7 +2652,7 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 			</g>
 
 			<g>
-				<path data-state="isCO1" style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;" d="M549.3,724h-33.8c-6.6,0-12-5.4-12-12v-33.8
+				<path data-state="states['statum-boiler-room'].isCO1" style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;" d="M549.3,724h-33.8c-6.6,0-12-5.4-12-12v-33.8
 				c0-6.6,5.4-12,12-12h33.8c6.6,0,12,5.4,12,12V712C561.3,718.6,555.9,724,549.3,724z" />
 
 				<text transform="matrix(1 0 0 1 520.4302 714.943)" style="font-family:'MyriadPro-Regular'; font-size:12px;">CO 1</text>
@@ -2693,7 +2693,7 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 			</g>
 
 			<g>
-				<path data-state="isCH1" style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;" d="M612.4,724h-33.8c-6.6,0-12-5.4-12-12v-33.8
+				<path data-state="states['statum-boiler-room'].isCH1" style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;" d="M612.4,724h-33.8c-6.6,0-12-5.4-12-12v-33.8
 				c0-6.6,5.4-12,12-12h33.8c6.6,0,12,5.4,12,12V712C624.4,718.6,619,724,612.4,724z" />
 				<text transform="matrix(1 0 0 1 583.7354 714.943)" style="font-family:'MyriadPro-Regular'; font-size:12px;">CH 1</text>
 				<g id="g3517-3_1_" transform="matrix(0.93449242,0,0,0.93449242,-75.04396,-3.2503739)">
@@ -2733,7 +2733,7 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 			</g>
 
 			<g>
-				<path data-state="isCO2" style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;" d="M675.5,724h-33.8c-6.6,0-12-5.4-12-12v-33.8
+				<path data-state="states['statum-boiler-room'].isCO2" style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;" d="M675.5,724h-33.8c-6.6,0-12-5.4-12-12v-33.8
 				c0-6.6,5.4-12,12-12h33.8c6.6,0,12,5.4,12,12V712C687.5,718.6,682.1,724,675.5,724z" />
 				<text transform="matrix(1 0 0 1 646.5974 714.943)" style="font-family:'MyriadPro-Regular'; font-size:12px;">CO 2</text>
 
@@ -2773,7 +2773,7 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 			</g>
 
 			<g>
-				<path data-state="isCH2" style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;" d="M738.5,724h-33.8c-6.6,0-12-5.4-12-12v-33.8
+				<path data-state="states['statum-boiler-room'].isCH2" style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;" d="M738.5,724h-33.8c-6.6,0-12-5.4-12-12v-33.8
 				c0-6.6,5.4-12,12-12h33.8c6.6,0,12,5.4,12,12V712C750.5,718.6,745.1,724,738.5,724z" />
 
 				<text transform="matrix(1 0 0 1 709.9026 714.943)" style="font-family:'MyriadPro-Regular'; font-size:12px;">CH 2</text>
@@ -2816,7 +2816,7 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 			</g>
 
 			<g>
-				<path data-state="isGasFlap" style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;" d="M801.7,724h-33.8c-6.6,0-12-5.4-12-12v-33.8
+				<path data-state="states['statum-boiler-room'].isGasFlap" style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;" d="M801.7,724h-33.8c-6.6,0-12-5.4-12-12v-33.8
 				c0-6.6,5.4-12,12-12h33.8c6.6,0,12,5.4,12,12V712C813.7,718.6,808.3,724,801.7,724z" />
 				<text transform="matrix(1 0 0 1 766.5567 707.7018)">
 					<tspan x="0" y="0" style="font-family:'MyriadPro-Regular'; font-size:12px;">клапан</tspan>
@@ -2841,7 +2841,7 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 			</g>
 
 			<g>
-				<path data-state="isVaporDt1" style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;" d="M865,724h-33.8c-6.6,0-12-5.4-12-12v-33.8
+				<path data-state="states['statum-boiler-room'].isVaporDt1" style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;" d="M865,724h-33.8c-6.6,0-12-5.4-12-12v-33.8
 				c0-6.6,5.4-12,12-12H865c6.6,0,12,5.4,12,12V712C877,718.6,871.6,724,865,724z" />
 				<text transform="matrix(1 0 0 1 823.4816 714.943)" style="font-family:'MyriadPro-Regular'; font-size:12px;">Пары ДТ1</text>
 				<g id="g3517-3_5_" transform="matrix(0.93449242,0,0,0.93449242,-75.04396,-3.2503739)">
@@ -2882,7 +2882,7 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 			</g>
 
 			<g>
-				<path data-state="isVaporDt2" style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;" d="M928.1,724h-33.8c-6.6,0-12-5.4-12-12v-33.8
+				<path data-state="states['statum-boiler-room'].isVaporDt2" style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;" d="M928.1,724h-33.8c-6.6,0-12-5.4-12-12v-33.8
 				c0-6.6,5.4-12,12-12h33.8c6.6,0,12,5.4,12,12V712C940.1,718.6,934.7,724,928.1,724z" />
 				<g id="g3517-3_4_" transform="matrix(0.93449242,0,0,0.93449242,-75.04396,-3.2503739)">
 					<path id="path3513-9_4_" d="M1073.3,747.9C1073.3,747.9,1073.3,747.9,1073.3,747.9l-3.4-3c-0.4-0.3-1.1-0.6-2.4-0.1l-2.6-2.3
@@ -2930,7 +2930,7 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1111.2" y1="589.5" x2="1111.3" y2="618.3" />
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1118.8" y1="589.5" x2="1118.9" y2="618.3" />
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1126.3" y1="589.5" x2="1126.4" y2="618.3" />
-		<circle data-state="boilerControlLinkStatuses[0].isActive" style="fill:#FFFFFF;stroke:#666666;stroke-width:0.25;stroke-miterlimit:10;" cx="1094" cy="596" r="4" />
+		<circle data-state="states['statum-boiler-room'].boilerControlLinkStatuses[0].isActive" style="fill:#FFFFFF;stroke:#666666;stroke-width:0.25;stroke-miterlimit:10;" cx="1094" cy="596" r="4" />
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1106.1" y1="596.1" x2="1109" y2="596.1" />
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1113.6" y1="596.1" x2="1116.5" y2="596.1" />
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1121.1" y1="596.1" x2="1124" y2="596.1" />
@@ -2949,7 +2949,7 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1111.1" y1="626.1" x2="1111.2" y2="654.9" />
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1118.6" y1="626.1" x2="1118.8" y2="654.9" />
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1126.1" y1="626.1" x2="1126.3" y2="654.9" />
-		<circle data-state="boilerControlLinkStatuses[1].isActive" style="fill:#FFFFFF;stroke:#666666;stroke-width:0.25;stroke-miterlimit:10;" cx="1094" cy="632.7" r="4" />
+		<circle data-state="states['statum-boiler-room'].boilerControlLinkStatuses[1].isActive" style="fill:#FFFFFF;stroke:#666666;stroke-width:0.25;stroke-miterlimit:10;" cx="1094" cy="632.7" r="4" />
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1106" y1="632.7" x2="1108.9" y2="632.7" />
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1113.5" y1="632.7" x2="1116.4" y2="632.7" />
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1121" y1="632.7" x2="1123.9" y2="632.7" />
@@ -2968,7 +2968,7 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1111.1" y1="663.6" x2="1111.2" y2="692.4" />
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1118.6" y1="663.6" x2="1118.7" y2="692.4" />
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1126.1" y1="663.6" x2="1126.2" y2="692.4" />
-		<circle data-state="boilerControlLinkStatuses[2].isActive" style="fill:#FFFFFF;stroke:#666666;stroke-width:0.25;stroke-miterlimit:10;" cx="1094" cy="670.2" r="4" />
+		<circle data-state="states['statum-boiler-room'].boilerControlLinkStatuses[2].isActive" style="fill:#FFFFFF;stroke:#666666;stroke-width:0.25;stroke-miterlimit:10;" cx="1094" cy="670.2" r="4" />
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1105.9" y1="670.3" x2="1108.8" y2="670.3" />
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1113.5" y1="670.3" x2="1116.4" y2="670.3" />
 		<line style="fill:none;stroke:#666666;stroke-miterlimit:10;" x1="1121" y1="670.3" x2="1123.9" y2="670.3" />

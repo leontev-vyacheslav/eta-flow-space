@@ -40,7 +40,7 @@ export function create({ signal } = {}) {
         ];
 
         levels.forEach(p => {
-            const levelStateElement = mnemoschemaElement.querySelector(`[data-state="${p.state}"]`);
+            const levelStateElement = mnemoschemaElement.querySelector(`[data-state="states['tsarevo-boiler-room'].${p.state}"]`);
             if (!levelStateElement) {
                 return;
             }
@@ -54,7 +54,7 @@ export function create({ signal } = {}) {
             }
         });
         if (!isMaxLevel) {
-            const isSupplyWaterLevelEmergencyMinElement = mnemoschemaElement.querySelector('[data-state="isSupplyWaterLevelEmergencyMin"]');
+            const isSupplyWaterLevelEmergencyMinElement = mnemoschemaElement.querySelector('[data-state="states[\'tsarevo-boiler-room\'].isSupplyWaterLevelEmergencyMin"]');
             if (isSupplyWaterLevelEmergencyMinElement) {
                 isSupplyWaterLevelEmergencyMinElement.style.display = 'inline';
             }
@@ -72,14 +72,15 @@ export function create({ signal } = {}) {
     }
 
     return {
-        onBeforeMount(mnemoschemaElement, deviceState) {
+        onBeforeMount(mnemoschemaElement, deviceStates) {
+            const deviceState = deviceStates['tsarevo-boiler-room'];
             applyMnemoschemaSize(mnemoschemaElement);
             if (deviceState && deviceState.state) {
                 setLevelSupplyWaterTank(mnemoschemaElement, deviceState);
             }
         },
 
-        onAfterMount(mnemoschemaElement, deviceState) {
+        onAfterMount(mnemoschemaElement, deviceStates) {
             const resizeHandler = () => applyMnemoschemaSize(mnemoschemaElement);
             xSmallMedia.addEventListener('change', resizeHandler, { signal });
             smallMedia.addEventListener('change', resizeHandler, { signal });

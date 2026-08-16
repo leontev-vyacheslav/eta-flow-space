@@ -5,24 +5,31 @@ import AppConstants from "../../../../constants/app-constants";
 
 export const useMnemoschemaStateSetup = () => {
     const { isSmall, isXSmall, isLarge } = useScreenSize();
-    const { schemaTypeInfoPropertiesChain, dataschema, deviceState } = useDashboardPage();
+    const { schemasTypeInfoPropertiesChain, dataschemas, deviceStates } = useDashboardPage();
 
     const applyStateToMultiStateElements = useCallback((mnemoschemaElement: HTMLElement) => {
         [...mnemoschemaElement.querySelectorAll(`[data-state]`)]
             .filter(element => element.getAttribute('data-state-eval') && element.getAttribute('data-state')?.includes(';'))
             .forEach(element => {
-                const state = deviceState?.state;
+                const states: Record<string, any> = {};
+                for (const deviceCode of Object.keys(deviceStates as Record<string, any>)) {
+                    states[deviceCode] = (deviceStates as Record<string, any>)[deviceCode].state;
+                }
                 const dataStateEvalAttr = element.getAttribute('data-state-eval');
-                if (dataStateEvalAttr && state) {
+                if (dataStateEvalAttr && states) {
                     eval(dataStateEvalAttr);
                 }
             });
-    }, [deviceState]);
+    }, [deviceStates]);
 
-    const applyStateToTextElement = useCallback((element: Element, value: any, typeInfo: any) => {
+    const applyStateToTextElement = useCallback((element: Element, key: string, value: any, typeInfo: any) => {
+        if (!dataschemas || !dataschemas[key] || !typeInfo) {
+            return;
+        }
+
         if (typeInfo?.isEnum) {
             try {
-                const enumDescription = (dataschema.$defs[typeInfo.typeName].enumDescriptions[value].split(' - ').pop() as string).split('(')[0].trim();
+                const enumDescription = (dataschemas[key].$defs[typeInfo.typeName].enumDescriptions[value].split(' - ').pop() as string).split('(')[0].trim();
                 element.innerHTML = enumDescription === 'Не используется' ? '' : enumDescription;
             } catch {
                 element.innerHTML = '<tspan style="fill: red">Ошибка</tspan>'
@@ -64,7 +71,7 @@ export const useMnemoschemaStateSetup = () => {
                 element.innerHTML = `${typeInfo?.label} ${element.innerHTML}`;
             }
         }
-    }, [dataschema]);
+    }, [dataschemas]);
 
     const applyStateToColoringElement = useCallback((element: Element, value: any, typeInfo: any) => {
         const styleProps = typeInfo?.ui.colorizer.styleProps;
@@ -96,31 +103,38 @@ export const useMnemoschemaStateSetup = () => {
     }, []);
 
     return useCallback((mnemoschemaElement: HTMLElement) => {
-        if (!schemaTypeInfoPropertiesChain) {
+        if (!schemasTypeInfoPropertiesChain || Object.keys(schemasTypeInfoPropertiesChain).length === 0) {
             return;
         }
 
         applyStateToMultiStateElements(mnemoschemaElement);
+        for (const key of Object.keys(schemasTypeInfoPropertiesChain)) {
+            const schemaTypeInfoPropertiesChain = schemasTypeInfoPropertiesChain[key];
 
-        schemaTypeInfoPropertiesChain
-            .forEach(({ typeInfo, propertiesChainValuePair }) => {
-                mnemoschemaElement.querySelectorAll(`[data-state="${propertiesChainValuePair.propertiesChain}"]`)
-                    .forEach(element => {
-                        const value = propertiesChainValuePair.value;
+            schemaTypeInfoPropertiesChain
+                .forEach(({ typeInfo, propertiesChainValuePair }) => {
+                    mnemoschemaElement.querySelectorAll(`[data-state="states['${key}'].${propertiesChainValuePair.propertiesChain}"]`)
+                        .forEach(element => {
+                            const value = propertiesChainValuePair.value;
 
-                        if (element.tagName === 'text') {
-                            applyStateToTextElement(element, value, typeInfo);
-                        } else if (typeInfo?.ui.colorizer) {
-                            applyStateToColoringElement(element, value, typeInfo);
-                        }
+                            if (element.tagName === 'text') {
+                                applyStateToTextElement(element, key, value, typeInfo);
+                            } else if (typeInfo?.ui.colorizer) {
+                                applyStateToColoringElement(element, value, typeInfo);
+                            }
 
-                        const state = deviceState?.state;
-                        const dataStateEvalAttr = element.getAttribute('data-state-eval');
-                        if (dataStateEvalAttr && state) {
-                            eval(dataStateEvalAttr);
-                        }
-                    });
-            });
+                            const states: Record<string, any> = {};
+                            for (const deviceCode of Object.keys(deviceStates as Record<string, any>)) {
+                                states[deviceCode] = (deviceStates as Record<string, any>)[deviceCode].state;
+                            }
+                            const dataStateEvalAttr = element.getAttribute('data-state-eval');
+                            if (dataStateEvalAttr && states) {
+                                eval(dataStateEvalAttr);
+                            }
+                        });
+                });
+        }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [dataschema, schemaTypeInfoPropertiesChain, isSmall, isXSmall, isLarge, deviceState, applyStateToMultiStateElements, applyStateToTextElement, applyStateToColoringElement]);
+    }, [dataschemas, schemasTypeInfoPropertiesChain, isSmall, isXSmall, isLarge, deviceStates, applyStateToMultiStateElements, applyStateToTextElement, applyStateToColoringElement]);
 }

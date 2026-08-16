@@ -15,21 +15,21 @@ export class MnemoschemaSelectorDataModel extends Model {
     @ForeignKey(() => DeviceDataModel)
     @Column({
         type: DataType.INTEGER,
-        allowNull: true,
+        allowNull: false,
         unique: true,
     })
     declare deviceId: number;
 
     @BelongsTo(() => DeviceDataModel, 'deviceId')
-    declare device?: DeviceDataModel;
+    declare device: DeviceDataModel;
 
     @ForeignKey(() => DeviceDataModel)
     @Column({
         type: DataType.INTEGER,
-        allowNull: true,
+        allowNull: false,
     })
     declare sourceDeviceId: number;
 
     @BelongsTo(() => DeviceDataModel, 'sourceDeviceId')
-    declare sourceDevice?: DeviceDataModel;
+    declare sourceDevice: DeviceDataModel;
 }

@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Op, ProjectionAlias, literal } from 'sequelize';
 import { SharedStoreService } from '../common/services/shared-store/shared-store.service';
-import { DeviceStateDataModel } from '../database/models';
+import { DeviceStateDataModel, MnemoschemaSelectorDataModel, DeviceDataModel } from '../database/models';
 import { I18nService } from 'nestjs-i18n';
 
 function fieldToJsonbPath(field: string): string {
@@ -24,8 +24,12 @@ function fieldToJsonbPath(field: string): string {
 @Injectable()
 export class DeviceStateService {
     constructor(
+        @InjectModel(DeviceDataModel)
+        private readonly deviceModel: typeof DeviceDataModel,
         @InjectModel(DeviceStateDataModel)
         private readonly deviceStateModel: typeof DeviceStateDataModel,
+        @InjectModel(MnemoschemaSelectorDataModel)
+        private readonly mnemoschemaSelectorModel: typeof MnemoschemaSelectorDataModel,
         private readonly sharedStoreService: SharedStoreService,
         private readonly i18n: I18nService,
     ) {}
@@ -46,20 +50,55 @@ export class DeviceStateService {
         return deviceStates;
     }
 
-    async getDeviceState(deviceId: number): Promise<Partial<DeviceStateDataModel>> {
-        const redisState = await this.sharedStoreService.getDeviceState<Record<string, unknown>>(deviceId);
+    async getDeviceStates(targetDeviceId: number): Promise<Record<string, Partial<DeviceStateDataModel>>> {
+        const result: Record<string, Partial<DeviceStateDataModel>> = {};
+        const mnemoschemaSelector = await this.mnemoschemaSelectorModel.findOne({
+            attributes: ['sourceDeviceId'],
+            where: {
+                deviceId: targetDeviceId,
+            },
+        });
+        const linkedDevices = await this.mnemoschemaSelectorModel.findAll({
+            attributes: ['deviceId'],
+            where: {
+                sourceDeviceId: mnemoschemaSelector?.sourceDeviceId,
+            },
+            include: [
+                {
+                    model: this.deviceModel,
+                    as: 'device',
+                    attributes: ['code'],
+                    required: true,
+                },
+            ],
+        });
 
-        if (this.isValidState(redisState)) {
-            return {
-                id: 0,
-                deviceId,
-                state: { isConnected: true, ...redisState },
-                createdAt: new Date(),
-                updatedAt: new Date(),
-            } as Partial<DeviceStateDataModel>;
+        // TODO: need to be refactored
+        if (linkedDevices.length === 0) {
+            const fallbackState = await this.getFallbackState(targetDeviceId);
+
+            return { [targetDeviceId]: fallbackState };
         }
 
-        return this.getFallbackState(deviceId);
+        for (const linkedDevice of linkedDevices) {
+            const linkedDeviceId = linkedDevice.deviceId;
+            const redisState = await this.sharedStoreService.getDeviceState<Record<string, unknown>>(linkedDeviceId);
+
+            if (this.isValidState(redisState)) {
+                result[linkedDevice.device.code] = {
+                    id: 0,
+                    deviceId: linkedDeviceId,
+                    state: { isConnected: true, ...redisState },
+                    createdAt: new Date(),
+                    updatedAt: new Date(),
+                };
+            } else {
+                const fallbackState = await this.getFallbackState(linkedDeviceId);
+                result[linkedDevice.device.code] = fallbackState;
+            }
+        }
+
+        return result;
     }
 
     private isValidState(state: Record<string, unknown> | null): state is Record<string, unknown> {

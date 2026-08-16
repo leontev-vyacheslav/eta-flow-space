@@ -5,7 +5,7 @@
   "properties": {
     "activePowerTotal": {
       "type": "number",
-      "unit": "kW",
+      "unit": "кВт",
       "ui": {
         "group": 1,
         "editor": {
@@ -18,12 +18,13 @@
           "editorOptions": {
             "readOnly": true
           }
-        }
+        },
+        "chart": {}
       }
     },
     "activePowerL1": {
       "type": "number",
-      "unit": "kW",
+      "unit": "кВт",
       "ui": {
         "group": 1,
         "editor": {
@@ -41,7 +42,7 @@
     },
     "activePowerL2": {
       "type": "number",
-      "unit": "kW",
+      "unit": "кВт",
       "ui": {
         "group": 1,
         "editor": {
@@ -59,7 +60,7 @@
     },
     "activePowerL3": {
       "type": "number",
-      "unit": "kW",
+      "unit": "кВт",
       "ui": {
         "group": 1,
         "editor": {

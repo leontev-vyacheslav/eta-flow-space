@@ -31,4 +31,6 @@ export interface MnemoschemaSelectorModel  {
     device:  DescriptiveBaseModel;
 
     sourceDevice: DescriptiveBaseModel;
+
+    linkedDevices: { deviceId: number, deviceCode: string, deviceName: string, deviceDescription: string }[];
 }
