@@ -17,6 +17,7 @@ import { createMapMarkerIcon } from "./map-marker-icon";
 import { getQuickGuid } from "../../utils/uuid";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSharedArea } from "../../contexts/shared-area";
+import { MapMarkerIconEmergencyTypes } from "../../models/enums/map-icon-emergency-types";
 
 
 import 'leaflet/dist/leaflet.css';
@@ -183,14 +184,34 @@ export const MapPage = () => {
             if (!device.objectLocation) {
                 return;
             }
+            let mapIconEmergencyType = MapMarkerIconEmergencyTypes.Normal;
 
             const { latitude, longitude } = device.objectLocation;
             const emergencyState = emergencyStates?.find(s => s.deviceId === device.id);
 
-            const hasSiblings = devices.filter(d => d.flowId === device.flowId).length > 1;
+            if (emergencyState) {
+                mapIconEmergencyType = MapMarkerIconEmergencyTypes.Warning;
+
+                if (emergencyState.reasons?.some(r => r.id === AppConstants.identifiers.connectionEmergencyReasonId)) {
+                    mapIconEmergencyType = MapMarkerIconEmergencyTypes.Critical;
+                }
+            }
+
+            const linkedDevices = devices.filter(d => d.flowId === device.flowId);
+            const hasSiblings = linkedDevices.length > 1;
+            if (hasSiblings) {
+                const linkedEmergencyStates = emergencyStates?.filter(s => linkedDevices.some(d => d.id === s.deviceId));
+                if (linkedEmergencyStates && linkedEmergencyStates.length > 0) {
+                    if (linkedEmergencyStates.some(s => s.reasons?.some(r => r.id === AppConstants.identifiers.connectionEmergencyReasonId))) {
+                        mapIconEmergencyType = MapMarkerIconEmergencyTypes.Critical;
+                    } else if (linkedEmergencyStates.some(s => s.reasons && s.reasons.length > 0)) {
+                        mapIconEmergencyType = MapMarkerIconEmergencyTypes.Warning;
+                    }
+            }
+        }
 
             const marker = L.marker([latitude, longitude], {
-                icon: createMapMarkerIcon(emergencyState, hasSiblings)
+                icon: createMapMarkerIcon(mapIconEmergencyType, hasSiblings)
             }).addTo(markersFeatureGroup);
 
             // Store marker reference by device ID

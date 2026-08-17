@@ -76,6 +76,19 @@ export class DeviceService {
             include: this.BASE_DEVICE_INCLUDES,
         });
 
+        // const r = {
+        //     id: device?.id,
+        //     code: device?.code,
+        //     description: device?.description,
+        //     name: device?.name,
+        //     flow: device?.flow,
+        //     objectLocation: device?.objectLocation,
+        //     reports: device?.reports,
+        //     // mnemoschemaSelector: device?.mnemoschemaSelector,
+        //     mnemoschemaSelectorDeviceCode: device?.mnemoschemaSelector?.sourceDevice?.code,
+        //     linkedDevices: device?.mnemoschemaSelector?.linkedDevices
+        // };
+
         return device;
     }
 
