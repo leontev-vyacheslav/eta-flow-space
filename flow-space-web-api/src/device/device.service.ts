@@ -8,7 +8,7 @@ import {
     UserDeviceLinkDataModel,
 } from '../database/models';
 import { InjectModel } from '@nestjs/sequelize';
-import { Includeable, Sequelize } from 'sequelize';
+import { Includeable } from 'sequelize';
 @Injectable()
 export class DeviceService {
     private readonly BASE_DEVICE_INCLUDES: Includeable[] = [
@@ -23,35 +23,52 @@ export class DeviceService {
         {
             model: MnemoschemaSelectorDataModel,
             as: 'mnemoschemaSelector',
-            attributes: {
-                include: [
-                    [
-                        Sequelize.literal(`(
-                        SELECT COALESCE(
-                        json_agg(DISTINCT jsonb_build_object(
-                            'deviceId', d.id,
-                            'deviceCode', d.code,
-                            'deviceDescription', d.description,
-                            'deviceName', d.name
-                        )),
-                        '[]'::json
-                        )
-                        FROM mnemoschema_selector AS s
-                        JOIN device AS d ON s."deviceId" = d."id"
-                        WHERE s."sourceDeviceId" = "mnemoschemaSelector"."sourceDeviceId"
-                        )`),
-                        'linkedDevices',
-                    ],
-                ],
-            },
+            attributes: ['id', 'sourceDeviceId'],
             include: [
-                { model: DeviceDataModel, as: 'device', attributes: ['id', 'code', 'description'] },
-                { model: DeviceDataModel, as: 'sourceDevice', attributes: ['id', 'code', 'description'] },
+                {
+                    model: DeviceDataModel,
+                    as: 'sourceDevice',
+                    attributes: ['code'],
+                },
             ],
         },
     ];
 
-    constructor(@InjectModel(DeviceDataModel) private readonly deviceModel: typeof DeviceDataModel) {}
+    constructor(
+        @InjectModel(DeviceDataModel) private readonly deviceModel: typeof DeviceDataModel,
+        @InjectModel(MnemoschemaSelectorDataModel) private readonly mnemoschemaSelectorModel: typeof MnemoschemaSelectorDataModel,
+    ) {}
+
+    private async getLinkedDevices(deviceId: number) {
+        const source = await this.mnemoschemaSelectorModel.findOne({
+            attributes: ['sourceDeviceId'],
+            where: { deviceId: deviceId },
+            include: [
+                {
+                    model: DeviceDataModel,
+                    as: 'device',
+                    attributes: ['id', 'code', 'description', 'name'],
+                    required: true,
+                },
+            ],
+        });
+
+        if (!source) {
+            return [];
+        }
+
+        return this.mnemoschemaSelectorModel.findAll({
+            where: { sourceDeviceId: source.sourceDeviceId },
+            include: [
+                {
+                    model: DeviceDataModel,
+                    as: 'device',
+                    attributes: ['id', 'code', 'description', 'name'],
+                    required: true,
+                },
+            ],
+        });
+    }
 
     async getDevices(userId: number): Promise<DeviceDataModel[]> {
         const devices = await this.deviceModel.findAll({
@@ -71,31 +88,34 @@ export class DeviceService {
         return devices;
     }
 
-    async getDevice(deviceId: number): Promise<DeviceDataModel | null> {
+    async getDevice(deviceId: number): Promise<Partial<DeviceDataModel> | null> {
         const device = await this.deviceModel.findByPk(deviceId, {
             include: this.BASE_DEVICE_INCLUDES,
         });
 
-        // const r = {
-        //     id: device?.id,
-        //     code: device?.code,
-        //     description: device?.description,
-        //     name: device?.name,
-        //     flow: device?.flow,
-        //     objectLocation: device?.objectLocation,
-        //     reports: device?.reports,
-        //     // mnemoschemaSelector: device?.mnemoschemaSelector,
-        //     mnemoschemaSelectorDeviceCode: device?.mnemoschemaSelector?.sourceDevice?.code,
-        //     linkedDevices: device?.mnemoschemaSelector?.linkedDevices
-        // };
+        const linkedDevices = await this.getLinkedDevices(deviceId);
 
-        return device;
+        return device
+            ? ({
+                  id: device.id,
+                  code: device.code,
+                  description: device.description,
+                  name: device.name,
+                  flow: device.flow,
+                  objectLocation: device.objectLocation,
+                  reports: device.reports,
+                  mnemoschemaCode: device.mnemoschemaSelector!.sourceDevice?.code,
+                  linkedDevices: linkedDevices.map((d) => d.device),
+              } as DeviceDataModel & {
+                  mnemoschemaCode?: string;
+                  linkedDevices: DeviceDataModel[];
+              })
+            : null;
     }
 
     async getDeviceByCode(deviceCode: string): Promise<DeviceDataModel | null> {
         const device = await this.deviceModel.findOne({
             where: { code: deviceCode },
-            include: this.BASE_DEVICE_INCLUDES,
         });
 
         return device;

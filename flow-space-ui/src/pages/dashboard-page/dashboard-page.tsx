@@ -61,19 +61,19 @@ const DashboardPageInner = () => {
                         {
                             render: () => <MenuItemWithSubMenu icon={<GraphIcon size={20} />} text={'Графики...'} />,
                             items: Object.keys(schemasTypeInfoPropertiesChain).map(deviceCode => {
-                                const targetDevice = device?.mnemoschemaSelector.linkedDevices.find(d => d.deviceCode === deviceCode);
+                                const targetDevice = device?.linkedDevices.find(d => d.code === deviceCode);
                                 return {
 
                                     icon: () => <GraphIcon size={20} />,
-                                    text: `${kebabToCamel(targetDevice?.deviceName || deviceCode)}...`,
+                                    text: `${kebabToCamel(targetDevice?.name || deviceCode)}...`,
                                     onClick: () => {
                                         if (targetDevice && schemasTypeInfoPropertiesChain) {
                                             const s = schemasTypeInfoPropertiesChain[deviceCode]?.filter(chain => chain.typeInfo?.ui.chart);
                                             graphService.show({ device: {
-                                                id: targetDevice.deviceId,
-                                                code: targetDevice.deviceCode,
-                                                name: targetDevice.deviceName,
-                                                description: targetDevice.deviceDescription
+                                                id: targetDevice.id,
+                                                code: targetDevice.code,
+                                                name: targetDevice.name,
+                                                description: targetDevice.description
                                             } as DeviceModel, schemaTypeInfos: s || [] });
                                         }
                                     }

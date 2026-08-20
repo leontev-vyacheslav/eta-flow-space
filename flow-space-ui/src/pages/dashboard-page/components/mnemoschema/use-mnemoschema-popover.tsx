@@ -77,7 +77,7 @@ export const useMnemoschemaPopover = () => {
                                     <td colSpan={2}>
                                         <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
                                             <DashboardIcon size={16} />
-                                            <strong>{device?.mnemoschemaSelector.linkedDevices.find(d => d.deviceCode === deviceCode)?.deviceDescription}</strong>
+                                            <strong>{device?.linkedDevices.find(d => d.code === deviceCode)?.description}</strong>
                                         </div>
                                     </td>
                                 </tr> : null}

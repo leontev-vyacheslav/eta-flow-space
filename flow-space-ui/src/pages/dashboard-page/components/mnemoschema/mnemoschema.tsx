@@ -45,10 +45,7 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
             let plugInModule = null;
             try {
                 if (device) {
-                    const mnemoschemaSelectorDeviceCode = device.mnemoschemaSelector.sourceDeviceId == device.id
-                        ? device.code
-                        : device.mnemoschemaSelector.sourceDevice.code;
-                    plugInModule = await import(/* @vite-ignore */ `${routes.host}/static/devices/${mnemoschemaSelectorDeviceCode}/mnemo-schema.js?v=${Date.now()}`);
+                    plugInModule = await import(/* @vite-ignore */ `${routes.host}/static/devices/${device.mnemoschemaCode}/mnemo-schema.js?v=${Date.now()}`);
                 }
             } catch (error) {
                 console.error(error);

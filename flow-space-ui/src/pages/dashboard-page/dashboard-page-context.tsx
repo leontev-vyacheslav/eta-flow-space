@@ -99,14 +99,11 @@ function DashboardPageContextProvider(props: any) {
                 });
                 return;
             }
-            const mnemoschemaSelectorDeviceCode = targetDevice.mnemoschemaSelector.sourceDeviceId == targetDevice.id
-                ? targetDevice.code
-                : targetDevice.mnemoschemaSelector.sourceDevice.code;
 
             const dataschemaEntries = await Promise.all(
-                targetDevice.mnemoschemaSelector.linkedDevices.map(async (ld) => {
-                    const schema = await getDeviceStateDataschemaAsync(ld.deviceCode);
-                    return [ld.deviceCode, schema] as const;
+                targetDevice.linkedDevices.map(async (ld) => {
+                    const schema = await getDeviceStateDataschemaAsync(ld.code);
+                    return [ld.code, schema] as const;
                 })
             );
             if (cancelled) {
@@ -117,7 +114,7 @@ function DashboardPageContextProvider(props: any) {
 
             const labeledFetches = [
                 { label: 'состояния устройства', promise: getDeviceStatesAsync(targetDeviceId) },
-                { label: 'мнемосхемы', promise: getMnemoschemaAsync(mnemoschemaSelectorDeviceCode) },
+                { label: 'мнемосхемы', promise: getMnemoschemaAsync(targetDevice.mnemoschemaCode) },
             ];
             const settledFetches = await Promise.allSettled(labeledFetches.map((f) => f.promise));
             if (cancelled) return;

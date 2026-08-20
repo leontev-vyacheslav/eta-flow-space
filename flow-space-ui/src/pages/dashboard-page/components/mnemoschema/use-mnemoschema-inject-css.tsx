@@ -13,10 +13,7 @@ export const useMnemoschemaInjectCss = () => {
 
         let cssModule = null;
         try {
-            const mnemoschemaSelectorDeviceCode = device.mnemoschemaSelector.sourceDeviceId == device.id
-                ? device.code
-                : device.mnemoschemaSelector.sourceDevice.code;
-            cssModule = await getMnemoschemaStylesheetsAsync(mnemoschemaSelectorDeviceCode);
+            cssModule = await getMnemoschemaStylesheetsAsync(device.mnemoschemaCode);
         } catch (error) {
             console.error(error);
         }

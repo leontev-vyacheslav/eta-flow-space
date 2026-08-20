@@ -28,7 +28,7 @@ export class DeviceController {
 
     @Get(':deviceId')
     @UseGuards(DeviceOwnershipGuard)
-    async getDevice(@Param('deviceId', ParseIntPipe) deviceId: number): Promise<DeviceDataModel> {
+    async getDevice(@Param('deviceId', ParseIntPipe) deviceId: number): Promise<Partial<DeviceDataModel> | null> {
         const device = await this.deviceService.getDevice(deviceId);
         if (!device) {
             throw new NotFoundException(this.i18n.t('errors.DEVICE_NOT_FOUND', { args: { deviceId } }));
@@ -40,6 +40,10 @@ export class DeviceController {
     @Get('by-code/:deviceCode')
     async getDeviceByCode(@Param('deviceCode') deviceCode: string): Promise<DeviceDataModel | null> {
         const device = await this.deviceService.getDeviceByCode(deviceCode);
+
+        if (!device) {
+            throw new NotFoundException(this.i18n.t('errors.DEVICE_NOT_FOUND', { args: { deviceCode } }));
+        }
 
         return device;
     }
