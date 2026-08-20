@@ -52,7 +52,9 @@ export type AppDataContextFlowEndpointsModel = {
   getDeviceStatesAsync: GetDeviceStatesAsyncFunc;
   getMnemoschemaAsync: GetMnemoschemaAsyncFunc;
   getDeviceAsync: GetDeviceAsyncFunc;
-  getDeviceByCodeAsync: (deviceCode: string) => Promise<DeviceModel | undefined>;
+  getDeviceByCodeAsync: (
+    deviceCode: string,
+  ) => Promise<DeviceModel | undefined>;
   getDeviceStateDataschemaAsync: GetDeviceStateDataschemaAsyncFunc;
   getDeviceStatesByDatesAsync: GetDeviceStatesByDatesAsyncFunc;
   getEmergencyStatesAsync: GetEmergencyStateAsyncFunc;
@@ -118,31 +120,31 @@ export const useFlowData = () => {
   const getMnemoschemaAsync = useCallback<GetMnemoschemaAsyncFunc>(
     async (deviceCode: string) => {
       return await fetch(
-        `${routes.host}/static/devices/${deviceCode}/mnemo-schema.svg?v=${Date.now()}`,
+
+        `${routes.host}/static/devices/${deviceCode}/mnemo-schema.svg?v=${staticFilesManifest[deviceCode]?.["mnemo-schema"] ?? Date.now()}`,
       ).then((res) => (res.ok ? res.text() : undefined));
     },
-    [],
+    [staticFilesManifest],
   );
 
   const getDeviceStateDataschemaAsync =
     useCallback<GetDeviceStateDataschemaAsyncFunc>(
       async (deviceCode: string) => {
         return fetch(
-          // `${routes.host}/static/devices/${deviceCode}/data-schema.json?v=${staticFilesManifest["data-schema"] ?? Date.now()}`,
-          `${routes.host}/static/devices/${deviceCode}/data-schema.json?v=${Date.now()}`,
+          `${routes.host}/static/devices/${deviceCode}/data-schema.json?v=${staticFilesManifest[deviceCode]?.["data-schema"] ?? Date.now()}`,
         ).then((res) => (res.ok ? res.json() : undefined));
       },
-      [],
+      [staticFilesManifest],
     );
 
   const getMnemoschemaStylesheetsAsync =
     useCallback<GetMnemoschemaStylesheetsAsyncFunc>(
       async (deviceCode: string) => {
         return await fetch(
-          `${routes.host}/static/devices/${deviceCode}/mnemo-schema.css?v=${Date.now()}`,
+          `${routes.host}/static/devices/${deviceCode}/mnemo-schema.css?v=${staticFilesManifest[deviceCode]?.["css"] ?? Date.now()}`,
         ).then((res) => (res.ok ? res.text() : undefined));
       },
-      [],
+      [staticFilesManifest],
     );
 
   const getDeviceAsync = useCallback(

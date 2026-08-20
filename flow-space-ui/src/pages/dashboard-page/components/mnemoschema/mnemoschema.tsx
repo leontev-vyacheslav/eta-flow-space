@@ -45,7 +45,7 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
             let plugInModule = null;
             try {
                 if (device) {
-                    plugInModule = await import(/* @vite-ignore */ `${routes.host}/static/devices/${device.mnemoschemaCode}/mnemo-schema.js?v=${Date.now()}`);
+                    plugInModule = await import(/* @vite-ignore */ `${routes.host}/static/devices/${device.mnemoschemaCode}/mnemo-schema.js?v=${staticFilesManifest[device.code]?.["js"] ?? Date.now()}`);
                 }
             } catch (error) {
                 console.error(error);
