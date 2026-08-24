@@ -16,7 +16,7 @@ import './dashboard-page-content.scss';
 
 export type DashboardPageContextModel = {
     device?: DeviceModel;
-    deviceStates?: DeviceStateModel[];
+    deviceStates?: Record<string, DeviceStateModel>;
     mnemoschema?: string;
     dataschemas?: Record<string, any>;
     isValidDeviceState: boolean;

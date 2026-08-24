@@ -136,8 +136,7 @@ const DashboardPageInner = () => {
     useEffect(() => {
         (async () => {
             const results = await Promise.allSettled([
-                //import(`./components/control/control-form.tsx`),
-                null, // Temporarily disabled control form import
+                import(`./components/control/control-form.tsx`),
                 import(`./components/mnemoschema/mnemoschema.tsx`),
             ]);
 
