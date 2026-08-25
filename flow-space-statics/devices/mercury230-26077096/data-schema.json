@@ -110,7 +110,7 @@
     },
     "reactivePowerTotal": {
       "type": "number",
-      "unit": "kVAr",
+      "unit": "кВАр",
       "ui": {
         "group": 2,
         "editor": {
@@ -128,7 +128,7 @@
     },
     "reactivePowerL1": {
       "type": "number",
-      "unit": "kVAr",
+      "unit": "кВАр",
       "ui": {
         "group": 2,
         "editor": {
@@ -146,7 +146,7 @@
     },
     "reactivePowerL2": {
       "type": "number",
-      "unit": "kVAr",
+      "unit": "кВАр",
       "ui": {
         "group": 2,
         "editor": {
@@ -164,7 +164,7 @@
     },
     "reactivePowerL3": {
       "type": "number",
-      "unit": "kVAr",
+      "unit": "кВАр",
       "ui": {
         "group": 2,
         "editor": {
@@ -200,7 +200,7 @@
     },
     "apparentPowerL1": {
       "type": "number",
-      "unit": "kVA",
+      "unit": "кВА",
       "ui": {
         "group": 3,
         "editor": {
@@ -218,7 +218,7 @@
     },
     "apparentPowerL2": {
       "type": "number",
-      "unit": "kVA",
+      "unit": "кВА",
       "ui": {
         "group": 3,
         "editor": {
@@ -236,7 +236,7 @@
     },
     "apparentPowerL3": {
       "type": "number",
-      "unit": "kVA",
+      "unit": "кВА",
       "ui": {
         "group": 3,
         "editor": {
@@ -254,7 +254,7 @@
     },
     "voltageL1": {
       "type": "number",
-      "unit": "V",
+      "unit": "В",
       "ui": {
         "group": 4,
         "editor": {
@@ -272,7 +272,7 @@
     },
     "voltageL2": {
       "type": "number",
-      "unit": "V",
+      "unit": "В",
       "ui": {
         "group": 4,
         "editor": {
@@ -290,7 +290,7 @@
     },
     "voltageL3": {
       "type": "number",
-      "unit": "V",
+      "unit": "В",
       "ui": {
         "group": 4,
         "editor": {
@@ -484,7 +484,7 @@
     },
     "frequency": {
       "type": "number",
-      "unit": "Hz",
+      "unit": "Гц",
       "ui": {
         "group": 8,
         "editor": {
@@ -502,7 +502,7 @@
     },
     "energyActiveTotal": {
       "type": "number",
-      "unit": "kWh",
+      "unit": "кВтч",
       "ui": {
         "group": 9,
         "editor": {
@@ -520,7 +520,7 @@
     },
     "energyReactiveTotal": {
       "type": "number",
-      "unit": "kVArh",
+      "unit": "кВАрч",
       "ui": {
         "group": 9,
         "editor": {
