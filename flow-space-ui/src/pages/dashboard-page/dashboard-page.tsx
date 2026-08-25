@@ -23,6 +23,7 @@ const DashboardPageInner = () => {
     const tabPanelRef = useRef<TabPanel>(null);
     const navigate = useNavigate();
     const isAdmin = useAuthStore(selectIsAdmin);
+    const [tabIndex, setTabIndex] = useState<number>(0);
     const [isWideScreen, setIsWideScreen] = useState<boolean>(() => {
         const storedValue = localStorage.getItem('isMnemoschemaWideScreen');
         return storedValue ? JSON.parse(storedValue) : false;
@@ -32,7 +33,6 @@ const DashboardPageInner = () => {
     const { flowCode } = useParams();
     const [ControlTabContent, setControlTabContent] = useState<ComponentType<any> | null>(null);
     const [MnemoschemaTabContent, setMnemoschemaTabContent] = useState<ComponentType<any> | null>(null);
-    const [tabIndex, setTabIndex] = useState<number>(0);
 
     const menuItems = useMemo(() => {
 
@@ -46,6 +46,7 @@ const DashboardPageInner = () => {
                         return newValue;
                     });
                 },
+                disabled: tabIndex !== 0
             },
             {
                 icon: () => <AdditionalMenuIcon size={20} color='black' />,
@@ -131,7 +132,7 @@ const DashboardPageInner = () => {
 
         return menuItems;
 
-    }, [device, isWideScreen, navigate, schemasTypeInfoPropertiesChain, setRefreshToken]);
+    }, [device, isWideScreen, navigate, schemasTypeInfoPropertiesChain, setRefreshToken, tabIndex]);
 
     useEffect(() => {
         (async () => {
@@ -197,7 +198,7 @@ const DashboardPageInner = () => {
                                 }
                             </TabPanelItem>
 
-                            <TabPanelItem title='Управление' tabRender={(e) => <IconTab tab={e} icon={<ParamsIcon size={18} />} />}>
+                            <TabPanelItem title='Параметры' tabRender={(e) => <IconTab tab={e} icon={<ParamsIcon size={18} />} />}>
                                 {
                                     ControlTabContent && tabIndex === 1
                                         ? <ControlTabContent />
