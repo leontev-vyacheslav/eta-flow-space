@@ -1,8 +1,8 @@
 #!/bin/bash
 # generate-manifest.sh — run this after changing any static file
 
-# STATICS_DIR="/home/admin-leo/eta-flow-space/flow-space-statics"
-STATICS_DIR="/home/leo/projects/eta-flow-space/flow-space-statics"
+STATICS_DIR="/home/admin-leo/eta-flow-space/flow-space-statics"
+#STATICS_DIR="/home/leo/projects/eta-flow-space/flow-space-statics"
 MANIFEST="{}"
 
 for device_dir in "$STATICS_DIR"/devices/*/; do

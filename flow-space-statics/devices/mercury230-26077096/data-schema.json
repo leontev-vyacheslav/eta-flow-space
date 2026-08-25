@@ -3,6 +3,38 @@
   "title": "DeviceState",
   "type": "object",
   "properties": {
+      "isConnected": {
+      "type": "boolean",
+      "ui": {
+        "group": 10,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "editorOptions": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "На связи"
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": false,
+                "white": true
+              },
+              "stroke": {
+                "yellow": false,
+                "black": true
+              }
+            }
+          ]
+        }
+      }
+    },
     "activePowerTotal": {
       "type": "number",
       "unit": "кВт",
@@ -614,9 +646,9 @@
       },
       {
         "id": 10,
-        "name": "timestamp",
-        "caption": "Время",
-        "order": 600
+        "name": "state",
+        "caption": "Состояния",
+        "order": 1
       }
     ]
   }
