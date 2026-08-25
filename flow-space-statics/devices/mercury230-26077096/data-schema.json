@@ -518,7 +518,7 @@
           "label": {
             "location": "top",
             "showColon": true,
-            "text": "Время измерения"
+            "text": "Время опроса"
           }
         }
       }
