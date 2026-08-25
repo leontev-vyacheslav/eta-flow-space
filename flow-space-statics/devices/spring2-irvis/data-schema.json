@@ -168,7 +168,6 @@
                         "displayFormat": "dd.MM.yyyy HH:mm:ss",
                         "readOnly": true
                     },
-                    "cssClass": "form-input-box",
                     "label": {
                         "location": "top",
                         "showColon": true,
