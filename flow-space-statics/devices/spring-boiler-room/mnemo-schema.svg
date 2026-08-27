@@ -415,8 +415,8 @@
 		V49.6c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C381.4,71.4,378.8,74,375.7,74z" />
 			<text transform="matrix(1 0 0 1 322.1674 56.0185)"
 				style="font-family:'Arial'; font-size:10px;">Т12&#160;(н.в.)</text>
-			<text data-state="states['spring-boiler-room'].tempOutAir"
-				transform="matrix(1 0 0 1 325 68.608)" style="font-family:'Arial'; font-size:9px;">20,56ºC</text>
+			<text data-state="states['spring-boiler-room'].tempOutAir" transform="matrix(1 0 0 1 325 68.608)"
+				style="font-family:'Arial'; font-size:9px;">20,56ºC</text>
 		</g>
 
 		<g>
@@ -573,12 +573,15 @@
 	</g>
 
 	<g data-section="electroPowerMeters" transform="translate(-50, -50)">
-		<g>
+		<rect style="fill:none;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;" rx="7" ry="7" x="650" y="140"
+			width="90" height="170" />
+		<text transform="matrix(0 -1 1 0 660 260)" style="font-family:'Arial'; font-size:9px;">Электросчетчики</text>
+		<g transform="translate(13, 5)">
 			<rect x="650" y="150" width="70" height="11.2"
 				style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
 			<text data-state="states['mercury230-26077096'].energyActiveTotal" transform="matrix(1 0 0 1 655 159)"
 				style="font-family:'Arial'; font-size:9px;">3,0 кВт</text>
-			<text transform="matrix(1 0 0 1 670 148)" style="font-family:'Arial'; font-size:10px;">EP1</text>
+			<text transform="matrix(1 0 0 1 670 148)" style="font-family:'Arial'; font-size:10px;">EPT1</text>
 		</g>
 	</g>
 
