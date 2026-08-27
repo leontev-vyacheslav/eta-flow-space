@@ -515,7 +515,8 @@
           "editorOptions": {
             "readOnly": true
           }
-        }
+        },
+        "chart": {}
       }
     },
     "energyReactiveTotal": {

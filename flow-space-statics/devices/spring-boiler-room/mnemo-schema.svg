@@ -574,7 +574,7 @@
 
 	<g data-section="electroPowerMeters" transform="translate(-50, -50)">
 		<g>
-			<rect x="650" y="150" width="60" height="11.2"
+			<rect x="650" y="150" width="70" height="11.2"
 				style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
 			<text data-state="states['mercury230-26077096'].energyActiveTotal" transform="matrix(1 0 0 1 655 159)"
 				style="font-family:'Arial'; font-size:9px;">3,0 кВт</text>
