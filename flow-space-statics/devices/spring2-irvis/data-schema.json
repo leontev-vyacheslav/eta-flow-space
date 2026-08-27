@@ -35,6 +35,32 @@
                 }
             }
         },
+        "accumulatedVolume": {
+            "type": "number",
+            "unit": "м3",
+            "formatting": {
+                "options": {
+                    "style": "decimal",
+                    "maximumFractionDigits": 2,
+                    "minimumFractionDigits": 2
+                }
+            },
+            "ui": {
+                "group": 2,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Накопленный объем газа"
+                    },
+                    "editorOptions": {
+                        "readOnly": true
+                    }
+                },
+                "chart": {}
+            }
+        },
         "timeOfWork": {
             "type": "number",
             "ui": {
