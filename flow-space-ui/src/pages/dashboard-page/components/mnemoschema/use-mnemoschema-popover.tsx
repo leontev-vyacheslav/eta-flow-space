@@ -347,11 +347,13 @@ export const useMnemoschemaPopover = () => {
                 collision: 'flipfit'
             },
             onContentReady: () => {
+                // debugger;
                 for (const deviceCode of Object.keys(propertyInfosDict)) {
+
                     const propertyInfos = propertyInfosDict[deviceCode];
                     for (const propertyInfo of propertyInfos) {
                         if (!propertyInfo.typeInfo?.ui.chart) {
-                            return;
+                            continue;
                         }
                         queueMicrotask(() => {
                             document.querySelector(`[data-state-graph="${propertyInfo.propertiesChainValuePair.propertiesChain}"]`)
