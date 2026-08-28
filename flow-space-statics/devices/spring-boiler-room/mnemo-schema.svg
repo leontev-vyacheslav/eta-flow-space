@@ -597,15 +597,15 @@
 				<text transform="matrix(1 0 0 1 670 148)" style="font-family:'Arial'; font-size:10px;">EPT1</text>
 			</g>
 		</g>
-		<g data-section="mercury230-26077097" transform="translate(0, 50)">
-			<use href="#infoIcon" data-state-eval="element.style.fill = (states['mercury230-26077097'].isConnected === false ? '#F44336': '#0072C6')"
-				data-state="states['mercury230-26077097'].isConnected;states['mercury230-26077097'].timestamp"
+		<g data-section="mercury230-26077087" transform="translate(0, 50)">
+			<use href="#infoIcon" data-state-eval="element.style.fill = (states['mercury230-26077087'].isConnected === false ? '#F44336': '#0072C6')"
+				data-state="states['mercury230-26077087'].isConnected;states['mercury230-26077087'].timestamp"
 				style="fill:#0072C6;" transform="translate(720 141) scale(0.55)" />
 
 			<g transform="translate(13, 5)">
 				<rect x="650" y="150" width="70" height="11.2"
 					style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-				<text data-state="states['mercury230-26077097'].energyActiveTotal" transform="matrix(1 0 0 1 655 159)"
+				<text data-state="states['mercury230-26077087'].energyActiveTotal" transform="matrix(1 0 0 1 655 159)"
 					style="font-family:'Arial'; font-size:9px;">3,0 кВт</text>
 				<text transform="matrix(1 0 0 1 670 148)" style="font-family:'Arial'; font-size:10px;">EPT2</text>
 			</g>

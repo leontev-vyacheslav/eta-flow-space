@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "DeviceState",
+  "title": "mercury230-26077096",
   "type": "object",
   "properties": {
       "isConnected": {
