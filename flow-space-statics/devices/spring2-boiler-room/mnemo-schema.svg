@@ -449,6 +449,10 @@
 
 
 	<g transform="translate(-70, 0)">
+		<use href="#infoIcon"
+			data-state-eval="element.style.fill = (states['spring2-boiler-room'].isConnected === false ? '#F44336': '#0072C6')"
+			data-state="states['spring2-boiler-room'].isConnected;states['spring2-boiler-room'].timestamp"
+			style="fill:#0072C6;" transform="translate(620 15) scale(0.55)" />
 		<g>
 			<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M164,74H98.6c-3.1,0-5.7-2.5-5.7-5.7V49.6
 		c0-3.1,2.5-5.7,5.7-5.7H164c3.1,0,5.7,2.5,5.7,5.7v18.7C169.7,71.4,167.2,74,164,74z" />
