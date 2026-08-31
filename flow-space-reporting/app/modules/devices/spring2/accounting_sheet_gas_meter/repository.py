@@ -50,7 +50,7 @@ class AccountingSheetGasMeterRepository:
             date_to = date_from + relativedelta(months=4)
 
         accumulated_volume = cast(
-            literal_column("state -> 'gasMeter' ->> 'accumulatedVolume'"),
+            literal_column("state -> 'accumulatedVolume'"),
             Integer,
         )
         created_at_tz = func.timezone(time_zone, DeviceState.created_at).label("created_at")
@@ -66,7 +66,7 @@ class AccountingSheetGasMeterRepository:
                 DeviceState.device_id == device_id,
                 DeviceState.created_at >= date_from,
                 DeviceState.created_at < date_to,
-                DeviceState.state["gasMeter"]["accumulatedVolume"] != None,
+                DeviceState.state["accumulatedVolume"] != None,
             )
             .distinct(day_expr)
             .order_by(day_expr, desc(created_at_tz))
