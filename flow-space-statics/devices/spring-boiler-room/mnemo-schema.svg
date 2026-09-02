@@ -592,9 +592,12 @@
 			<g transform="translate(13, 5)">
 				<rect x="650" y="150" width="70" height="11.2"
 					style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
+				<text transform="matrix(1 0 0 1 670 148)" style="font-family:'Arial'; font-size:10px;">EM1</text>
 				<text data-state="states['mercury230-26077096'].energyActiveTotal" transform="matrix(1 0 0 1 655 159)"
-					style="font-family:'Arial'; font-size:9px;">3,0 кВт</text>
-				<text transform="matrix(1 0 0 1 670 148)" style="font-family:'Arial'; font-size:10px;">EPT1</text>
+					style="font-family:'Arial'; font-size:9px;"></text>
+				<rect x="650" y="170" width="70" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
+				<text data-state="states['mercury230-26077096'].energyReactiveTotal" transform="matrix(1 0 0 1 655 179)"
+					style="font-family:'Arial'; font-size:9px;"></text>
 			</g>
 		</g>
 		<g data-section="mercury230-26077087" transform="translate(0, 50)">
@@ -605,9 +608,13 @@
 			<g transform="translate(13, 5)">
 				<rect x="650" y="150" width="70" height="11.2"
 					style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
+				<text transform="matrix(1 0 0 1 670 148)" style="font-family:'Arial'; font-size:10px;">EM2</text>
 				<text data-state="states['mercury230-26077087'].energyActiveTotal" transform="matrix(1 0 0 1 655 159)"
-					style="font-family:'Arial'; font-size:9px;">3,0 кВт</text>
-				<text transform="matrix(1 0 0 1 670 148)" style="font-family:'Arial'; font-size:10px;">EPT2</text>
+					style="font-family:'Arial'; font-size:9px;"></text>
+
+				<rect x="650" y="170" width="70" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
+				<text  data-state="states['mercury230-26077087'].energyReactiveTotal" transform="matrix(1 0 0 1 655 179)"
+					style="font-family:'Arial'; font-size:9px;"></text>
 			</g>
 		</g>
 	</g>
