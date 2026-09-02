@@ -59,18 +59,6 @@ const INSTANT_FIELDS = [
     { name: 'Hz',      factor: 0.01 },
 ];
 
-// const ENERGY_READINGS = [
-//     { key: 'energyActiveTotal',      tariff: 0x00, energyType: 0x00 },
-//     { key: 'energyReactiveTotal',    tariff: 0x00, energyType: 0x02 },
-//     { key: 'energyActiveTariff1',    tariff: 0x01, energyType: 0x00 },
-//     { key: 'energyActiveTariff2',    tariff: 0x02, energyType: 0x00 },
-//     { key: 'energyActiveTariff3',    tariff: 0x03, energyType: 0x00 },
-//     { key: 'energyActiveTariff4',    tariff: 0x04, energyType: 0x00 },
-//     { key: 'energyReactiveTariff1',  tariff: 0x01, energyType: 0x02 },
-//     { key: 'energyReactiveTariff2',  tariff: 0x02, energyType: 0x02 },
-//     { key: 'energyReactiveTariff3',  tariff: 0x03, energyType: 0x02 },
-//     { key: 'energyReactiveTariff4',  tariff: 0x04, energyType: 0x02 },
-// ];
 
 class Mercury230Client {
     constructor(net, host, port, address, socketTimeout = 15000) {
@@ -158,12 +146,6 @@ class Mercury230Client {
         return result;
     }
 
-    // async readEnergy(tariff, energyType) {
-    //     const raw = await this.sendCommand([0x05, tariff, energyType]);
-    //     const value = decode4ByteEnergy(raw, 0);
-    //     return value !== null ? value / 1000 : null;
-    // }
-
     // Читаем накопленную энергию (активную и реактивную) для заданного тарифа.
     // tariff: 0x00 = сумма по всем тарифам, 0x01..0x04 = тариф 1..4
     // Ответ содержит все 4 группы: A+ (актив. прямая), A- (актив. обратная, не используется),
@@ -211,4 +193,25 @@ class Mercury230Client {
     }
 }
 
-module.exports = { Mercury230Client };
+
+// ==================== очередь доступа к общему TCP-каналу ====================
+// Гарантирует, что для одного и того же host:port (например, один WIZ108SR,
+// обслуживающий несколько счетчиков на общей RS-485 шине) одновременно
+// выполняется только одна операция подключения/опроса, даже если несколько
+// экземпляров Mercury230Client пытаются подключиться одновременно.
+
+const connectionLocks = new Map(); // key: "host:port" -> цепочка промисов
+
+function withConnectionLock(host, port, fn) {
+    const key = `${host}:${port}`;
+    const previous = connectionLocks.get(key) || Promise.resolve();
+    // Выполняем fn() только после завершения предыдущей операции на этом host:port,
+    // независимо от того, успешно она завершилась или с ошибкой.
+    const next = previous.catch(() => {}).then(fn);
+    // Сохраняем цепочку, "гасим" возможную ошибку, чтобы не сломать очередь для следующих.
+    connectionLocks.set(key, next.catch(() => {}));
+
+    return next;
+}
+
+module.exports = { Mercury230Client, withConnectionLock };

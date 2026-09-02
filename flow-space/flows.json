@@ -285,7 +285,7 @@
         "type": "function",
         "z": "d6d7729c719fdc31",
         "name": "get-measurements",
-        "func": "const HOST = env.get('HOST');\nconst PORT = Number(env.get('PORT'));\nconst ADDRESS = Number(env.get('ADDRESS'));\n\nconst { Mercury230Client } = global.get('mercury230');\nconst client = new Mercury230Client(net, HOST, PORT, ADDRESS);\n\n(async () => {\n    try {\n        await client.connect();\n        const deviceState = await client.readFullState();\n        node.send({ payload: deviceState });\n        node.status({ fill: 'green', shape: 'dot', text: 'ok ' + new Date().toLocaleTimeString() });\n    } catch (err) {\n        node.error('Mercury230 read failed: ' + err.message);\n        node.status({ fill: 'red', shape: 'ring', text: 'error' });\n    } finally {\n        client.disconnect();\n    }\n})();\n\nreturn null;\n\n",
+        "func": "const HOST = env.get('HOST');\nconst PORT = Number(env.get('PORT'));\nconst ADDRESS = Number(env.get('ADDRESS'));\n\nconst { Mercury230Client, withConnectionLock } = global.get('mercury230');\n\n(async () => {\n    try {\n        const deviceState = await withConnectionLock(HOST, PORT, async () => {\n            const client = new Mercury230Client(net, HOST, PORT, ADDRESS);\n            try {\n                await client.connect();\n                return await client.readFullState();\n            } finally {\n                client.disconnect();\n            }\n        });\n\n        node.send({ payload: deviceState });\n        node.status({ fill: 'green', shape: 'dot', text: 'ok ' + new Date().toLocaleTimeString() });\n    } catch (err) {\n        node.error('Mercury230 read failed: ' + err.message);\n        node.status({ fill: 'red', shape: 'ring', text: 'error' });\n    }\n})();\n\nreturn null;\n\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -1425,7 +1425,7 @@
                 "vt": "str"
             }
         ],
-        "repeat": "65",
+        "repeat": "300",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
@@ -1511,7 +1511,7 @@
                 "vt": "str"
             }
         ],
-        "repeat": "45",
+        "repeat": "300",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
