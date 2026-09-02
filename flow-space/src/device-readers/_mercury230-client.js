@@ -59,18 +59,18 @@ const INSTANT_FIELDS = [
     { name: 'Hz',      factor: 0.01 },
 ];
 
-// const ENERGY_READINGS = [
-//     { key: 'energyActiveTotal',      tariff: 0x00, energyType: 0x00 },
-//     { key: 'energyReactiveTotal',    tariff: 0x00, energyType: 0x02 },
-//     { key: 'energyActiveTariff1',    tariff: 0x01, energyType: 0x00 },
-//     { key: 'energyActiveTariff2',    tariff: 0x02, energyType: 0x00 },
-//     { key: 'energyActiveTariff3',    tariff: 0x03, energyType: 0x00 },
-//     { key: 'energyActiveTariff4',    tariff: 0x04, energyType: 0x00 },
-//     { key: 'energyReactiveTariff1',  tariff: 0x01, energyType: 0x02 },
-//     { key: 'energyReactiveTariff2',  tariff: 0x02, energyType: 0x02 },
-//     { key: 'energyReactiveTariff3',  tariff: 0x03, energyType: 0x02 },
-//     { key: 'energyReactiveTariff4',  tariff: 0x04, energyType: 0x02 },
-// ];
+const ENERGY_READINGS = [
+    { key: 'energyActiveTotal',      tariff: 0x00, energyType: 0x00 },
+    { key: 'energyReactiveTotal',    tariff: 0x00, energyType: 0x02 },
+    { key: 'energyActiveTariff1',    tariff: 0x01, energyType: 0x00 },
+    { key: 'energyActiveTariff2',    tariff: 0x02, energyType: 0x00 },
+    { key: 'energyActiveTariff3',    tariff: 0x03, energyType: 0x00 },
+    { key: 'energyActiveTariff4',    tariff: 0x04, energyType: 0x00 },
+    { key: 'energyReactiveTariff1',  tariff: 0x01, energyType: 0x02 },
+    { key: 'energyReactiveTariff2',  tariff: 0x02, energyType: 0x02 },
+    { key: 'energyReactiveTariff3',  tariff: 0x03, energyType: 0x02 },
+    { key: 'energyReactiveTariff4',  tariff: 0x04, energyType: 0x02 },
+];
 
 class Mercury230Client {
     constructor(net, host, port, address, socketTimeout = 15000) {
@@ -158,48 +158,18 @@ class Mercury230Client {
         return result;
     }
 
-    // async readEnergy(tariff, energyType) {
-    //     const raw = await this.sendCommand([0x05, tariff, energyType]);
-    //     const value = decode4ByteEnergy(raw, 0);
-    //     return value !== null ? value / 1000 : null;
-    // }
-
-    // Читаем накопленную энергию (активную и реактивную) для заданного тарифа.
-    // tariff: 0x00 = сумма по всем тарифам, 0x01..0x04 = тариф 1..4
-    // Ответ содержит все 4 группы: A+ (актив. прямая), A- (актив. обратная, не используется),
-    // R+ (реакт. прямая), R- (реакт. обратная, не используется) -- считываем их все за один запрос.
-    async readEnergyBlock(tariff) {
-        const raw = await this.sendCommand([0x05, 0x00, tariff]); // byte3=0x00 (текущий период, месяц не важен)
-        const activeForward = decode4ByteEnergy(raw, 0);   // A+
-        const reactiveForward = decode4ByteEnergy(raw, 8); // R+
-        return {
-            active: activeForward !== null ? activeForward / 1000 : null,     // кВт·ч
-            reactive: reactiveForward !== null ? reactiveForward / 1000 : null, // кВАр·ч
-        };
+    async readEnergy(tariff, energyType) {
+        const raw = await this.sendCommand([0x05, tariff, energyType]);
+        const value = decode4ByteEnergy(raw, 0);
+        return value !== null ? value / 1000 : null;
     }
 
-
     async readAllEnergy() {
-        const sum = await this.readEnergyBlock(0x00);
-        const t1 = await this.readEnergyBlock(0x01);
-        const t2 = await this.readEnergyBlock(0x02);
-        const t3 = await this.readEnergyBlock(0x03);
-        const t4 = await this.readEnergyBlock(0x04);
-
-        return {
-            energyActiveTotal: sum.active,          // суммарная активная энергия (кВт·ч)
-            energyReactiveTotal: sum.reactive,      // суммарная реактивная энергия (кВАр·ч)
-
-            energyActiveTariff1: t1.active,         // активная энергия, тариф 1
-            energyActiveTariff2: t2.active,         // активная энергия, тариф 2
-            energyActiveTariff3: t3.active,         // активная энергия, тариф 3
-            energyActiveTariff4: t4.active,         // активная энергия, тариф 4
-
-            energyReactiveTariff1: t1.reactive,     // реактивная энергия, тариф 1
-            energyReactiveTariff2: t2.reactive,     // реактивная энергия, тариф 2
-            energyReactiveTariff3: t3.reactive,     // реактивная энергия, тариф 3
-            energyReactiveTariff4: t4.reactive,     // реактивная энергия, тариф 4
-        };
+        const result = {};
+        for (const reading of ENERGY_READINGS) {
+            result[reading.key] = await this.readEnergy(reading.tariff, reading.energyType);
+        }
+        return result;
     }
 
     async readFullState() {

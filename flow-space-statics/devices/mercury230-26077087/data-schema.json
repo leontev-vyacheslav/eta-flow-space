@@ -123,7 +123,8 @@
           "editorOptions": {
             "readOnly": true
           }
-        }
+        },
+        "chart": {}
       }
     },
     "reactivePowerL1": {
@@ -534,7 +535,8 @@
           "editorOptions": {
             "readOnly": true
           }
-        }
+        },
+        "chart": {}
       }
     },
     "timestamp": {
