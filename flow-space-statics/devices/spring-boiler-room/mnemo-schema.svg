@@ -586,7 +586,7 @@
 		<g data-section="mercury230-26077096">
 			<use href="#infoIcon"
 			data-state-eval="element.style.fill = (states['mercury230-26077096'].isConnected === false ? '#F44336': '#0072C6')"
-			data-state="states['mercury230-26077096'].isConnected;states['mercury230-26077096'].timestamp"
+			data-state="states['mercury230-26077096'].isConnected;states['mercury230-26077096'].timestamp;states['mercury230-26077096'].energyActiveTariff1;states['mercury230-26077096'].energyActiveTariff2"
 			style="fill:#0072C6;" transform="translate(720 141) scale(0.55)" />
 
 			<g transform="translate(13, 5)">
@@ -602,7 +602,7 @@
 		</g>
 		<g data-section="mercury230-26077087" transform="translate(0, 50)">
 			<use href="#infoIcon" data-state-eval="element.style.fill = (states['mercury230-26077087'].isConnected === false ? '#F44336': '#0072C6')"
-				data-state="states['mercury230-26077087'].isConnected;states['mercury230-26077087'].timestamp"
+				data-state="states['mercury230-26077087'].isConnected;states['mercury230-26077087'].timestamp;states['mercury230-26077087'].energyActiveTariff1;states['mercury230-26077087'].energyActiveTariff2"
 				style="fill:#0072C6;" transform="translate(720 141) scale(0.55)" />
 
 			<g transform="translate(13, 5)">
