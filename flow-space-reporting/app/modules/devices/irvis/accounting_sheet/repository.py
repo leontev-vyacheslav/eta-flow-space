@@ -9,7 +9,7 @@ from sqlalchemy import and_, desc, select, func, cast, Integer, literal_column, 
 
 from app.data_models import DeviceState, UserDeviceLink
 from app.db.database import get_db
-from app.modules.devices.spring2.accounting_sheet_gas_meter.models import AccountingSheetGasMeterReportRowModel
+from app.modules.devices.irvis.accounting_sheet.models import AccountingSheetGasMeterReportRowModel
 from app.models.accounting_period_types import AccountingPeriodTypes
 
 

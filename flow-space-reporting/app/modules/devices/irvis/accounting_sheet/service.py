@@ -8,7 +8,7 @@ from jinja2 import Environment, FileSystemLoader
 import pytz
 from weasyprint import HTML
 
-from app.modules.devices.spring2.accounting_sheet_gas_meter.repository import AccountingSheetGasMeterRepository
+from app.modules.devices.irvis.accounting_sheet.repository import AccountingSheetGasMeterRepository
 from app.modules.formatters import *
 
 templates_dir = Path(__file__).parent.parent.parent.parent.parent / "templates/devices/spring2"
