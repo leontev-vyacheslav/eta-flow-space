@@ -539,6 +539,158 @@
         "chart": {}
       }
     },
+    "energyActiveTariff1": {
+      "type": "number",
+      "unit": "кВтч",
+      "ui": {
+        "group": 9,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Активная энергия, тариф 1"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "energyActiveTariff2": {
+      "type": "number",
+      "unit": "кВтч",
+      "ui": {
+        "group": 9,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Активная энергия, тариф 2"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      },
+      "chart": {}
+    },
+    "energyActiveTariff3": {
+      "type": "number",
+      "unit": "кВтч",
+      "ui": {
+        "group": 9,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Активная энергия, тариф 3"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      },
+      "chart": {}
+    },
+    "energyActiveTariff4": {
+      "type": "number",
+      "unit": "кВтч",
+      "ui": {
+        "group": 9,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Активная энергия, тариф 4"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      },
+      "chart": {}
+    },
+    "energyReactiveTariff1": {
+      "type": "number",
+      "unit": "кВАрч",
+      "ui": {
+        "group": 9,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Реактивная энергия, тариф 1"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      },
+      "chart": {}
+    },
+    "energyReactiveTariff2": {
+      "type": "number",
+      "unit": "кВАрч",
+      "ui": {
+        "group": 9,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Реактивная энергия, тариф 2"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      },
+      "chart": {}
+    },
+    "energyReactiveTariff3": {
+      "type": "number",
+      "unit": "кВАрч",
+      "ui": {
+        "group": 9,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Реактивная энергия, тариф 3"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      },
+      "chart": {}
+    },
+    "energyReactiveTariff4": {
+      "type": "number",
+      "unit": "кВАрч",
+      "ui": {
+        "group": 9,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Реактивная энергия, тариф 4"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      },
+      "chart": {}
+    },
     "timestamp": {
       "type": "integer",
       "ui": {
