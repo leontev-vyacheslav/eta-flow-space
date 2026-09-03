@@ -8,10 +8,10 @@ from jinja2 import Environment, FileSystemLoader
 import pytz
 from weasyprint import HTML
 
-from app.modules.devices.irvis.accounting_sheet.repository import AccountingSheetGasMeterRepository
+from app.modules.devices.mercury230.accounting_sheet.repository import AccountingSheetRepository
 from app.modules.formatters import *
 
-templates_dir = Path(__file__).parent.parent.parent.parent.parent / "templates/devices/irvis"
+templates_dir = Path(__file__).parent.parent.parent.parent.parent / "templates/devices/mercury230"
 template_env = Environment(loader=FileSystemLoader(templates_dir))
 
 filters = [
@@ -26,10 +26,10 @@ for filter in filters:
     template_env.filters[filter.__name__] = filter
 
 
-class AccountingSheetGasMeterReportService:
+class AccountingSheetReportService:
     report_name = "accounting_sheet_report"
 
-    def __init__(self, repository: Annotated[AccountingSheetGasMeterRepository, Depends(AccountingSheetGasMeterRepository)]):
+    def __init__(self, repository: Annotated[AccountingSheetRepository, Depends(AccountingSheetRepository)]):
         self._repository = repository
 
     async def render_async(self, *args: Any, **kwargs: Any) -> tuple[bytes | None, str]:
@@ -58,25 +58,10 @@ class AccountingSheetGasMeterReportService:
                 },
             )
 
-        total_consumption = sum(row.consumption for row in data if row.consumption is not None)
-
-        monthly_data: OrderedDict[str, list] = OrderedDict()
-        monthly_totals: dict[str, int] = {}
-        for row in data:
-            month_key = row.day.strftime("%Y-%m")
-            if month_key not in monthly_data:
-                monthly_data[month_key] = []
-                monthly_totals[month_key] = 0
-            monthly_data[month_key].append(row)
-            if row.consumption is not None:
-                monthly_totals[month_key] += row.consumption
-
         html_content = template_env.get_template(f"{self.report_name}.html").render(
             *args,
             **kwargs,
-            monthly_data=monthly_data,
-            monthly_totals=monthly_totals,
-            total_consumption=total_consumption,
+            data=data,
             templates_dir=templates_dir,
         )
 
