@@ -817,7 +817,7 @@
 
 		<use href="#infoIcon"
 			data-state-eval="element.style.fill = (states['spring2-irvis'].isConnected === false ? '#F44336': '#0072C6')"
-			data-state="states['spring2-irvis'].isConnected;states['spring2-irvis'].timestamp;states['spring2-irvis'].accumulatedVolume;"
+			data-state="states['spring2-irvis'].isConnected;states['spring2-irvis'].timestamp;states['spring2-irvis'].accumulatedVolume;states['spring2-irvis'].timeOfWork"
 			style="fill:#0072C6" transform="translate(105 380) scale(0.65)" />
 		<rect style="fill:none;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;"
 			rx="10" ry="10"
