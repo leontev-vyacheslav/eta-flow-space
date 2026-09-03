@@ -63,6 +63,7 @@
         },
         "timeOfWork": {
             "type": "number",
+            "unit": "час",
             "ui": {
                 "group": 2,
                 "editor": {
