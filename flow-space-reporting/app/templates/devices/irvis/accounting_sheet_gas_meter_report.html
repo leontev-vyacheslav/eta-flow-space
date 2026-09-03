@@ -114,10 +114,10 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Дата</th>
-                    <th>Время</th>
+                    <th style="width: 200px;">Дата</th>
+                    <!-- <th>Время</th> -->
                     <th>Объем</th>
-                    <th>Потребление</th>
+                    <th style="width: 100px;">Потребление</th>
                 </tr>
             </thead>
             <tbody>
@@ -129,9 +129,9 @@
                     <td>
                         {{ row.day | locale_format_date }}
                     </td>
-                    <td>
+                    <!-- <td>
                         {{ row.created_at | locale_format_datetime }}
-                    </td>
+                    </td> -->
                     <td>
                         {{ row.volume if row.volume is not none else '-' }}
                     </td>
@@ -141,7 +141,7 @@
                 </tr>
                 {% endfor %}
                 <tr style="font-weight: bold;">
-                    <td colspan="4" style="text-align: right;">Итого за период:</td>
+                    <td colspan="3" style="text-align: right;">Итого за период:</td>
                     <td>{{ monthly_totals[month_key] }}</td>
                 </tr>
             </tbody>

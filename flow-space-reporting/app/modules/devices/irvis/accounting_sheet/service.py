@@ -11,7 +11,7 @@ from weasyprint import HTML
 from app.modules.devices.irvis.accounting_sheet.repository import AccountingSheetGasMeterRepository
 from app.modules.formatters import *
 
-templates_dir = Path(__file__).parent.parent.parent.parent.parent / "templates/devices/spring2"
+templates_dir = Path(__file__).parent.parent.parent.parent.parent / "templates/devices/irvis"
 template_env = Environment(loader=FileSystemLoader(templates_dir))
 
 filters = [

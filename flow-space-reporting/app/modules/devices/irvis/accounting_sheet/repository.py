@@ -49,6 +49,10 @@ class AccountingSheetGasMeterRepository:
             date_from = datetime.now().replace(day=1, hour=0, minute=0, second=0, microsecond=0) - relativedelta(months=3)
             date_to = date_from + relativedelta(months=4)
 
+        # NEW: pull in one extra day before the reporting window so the first
+        # row has a prior value to diff against
+        query_date_from = date_from - relativedelta(days=1)
+
         accumulated_volume = cast(
             literal_column("state -> 'accumulatedVolume'"),
             Integer,
@@ -64,8 +68,8 @@ class AccountingSheetGasMeterRepository:
             )
             .where(
                 DeviceState.device_id == device_id,
-                DeviceState.created_at >= date_from,
-                DeviceState.created_at < date_to,
+                created_at_tz >= query_date_from,  # <- filter on local time, not UTC
+                created_at_tz < date_to,  # <- filter on local time, not UTC
                 DeviceState.state["accumulatedVolume"] != None,
             )
             .distinct(day_expr)
@@ -74,7 +78,11 @@ class AccountingSheetGasMeterRepository:
         )
 
         date_series = select(
-            func.generate_series(func.date(date_from), func.date(date_to) - text("INTERVAL '1 day'"), text("INTERVAL '1 day'")).label("day")
+            func.generate_series(
+                func.date(query_date_from),  # <- widened
+                func.date(date_to) - text("INTERVAL '1 day'"),
+                text("INTERVAL '1 day'"),
+            ).label("day")
         ).cte("date_series")
 
         all_days_with_data = (
@@ -89,12 +97,22 @@ class AccountingSheetGasMeterRepository:
 
         lag_volume = func.lag(all_days_with_data.c.volume).over(order_by=all_days_with_data.c.day)
 
-        query = select(
-            all_days_with_data.c.day,
-            all_days_with_data.c.created_at,
-            all_days_with_data.c.volume,
-            (all_days_with_data.c.volume - lag_volume).label("consumption"),
-        ).order_by(all_days_with_data.c.day)
+
+
+        with_consumption = (
+            select(
+                all_days_with_data.c.day,
+                all_days_with_data.c.created_at,
+                all_days_with_data.c.volume,
+                (all_days_with_data.c.volume - lag_volume).label("consumption"),
+            )
+        ).cte("with_consumption")
+
+        query = (
+            select(with_consumption)
+            .where(with_consumption.c.day >= func.date(date_from))   # <- trimming now happens AFTER LAG
+            .order_by(with_consumption.c.day)
+        )
 
         result = await self._session.execute(query)
         rows = result.fetchall()
