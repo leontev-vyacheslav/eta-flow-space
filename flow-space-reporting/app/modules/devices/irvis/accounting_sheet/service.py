@@ -8,7 +8,7 @@ from jinja2 import Environment, FileSystemLoader
 import pytz
 from weasyprint import HTML
 
-from app.modules.devices.irvis.accounting_sheet.repository import AccountingSheetGasMeterRepository
+from app.modules.devices.irvis.accounting_sheet.repository import AccountingSheetRepository
 from app.modules.formatters import *
 
 templates_dir = Path(__file__).parent.parent.parent.parent.parent / "templates/devices/irvis"
@@ -26,10 +26,10 @@ for filter in filters:
     template_env.filters[filter.__name__] = filter
 
 
-class AccountingSheetGasMeterReportService:
+class AccountingSheetReportService:
     report_name = "accounting_sheet_report"
 
-    def __init__(self, repository: Annotated[AccountingSheetGasMeterRepository, Depends(AccountingSheetGasMeterRepository)]):
+    def __init__(self, repository: Annotated[AccountingSheetRepository, Depends(AccountingSheetRepository)]):
         self._repository = repository
 
     async def render_async(self, *args: Any, **kwargs: Any) -> tuple[bytes | None, str]:

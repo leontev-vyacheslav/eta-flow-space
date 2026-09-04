@@ -58,10 +58,25 @@ class AccountingSheetReportService:
                 },
             )
 
+        total_consumption = sum(row.consumption for row in data if row.consumption is not None)
+
+        monthly_data: OrderedDict[str, list] = OrderedDict()
+        monthly_totals: dict[str, int] = {}
+        for row in data:
+            month_key = row.day.strftime("%Y-%m")
+            if month_key not in monthly_data:
+                monthly_data[month_key] = []
+                monthly_totals[month_key] = 0
+            monthly_data[month_key].append(row)
+            if row.consumption is not None:
+                monthly_totals[month_key] += row.consumption
+
         html_content = template_env.get_template(f"{self.report_name}.html").render(
             *args,
             **kwargs,
-            data=data,
+            monthly_data=monthly_data,
+            monthly_totals=monthly_totals,
+            total_consumption=total_consumption,
             templates_dir=templates_dir,
         )
 
@@ -69,3 +84,4 @@ class AccountingSheetReportService:
         filename = f"{self.report_name}_{datetime.now(timezone.utc).strftime('%Y%m%d')}.pdf"
 
         return pdf_bytes, filename
+

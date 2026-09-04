@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, Query
 from fastapi.responses import Response
 
 from app.auth import verify_token
-from app.modules.devices.irvis.accounting_sheet.service import AccountingSheetGasMeterReportService
+from app.modules.devices.irvis.accounting_sheet.service import AccountingSheetReportService
 from app.models.accounting_period_types import AccountingPeriodTypes
 
 router = APIRouter()
@@ -14,7 +14,7 @@ async def get_accounting_sheet_gas_meter_report_async(
     device_id: int | None = Query(alias="deviceId", default=None),
     time_zone: str = Query(alias="timezone", default="Europe/Moscow"),
     token_payload: dict = Depends(verify_token),
-    service: AccountingSheetGasMeterReportService = Depends(AccountingSheetGasMeterReportService),
+    service: AccountingSheetReportService = Depends(AccountingSheetReportService),
 ):
 
     pdf_bytes, filename = await service.render_async(

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Ведомость учета электрической энергии</title>
+    <title>Ведомость учета  электрической энергии</title>
 
     <style>
         @page {
@@ -95,7 +95,7 @@
         <img class="header-logo" src="{{ templates_dir.parent.parent.as_uri() }}/common/header-logo-grayscale.svg"
             alt="Report Icon" style=" height: 50px; vertical-align: middle; margin-right: 8px;">
         <div style="display: flex; flex-direction: column; flex: 1;">
-            <div style="flex: 1;">Ведомость учета электрической энергии</div>
+            <div style="flex: 1;">Ведомость учета параметров ЭЛЕКТРИЧЕСКАЯ ЭНЕРГИЯ</div>
             <div>статистические данные</div>
         </div>
         <div style="width: 55px;"></div>
@@ -107,7 +107,51 @@
         </div>
     </div>
 
-    <div>Test</div>
+    {% for month_key, rows in monthly_data.items() %}
+    <div{% if not loop.first %} class="page-break"{% endif %}>
+        <h2>{{ rows[0].day | locale_format_month_name }}</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th style="width: 200px;">Дата</th>
+                    <!-- <th>Время</th> -->
+                    <th>Значение</th>
+                    <th style="width: 100px;">Потребление</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in rows %}
+                <tr>
+                    <td style="width: 25px;">
+                        {{ loop.index }}.
+                    </td>
+                    <td>
+                        {{ row.day | locale_format_date }}
+                    </td>
+                    <!-- <td>
+                        {{ row.created_at | locale_format_datetime }}
+                    </td> -->
+                    <td>
+                        {{ row.value if row.value is not none else '-' }}
+                    </td>
+                    <td>
+                        {{ row.consumption if row.consumption is not none else '-' }}
+                    </td>
+                </tr>
+                {% endfor %}
+                <tr style="font-weight: bold;">
+                    <td colspan="3" style="text-align: right;">Итого за период:</td>
+                    <td>{{ monthly_totals[month_key] }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    {% endfor %}
+
+    <div class="page-break">
+        <h2>Итого за весь период: {{ total_consumption }}</h2>
+    </div>
 </body>
 
 </html>

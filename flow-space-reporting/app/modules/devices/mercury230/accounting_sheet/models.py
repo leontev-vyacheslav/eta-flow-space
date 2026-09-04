@@ -6,6 +6,6 @@ from datetime import date, datetime
 class AccountingSheetReportRowModel:
     day: date
     created_at: datetime | None
-    
-    volume: int | None
+
+    value: int | None
     consumption: int | None

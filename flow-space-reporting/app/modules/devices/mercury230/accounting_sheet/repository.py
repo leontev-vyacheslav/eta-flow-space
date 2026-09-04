@@ -37,11 +37,89 @@ class AccountingSheetRepository:
                 },
             )
 
+        today = date.today()
+        date_to = datetime.now()
+        if period_type == AccountingPeriodTypes.MONTH:
+            date_from = datetime.now().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+            date_to = today + relativedelta(days=1)
+        elif period_type == AccountingPeriodTypes.PREVIOUS_MONTH:
+            date_from = datetime.now().replace(day=1, hour=0, minute=0, second=0, microsecond=0) - relativedelta(months=1)
+            date_to = date_from + relativedelta(months=1)
+        elif period_type == AccountingPeriodTypes.ALL_TIME:
+            date_from = datetime.now().replace(day=1, hour=0, minute=0, second=0, microsecond=0) - relativedelta(months=3)
+            date_to = date_from + relativedelta(months=4)
+
+        # NEW: pull in one extra day before the reporting window so the first
+        # row has a prior value to diff against
+        query_date_from = date_from - relativedelta(days=1)
+
+        accumulated_consumption = cast(
+            literal_column("state -> 'energyActiveTotal'"),
+            Integer,
+        )
+
+        created_at_tz = func.timezone(time_zone, DeviceState.created_at).label("created_at")
+        day_expr = func.date(created_at_tz)
+
+        daily_last = (
+            select(
+                day_expr.label("day"),
+                created_at_tz.label("created_at"),
+                accumulated_consumption.label("volume"),
+            )
+            .where(
+                DeviceState.device_id == device_id,
+                created_at_tz >= query_date_from,  # <- filter on local time, not UTC
+                created_at_tz < date_to,  # <- filter on local time, not UTC
+                DeviceState.state["energyActiveTotal"] != None,
+            )
+            .distinct(day_expr)
+            .order_by(day_expr, desc(created_at_tz))
+            .cte("daily_last")
+        )
+
+        date_series = select(
+            func.generate_series(
+                func.date(query_date_from),  # <- widened
+                func.date(date_to) - text("INTERVAL '1 day'"),
+                text("INTERVAL '1 day'"),
+            ).label("day")
+        ).cte("date_series")
+
+        all_days_with_data = (
+            select(
+                date_series.c.day,
+                daily_last.c.created_at,
+                daily_last.c.volume,
+            )
+            .outerjoin(daily_last, date_series.c.day == daily_last.c.day)
+            .order_by(date_series.c.day)
+        ).cte("all_days_with_data")
+
+        lag_volume = func.lag(all_days_with_data.c.volume).over(order_by=all_days_with_data.c.day)
+
+        with_consumption = (
+            select(
+                all_days_with_data.c.day,
+                all_days_with_data.c.created_at,
+                all_days_with_data.c.volume,
+                (all_days_with_data.c.volume - lag_volume).label("consumption"),
+            )
+        ).cte("with_consumption")
+
+        query = (
+            select(with_consumption).where(with_consumption.c.day >= func.date(date_from)).order_by(with_consumption.c.day)  # <- trimming now happens AFTER LAG
+        )
+
+        result = await self._session.execute(query)
+        rows = result.fetchall()
+
         return [
             AccountingSheetReportRowModel(
-                day=datetime.now(),
-                consumption=0,
-                volume=0,
-                created_at=datetime.now(),
-            ) for _ in range(2)
+                day=row.day,
+                consumption=row.consumption,
+                value=row.volume,
+                created_at=row.created_at,
+            )
+            for row in rows
         ]

@@ -133,7 +133,7 @@
                         {{ row.created_at | locale_format_datetime }}
                     </td> -->
                     <td>
-                        {{ row.volume if row.volume is not none else '-' }}
+                        {{ row.value if row.value is not none else '-' }}
                     </td>
                     <td>
                         {{ row.consumption if row.consumption is not none else '-' }}

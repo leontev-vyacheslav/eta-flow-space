@@ -9,17 +9,17 @@ from sqlalchemy import and_, desc, select, func, cast, Integer, literal_column, 
 
 from app.data_models import DeviceState, UserDeviceLink
 from app.db.database import get_db
-from app.modules.devices.irvis.accounting_sheet.models import AccountingSheetGasMeterReportRowModel
+from app.modules.devices.irvis.accounting_sheet.models import AccountingSheetReportRowModel
 from app.models.accounting_period_types import AccountingPeriodTypes
 
 
-class AccountingSheetGasMeterRepository:
+class AccountingSheetRepository:
     def __init__(self, session: Annotated[AsyncSession, Depends(get_db)]):
         self._session = session
 
     async def get_data_async(
         self, token_payload: dict, time_zone: str, device_id: int | None, period_type: AccountingPeriodTypes
-    ) -> list[AccountingSheetGasMeterReportRowModel]:
+    ) -> list[AccountingSheetReportRowModel]:
         user_id = token_payload.get("userId")
 
         check_user_query = (
@@ -53,7 +53,7 @@ class AccountingSheetGasMeterRepository:
         # row has a prior value to diff against
         query_date_from = date_from - relativedelta(days=1)
 
-        accumulated_volume = cast(
+        accumulated_consumption = cast(
             literal_column("state -> 'accumulatedVolume'"),
             Integer,
         )
@@ -64,7 +64,7 @@ class AccountingSheetGasMeterRepository:
             select(
                 day_expr.label("day"),
                 created_at_tz.label("created_at"),
-                accumulated_volume.label("volume"),
+                accumulated_consumption.label("volume"),
             )
             .where(
                 DeviceState.device_id == device_id,
@@ -97,8 +97,6 @@ class AccountingSheetGasMeterRepository:
 
         lag_volume = func.lag(all_days_with_data.c.volume).over(order_by=all_days_with_data.c.day)
 
-
-
         with_consumption = (
             select(
                 all_days_with_data.c.day,
@@ -109,19 +107,17 @@ class AccountingSheetGasMeterRepository:
         ).cte("with_consumption")
 
         query = (
-            select(with_consumption)
-            .where(with_consumption.c.day >= func.date(date_from))   # <- trimming now happens AFTER LAG
-            .order_by(with_consumption.c.day)
+            select(with_consumption).where(with_consumption.c.day >= func.date(date_from)).order_by(with_consumption.c.day)  # <- trimming now happens AFTER LAG
         )
 
         result = await self._session.execute(query)
         rows = result.fetchall()
 
         return [
-            AccountingSheetGasMeterReportRowModel(
+            AccountingSheetReportRowModel(
                 day=row.day,
                 created_at=row.created_at,
-                volume=row.volume,
+                value=row.volume,
                 consumption=row.consumption,
             )
             for row in rows
