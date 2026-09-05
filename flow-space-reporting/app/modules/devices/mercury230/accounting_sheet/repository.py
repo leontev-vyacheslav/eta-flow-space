@@ -5,11 +5,11 @@ from typing import Annotated
 from fastapi import HTTPException, status
 from fastapi.params import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import and_, desc, select, func, cast, Integer, literal_column, text
+from sqlalchemy import and_, desc, or_, select, func, cast, Integer, literal_column, text
 
 from app.data_models import DeviceState, UserDeviceLink
 from app.db.database import get_db
-from app.modules.devices.mercury230.accounting_sheet.models import AccountingSheetReportRowModel
+from app.modules.devices.mercury230.accounting_sheet.models import AccountingSheetReportRowModel, MetricValue
 from app.models.accounting_period_types import AccountingPeriodTypes
 
 
@@ -53,25 +53,27 @@ class AccountingSheetRepository:
         # row has a prior value to diff against
         query_date_from = date_from - relativedelta(days=1)
 
-        accumulated_consumption = cast(
-            literal_column("state -> 'energyActiveTotal'"),
-            Integer,
-        )
+        # Define once — add/remove metrics here and nothing else needs to change
+        METRICS = [
+            ("energyActiveTotal", "energyActiveTotal"),
+            ("energyActiveTariff1", "energyActiveTariff1"),
+            ("energyActiveTariff2", "energyActiveTariff2"),
+        ]
+
+        accumulated_consumption = [cast(literal_column(f"state -> '{json_key}'"), Integer).label(column_name) for json_key, column_name in METRICS]
 
         created_at_tz = func.timezone(time_zone, DeviceState.created_at).label("created_at")
         day_expr = func.date(created_at_tz)
 
         daily_last = (
-            select(
-                day_expr.label("day"),
-                created_at_tz.label("created_at"),
-                accumulated_consumption.label("volume"),
-            )
+            select(day_expr.label("day"), created_at_tz.label("created_at"), *accumulated_consumption)
             .where(
                 DeviceState.device_id == device_id,
-                created_at_tz >= query_date_from,  # <- filter on local time, not UTC
-                created_at_tz < date_to,  # <- filter on local time, not UTC
-                DeviceState.state["energyActiveTotal"] != None,
+                created_at_tz >= query_date_from,
+                created_at_tz < date_to,
+                # keep a not-null guard on at least one metric so bootstrap/day rows
+                # with no readings at all are still excluded; adjust per your needs
+                or_(*[DeviceState.state[json_key] != None for json_key, _ in METRICS]),
             )
             .distinct(day_expr)
             .order_by(day_expr, desc(created_at_tz))
@@ -80,7 +82,7 @@ class AccountingSheetRepository:
 
         date_series = select(
             func.generate_series(
-                func.date(query_date_from),  # <- widened
+                func.date(query_date_from),
                 func.date(date_to) - text("INTERVAL '1 day'"),
                 text("INTERVAL '1 day'"),
             ).label("day")
@@ -89,37 +91,46 @@ class AccountingSheetRepository:
         all_days_with_data = (
             select(
                 date_series.c.day,
-                daily_last.c.created_at,
-                daily_last.c.volume,
+                *[c for c in daily_last.c if c.name != "day"],
             )
             .outerjoin(daily_last, date_series.c.day == daily_last.c.day)
             .order_by(date_series.c.day)
         ).cte("all_days_with_data")
 
-        lag_volume = func.lag(all_days_with_data.c.volume).over(order_by=all_days_with_data.c.day)
+        # Build a LAG + consumption column per metric
+        consumption_cols = []
+        for _, column_name in METRICS:
+            metric_col = getattr(all_days_with_data.c, column_name)
+            lag_col = func.lag(metric_col).over(order_by=all_days_with_data.c.day)
+            consumption_cols.append((metric_col - lag_col).label(f"consumption_{column_name}"))
 
         with_consumption = (
             select(
                 all_days_with_data.c.day,
                 all_days_with_data.c.created_at,
-                all_days_with_data.c.volume,
-                (all_days_with_data.c.volume - lag_volume).label("consumption"),
+                *[getattr(all_days_with_data.c, column_name) for _, column_name in METRICS],
+                *consumption_cols,
             )
         ).cte("with_consumption")
 
-        query = (
-            select(with_consumption).where(with_consumption.c.day >= func.date(date_from)).order_by(with_consumption.c.day)  # <- trimming now happens AFTER LAG
-        )
+        query = select(with_consumption).where(with_consumption.c.day >= func.date(date_from)).order_by(with_consumption.c.day)
 
         result = await self._session.execute(query)
         rows = result.fetchall()
 
-        return [
+        data = [
             AccountingSheetReportRowModel(
                 day=row.day,
-                consumption=row.consumption,
-                value=row.volume,
                 created_at=row.created_at,
+                metrics={
+                    column_name: MetricValue(
+                        value=getattr(row, column_name),
+                        consumption=getattr(row, f"consumption_{column_name}"),
+                    )
+                    for _, column_name in METRICS
+                },
             )
             for row in rows
         ]
+
+        return data

@@ -114,16 +114,20 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th style="width: 200px;">Дата</th>
-                    <!-- <th>Время</th> -->
-                    <th>Значение</th>
-                    <th style="width: 100px;">Потребление</th>
+                    <th style="width: 100%">Дата</th>
+
+                    <th style="width: 100px;">Значение тариф 1</th>
+                    <th style="width: 100px;">Потребление тариф 1</th>
+                    <th style="width: 100px;">Значение тариф 2</th>
+                    <th style="width: 100px;">Потребление тариф 2</th>
+                    <th style="width: 100px;">Значение общее</th>
+                    <th style="width: 100px;">Потребление общее</th>
                 </tr>
             </thead>
             <tbody>
                 {% for row in rows %}
                 <tr>
-                    <td style="width: 25px;">
+                    <td >
                         {{ loop.index }}.
                     </td>
                     <td>
@@ -133,16 +137,35 @@
                         {{ row.created_at | locale_format_datetime }}
                     </td> -->
                     <td>
-                        {{ row.value if row.value is not none else '-' }}
+                        {{ row.metrics['energyActiveTariff1'].value if row.metrics['energyActiveTariff1'].value is not none else '-' }}
                     </td>
                     <td>
-                        {{ row.consumption if row.consumption is not none else '-' }}
+                        {{ row.metrics['energyActiveTariff1'].consumption if row.metrics['energyActiveTariff1'].consumption is not none else '-' }}
+                    </td>
+
+                    <td>
+                        {{ row.metrics['energyActiveTariff2'].value if row.metrics['energyActiveTariff2'].value is not none else '-' }}
+                    </td>
+                    <td>
+                        {{ row.metrics['energyActiveTariff2'].consumption if row.metrics['energyActiveTariff2'].consumption is not none else '-' }}
+                    </td>
+
+                    <td>
+                        {{ row.metrics['energyActiveTotal'].value if row.metrics['energyActiveTotal'].value is not none else '-' }}
+                    </td>
+                    <td>
+                        {{ row.metrics['energyActiveTotal'].consumption if row.metrics['energyActiveTotal'].consumption is not none else '-' }}
                     </td>
                 </tr>
                 {% endfor %}
                 <tr style="font-weight: bold;">
-                    <td colspan="3" style="text-align: right;">Итого за период:</td>
-                    <td>{{ monthly_totals[month_key] }}</td>
+                    <td colspan="2" style="text-align: right;">Итого за период:</td>
+                    <td></td>
+                    <td>{{ monthly_totals[month_key]['energyActiveTariff1'] }}</td>
+                    <td></td>
+                    <td>{{ monthly_totals[month_key]['energyActiveTariff2'] }}</td>
+                    <td></td>
+                    <td>{{ monthly_totals[month_key]['energyActiveTotal'] }}</td>
                 </tr>
             </tbody>
         </table>

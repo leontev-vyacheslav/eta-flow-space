@@ -7,6 +7,7 @@ from fastapi.params import Depends
 from jinja2 import Environment, FileSystemLoader
 import pytz
 from weasyprint import HTML
+from collections import defaultdict
 
 from app.modules.devices.mercury230.accounting_sheet.repository import AccountingSheetRepository
 from app.modules.formatters import *
@@ -58,18 +59,30 @@ class AccountingSheetReportService:
                 },
             )
 
-        total_consumption = sum(row.consumption for row in data if row.consumption is not None)
+        # Total consumption per metric key, e.g. {"energyActiveTotal": 12345, "energyReactiveTotal": 678}
+        total_consumption: dict[str, int] = defaultdict(int)
+        for row in data:
+            for key, metric in row.metrics.items():
+                if metric.consumption is not None:
+                    total_consumption[key] += metric.consumption
 
+        # Monthly breakdown, now nested per metric key
         monthly_data: OrderedDict[str, list] = OrderedDict()
-        monthly_totals: dict[str, int] = {}
+        monthly_totals: OrderedDict[str, dict[str, int]] = OrderedDict()
         for row in data:
             month_key = row.day.strftime("%Y-%m")
             if month_key not in monthly_data:
                 monthly_data[month_key] = []
-                monthly_totals[month_key] = 0
+                monthly_totals[month_key] = defaultdict(int)
             monthly_data[month_key].append(row)
-            if row.consumption is not None:
-                monthly_totals[month_key] += row.consumption
+            for key, metric in row.metrics.items():
+                if metric.consumption is not None:
+                    monthly_totals[month_key][key] += metric.consumption
+
+        # Convert defaultdicts to plain dicts before passing to the template —
+        # Jinja handles plain dicts more predictably (e.g. with .items(), 'in' checks)
+        total_consumption = dict(total_consumption)
+        monthly_totals = OrderedDict((k, dict(v)) for k, v in monthly_totals.items())
 
         html_content = template_env.get_template(f"{self.report_name}.html").render(
             *args,
