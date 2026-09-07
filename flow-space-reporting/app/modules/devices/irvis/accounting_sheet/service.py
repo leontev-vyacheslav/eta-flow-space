@@ -1,86 +1,15 @@
-from collections import OrderedDict
-from datetime import datetime, timezone
 from pathlib import Path
-from typing import Annotated, Any
-from fastapi import HTTPException, status
+from typing import Annotated
 from fastapi.params import Depends
-from jinja2 import Environment, FileSystemLoader
-import pytz
-from weasyprint import HTML
 
+from app.services.accounting_sheet_base_service import AccountingSheetReportBaseService
 from app.modules.devices.irvis.accounting_sheet.repository import AccountingSheetRepository
-from app.modules.formatters import *
-
-templates_dir = Path(__file__).parent.parent.parent.parent.parent / "templates/devices/irvis"
-template_env = Environment(loader=FileSystemLoader(templates_dir))
-
-filters = [
-    locale_format_date,
-    locale_format_datetime,
-    locale_format_month,
-    locale_format_month_name,
-    period_type_title_format,
-]
-
-for filter in filters:
-    template_env.filters[filter.__name__] = filter
 
 
-class AccountingSheetReportService:
+class AccountingSheetReportService(AccountingSheetReportBaseService):
     report_name = "accounting_sheet_report"
 
     def __init__(self, repository: Annotated[AccountingSheetRepository, Depends(AccountingSheetRepository)]):
-        self._repository = repository
+        self.templates_dir = Path(__file__).parent.parent.parent.parent.parent / "templates/devices/irvis"
 
-    async def render_async(self, *args: Any, **kwargs: Any) -> tuple[bytes | None, str]:
-        time_zone: str = kwargs["time_zone"]
-
-        if time_zone not in pytz.all_timezones:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail=f"Указана неверная временная зона в запросе: {time_zone}",
-            )
-
-        try:
-            data = await self._repository.get_data_async(*args, **kwargs)
-        except Exception as e:
-            raise HTTPException(
-                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                detail=f"Ошибка доступа к базе данных: {str(e)}",
-            )
-
-        if not data or len(data) == 0:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail={
-                    "message": "Отсутствуют данные в базе данных для выбранного периода",
-                    "severity": "warning",
-                },
-            )
-
-        total_consumption = sum(row.consumption for row in data if row.consumption is not None)
-
-        monthly_data: OrderedDict[str, list] = OrderedDict()
-        monthly_totals: dict[str, int] = {}
-        for row in data:
-            month_key = row.day.strftime("%Y-%m")
-            if month_key not in monthly_data:
-                monthly_data[month_key] = []
-                monthly_totals[month_key] = 0
-            monthly_data[month_key].append(row)
-            if row.consumption is not None:
-                monthly_totals[month_key] += row.consumption
-
-        html_content = template_env.get_template(f"{self.report_name}.html").render(
-            *args,
-            **kwargs,
-            monthly_data=monthly_data,
-            monthly_totals=monthly_totals,
-            total_consumption=total_consumption,
-            templates_dir=templates_dir,
-        )
-
-        pdf_bytes = HTML(string=html_content).write_pdf()
-        filename = f"{self.report_name}_{datetime.now(timezone.utc).strftime('%Y%m%d')}.pdf"
-
-        return pdf_bytes, filename
+        super().__init__(repository, templates_dir=self.templates_dir)
