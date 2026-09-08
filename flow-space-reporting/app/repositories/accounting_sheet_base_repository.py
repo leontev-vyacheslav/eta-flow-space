@@ -28,7 +28,6 @@ class AccountingSheetBaseRepository:
             select(UserDeviceLink.user_id, Device.id, Device.name, Device.code)
             .join(Device, Device.id == UserDeviceLink.device_id)
             .where(and_(UserDeviceLink.user_id == user_id, UserDeviceLink.device_id == device_id))
-            .select_from(UserDeviceLink)
         )
         check_user_query_result = await self._session.execute(check_user_query)
 
