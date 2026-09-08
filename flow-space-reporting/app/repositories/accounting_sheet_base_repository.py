@@ -1,13 +1,13 @@
 from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
-from typing import Annotated
+from typing import Annotated, Tuple
 
 from fastapi import HTTPException, status
 from fastapi.params import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import and_, desc, or_, select, func, cast, Integer, literal_column, text
 
-from app.data_models import DeviceState, UserDeviceLink
+from app.data_models import DeviceState, UserDeviceLink, Device
 from app.db.database import get_db
 from app.models.accounting_sheet_report_row_model import AccountingSheetReportRowModel
 from app.models.metric_value_model import MetricValueModel
@@ -21,16 +21,21 @@ class AccountingSheetBaseRepository:
 
     async def get_data_async(
         self, token_payload: dict, time_zone: str, device_id: int | None, period_type: AccountingPeriodTypes
-    ) -> list[AccountingSheetReportRowModel]:
+    ) -> Tuple[list[AccountingSheetReportRowModel], int | None, str, str]:
         user_id = token_payload.get("userId")
 
         check_user_query = (
-            select(UserDeviceLink.user_id).where(and_(UserDeviceLink.user_id == user_id, UserDeviceLink.device_id == device_id)).select_from(UserDeviceLink)
+            select(UserDeviceLink.user_id, Device.id, Device.name, Device.code)
+            .join(Device, Device.id == UserDeviceLink.device_id)
+            .where(and_(UserDeviceLink.user_id == user_id, UserDeviceLink.device_id == device_id))
+            .select_from(UserDeviceLink)
         )
         check_user_query_result = await self._session.execute(check_user_query)
 
-        has_access = check_user_query_result.first() is not None
-        if not has_access:
+        access_data = check_user_query_result.first()
+        if access_data is not None:
+            user_id, device_id, device_name, device_code = access_data
+        else:
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
                 detail={
@@ -130,4 +135,4 @@ class AccountingSheetBaseRepository:
             for row in rows
         ]
 
-        return data
+        return data, device_id, device_name, device_code

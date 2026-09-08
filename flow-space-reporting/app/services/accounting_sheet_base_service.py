@@ -43,7 +43,7 @@ class AccountingSheetReportBaseService:
             )
 
         try:
-            data = await self._repository.get_data_async(*args, **kwargs)
+            data, device_id, device_name, device_code = await self._repository.get_data_async(*args, **kwargs)
         except Exception as e:
             raise HTTPException(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -86,7 +86,9 @@ class AccountingSheetReportBaseService:
 
         html_content = self.template_env.get_template(f"{self.report_name}.html").render(
             *args,
-            **kwargs,
+            **kwargs,  # device_id
+            device_name=device_name,
+            device_code=device_code,
             monthly_data=monthly_data,
             monthly_totals=monthly_totals,
             total_consumption=total_consumption,
