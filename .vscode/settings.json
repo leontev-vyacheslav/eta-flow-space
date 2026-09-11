@@ -10,15 +10,16 @@
         "**/dist": true,
         "**/build": true,
         "**/coverage": true,
-        "**/.venv": true
+
     },
     "svg.preview.background": "transparent",
     "[python]": {
         "editor.defaultFormatter": "ms-python.black-formatter",
-        "editor.formatOnSave": true
+        "editor.formatOnSave": true,
     },
     "black-formatter.args": [
         "--line-length",
         "160",
     ],
+    "isort.importStrategy": "fromEnvironment"
 }

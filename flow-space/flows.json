@@ -281,6 +281,36 @@
         "showLogs": true
     },
     {
+        "id": "93c59e0910ba051a",
+        "type": "modbus-client",
+        "name": "spring-vzljot_026",
+        "clienttype": "tcp",
+        "bufferCommands": true,
+        "stateLogEnabled": false,
+        "queueLogEnabled": false,
+        "failureLogEnabled": true,
+        "tcpHost": "10.10.3.22",
+        "tcpPort": "5010",
+        "tcpType": "TCP-RTU-BUFFERED",
+        "serialPort": "/dev/ttyUSB",
+        "serialType": "RTU-BUFFERD",
+        "serialBaudrate": 9600,
+        "serialDatabits": 8,
+        "serialStopbits": 1,
+        "serialParity": "none",
+        "serialConnectionDelay": 100,
+        "serialAsciiResponseStartDelimiter": "0x3A",
+        "unit_id": 1,
+        "commandDelay": 1,
+        "clientTimeout": 10000,
+        "reconnectOnTimeout": true,
+        "reconnectTimeout": 4000,
+        "parallelUnitIdsAllowed": true,
+        "showErrors": false,
+        "showWarnings": true,
+        "showLogs": true
+    },
+    {
         "id": "8430efb840731807",
         "type": "function",
         "z": "d6d7729c719fdc31",
@@ -1017,10 +1047,13 @@
         "x": 150,
         "y": 80,
         "wires": [
-            [],
+            [
+                "2d3c9ac741bd80d2"
+            ],
             [
                 "739e4dcf6f0d9904",
-                "ba48a12786b5e209"
+                "ba48a12786b5e209",
+                "a13ce2a3d36bcce4"
             ]
         ]
     },
@@ -1615,6 +1648,226 @@
                 "0a018730228903d3"
             ]
         ]
+    },
+    {
+        "id": "f906f078432f497d",
+        "type": "modbus-read",
+        "z": "a03807f6777b0746",
+        "name": "vzljot_026",
+        "topic": "",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": true,
+        "showWarnings": true,
+        "unitid": "1",
+        "dataType": "HoldingRegister",
+        "adr": "0xC01E",
+        "quantity": "8",
+        "rate": "10",
+        "rateUnit": "s",
+        "delayOnStart": false,
+        "enableDeformedMessages": false,
+        "startDelayTime": "",
+        "server": "93c59e0910ba051a",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "x": 140,
+        "y": 1320,
+        "wires": [
+            [],
+            [
+                "4dbd5e2a8f6211e2",
+                "e06e545044132f95"
+            ]
+        ]
+    },
+    {
+        "id": "4dbd5e2a8f6211e2",
+        "type": "function",
+        "z": "a03807f6777b0746",
+        "name": "data-convert",
+        "func": "// Input: msg.payload is an array of 8 raw 16-bit register values\n// from node-red-contrib-modbus (ПР1-ПР4, big-endian word order)\n\nconst regs = msg.payload;\n\nnode.warn(msg);\nnode.warn(msg.payload);\n\n\n\nfunction regsToFloat(hi, lo) {\n    const buf = Buffer.alloc(4);\n    buf.writeUInt16BE(hi, 0);\n    buf.writeUInt16BE(lo, 2);\n    return buf.readFloatBE(0);\n}\n\nconst pr1 = regsToFloat(regs[0], regs[1]);\nconst pr2 = regsToFloat(regs[2], regs[3]);\nconst pr3 = regsToFloat(regs[4], regs[5]);\nconst pr4 = regsToFloat(regs[6], regs[7]);\n\nmsg.payload = {\n    pr1_m3h: pr1,\n    pr2_m3h: pr2,\n    pr3_m3h: pr3,\n    pr4_m3h: pr4,\n};\n\nreturn msg;\n\n\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 1360,
+        "wires": [
+            [
+                "35a6c9f4573ecc4f",
+                "9e6dc7b6a921b964"
+            ]
+        ]
+    },
+    {
+        "id": "35a6c9f4573ecc4f",
+        "type": "debug",
+        "z": "a03807f6777b0746",
+        "name": "debug 12",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 680,
+        "y": 1360,
+        "wires": []
+    },
+    {
+        "id": "e06e545044132f95",
+        "type": "function",
+        "z": "a03807f6777b0746",
+        "name": "trigger",
+        "func": "const buffer_array = msg.payload.buffer;\nif (buffer_array.length > 0) {\n    msg.payload = 1;\n\n    return msg;\n}\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 1420,
+        "wires": [
+            [
+                "01fa27a0afa879a6"
+            ]
+        ]
+    },
+    {
+        "id": "01fa27a0afa879a6",
+        "type": "modbus-getter",
+        "z": "a03807f6777b0746",
+        "d": true,
+        "name": "",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "logIOActivities": false,
+        "unitid": "1",
+        "dataType": "HoldingRegister",
+        "adr": "0xC068",
+        "quantity": "8",
+        "server": "93c59e0910ba051a",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "enableDeformedMessages": false,
+        "startDelayTime": "",
+        "x": 160,
+        "y": 1540,
+        "wires": [
+            [],
+            [
+                "1e73079982bd0d89"
+            ]
+        ]
+    },
+    {
+        "id": "1e73079982bd0d89",
+        "type": "function",
+        "z": "a03807f6777b0746",
+        "name": "data-convert",
+        "func": "// Input: msg.payload is an array of 4 raw 16-bit registers\n// from node-red-contrib-modbus, FC=4, address=0xC068 (49256 decimal), quantity=4\n\nconst regs = msg.payload;\n\n\n\nfunction regsToInt32(hi, lo) {\n    const buf = Buffer.alloc(4);\n    buf.writeUInt16BE(hi, 0);\n    buf.writeUInt16BE(lo, 2);\n    return buf.readInt32BE(0);\n}\n\nfunction regsToFloat(hi, lo) {\n    const buf = Buffer.alloc(4);\n    buf.writeUInt16BE(hi, 0);\n    buf.writeUInt16BE(lo, 2);\n    return buf.readFloatBE(0);\n}\n\nconst longPart = regsToInt32(regs[0], regs[1]);\nconst floatPart = regsToFloat(regs[2], regs[3]);\nconst totalHeat = longPart + floatPart;\n\nmsg.payload = {\n    total_heat: totalHeat,\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 1580,
+        "wires": [
+            [
+                "9e6dc7b6a921b964"
+            ]
+        ]
+    },
+    {
+        "id": "9e6dc7b6a921b964",
+        "type": "join",
+        "z": "a03807f6777b0746",
+        "name": "joinData",
+        "mode": "custom",
+        "build": "merged",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "useparts": false,
+        "accumulate": false,
+        "timeout": "",
+        "count": "",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 680,
+        "y": 1480,
+        "wires": [
+            [
+                "b2db2337879fa7c2"
+            ]
+        ]
+    },
+    {
+        "id": "b2db2337879fa7c2",
+        "type": "debug",
+        "z": "a03807f6777b0746",
+        "name": "debug 13",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 870,
+        "y": 1500,
+        "wires": []
+    },
+    {
+        "id": "2d3c9ac741bd80d2",
+        "type": "debug",
+        "z": "a03807f6777b0746",
+        "name": "debug 16",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 330,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "a13ce2a3d36bcce4",
+        "type": "debug",
+        "z": "a03807f6777b0746",
+        "name": "debug 17",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 230,
+        "y": 180,
+        "wires": []
     },
     {
         "id": "13bfc5999f0041c0",
