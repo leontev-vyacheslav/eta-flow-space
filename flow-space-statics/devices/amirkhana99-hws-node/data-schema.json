@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "StateModel",
+  "title": "amirkhana99-hws-node",
   "type": "object",
   "properties": {
     "isConnected": {

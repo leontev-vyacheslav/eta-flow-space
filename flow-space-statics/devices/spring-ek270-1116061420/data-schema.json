@@ -1,0 +1,72 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "spring-ek270-1116061420",
+    "type": "object",
+    "properties": {
+        "isConnected": {
+            "type": "boolean",
+            "ui": {
+                "group": 1,
+                "editor": {
+                    "editorType": "dxCheckBox",
+                    "editorOptions": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "left",
+                        "showColon": true,
+                        "text": "На связи"
+                    }
+                },
+                "colorizer": {
+                    "styleProps": [
+                        {
+                            "fill": {
+                                "red": false,
+                                "white": true
+                            },
+                            "stroke": {
+                                "yellow": false,
+                                "black": true
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        "timestamp": {
+            "type": "integer",
+            "ui": {
+                "group": 1,
+                "editor": {
+                    "editorType": "dxDateBox",
+                    "editorOptions": {
+                        "type": "datetime",
+                        "displayFormat": "dd.MM.yyyy HH:mm:ss",
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Время опроса"
+                    }
+                }
+            }
+        }
+    },
+    "required": [
+        "isConnected"
+    ],
+    "ui": {
+        "useTabs": true,
+        "groups": [
+            {
+                "id": 1,
+                "name": "state",
+                "caption": "Состояния",
+                "order": 100
+            }
+        ]
+    }
+}
