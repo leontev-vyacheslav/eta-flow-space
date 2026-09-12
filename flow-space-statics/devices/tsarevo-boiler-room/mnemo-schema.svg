@@ -2804,7 +2804,7 @@
             <use href="#infoIcon"
                 data-state-eval="element.style.fill = (states['tsarevo-boiler-room'].isConnected === false ? '#F44336': '#0072C6')"
                 data-state="states['tsarevo-boiler-room'].isConnected;states['tsarevo-boiler-room'].timestamp"
-                style="fill:#0072C6;" transform="translate(1125 15) scale(0.55)" />
+                style="fill:#0072C6;" transform="translate(1125 18) scale(0.55)" />
 
             <path style="fill:none;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;" d="M1135.9,83.1H517.8c-5.2,0-9.4-4.2-9.4-9.4V22.9
                 c0-5.2,4.2-9.4,9.4-9.4h618.1c5.2,0,9.4,4.2,9.4,9.4v50.7C1145.3,78.8,1141.1,83.1,1135.9,83.1z" />
