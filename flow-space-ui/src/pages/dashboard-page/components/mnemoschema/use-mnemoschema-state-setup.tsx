@@ -17,7 +17,12 @@ export const useMnemoschemaStateSetup = () => {
                 }
                 const dataStateEvalAttr = element.getAttribute('data-state-eval');
                 if (dataStateEvalAttr && states) {
-                    eval(dataStateEvalAttr);
+                    try {
+                        eval(dataStateEvalAttr);
+                    }
+                    catch (error) {
+                        console.error(`Error evaluating expression: ${dataStateEvalAttr}`, error);
+                    }
                 }
             });
     }, [deviceStates]);
@@ -129,7 +134,11 @@ export const useMnemoschemaStateSetup = () => {
                             }
                             const dataStateEvalAttr = element.getAttribute('data-state-eval');
                             if (dataStateEvalAttr && states) {
-                                eval(dataStateEvalAttr);
+                                try {
+                                    eval(dataStateEvalAttr);
+                                } catch (error) {
+                                    console.error(`Error evaluating expression: ${dataStateEvalAttr}`, error);
+                                }
                             }
                         });
                 });
