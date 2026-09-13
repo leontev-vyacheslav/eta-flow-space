@@ -364,8 +364,8 @@
 
 	<g>
 		<use href="#infoIcon"
-			data-state-eval="element.style.fill = (states['spring-vzljot26-1415796'].isConnected === false ? '#F44336': '#0072C6')"
-			data-state="states['spring-vzljot26-1415796'].isConnected;states['spring-vzljot26-1415796'].timestamp"
+			data-state-eval="element.style.fill = (states['spring-vzljot026-1415796'].isConnected === false ? '#F44336': '#0072C6')"
+			data-state="states['spring-vzljot026-1415796'].isConnected;states['spring-vzljot026-1415796'].timestamp"
 			style="fill:#0072C6" transform="translate(390 280) scale(0.55)" />
 
 		<rect style="fill:none;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;"
