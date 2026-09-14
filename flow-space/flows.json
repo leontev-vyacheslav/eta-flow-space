@@ -1817,7 +1817,8 @@
         "y": 1480,
         "wires": [
             [
-                "b2db2337879fa7c2"
+                "b2db2337879fa7c2",
+                "4f499b0989f26ce4"
             ]
         ]
     },
@@ -1868,6 +1869,72 @@
         "x": 230,
         "y": 180,
         "wires": []
+    },
+    {
+        "id": "4f499b0989f26ce4",
+        "type": "function",
+        "z": "a03807f6777b0746",
+        "name": "collect-device-state",
+        "func": "const { storeDeviceStateToCacheAsync } = global.get('helpers');\n\nconst payload = msg.payload;\n\nconst deviceState = {\n\n    // Timestamp\n    timestamp: Date.now(),\n};\n\nconst flowUid = node.path.split('/').find(_ => true);\nawait storeDeviceStateToCacheAsync(global, flowUid, deviceState, 4);\nmsg.deviceState = deviceState;\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1050,
+        "y": 1440,
+        "wires": [
+            [
+                "aaf780c486dcf933"
+            ]
+        ]
+    },
+    {
+        "id": "aaf780c486dcf933",
+        "type": "debug",
+        "z": "a03807f6777b0746",
+        "name": "debug 18",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1260,
+        "y": 1440,
+        "wires": []
+    },
+    {
+        "id": "889a341d8ca91c41",
+        "type": "inject",
+        "z": "a03807f6777b0746",
+        "d": true,
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "300",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 910,
+        "y": 1360,
+        "wires": [
+            [
+                "4f499b0989f26ce4"
+            ]
+        ]
     },
     {
         "id": "13bfc5999f0041c0",
