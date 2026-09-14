@@ -543,7 +543,8 @@ module.exports = {
     functionGlobalContext: {
         redisClient: redisClient,
         helpers: require('./src/helpers'),
-        crc: require('crc')
+        crc: require('crc'),
+        mercury230: require('./src/device-readers/mercury230-client.js'),
     },
 
     /** The maximum number of messages nodes will buffer internally as part of their

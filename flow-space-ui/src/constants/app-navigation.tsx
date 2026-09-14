@@ -39,7 +39,7 @@ export const useSideNavigationMenuItems = () => {
                     }
                     return [{
                         id: `flow/${f.code}`,
-                        text: `${f.name} (${f.devices.length})`,
+                        text: `${f.name}`,
                         iconRender: (props: IconBaseProps) => <FlowDevicesGroupIcon size={22} {...props} />,
                         expanded: true,
                         items: f.devices.map((d: any) => ({

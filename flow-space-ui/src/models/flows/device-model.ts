@@ -19,4 +19,20 @@ export interface DeviceModel extends EntityModel, DescriptiveBaseModel, Timestam
     settings: DeviceSettingsModel,
 
     reports?: any[];
+
+    mnemoschemaCode: string;
+
+    linkedDevices: (EntityModel & DescriptiveBaseModel) [];
+}
+
+export interface MnemoschemaSelectorModel  {
+    deviceId: number;
+
+    sourceDeviceId: number;
+
+    device:  DescriptiveBaseModel;
+
+    sourceDevice: DescriptiveBaseModel;
+
+    linkedDevices: { deviceId: number, deviceCode: string, deviceName: string, deviceDescription: string }[];
 }

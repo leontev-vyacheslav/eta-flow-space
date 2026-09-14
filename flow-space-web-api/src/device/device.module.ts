@@ -1,12 +1,29 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { DeviceController } from './device.controller';
-import { DeviceDataModel, FlowDataModel, ObjectLocationDataModel, UserDeviceLinkDataModel, ReportDataModel } from '../database/models';
+import {
+    DeviceDataModel,
+    FlowDataModel,
+    ObjectLocationDataModel,
+    UserDeviceLinkDataModel,
+    ReportDataModel,
+    MnemoschemaSelectorDataModel,
+} from '../database/models';
 import { SequelizeModule } from '@nestjs/sequelize/dist/sequelize.module';
 import { DeviceService } from './device.service';
 
 @Module({
-    imports: [ConfigModule, SequelizeModule.forFeature([DeviceDataModel, FlowDataModel, ObjectLocationDataModel, UserDeviceLinkDataModel, ReportDataModel])],
+    imports: [
+        ConfigModule,
+        SequelizeModule.forFeature([
+            DeviceDataModel,
+            FlowDataModel,
+            ObjectLocationDataModel,
+            UserDeviceLinkDataModel,
+            ReportDataModel,
+            MnemoschemaSelectorDataModel,
+        ]),
+    ],
     controllers: [DeviceController],
     providers: [DeviceService],
 })

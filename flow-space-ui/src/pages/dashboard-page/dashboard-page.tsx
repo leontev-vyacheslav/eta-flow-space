@@ -16,34 +16,37 @@ import { graphService } from '../../components/dialogs/graph-dialog/graph-dialog
 import { emergencyLogService } from '../../components/dialogs/emergency-log-dialog/emergency-log-dialog.tsx';
 import { useAuthStore } from '../../contexts/auth-store.tsx';
 import { selectIsAdmin } from '../../contexts/auth-selectors.ts';
+import { kebabToCamel } from '../../utils/string-utils.ts';
+import type { DeviceModel } from '../../models/flows/device-model.ts';
 
 const DashboardPageInner = () => {
     const tabPanelRef = useRef<TabPanel>(null);
     const navigate = useNavigate();
     const isAdmin = useAuthStore(selectIsAdmin);
-    const [ isWideScreen, setIsWideScreen ] = useState<boolean>(() => {
+    const [tabIndex, setTabIndex] = useState<number>(0);
+    const [isWideScreen, setIsWideScreen] = useState<boolean>(() => {
         const storedValue = localStorage.getItem('isMnemoschemaWideScreen');
         return storedValue ? JSON.parse(storedValue) : false;
     });
 
-    const { setRefreshToken, schemaTypeInfoPropertiesChain, device } = useDashboardPage();
+    const { setRefreshToken, schemasTypeInfoPropertiesChain, device } = useDashboardPage();
     const { flowCode } = useParams();
     const [ControlTabContent, setControlTabContent] = useState<ComponentType<any> | null>(null);
     const [MnemoschemaTabContent, setMnemoschemaTabContent] = useState<ComponentType<any> | null>(null);
-    const [tabIndex, setTabIndex] = useState<number>(0);
 
     const menuItems = useMemo(() => {
 
         const menuItems = [
             {
-               icon: () => isWideScreen ? <WideScreenExitIcon size={20} color='black' /> : <WideScreenIcon size={20} color='black' /> ,
+                icon: () => isWideScreen ? <WideScreenExitIcon size={20} color='black' /> : <WideScreenIcon size={20} color='black' />,
                 onClick: () => {
-                    setIsWideScreen(prev =>  {
+                    setIsWideScreen(prev => {
                         const newValue = !prev;
                         localStorage.setItem('isMnemoschemaWideScreen', JSON.stringify(newValue));
                         return newValue;
                     });
                 },
+                disabled: tabIndex !== 0
             },
             {
                 icon: () => <AdditionalMenuIcon size={20} color='black' />,
@@ -55,16 +58,42 @@ const DashboardPageInner = () => {
                             setRefreshToken(getQuickGuid());
                         }
                     },
-                    {
-                        icon: () => <GraphIcon size={20} />,
-                        text: 'Графики...',
-                        onClick: () => {
-                            if (device) {
-                                const s = schemaTypeInfoPropertiesChain?.filter(chain => chain.typeInfo?.ui.chart);
-                                graphService.show({ device: device, schemaTypeInfos: s || [] });
+                    ...(device && schemasTypeInfoPropertiesChain ? (Object.keys(schemasTypeInfoPropertiesChain).length > 1 ? [
+                        {
+                            render: () => <MenuItemWithSubMenu icon={<GraphIcon size={20} />} text={'Графики...'} />,
+                            items: Object.keys(schemasTypeInfoPropertiesChain).map(deviceCode => {
+                                const targetDevice = device?.linkedDevices.find(d => d.code === deviceCode);
+                                return {
+
+                                    icon: () => <GraphIcon size={20} />,
+                                    text: `${kebabToCamel(targetDevice?.name || deviceCode)}...`,
+                                    onClick: () => {
+                                        if (targetDevice && schemasTypeInfoPropertiesChain) {
+                                            const s = schemasTypeInfoPropertiesChain[deviceCode]?.filter(chain => chain.typeInfo?.ui.chart);
+                                            graphService.show({ device: {
+                                                id: targetDevice.id,
+                                                code: targetDevice.code,
+                                                name: targetDevice.name,
+                                                description: targetDevice.description
+                                            } as DeviceModel, schemaTypeInfos: s || [] });
+                                        }
+                                    }
+                                }
+                            }),
+                        }
+                    ] : [
+                        {
+                            icon: () => <GraphIcon size={20} />,
+                            text: 'Графики...',
+                            onClick: () => {
+                                if (device && schemasTypeInfoPropertiesChain) {
+                                    const s = schemasTypeInfoPropertiesChain[device.code]?.filter(chain => chain.typeInfo?.ui.chart);
+                                    graphService.show({ device: device, schemaTypeInfos: s || [] });
+                                }
                             }
                         }
-                    }, {
+                    ]) : []),
+                    {
                         icon: () => <WarningLogIcon size={20} />,
                         text: 'Журнал аварий...',
                         onClick: () => {
@@ -103,7 +132,7 @@ const DashboardPageInner = () => {
 
         return menuItems;
 
-    }, [device, isWideScreen, navigate, schemaTypeInfoPropertiesChain, setRefreshToken]);
+    }, [device, isWideScreen, navigate, schemasTypeInfoPropertiesChain, setRefreshToken, tabIndex]);
 
     useEffect(() => {
         (async () => {
@@ -140,7 +169,7 @@ const DashboardPageInner = () => {
             <PageHeader caption={() => {
                 return <div style={{ display: 'flex', flexDirection: 'column' }}>
                     <span>Приборная панель</span>
-                    <span style={{ fontSize: 12, fontWeight: 'normal', minHeight: 16, color: 'rgb(118, 118, 118)' }}>{device ? device.description + (isAdmin ? ` [${device.id}]` : '') : ''}</span>
+                    <span style={{ fontSize: 12, fontWeight: 'normal', minHeight: 16, color: 'rgb(118, 118, 118)' }}>{device && device.flow ? device.flow.name + (isAdmin ? ` [${device.flow.id}]` : '') : ''}</span>
                 </div>
             }} menuItems={menuItems}>
                 <DashboardIcon size={AppConstants.headerIconSize} />
@@ -169,7 +198,7 @@ const DashboardPageInner = () => {
                                 }
                             </TabPanelItem>
 
-                            <TabPanelItem title='Управление' tabRender={(e) => <IconTab tab={e} icon={<ParamsIcon size={18} />} />}>
+                            <TabPanelItem title='Параметры' tabRender={(e) => <IconTab tab={e} icon={<ParamsIcon size={18} />} />}>
                                 {
                                     ControlTabContent && tabIndex === 1
                                         ? <ControlTabContent />

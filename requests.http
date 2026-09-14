@@ -1,7 +1,7 @@
 @baseUrl = http://localhost:3001
 
 ###
-@authToken = {{signIn.response.body.token}}
+@authToken = {{signIn.response.body.accessToken}}
 
 ###
 # @name signIn
@@ -15,7 +15,7 @@ content-type: application/json
 
 ###
 # @name getDevice
-GET {{baseUrl}}/api/devices/13
+GET {{baseUrl}}/api/devices/4
 Authorization: Bearer {{authToken}}
 
 ###

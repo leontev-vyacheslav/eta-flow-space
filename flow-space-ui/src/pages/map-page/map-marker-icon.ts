@@ -1,22 +1,17 @@
 import L from "leaflet";
 import AppConstants from "../../constants/app-constants";
-import type { EmergencyModel } from "../../models/flows/emergency-model";
+import { MapMarkerIconEmergencyTypes } from "../../models/enums/map-icon-emergency-types";
 
 export const createMapMarkerIcon = (
-  emergencyState: EmergencyModel | undefined,
+  emergencyType: MapMarkerIconEmergencyTypes,
   hasSiblings: boolean = false,
 ): L.DivIcon => {
-  const hasEmergency = !!emergencyState;
-
   const color =
-    hasEmergency &&
-    emergencyState?.reasons?.find(
-      (r) => r.id === AppConstants.identifiers.connectionEmergencyReasonId,
-    )
-      ? AppConstants.colors.emergencyCriticalColor
-      : hasEmergency
+    emergencyType === MapMarkerIconEmergencyTypes.Normal
+      ? AppConstants.colors.normalDeviceStateColor
+      : emergencyType === MapMarkerIconEmergencyTypes.Warning
         ? AppConstants.colors.emergencyWarningColor
-        : AppConstants.colors.normalDeviceStateColor;
+        : AppConstants.colors.emergencyCriticalColor;
 
   return L.divIcon({
     className: "",

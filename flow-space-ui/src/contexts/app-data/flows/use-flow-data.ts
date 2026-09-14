@@ -15,15 +15,15 @@ import type { UserSettingsModel } from "../../../models/flows/user-settings-mode
 
 export type GetFlowListAsyncFunc = () => Promise<FlowModel[] | undefined>;
 export type GetDeviceListAsyncFunc = () => Promise<DeviceModel[] | undefined>;
-export type GetDeviceStateAsyncFunc = (
+export type GetDeviceStatesAsyncFunc = (
   deviceId: number,
-) => Promise<DeviceStateModel | undefined>;
+) => Promise<Record<string, DeviceStateModel> | undefined>;
 export type GetEmergencyStateAsyncFunc = () => Promise<
   EmergencyModel[] | undefined
 >;
 export type GetMnemoschemaAsyncFunc = (
   flowCode: string,
-) => Promise<string | null | undefined>;
+) => Promise<string | undefined>;
 export type GetDeviceAsyncFunc = (
   deviceId: number,
 ) => Promise<DeviceModel | undefined>;
@@ -49,9 +49,12 @@ export type AppDataContextFlowEndpointsModel = {
   getStaticFilesManifest: () => Promise<any>;
   getFlowListAsync: GetFlowListAsyncFunc;
   getDeviceListAsync: GetDeviceListAsyncFunc;
-  getDeviceStateAsync: GetDeviceStateAsyncFunc;
+  getDeviceStatesAsync: GetDeviceStatesAsyncFunc;
   getMnemoschemaAsync: GetMnemoschemaAsyncFunc;
   getDeviceAsync: GetDeviceAsyncFunc;
+  getDeviceByCodeAsync: (
+    deviceCode: string,
+  ) => Promise<DeviceModel | undefined>;
   getDeviceStateDataschemaAsync: GetDeviceStateDataschemaAsyncFunc;
   getDeviceStatesByDatesAsync: GetDeviceStatesByDatesAsyncFunc;
   getEmergencyStatesAsync: GetEmergencyStateAsyncFunc;
@@ -97,7 +100,7 @@ export const useFlowData = () => {
     }
   }, [authHttpRequest]);
 
-  const getDeviceStateAsync = useCallback<GetDeviceStateAsyncFunc>(
+  const getDeviceStatesAsync = useCallback<GetDeviceStatesAsyncFunc>(
     async (deviceId: number) => {
       const response = await authHttpRequest(
         {
@@ -108,37 +111,38 @@ export const useFlowData = () => {
       );
 
       if (response && response.status === HttpConstants.StatusCodes.Ok) {
-        return response.data as DeviceStateModel;
+        return response.data as Record<string, DeviceStateModel>;
       }
     },
     [authHttpRequest],
   );
 
   const getMnemoschemaAsync = useCallback<GetMnemoschemaAsyncFunc>(
-    async (flowCode: string) => {
+    async (deviceCode: string) => {
       return await fetch(
-        `${routes.host}/static/flows/${flowCode}/${flowCode}-mnemo-schema.svg?v=${staticFilesManifest["mnemo-schema"] ?? Date.now()}`,
-      ).then((res) => (res.ok ? res.text() : null));
+
+        `${routes.host}/static/devices/${deviceCode}/mnemo-schema.svg?v=${staticFilesManifest[deviceCode]?.["mnemo-schema"] ?? Date.now()}`,
+      ).then((res) => (res.ok ? res.text() : undefined));
     },
     [staticFilesManifest],
   );
 
   const getDeviceStateDataschemaAsync =
     useCallback<GetDeviceStateDataschemaAsyncFunc>(
-      async (flowCode: string) => {
+      async (deviceCode: string) => {
         return fetch(
-          `${routes.host}/static/flows/${flowCode}/${flowCode}-data-schema.json?v=${staticFilesManifest["data-schema"] ?? Date.now()}`,
-        ).then((res) => (res.ok ? res.json() : null));
+          `${routes.host}/static/devices/${deviceCode}/data-schema.json?v=${staticFilesManifest[deviceCode]?.["data-schema"] ?? Date.now()}`,
+        ).then((res) => (res.ok ? res.json() : undefined));
       },
       [staticFilesManifest],
     );
 
   const getMnemoschemaStylesheetsAsync =
     useCallback<GetMnemoschemaStylesheetsAsyncFunc>(
-      async (flowCode: string) => {
+      async (deviceCode: string) => {
         return await fetch(
-          `${routes.host}/static/flows/${flowCode}/${flowCode}-mnemo-schema.css?v=${staticFilesManifest["mnemo-schema"] ?? Date.now()}`,
-        ).then((res) => (res.ok ? res.text() : null));
+          `${routes.host}/static/devices/${deviceCode}/mnemo-schema.css?v=${staticFilesManifest[deviceCode]?.["css"] ?? Date.now()}`,
+        ).then((res) => (res.ok ? res.text() : undefined));
       },
       [staticFilesManifest],
     );
@@ -147,6 +151,20 @@ export const useFlowData = () => {
     async (deviceId: number) => {
       const response = await authHttpRequest({
         url: `${routes.host}${routes.devices}/${deviceId}`,
+        method: HttpConstants.Methods.Get as Method,
+      });
+
+      if (response && response.status === HttpConstants.StatusCodes.Ok) {
+        return response.data as DeviceModel;
+      }
+    },
+    [authHttpRequest],
+  );
+
+  const getDeviceByCodeAsync = useCallback(
+    async (deviceCode: string) => {
+      const response = await authHttpRequest({
+        url: `${routes.host}${routes.devices}/by-code/${deviceCode}`,
         method: HttpConstants.Methods.Get as Method,
       });
 
@@ -258,13 +276,16 @@ export const useFlowData = () => {
     }
   }, [authHttpRequest]);
 
-  const postUserSettingsAsync = useCallback(async (settings: UserSettingsModel) => {
-    await authHttpRequest({
-      url: `${routes.host}${routes.users}/settings`,
-      method: HttpConstants.Methods.Post as Method,
-      data: settings,
-    });
-  }, [authHttpRequest]);
+  const postUserSettingsAsync = useCallback(
+    async (settings: UserSettingsModel) => {
+      await authHttpRequest({
+        url: `${routes.host}${routes.users}/settings`,
+        method: HttpConstants.Methods.Post as Method,
+        data: settings,
+      });
+    },
+    [authHttpRequest],
+  );
 
   useEffect(() => {
     (async () => {
@@ -277,10 +298,11 @@ export const useFlowData = () => {
     getStaticFilesManifest,
     getFlowListAsync,
     getDeviceListAsync,
-    getDeviceStateAsync,
+    getDeviceStatesAsync,
     getMnemoschemaAsync,
     getMnemoschemaStylesheetsAsync,
     getDeviceAsync,
+    getDeviceByCodeAsync,
     getDeviceStateDataschemaAsync,
     getDeviceStatesByDatesAsync,
     getEmergencyStatesAsync,

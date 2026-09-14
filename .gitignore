@@ -16,3 +16,5 @@ flow-space-backups/
 
 dist/
 *.rdb
+
+.venv/

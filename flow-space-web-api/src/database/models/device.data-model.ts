@@ -1,5 +1,6 @@
 import { Table, Column, Model, DataType, PrimaryKey, AutoIncrement, ForeignKey, BelongsTo, HasMany, HasOne } from 'sequelize-typescript';
 import { FlowDataModel } from './flow.data-model';
+import { MnemoschemaSelectorDataModel } from './mnemoschema-selector.data-model';
 import { ObjectLocationDataModel } from './object-location.data-model';
 import { DeviceStateDataModel } from './device-state.data-model';
 import { EmergencyStateDataModel } from './emergency-state.data-model';
@@ -67,6 +68,9 @@ export class DeviceDataModel extends Model {
         allowNull: true,
     })
     declare lastStateUpdate: Date;
+
+    @HasOne(() => MnemoschemaSelectorDataModel, 'deviceId')
+    declare mnemoschemaSelector?: MnemoschemaSelectorDataModel;
 
     @HasMany(() => DeviceStateDataModel, 'deviceId')
     declare states?: DeviceStateDataModel[];

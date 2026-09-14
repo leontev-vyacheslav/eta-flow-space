@@ -48,7 +48,7 @@ export function getKeyValuePairs(data: any): PropertiesChainValuePairModel[] {
 const PRIMITIVE_TYPES = new Set(['number', 'integer', 'string', 'boolean']);
 
 export const getSchemaTypeInfo = (propertiesChain: string, subschema: any, schema?: any): SchemaTypeInfoModel | undefined => {
-    if (!subschema.properties) {
+    if (!subschema || !subschema.properties) {
         return undefined
     };
 
