@@ -741,8 +741,8 @@
       "items": {
         "$ref": "#/$defs/BoilerPumpModel"
       },
-      "minItems": 4,
-      "maxItems": 4
+      "minItems": 3,
+      "maxItems": 3
     },
     "networkPumps": {
       "type": "array",
@@ -1479,80 +1479,39 @@
     "BoilerPumpModel": {
       "type": "object",
       "properties": {
-        "state": {
-          "$ref": "#/$defs/BoilerPumpState",
+        "isFailure": {
+          "type": "boolean",
           "ui": {
             "group": 5,
             "editor": {
-              "editorType": "dxSelectBox",
+              "editorType": "dxCheckBox",
               "label": {
-                "location": "top",
+                "location": "left",
                 "showColon": true,
-                "text": "Состояние насоса котла"
+                "text": "Авария насоса котла"
               },
               "editorOptions": {
-                "readOnly": true,
-                "valueExpr": "id",
-                "displayExpr": "description"
+                "readOnly": true
               }
             },
             "colorizer": {
               "styleProps": [
+                {
+                  "stroke-width": {
+                    "1": false,
+                    "2  ": true
+                  }
+                },
+                {
+                  "fill": {
+                    "#808080": false,
+                    "white": true
+                  }
+                },
                 {
                   "stroke": {
-                    "#0000FF": [
-                      1
-                    ],
-                    "red": [
-                      2
-                    ]
-                  },
-                  "fill": {
-                    "#FFFFFF": [
-                      1
-                    ],
-                    "#808080": [
-                      2
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        },
-        "statusCurrentSensor": {
-          "$ref": "#/$defs/SensorStatus",
-          "ui": {
-            "group": 5,
-            "editor": {
-              "editorType": "dxSelectBox",
-              "label": {
-                "location": "top",
-                "showColon": true,
-                "text": "Статус датчика тока насоса котла"
-              },
-              "editorOptions": {
-                "readOnly": true,
-                "valueExpr": "id",
-                "displayExpr": "description"
-              }
-            },
-            "colorizer": {
-              "styleProps": [
-                {
-                  "fill": {
-                    "#00FF00": [
-                      1
-                    ],
-                    "yellow": [
-                      2
-                    ],
-                    "red": [
-                      4,
-                      8,
-                      16,
-                      32
-                    ]
+                    "#0000FF": true,
+                    "black": false
                   }
                 }
               ]
@@ -1561,8 +1520,7 @@
         }
       },
       "required": [
-        "state",
-        "statusCurrentSensor"
+        "isFailure"
       ]
     },
     "NetworkPumpModel": {
