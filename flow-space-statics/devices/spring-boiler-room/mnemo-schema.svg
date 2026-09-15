@@ -126,7 +126,7 @@
 		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="120.3,170.9 116.4,164.3 124.3,164.3
 			120.3,170.9 " />
 
-		<path style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M130.8,175.6h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
+		<path data-state="states['spring-boiler-room'].boilerPumps[0].isFailure;" style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M130.8,175.6h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
 				c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6V173C133.4,174.5,132.2,175.6,130.8,175.6z" />
 
 	</g>
@@ -152,7 +152,7 @@
 			r="9.3" />
 		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="239.8,170.8 235.8,164.2 243.7,164.2
 			239.8,170.8 		" />
-		<path style="fill:none;stroke:#FF0000;stroke-width:2;stroke-miterlimit:10;" d="M250.2,175.5h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
+		<path data-state="states['spring-boiler-room'].boilerPumps[1].isFailure;" style="fill:none;stroke:#FF0000;stroke-width:2;stroke-miterlimit:10;" d="M250.2,175.5h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
 				c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6v21.6C252.8,174.4,251.7,175.5,250.2,175.5z" />
 		<text transform="matrix(1 0 0 1 218.1215 143.9151)" style="font-family:'Arial'; font-size:10px;">НК2</text>
 	</g>
@@ -178,7 +178,7 @@
 		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="359.2" cy="162" r="9.3" />
 		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="359.3,170.7 355.4,164.1 363.3,164.1
 			359.3,170.7" />
-		<path style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M369.8,175.5h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
+		<path data-state="states['spring-boiler-room'].boilerPumps[2].isFailure;" style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M369.8,175.5h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
 				c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6v21.6C372.4,174.3,371.2,175.5,369.8,175.5z" />
 		<text transform="matrix(1 0 0 1 337.671 143.8647)" style="font-family:'Arial'; font-size:10px;">НК3</text>
 	</g>
@@ -207,7 +207,7 @@
 			r="9.3" />
 		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="479.3,170.6 475.3,164 483.2,164 479.3,170.6
 			" />
-		<path style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M489.7,175.4h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
+		<path data-state="states['spring-boiler-room'].boilerPumps[3].isFailure;" style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M489.7,175.4h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
 				c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6v21.6C492.3,174.2,491.2,175.4,489.7,175.4z" />
 	</g>
 

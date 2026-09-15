@@ -1,0 +1,114 @@
+{
+    "tempOutAir": 15.063125610351562,
+    "tempInNet": 70.6624984741211,
+    "pressInNet": 4.961874961853027,
+    "tempOutNet": 60.287506103515625,
+    "pressOutNet": 2.4337499141693115,
+    "isCO": false,
+    "isCH": false,
+    "isFireAlarm": false,
+    "isSecurityAlarm": false,
+    "isAlarmStopAsmNetworkPumps": false,
+    "isAlarmAsmNetworkPumps": false,
+    "isWorkingAsmNetworkPumps": true,
+    "isAlarmThreeWayValve": false,
+    "boilers": [
+        {
+            "isBurnerFailure": false,
+            "isWorking": false
+        },
+        {
+            "isBurnerFailure": false,
+            "isWorking": false
+        },
+        {
+            "isBurnerFailure": false,
+            "isWorking": false
+        },
+        {
+            "isBurnerFailure": false,
+            "isWorking": false
+        }
+    ],
+    "boilerPumps": [
+        {
+            "isFailure": true
+        },
+        {
+            "isFailure": true
+        },
+        {
+            "isFailure": true
+        },
+        {
+            "isFailure": true
+        }
+    ],
+    "sensors": {
+        "isPressInNetSensorError": false,
+        "isPressOutNetSensorError": false,
+        "isPressInNetHighLevel": false,
+        "isPressInNetPreHighLevel": false,
+        "isPressInNetPreLowLevel": false,
+        "isPressInNetLowLevel": false,
+        "isPressOutHighLevel": false,
+        "isPressOutPreHighLevel": false,
+        "isPressOutPreLowLevel": false,
+        "isPressOutLowLevel": false,
+        "isTempInNetSensorError": false,
+        "isTempOutNetSensorError": false,
+        "isTempInNetPreHighLevel": false,
+        "isTempInNetPreLowLevel": false,
+        "isTempInNetLowLevel": false,
+        "isTempOutNetHighLevel": false,
+        "isTempOutNetPreHighLevel": false,
+        "isTempOutNetPreLowLevel": false,
+        "isTempOutNetLowLevel": false
+    },
+    "threewayValve": {
+        "status": 0
+    },
+    "networkPumps": [
+        {
+            "state": 1,
+            "operatingTime": 3851,
+            "current": 1108397261,
+            "frequency": 1109105050,
+            "isDryRun": false,
+            "isAlarm": false,
+            "mode": 1,
+            "status": 0
+        },
+        {
+            "state": 0,
+            "operatingTime": 6349,
+            "current": 0,
+            "frequency": 0,
+            "isDryRun": false,
+            "isAlarm": false,
+            "mode": 1,
+            "status": 0
+        },
+        {
+            "state": 0,
+            "operatingTime": 1264,
+            "current": 0,
+            "frequency": 0,
+            "isDryRun": false,
+            "isAlarm": false,
+            "mode": 1,
+            "status": 0
+        }
+    ],
+    "sourceWaterPumps": [
+        {
+            "isAlarm": false,
+            "isWorking": false
+        },
+        {
+            "isAlarm": false,
+            "isWorking": false
+        }
+    ],
+    "timestamp": 1789478616571
+}
