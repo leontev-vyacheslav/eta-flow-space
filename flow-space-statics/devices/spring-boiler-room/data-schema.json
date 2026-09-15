@@ -741,8 +741,8 @@
       "items": {
         "$ref": "#/$defs/BoilerPumpModel"
       },
-      "minItems": 3,
-      "maxItems": 3
+      "minItems": 4,
+      "maxItems": 4
     },
     "networkPumps": {
       "type": "array",
@@ -1011,87 +1011,6 @@
     "BoilerModel": {
       "type": "object",
       "properties": {
-        "state": {
-          "$ref": "#/$defs/BoilerState",
-          "ui": {
-            "group": 2,
-            "editor": {
-              "editorType": "dxSelectBox",
-              "label": {
-                "location": "top",
-                "showColon": true,
-                "text": "Состояние котла"
-              },
-              "editorOptions": {
-                "readOnly": true,
-                "valueExpr": "id",
-                "displayExpr": "description"
-              }
-            },
-            "colorizer": {
-              "styleProps": [
-                {
-                  "fill": {
-                    "#00FF00": [
-                      8,
-                      16
-                    ],
-                    "yellow": [
-                      32
-                    ],
-                    "red": [
-                      128
-                    ],
-                    "white": [
-                      1,
-                      2,
-                      4,
-                      64
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        },
-        "tempOut": {
-          "type": "number",
-          "unit": "°C",
-          "ui": {
-            "group": 2,
-            "editor": {
-              "editorType": "dxNumberBox",
-              "label": {
-                "location": "top",
-                "showColon": true,
-                "text": "Температура воды на подаче котла"
-              },
-              "editorOptions": {
-                "readOnly": true
-              }
-            },
-            "chart": {}
-          }
-        },
-        "tempFlueGases": {
-          "type": "number",
-          "unit": "°C",
-          "ui": {
-            "group": 2,
-            "editor": {
-              "editorType": "dxNumberBox",
-              "label": {
-                "location": "top",
-                "showColon": true,
-                "text": "Температура дымовых газов котла"
-              },
-              "editorOptions": {
-                "readOnly": true
-              }
-            },
-            "chart": {}
-          }
-        },
         "isBurnerFailure": {
           "type": "boolean",
           "ui": {
@@ -1112,7 +1031,7 @@
                 {
                   "stroke": {
                     "red": true,
-                    "#808080": false
+                    "#000000": false
                   }
                 }
               ]
@@ -1140,259 +1059,6 @@
                   "fill": {
                     "#00FF00": true,
                     "white": false
-                  }
-                }
-              ]
-            }
-          }
-        },
-        "isGasRelayPressure": {
-          "type": "boolean",
-          "ui": {
-            "group": 2,
-            "editor": {
-              "editorType": "dxCheckBox",
-              "label": {
-                "location": "left",
-                "showColon": true,
-                "text": "Реле давления газа"
-              },
-              "editorOptions": {
-                "readOnly": true
-              }
-            },
-            "colorizer": {
-              "styleProps": [
-                {
-                  "fill": {
-                    "red": true,
-                    "white": false
-                  }
-                }
-              ]
-            }
-          }
-        },
-        "isMinWaterPressure": {
-          "type": "boolean",
-          "ui": {
-            "group": 2,
-            "editor": {
-              "editorType": "dxCheckBox",
-              "label": {
-                "location": "left",
-                "showColon": true,
-                "text": "Мин. давление воды"
-              },
-              "editorOptions": {
-                "readOnly": true
-              }
-            },
-            "colorizer": {
-              "styleProps": [
-                {
-                  "fill": {
-                    "red": true,
-                    "white": false
-                  }
-                }
-              ]
-            }
-          }
-        },
-        "isMaxWaterPressure": {
-          "type": "boolean",
-          "ui": {
-            "group": 2,
-            "editor": {
-              "editorType": "dxCheckBox",
-              "label": {
-                "location": "left",
-                "showColon": true,
-                "text": "Макс. давление воды"
-              },
-              "editorOptions": {
-                "readOnly": true
-              }
-            },
-            "colorizer": {
-              "styleProps": [
-                {
-                  "fill": {
-                    "red": true,
-                    "white": false
-                  }
-                }
-              ]
-            }
-          }
-        },
-        "isMaxWaterTemperature": {
-          "type": "boolean",
-          "ui": {
-            "group": 2,
-            "editor": {
-              "editorType": "dxCheckBox",
-              "label": {
-                "location": "left",
-                "showColon": true,
-                "text": "Макс. температура воды"
-              },
-              "editorOptions": {
-                "readOnly": true
-              }
-            },
-            "colorizer": {
-              "styleProps": [
-                {
-                  "fill": {
-                    "red": true,
-                    "white": false
-                  }
-                }
-              ]
-            }
-          }
-        },
-        "isFlowRelay": {
-          "type": "boolean",
-          "ui": {
-            "group": 2,
-            "editor": {
-              "editorType": "dxCheckBox",
-              "label": {
-                "location": "left",
-                "showColon": true,
-                "text": "Реле потока"
-              },
-              "editorOptions": {
-                "readOnly": true
-              }
-            },
-            "colorizer": {
-              "styleProps": [
-                {
-                  "stroke-width": {
-                    "1": false,
-                    "2  ": true
-                  }
-                },
-                {
-                  "fill": {
-                    "#808080": false,
-                    "white": true
-                  }
-                },
-                {
-                  "stroke": {
-                    "#0000FF": true,
-                    "black": false
-                  }
-                }
-              ]
-            }
-          }
-        },
-        "statusTempOutSensor": {
-          "$ref": "#/$defs/SensorStatus",
-          "ui": {
-            "group": 2,
-            "editor": {
-              "editorType": "dxSelectBox",
-              "label": {
-                "location": "top",
-                "showColon": true,
-                "text": "Статус датчика температуры воды на подаче котла"
-              },
-              "editorOptions": {
-                "readOnly": true,
-                "valueExpr": "id",
-                "displayExpr": "description"
-              }
-            },
-            "colorizer": {
-              "styleProps": [
-                {
-                  "stroke-width": {
-                    "0.25": [
-                      1
-                    ],
-                    "0.5": [
-                      2
-                    ],
-                    "1": [
-                      4,
-                      8,
-                      16,
-                      32
-                    ]
-                  },
-                  "stroke": {
-                    "#000000": [
-                      1
-                    ],
-                    "#FFC107": [
-                      2
-                    ],
-                    "red": [
-                      4,
-                      8,
-                      16,
-                      32
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        },
-        "statusTempFlueGasesSensor": {
-          "$ref": "#/$defs/SensorStatus",
-          "ui": {
-            "group": 2,
-            "editor": {
-              "editorType": "dxSelectBox",
-              "label": {
-                "location": "top",
-                "showColon": true,
-                "text": "Статус датчика температуры дымовых газов"
-              },
-              "editorOptions": {
-                "readOnly": true,
-                "valueExpr": "id",
-                "displayExpr": "description"
-              }
-            },
-            "colorizer": {
-              "styleProps": [
-                {
-                  "stroke-width": {
-                    "0.25": [
-                      1
-                    ],
-                    "0.5": [
-                      2
-                    ],
-                    "1": [
-                      4,
-                      8,
-                      16,
-                      32
-                    ]
-                  },
-                  "stroke": {
-                    "#000000": [
-                      1
-                    ],
-                    "#FFC107": [
-                      2
-                    ],
-                    "red": [
-                      4,
-                      8,
-                      16,
-                      32
-                    ]
                   }
                 }
               ]
@@ -1503,15 +1169,9 @@
                   }
                 },
                 {
-                  "fill": {
-                    "#808080": false,
-                    "white": true
-                  }
-                },
-                {
                   "stroke": {
-                    "#0000FF": true,
-                    "black": false
+                    "red": true,
+                    "blue": false
                   }
                 }
               ]
