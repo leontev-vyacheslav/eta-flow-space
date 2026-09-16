@@ -76,7 +76,8 @@
                     "editorOptions": {
                         "readOnly": true
                     }
-                }
+                },
+                 "chart": {}
             }
         },
         "currentPressure": {
