@@ -901,49 +901,34 @@
     "NetworkPumpState": {
       "type": "integer",
       "enum": [
-        1,
-        2,
-        4,
-        8,
-        16,
-        32,
-        64,
-        128,
-        256,
-        512,
-        1024,
-        2048,
-        4096,
-        8192
+        0,
+        1
       ],
       "enumDescriptions": {
-        "1": "WAITING_FOR_READINESS - Ожидание готовности",
-        "2": "READINESS - Готовность",
-        "4": "NOT_USED_0 - Не используется",
-        "8": "NOT_USED_1 - Не используется",
-        "16": "NOT_USED_2 - Не используется",
-        "32": "START_FROM_VFD - Запуск от ЧРП",
-        "64": "OPERATING_FROM_VFD - В работе от ЧРП",
-        "128": "STOP_FROM_VFD - Останов от ЧРП",
-        "256": "NOT_USED_3 - Не используется",
-        "512": "ALARM - Авария",
-        "1024": "NOT_USED_4 - Не используется",
-        "2048": "NOT_USED_5 - Не используется",
-        "4096": "NOT_USED_6 - Не используется",
-        "8192": "NOT_USED_7 - Не используется"
+        "0": "STOP - Останов",
+        "1": "WORKING - Работа"
       }
     },
-    "NetworkPumpFcStatus": {
+     "NetworkPumpStatus": {
       "type": "integer",
       "enum": [
-        1,
-        2,
-        3
+        0,
+        1
       ],
       "enumDescriptions": {
-        "1": "FC_OPERATING - Работа ПЧ",
-        "2": "FC_ALARM - Авария ПЧ",
-        "3": "FC_STOP - Останов ПЧ"
+        "0": "RESERVED - Резервный",
+        "1": "MAIN - Ocновной"
+      }
+    },
+     "NetworkPumpMode": {
+      "type": "integer",
+      "enum": [
+        0,
+        1
+      ],
+      "enumDescriptions": {
+        "0": "MANUAL - Ручной",
+        "1": "AUTO - Автоматический"
       }
     },
     "SourceWaterPumpModel": {
@@ -1210,6 +1195,54 @@
             }
           }
         },
+        "status": {
+          "$ref": "#/$defs/NetworkPumpStatus",
+          "ui": {
+            "group": 3,
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Статус сетевого насоса"
+              },
+              "editorOptions": {
+                "readOnly": true,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {}
+              ]
+            }
+          }
+        },
+        "mode": {
+          "$ref": "#/$defs/NetworkPumpMode",
+          "ui": {
+            "group": 3,
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Режим управления сетевым насосом"
+              },
+              "editorOptions": {
+                "readOnly": true,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {}
+              ]
+            }
+          }
+        },
         "isDryRun": {
           "type": "boolean",
           "ui": {
@@ -1237,33 +1270,27 @@
             }
           }
         },
-        "statusFc": {
-          "$ref": "#/$defs/NetworkPumpFcStatus",
+        "isAlarm": {
+          "type": "boolean",
           "ui": {
             "group": 3,
             "editor": {
-              "editorType": "dxSelectBox",
+              "editorType": "dxCheckBox",
               "label": {
-                "location": "top",
+                "location": "left",
                 "showColon": true,
-                "text": "Статус ПЧ сетевого насоса"
+                "text": "Авария"
               },
               "editorOptions": {
-                "readOnly": true,
-                "valueExpr": "id",
-                "displayExpr": "description"
+                "readOnly": true
               }
             },
             "colorizer": {
               "styleProps": [
                 {
                   "fill": {
-                    "#FFFFFF": [
-                      1
-                    ],
-                    "#808080": [
-                      2
-                    ]
+                    "red": true,
+                    "white": false
                   }
                 }
               ]
@@ -1274,7 +1301,7 @@
       "required": [
         "state",
         "isDryRun",
-        "statusFc"
+        "isAlarm"
       ]
     },
     "GasMeterModel": {

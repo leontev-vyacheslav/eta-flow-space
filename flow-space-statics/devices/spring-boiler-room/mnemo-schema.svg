@@ -23,14 +23,15 @@
 						" />
 			</g>
 		</g>
-	</defs>
-	<defs>
 		<g id="emergencyIcon">
 			<rect style="fill:#606060;" width="2" height="10" transform="translate(8, 5)" />
 			<path style="fill:#FFC107;cursor:pointer" transform="scale(0.035)"
 				d="M479 447.77 268.43 56.64a8 8 0 0 0-14.09 0L43.73 447.77a8 8 0 0 0 7.05 11.79H472a8 8 0 0 0 7-11.79zm-197.62-36.29h-40v-40h40zm-4-63.92h-32l-6-160h44z">
 			</path>
 		</g>
+	</defs>
+	<defs>
+
 	</defs>
 	<defs>
 		<g id="fireAlarmIcon">
@@ -132,9 +133,9 @@
 
 	<g data-section="boiler[0]">
 		<text transform="matrix(1 0 0 1 141.5219 125.3774)" style="font-family:'Arial'; font-size:10px;">К1</text>
-		<rect x="141.5" y="128.4" style="fill:#FFFFFF;stroke:#FF0000;stroke-miterlimit:10;" width="63.6"
+		<rect x="141.5" y="128.4" style="fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;" width="63.6"
 			height="69.3" />
-		<path data-state="states['spring-boiler-room'].boilers[0].isBurnerFailure" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" d="M189.3,194.6h-29.5c-2.5,0-4.5-2-4.5-4.5v-19.9
+		<path data-state="states['spring-boiler-room'].boilers[0].isBurnerFailure;states['spring-boiler-room'].boilers[0].isWorking" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" d="M189.3,194.6h-29.5c-2.5,0-4.5-2-4.5-4.5v-19.9
 				c0-2.5,2-4.5,4.5-4.5h29.5c2.5,0,4.5,2,4.5,4.5v19.9C193.7,192.6,191.7,194.6,189.3,194.6z" />
 
 		<use data-state="states['spring-boiler-room'].boilers[0].isWorking"
@@ -163,7 +164,7 @@
 	<g data-section="boiler[1]">
 		<rect x="261" y="128.3" style="fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;" width="63.6" height="69.3" />
 		<text transform="matrix(1 0 0 1 260.9538 125.2767)" style="font-family:'Arial'; font-size:10px;">К2</text>
-		<path data-state="states['spring-boiler-room'].boilers[1].isBurnerFailure" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" d="M308.7,194.5h-29.5c-2.5,0-4.5-2-4.5-4.5v-19.9
+		<path data-state="states['spring-boiler-room'].boilers[1].isBurnerFailure;states['spring-boiler-room'].boilers[1].isWorking" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" d="M308.7,194.5h-29.5c-2.5,0-4.5-2-4.5-4.5v-19.9
 			c0-2.5,2-4.5,4.5-4.5h29.5c2.5,0,4.5,2,4.5,4.5v19.9C313.2,192.5,311.2,194.5,308.7,194.5z" />
 		<use data-state="states['spring-boiler-room'].boilers[1].isWorking"
 			data-state-eval="element.style.display = (value ? 'initial': 'none');"
@@ -193,7 +194,7 @@
 		<rect x="380.5" y="128.2" style="fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;" width="63.6"
 			height="69.3" />
 		<text transform="matrix(1 0 0 1 380.5033 125.2263)" style="font-family:'Arial'; font-size:10px;">К3</text>
-		<path data-state="states['spring-boiler-room'].boilers[2].isBurnerFailure" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" d="M428.2,194.5h-29.5c-2.5,0-4.5-2-4.5-4.5v-19.9
+		<path data-state="states['spring-boiler-room'].boilers[2].isBurnerFailure;states['spring-boiler-room'].boilers[2].isWorking" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" d="M428.2,194.5h-29.5c-2.5,0-4.5-2-4.5-4.5v-19.9
 			c0-2.5,2-4.5,4.5-4.5h29.5c2.5,0,4.5,2,4.5,4.5V190C432.7,192.5,430.7,194.5,428.2,194.5z" />
 
 		<use data-state="states['spring-boiler-room'].boilers[2].isWorking"
@@ -229,7 +230,7 @@
 		<text transform="matrix(1 0 0 1 500.4504 125.1256)" style="font-family:'Arial'; font-size:10px;">К4</text>
 		<rect x="500.5" y="128.1" style="fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;" width="63.6"
 			height="69.3" />
-		<path data-state="states['spring-boiler-room'].boilers[3].isBurnerFailure" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" d="M548.2,194.4h-29.5c-2.5,0-4.5-2-4.5-4.5v-19.9
+		<path data-state="states['spring-boiler-room'].boilers[3].isBurnerFailure;states['spring-boiler-room'].boilers[3].isWorking" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" d="M548.2,194.4h-29.5c-2.5,0-4.5-2-4.5-4.5v-19.9
 				c0-2.5,2-4.5,4.5-4.5h29.5c2.5,0,4.5,2,4.5,4.5v19.9C552.7,192.4,550.6,194.4,548.2,194.4z" />
 
 		<use data-state="states['spring-boiler-room'].boilers[3].isWorking"
@@ -243,12 +244,22 @@
 
 	<g data-section="networkPumps[0]">
 		<text transform="matrix(1 0 0 1 112.4372 319.2943)" style="font-family:'Arial'; font-size:10px;">СН1</text>
-		<circle style="fill:none;stroke:#000000;stroke-miterlimit:10;" cx="137" cy="337.5" r="10.6" />
-		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="137" cy="337.4" r="9.3" />
+		<circle
+			style="fill:none;stroke:#000000;stroke-miterlimit:10;" cx="137" cy="337.5" r="10.6" />
+		<circle data-state="states['spring-boiler-room'].networkPumps[0].state"
+			data-state-eval="element.style.fill = (states['spring-boiler-room'].networkPumps[0].state === 1) ? 'white' : '#999999'"
+			style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="137" cy="337.4" r="9.3" />
 		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="137.1,346.2 133.1,339.5 141,339.5 137.1,346.2
 					" />
-		<path style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M147.6,350.9h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
+		<path data-state="states['spring-boiler-room'].networkPumps[0].state;states['spring-boiler-room'].networkPumps[0].status;states['spring-boiler-room'].networkPumps[0].mode;states['spring-boiler-room'].networkPumps[0].isDryRun;states['spring-boiler-room'].networkPumps[0].isAlarm;"
+			 data-state-eval="element.style.stroke = (states['spring-boiler-room'].networkPumps[0].isDryRun || states['spring-boiler-room'].networkPumps[0].isAlarm) ? 'red': 'blue'"
+			 style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M147.6,350.9h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
 				c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6v21.6C150.1,349.7,149,350.9,147.6,350.9z" />
+
+			<use data-state="states['spring-boiler-room'].networkPumps[0].state;states['spring-boiler-room'].networkPumps[0].isDryRun;states['spring-boiler-room'].networkPumps[0].isAlarm;"
+				data-state-eval="element.style.display = (states['spring-boiler-room'].networkPumps[0].isDryRun || states['spring-boiler-room'].networkPumps[0].isAlarm) ? 'initial': 'none'"
+				href="#emergencyIcon" transform="translate(135,304)"/>
+
 	</g>
 
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="172.6" y1="268.1" x2="172.6" y2="324.2" />
@@ -256,13 +267,23 @@
 
 	<g data-section="networkPumps[1]">
 		<circle style="fill:#999999;stroke:#000000;stroke-miterlimit:10;" cx="172.6" cy="337.5" r="10.6" />
-		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="172.6" cy="337.5"
+		<circle data-state="states['spring-boiler-room'].networkPumps[1].state"
+			data-state-eval="element.style.fill = (states['spring-boiler-room'].networkPumps[1].state === 1) ? 'white' : '#999999'"
+			style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="172.6" cy="337.5"
 			r="9.3" />
 		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="172.7,346.2 168.7,339.6 176.6,339.6
 			172.7,346.2 		" />
-		<path style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M183.2,350.9h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
+		<path
+			data-state="states['spring-boiler-room'].networkPumps[1].state;states['spring-boiler-room'].networkPumps[1].status;states['spring-boiler-room'].networkPumps[1].mode;states['spring-boiler-room'].networkPumps[1].isDryRun;states['spring-boiler-room'].networkPumps[1].isAlarm;"
+			 data-state-eval="element.style.stroke = (states['spring-boiler-room'].networkPumps[1].isDryRun || states['spring-boiler-room'].networkPumps[1].isAlarm) ? 'red': 'blue'"
+		 style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M183.2,350.9h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
 				c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6v21.6C185.8,349.8,184.6,350.9,183.2,350.9z" />
 		<text transform="matrix(1 0 0 1 148.0516 319.3167)" style="font-family:'Arial'; font-size:10px;">СН2</text>
+
+		<use data-state="states['spring-boiler-room'].networkPumps[1].state;states['spring-boiler-room'].networkPumps[1].isDryRun;states['spring-boiler-room'].networkPumps[1].isAlarm;"
+				data-state-eval="element.style.display = (states['spring-boiler-room'].networkPumps[1].isDryRun || states['spring-boiler-room'].networkPumps[1].isAlarm) ? 'initial': 'none'"
+				href="#emergencyIcon" transform="translate(171,304)"/>
+
 	</g>
 
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="208.3" y1="307.2" x2="208.3" y2="324.2" />
@@ -271,12 +292,21 @@
 	<g data-section="networkPumps[2]">
 		<text transform="matrix(1 0 0 1 183.7291 319.3167)" style="font-family:'Arial'; font-size:10px;">СН3</text>
 		<circle style="fill:#999999;stroke:#000000;stroke-miterlimit:10;" cx="208.3" cy="337.5" r="10.6" />
-		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="208.3" cy="337.5"
+		<circle data-state="states['spring-boiler-room'].networkPumps[2].state"
+			data-state-eval="element.style.fill = (states['spring-boiler-room'].networkPumps[2].state === 1) ? 'white' : '#999999'"
+			style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="208.3" cy="337.5"
 			r="9.3" />
 		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="208.4,346.2 204.4,339.6 212.3,339.6
 			208.4,346.2 		" />
-		<path style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M218.9,350.9h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
+		<path
+			data-state="states['spring-boiler-room'].networkPumps[2].state;states['spring-boiler-room'].networkPumps[2].status;states['spring-boiler-room'].networkPumps[2].mode;states['spring-boiler-room'].networkPumps[2].isDryRun;states['spring-boiler-room'].networkPumps[2].isAlarm;"
+			 data-state-eval="element.style.stroke = (states['spring-boiler-room'].networkPumps[2].isDryRun || states['spring-boiler-room'].networkPumps[2].isAlarm) ? 'red': 'blue'"
+		style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M218.9,350.9h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
 				c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6v21.6C221.4,349.8,220.3,350.9,218.9,350.9z" />
+
+		<use data-state="states['spring-boiler-room'].networkPumps[2].state;states['spring-boiler-room'].networkPumps[2].isDryRun;states['spring-boiler-room'].networkPumps[2].isAlarm;"
+			data-state-eval="element.style.display = (states['spring-boiler-room'].networkPumps[2].isDryRun || states['spring-boiler-room'].networkPumps[2].isAlarm) ? 'initial': 'none'"
+			href="#emergencyIcon" transform="translate(207,304)"/>
 	</g>
 
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="172.6" y1="307.2" x2="137" y2="307.3" />
