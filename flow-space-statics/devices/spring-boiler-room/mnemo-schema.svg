@@ -272,7 +272,7 @@
 	<g data-section="networkPumps[0]">
 		<text transform="matrix(1 0 0 1 112.4372 319.2943)" style="font-family:'Arial'; font-size:10px;">СН1</text>
 		<circle
-			style="fill:none;stroke:#000000;stroke-miterlimit:10;" cx="137" cy="337.5" r="10.6" />
+			style="fill:#999999;stroke:#000000;stroke-miterlimit:10;" cx="137" cy="337.5" r="10.6" />
 		<circle data-state="states['spring-boiler-room'].networkPumps[0].state"
 			data-state-eval="element.style.fill = (states['spring-boiler-room'].networkPumps[0].state === 1) ? 'white' : '#999999'"
 			style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="137" cy="337.4" r="9.3" />
@@ -324,10 +324,10 @@
 			style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="208.3" cy="337.5"
 			r="9.3" />
 		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="208.4,346.2 204.4,339.6 212.3,339.6
-			208.4,346.2 		" />
+			208.4,346.2" />
 		<path
 			data-state="states['spring-boiler-room'].networkPumps[2].state;states['spring-boiler-room'].networkPumps[2].status;states['spring-boiler-room'].networkPumps[2].mode;states['spring-boiler-room'].networkPumps[2].isDryRun;states['spring-boiler-room'].networkPumps[2].isAlarm;"
-			 data-state-eval="element.style.stroke = (states['spring-boiler-room'].networkPumps[2].isDryRun || states['spring-boiler-room'].networkPumps[2].isAlarm) ? 'red': 'blue'"
+			data-state-eval="element.style.stroke = (states['spring-boiler-room'].networkPumps[2].isDryRun || states['spring-boiler-room'].networkPumps[2].isAlarm) ? 'red': 'blue'"
 		style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M218.9,350.9h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
 				c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6v21.6C221.4,349.8,220.3,350.9,218.9,350.9z" />
 
@@ -370,15 +370,25 @@
 	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="531.6" cy="209.8" r="1.3" />
 	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="532.2" cy="114.8" r="1.3" />
 	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="532.2" cy="93.7" r="1.3" />
-	<g>
-		<circle style="fill:none;stroke:#000000;stroke-miterlimit:10;" cx="398" cy="432" r="10.6" />
-		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="398" cy="432" r="9.3" />
+	<g data-section="sourceWaterPumps[1]">
+		<circle style="fill:#999999;stroke:#000000;stroke-miterlimit:10;" cx="398" cy="432" r="10.6" />
+		<circle
+			data-state="states['spring-boiler-room'].sourceWaterPumps[1].isWorking;states['spring-boiler-room'].sourceWaterPumps[1].isAlarm;"
+			data-state-eval="element.style.fill = (states['spring-boiler-room'].sourceWaterPumps[1].isWorking === true) ? 'white' : '#999999'"
+			style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="398" cy="432" r="9.3" />
 		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="389.2,432.1 395.9,428.1 395.9,436 389.2,432.1
 		" />
 		<g>
-			<path style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M384.5,442.6v-21c0-1.4,1.2-2.6,2.6-2.6h21.6
-			c1.4,0,2.6,1.2,2.6,2.6v21c0,1.4-1.2,2.6-2.6,2.6h-21.6C385.7,445.2,384.5,444,384.5,442.6z" />
+			<path
+				data-state="states['spring-boiler-room'].sourceWaterPumps[1].isAlarm"
+				style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M384.5,442.6v-21c0-1.4,1.2-2.6,2.6-2.6h21.6
+				c1.4,0,2.6,1.2,2.6,2.6v21c0,1.4-1.2,2.6-2.6,2.6h-21.6C385.7,445.2,384.5,444,384.5,442.6z" />
 		</g>
+
+		<use data-state="states['spring-boiler-room'].sourceWaterPumps[1].isAlarm;"
+			data-state-eval="element.style.display = (states['spring-boiler-room'].sourceWaterPumps[1].isAlarm) ? 'initial': 'none'"
+			href="#emergencyIcon" transform="translate(413, 418)"/>
+
 	</g>
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="349.6" y1="417.4" x2="384.7" y2="417.4" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="411.4" y1="417.7" x2="665" y2="417.7" />
@@ -757,16 +767,23 @@
 	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="226.9" y1="270" x2="226.9" y2="258.8" />
 	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="448.5" y1="249.5" x2="448.5" y2="190.7" />
 	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="448.5" y1="270" x2="448.5" y2="258.6" />
-	<g>
-		<circle style="fill:none;stroke:#000000;stroke-miterlimit:10;" cx="398.1" cy="403.2" r="10.6" />
-		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="398.1" cy="403.2"
+	<g data-section="sourceWaterPumps[0]">
+		<circle style="fill:#999999;stroke:#000000;stroke-miterlimit:10;" cx="398.1" cy="403.2" r="10.6" />
+		<circle
+			data-state="states['spring-boiler-room'].sourceWaterPumps[0].isWorking;states['spring-boiler-room'].sourceWaterPumps[0].isAlarm;"
+			data-state-eval="element.style.fill = (states['spring-boiler-room'].sourceWaterPumps[0].isWorking === true) ? 'white' : '#999999'"
+		style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="398.1" cy="403.2"
 			r="9.3" />
 		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="389.3,403.3 396,399.3 396,407.2 389.3,403.3
 		" />
 		<g>
-			<path style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M384.6,413.8v-21c0-1.4,1.2-2.6,2.6-2.6h21.6
+			<path data-state="states['spring-boiler-room'].sourceWaterPumps[0].isAlarm" style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M384.6,413.8v-21c0-1.4,1.2-2.6,2.6-2.6h21.6
 			c1.4,0,2.6,1.2,2.6,2.6v21c0,1.4-1.2,2.6-2.6,2.6h-21.6C385.8,416.3,384.6,415.2,384.6,413.8z" />
 		</g>
+
+		<use data-state="states['spring-boiler-room'].sourceWaterPumps[0].isAlarm;"
+			data-state-eval="element.style.display = (states['spring-boiler-room'].sourceWaterPumps[0].isAlarm) ? 'initial': 'none'"
+			href="#emergencyIcon" transform="translate(413, 387)"/>
 	</g>
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="589.9" y1="254.8" x2="186.1" y2="254.8" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="172.3" y1="234.8" x2="172.3" y2="241.4" />

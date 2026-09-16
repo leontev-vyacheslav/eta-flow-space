@@ -728,14 +728,7 @@
       "minItems": 4,
       "maxItems": 4
     },
-    "boilerOutputValves": {
-      "type": "array",
-      "items": {
-        "$ref": "#/$defs/BoilerOutputValveModel"
-      },
-      "minItems": 4,
-      "maxItems": 4
-    },
+
     "boilerPumps": {
       "type": "array",
       "items": {
@@ -751,9 +744,6 @@
       },
       "minItems": 3,
       "maxItems": 3
-    },
-    "gasMeter": {
-      "$ref": "#/$defs/GasMeterModel"
     },
     "timestamp": {
       "type": "integer",
@@ -824,33 +814,6 @@
         "32": "OVERLOAD - Перегрузка (выход сигнала датчика за установленные границы)"
       }
     },
-    "SourceWaterPumpState": {
-      "type": "integer",
-      "enum": [
-        1,
-        2,
-        4,
-        8,
-        16,
-        32,
-        128,
-        256,
-        512,
-        1024
-      ],
-      "enumDescriptions": {
-        "1": "NO_POWER - Нет питания",
-        "2": "STOPPED - Остановлен",
-        "4": "OPERATING - В работе",
-        "8": "ALARM - Авария",
-        "16": "STARTUP_ACCELERATION - Запуск (разгон)",
-        "32": "STOP - Останов",
-        "128": "REGULATION_MIN_FREQUENCY - Регулирование (мин. частота)",
-        "256": "REGULATION_MAX_FREQUENCY - Регулирование (макс. частота)",
-        "512": "WAITING_FOR_START - Ожидание включения",
-        "1024": "WAITING_FOR_READINESS - Ожидание готовности"
-      }
-    },
     "BoilerState": {
       "type": "integer",
       "enum": [
@@ -872,17 +835,6 @@
         "32": "HOT_RESERVE - В горячем резерве",
         "64": "STOPPING - Останавливается",
         "128": "ALARM - Авария"
-      }
-    },
-    "BoilerOutputValveState": {
-      "type": "integer",
-      "enum": [
-        1,
-        2
-      ],
-      "enumDescriptions": {
-        "1": "OPEN - Открыта",
-        "2": "CLOSED - Закрыта"
       }
     },
     "BoilerPumpState": {
@@ -934,57 +886,60 @@
     "SourceWaterPumpModel": {
       "type": "object",
       "properties": {
-        "state": {
-          "$ref": "#/$defs/SourceWaterPumpState",
+        "isWorking": {
+          "type": "boolean",
           "ui": {
             "group": 4,
             "editor": {
-              "editorType": "dxSelectBox",
+              "editorType": "dxCheckBox",
               "label": {
-                "location": "top",
+                "location": "left",
                 "showColon": true,
-                "text": "Состояние насоса исходной воды"
+                "text": "Работа насоса исходной воды"
               },
               "editorOptions": {
-                "readOnly": true,
-                "valueExpr": "id",
-                "displayExpr": "description"
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "#00FF00": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isAlarm": {
+          "type": "boolean",
+          "ui": {
+            "group": 4,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Авария насоса исходной воды"
+              },
+              "editorOptions": {
+                "readOnly": true
               }
             },
             "colorizer": {
               "styleProps": [
                 {
                   "stroke-width": {
-                    "2": [
-                      8
-                    ],
-                    "1": [
-                      1,
-                      2,
-                      16,
-                      32,
-                      128,
-                      256,
-                      512,
-                      1024
-                    ]
+                    "1": false,
+                    "2  ": true
                   }
                 },
                 {
                   "stroke": {
-                    "red": [
-                      8
-                    ],
-                    "black": [
-                      1,
-                      2,
-                      16,
-                      32,
-                      128,
-                      256,
-                      512,
-                      1024
-                    ]
+                    "red": true,
+                    "#000000": false
                   }
                 }
               ]
@@ -1064,67 +1019,6 @@
         "isFlowRelay",
         "statusTempOutSensor",
         "statusTempFlueGasesSensor"
-      ]
-    },
-    "BoilerOutputValveModel": {
-      "type": "object",
-      "properties": {
-        "state": {
-          "$ref": "#/$defs/BoilerOutputValveState",
-          "ui": {
-            "group": 6,
-            "editor": {
-              "editorType": "dxSelectBox",
-              "label": {
-                "location": "top",
-                "showColon": true,
-                "text": "Состояние задвижки на выходе котла"
-              },
-              "editorOptions": {
-                "readOnly": true,
-                "valueExpr": "id",
-                "displayExpr": "description"
-              }
-            },
-            "colorizer": {
-              "styleProps": [
-                {
-                  "stroke": {
-                    "black": [
-                      2
-                    ],
-                    "blue": [
-                      1
-                    ]
-                  }
-                },
-                {
-                  "stroke-width": {
-                    "1": [
-                      2
-                    ],
-                    "2": [
-                      1
-                    ]
-                  }
-                },
-                {
-                  "fill": {
-                    "#808080": [
-                      2
-                    ],
-                    "white": [
-                      1
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        }
-      },
-      "required": [
-        "state"
       ]
     },
     "BoilerPumpModel": {
@@ -1302,138 +1196,6 @@
         "state",
         "isDryRun",
         "isAlarm"
-      ]
-    },
-    "GasMeterModel": {
-      "type": "object",
-      "properties": {
-        "timeOfWork": {
-          "type": "number",
-          "ui": {
-            "group": 8,
-            "editor": {
-              "editorType": "dxNumberBox",
-              "label": {
-                "location": "top",
-                "showColon": true,
-                "text": "Время наработки счетчика газа"
-              },
-              "editorOptions": {
-                "readOnly": true
-              }
-            },
-            "chart": {}
-          }
-        },
-        "currentPressure": {
-          "type": "number",
-          "unit": "кПа",
-          "formatting": {
-            "options": {
-              "style": "decimal",
-              "maximumFractionDigits": 2,
-              "minimumFractionDigits": 2
-            }
-          },
-          "ui": {
-            "group": 8,
-            "editor": {
-              "editorType": "dxNumberBox",
-              "label": {
-                "location": "top",
-                "showColon": true,
-                "text": "Текущее давление газа"
-              },
-              "editorOptions": {
-                "readOnly": true
-              }
-            },
-            "chart": {}
-          }
-        },
-        "currentTemp": {
-          "type": "number",
-          "unit": "°C",
-          "formatting": {
-            "options": {
-              "style": "decimal",
-              "maximumFractionDigits": 2,
-              "minimumFractionDigits": 2
-            }
-          },
-          "ui": {
-            "group": 8,
-            "editor": {
-              "editorType": "dxNumberBox",
-              "label": {
-                "location": "top",
-                "showColon": true,
-                "text": "Текущая температура газа"
-              },
-              "editorOptions": {
-                "readOnly": true
-              }
-            },
-            "chart": {}
-          }
-        },
-        "currentFlowRateNc": {
-          "type": "number",
-          "unit": "н.м3/ч",
-          "formatting": {
-            "options": {
-              "style": "decimal",
-              "maximumFractionDigits": 2,
-              "minimumFractionDigits": 2
-            }
-          },
-          "ui": {
-            "group": 8,
-            "editor": {
-              "editorType": "dxNumberBox",
-              "label": {
-                "location": "top",
-                "showColon": true,
-                "text": "Текущий расход в н.у."
-              },
-              "editorOptions": {
-                "readOnly": true
-              }
-            },
-            "chart": {}
-          }
-        },
-        "currentFlowRateWc": {
-          "type": "number",
-          "unit": "р.м3/ч",
-          "formatting": {
-            "options": {
-              "style": "decimal",
-              "maximumFractionDigits": 2,
-              "minimumFractionDigits": 2
-            }
-          },
-          "ui": {
-            "group": 8,
-            "editor": {
-              "editorType": "dxNumberBox",
-              "label": {
-                "location": "top",
-                "showColon": true,
-                "text": "Текущий расход в раб.у."
-              },
-              "editorOptions": {
-                "readOnly": true
-              }
-            },
-            "chart": {}
-          }
-        }
-      },
-      "required": [
-        "timeOfWork",
-        "currentPressure",
-        "currentTemp"
       ]
     }
   },
