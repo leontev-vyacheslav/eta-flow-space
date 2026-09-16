@@ -120,14 +120,20 @@
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="120.3" y1="175.6" x2="120.3" y2="209.5" />
 
 	<g data-section="boilerPumps[0]">
-		<text transform="matrix(1 0 0 1 99.6896 145.0158)" style="font-family:'Arial'; font-size:10px;">НК1</text>
-		<circle style="fill:none;stroke:#000000;stroke-miterlimit:10;" cx="120.3" cy="162.2" r="10.6" />
-		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="120.2" cy="162.2"
+		<text transform="matrix(1 0 0 1 99.6896 145.0158)" style="font-family:'Arial'; font-size:10px;">НK1</text>
+		<circle style="fill:#999999;stroke:#000000;stroke-miterlimit:10;" cx="120.3" cy="162.2" r="10.6" />
+		<circle data-state="states['spring-boiler-room'].boilerPumps[0].isFailure;"
+			data-state-eval="element.style.fill = (states['spring-boiler-room'].boilerPumps[0].isFailure ? '#999999': 'white');"
+			style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="120.2" cy="162.2"
 			r="9.3" />
 		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="120.3,170.9 116.4,164.3 124.3,164.3
 			120.3,170.9 " />
 		<path data-state="states['spring-boiler-room'].boilerPumps[0].isFailure" style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M130.8,175.6h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
 				c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6V173C133.4,174.5,132.2,175.6,130.8,175.6z" />
+
+		<use data-state="states['spring-boiler-room'].boilerPumps[0].isFailure;"
+			data-state-eval="element.style.display = (states['spring-boiler-room'].boilerPumps[0].isFailure ? 'initial': 'none');"
+			href="#emergencyIcon" transform="translate(120.3, 128)" />
 
 	</g>
 
@@ -151,14 +157,21 @@
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="239.7" y1="175.5" x2="239.7" y2="209.4" />
 
 	<g data-section="boilerPumps[1]">
-		<circle style="fill:none;stroke:#000000;stroke-miterlimit:10;" cx="239.7" cy="162.1" r="10.6" />
-		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="239.7" cy="162.1"
+		<circle style="fill:#999999;stroke:#000000;stroke-miterlimit:10;" cx="239.7" cy="162.1" r="10.6" />
+		<circle
+			data-state="states['spring-boiler-room'].boilerPumps[1].isFailure;"
+			data-state-eval="element.style.fill = (states['spring-boiler-room'].boilerPumps[1].isFailure ? '#999999': 'white');"
+		style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="239.7" cy="162.1"
 			r="9.3" />
 		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="239.8,170.8 235.8,164.2 243.7,164.2
 			239.8,170.8 		" />
 		<path data-state="states['spring-boiler-room'].boilerPumps[1].isFailure" style="fill:none;stroke:#FF0000;stroke-width:2;stroke-miterlimit:10;" d="M250.2,175.5h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
 				c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6v21.6C252.8,174.4,251.7,175.5,250.2,175.5z" />
 		<text transform="matrix(1 0 0 1 218.1215 143.9151)" style="font-family:'Arial'; font-size:10px;">НК2</text>
+		<use
+			data-state="states['spring-boiler-room'].boilerPumps[1].isFailure;"
+			data-state-eval="element.style.display = (states['spring-boiler-room'].boilerPumps[1].isFailure ? 'initial': 'none');"
+		href="#emergencyIcon" transform="translate(239.7, 128)" />
 	</g>
 
 	<g data-section="boiler[1]">
@@ -181,13 +194,20 @@
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="359.3" y1="175.5" x2="359.3" y2="209.3" />
 
 	<g data-section="boilerPumps[2]">
-		<circle style="fill:none;stroke:#000000;stroke-miterlimit:10;" cx="359.3" cy="162" r="10.6" />
-		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="359.2" cy="162" r="9.3" />
+		<circle style="fill:#999999;stroke:#000000;stroke-miterlimit:10;" cx="359.3" cy="162" r="10.6" />
+		<circle
+			data-state="states['spring-boiler-room'].boilerPumps[2].isFailure;"
+			data-state-eval="element.style.fill = (states['spring-boiler-room'].boilerPumps[2].isFailure ? '#999999': 'white');"
+		style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="359.2" cy="162" r="9.3" />
 		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="359.3,170.7 355.4,164.1 363.3,164.1
 			359.3,170.7" />
 		<path data-state="states['spring-boiler-room'].boilerPumps[2].isFailure" style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M369.8,175.5h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
 				c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6v21.6C372.4,174.3,371.2,175.5,369.8,175.5z" />
 		<text transform="matrix(1 0 0 1 337.671 143.8647)" style="font-family:'Arial'; font-size:10px;">НК3</text>
+		<use
+			 data-state="states['spring-boiler-room'].boilerPumps[2].isFailure;"
+			data-state-eval="element.style.display = (states['spring-boiler-room'].boilerPumps[2].isFailure ? 'initial': 'none');"
+		href="#emergencyIcon" transform="translate(359.3, 128)" />
 	</g>
 
 	<g data-section="boiler[2]">
@@ -213,13 +233,20 @@
 
 	<g data-section="boilerPumps[3]">
 		<text transform="matrix(1 0 0 1 457.6181 143.764)" style="font-family:'Arial'; font-size:10px;">НК4</text>
-		<circle style="fill:none;stroke:#000000;stroke-miterlimit:10;" cx="479.2" cy="161.9" r="10.6" />
-		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="479.2" cy="161.9"
+		<circle style="fill:#999999;stroke:#000000;stroke-miterlimit:10;" cx="479.2" cy="161.9" r="10.6" />
+		<circle
+			data-state="states['spring-boiler-room'].boilerPumps[3].isFailure;"
+			data-state-eval="element.style.fill = (states['spring-boiler-room'].boilerPumps[3].isFailure ? '#999999': 'white');"
+		style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="479.2" cy="161.9"
 			r="9.3" />
 		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="479.3,170.6 475.3,164 483.2,164 479.3,170.6
 			" />
 		<path data-state="states['spring-boiler-room'].boilerPumps[3].isFailure" style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M489.7,175.4h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
 				c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6v21.6C492.3,174.2,491.2,175.4,489.7,175.4z" />
+				<use
+			data-state="states['spring-boiler-room'].boilerPumps[3].isFailure;"
+			data-state-eval="element.style.display = (states['spring-boiler-room'].boilerPumps[3].isFailure ? 'initial': 'none');"
+				href="#emergencyIcon" transform="translate(479.2,128)" />
 	</g>
 
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="531.6" y1="219.4" x2="531.6" y2="227.9" />
