@@ -1,0 +1,191 @@
+[{
+    "id": 1,
+    "expression": "state.isOffInput1 === true",
+    "description": "Ввод 1 выключен"
+  },
+  {
+    "id": 2,
+    "expression": "state.isFireAlarm === true",
+    "description": "Пожарная тревога"
+  },
+    {
+        "id": 3,
+        "expression": "state.isAlarmThreeWayValve === true",
+        "description": "Авария трехходового клапана"
+    },
+    {
+        "id": 4,
+        "expression": "state.isSecurityAlarm === true",
+        "description": "Сигнал охранной системы"
+    },
+    {
+        "id": 5,
+        "expression": "state.isCO === true",
+        "description": "Газоанализатор СО"
+    },
+     {
+        "id": 6,
+        "expression": "state.isCH === true",
+        "description": "Газоанализатор СH"
+    },
+    {
+        "id": 7,
+        "expression": "state.boilerPumps[0].isFailure === true",
+        "description": "Авария насоса котла 1"
+    },
+    {
+        "id": 8,
+        "expression": "state.boilerPumps[1].isFailure === true",
+        "description": "Авария насоса котла 2"
+    },
+    {
+        "id": 9,
+        "expression": "state.boilerPumps[2].isFailure === true",
+        "description": "Авария насоса котла 3"
+    },
+    {
+        "id": 10,
+        "expression": "state.boilerPumps[3].isFailure === true",
+        "description": "Авария насоса котла 4"
+    },
+    {
+        "id": 11,
+        "expression": "state.sourceWaterPumps[0].isAlarm === true",
+        "description": "Авария насоса подпитки 1"
+    },
+    {
+        "id": 12,
+        "expression": "state.sourceWaterPumps[1].isAlarm === true",
+        "description": "Авария насоса подпитки 2"
+    },
+    {
+        "id": 13,
+        "expression": "state.networkPumps[0].isAlarm === true",
+        "description": "Авария насоса сети 1"
+    },
+    {
+        "id": 14,
+        "expression": "state.networkPumps[1].isAlarm === true",
+        "description": "Авария насоса сети 2"
+    },
+    {
+        "id": 15,
+        "expression": "state.networkPumps[2].isAlarm === true",
+        "description": "Авария насоса сети 3"
+    },
+    {
+        "id": 16,
+        "expression": "state.boilers[0].isBurnerFailure === true",
+        "description": "Авария горелки котла 1"
+    },
+    {
+        "id": 17,
+        "expression": "state.boilers[1].isBurnerFailure === true",
+        "description": "Авария горелки котла 2"
+    },
+    {
+        "id": 18,
+        "expression": "state.boilers[2].isBurnerFailure === true",
+        "description": "Авария горелки котла 3"
+    },
+    {
+        "id": 19,
+        "expression": "state.boilers[3].isBurnerFailure === true",
+        "description": "Авария горелки котла 4"
+    },
+    {
+        "id": 20,
+        "expression": "state.isPressInNetSensorError === true",
+        "description": "Ошибка датчика давления в сети"
+    },
+    {
+        "id": 21,
+        "expression": "state.isPressOutNetSensorError === true",
+        "description": "Ошибка датчика давления на выходе"
+    },
+    {
+        "id": 22,
+        "expression": "state.isTempInNetSensorError === true",
+        "description": "Ошибка датчика температуры в сети"
+    },
+    {
+        "id": 23,
+        "expression": "state.isTempOutNetSensorError === true",
+        "description": "Ошибка датчика температуры на выходе"
+    },
+    {
+        "id": 24,
+        "expression": "state.isPressInNetHighLevel === true",
+        "description": "Давление в сети выше допустимого уровня"
+    },
+    {
+        "id": 25,
+        "expression": "state.isPressInNetPreHighLevel === true",
+        "description": "Давление в сети выше предварительного уровня"
+    },
+    {
+        "id": 26,
+        "expression": "state.isPressInNetPreLowLevel === true",
+        "description": "Давление в сети ниже предварительного уровня"
+    },
+    {
+        "id": 27,
+        "expression": "state.isPressInNetLowLevel === true",
+        "description": "Давление в сети ниже допустимого уровня"
+    },
+    {
+        "id": 28,
+        "expression": "state.isPressOutHighLevel === true",
+        "description": "Давление на выходе выше допустимого уровня"
+    },
+    {
+        "id": 29,
+        "expression": "state.isPressOutPreHighLevel === true",
+        "description": "Давление на выходе выше предварительного уровня"
+    },
+    {
+        "id": 30,
+        "expression": "state.isPressOutPreLowLevel === true",
+        "description": "Давление на выходе ниже предварительного уровня"
+    },
+    {
+        "id": 31,
+        "expression": "state.isPressOutLowLevel === true",
+        "description": "Давление на выходе ниже допустимого уровня"
+    },
+    {
+        "id": 32,
+        "expression": "state.isTempInNetPreHighLevel === true",
+        "description": "Температура в сети выше предварительного уровня"
+    },
+    {
+        "id": 33,
+        "expression": "state.isTempInNetPreLowLevel === true",
+        "description": "Температура в сети ниже предварительного уровня"
+    },
+    {
+        "id": 34,
+        "expression": "state.isTempInNetLowLevel === true",
+        "description": "Температура в сети ниже допустимого уровня"
+    },
+    {
+        "id": 35,
+        "expression": "state.isTempOutNetHighLevel === true",
+        "description": "Температура на выходе выше допустимого уровня"
+    },
+    {
+        "id": 36,
+        "expression": "state.isTempOutNetPreHighLevel === true",
+        "description": "Температура на выходе выше предварительного уровня"
+    },
+    {
+        "id": 37,
+        "expression": "state.isTempOutNetPreLowLevel === true",
+        "description": "Температура на выходе ниже предварительного уровня"
+    },
+    {
+        "id": 38,
+        "expression": "state.isTempOutNetLowLevel === true",
+        "description": "Температура на выходе ниже допустимого уровня"
+    }
+]
