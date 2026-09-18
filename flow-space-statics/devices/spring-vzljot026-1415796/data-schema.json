@@ -35,7 +35,114 @@
                 }
             }
         },
-        
+        "volumeFlowRateInputPipe": {
+            "type": "number",
+            "unit": "м³/ч",
+            "ui": {
+                "group": 1,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "editorOptions": {
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Объемный расход в подающем трубопроводе"
+                    }
+                }
+            }
+        },
+        "volumeFlowRateReturnPipe": {
+            "type": "number",
+            "unit": "м³/ч",
+            "ui": {
+                "group": 1,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "editorOptions": {
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Объемный расход в обратном трубопроводе"
+                    }
+                }
+            }
+        },
+        "temperatureInputPipe": {
+            "type": "number",
+            "unit": "°C",
+            "ui": {
+                "group": 1,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "editorOptions": {
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Температура в подающем трубопроводе"
+                    }
+                }
+            }
+        },
+         "temperatureReturnPipe": {
+            "type": "number",
+            "unit": "°C",
+            "ui": {
+                "group": 1,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "editorOptions": {
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Температура в подающем трубопроводе"
+                    }
+                }
+            }
+        },
+        "pressureInputPipe": {
+            "type": "number",
+            "unit": "кПа",
+            "ui": {
+                "group": 1,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "editorOptions": {
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Давление в подающем трубопроводе"
+                    }
+                }
+            }
+        },
+        "pressureReturnPipe": {
+            "type": "number",
+            "unit": "кПа",
+            "ui": {
+                "group": 1,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "editorOptions": {
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Давление в обратном трубопроводе"
+                    }
+                }
+            }
+        },
         "timestamp": {
             "type": "integer",
             "ui": {
