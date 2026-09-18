@@ -143,6 +143,25 @@
                 }
             }
         },
+        "totalHeatConsumption": {
+            "type": "number",
+            "unit": "Гкал",
+            "ui": {
+                "group": 1,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "editorOptions": {
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Общее количество тепла"
+                    }
+                },
+                "chart": {}
+            }
+        },
         "timestamp": {
             "type": "integer",
             "ui": {
