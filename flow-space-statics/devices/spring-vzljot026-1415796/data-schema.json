@@ -35,6 +35,7 @@
                 }
             }
         },
+        
         "timestamp": {
             "type": "integer",
             "ui": {
