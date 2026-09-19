@@ -302,7 +302,7 @@
         "serialAsciiResponseStartDelimiter": "0x3A",
         "unit_id": 1,
         "commandDelay": 1,
-        "clientTimeout": "10000",
+        "clientTimeout": 10000,
         "reconnectOnTimeout": true,
         "reconnectTimeout": 4000,
         "parallelUnitIdsAllowed": true,
@@ -1047,13 +1047,10 @@
         "x": 150,
         "y": 80,
         "wires": [
-            [
-                "2d3c9ac741bd80d2"
-            ],
+            [],
             [
                 "739e4dcf6f0d9904",
-                "ba48a12786b5e209",
-                "a13ce2a3d36bcce4"
+                "ba48a12786b5e209"
             ]
         ]
     },
@@ -1173,26 +1170,9 @@
         "y": 440,
         "wires": [
             [
-                "97a37cff24eab2ec",
                 "541e40da0fbab5bd"
             ]
         ]
-    },
-    {
-        "id": "97a37cff24eab2ec",
-        "type": "debug",
-        "z": "a03807f6777b0746",
-        "name": "debug 10",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 920,
-        "y": 360,
-        "wires": []
     },
     {
         "id": "41441d8783f11816",
@@ -1386,8 +1366,7 @@
         "y": 440,
         "wires": [
             [
-                "458b8544654139a3",
-                "0212465cbf8efe29"
+                "458b8544654139a3"
             ]
         ]
     },
@@ -1410,22 +1389,6 @@
                 "fe6cb4d10ba3253a"
             ]
         ]
-    },
-    {
-        "id": "0212465cbf8efe29",
-        "type": "debug",
-        "z": "a03807f6777b0746",
-        "name": "debug 14",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 730,
-        "y": 560,
-        "wires": []
     },
     {
         "id": "0155e63221e70dc8",
@@ -1650,179 +1613,6 @@
         ]
     },
     {
-        "id": "f906f078432f497d",
-        "type": "modbus-read",
-        "z": "a03807f6777b0746",
-        "d": true,
-        "name": "vzljot_026",
-        "topic": "",
-        "showStatusActivities": false,
-        "logIOActivities": false,
-        "showErrors": true,
-        "showWarnings": true,
-        "unitid": "1",
-        "dataType": "InputRegister",
-        "adr": "0xC01E",
-        "quantity": "8",
-        "rate": "1",
-        "rateUnit": "m",
-        "delayOnStart": false,
-        "enableDeformedMessages": false,
-        "startDelayTime": "",
-        "server": "93c59e0910ba051a",
-        "useIOFile": false,
-        "ioFile": "",
-        "useIOForPayload": false,
-        "emptyMsgOnFail": false,
-        "x": 140,
-        "y": 1320,
-        "wires": [
-            [],
-            [
-                "4dbd5e2a8f6211e2",
-                "3e44c23026da16de"
-            ]
-        ]
-    },
-    {
-        "id": "4dbd5e2a8f6211e2",
-        "type": "function",
-        "z": "a03807f6777b0746",
-        "name": "data-convert",
-        "func": "\nconst regs = msg.payload.data; // [16453, 14861, 16457, 17853, 0, 0, 0, 0]\n\nconst floats = [];\nfor (let i = 0; i < 8; i += 2) {\n    const buf = Buffer.alloc(4);\n    buf.writeUInt16BE(regs[i], 0);\n    buf.writeUInt16BE(regs[i + 1], 2);\n    floats.push(buf.readFloatBE(0));\n}\nmsg.payload = {\n    volumeFlowRate1: floats[0],\n    volumeFlowRate2: floats[1],\n    volumeFlowRate3: floats[2],\n    volumeFlowRate4: floats[3]\n};\n\nreturn msg;\n\n",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 430,
-        "y": 1360,
-        "wires": [
-            [
-                "9e6dc7b6a921b964"
-            ]
-        ]
-    },
-    {
-        "id": "1e73079982bd0d89",
-        "type": "function",
-        "z": "a03807f6777b0746",
-        "name": "data-convert",
-        "func": "const regs = msg.payload.data; // [pt1_hi, pt1_lo, pt2_hi, pt2_lo, pt3_hi, pt3_lo, pt4_hi, pt4_lo]\nconst floats = [];\n\nfor (let i = 0; i < 8; i += 2) {\n    const buf = Buffer.alloc(4);\n    buf.writeUInt16BE(regs[i], 0);\n    buf.writeUInt16BE(regs[i + 1], 2);\n\n    floats.push(buf.readFloatBE(0));\n}\n\nmsg.payload = {\n    temperature1: floats[0],\n    temperature2: floats[1],\n    temperature3: floats[2],\n    temperature4: floats[3]\n};\n\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 430,
-        "y": 1480,
-        "wires": [
-            [
-                "9e6dc7b6a921b964"
-            ]
-        ]
-    },
-    {
-        "id": "9e6dc7b6a921b964",
-        "type": "join",
-        "z": "a03807f6777b0746",
-        "name": "joinData",
-        "mode": "custom",
-        "build": "merged",
-        "property": "payload",
-        "propertyType": "msg",
-        "key": "topic",
-        "joiner": "\\n",
-        "joinerType": "str",
-        "useparts": false,
-        "accumulate": false,
-        "timeout": "",
-        "count": "",
-        "reduceRight": false,
-        "reduceExp": "",
-        "reduceInit": "",
-        "reduceInitType": "",
-        "reduceFixup": "",
-        "x": 680,
-        "y": 1440,
-        "wires": [
-            [
-                "4f499b0989f26ce4"
-            ]
-        ]
-    },
-    {
-        "id": "2d3c9ac741bd80d2",
-        "type": "debug",
-        "z": "a03807f6777b0746",
-        "name": "debug 16",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 330,
-        "y": 40,
-        "wires": []
-    },
-    {
-        "id": "a13ce2a3d36bcce4",
-        "type": "debug",
-        "z": "a03807f6777b0746",
-        "name": "debug 17",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 230,
-        "y": 180,
-        "wires": []
-    },
-    {
-        "id": "4f499b0989f26ce4",
-        "type": "function",
-        "z": "a03807f6777b0746",
-        "name": "collect-device-state",
-        "func": "const { storeDeviceStateToCacheAsync } = global.get('helpers');\n\nconst payload = msg.payload;\n\nconst deviceState = {\n    volumeFlowRateInputPipe: payload.volumeFlowRate1,\n    volumeFlowRateReturnPipe: payload.volumeFlowRate2,\n    temperatureInputPipe: payload.temperature1,\n    temperatureReturnPipe: payload.temperature2,\n    pressureInputPipe: payload.pressure1 > 0 ? payload.pressure1 : 0,\n    pressureReturnPipe: payload.pressure2 > 0 ? payload.pressure2 : 0,\n\n    // Timestamp\n    timestamp: Date.now(),\n};\n\nconst flowUid = node.path.split('/').find(_ => true);\nawait storeDeviceStateToCacheAsync(global, flowUid, deviceState, 4);\nmsg.deviceState = deviceState;\n\nreturn msg;\n",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 890,
-        "y": 1440,
-        "wires": [
-            [
-                "aaf780c486dcf933"
-            ]
-        ]
-    },
-    {
-        "id": "aaf780c486dcf933",
-        "type": "debug",
-        "z": "a03807f6777b0746",
-        "name": "debug 18",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "deviceState",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1120,
-        "y": 1440,
-        "wires": []
-    },
-    {
         "id": "aa422656ca4fb80b",
         "type": "inject",
         "z": "a03807f6777b0746",
@@ -1844,8 +1634,8 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 160,
-        "y": 1780,
+        "x": 140,
+        "y": 1300,
         "wires": [
             [
                 "ffc15b634433cef3"
@@ -1856,7 +1646,7 @@
         "id": "ffc15b634433cef3",
         "type": "function",
         "z": "a03807f6777b0746",
-        "name": "function 1",
+        "name": "Vzljot026",
         "func": "function crc16(buffer) {\n    let crc = 0xFFFF;\n    for (let pos = 0; pos < buffer.length; pos++) {\n        crc ^= buffer[pos];\n        for (let i = 0; i < 8; i++) {\n            if (crc & 0x0001) {\n                crc >>= 1;\n                crc ^= 0xA001;\n            } else {\n                crc >>= 1;\n            }\n        }\n    }\n    return crc;\n}\n\nfunction buildRequest(unitId, fc, address, count) {\n    const buf = Buffer.alloc(6);\n    buf.writeUInt8(unitId, 0);\n    buf.writeUInt8(fc, 1);\n    buf.writeUInt16BE(address, 2);\n    buf.writeUInt16BE(count, 4);\n    const crc = crc16(buf);\n    const crcBuf = Buffer.alloc(2);\n    crcBuf.writeUInt16LE(crc, 0); // Modbus CRC is little-endian on the wire\n    return Buffer.concat([buf, crcBuf]);\n}\n\nconst socket = new net.Socket();\nsocket.connect(5011, '10.10.0.246', () => {\n    const req = buildRequest(1, 4, 0xC01E, 8);\n    socket.write(req);\n});\n\nsocket.on('data', (data) => {\n    // data[0]=unitId, data[1]=fc, data[2]=byteCount, data[3..]=register bytes, last 2 bytes=CRC\n    const byteCount = data[2];\n    const regs = [];\n    for (let i = 0; i < byteCount; i += 2) {\n        regs.push(data.readUInt16BE(3 + i));\n    }\n    const floats = [];\n    for (let i = 0; i < regs.length; i += 2) {\n        const buf = Buffer.alloc(4);\n        buf.writeUInt16BE(regs[i], 0);\n        buf.writeUInt16BE(regs[i + 1], 2);\n        floats.push(buf.readFloatBE(0));\n    }\n     msg.payload = { pr1: floats[0], pr2: floats[1], pr3: floats[2], pr4: floats[3] };\n     node.send(msg);\n    socket.end();\n});",
         "outputs": 1,
         "timeout": 0,
@@ -1873,8 +1663,8 @@
                 "module": "net"
             }
         ],
-        "x": 410,
-        "y": 1780,
+        "x": 390,
+        "y": 1300,
         "wires": [
             [
                 "b7176db648aa94c5"
@@ -1893,62 +1683,9 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 660,
-        "y": 1780,
+        "x": 640,
+        "y": 1300,
         "wires": []
-    },
-    {
-        "id": "e29c49de5d2b8822",
-        "type": "modbus-getter",
-        "z": "a03807f6777b0746",
-        "d": true,
-        "name": "",
-        "showStatusActivities": false,
-        "showErrors": false,
-        "showWarnings": true,
-        "logIOActivities": false,
-        "unitid": "1",
-        "dataType": "InputRegister",
-        "adr": "0xC02A",
-        "quantity": "8",
-        "server": "93c59e0910ba051a",
-        "useIOFile": false,
-        "ioFile": "",
-        "useIOForPayload": false,
-        "emptyMsgOnFail": false,
-        "keepMsgProperties": false,
-        "delayOnStart": false,
-        "enableDeformedMessages": false,
-        "startDelayTime": "",
-        "x": 160,
-        "y": 1480,
-        "wires": [
-            [],
-            [
-                "1e73079982bd0d89",
-                "446ebe892bb4b37c"
-            ]
-        ]
-    },
-    {
-        "id": "3e44c23026da16de",
-        "type": "function",
-        "z": "a03807f6777b0746",
-        "name": "trigger",
-        "func": "const buffer_array = msg.payload.buffer;\nif (buffer_array.length > 0) {\n    msg.payload = 1;\n\n    return msg;\n}\n",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 310,
-        "y": 1400,
-        "wires": [
-            [
-                "e29c49de5d2b8822"
-            ]
-        ]
     },
     {
         "id": "3b2dd360db804c04",
@@ -1956,81 +1693,9 @@
         "z": "a03807f6777b0746",
         "name": "spring-vzljot026-1415796 [22] - mock (VZLJOT_026M-1413560)",
         "info": "",
-        "x": 310,
-        "y": 1900,
+        "x": 290,
+        "y": 1420,
         "wires": []
-    },
-    {
-        "id": "97ca1d1e00135a4c",
-        "type": "modbus-getter",
-        "z": "a03807f6777b0746",
-        "d": true,
-        "name": "",
-        "showStatusActivities": false,
-        "showErrors": false,
-        "showWarnings": true,
-        "logIOActivities": false,
-        "unitid": "1",
-        "dataType": "HoldingRegister",
-        "adr": "0xC034",
-        "quantity": "8",
-        "server": "93c59e0910ba051a",
-        "useIOFile": false,
-        "ioFile": "",
-        "useIOForPayload": false,
-        "emptyMsgOnFail": false,
-        "keepMsgProperties": false,
-        "delayOnStart": false,
-        "enableDeformedMessages": false,
-        "startDelayTime": "",
-        "x": 160,
-        "y": 1600,
-        "wires": [
-            [],
-            [
-                "12fb20d03841a6b4"
-            ]
-        ]
-    },
-    {
-        "id": "12fb20d03841a6b4",
-        "type": "function",
-        "z": "a03807f6777b0746",
-        "name": "data-convert",
-        "func": "const regs = msg.payload.data;\nconst floats = [];\n\nfor (let i = 0; i < 8; i += 2) {\n    const buf = Buffer.alloc(4);\n    buf.writeUInt16BE(regs[i], 0);\n    buf.writeUInt16BE(regs[i + 1], 2);\n\n    floats.push(buf.readFloatBE(0));\n}\n\nmsg.payload = {\n    presure1: floats[0],\n    presure2: floats[1],\n    presure3: floats[2],\n    presure4: floats[3]\n};\n\nmsg.complete = true;\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 430,
-        "y": 1620,
-        "wires": [
-            [
-                "9e6dc7b6a921b964"
-            ]
-        ]
-    },
-    {
-        "id": "446ebe892bb4b37c",
-        "type": "function",
-        "z": "a03807f6777b0746",
-        "name": "trigger",
-        "func": "const buffer_array = msg.payload.buffer;\nif (buffer_array.length > 0) {\n    msg.payload = 1;\n\n    return msg;\n}\n",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 310,
-        "y": 1540,
-        "wires": [
-            [
-                "97ca1d1e00135a4c"
-            ]
-        ]
     },
     {
         "id": "1c452a002ba73ce2",
@@ -2040,7 +1705,7 @@
         "topic": "",
         "showStatusActivities": false,
         "logIOActivities": false,
-        "showErrors": true,
+        "showErrors": false,
         "showWarnings": true,
         "unitid": "1",
         "dataType": "InputRegister",
@@ -2056,8 +1721,8 @@
         "ioFile": "",
         "useIOForPayload": false,
         "emptyMsgOnFail": false,
-        "x": 170,
-        "y": 1960,
+        "x": 150,
+        "y": 1480,
         "wires": [
             [],
             [
@@ -2072,15 +1737,15 @@
         "type": "function",
         "z": "a03807f6777b0746",
         "name": "data-convert",
-        "func": "function floatsFromRegs(regs, offset, count) {\n    const out = [];\n    for (let i = offset; i < offset + count * 2; i += 2) {\n        const buf = Buffer.alloc(4);\n        buf.writeUInt16BE(regs[i], 0);\n        buf.writeUInt16BE(regs[i + 1], 2);\n        out.push(buf.readFloatBE(0));\n    }\n    \n    return out;\n}\n\nconst regs = msg.payload.data;\n\nif (!regs || regs.length < 30) {\n    node.error(\"Unexpected register count: \" + (regs ? regs.length : \"undefined\"));\n    return null;\n}\n\nconst pr = floatsFromRegs(regs, 0, 4);   // 0xC01E - flow rates\nconst pt = floatsFromRegs(regs, 12, 4);  // 0xC02A - temperatures\nconst pd = floatsFromRegs(regs, 22, 4);  // 0xC034 - pressures\n\nmsg.payload = {\n    volumeFlowRate1: pr[0], volumeFlowRate2: pr[1], volumeFlowRate3: pr[2], volumeFlowRate4: pr[3],\n    temperature1: pt[0], temperature2: pt[1], temperature3: pt[2], temperature4: pt[3],\n    presure1: pd[0], presure2: pd[1], presure3: pd[2], presure4: pd[3]\n};\n\n\n\nreturn msg;\n",
+        "func": "function floatsFromRegs(regs, offset, count) {\n    const result = [];\n    for (let i = offset; i < offset + count * 2; i += 2) {\n        const buf = Buffer.alloc(4);\n        buf.writeUInt16BE(regs[i], 0);\n        buf.writeUInt16BE(regs[i + 1], 2);\n\n        result.push(buf.readFloatBE(0));\n    }\n\n    return result;\n}\n\nconst regs = msg.payload.data;\n\nif (!regs || regs.length < 30) {\n    node.error(\"Unexpected register count: \" + (regs ? regs.length : \"undefined\"));\n    \n    return null;\n}\n\nconst flowRates = floatsFromRegs(regs, 0, 4);   // 0xC01E - flow rates\nconst temperatures = floatsFromRegs(regs, 12, 4);  // 0xC02A - temperatures\nconst preasures = floatsFromRegs(regs, 22, 4);  // 0xC034 - pressures\n\nmsg.payload = {\n    volumeFlowRate1: flowRates[0],\n    volumeFlowRate2: flowRates[1],\n    volumeFlowRate3: flowRates[2],\n    volumeFlowRate4: flowRates[3],\n    temperature1: temperatures[0],\n    temperature2: temperatures[1],\n    temperature3: temperatures[2],\n    temperature4: temperatures[3],\n    presure1: preasures[0],\n    presure2: preasures[1],\n    presure3: preasures[2],\n    presure4: preasures[3]\n};\n\n\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 410,
-        "y": 1940,
+        "x": 390,
+        "y": 1460,
         "wires": [
             [
                 "e8db51391a4a9f93"
@@ -2108,8 +1773,8 @@
         "reduceInit": "",
         "reduceInitType": "",
         "reduceFixup": "",
-        "x": 620,
-        "y": 1940,
+        "x": 600,
+        "y": 1460,
         "wires": [
             [
                 "9212c9241bc385a8"
@@ -2128,8 +1793,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 830,
-        "y": 1940,
+        "x": 810,
+        "y": 1460,
         "wires": [
             [
                 "ccb246d54332291d"
@@ -2141,15 +1806,15 @@
         "type": "debug",
         "z": "a03807f6777b0746",
         "name": "debug 12",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1040,
-        "y": 1940,
+        "x": 1020,
+        "y": 1460,
         "wires": []
     },
     {
@@ -2164,8 +1829,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 410,
-        "y": 2060,
+        "x": 390,
+        "y": 1580,
         "wires": [
             [
                 "cdc4261997b71799"
@@ -2178,7 +1843,7 @@
         "z": "a03807f6777b0746",
         "name": "",
         "showStatusActivities": false,
-        "showErrors": true,
+        "showErrors": false,
         "showWarnings": true,
         "logIOActivities": false,
         "unitid": "1",
@@ -2194,8 +1859,8 @@
         "delayOnStart": false,
         "enableDeformedMessages": false,
         "startDelayTime": "",
-        "x": 180,
-        "y": 2120,
+        "x": 160,
+        "y": 1640,
         "wires": [
             [],
             [
@@ -2215,8 +1880,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 440,
-        "y": 2160,
+        "x": 420,
+        "y": 1680,
         "wires": [
             [
                 "e8db51391a4a9f93"
@@ -2235,8 +1900,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 370,
-        "y": 1980,
+        "x": 350,
+        "y": 1500,
         "wires": []
     },
     {
@@ -2256,8 +1921,8 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 250,
-        "y": 2060,
+        "x": 230,
+        "y": 1580,
         "wires": [
             [
                 "ef2bb516ae2187fd"
