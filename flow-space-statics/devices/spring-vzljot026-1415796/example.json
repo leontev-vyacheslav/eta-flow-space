@@ -1,0 +1,18 @@
+{
+  "mass1": 11969552.812871695,
+  "mass2": 10782582.854981065,
+  "mass3": 0,
+  "mass4": 0,
+  "volume1": 12272990.033448935,
+  "volume2": 10934886.06965208,
+  "volume3": 0,
+  "volume4": 0,
+  "timestamp": 1789886741044,
+  "pressureInputPipe": 0,
+  "pressureReturnPipe": 0,
+  "temperatureInputPipe": 73.54801940917969,
+  "totalHeatConsumption": 242193.37237641215,
+  "temperatureReturnPipe": 53.58796691894531,
+  "volumeFlowRateInputPipe": 59.52000045776367,
+  "volumeFlowRateReturnPipe": 65.27999877929688
+}

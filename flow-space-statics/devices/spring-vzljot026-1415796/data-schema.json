@@ -162,6 +162,83 @@
                 "chart": {}
             }
         },
+        "mass1": {
+            "type": "number",
+            "unit": "т",
+            "ui": {
+                "group": 1,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "editorOptions": {
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Масса в подающем трубопроводе"
+                    }
+                },
+                "chart": {}
+            }
+        },
+        "mass2": {
+            "type": "number",
+            "unit": "т",
+            "ui": {
+                "group": 1,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "editorOptions": {
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Масса в обратном трубопроводе"
+                    }
+                },
+                "chart": {}
+            }
+        },
+        "volume1": {
+            "type": "number",
+            "unit": "м³",
+            "ui": {
+                "group": 1,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "editorOptions": {
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Объем в подающем трубопроводе"
+                    }
+                },
+                "chart": {}
+            }
+        },
+        "volume2": {
+            "type": "number",
+            "unit": "м³",
+            "ui": {
+                "group": 1,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "editorOptions": {
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Объем в обратном трубопроводе"
+                    }
+                },
+                "chart": {}
+            }
+        },
+
         "timestamp": {
             "type": "integer",
             "ui": {
