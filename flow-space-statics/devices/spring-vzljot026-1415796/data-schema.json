@@ -50,7 +50,8 @@
                         "showColon": true,
                         "text": "Объемный расход в подающем трубопроводе"
                     }
-                }
+                },
+                "chart": {}
             }
         },
         "volumeFlowRateReturnPipe": {
@@ -68,7 +69,8 @@
                         "showColon": true,
                         "text": "Объемный расход в обратном трубопроводе"
                     }
-                }
+                },
+                "chart": {}
             }
         },
         "temperatureInputPipe": {
@@ -86,10 +88,11 @@
                         "showColon": true,
                         "text": "Температура в подающем трубопроводе"
                     }
-                }
+                },
+                "chart": {}
             }
         },
-         "temperatureReturnPipe": {
+        "temperatureReturnPipe": {
             "type": "number",
             "unit": "°C",
             "ui": {
@@ -104,7 +107,8 @@
                         "showColon": true,
                         "text": "Температура в подающем трубопроводе"
                     }
-                }
+                },
+                "chart": {}
             }
         },
         "pressureInputPipe": {
@@ -122,7 +126,8 @@
                         "showColon": true,
                         "text": "Давление в подающем трубопроводе"
                     }
-                }
+                },
+                "chart": {}
             }
         },
         "pressureReturnPipe": {
@@ -140,7 +145,8 @@
                         "showColon": true,
                         "text": "Давление в обратном трубопроводе"
                     }
-                }
+                },
+                "chart": {}
             }
         },
         "totalHeatConsumption": {
@@ -162,7 +168,7 @@
                 "chart": {}
             }
         },
-        "mass1": {
+        "massInputPipe": {
             "type": "number",
             "unit": "т",
             "ui": {
@@ -181,7 +187,7 @@
                 "chart": {}
             }
         },
-        "mass2": {
+        "massReturnPipe": {
             "type": "number",
             "unit": "т",
             "ui": {
@@ -200,7 +206,7 @@
                 "chart": {}
             }
         },
-        "volume1": {
+        "volumeInputPipe": {
             "type": "number",
             "unit": "м³",
             "ui": {
@@ -219,7 +225,7 @@
                 "chart": {}
             }
         },
-        "volume2": {
+        "volumeReturnPipe": {
             "type": "number",
             "unit": "м³",
             "ui": {
@@ -238,7 +244,6 @@
                 "chart": {}
             }
         },
-
         "timestamp": {
             "type": "integer",
             "ui": {
