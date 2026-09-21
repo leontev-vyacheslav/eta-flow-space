@@ -5,7 +5,7 @@ from typing import Annotated, Tuple
 from fastapi import HTTPException, status
 from fastapi.params import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import and_, desc, or_, select, func, cast, Integer, literal_column, text
+from sqlalchemy import and_, desc, or_, select, func, cast, Float, literal_column, text
 
 from app.data_models import DeviceState, UserDeviceLink, Device
 from app.db.database import get_db
@@ -61,7 +61,7 @@ class AccountingSheetBaseRepository:
 
         # Define once — add/remove metrics here and nothing else needs to change
 
-        accumulated_consumption = [cast(literal_column(f"state -> '{json_key}'"), Integer).label(column_name) for json_key, column_name in self.METRICS]
+        accumulated_consumption = [cast(literal_column(f"state -> '{json_key}'"), Float).label(column_name) for json_key, column_name in self.METRICS]
 
         created_at_tz = func.timezone(time_zone, DeviceState.created_at).label("created_at")
         day_expr = func.date(created_at_tz)

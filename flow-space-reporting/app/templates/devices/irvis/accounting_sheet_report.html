@@ -129,20 +129,17 @@
                     <td>
                         {{ row.day | locale_format_date }}
                     </td>
-                    <!-- <td>
-                        {{ row.created_at | locale_format_datetime }}
-                    </td> -->
                     <td>
-                        {{ row.metrics['accumulatedVolume'].value if row.metrics['accumulatedVolume'].value is not none else '-' }}
+                        {{ row.metrics['accumulatedVolume'].value | format_number if row.metrics['accumulatedVolume'].value is not none else '-' }}
                     </td>
                     <td>
-                        {{ row.metrics['accumulatedVolume'].consumption if row.metrics['accumulatedVolume'].consumption is not none else '-' }}
+                        {{ row.metrics['accumulatedVolume'].consumption | format_number if row.metrics['accumulatedVolume'].consumption is not none else '-' }}
                     </td>
                 </tr>
                 {% endfor %}
                 <tr style="font-weight: bold;">
                     <td colspan="3" style="text-align: right;">Итого за период:</td>
-                    <td>{{ monthly_totals[month_key]['accumulatedVolume'] }}</td>
+                    <td>{{ monthly_totals[month_key]['accumulatedVolume'] | format_number }}</td>
                 </tr>
             </tbody>
         </table>
@@ -150,7 +147,7 @@
     {% endfor %}
 
     <div class="page-break">
-        <h2>Итого за весь период: {{ total_consumption['accumulatedVolume'] }}</h2>
+        <h2>Итого за весь период: {{ total_consumption['accumulatedVolume'] | format_number }}</h2>
     </div>
 </body>
 

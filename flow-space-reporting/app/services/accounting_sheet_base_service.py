@@ -18,6 +18,7 @@ filters = [
     locale_format_month,
     locale_format_month_name,
     period_type_title_format,
+    format_number,
 ]
 
 

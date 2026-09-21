@@ -2,5 +2,5 @@ from pydantic import BaseModel
 
 
 class MetricValueModel(BaseModel):
-    value: int | None
-    consumption: int | None
+    value: float | None
+    consumption: float | None
