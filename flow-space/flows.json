@@ -42,7 +42,7 @@
     {
         "id": "d6d7729c719fdc31",
         "type": "subflow",
-        "name": "Mercury230",
+        "name": "Mercury230 Client",
         "info": "",
         "category": "",
         "in": [
@@ -95,6 +95,75 @@
             "wires": [
                 {
                     "id": "f771ca0ce7b8f417",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "ek270iec61107reader00",
+        "type": "subflow",
+        "name": "EK270 IEC61107 Client",
+        "info": "Reads the full parameter set from an EK270 gas volume corrector over TCP (e.g. via a МТЭК-2/3 GPRS gateway), using the IEC 61107-2001 programming-mode handshake, via the shared Ek270Iec61107Client class (registered on functionGlobalContext in settings.js — see the setup note delivered alongside this subflow). Send any message in to trigger a read; the same message comes out with `msg.payload` set to the typed result object (matching the ek270 JSON schema: numeric measurements, factoryNumber/firmware as strings, deviceTime/timestamp as epoch ms, isConnected boolean). On failure, `msg.payload` still carries isConnected: false plus whatever partial data was read before the failure, and node.error() is called with the failure message.",
+        "category": "subflows",
+        "in": [
+            {
+                "x": 80,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "ek270iec61107reader01"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 400,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "ek270iec61107reader01",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "HOST",
+                "type": "str",
+                "value": "94.180.248.157"
+            },
+            {
+                "name": "PORT",
+                "type": "num",
+                "value": "5021"
+            },
+            {
+                "name": "EVEN_PARITY",
+                "type": "bool",
+                "value": "false"
+            },
+            {
+                "name": "STEP_DELAY_MS",
+                "type": "num",
+                "value": "300"
+            },
+            {
+                "name": "RESPONSE_TIMEOUT_MS",
+                "type": "num",
+                "value": "30000"
+            }
+        ],
+        "meta": {},
+        "color": "#DDAA99",
+        "status": {
+            "x": 420,
+            "y": 220,
+            "wires": [
+                {
+                    "id": "b6b689632e73322d",
                     "port": 0
                 }
             ]
@@ -315,7 +384,7 @@
         "type": "function",
         "z": "d6d7729c719fdc31",
         "name": "get-measurements",
-        "func": "const HOST = env.get('HOST');\nconst PORT = Number(env.get('PORT'));\nconst ADDRESS = Number(env.get('ADDRESS'));\n\nconst { Mercury230Client, withConnectionLock } = global.get('mercury230');\n\n(async () => {\n    try {\n        const deviceState = await withConnectionLock(HOST, PORT, async () => {\n            const client = new Mercury230Client(net, HOST, PORT, ADDRESS);\n            try {\n                await client.connect();\n                return await client.readFullState();\n            } finally {\n                client.disconnect();\n            }\n        });\n\n        node.send({ payload: deviceState });\n        node.status({ fill: 'green', shape: 'dot', text: 'ok ' + new Date().toLocaleTimeString() });\n    } catch (err) {\n        node.error('Mercury230 read failed: ' + err.message);\n        node.status({ fill: 'red', shape: 'ring', text: 'error' });\n    }\n})();\n\nreturn null;\n\n",
+        "func": "const HOST = env.get('HOST');\nconst PORT = Number(env.get('PORT'));\nconst ADDRESS = Number(env.get('ADDRESS'));\n\nconst { Mercury230Client } = global.get('mercury230');\nconst { withConnectionLock } = global.get('withConnectionLock');\n\n(async () => {\n    try {\n        const deviceState = await withConnectionLock(HOST, PORT, async () => {\n            const client = new Mercury230Client(net, HOST, PORT, ADDRESS);\n            try {\n                await client.connect();\n                return await client.readFullState();\n            } finally {\n                client.disconnect();\n            }\n        });\n\n        node.send({ payload: deviceState });\n        node.status({ fill: 'green', shape: 'dot', text: 'ok ' + new Date().toLocaleTimeString() });\n    } catch (err) {\n        node.error('Mercury230 read failed: ' + err.message);\n        node.status({ fill: 'red', shape: 'ring', text: 'error' });\n    }\n})();\n\nreturn null;\n\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -341,6 +410,36 @@
         "scope": null,
         "x": 320,
         "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ek270iec61107reader01",
+        "type": "function",
+        "z": "ek270iec61107reader00",
+        "name": "get-measurements",
+        "func": "const HOST = env.get('HOST');\nconst PORT = Number(env.get('PORT'));\nconst EVEN_PARITY_RAW = env.get('EVEN_PARITY');\nconst EVEN_PARITY = EVEN_PARITY_RAW === true || EVEN_PARITY_RAW === 'true';\nconst STEP_DELAY_MS = Number(env.get('STEP_DELAY_MS')) || 300;\nconst RESPONSE_TIMEOUT_MS = Number(env.get('RESPONSE_TIMEOUT_MS')) || 30000;\n\nconst { Ek270Iec61107Client } = global.get('ek270Iec61107');\nconst { withConnectionLock } = global.get('withConnectionLock');\n\n(async () => {\n    try {\n        const deviceState = await withConnectionLock(HOST, PORT, async () => {\n            const client = new Ek270Iec61107Client({\n                host: HOST,\n                port: PORT,\n                evenParity: EVEN_PARITY,\n                stepDelayMs: STEP_DELAY_MS,\n                responseTimeoutMs: RESPONSE_TIMEOUT_MS,\n            });\n            // Ek270Iec61107Client.read() opens the socket, runs the full\n            // IEC 61107 handshake, reads every parameter and closes the\n            // socket itself — unlike Mercury230Client there is no separate\n            // connect()/disconnect() step to call here.\n            return await client.read();\n        });\n\n        msg.payload = deviceState;\n        node.send(msg);\n        node.status({ fill: 'green', shape: 'dot', text: 'ok ' + new Date().toLocaleTimeString() });\n    } catch (err) {\n        // Full read failed — nothing goes out. No partial/incomplete set is sent downstream.\n        node.error('EK270 read failed: ' + err.message, msg);\n        node.status({ fill: 'red', shape: 'ring', text: 'error' });\n    }\n})();\n\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 220,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b6b689632e73322d",
+        "type": "status",
+        "z": "ek270iec61107reader00",
+        "name": "",
+        "scope": null,
+        "x": 140,
+        "y": 220,
         "wires": [
             []
         ]
@@ -1560,21 +1659,21 @@
         "env": [
             {
                 "name": "HOST",
-                "value": "78.138.175.183",
+                "value": "94.180.248.157",
                 "type": "str"
             },
             {
                 "name": "PORT",
-                "value": "5022",
+                "value": "5012",
                 "type": "str"
             },
             {
                 "name": "ADDRESS",
-                "value": "0x05",
+                "value": "96",
                 "type": "str"
             }
         ],
-        "x": 430,
+        "x": 450,
         "y": 600,
         "wires": [
             [
@@ -1590,102 +1689,27 @@
         "env": [
             {
                 "name": "HOST",
-                "value": "78.138.175.183",
+                "value": "94.180.248.157",
                 "type": "str"
             },
             {
                 "name": "PORT",
-                "value": "5022",
+                "value": "5012",
                 "type": "num"
             },
             {
                 "name": "ADDRESS",
-                "value": "45",
+                "value": "87",
                 "type": "num"
             }
         ],
-        "x": 430,
+        "x": 450,
         "y": 720,
         "wires": [
             [
                 "0a018730228903d3"
             ]
         ]
-    },
-    {
-        "id": "aa422656ca4fb80b",
-        "type": "inject",
-        "z": "a03807f6777b0746",
-        "d": true,
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 130,
-        "y": 1280,
-        "wires": [
-            [
-                "ffc15b634433cef3"
-            ]
-        ]
-    },
-    {
-        "id": "ffc15b634433cef3",
-        "type": "function",
-        "z": "a03807f6777b0746",
-        "name": "Vzljot026",
-        "func": "function crc16(buffer) {\n    let crc = 0xFFFF;\n    for (let pos = 0; pos < buffer.length; pos++) {\n        crc ^= buffer[pos];\n        for (let i = 0; i < 8; i++) {\n            if (crc & 0x0001) {\n                crc >>= 1;\n                crc ^= 0xA001;\n            } else {\n                crc >>= 1;\n            }\n        }\n    }\n    return crc;\n}\n\nfunction buildRequest(unitId, fc, address, count) {\n    const buf = Buffer.alloc(6);\n    buf.writeUInt8(unitId, 0);\n    buf.writeUInt8(fc, 1);\n    buf.writeUInt16BE(address, 2);\n    buf.writeUInt16BE(count, 4);\n    const crc = crc16(buf);\n    const crcBuf = Buffer.alloc(2);\n    crcBuf.writeUInt16LE(crc, 0); // Modbus CRC is little-endian on the wire\n    return Buffer.concat([buf, crcBuf]);\n}\n\nconst socket = new net.Socket();\nsocket.connect(5011, '10.10.0.246', () => {\n    const req = buildRequest(1, 4, 0xC01E, 8);\n    socket.write(req);\n});\n\nsocket.on('data', (data) => {\n    // data[0]=unitId, data[1]=fc, data[2]=byteCount, data[3..]=register bytes, last 2 bytes=CRC\n    const byteCount = data[2];\n    const regs = [];\n    for (let i = 0; i < byteCount; i += 2) {\n        regs.push(data.readUInt16BE(3 + i));\n    }\n    const floats = [];\n    for (let i = 0; i < regs.length; i += 2) {\n        const buf = Buffer.alloc(4);\n        buf.writeUInt16BE(regs[i], 0);\n        buf.writeUInt16BE(regs[i + 1], 2);\n        floats.push(buf.readFloatBE(0));\n    }\n     msg.payload = { pr1: floats[0], pr2: floats[1], pr3: floats[2], pr4: floats[3] };\n     node.send(msg);\n    socket.end();\n});",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [
-            {
-                "var": "ModbusRTU",
-                "module": "modbus-serial"
-            },
-            {
-                "var": "net",
-                "module": "net"
-            }
-        ],
-        "x": 380,
-        "y": 1280,
-        "wires": [
-            [
-                "b7176db648aa94c5"
-            ]
-        ]
-    },
-    {
-        "id": "b7176db648aa94c5",
-        "type": "debug",
-        "z": "a03807f6777b0746",
-        "name": "debug 20",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 630,
-        "y": 1280,
-        "wires": []
     },
     {
         "id": "3b2dd360db804c04",
@@ -1711,8 +1735,8 @@
         "dataType": "InputRegister",
         "adr": "0xC01E",
         "quantity": "30",
-        "rate": "2",
-        "rateUnit": "m",
+        "rate": "30",
+        "rateUnit": "s",
         "delayOnStart": false,
         "enableDeformedMessages": false,
         "startDelayTime": "",
@@ -2006,6 +2030,85 @@
         "wires": [
             [
                 "83220f754a3875a4"
+            ]
+        ]
+    },
+    {
+        "id": "a6d230e8dad9b34d",
+        "type": "inject",
+        "z": "a03807f6777b0746",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "180",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 1340,
+        "wires": [
+            [
+                "b1a4adec7ce85209"
+            ]
+        ]
+    },
+    {
+        "id": "077f8a7615c4ef33",
+        "type": "function",
+        "z": "a03807f6777b0746",
+        "name": "collect-device-state",
+        "func": "const { storeDeviceStateToCacheAsync } = global.get('helpers');\n\nconst payload = msg.payload;\n\nconst deviceState = {\n    ...payload,\n\n    // Timestamp\n    timestamp: Date.now(),\n};\n\nconst flowUid = node.path.split('/').find(_ => true);\nawait storeDeviceStateToCacheAsync(global, flowUid, deviceState, 3);\nmsg.deviceState = deviceState;\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 1340,
+        "wires": [
+            [
+                "14338c24c8804de4"
+            ]
+        ]
+    },
+    {
+        "id": "14338c24c8804de4",
+        "type": "debug",
+        "z": "a03807f6777b0746",
+        "name": "debug 16",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "deviceState",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 820,
+        "y": 1340,
+        "wires": []
+    },
+    {
+        "id": "b1a4adec7ce85209",
+        "type": "subflow:ek270iec61107reader00",
+        "z": "a03807f6777b0746",
+        "name": "EK270",
+        "x": 350,
+        "y": 1340,
+        "wires": [
+            [
+                "077f8a7615c4ef33"
             ]
         ]
     },

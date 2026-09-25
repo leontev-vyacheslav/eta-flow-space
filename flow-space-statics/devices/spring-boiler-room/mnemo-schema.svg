@@ -727,7 +727,7 @@
 		<text transform="matrix(1 0 0 1 172.6377 407.7655)" style="font-family:'Arial'; font-size:10px;">FE3.1</text>
 		<polygon style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" points="220.8,423.7 155.8,423.7
 		155.8,423.7 155.8,411.4 155.8,411.4 220.8,411.4 220.8,411.4 220.8,423.7 	" />
-		<text transform="matrix(1 0 0 1 164.9556 421.2297)" style="font-family:'Arial'; font-size:9px;"></text>
+		<text data-state="states['spring-ek270-1116061420'].standardVolumeFlow" transform="matrix(1 0 0 1 164.9556 421.2297)" style="font-family:'Arial'; font-size:9px;"></text>
 	</g>
 
 	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="240" y1="417.6" x2="240" y2="407.4" />
@@ -736,14 +736,14 @@
 		<text transform="matrix(1 0 0 1 227.5563 394.2139)" style="font-family:'Arial'; font-size:10px;">TE14</text>
 		<polygon style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" points="262.5,407.4 217.5,407.4
 		217.5,407.4 217.5,396.2 217.5,396.2 262.5,396.2 262.5,396.2 262.5,407.4 	" />
-		<text transform="matrix(1 0 0 1 227.0793 404.9299)" style="font-family:'Arial'; font-size:9px;"></text>
+		<text data-state="states['spring-ek270-1116061420'].temperature" transform="matrix(1 0 0 1 227.0793 404.9299)" style="font-family:'Arial'; font-size:9px;"></text>
 	</g>
 	<circle style="fill:#F7931E;stroke:#F7931E;stroke-miterlimit:10;" cx="240" cy="417.5" r="1.3" />
 	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="289.5" y1="417.7" x2="289.5" y2="407.3" />
 	<g>
 		<polygon style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" points="315.2,407.4 265.2,407.4
 		265.2,407.4 265.2,396.2 265.2,396.2 315.2,396.2 315.2,396.2 315.2,407.4 	" />
-		<text transform="matrix(0.9091 0 0 1 271.954 404.9297)" style="font-family:'Arial'; font-size:9px;"></text>
+		<text data-state="states['spring-ek270-1116061420'].pressure" transform="matrix(0.9091 0 0 1 271.954 404.9297)" style="font-family:'Arial'; font-size:9px;"></text>
 		<text transform="matrix(1 0 0 1 280.1481 393.8525)" style="font-family:'Arial'; font-size:10px;">PE4</text>
 	</g>
 	<circle style="fill:#F7931E;stroke:#F7931E;stroke-miterlimit:10;" cx="289.5" cy="417.3" r="1.3" />
@@ -754,7 +754,7 @@
 
 	<use href="#infoIcon"
 			data-state-eval="element.style.fill = (states['spring-ek270-1116061420'].isConnected === false ? '#F44336': '#0072C6')"
-			data-state="states['spring-ek270-1116061420'].isConnected;states['spring-ek270-1116061420'].timestamp"
+			data-state="states['spring-ek270-1116061420'].isConnected;states['spring-ek270-1116061420'].timestamp;states['spring-ek270-1116061420'].fullStandardVolume;states['spring-ek270-1116061420'].disturbanceStandardVolume"
 			style="fill:#0072C6" transform="translate(105 380) scale(0.55)" />
 		<rect style="fill:none;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;"
 			rx="10" ry="10"

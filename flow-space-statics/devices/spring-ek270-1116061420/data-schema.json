@@ -1,72 +1,413 @@
 {
-    "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "title": "spring-ek270-1116061420",
-    "type": "object",
-    "properties": {
-        "isConnected": {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ek270-1116061420",
+  "type": "object",
+  "properties": {
+    "isConnected": {
+      "type": "boolean",
+      "ui": {
+        "group": 10,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "editorOptions": {
             "type": "boolean",
-            "ui": {
-                "group": 1,
-                "editor": {
-                    "editorType": "dxCheckBox",
-                    "editorOptions": {
-                        "type": "boolean",
-                        "readOnly": true
-                    },
-                    "label": {
-                        "location": "left",
-                        "showColon": true,
-                        "text": "На связи"
-                    }
-                },
-                "colorizer": {
-                    "styleProps": [
-                        {
-                            "fill": {
-                                "red": false,
-                                "white": true
-                            },
-                            "stroke": {
-                                "yellow": false,
-                                "black": true
-                            }
-                        }
-                    ]
-                }
-            }
+            "readOnly": true
+          },
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "На связи"
+          }
         },
-        "timestamp": {
-            "type": "integer",
-            "ui": {
-                "group": 1,
-                "editor": {
-                    "editorType": "dxDateBox",
-                    "editorOptions": {
-                        "type": "datetime",
-                        "displayFormat": "dd.MM.yyyy HH:mm:ss",
-                        "readOnly": true
-                    },
-                    "label": {
-                        "location": "top",
-                        "showColon": true,
-                        "text": "Время опроса"
-                    }
-                }
-            }
-        }
-    },
-    "required": [
-        "isConnected"
-    ],
-    "ui": {
-        "useTabs": true,
-        "groups": [
+        "colorizer": {
+          "styleProps": [
             {
-                "id": 1,
-                "name": "state",
-                "caption": "Состояния",
-                "order": 100
+              "fill": {
+                "red": false,
+                "white": true
+              },
+              "stroke": {
+                "yellow": false,
+                "black": true
+              }
             }
-        ]
+          ]
+        }
+      }
+    },
+    "standardVolumeFlow": {
+      "type": "number",
+      "unit": "м3/ч",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Расход газа при н.у."
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "workVolumeFlow": {
+      "type": "number",
+      "unit": "м3/ч",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Расход газа при раб.у."
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "pressure": {
+      "type": "number",
+      "unit": "бар",
+      "ui": {
+        "group": 2,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Давление"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "temperature": {
+      "type": "number",
+      "unit": "°C",
+      "ui": {
+        "group": 3,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Температура"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "correctionCoefficient": {
+      "type": "number",
+      "ui": {
+        "group": 4,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Коэффициент коррекции"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "standardVolume": {
+      "type": "number",
+      "unit": "м3",
+      "ui": {
+        "group": 5,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Накопленный объем газа при н.у."
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "workVolume": {
+      "type": "number",
+      "unit": "м3",
+      "ui": {
+        "group": 5,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Накопленный объем газа при раб.у."
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "disturbanceStandardVolume": {
+      "type": "number",
+      "unit": "м3",
+      "ui": {
+        "group": 5,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Накопленный возмущенный объем при н.у."
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "fullStandardVolume": {
+      "type": "number",
+      "unit": "м3",
+      "ui": {
+        "group": 5,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Накопленный общий объем при н.у."
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "disturbanceWorkVolume": {
+      "type": "number",
+      "unit": "м3",
+      "ui": {
+        "group": 5,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Накопленный возмущенный объем при раб.у."
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "fullWorkVolume": {
+      "type": "number",
+      "unit": "м3",
+      "ui": {
+        "group": 5,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Накопленный общий объем при раб.у."
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "factoryNumber": {
+      "type": "string",
+      "ui": {
+        "group": 6,
+        "editor": {
+          "editorType": "dxTextBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Заводской номер"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "firmware": {
+      "type": "string",
+      "ui": {
+        "group": 6,
+        "editor": {
+          "editorType": "dxTextBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Версия ПО"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "reportingHour": {
+      "type": "number",
+      "unit": "ч",
+      "ui": {
+        "group": 6,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Отчетный час"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "archiveInterval": {
+      "type": "number",
+      "unit": "мин",
+      "ui": {
+        "group": 6,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Интервал архивирования"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "deviceTime": {
+      "type": "integer",
+      "ui": {
+        "group": 10,
+        "editor": {
+          "editorType": "dxDateBox",
+          "editorOptions": {
+            "type": "datetime",
+            "displayFormat": "dd.MM.yyyy HH:mm:ss",
+            "readOnly": true
+          },
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Текущее время прибора"
+          }
+        }
+      }
+    },
+    "timestamp": {
+      "type": "integer",
+      "ui": {
+        "group": 10,
+        "editor": {
+          "editorType": "dxDateBox",
+          "editorOptions": {
+            "type": "datetime",
+            "displayFormat": "dd.MM.yyyy HH:mm:ss",
+            "readOnly": true
+          },
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Время опроса"
+          }
+        }
+      }
     }
+  },
+  "required": [
+    "isConnected",
+    "standardVolumeFlow",
+    "workVolumeFlow",
+    "pressure",
+    "temperature",
+    "correctionCoefficient",
+    "standardVolume",
+    "workVolume",
+    "fullStandardVolume",
+    "fullWorkVolume",
+    "timestamp"
+  ],
+  "ui": {
+    "useTabs": true,
+    "groups": [
+      {
+        "id": 1,
+        "name": "flow",
+        "caption": "Объемный расход",
+        "order": 100
+      },
+      {
+        "id": 2,
+        "name": "pressure",
+        "caption": "Давление",
+        "order": 200
+      },
+      {
+        "id": 3,
+        "name": "temperature",
+        "caption": "Температура",
+        "order": 300
+      },
+      {
+        "id": 4,
+        "name": "correction",
+        "caption": "Коэффициент",
+        "order": 400
+      },
+      {
+        "id": 5,
+        "name": "volume",
+        "caption": "Накопленные объемы",
+        "order": 500
+      },
+      {
+        "id": 6,
+        "name": "device",
+        "caption": "Информация о приборе",
+        "order": 600
+      },
+      {
+        "id": 10,
+        "name": "state",
+        "caption": "Состояния",
+        "order": 1
+      }
+    ]
+  }
 }

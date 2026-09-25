@@ -1,0 +1,18 @@
+{
+  "factoryNumber": "1116061420",
+  "deviceTime": "2026-09-24,11:46:52",
+  "correctionCoefficient": "3.66218",
+  "standardVolumeFlow": "65.91",
+  "workVolumeFlow": "18",
+  "pressure": "3.77814",
+  "temperature": "26.96",
+  "standardVolume": "27990796.7312",
+  "workVolume": "7361595",
+  "disturbanceStandardVolume": "411832.6288",
+  "fullStandardVolume": "28402629.36",
+  "disturbanceWorkVolume": "85872",
+  "fullWorkVolume": "7447467",
+  "firmware": "1.60",
+  "reportingHour": "10",
+  "archiveInterval": "60"
+}

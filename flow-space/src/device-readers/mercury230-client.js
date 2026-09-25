@@ -193,25 +193,4 @@ class Mercury230Client {
     }
 }
 
-
-// ==================== очередь доступа к общему TCP-каналу ====================
-// Гарантирует, что для одного и того же host:port (например, один WIZ108SR,
-// обслуживающий несколько счетчиков на общей RS-485 шине) одновременно
-// выполняется только одна операция подключения/опроса, даже если несколько
-// экземпляров Mercury230Client пытаются подключиться одновременно.
-
-const connectionLocks = new Map(); // key: "host:port" -> цепочка промисов
-
-function withConnectionLock(host, port, fn) {
-    const key = `${host}:${port}`;
-    const previous = connectionLocks.get(key) || Promise.resolve();
-    // Выполняем fn() только после завершения предыдущей операции на этом host:port,
-    // независимо от того, успешно она завершилась или с ошибкой.
-    const next = previous.catch(() => {}).then(fn);
-    // Сохраняем цепочку, "гасим" возможную ошибку, чтобы не сломать очередь для следующих.
-    connectionLocks.set(key, next.catch(() => {}));
-
-    return next;
-}
-
-module.exports = { Mercury230Client, withConnectionLock };
+module.exports = { Mercury230Client };
