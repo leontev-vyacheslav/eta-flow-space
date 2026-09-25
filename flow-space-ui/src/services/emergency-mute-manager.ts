@@ -7,7 +7,8 @@ class EmergencyMuteManager {
   oneYear = 31536000000;
 
   private readonly storageKey = "emergencyDeviceMuted";
-  private audioUnlocked = false;
+  // one shared context: browsers limit live AudioContexts, and a context resumed by a user gesture stays allowed to play
+  private audioContext: AudioContext | null = null;
 
   private getDevices(): MutedDeviceModel[] {
     const data = localStorage.getItem(this.storageKey);
@@ -18,8 +19,18 @@ class EmergencyMuteManager {
     localStorage.setItem(this.storageKey, JSON.stringify(devices));
   }
 
+  private getAudioContext(): AudioContext {
+    if (!this.audioContext || this.audioContext.state === "closed") {
+      this.audioContext = new AudioContext();
+    }
+    return this.audioContext;
+  }
+
   private playAlertSound(soundType: string): void {
-    const ctx = new AudioContext();
+    const ctx = this.getAudioContext();
+    if (ctx.state === "suspended") {
+      ctx.resume().catch(() => {});
+    }
 
     const buzzer = (startTime: number, frequency: number, duration: number) => {
       const oscillator = ctx.createOscillator();
@@ -241,12 +252,10 @@ class EmergencyMuteManager {
   }
 
   unlockAudio(): void {
-    if (this.audioUnlocked) return;
-    const ctx = new AudioContext();
-    ctx.resume().then(() => {
-      this.audioUnlocked = true;
-      ctx.close();
-    });
+    const ctx = this.getAudioContext();
+    if (ctx.state === "suspended") {
+      ctx.resume().catch(() => {});
+    }
   }
 }
 
