@@ -56,12 +56,17 @@ export const useAuthHttpRequest = () => {
                             response = await httpClientBase.request(config) as AxiosResponse;
                         } catch (retryError) {
                             response = (retryError as AxiosError).response;
-                            await signOut();
-                            if (!suppressShowUnauthorized) {
-                                proclaim({
-                                    type: 'error',
-                                    message: response?.data?.message || 'Сессия истекла',
-                                });
+                            // only a repeated 401 means the session is gone; other errors keep the user signed in
+                            if (response?.status === HttpConstants.StatusCodes.Unauthorized) {
+                                await signOut();
+                                if (!suppressShowUnauthorized) {
+                                    proclaim({
+                                        type: 'error',
+                                        message: response?.data?.message || 'Сессия истекла',
+                                    });
+                                }
+                            } else if (!suppressShowError) {
+                                await proclaimError(retryError);
                             }
                             return response;
                         }
