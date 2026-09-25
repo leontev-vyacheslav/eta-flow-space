@@ -41,7 +41,7 @@ export const ControlForm = ({ onFieldDataChanged }: ControlFormProps) => {
                     if (typeInfo!.isEnum) {
                         editor.editorOptions = {
                             ...editor.editorOptions,
-                            items: registryEnums[typeInfo!.typeName]
+                            items: registryEnums[device.code]?.[typeInfo!.typeName]
                         }
                     }
                     if (typeInfo!.unit) {

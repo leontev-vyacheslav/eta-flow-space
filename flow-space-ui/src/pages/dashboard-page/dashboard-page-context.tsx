@@ -24,7 +24,7 @@ export type DashboardPageContextModel = {
     setRefreshToken: React.Dispatch<React.SetStateAction<string>>;
 
     schemasTypeInfoPropertiesChain: Record<string, SchemaTypeInfoPropertiesChainModel[]> | undefined;
-    registryEnums: Record<string, DictionaryBaseModel[]>;
+    registryEnums: Record<string, Record<string, DictionaryBaseModel[]>>;
 };
 
 const DashboardPageContext = createContext({} as DashboardPageContextModel);
