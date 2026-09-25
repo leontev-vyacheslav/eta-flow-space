@@ -182,7 +182,8 @@
           "editorOptions": {
             "readOnly": true
           }
-        }
+        },
+        "chart": {}
       }
     },
     "fullStandardVolume": {
@@ -219,7 +220,8 @@
           "editorOptions": {
             "readOnly": true
           }
-        }
+        },
+        "chart": {}
       }
     },
     "fullWorkVolume": {
