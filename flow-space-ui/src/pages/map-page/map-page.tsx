@@ -35,23 +35,26 @@ export const MapPage = () => {
     const latestRequestRef = useRef<number>(0);
     const { treeViewRef } = useSharedArea();
 
+    // close popups and fit the view to all markers
+    const showAllMarkers = useCallback(() => {
+        const map = mapRef.current;
+        const markersGroup = markersGroupRef.current;
+        if (!map || !markersGroup) {
+            return;
+        }
+
+        map.closePopup();
+        if (markersGroup.getLayers().length > 0) {
+            map.fitBounds(markersGroup.getBounds(), AppConstants.mapDefaultBoundsSetting as L.FitBoundsOptions);
+        } else {
+            map.setView(AppConstants.mapDefaultCenter, AppConstants.mapDefaultZoom, { animate: true });
+        }
+    }, []);
+
     const longPressBinder = useLongPress(
         () => {
             if (mapRef.current) {
-                // close all popups
-                mapRef.current.closePopup();
-
-                // center by markers bounds
-                if (!markersGroupRef.current) {
-                    return;
-                }
-                const markersGroup = markersGroupRef.current!;
-
-                if (markersGroup.getLayers().length > 0) {
-                    mapRef.current.fitBounds(markersGroup.getBounds(), AppConstants.mapDefaultBoundsSetting as L.FitBoundsOptions);
-                } else {
-                    mapRef.current.setView(AppConstants.mapDefaultCenter, AppConstants.mapDefaultZoom, { animate: true });
-                }
+                showAllMarkers();
                 setTimeout(() => {
                     const path = `/map`;
                     navigate(path);
@@ -253,9 +256,14 @@ export const MapPage = () => {
         buildMarkersAsync();
     }, [buildMarkersAsync]);
 
-    // Open popup for specific deviceId after markers are built
+    // Open popup for specific deviceId after markers are built; back on /map show all markers
+    // (the page stays mounted when switching between the map routes)
     useEffect(() => {
-        showPopup(deviceId);
+        if (deviceId) {
+            showPopup(deviceId);
+        } else {
+            showAllMarkers();
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [deviceId]);
 

@@ -21,8 +21,21 @@ function NavigationProvider(props: AppBaseProviderProps) {
     );
 }
 
+// one wrapper type per page component: routes sharing a page (e.g. /map and /map/:flowCode/device/:deviceId)
+// must render the same component type, otherwise React remounts the page when navigating between them
+const wrappedComponents = new Map<ElementType, ElementType>();
+
 function withNavigationWatcher(Component: ElementType, path: string) {
-    const WrappedComponent = function (props: Record<string, unknown>) {
+    let WrappedComponent = wrappedComponents.get(Component);
+    if (!WrappedComponent) {
+        WrappedComponent = createNavigationWatcher(Component);
+        wrappedComponents.set(Component, WrappedComponent);
+    }
+    return <WrappedComponent path={path} />;
+}
+
+function createNavigationWatcher(Component: ElementType) {
+    return function WrappedComponent({ path, ...props }: { path: string } & Record<string, unknown>) {
         const { setNavigationData } = useNavigation();
         const location = useLocation();
         const { treeViewRef } = useSharedArea();
@@ -69,13 +82,11 @@ function withNavigationWatcher(Component: ElementType, path: string) {
             () => {
                 setNavigationData?.({ currentPath: path });
             },
-            // eslint-disable-next-line react-hooks/exhaustive-deps
             [path, setNavigationData]
         );
 
         return <Component {...props} />;
     };
-    return <WrappedComponent />;
 }
 
 export {
