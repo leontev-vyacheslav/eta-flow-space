@@ -30,7 +30,7 @@ export type DashboardPageContextModel = {
 const DashboardPageContext = createContext({} as DashboardPageContextModel);
 
 function DashboardPageContextProvider(props: any) {
-    const { getDeviceAsync, getDeviceStatesAsync, getMnemoschemaAsync, getDeviceStateDataschemaAsync } = useAppData();
+    const { getDeviceAsync, getDeviceStatesAsync, getMnemoschemaAsync, getDeviceStateDataschemaAsync, staticFilesManifest } = useAppData();
     const { deviceId, flowCode } = useParams();
     // const isAdmin = useAuthStore(selectIsAdmin);
 
@@ -82,7 +82,8 @@ function DashboardPageContextProvider(props: any) {
         let cancelled = false;
 
         (async () => {
-            if (!deviceId || !flowCode) {
+            // wait for the static files manifest so schema/mnemoschema requests use versioned URLs and load only once
+            if (!deviceId || !flowCode || !staticFilesManifest) {
                 return;
             }
             const targetDeviceId = parseInt(deviceId, 10);
@@ -137,7 +138,7 @@ function DashboardPageContextProvider(props: any) {
         })();
 
         return () => { cancelled = true; };
-    }, [deviceId, flowCode, getDeviceAsync, getDeviceStatesAsync, getMnemoschemaAsync, getDeviceStateDataschemaAsync, applyDimensionsToStates, refreshToken]);
+    }, [deviceId, flowCode, staticFilesManifest, getDeviceAsync, getDeviceStatesAsync, getMnemoschemaAsync, getDeviceStateDataschemaAsync, applyDimensionsToStates, refreshToken]);
 
     // useEffect(() => {
     //     if (!dataschemas) {

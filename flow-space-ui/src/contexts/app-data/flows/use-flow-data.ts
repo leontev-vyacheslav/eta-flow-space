@@ -72,10 +72,15 @@ export const useFlowData = () => {
   const authHttpRequest = useAuthHttpRequest();
 
   const getStaticFilesManifest = useCallback(async () => {
-    const res = await fetch(
-      `${routes.host}/static/manifest.json?v=${Date.now()}`,
-    );
-    return res.ok ? res.json() : {};
+    try {
+      const res = await fetch(
+        `${routes.host}/static/manifest.json?v=${Date.now()}`,
+      );
+      return res.ok ? await res.json() : {};
+    } catch (error) {
+      console.error("Failed to load static files manifest:", error);
+      return {};
+    }
   }, []);
 
   const getFlowListAsync = useCallback<GetFlowListAsyncFunc>(async () => {
@@ -121,7 +126,7 @@ export const useFlowData = () => {
     async (deviceCode: string) => {
       return await fetch(
 
-        `${routes.host}/static/devices/${deviceCode}/mnemo-schema.svg?v=${staticFilesManifest[deviceCode]?.["mnemo-schema"] ?? Date.now()}`,
+        `${routes.host}/static/devices/${deviceCode}/mnemo-schema.svg?v=${staticFilesManifest?.[deviceCode]?.["mnemo-schema"] ?? Date.now()}`,
       ).then((res) => (res.ok ? res.text() : undefined));
     },
     [staticFilesManifest],
@@ -131,7 +136,7 @@ export const useFlowData = () => {
     useCallback<GetDeviceStateDataschemaAsyncFunc>(
       async (deviceCode: string) => {
         return fetch(
-          `${routes.host}/static/devices/${deviceCode}/data-schema.json?v=${staticFilesManifest[deviceCode]?.["data-schema"] ?? Date.now()}`,
+          `${routes.host}/static/devices/${deviceCode}/data-schema.json?v=${staticFilesManifest?.[deviceCode]?.["data-schema"] ?? Date.now()}`,
         ).then((res) => (res.ok ? res.json() : undefined));
       },
       [staticFilesManifest],
@@ -141,7 +146,7 @@ export const useFlowData = () => {
     useCallback<GetMnemoschemaStylesheetsAsyncFunc>(
       async (deviceCode: string) => {
         return await fetch(
-          `${routes.host}/static/devices/${deviceCode}/mnemo-schema.css?v=${staticFilesManifest[deviceCode]?.["css"] ?? Date.now()}`,
+          `${routes.host}/static/devices/${deviceCode}/mnemo-schema.css?v=${staticFilesManifest?.[deviceCode]?.["css"] ?? Date.now()}`,
         ).then((res) => (res.ok ? res.text() : undefined));
       },
       [staticFilesManifest],
