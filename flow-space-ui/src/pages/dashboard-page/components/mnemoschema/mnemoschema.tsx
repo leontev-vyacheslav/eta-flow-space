@@ -86,7 +86,7 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
         };
     }, [device, deviceStates, mnemoschema, onBeforeMount, onAfterMount, stateSetup, schemasTypeInfoPropertiesChain, dataschemas, mnemoschemaClickHandler, injectCss, staticFilesManifest]);
 
-    useMnemoschemaRestoreTransformState(device?.code, transformComponentRef, () => setIsInitComplete(true));
+    useMnemoschemaRestoreTransformState(device?.mnemoschemaCode, transformComponentRef, () => setIsInitComplete(true));
 
     return mnemoschema && schemasTypeInfoPropertiesChain && deviceStates && Object.keys(deviceStates).length !== 0
         ?
@@ -97,7 +97,7 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
             minScale={0.5}
             onTransform={(_, transformedState) => {
                 if (isInitComplete && device) {
-                    localStorage.setItem(`mnemoschemaTransformedState_${kebabToCamel(device.code)}`, JSON.stringify(transformedState));
+                    localStorage.setItem(`mnemoschemaTransformedState_${kebabToCamel(device.mnemoschemaCode)}`, JSON.stringify(transformedState));
                 }
             }}
         >
