@@ -56,7 +56,10 @@ export const useMnemoschemaPopover = () => {
     //     });
     // }, [dataschema]);
 
-    const PropertyInfoTable = useCallback(({ propertyInfosDict }: { propertyInfosDict: Record<string, SchemaTypeInfoPropertiesChainModel[]> }) => {
+    const PropertyInfoTable = useCallback(({ propertyInfosDict, formattedValues }: {
+        propertyInfosDict: Record<string, SchemaTypeInfoPropertiesChainModel[]>,
+        formattedValues: Map<SchemaTypeInfoPropertiesChainModel, React.ReactNode>
+    }) => {
         const linkedDevicesCount = dataschemas ? Object.keys(dataschemas).length : 1;
 
         return (
@@ -82,10 +85,10 @@ export const useMnemoschemaPopover = () => {
                                     </td>
                                 </tr> : null}
                                 {propertyInfos.map((propertyInfo: SchemaTypeInfoPropertiesChainModel) => {
-                                    const value = (propertyInfo as any)["formattedValue"];
+                                    const value = formattedValues.get(propertyInfo);
 
                                     return (
-                                        <tr>
+                                        <tr key={propertyInfo.propertiesChainValuePair.propertiesChain}>
                                             <td>
                                                 <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
                                                     <span style={{ fontSize: '1em' }}>{propertyInfo.typeInfo?.ui.editor.label.text ?? ''}</span>
@@ -122,7 +125,8 @@ export const useMnemoschemaPopover = () => {
 
 
     const popoverContentRender = useCallback((propertyInfosDict: Record<string, SchemaTypeInfoPropertiesChainModel[]>, target: Element) => {
-        const values: { propertiesChain: string, value: any }[] = [];
+        // formatted per popover; the property infos are shared memoized context data and must not be mutated
+        const formattedValues = new Map<SchemaTypeInfoPropertiesChainModel, React.ReactNode>();
 
         for (const deviceCode of Object.keys(propertyInfosDict)) {
             const propertyInfos = propertyInfosDict[deviceCode];
@@ -177,13 +181,12 @@ export const useMnemoschemaPopover = () => {
                     const unit = propertyInfo.typeInfo?.unit;
                     value = `${value}${unit ? ' ' + unit : ''}`;
                 }
-                values.push({ propertiesChain: propertyInfo.propertiesChainValuePair.propertiesChain, value });
-                (propertyInfo as any)["formattedValue"] = value;
+                formattedValues.set(propertyInfo, value);
             }
         }
 
         return (
-            <PropertyInfoTable propertyInfosDict={propertyInfosDict} />
+            <PropertyInfoTable propertyInfosDict={propertyInfosDict} formattedValues={formattedValues} />
         );
     }, [PropertyInfoTable, dataschemas, isAdmin]);
 
