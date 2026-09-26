@@ -22,7 +22,10 @@ export type ReportParamsDialogProps = React.PropsWithChildren<IPopupOptions> & A
 const ReportParametricDialog = (props: ReportParamsDialogProps) => {
     const { isXSmall, isSmall } = useScreenSize();
     const popupRef = useRef<PopupRef>(null);
-    const [parameterValues, setParameterValues] = useState<any>();
+    // the form edits (and DevExtreme mutates) a copy, so Cancel leaves the page's values untouched
+    // and "Применить" without changes still sends the current values
+    const [formData] = useState<any>(() => ({ ...props.parameterValues }));
+    const [parameterValues, setParameterValues] = useState<any>(formData);
     const [parameters, setParameters] = useState<ParameterModel[]>();
     const { getDeviceListAsync } = useAppData();
 
@@ -65,7 +68,7 @@ const ReportParametricDialog = (props: ReportParamsDialogProps) => {
             }}
         >
             <div style={{ padding: '20px', paddingTop: 0 }}>
-                <ReportParametric parameters={parameters} parameterValues={props.parameterValues} onParameterValuesChange={(values) => {
+                <ReportParametric parameters={parameters} parameterValues={formData} onParameterValuesChange={(values) => {
                     setParameterValues(values);
                 }} />
             </div>
