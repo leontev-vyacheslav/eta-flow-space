@@ -1,4 +1,5 @@
 from collections import OrderedDict
+import logging
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Annotated, Any
@@ -11,6 +12,8 @@ from collections import defaultdict
 
 from app.helpers.formatters import *
 from app.repositories.accounting_sheet_base_repository import AccountingSheetBaseRepository
+
+logger = logging.getLogger(__name__)
 
 filters = [
     locale_format_date,
@@ -45,10 +48,16 @@ class AccountingSheetReportBaseService:
 
         try:
             data, device_id, device_name, device_code = await self._repository.get_data_async(*args, **kwargs)
-        except Exception as e:
+        except HTTPException:
+            raise
+        except Exception:
+            logger.exception("Failed to load data for %s", self.report_name)
             raise HTTPException(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                detail=f"Ошибка доступа к базе данных: {str(e)}",
+                detail={
+                    "message": "Ошибка доступа к базе данных",
+                    "severity": "error",
+                },
             )
 
         if not data or len(data) == 0:

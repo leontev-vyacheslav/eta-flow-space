@@ -1,4 +1,5 @@
 from datetime import datetime, timezone
+import logging
 from pathlib import Path
 from typing import Annotated, Any
 
@@ -13,6 +14,8 @@ from app.models.period_types import PeriodTypes
 from app.modules.common.emergency_summary.repository import EmergencySummaryRepository
 from app.helpers.formatters import *
 from app.helpers.helpers import is_admin
+
+logger = logging.getLogger(__name__)
 
 templates_dir = Path(__file__).parent.parent.parent.parent / "templates/common"
 template_env = Environment(loader=FileSystemLoader(templates_dir))
@@ -74,10 +77,16 @@ class EmergencySummaryReportService:
             )
         try:
             data = await self._repository.get_data_async(*args, **kwargs)
-        except Exception as e:
+        except HTTPException:
+            raise
+        except Exception:
+            logger.exception("Failed to load data for %s", self.report_name)
             raise HTTPException(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                detail=f"Ошибка доступа к базе данных: {str(e)}",
+                detail={
+                    "message": "Ошибка доступа к базе данных",
+                    "severity": "error",
+                },
             )
 
         if not data or len(data) == 0:
