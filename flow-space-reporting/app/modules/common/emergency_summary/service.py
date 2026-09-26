@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 import logging
 from pathlib import Path
 from typing import Annotated, Any
@@ -10,7 +10,7 @@ import pytz
 from weasyprint import HTML
 
 from app.modules.common.emergency_summary.models import EmergencySummaryReportRowModel
-from app.models.period_types import PeriodTypes
+from app.models.grouping_period_types import GroupingPeriodTypes
 from app.modules.common.emergency_summary.repository import EmergencySummaryRepository
 from app.helpers.formatters import *
 from app.helpers.helpers import is_admin
@@ -66,7 +66,9 @@ class EmergencySummaryReportService:
         token_payload: dict = kwargs["token_payload"]
         time_zone: str = kwargs["time_zone"]
         device_id: int | None = kwargs.get("device_id")
-        period_type: PeriodTypes = kwargs["period_type"]
+        period_type: GroupingPeriodTypes = kwargs["period_type"]
+        date_from: date | None = kwargs.get("date_from")
+        date_to: date | None = kwargs.get("date_to")
 
         is_admin_role = is_admin(token_payload)
 
@@ -74,6 +76,14 @@ class EmergencySummaryReportService:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail=f"Указана неверная временная зона в запросе: {time_zone}",
+            )
+        if date_from is not None and date_to is not None and date_from > date_to:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail={
+                    "message": "Дата начала периода позже даты окончания",
+                    "severity": "warning",
+                },
             )
         try:
             data = await self._repository.get_data_async(*args, **kwargs)
