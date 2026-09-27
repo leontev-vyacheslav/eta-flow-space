@@ -7,10 +7,10 @@ from fastapi import HTTPException, status
 from fastapi.params import Depends
 from jinja2 import Environment, FileSystemLoader
 import pytz
-from weasyprint import HTML
 from collections import defaultdict
 
 from app.helpers.formatters import *
+from app.helpers.pdf import render_pdf_async
 from app.repositories.accounting_sheet_base_repository import AccountingSheetBaseRepository
 
 logger = logging.getLogger(__name__)
@@ -105,7 +105,7 @@ class AccountingSheetReportBaseService:
             templates_dir=self.templates_dir,
         )
 
-        pdf_bytes = HTML(string=html_content).write_pdf()
+        pdf_bytes = await render_pdf_async(html_content)
         filename = f"{self.report_name}_{datetime.now(timezone.utc).strftime('%Y%m%d')}.pdf"
 
         return pdf_bytes, filename

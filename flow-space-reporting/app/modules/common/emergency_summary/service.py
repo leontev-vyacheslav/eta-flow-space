@@ -7,12 +7,12 @@ from fastapi import HTTPException, status
 from fastapi.params import Depends
 from jinja2 import Environment, FileSystemLoader
 import pytz
-from weasyprint import HTML
 
 from app.modules.common.emergency_summary.models import EmergencySummaryReportRowModel
 from app.models.grouping_period_types import GroupingPeriodTypes
 from app.modules.common.emergency_summary.repository import EmergencySummaryRepository
 from app.helpers.formatters import *
+from app.helpers.pdf import render_pdf_async
 from app.helpers.helpers import is_admin
 
 logger = logging.getLogger(__name__)
@@ -120,7 +120,7 @@ class EmergencySummaryReportService:
             device_name=device_name,
         )
 
-        pdf_bytes = HTML(string=html_content).write_pdf()
+        pdf_bytes = await render_pdf_async(html_content)
         filename = f"{self.report_name}_{datetime.now(timezone.utc).strftime('%Y%m%d')}.pdf"
 
         return pdf_bytes, filename
