@@ -12,10 +12,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN python -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
-# Install Python dependencies (declared in pyproject.toml)
+# Install the exact, hash-verified dependency set from the lockfile, then check it still
+# satisfies pyproject.toml (fails the build if requirements.lock was not regenerated)
 WORKDIR /build
-COPY pyproject.toml .
-RUN pip install --no-cache-dir .
+COPY pyproject.toml requirements.lock ./
+RUN pip install --no-cache-dir --require-hashes -r requirements.lock \
+    && pip install --no-cache-dir --no-deps . \
+    && pip check
 
 # ---- Runtime stage: only the shared libraries WeasyPrint needs, no compilers ----
 FROM ${PYTHON_IMAGE}
