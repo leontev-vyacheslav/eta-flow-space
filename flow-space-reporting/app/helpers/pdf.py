@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import cast
 
 from fastapi.concurrency import run_in_threadpool
 from weasyprint import CSS, HTML
@@ -11,7 +12,8 @@ FONTS_CSS_PATH = Path(__file__).parent.parent / "templates/assets/fonts/fonts.cs
 def _render_pdf(html_content: str) -> bytes:
     font_config = FontConfiguration()
     fonts_css = CSS(filename=FONTS_CSS_PATH, font_config=font_config)
-    return HTML(string=html_content).write_pdf(stylesheets=[fonts_css], font_config=font_config)
+    # Without a target, write_pdf returns the PDF as bytes (it returns None only when writing to a target)
+    return cast(bytes, HTML(string=html_content).write_pdf(stylesheets=[fonts_css], font_config=font_config))
 
 
 async def render_pdf_async(html_content: str) -> bytes:

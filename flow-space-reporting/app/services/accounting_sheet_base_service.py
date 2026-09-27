@@ -70,7 +70,7 @@ class AccountingSheetReportBaseService:
             )
 
         # Total consumption per metric key, e.g. {"energyActiveTotal": 12345, "energyReactiveTotal": 678}
-        total_consumption: dict[str, int] = defaultdict(int)
+        total_consumption: dict[str, float] = defaultdict(float)
         for row in data:
             for key, metric in row.metrics.items():
                 if metric.consumption is not None:
@@ -78,12 +78,12 @@ class AccountingSheetReportBaseService:
 
         # Monthly breakdown, now nested per metric key
         monthly_data: OrderedDict[str, list] = OrderedDict()
-        monthly_totals: OrderedDict[str, dict[str, int]] = OrderedDict()
+        monthly_totals: OrderedDict[str, dict[str, float]] = OrderedDict()
         for row in data:
             month_key = row.day.strftime("%Y-%m")
             if month_key not in monthly_data:
                 monthly_data[month_key] = []
-                monthly_totals[month_key] = defaultdict(int)
+                monthly_totals[month_key] = defaultdict(float)
             monthly_data[month_key].append(row)
             for key, metric in row.metrics.items():
                 if metric.consumption is not None:
