@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { useDashboardPage } from "../../dashboard-page-context";
 import { useScreenSize } from "../../../../utils/media-query";
-import AppConstants from "../../../../constants/app-constants";
+import { formatDateTime, formatNumber, getEnumDescription, isDateTime } from "../../../../helpers/state-value-format";
 
 export const useMnemoschemaStateSetup = () => {
     const { isSmall, isXSmall, isLarge } = useScreenSize();
@@ -33,42 +33,24 @@ export const useMnemoschemaStateSetup = () => {
         }
 
         if (typeInfo?.isEnum) {
-            try {
-                const enumDescription = (dataschemas[key].$defs[typeInfo.typeName].enumDescriptions[value].split(' - ').pop() as string).split('(')[0].trim();
+            // the diagram has little room: drop the "(...)" remark and hide unused values
+            const enumDescription = getEnumDescription(dataschemas[key], typeInfo.typeName, value)?.split('(')[0].trim();
+            if (enumDescription === undefined) {
+                element.innerHTML = '<tspan style="fill: red">Ошибка</tspan>';
+            } else {
                 element.innerHTML = enumDescription === 'Не используется' ? '' : enumDescription;
-            } catch {
-                element.innerHTML = '<tspan style="fill: red">Ошибка</tspan>'
             }
         } else {
             if (typeInfo?.typeName === 'number') {
-                if (typeInfo?.formatting && typeInfo?.formatting.options) {
-                    value = new Intl.NumberFormat(
-                        typeInfo.formatting.locale ?? AppConstants.formatting.numberFormat.locale,
-                        typeInfo.formatting.options
-                    ).format(value);
-                } else {
-                    value = new Intl.NumberFormat(
-                        AppConstants.formatting.numberFormat.locale,
-                        AppConstants.formatting.numberFormat.options as any
-                    ).format(value);
-                }
+                value = formatNumber(value, typeInfo);
             }
 
             const unit = typeInfo && typeInfo.unit;
             if (unit) {
-                element.innerHTML = `${value} ${unit ? unit : ''}`;
+                element.innerHTML = `${value} ${unit}`;
             } else {
-                const formatAttr = element.getAttribute('data-state-format');
-
-                if (typeInfo?.ui.editor.editorOptions.type === 'datetime') {
-                    const date = new Date(value);
-                    if (formatAttr === 'date') {
-                        value = date.toLocaleDateString('ru-RU');
-                    } else if (formatAttr === 'time') {
-                        value = date.toLocaleTimeString('ru-RU');
-                    } else {
-                        value = date.toLocaleString('ru-RU');
-                    }
+                if (isDateTime(typeInfo)) {
+                    value = formatDateTime(value, element.getAttribute('data-state-format'));
                 }
                 element.innerHTML = value;
             }

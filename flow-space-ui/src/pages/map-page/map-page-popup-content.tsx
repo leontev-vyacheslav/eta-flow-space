@@ -7,6 +7,7 @@ import type { MapPagePopupContentProps } from "../../models/map-page-popup-conte
 import { emergencyMuteManager } from "../../services/emergency-mute-manager";
 import AppConstants from "../../constants/app-constants";
 import { graphService } from "../../components/dialogs/graph-dialog/graph-dialog";
+import { formatDateTime, formatNumber, getEnumDescription, isDateTime } from "../../helpers/state-value-format";
 import { useAuthStore } from "../../contexts/auth-store";
 import { selectIsAdmin } from "../../contexts/auth-selectors";
 
@@ -38,36 +39,18 @@ export const MapPagePopupContent = ({ device, deviceState, dataschema, emergency
         }
 
         if (typeInfo.isEnum) {
-            try {
-                return dataschema.$defs[typeInfo.typeName].enumDescriptions[value].split(' - ').pop();;
-            } catch {
-                return (
-                    <span style={{ color: 'red' }}>Ошибка ({value})</span>
-                )
-            }
+            const enumDescription = getEnumDescription(dataschema, typeInfo.typeName, value);
+            return enumDescription !== undefined
+                ? enumDescription
+                : <span style={{ color: 'red' }}>Ошибка ({value})</span>;
         }
 
-        if (typeInfo?.ui.editor.editorOptions.type === 'datetime') {
-            if (typeInfo.typeName === 'integer') {
-                return (new Date(value)).toLocaleString('ru-RU', {});
-            } else if (typeInfo.typeName === 'string') {
-                return (new Date(Date.parse(value))).toLocaleString('ru-RU', {});
-            }
+        if (isDateTime(typeInfo) && ['integer', 'string'].includes(typeInfo.typeName)) {
+            return formatDateTime(value);
         }
-
 
         if (['integer', 'float', 'number'].includes(typeInfo.typeName)) {
-            if (typeInfo?.formatting && typeInfo.formatting.options) {
-                value = new Intl.NumberFormat(
-                    typeInfo.formatting.locale ?? AppConstants.formatting.numberFormat.locale,
-                    typeInfo.formatting.options
-                ).format(value);
-            } else {
-                value = new Intl.NumberFormat(
-                    AppConstants.formatting.numberFormat.locale,
-                    AppConstants.formatting.numberFormat.options as any
-                ).format(value);
-            }
+            value = formatNumber(value, typeInfo);
 
             if (typeInfo?.unit) {
                 return `${value} ${typeInfo?.unit}`;

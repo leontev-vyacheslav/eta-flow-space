@@ -5,7 +5,7 @@ import dxPopover from "devextreme/ui/popover";
 import { DashboardIcon, GraphIcon, HelpIcon, TypeIcon, VariableIcon } from "../../../../constants/app-icons";
 import type { SchemaTypeInfoPropertiesChainModel } from "../../../../helpers/data-helper";
 // import { showAlertDialog } from "../../../../utils/dialogs";
-import AppConstants from "../../../../constants/app-constants";
+import { formatDateTime, formatNumber, getEnumDescription, isDateTime } from "../../../../helpers/state-value-format";
 
 import './mnemoschema-popover.scss';
 import { graphService } from "../../../../components/dialogs/graph-dialog/graph-dialog";
@@ -137,32 +137,13 @@ export const useMnemoschemaPopover = () => {
                     value = value === true ? 'Да' : 'Нет';
                 }
                 if (propertyInfo.typeInfo?.typeName === 'number') {
-                    if (propertyInfo.typeInfo?.formatting && propertyInfo.typeInfo?.formatting.options) {
-                        value = new Intl.NumberFormat(
-                            propertyInfo.typeInfo.formatting.locale ?? AppConstants.formatting.numberFormat.locale,
-                            propertyInfo.typeInfo.formatting.options
-                        ).format(value);
-                    } else {
-                        value = new Intl.NumberFormat(
-                            AppConstants.formatting.numberFormat.locale,
-                            AppConstants.formatting.numberFormat.options as any
-                        ).format(value);
-                    }
+                    value = formatNumber(value, propertyInfo.typeInfo);
                 }
 
-                if (propertyInfo.typeInfo?.ui.editor.editorOptions.type === 'datetime') {
-                    const date = new Date(value);
-                    const formatAttr = target.getAttribute('data-state-format');
-                    if (formatAttr === 'date') {
-                        value = date.toLocaleDateString('ru-RU');
-                    } else if (formatAttr === 'time') {
-                        value = date.toLocaleTimeString('ru-RU');
-                    } else {
-                        value = date.toLocaleString('ru-RU');
-                    }
+                if (isDateTime(propertyInfo.typeInfo)) {
+                    value = formatDateTime(value, target.getAttribute('data-state-format'));
                 } else if (propertyInfo.typeInfo?.isEnum) {
-
-                    const enumDescription = dataschemas![deviceCode].$defs[propertyInfo.typeInfo?.typeName].enumDescriptions[value]?.split(' - ').pop();
+                    const enumDescription = getEnumDescription(dataschemas?.[deviceCode], propertyInfo.typeInfo.typeName, value);
                     if (isAdmin) {
                         value = enumDescription ? enumDescription + ' (' + value + ')' : <span style={{ color: 'red' }}>Ошибка ({value})</span>
                         value = (
