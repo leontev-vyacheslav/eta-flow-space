@@ -36,7 +36,11 @@ export const useMnemoschemaStateSetup = () => {
             // the diagram has little room: drop the "(...)" remark and hide unused values
             const enumDescription = getEnumDescription(dataschemas[key], typeInfo.typeName, value)?.split('(')[0].trim();
             if (enumDescription === undefined) {
-                element.innerHTML = '<tspan style="fill: red">Ошибка</tspan>';
+                // same message as the popover and map popup; built via DOM so the raw value is never parsed as markup
+                const errorElement = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
+                errorElement.style.fill = 'red';
+                errorElement.textContent = `Ошибка (${value})`;
+                element.replaceChildren(errorElement);
             } else {
                 element.innerHTML = enumDescription === 'Не используется' ? '' : enumDescription;
             }

@@ -59,6 +59,10 @@ export const MapPagePopupContent = ({ device, deviceState, dataschema, emergency
             return value;
         }
 
+        if (typeInfo.typeName === 'string' && value !== undefined && value !== null) {
+            return typeInfo?.unit ? `${value} ${typeInfo.unit}` : value;
+        }
+
         return 'Нет данных';
 
     }, [dataschema]);
