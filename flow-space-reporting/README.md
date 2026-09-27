@@ -28,6 +28,12 @@ cp .env.example .env
 uvicorn main:app --reload --host 0.0.0.0 --port 8000
 ```
 
+## Fonts
+
+Reports use Liberation Serif (metric-compatible with Times New Roman), bundled in
+`app/templates/assets/fonts/` under the SIL Open Font License (`OFL.txt`) and loaded for
+every report by `app/helpers/pdf.py`, so PDFs render the same in development and Docker.
+
 ## API Endpoints
 
 | Method | Endpoint | Description |
