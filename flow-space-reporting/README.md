@@ -19,7 +19,7 @@ python3 -m venv .venv
 source .venv/bin/activate
 
 # Install dependencies
-pip install -r requirements.txt
+pip install -e ".[dev]"
 
 # Copy and configure environment
 cp .env.example .env
@@ -52,6 +52,5 @@ flow-space-reporting/
 ├── .env.example
 ├── .gitignore
 ├── main.py                 # FastAPI application entry point
-├── pyproject.toml
-└── requirements.txt
+└── pyproject.toml          # Dependencies (single source of truth)
 ```

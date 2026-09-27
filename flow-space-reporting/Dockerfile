@@ -16,9 +16,9 @@ WORKDIR /app
 RUN python -m venv /app/.venv
 ENV PATH="/app/.venv/bin:$PATH"
 
-# Install Python dependencies
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# Install Python dependencies (declared in pyproject.toml)
+COPY pyproject.toml .
+RUN pip install --no-cache-dir .
 
 # Copy application code
 COPY . .

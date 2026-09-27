@@ -1,4 +1,4 @@
-from typing_extensions import Annotated
+from typing import Annotated
 from fastapi.params import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.db.database import get_db
