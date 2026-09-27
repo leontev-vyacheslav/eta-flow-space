@@ -1,30 +1,49 @@
-FROM python:3.14-slim
+# Pinned to the Python/Debian combination the service is tested with; bump deliberately
+ARG PYTHON_IMAGE=python:3.14.7-slim-trixie
 
-# Install system dependencies for WeasyPrint
+# ---- Build stage: compile and install dependencies into a virtual environment ----
+FROM ${PYTHON_IMAGE} AS builder
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
-    libpango-1.0-0 \
-    libpangocairo-1.0-0 \
-    libgdk-pixbuf-2.0-0 \
     libffi-dev \
-    shared-mime-info \
     && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /app
-
-# Create virtual environment
-RUN python -m venv /app/.venv
-ENV PATH="/app/.venv/bin:$PATH"
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
 
 # Install Python dependencies (declared in pyproject.toml)
+WORKDIR /build
 COPY pyproject.toml .
 RUN pip install --no-cache-dir .
 
-# Copy application code
+# ---- Runtime stage: only the shared libraries WeasyPrint needs, no compilers ----
+FROM ${PYTHON_IMAGE}
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libpango-1.0-0 \
+    libpangocairo-1.0-0 \
+    libgdk-pixbuf-2.0-0 \
+    shared-mime-info \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN useradd --system --create-home --uid 10001 app
+
+ENV PATH="/opt/venv/bin:$PATH" \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
+COPY --from=builder /opt/venv /opt/venv
+
+WORKDIR /app
+# Application code stays owned by root, so the service user cannot modify it
 COPY . .
 
-# Expose port
+USER app
+
 EXPOSE 8000
 
-# Run the application
+HEALTHCHECK --interval=30s --timeout=5s --start-period=15s --retries=3 \
+    CMD ["python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health-check', timeout=4)"]
+
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
