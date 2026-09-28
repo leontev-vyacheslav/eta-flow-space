@@ -83,30 +83,40 @@ export const ReportPage = () => {
 
     useEffect(() => {
         let url: string | null = null;
+        let cancelled = false;
+        let finished = false;
+        // show the loader only for slow reports; the timer is cancelled when loading ends,
+        // otherwise a fast reply would hide the loader before it is shown and leave it stuck
+        let showLoaderTimer: ReturnType<typeof setTimeout> | undefined;
+
         (async () => {
             if (!reportDefinition || !reportParameterValues) {
                 return;
             }
             try {
-                setTimeout(async () => {
-                    showLoader();
-                }, 200);
+                showLoaderTimer = setTimeout(showLoader, 200);
                 const blob = await getReportAsync(reportDefinition.url, reportParameterValues);
-                if (!blob) {
-                    setTimeout(() => {
-                        hideLoader();
-                    }, 250);
-
+                // a newer report (other id or parameters) was requested meanwhile: drop this reply
+                if (!blob || cancelled) {
                     return;
                 }
                 url = URL.createObjectURL(blob);
                 setReportBlobUrl(url);
             } finally {
-                hideLoader();
+                finished = true;
+                clearTimeout(showLoaderTimer);
+                if (!cancelled) {
+                    hideLoader();
+                }
             }
         })();
 
         return () => {
+            cancelled = true;
+            if (!finished) {
+                clearTimeout(showLoaderTimer);
+                hideLoader();
+            }
             if (url) {
                 URL.revokeObjectURL(url);
             }
