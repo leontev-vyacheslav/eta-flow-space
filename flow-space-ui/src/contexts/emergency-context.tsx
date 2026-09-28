@@ -28,6 +28,14 @@ function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
     const popoverInstance = useRef<dxPopover<any>>(null);
     const { getEmergencyStatesAsync } = useAppData();
     const { flows, appSettingsData } = useAppSettingsStore();
+    // the poll reads the latest values from refs: flows/settings arriving or changing must not restart it (and refetch)
+    const flowsRef = useRef(flows);
+    const appSettingsDataRef = useRef(appSettingsData);
+    useEffect(() => {
+        flowsRef.current = flows;
+        appSettingsDataRef.current = appSettingsData;
+    }, [flows, appSettingsData]);
+    const hasFlows = !!flows && flows.length > 0;
     const [emergencyStates] = useState<EmergencyModel[]>([]);
     const popoverContentContainerRef = useRef<HTMLDivElement>(null);
     const popoverContentReactRootRef = useRef<ReturnType<typeof createRoot> | null>(null);
@@ -148,7 +156,7 @@ function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
     }, [showEmergencyPopover, unmountEmergencyPopoverRoot]);
 
     const refreshEmergencyStates = useCallback(async () => {
-        if (!flows) {
+        if (!flowsRef.current) {
             return;
         }
 
@@ -157,6 +165,8 @@ function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
             return;
         }
 
+        const flows = flowsRef.current;
+        const appSettingsData = appSettingsDataRef.current;
         emergencyMuteManager.processEmergencyStates(emergencyStates, appSettingsData?.userSettings?.notifications?.web.enabled, appSettingsData?.userSettings?.notifications?.web.soundType);
 
         const emergencyIconContainerElements = Array.from(document.querySelectorAll('[data-emergency-icon-container]'));
@@ -185,9 +195,13 @@ function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
                 (emergencyIconDom.body.firstElementChild as HTMLElement).addEventListener('click', (e) => emergencyIconClickHandler(e, emergencyState));
                 emergencyIconContainerElement.append(...emergencyIconDom.body.childNodes);
             });
-    }, [appSettingsData, emergencyIconClickHandler, flows, getEmergencyStatesAsync]);
+    }, [emergencyIconClickHandler, getEmergencyStatesAsync]);
 
     useEffect(() => {
+        if (!hasFlows) {
+            return;
+        }
+
         (async () => {
             await refreshEmergencyStates();
         })();
@@ -199,7 +213,7 @@ function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
         return () => {
             clearInterval(timer);
         };
-    }, [refreshEmergencyStates]);
+    }, [hasFlows, refreshEmergencyStates]);
 
     useEffect(() => {
         return () => {
