@@ -5,24 +5,14 @@ from pathlib import Path
 from typing import Annotated, Any
 from fastapi import HTTPException, status
 from fastapi.params import Depends
-from jinja2 import Environment, FileSystemLoader
 import pytz
 from collections import defaultdict
 
-from app.helpers.formatters import *
 from app.helpers.pdf import render_pdf_async
+from app.helpers.templates import get_template_env
 from app.repositories.accounting_sheet_base_repository import AccountingSheetBaseRepository
 
 logger = logging.getLogger(__name__)
-
-filters = [
-    locale_format_date,
-    locale_format_datetime,
-    locale_format_month,
-    locale_format_month_name,
-    period_type_title_format,
-    format_number,
-]
 
 
 class AccountingSheetReportBaseService:
@@ -33,9 +23,7 @@ class AccountingSheetReportBaseService:
 
         self._repository = repository
 
-        self.template_env = Environment(loader=FileSystemLoader(templates_dir))
-        for filter in filters:
-            self.template_env.filters[filter.__name__] = filter
+        self.template_env = get_template_env(templates_dir)
 
     async def render_async(self, *args: Any, **kwargs: Any) -> tuple[bytes | None, str]:
         time_zone: str = kwargs["time_zone"]

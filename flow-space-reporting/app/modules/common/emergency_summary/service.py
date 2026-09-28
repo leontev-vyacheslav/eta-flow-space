@@ -5,30 +5,18 @@ from typing import Annotated, Any
 
 from fastapi import HTTPException, status
 from fastapi.params import Depends
-from jinja2 import Environment, FileSystemLoader
 import pytz
 
 from app.modules.common.emergency_summary.models import EmergencySummaryReportRowModel
 from app.models.grouping_period_types import GroupingPeriodTypes
 from app.modules.common.emergency_summary.repository import EmergencySummaryRepository
-from app.helpers.formatters import *
 from app.helpers.pdf import render_pdf_async
+from app.helpers.templates import get_template_env
 from app.helpers.helpers import is_admin
 
 logger = logging.getLogger(__name__)
 
 templates_dir = Path(__file__).parent.parent.parent.parent / "templates/common"
-template_env = Environment(loader=FileSystemLoader(templates_dir))
-
-filters = [
-    locale_format_date,
-    locale_format_datetime,
-    locale_format_month,
-    period_type_title_format,
-]
-
-for filter in filters:
-    template_env.filters[filter.__name__] = filter
 
 
 class EmergencySummaryReportService:
@@ -36,6 +24,8 @@ class EmergencySummaryReportService:
 
     def __init__(self, repository: Annotated[EmergencySummaryRepository, Depends(EmergencySummaryRepository)]) -> None:
         self._repository = repository
+        self.templates_dir = templates_dir
+        self.template_env = get_template_env(templates_dir)
 
     def __group_data(
         self,
@@ -112,9 +102,9 @@ class EmergencySummaryReportService:
 
         device_name = data[0].device_name if data and len(data) > 0 and device_id is not None else f"все устройства"
 
-        html_content = template_env.get_template(f"{self.report_name}.html").render(
+        html_content = self.template_env.get_template(f"{self.report_name}.html").render(
             data=grouped_data,
-            templates_dir=templates_dir,
+            templates_dir=self.templates_dir,
             is_admin=is_admin_role,
             period_type=period_type.value,
             device_name=device_name,
