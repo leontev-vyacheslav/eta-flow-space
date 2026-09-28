@@ -6,7 +6,6 @@ from typing import Annotated, Any
 from fastapi import HTTPException, status
 from fastapi.params import Depends
 import pytz
-from collections import defaultdict
 
 from app.helpers.pdf import render_pdf_async
 from app.helpers.templates import get_template_env
@@ -48,7 +47,8 @@ class AccountingSheetReportBaseService:
                 },
             )
 
-        if not data or len(data) == 0:
+        # The query returns a row for every calendar day, so "no data" means no day has any reading
+        if not any(metric.value is not None for row in data for metric in row.metrics.values()):
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail={
@@ -57,30 +57,22 @@ class AccountingSheetReportBaseService:
                 },
             )
 
-        # Total consumption per metric key, e.g. {"energyActiveTotal": 12345, "energyReactiveTotal": 678}
-        total_consumption: dict[str, float] = defaultdict(float)
-        for row in data:
-            for key, metric in row.metrics.items():
-                if metric.consumption is not None:
-                    total_consumption[key] += metric.consumption
-
-        # Monthly breakdown, now nested per metric key
+        # Consumption totals per metric key, overall and per month. A total stays None ("no data",
+        # rendered as "-") until some day has consumption, so a missing value is never reported as 0
+        metric_keys = list(data[0].metrics)
+        total_consumption: dict[str, float | None] = dict.fromkeys(metric_keys)
         monthly_data: OrderedDict[str, list] = OrderedDict()
-        monthly_totals: OrderedDict[str, dict[str, float]] = OrderedDict()
+        monthly_totals: OrderedDict[str, dict[str, float | None]] = OrderedDict()
         for row in data:
             month_key = row.day.strftime("%Y-%m")
             if month_key not in monthly_data:
                 monthly_data[month_key] = []
-                monthly_totals[month_key] = defaultdict(float)
+                monthly_totals[month_key] = dict.fromkeys(metric_keys)
             monthly_data[month_key].append(row)
             for key, metric in row.metrics.items():
                 if metric.consumption is not None:
-                    monthly_totals[month_key][key] += metric.consumption
-
-        # Convert defaultdicts to plain dicts before passing to the template —
-        # Jinja handles plain dicts more predictably (e.g. with .items(), 'in' checks)
-        total_consumption = dict(total_consumption)
-        monthly_totals = OrderedDict((k, dict(v)) for k, v in monthly_totals.items())
+                    total_consumption[key] = (total_consumption[key] or 0.0) + metric.consumption
+                    monthly_totals[month_key][key] = (monthly_totals[month_key][key] or 0.0) + metric.consumption
 
         html_content = self.template_env.get_template(f"{self.report_name}.html").render(
             *args,
