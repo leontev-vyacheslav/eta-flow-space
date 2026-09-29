@@ -19,3 +19,43 @@ You can solve this in one of three ways, depending on your preference:
 ```shell
 sudo chown -R 1000:1000 ./data
 ```
+
+### 2. HTTPS on port 3000 (https://eta24.ru:3000)
+
+Only port 3000 is forwarded by the office router, and ports 80/443 belong to the IIS server (old dispatching
+system). That server already gets a Let's Encrypt certificate for `eta24.ru` from win-acme; the gateway reuses it
+(a certificate is not tied to a port).
+
+```
+IIS server (win-acme, scheduled task)            Linux machine (docker compose)
+ renews eta24.ru, installs it in IIS              sync-cert.sh (host cron, daily): scp the PEM files,
+ + exports PEM files to C:\certs\eta24  <-- SSH -- check them, copy to ./certs, reload the gateway
+```
+
+**IIS server (done once):** the eta24.ru renewal has two store steps: *Windows Certificate Store (WebHosting)* for
+IIS and *PEM encoded files* to `C:\certs\eta24` without a key password. The folder is readable only by SYSTEM,
+Administrators and the SSH user (PowerShell as administrator; the quotes stop PowerShell reading `(OI)` as a command):
+
+```powershell
+icacls C:\certs\eta24 /inheritance:r /grant:r '*S-1-5-18:(OI)(CI)F' '*S-1-5-32-544:(OI)(CI)F' 'eta-leo:(OI)(CI)R'
+icacls C:\certs\eta24\* /reset
+```
+
+**Linux machine, switching over** (in this order: nginx does not start without the certificate files):
+
+```shell
+cp sync-cert.env.example sync-cert.env   # fill in the IIS server address, SSH user, folder
+./sync-cert.sh                           # first run fills ./certs; expect "certificate installed"
+docker compose up -d --build eta-flow-space-ui eta-flow-space-gateway
+crontab -e                               # add: 30 15 * * * /path/to/eta-flow-space/sync-cert.sh >> /path/to/eta-flow-space/sync-cert.log 2>&1
+```
+
+Check: `https://eta24.ru:3000` opens with a valid certificate, and `http://eta24.ru:3000` redirects to it.
+The first `./sync-cert.sh` run also shows whether `scp` accepts the Windows path; if not, try
+`CERT_SOURCE_DIR=/C:/certs/eta24`.
+
+`sync-cert.sh` only installs a certificate that is valid, not expired, for `eta24.ru` and matching its key;
+otherwise it logs an error and keeps the current one. If the gateway rejects new files, the previous ones are restored.
+
+**Rollback:** `git checkout <previous commit> -- nginx.conf docker-compose.yaml` and
+`docker compose up -d eta-flow-space-gateway` bring back plain HTTP on 3000 (the UI build works with both).

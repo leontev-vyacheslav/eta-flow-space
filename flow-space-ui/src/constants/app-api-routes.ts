@@ -1,5 +1,6 @@
 export default {
-    host: process.env.NODE_ENV !== 'production' ? 'http://localhost:3002' : `http://${window.location.hostname}:3000`,
+    // production: the gateway serves the UI and the API on one address, so use the page's own (https://eta24.ru:3000)
+    host: process.env.NODE_ENV !== 'production' ? 'http://localhost:3002' : window.location.origin,
 
     accountSignIn: '/sign-in',
     accountRefresh: '/refresh',

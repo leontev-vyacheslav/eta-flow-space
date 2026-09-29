@@ -18,3 +18,7 @@ dist/
 *.rdb
 
 .venv/
+# HTTPS certificate for the gateway (sync-cert.sh)
+certs/
+sync-cert.env
+sync-cert.log

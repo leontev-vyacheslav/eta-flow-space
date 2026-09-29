@@ -23,7 +23,11 @@ export const useQuickHelpReferenceData = () => {
         if (response && response.status === HttpStatusCode.Ok) {
             const quickHelpReference = response.data as QuickHelpReferenceModel;
             if (quickHelpReference.content) {
-                quickHelpReference.content = quickHelpReference.content.replaceAll('localhost:', `${window.location.hostname}:`);
+                // help texts link to http://localhost:<port>/...; point them at this server with the page's own
+                // protocol, otherwise an https page would block their http images as mixed content
+                quickHelpReference.content = quickHelpReference.content
+                    .replaceAll('http://localhost:', `${window.location.protocol}//localhost:`)
+                    .replaceAll('localhost:', `${window.location.hostname}:`);
             }
             return quickHelpReference;
         }
