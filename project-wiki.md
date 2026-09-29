@@ -57,5 +57,9 @@ The first `./sync-cert.sh` run also shows whether `scp` accepts the Windows path
 `sync-cert.sh` only installs a certificate that is valid, not expired, for `eta24.ru` and matching its key;
 otherwise it logs an error and keeps the current one. If the gateway rejects new files, the previous ones are restored.
 
+**Local development:** the gateway also listens on plain HTTP port 8080, published only on the machine's
+`127.0.0.1:3080` (not forwarded by the router). The developer SSH tunnel maps the dev UI's `localhost:3002` to it:
+`-L 3002:localhost:3080` (the HTTPS port 3000 would only answer with redirects to https).
+
 **Rollback:** `git checkout <previous commit> -- nginx.conf docker-compose.yaml` and
 `docker compose up -d eta-flow-space-gateway` bring back plain HTTP on 3000 (the UI build works with both).

@@ -104,6 +104,8 @@ services:
     container_name: eta-flow-space-gateway
     ports:
       - "3000:80"
+      # plain HTTP for the developer SSH tunnel (-L 3002:localhost:3080), reachable only on this machine
+      - "127.0.0.1:3080:8080"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
       - ./flow-space-statics:/var/www/static:ro
