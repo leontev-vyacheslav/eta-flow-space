@@ -18,6 +18,7 @@ import { getQuickGuid } from "../../utils/uuid";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSharedArea } from "../../contexts/shared-area";
 import { MapMarkerIconEmergencyTypes } from "../../models/enums/map-icon-emergency-types";
+import { MapSizeWatcher } from "./map-size-watcher";
 
 
 import 'leaflet/dist/leaflet.css';
@@ -306,6 +307,7 @@ export const MapPage = () => {
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
+                    <MapSizeWatcher />
                 </MapContainer>
             </div>
         </>
