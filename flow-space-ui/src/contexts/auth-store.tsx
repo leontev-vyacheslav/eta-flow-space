@@ -21,18 +21,22 @@ export interface AuthState {
 
 let refreshPromise: Promise<string | null> | null = null;
 
-export const useAuthStore = create<AuthState>((set, get) => ({
-  user: null,
+function readStoredUser(): AuthUserModel | null {
+  try {
+    const raw = localStorage.getItem('@userAuthData');
+    return raw ? (JSON.parse(raw) as AuthUserModel) : null;
+  } catch (e) {
+    console.error('Failed to read auth storage:', e);
+    return null;
+  }
+}
 
-  getUserAuthDataFromStorage: () => {
-    try {
-      const raw = localStorage.getItem('@userAuthData');
-      return raw ? (JSON.parse(raw) as AuthUserModel) : null;
-    } catch (e) {
-      console.error('Failed to read auth storage:', e);
-      return null;
-    }
-  },
+export const useAuthStore = create<AuthState>((set, get) => ({
+  // read synchronously so the first render already uses the signed-in routes;
+  // starting with null let the sign-in routes redirect to /sign-in and lose the current URL on reload
+  user: readStoredUser(),
+
+  getUserAuthDataFromStorage: readStoredUser,
 
   initFromStorage: () => {
     const user = get().getUserAuthDataFromStorage();
