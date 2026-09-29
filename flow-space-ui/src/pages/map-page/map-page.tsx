@@ -29,6 +29,9 @@ export const MapPage = () => {
     const { deviceId } = useParams();
     const { getDeviceListAsync, getDeviceStatesAsync, getEmergencyStatesAsync, getDeviceStateDataschemaAsync } = useAppData();
     const [refreshToken, setRefreshToken] = useState<string>(getQuickGuid());
+    // tiles are requested only once the map is positioned (fit to the markers or zoomed to a device);
+    // before that it sits at the default centre, whose tiles would be downloaded and thrown away
+    const [tilesReady, setTilesReady] = useState(false);
     const mapRef = useRef<L.Map>(null);
     const markersGroupRef = useRef<L.FeatureGroup | null>(null);
     const rootsRef = useRef<Map<number, ReturnType<typeof createRoot>>>(new Map());
@@ -175,6 +178,8 @@ export const MapPage = () => {
         }
 
         if (!devices || !mapRef.current) {
+            // no device list: show the map at the default centre rather than leaving it empty
+            setTilesReady(true);
             return;
         }
 
@@ -249,6 +254,7 @@ export const MapPage = () => {
         } else {
             showPopup(deviceId);
         }
+        setTilesReady(true);
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [getEmergencyStatesAsync, getDeviceListAsync, markerPopupOpenHandler, markerPopupCloseHandler, markerClickHandler, refreshToken]);
@@ -303,10 +309,12 @@ export const MapPage = () => {
                     center={AppConstants.mapDefaultCenter}
                     zoom={AppConstants.mapDefaultZoom}
                     style={{ height: 'calc(100% - 50px)', width: '100%', }}>
-                    <TileLayer
-                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    />
+                    {tilesReady
+                        ? <TileLayer
+                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        />
+                        : null}
                     <MapSizeWatcher />
                 </MapContainer>
             </div>

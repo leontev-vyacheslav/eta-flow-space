@@ -29,7 +29,8 @@ const AppConstants = {
         connectionEmergencyReasonId: 100
     },
     mapDefaultZoom: 14,
-    mapDefaultCenter: [51.50853, -0.12574] as [number, number],
+    // Kazan: only shown when no device has a location
+    mapDefaultCenter: [55.79628, 49.10886] as [number, number],
     mapDefaultBoundsSetting: {
         padding: [40, 40],
         maxZoom: 14,
