@@ -2,6 +2,7 @@ import { useCallback } from "react";
 import { useDashboardPage } from "../../dashboard-page-context";
 import { useScreenSize } from "../../../../utils/media-query";
 import { formatDateTime, formatNumber, getEnumDescription, isDateTime } from "../../../../helpers/state-value-format";
+import { evaluateState } from "../../../../helpers/state-expression";
 
 export const useMnemoschemaStateSetup = () => {
     const { isSmall, isXSmall, isLarge } = useScreenSize();
@@ -18,7 +19,7 @@ export const useMnemoschemaStateSetup = () => {
                 const dataStateEvalAttr = element.getAttribute('data-state-eval');
                 if (dataStateEvalAttr && states) {
                     try {
-                        eval(dataStateEvalAttr);
+                        evaluateState(dataStateEvalAttr, { element, states });
                     }
                     catch (error) {
                         console.error(`Error evaluating expression: ${dataStateEvalAttr}`, error);
@@ -121,7 +122,7 @@ export const useMnemoschemaStateSetup = () => {
                             const dataStateEvalAttr = element.getAttribute('data-state-eval');
                             if (dataStateEvalAttr && states) {
                                 try {
-                                    eval(dataStateEvalAttr);
+                                    evaluateState(dataStateEvalAttr, { element, value, states });
                                 } catch (error) {
                                     console.error(`Error evaluating expression: ${dataStateEvalAttr}`, error);
                                 }
