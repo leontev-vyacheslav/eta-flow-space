@@ -3692,7 +3692,7 @@
 
 
         <g transform="matrix(1 0 0 1 10 20)" style="font-weight:bold; letter-spacing: 1px" data-state="states['tsarevo-boiler-room'].timestamp"
-            data-state-eval="if(schemaTypeInfoPropertiesChain.find(s => s.propertiesChainValuePair.propertiesChain === 'isConnected')?.propertiesChainValuePair.value === false) {element.style.fill = 'red'}">
+            data-state-eval="if(states['tsarevo-boiler-room'].isConnected === false) {element.style.fill = 'red'}">
             <text data-state="states['tsarevo-boiler-room'].timestamp" data-state-format="date"
                 style="font-family:'MyriadPro-Regular'; font-size:10px;">{{timestamp}}</text>
             <text data-state="states['tsarevo-boiler-room'].timestamp" data-state-format="time" transform="matrix(1 0 0 1 5 15)"

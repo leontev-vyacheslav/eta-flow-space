@@ -2624,7 +2624,7 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 		</g>
 		<line style="fill:none;stroke:#4D4D4D;stroke-width:0.5;stroke-miterlimit:10;" x1="663.5" y1="431.2" x2="663.5" y2="433.1" />
 
-		<g transform="matrix(1 0 0 1 10 20)" style="font-weight:bold; letter-spacing: 1px" data-state="states['statum-boiler-room'].timestamp" data-state-eval="if(schemaTypeInfoPropertiesChain.find(s => s.propertiesChainValuePair.propertiesChain === 'isConnected')?.propertiesChainValuePair.value === false) {element.style.fill = 'red'}">
+		<g transform="matrix(1 0 0 1 10 20)" style="font-weight:bold; letter-spacing: 1px" data-state="states['statum-boiler-room'].timestamp" data-state-eval="if(states['statum-boiler-room'].isConnected === false) {element.style.fill = 'red'}">
 			<text data-state="states['statum-boiler-room'].timestamp" data-state-format="date" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{timestamp}}</text>
 			<text data-state="states['statum-boiler-room'].timestamp" data-state-format="time" transform="matrix(1 0 0 1 5 15)" style="font-family:'MyriadPro-Regular'; font-size:10px;">{{timestamp}}</text>
 		</g>
