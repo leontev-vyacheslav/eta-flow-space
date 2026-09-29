@@ -5,6 +5,7 @@ import routes from '../constants/app-api-routes';
 import { HttpConstants } from '../constants/app-http-constants';
 import type { AuthUserModel } from '../models/auth-user-model';
 import type { SignInModel } from '../models/signin-model';
+import type { RefreshAccessTokenFunc, RefreshAccessTokenResult } from '../models/auth-context';
 
 export interface AuthState {
   user: AuthUserModel | null;
@@ -13,13 +14,20 @@ export interface AuthState {
   initFromStorage: () => void;
   signIn: (signIn: SignInModel) => Promise<void>;
   signOut: () => Promise<void>;
-  refreshAccessToken: () => Promise<string | null>;
+  refreshAccessToken: RefreshAccessTokenFunc;
 
   // Derived (computed via selectors, not stored)
   getUserAuthDataFromStorage: () => AuthUserModel | null;
 }
 
-let refreshPromise: Promise<string | null> | null = null;
+let refreshPromise: Promise<RefreshAccessTokenResult> | null = null;
+
+// only these answers mean the refresh token itself is no good; anything else (no answer, 429, 5xx) is temporary
+const REFRESH_REJECTED_STATUSES: number[] = [
+  HttpConstants.StatusCodes.BadRequest,
+  HttpConstants.StatusCodes.Unauthorized,
+  HttpConstants.StatusCodes.Forbidden,
+];
 
 function readStoredUser(): AuthUserModel | null {
   try {
@@ -61,9 +69,9 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       return refreshPromise;
     }
 
-    refreshPromise = (async () => {
+    refreshPromise = (async (): Promise<RefreshAccessTokenResult> => {
       const stored = get().getUserAuthDataFromStorage();
-      if (!stored?.refreshToken) return null;
+      if (!stored?.refreshToken) return { status: 'rejected' };
 
       try {
         const response = await axios.post(
@@ -79,13 +87,18 @@ export const useAuthStore = create<AuthState>((set, get) => ({
           };
           localStorage.setItem('@userAuthData', JSON.stringify(updated));
           set({ user: updated });
-          return updated.accessToken;
+          return { status: 'refreshed', accessToken: updated.accessToken };
         }
+
+        return { status: 'rejected' };
       } catch (e) {
         console.error('Token refresh failed:', e);
-      }
+        const status = axios.isAxiosError(e) ? e.response?.status : undefined;
 
-      return null;
+        return status !== undefined && REFRESH_REJECTED_STATUSES.includes(status)
+          ? { status: 'rejected' }
+          : { status: 'unavailable', error: e };
+      }
     })();
 
     try {

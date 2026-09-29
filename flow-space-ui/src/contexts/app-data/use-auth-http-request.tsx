@@ -49,9 +49,9 @@ export const useAuthHttpRequest = () => {
                 response = axiosError.response;
 
                 if (response?.status === HttpConstants.StatusCodes.Unauthorized) {
-                    const newAccessToken = await refreshAccessToken();
-                    if (newAccessToken) {
-                        config.headers.Authorization = `Bearer ${newAccessToken}`;
+                    const refreshResult = await refreshAccessToken();
+                    if (refreshResult.status === 'refreshed') {
+                        config.headers.Authorization = `Bearer ${refreshResult.accessToken}`;
                         try {
                             response = await httpClientBase.request(config) as AxiosResponse;
                         } catch (retryError) {
@@ -70,6 +70,13 @@ export const useAuthHttpRequest = () => {
                             }
                             return response;
                         }
+                    } else if (refreshResult.status === 'unavailable') {
+                        // the refresh could not be done right now (network, rate limit, server error):
+                        // keep the session, the next request tries the refresh again
+                        if (!suppressShowError) {
+                            await proclaimError(refreshResult.error);
+                        }
+                        return response;
                     } else {
                         await signOut();
                         if (!suppressShowUnauthorized) {
