@@ -61,11 +61,12 @@ otherwise it logs an error and keeps the current one. If the gateway rejects new
 `127.0.0.1:3080` (not forwarded by the router). The developer SSH tunnel maps the dev UI's `localhost:3002` to it:
 `-L 3002:localhost:3080` (the HTTPS port 3000 would only answer with redirects to https).
 
-**Content-Security-Policy:** the gateway sends `Content-Security-Policy-Report-Only` (see `nginx.conf`): browsers
-block nothing yet, but list what the policy would block in the DevTools console (messages starting with
-"[Report Only] Refused to …"). When none show up during normal use, rename the header to `Content-Security-Policy`
-in `nginx.conf` and run `docker compose restart eta-flow-space-gateway`. A new external source (another tile
-server, a CDN) must be added to the matching directive first, or the browser will block it.
+**Content-Security-Policy:** the gateway sends an enforced `Content-Security-Policy` (see `nginx.conf`): scripts only
+from this site (no `eval`, no inline or foreign scripts), images from here and the OpenStreetMap tile servers, fonts
+from here. Anything else is blocked, and the DevTools console shows "Refused to …". A new external source (another
+tile server, a CDN) must be added to the matching directive first. To investigate a problem without blocking,
+rename the header to `Content-Security-Policy-Report-Only` for a while (console messages then start with
+"[Report Only]"), then back.
 
 **After changing `nginx.conf`:** run `docker compose up -d --force-recreate eta-flow-space-gateway`. The file is
 bind-mounted on its own, and `git pull` replaces it with a new file, so a restarted container can keep serving the
