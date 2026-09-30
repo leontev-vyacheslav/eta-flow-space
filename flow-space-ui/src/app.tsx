@@ -1,6 +1,7 @@
 import 'devextreme/dist/css/dx.common.css';
 import './themes/generated/theme.base.css';
 import './themes/generated/theme.additional.css';
+import './themes/roboto.css';
 import './dx-styles.scss';
 
 import { HashRouter as BrowserRouter } from 'react-router-dom';

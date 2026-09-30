@@ -1,0 +1,31 @@
+/* "Roboto" served from the app itself (DevExtreme's bundled files, full Cyrillic), instead of Google Fonts.
+   The theme only registers these files as "RobotoFallback"; the mnemoschema SVGs ask for font-family 'Roboto'
+   without a fallback, so the name must exist, or their text falls back to the browser's serif font. */
+@font-face {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: local("Roboto Light"), local("Roboto-Light"), url("../../node_modules/devextreme/dist/css/fonts/Roboto-300.woff2") format("woff2");
+}
+@font-face {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local("Roboto"), local("Roboto-Regular"), url("../../node_modules/devextreme/dist/css/fonts/Roboto-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: local("Roboto Medium"), local("Roboto-Medium"), url("../../node_modules/devextreme/dist/css/fonts/Roboto-500.woff2") format("woff2");
+}
+@font-face {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local("Roboto Bold"), local("Roboto-Bold"), url("../../node_modules/devextreme/dist/css/fonts/Roboto-700.woff2") format("woff2");
+}

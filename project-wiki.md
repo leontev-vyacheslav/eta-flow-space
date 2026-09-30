@@ -67,5 +67,9 @@ block nothing yet, but list what the policy would block in the DevTools console 
 in `nginx.conf` and run `docker compose restart eta-flow-space-gateway`. A new external source (another tile
 server, a CDN) must be added to the matching directive first, or the browser will block it.
 
+**After changing `nginx.conf`:** run `docker compose up -d --force-recreate eta-flow-space-gateway`. The file is
+bind-mounted on its own, and `git pull` replaces it with a new file, so a restarted container can keep serving the
+old one. Check with `docker exec eta-flow-space-gateway nginx -T | grep Content-Security`.
+
 **Rollback:** `git checkout <previous commit> -- nginx.conf docker-compose.yaml` and
 `docker compose up -d eta-flow-space-gateway` bring back plain HTTP on 3000 (the UI build works with both).
