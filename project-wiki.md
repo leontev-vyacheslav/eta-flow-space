@@ -61,5 +61,11 @@ otherwise it logs an error and keeps the current one. If the gateway rejects new
 `127.0.0.1:3080` (not forwarded by the router). The developer SSH tunnel maps the dev UI's `localhost:3002` to it:
 `-L 3002:localhost:3080` (the HTTPS port 3000 would only answer with redirects to https).
 
+**Content-Security-Policy:** the gateway sends `Content-Security-Policy-Report-Only` (see `nginx.conf`): browsers
+block nothing yet, but list what the policy would block in the DevTools console (messages starting with
+"[Report Only] Refused to …"). When none show up during normal use, rename the header to `Content-Security-Policy`
+in `nginx.conf` and run `docker compose restart eta-flow-space-gateway`. A new external source (another tile
+server, a CDN) must be added to the matching directive first, or the browser will block it.
+
 **Rollback:** `git checkout <previous commit> -- nginx.conf docker-compose.yaml` and
 `docker compose up -d eta-flow-space-gateway` bring back plain HTTP on 3000 (the UI build works with both).

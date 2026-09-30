@@ -3,8 +3,9 @@
 * http://js.devexpress.com/ThemeBuilder/
 */
 
-@import url(https://fonts.googleapis.com/css?family=Roboto:300,400,500,700);
-@import url(https://fonts.googleapis.com/earlyaccess/notokufiarabic.css);
+/* The Google Fonts @imports (Roboto, Noto Kufi Arabic) generated here were removed: Roboto comes from the
+   RobotoFallback faces below (DevExtreme's bundled files, full Cyrillic), so the UI does not depend on Google.
+   Remove them again if the theme is regenerated in ThemeBuilder. */
 @font-face {
   font-family: RobotoFallback;
   font-style: normal;
