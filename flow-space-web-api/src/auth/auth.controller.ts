@@ -78,6 +78,17 @@ export class AuthController {
         return userAuthData;
     }
 
+    // No access-token guard: the access token has often expired by the time the user signs out,
+    // and holding the refresh token is proof enough to revoke it. Always 204, so it reveals nothing.
+    @Post('sign-out')
+    @HttpCode(HttpStatus.NO_CONTENT)
+    @Throttle({ default: { limit: 5, ttl: seconds(60) } })
+    async signOut(@Body('refreshToken') refreshToken: unknown) {
+        if (typeof refreshToken === 'string' && refreshToken) {
+            await this.authService.signOut(refreshToken);
+        }
+    }
+
     @Get('health-check')
     @UseGuards(JwtAuthGuard)
     @HttpCode(HttpStatus.OK)

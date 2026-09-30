@@ -105,6 +105,31 @@ describe('AuthService', () => {
         await expect(service.refresh('bad-token')).rejects.toThrow();
     });
 
+    it('should revoke the refresh token on signOut', async () => {
+        await service.signOut('refresh-token');
+
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+        expect(sharedStoreService.deleteRefreshToken).toHaveBeenCalledWith('refresh-token');
+    });
+
+    it('should reject refresh after signOut', async () => {
+        const store = new Map<string, number>([['refresh-token', 1]]);
+        sharedStoreService.getRefreshTokenUserId.mockImplementation((token: string) => Promise.resolve(store.get(token) ?? null));
+        sharedStoreService.deleteRefreshToken.mockImplementation((token: string) => {
+            store.delete(token);
+            return Promise.resolve();
+        });
+        jwtService.verifyAsync.mockResolvedValue({
+            userId: 1,
+            roleId: 1,
+            type: 'refresh',
+        });
+
+        await service.signOut('refresh-token');
+
+        await expect(service.refresh('refresh-token')).rejects.toThrow();
+    });
+
     it('should reject refresh when token not in Redis', async () => {
         jwtService.verifyAsync.mockResolvedValue({
             userId: 1,

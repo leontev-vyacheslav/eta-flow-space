@@ -112,15 +112,11 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     const stored = get().getUserAuthDataFromStorage();
     if (stored) {
       try {
+        // revoke the refresh token on the server; the endpoint needs nothing else
         await axios.post(
           `${routes.host}${routes.accountSignOut}`,
-          stored,
-          {
-            headers: {
-              ...HttpConstants.Headers.ContentTypeJson,
-              Authorization: `Bearer ${stored.accessToken}`,
-            },
-          }
+          { refreshToken: stored.refreshToken },
+          { headers: HttpConstants.Headers.ContentTypeJson }
         );
       } catch {
         console.error('Sign-out revocation failed');

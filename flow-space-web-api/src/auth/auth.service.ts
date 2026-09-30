@@ -85,6 +85,11 @@ export class AuthService {
         return this.signIn({ login: '', userId: payload.userId, roleId: payload.roleId });
     }
 
+    async signOut(refreshToken: string) {
+        // Revoke the refresh token; an unknown or already used token is a no-op
+        await this.sharedStoreService.deleteRefreshToken(refreshToken);
+    }
+
     async verifyToken(token: string) {
         try {
             return await this.jwtService.verifyAsync<JwtPayloadModel & object>(token);
