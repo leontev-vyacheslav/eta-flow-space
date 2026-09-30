@@ -74,3 +74,18 @@ old one. Check with `docker exec eta-flow-space-gateway nginx -T | grep Content-
 
 **Rollback:** `git checkout <previous commit> -- nginx.conf docker-compose.yaml` and
 `docker compose up -d eta-flow-space-gateway` bring back plain HTTP on 3000 (the UI build works with both).
+
+### 3. Reports in the local dev UI
+
+The dev UI (`npm run dev`) talks to production through the SSH tunnel on `localhost:3002`, reports included
+(`/api/reporting` behind the gateway), so they work without running anything else locally.
+
+To work on the reports themselves, run `flow-space-reporting` locally
+(`.venv/bin/uvicorn main:app --reload --host 127.0.0.1 --port 8000`) and point the dev UI at it with
+`flow-space-ui/.env.development.local` (not committed):
+
+```shell
+VITE_REPORTING_HOST=http://localhost:8000/api
+```
+
+Restart `npm run dev` after creating or removing that file.

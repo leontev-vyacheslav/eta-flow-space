@@ -234,10 +234,7 @@ export const useFlowData = () => {
   const getReportDefinitionAsync = useCallback(
     async (reportId: number) => {
       const response = await authHttpRequest({
-        url:
-          process.env.NODE_ENV !== "production"
-            ? `http://localhost:8000/api/reports/${reportId}`
-            : `${routes.host}${routes.reporting}/reports/${reportId}`,
+        url: `${routes.reportingHost}/reports/${reportId}`,
         method: HttpConstants.Methods.Get as Method,
       });
 
@@ -253,10 +250,7 @@ export const useFlowData = () => {
       const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
       const response = await authHttpRequest(
         {
-          url:
-            process.env.NODE_ENV !== "production"
-              ? `http://localhost:8000/api${url}`
-              : `${routes.host}${routes.reporting}${url}`,
+          url: `${routes.reportingHost}${url}`,
           params: { ...params, timezone },
           method: HttpConstants.Methods.Get as Method,
           responseType: "blob",
