@@ -5,7 +5,6 @@ import { DeviceOwnershipGuard } from '../common/guards/device-ownership.guard';
 import { User } from '../common/decorators/user.decorator';
 import { RequestUserModel } from '../models/request-user.model';
 import { EmergencyStateService } from './emergency-state.service';
-import { SkipThrottle } from '@nestjs/throttler';
 
 @Controller('api/emergency-states')
 @UseGuards(JwtAuthGuard)
@@ -36,7 +35,6 @@ export class EmergencyStateController {
         return emergencyStates;
     }
 
-    @SkipThrottle()
     @Get()
     async getEmergencyStates(@User() user: RequestUserModel) {
         const { userId } = user;

@@ -16,11 +16,10 @@ import { DeviceStateDispatcherModule } from './common/services/device-state-disp
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { AcceptLanguageResolver, HeaderResolver, I18nModule, QueryResolver } from 'nestjs-i18n';
 import { CacheModule } from '@nestjs/cache-manager';
-import { ThrottlerGuard, ThrottlerModule, seconds } from '@nestjs/throttler';
+import { ThrottlerModule, seconds } from '@nestjs/throttler';
 
 import KeyvRedis from '@keyv/redis';
 import * as path from 'path';
-import { APP_GUARD } from '@nestjs/core';
 
 @Module({
     imports: [
@@ -44,10 +43,8 @@ import { APP_GUARD } from '@nestjs/core';
         }),
         ThrottlerModule.forRoot({
             throttlers: [
-                {
-                    ttl: seconds(parseInt(process.env.THROTTLE_TTL || '60')),
-                    limit: parseInt(process.env.THROTTLE_LIMIT || '20'),
-                },
+                // Applied only to the auth endpoints, through AuthThrottlerGuard.
+                { ttl: seconds(60), limit: 5 },
             ],
             errorMessage: 'Слишком много запросов. Пожалуйста, попробуйте позже.',
         }),
@@ -77,12 +74,6 @@ import { APP_GUARD } from '@nestjs/core';
         DeviceModule,
     ],
     controllers: [AppController],
-    providers: [
-        {
-            provide: APP_GUARD,
-            useClass: ThrottlerGuard,
-        },
-    ],
 })
 export class AppModule {
     configure(consumer: MiddlewareConsumer) {

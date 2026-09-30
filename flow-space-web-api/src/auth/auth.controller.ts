@@ -7,7 +7,7 @@ import { SignInModel } from '../models/sign-in.model';
 import { I18nService } from 'nestjs-i18n';
 import * as bcrypt from 'bcrypt';
 import { UserDataModel } from '../database/models';
-import { seconds, Throttle } from '@nestjs/throttler';
+import { AuthThrottlerGuard } from './guards/auth-throttler.guard';
 
 @Controller()
 export class AuthController {
@@ -21,7 +21,7 @@ export class AuthController {
 
     @Post('sign-in')
     @HttpCode(HttpStatus.OK)
-    @Throttle({ default: { limit: 5, ttl: seconds(60) } })
+    @UseGuards(AuthThrottlerGuard)
     async signIn(@Body() signIn: SignInModel) {
         const user = await this.usersService.getByName(signIn.login);
 
@@ -66,7 +66,7 @@ export class AuthController {
 
     @Post('refresh')
     @HttpCode(HttpStatus.OK)
-    @Throttle({ default: { limit: 5, ttl: seconds(60) } })
+    @UseGuards(AuthThrottlerGuard)
     async refresh(@Body('refreshToken') refreshToken: string) {
         if (!refreshToken) {
             throw new UnauthorizedException(this.i18n.t('errors.TOKEN_EXPIRED_OR_INVALID'));
@@ -82,7 +82,7 @@ export class AuthController {
     // and holding the refresh token is proof enough to revoke it. Always 204, so it reveals nothing.
     @Post('sign-out')
     @HttpCode(HttpStatus.NO_CONTENT)
-    @Throttle({ default: { limit: 5, ttl: seconds(60) } })
+    @UseGuards(AuthThrottlerGuard)
     async signOut(@Body('refreshToken') refreshToken: unknown) {
         if (typeof refreshToken === 'string' && refreshToken) {
             await this.authService.signOut(refreshToken);
