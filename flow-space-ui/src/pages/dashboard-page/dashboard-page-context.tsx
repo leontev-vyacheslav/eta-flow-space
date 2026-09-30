@@ -1,5 +1,5 @@
 // import Ajv from 'ajv/dist/2020';
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import type { DeviceModel } from '../../models/flows/device-model';
 import type { DeviceStateModel } from '../../models/flows/device-state-model';
 import { useAppData } from '../../contexts/app-data/app-data';
@@ -60,24 +60,6 @@ function DashboardPageContextProvider(props: any) {
     }, [dataschemas, deviceStates]);
 
 
-    const applyDimensionsToStates = useCallback((deviceStates: Record<string, DeviceStateModel> | undefined, dataschemas: Record<string, any> | undefined): any => {
-        if (!deviceStates || !dataschemas) {
-            return;
-        }
-        for (const code of Object.keys(deviceStates)) {
-            const schema = dataschemas[code];
-            const state = deviceStates[code].state;
-            getKeyValuePairs(state).forEach(p => {
-                if (typeof p.value === 'number' && Number.isFinite(p.value)) {
-                    const typeInfo = getSchemaTypeInfo(p.propertiesChain, schema);
-                    if (typeInfo && typeInfo.isEnum !== true && typeInfo.dimension) {
-                        eval(`state.${p.propertiesChain} = ${p.value * typeInfo.dimension}`);
-                    }
-                }
-            });
-        }
-    }, []);
-
     useEffect(() => {
         let cancelled = false;
 
@@ -129,8 +111,6 @@ function DashboardPageContextProvider(props: any) {
             const deviceStates = (settledFetches[0].status === 'fulfilled' ? settledFetches[0].value : undefined) as Record<string, DeviceStateModel> | undefined;
             const mnemoschema = (settledFetches[1].status === 'fulfilled' ? settledFetches[1].value : undefined) as string | undefined;
 
-            applyDimensionsToStates(deviceStates, targetDataschemas);
-
             setDevice(targetDevice);
             setDeviceStates(deviceStates);
             setMnemoschema(mnemoschema);
@@ -138,7 +118,7 @@ function DashboardPageContextProvider(props: any) {
         })();
 
         return () => { cancelled = true; };
-    }, [deviceId, flowCode, staticFilesManifest, getDeviceAsync, getDeviceStatesAsync, getMnemoschemaAsync, getDeviceStateDataschemaAsync, applyDimensionsToStates, refreshToken]);
+    }, [deviceId, flowCode, staticFilesManifest, getDeviceAsync, getDeviceStatesAsync, getMnemoschemaAsync, getDeviceStateDataschemaAsync, refreshToken]);
 
     // useEffect(() => {
     //     if (!dataschemas) {
@@ -221,7 +201,6 @@ function DashboardPageContextProvider(props: any) {
             }
 
             const deviceStates = await getDeviceStatesAsync(parseInt(deviceId));
-            applyDimensionsToStates(deviceStates, dataschemas);
             setDeviceStates(deviceStates);
         }, 60000);
 
@@ -230,7 +209,7 @@ function DashboardPageContextProvider(props: any) {
                 clearInterval(timer);
             }
         }
-    }, [deviceId, getDeviceStatesAsync, applyDimensionsToStates, dataschemas]);
+    }, [deviceId, getDeviceStatesAsync]);
 
     useEffect(() => {
         const registriesEnums = {} as Record<string, Record<string, DictionaryBaseModel[]>>;

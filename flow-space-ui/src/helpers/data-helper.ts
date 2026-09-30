@@ -7,7 +7,6 @@ export type PropertiesChainValuePairModel = {
 export type SchemaTypeInfoModel = {
     typeName: string,
     unit?: string;
-    dimension?: number;
     label?: string;
     formatting?: any;
     ui?: any;
@@ -60,7 +59,7 @@ export const getSchemaTypeInfo = (propertiesChain: string, subschema: any, schem
     if (prop) {
         schema = schema || subschema;
         if (PRIMITIVE_TYPES.has(prop.type)) {
-            return { typeName: prop.type, unit: prop.unit, formatting: prop.formatting, dimension: prop.dimension, label: prop.label, ui: prop.ui };
+            return { typeName: prop.type, unit: prop.unit, formatting: prop.formatting, label: prop.label, ui: prop.ui };
         } else if (prop.type === 'array') {
             const typeRef = prop.items.$ref;
             if (typeRef) {
@@ -73,7 +72,6 @@ export const getSchemaTypeInfo = (propertiesChain: string, subschema: any, schem
                 return {
                     typeName: prop.items.type,
                     unit: prop.items.unit,
-                    dimension: prop.items.dimension,
                     formatting: prop.items.formatting,
                 };
             }
@@ -88,7 +86,6 @@ export const getSchemaTypeInfo = (propertiesChain: string, subschema: any, schem
                 return {
                     typeName: typeName,
                     unit: prop.unit,
-                    dimension: prop.dimension,
                     formatting: prop.formatting,
                     label: prop.label,
                     ui: prop.ui,
