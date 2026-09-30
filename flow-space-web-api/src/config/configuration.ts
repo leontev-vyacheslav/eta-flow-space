@@ -1,5 +1,14 @@
 import { ConfigModel } from '../models/configs/config.model';
 
+// A missing JWT secret must stop the app: a built-in fallback would let anyone forge tokens.
+const requireEnv = (name: string): string => {
+    const value = process.env[name];
+    if (!value) {
+        throw new Error(`${name} is not set`);
+    }
+    return value;
+};
+
 export const configuration = (): ConfigModel => ({
     database: {
         username: process.env.DB_USERNAME || 'postgres',
@@ -11,8 +20,8 @@ export const configuration = (): ConfigModel => ({
         logging: process.env.NODE_ENV === 'development' ? console.log : false,
     },
     jwt: {
-        secret: process.env.JWT_SECRET || 'secret-key',
-        refreshSecret: process.env.JWT_REFRESH_SECRET || 'refresh-secret-key',
+        secret: requireEnv('JWT_SECRET'),
+        refreshSecret: requireEnv('JWT_REFRESH_SECRET'),
         expiresIn: process.env.JWT_EXPIRES_IN || '1h',
         refreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN || '7d',
         algorithm: (process.env.JWT_ALGORITHM || 'HS256') as ConfigModel['jwt']['algorithm'],
