@@ -14,6 +14,8 @@ import "./emergency-popover.scss";
 
 export interface EmergencyContextModel {
     refreshEmergencyStates: () => Promise<void>;
+    // draws the icons from the last poll again, e.g. once the side menu has (re)rendered its icon slots
+    redrawEmergencyIcons: () => void;
     showEmergencyPopover: (position: { x: number; y: number }, emergencyState: EmergencyModel) => void;
     emergencyStates: EmergencyModel[];
 }
@@ -36,6 +38,7 @@ function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
         appSettingsDataRef.current = appSettingsData;
     }, [flows, appSettingsData]);
     const hasFlows = !!flows && flows.length > 0;
+    const lastEmergencyStatesRef = useRef<EmergencyModel[] | null>(null);
     const [emergencyStates] = useState<EmergencyModel[]>([]);
     const popoverContentContainerRef = useRef<HTMLDivElement>(null);
     const popoverContentReactRootRef = useRef<ReturnType<typeof createRoot> | null>(null);
@@ -155,19 +158,14 @@ function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
         showEmergencyPopover({ x: event.clientX, y: event.clientY }, emergencyState);
     }, [showEmergencyPopover, unmountEmergencyPopoverRoot]);
 
-    const refreshEmergencyStates = useCallback(async () => {
-        if (!flowsRef.current) {
-            return;
-        }
-
-        const emergencyStates = await getEmergencyStatesAsync();
-        if (!emergencyStates) {
-            return;
-        }
-
+    // icons go into the [data-emergency-icon-container] slots that exist right now; slots rendered later
+    // (side menu drawn after the poll, or re-rendered) are filled by redrawEmergencyIcons
+    const drawEmergencyIcons = useCallback(() => {
+        const emergencyStates = lastEmergencyStatesRef.current;
         const flows = flowsRef.current;
-        const appSettingsData = appSettingsDataRef.current;
-        emergencyMuteManager.processEmergencyStates(emergencyStates, appSettingsData?.userSettings?.notifications?.web.enabled, appSettingsData?.userSettings?.notifications?.web.soundType);
+        if (!emergencyStates || !flows) {
+            return;
+        }
 
         const emergencyIconContainerElements = Array.from(document.querySelectorAll('[data-emergency-icon-container]'));
 
@@ -195,7 +193,24 @@ function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
                 (emergencyIconDom.body.firstElementChild as HTMLElement).addEventListener('click', (e) => emergencyIconClickHandler(e, emergencyState));
                 emergencyIconContainerElement.append(...emergencyIconDom.body.childNodes);
             });
-    }, [emergencyIconClickHandler, getEmergencyStatesAsync]);
+    }, [emergencyIconClickHandler]);
+
+    const refreshEmergencyStates = useCallback(async () => {
+        if (!flowsRef.current) {
+            return;
+        }
+
+        const emergencyStates = await getEmergencyStatesAsync();
+        if (!emergencyStates) {
+            return;
+        }
+
+        const appSettingsData = appSettingsDataRef.current;
+        emergencyMuteManager.processEmergencyStates(emergencyStates, appSettingsData?.userSettings?.notifications?.web.enabled, appSettingsData?.userSettings?.notifications?.web.soundType);
+
+        lastEmergencyStatesRef.current = emergencyStates;
+        drawEmergencyIcons();
+    }, [drawEmergencyIcons, getEmergencyStatesAsync]);
 
     useEffect(() => {
         if (!hasFlows) {
@@ -229,6 +244,7 @@ function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
 
     const contextValue: EmergencyContextModel = {
         refreshEmergencyStates,
+        redrawEmergencyIcons: drawEmergencyIcons,
         showEmergencyPopover,
         emergencyStates,
     };

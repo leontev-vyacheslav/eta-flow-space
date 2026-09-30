@@ -11,6 +11,7 @@ import type { SideNavigationMenuProps } from '../../models/side-navigation-menu-
 import './side-navigation-menu.scss';
 import { quickHelpReferenceService } from '../dialogs/quick-reference-help-dialog/quick-reference-help-dialog';
 import { emergencyLogService } from '../dialogs/emergency-log-dialog/emergency-log-dialog';
+import { useEmergency } from '../../contexts/emergency-context';
 
 export function SideNavigationMenu(props: SideNavigationMenuProps) {
     const {
@@ -26,6 +27,35 @@ export function SideNavigationMenu(props: SideNavigationMenuProps) {
     const { navigationData: { currentPath } } = useNavigation();
     const wrapperRef = useRef<Element | Element[]>(null);
     const sideNavigationMenuItems = useSideNavigationMenuItems();
+    const { redrawEmergencyIcons } = useEmergency();
+    const menuContainerRef = useRef<HTMLDivElement>(null);
+
+    // The TreeView renders its item templates (with the alarm icon slots) after the last alarm poll may have
+    // drawn, and renders them again on layout changes; fill new slots from the last poll when they appear.
+    // Only added slots count: the icons drawn into a slot do not trigger another redraw.
+    useEffect(() => {
+        const container = menuContainerRef.current;
+        if (!container) {
+            return;
+        }
+        let frame = 0;
+        const observer = new MutationObserver(mutations => {
+            const slotAdded = mutations.some(m => [...m.addedNodes].some(n =>
+                n instanceof Element && (n.matches('[data-emergency-icon-container]') || !!n.querySelector('[data-emergency-icon-container]'))));
+            if (slotAdded && !frame) {
+                frame = requestAnimationFrame(() => {
+                    frame = 0;
+                    redrawEmergencyIcons();
+                });
+            }
+        });
+        observer.observe(container, { childList: true, subtree: true });
+
+        return () => {
+            observer.disconnect();
+            cancelAnimationFrame(frame);
+        };
+    }, [redrawEmergencyIcons]);
 
     const items: TreeViewItemModel[] = useMemo<TreeViewItemModel[]>(
         () => {
@@ -89,7 +119,7 @@ export function SideNavigationMenu(props: SideNavigationMenuProps) {
     return (
         <div className={'dx-swatch-additional side-navigation-menu'} ref={getWrapperRef}>
             {children}
-            <div className={'menu-container'}>
+            <div className={'menu-container'} ref={menuContainerRef}>
                 <TreeView
                     ref={treeViewRef}
                     items={items as TreeViewItemModel[]}
