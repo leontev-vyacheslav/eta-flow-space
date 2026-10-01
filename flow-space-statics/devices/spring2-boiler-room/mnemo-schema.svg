@@ -2,7 +2,7 @@
 <!-- Generator: Adobe Illustrator 27.3.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="Layer_1"
 	xmlns="http://www.w3.org/2000/svg"
-	xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="-70 0 714 530.4" style="enable-background:new -70 0 714 530.4;" xml:space="preserve">
+	xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="-70 8 660 436" style="enable-background:new -70 8 660 436;" xml:space="preserve">
 
 	<defs>
 		<g id="infoIcon">
@@ -92,7 +92,7 @@
 			<text transform="matrix(1 0 0 1 77.5861 125.3774)" style="font-family:'Roboto'; font-size:10px;">К1</text>
 			<path data-state="states['spring2-boiler-room'].boilers[0].isBurnerFailure" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" d="M125.3,194.6H95.9c-2.5,0-4.5-2-4.5-4.5v-19.9
 		c0-2.5,2-4.5,4.5-4.5h29.5c2.5,0,4.5,2,4.5,4.5v19.9C129.8,192.6,127.8,194.6,125.3,194.6z" />
-			<use data-state="states['spring2-boiler-room'].boilers[0].isWorking" data-state-eval="element.style.display = (value ? 'initial': 'none');" href='#boilerFlame' transform="translate(94, 168) rotate(0, 25, 25) scale(0.06)" class="boiler-flame-animation" />
+			<use data-state="states['spring2-boiler-room'].boilers[0].isWorking" data-state-eval="element.style.display = (states['spring2-boiler-room'].boilers[0].isWorking ? 'initial': 'none');" href='#boilerFlame' transform="translate(94, 168) rotate(0, 25, 25) scale(0.06)" class="boiler-flame-animation" />
 		</g>
 		<use data-state="states['spring2-boiler-room'].boilers[0].state;states['spring2-boiler-room'].boilers[0].isBurnerFailure;states['spring2-boiler-room'].boilers[0].isGasRelayPressure;states['spring2-boiler-room'].boilers[0].isMinWaterPressure;states['spring2-boiler-room'].boilers[0].isMaxWaterPressure;states['spring2-boiler-room'].boilers[0].isMaxWaterTemperature" data-state-eval="element.style.display = (states['spring2-boiler-room'].boilers[0].isBurnerFailure || states['spring2-boiler-room'].boilers[0].isGasRelayPressure || states['spring2-boiler-room'].boilers[0].isMinWaterPressure || states['spring2-boiler-room'].boilers[0].isMaxWaterPressure ||  states['spring2-boiler-room'].boilers[0].isMaxWaterTemperature  ? 'initial': 'none')" href='#emergencyIcon' transform="translate(120, 130)" />
 	</g>
@@ -148,7 +148,7 @@
 			<text transform="matrix(1 0 0 1 197.018 125.2767)" style="font-family:'Roboto'; font-size:10px;">К2</text>
 			<path data-state="states['spring2-boiler-room'].boilers[1].isBurnerFailure" style="fill:#808080;stroke:#FF0000;stroke-miterlimit:10;" d="M244.7,194.5h-29.5c-2.5,0-4.5-2-4.5-4.5v-19.9
 			c0-2.5,2-4.5,4.5-4.5h29.5c2.5,0,4.5,2,4.5,4.5v19.9C249.2,192.5,247.2,194.5,244.7,194.5z" />
-			<use data-state="states['spring2-boiler-room'].boilers[1].isWorking" data-state-eval="element.style.display = (value ? 'initial': 'none');" href='#boilerFlame' transform="translate(214, 168) rotate(0, 25, 25) scale(0.06)" class="boiler-flame-animation" />
+			<use data-state="states['spring2-boiler-room'].boilers[1].isWorking" data-state-eval="element.style.display = (states['spring2-boiler-room'].boilers[1].isWorking ? 'initial': 'none');" href='#boilerFlame' transform="translate(214, 168) rotate(0, 25, 25) scale(0.06)" class="boiler-flame-animation" />
 		</g>
 		<use data-state="states['spring2-boiler-room'].boilers[1].state;states['spring2-boiler-room'].boilers[1].isBurnerFailure;states['spring2-boiler-room'].boilers[1].isGasRelayPressure;states['spring2-boiler-room'].boilers[1].isMinWaterPressure;states['spring2-boiler-room'].boilers[1].isMaxWaterPressure;states['spring2-boiler-room'].boilers[1].isMaxWaterTemperature" data-state-eval="element.style.display = (states['spring2-boiler-room'].boilers[1].isBurnerFailure || states['spring2-boiler-room'].boilers[1].isGasRelayPressure || states['spring2-boiler-room'].boilers[1].isMinWaterPressure || states['spring2-boiler-room'].boilers[1].isMaxWaterPressure ||  states['spring2-boiler-room'].boilers[1].isMaxWaterTemperature  ? 'initial': 'none')" href='#emergencyIcon' transform="translate(240, 130)" />
 	</g>
@@ -207,7 +207,7 @@
 			<text transform="matrix(1 0 0 1 316.5675 125.2263)" style="font-family:'Roboto'; font-size:10px;">К3</text>
 			<path data-state="states['spring2-boiler-room'].boilers[2].isBurnerFailure" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" d="M364.3,194.5h-29.5c-2.5,0-4.5-2-4.5-4.5v-19.9
 			c0-2.5,2-4.5,4.5-4.5h29.5c2.5,0,4.5,2,4.5,4.5V190C368.8,192.5,366.8,194.5,364.3,194.5z" />
-			<use data-state="states['spring2-boiler-room'].boilers[2].isWorking" data-state-eval="element.style.display = (value ? 'initial': 'none');" href='#boilerFlame' transform="translate(333, 168) rotate(0, 25, 25) scale(0.06)" class="boiler-flame-animation" />
+			<use data-state="states['spring2-boiler-room'].boilers[2].isWorking" data-state-eval="element.style.display = (states['spring2-boiler-room'].boilers[2].isWorking ? 'initial': 'none');" href='#boilerFlame' transform="translate(333, 168) rotate(0, 25, 25) scale(0.06)" class="boiler-flame-animation" />
 		</g>
 
 		<use data-state="states['spring2-boiler-room'].boilers[2].state;states['spring2-boiler-room'].boilers[2].isBurnerFailure;states['spring2-boiler-room'].boilers[2].isGasRelayPressure;states['spring2-boiler-room'].boilers[2].isMinWaterPressure;states['spring2-boiler-room'].boilers[2].isMaxWaterPressure;states['spring2-boiler-room'].boilers[2].isMaxWaterTemperature" data-state-eval="element.style.display = (states['spring2-boiler-room'].boilers[2].isBurnerFailure || states['spring2-boiler-room'].boilers[2].isGasRelayPressure || states['spring2-boiler-room'].boilers[2].isMinWaterPressure || states['spring2-boiler-room'].boilers[2].isMaxWaterPressure ||  states['spring2-boiler-room'].boilers[2].isMaxWaterTemperature ? 'initial': 'none')" href='#emergencyIcon' transform="translate(360, 130)" />
@@ -266,7 +266,7 @@
 			<text transform="matrix(1 0 0 1 436.5146 125.1256)" style="font-family:'Roboto'; font-size:10px;">К4</text>
 			<path data-state="states['spring2-boiler-room'].boilers[3].isBurnerFailure" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" d="M484.2,194.4h-29.5c-2.5,0-4.5-2-4.5-4.5v-19.9
 			c0-2.5,2-4.5,4.5-4.5h29.5c2.5,0,4.5,2,4.5,4.5v19.9C488.7,192.4,486.7,194.4,484.2,194.4z" />
-			<use data-state="states['spring2-boiler-room'].boilers[1].isWorking" data-state-eval="element.style.display = (value ? 'initial': 'none');" href='#boilerFlame' transform="translate(453, 168) rotate(0, 25, 25) scale(0.06)" class="boiler-flame-animation" />
+			<use data-state="states['spring2-boiler-room'].boilers[3].isWorking" data-state-eval="element.style.display = (states['spring2-boiler-room'].boilers[3].isWorking ? 'initial': 'none');" href='#boilerFlame' transform="translate(453, 168) rotate(0, 25, 25) scale(0.06)" class="boiler-flame-animation" />
 		</g>
 
 		<use data-state="states['spring2-boiler-room'].boilers[3].state;states['spring2-boiler-room'].boilers[3].isBurnerFailure;states['spring2-boiler-room'].boilers[3].isGasRelayPressure;states['spring2-boiler-room'].boilers[3].isMinWaterPressure;states['spring2-boiler-room'].boilers[3].isMaxWaterPressure;states['spring2-boiler-room'].boilers[3].isMaxWaterTemperature" data-state-eval="element.style.display = (states['spring2-boiler-room'].boilers[3].isBurnerFailure || states['spring2-boiler-room'].boilers[3].isGasRelayPressure || states['spring2-boiler-room'].boilers[3].isMinWaterPressure || states['spring2-boiler-room'].boilers[3].isMaxWaterPressure ||  states['spring2-boiler-room'].boilers[3].isMaxWaterTemperature ? 'initial': 'none')" href='#emergencyIcon' transform="translate(480, 130)" />
