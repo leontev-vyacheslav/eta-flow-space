@@ -45,7 +45,7 @@
 	<g data-section="boilerPumps[0]">
 		<text transform="matrix(1 0 0 1 36.7539 146.0158)" style="font-family:'Roboto'; font-size:10px;">НК1</text>
 		<circle data-state="states['spring2-boiler-room'].boilerPumps[0].state" data-colorizer-hint="fill" style="fill:none;stroke:#000000;stroke-miterlimit:10;" cx="56.3" cy="162.2" r="10.6" />
-		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="56.3" cy="162.2" r="9.3" />
+		<circle style="fill:white;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="56.3" cy="162.2" r="9.3" />
 		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="56.4,170.9 52.4,164.3 60.3,164.3 56.4,170.9
 		" />
 		<g>
@@ -103,7 +103,7 @@
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="228.2" y1="209.9" x2="175.8" y2="209.9" />
 	<g data-section="boilerPumps[1]">
 		<text transform="matrix(1 0 0 1 156.1857 145.9151)" style="font-family:'Roboto'; font-size:10px;">НК2</text>
-		<circle data-state="states['spring2-boiler-room'].boilerPumps[1].state" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="175.8" cy="162.1" r="10.6" />
+		<circle data-state="states['spring2-boiler-room'].boilerPumps[1].state" data-colorizer-hint="fill" style="fill:white;stroke:#000000;stroke-miterlimit:10;" cx="175.8" cy="162.1" r="10.6" />
 		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="175.7" cy="162.1" r="9.3" />
 		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="175.8,170.8 171.9,164.2 179.8,164.2
 		175.8,170.8 	" />
@@ -161,7 +161,7 @@
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="347.7" y1="209.9" x2="295.3" y2="209.9" />
 	<g data-section="boilerPumps[2]">
 		<text transform="matrix(1 0 0 1 275.7352 145.8647)" style="font-family:'Roboto'; font-size:10px;">НК3</text>
-		<circle data-state="states['spring2-boiler-room'].boilerPumps[2].state" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="295.3" cy="162" r="10.6" />
+		<circle data-state="states['spring2-boiler-room'].boilerPumps[2].state" data-colorizer-hint="fill" style="fill:white;stroke:#000000;stroke-miterlimit:10;" cx="295.3" cy="162" r="10.6" />
 		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="295.3" cy="162" r="9.3" />
 		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="295.4,170.7 291.4,164.1 299.3,164.1
 		295.4,170.7 	" />
@@ -221,7 +221,7 @@
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="467.7" y1="209.8" x2="415.3" y2="209.8" />
 	<g data-section="boilerPumps[3]">
 		<text transform="matrix(1 0 0 1 395.6823 145.764)" style="font-family:'Roboto'; font-size:10px;">НК4</text>
-		<circle data-state="states['spring2-boiler-room'].boilerPumps[3].state" data-colorizer-hint="fill" style="fill:none;stroke:#000000;stroke-miterlimit:10;" cx="415.3" cy="161.9" r="10.6" />
+		<circle data-state="states['spring2-boiler-room'].boilerPumps[3].state" data-colorizer-hint="fill" style="fill:white;stroke:#000000;stroke-miterlimit:10;" cx="415.3" cy="161.9" r="10.6" />
 		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="415.2" cy="161.9" r="9.3" />
 		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="415.3,170.6 411.4,164 419.3,164 415.3,170.6
 		" />
@@ -280,7 +280,7 @@
 
 	<g data-section="networkPumps[0]" transform="translate(-10, 0)">
 		<text transform="matrix(1 0 0 1 52.5014 320.2943)" style="font-family:'Roboto'; font-size:10px;">СН1</text>
-		<circle data-state="states['spring2-boiler-room'].networkPumps[0].statusFc" data-colorizer-hint="fill" style="fill:none;stroke:#000000;stroke-miterlimit:10;" cx="73.2" cy="337.6" r="10.6" />
+		<circle data-state="states['spring2-boiler-room'].networkPumps[0].statusFc" data-colorizer-hint="fill" style="fill:white;stroke:#000000;stroke-miterlimit:10;" cx="73.2" cy="337.6" r="10.6" />
 		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="73.2" cy="337.6" r="9.3" />
 		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="73.1,328.9 77.1,335.5 69.2,335.5 73.1,328.9
 		" />
@@ -296,7 +296,7 @@
 
 	<g data-section="networkPumps[1]">
 		<text transform="matrix(1 0 0 1 87.1158 320.3167)" style="font-family:'Roboto'; font-size:10px;">СН2</text>
-		<circle data-state="states['spring2-boiler-room'].networkPumps[1].statusFc" data-colorizer-hint="fill" style="fill:#999999;stroke:#000000;stroke-miterlimit:10;" cx="108.8" cy="337.6" r="10.6" />
+		<circle data-state="states['spring2-boiler-room'].networkPumps[1].statusFc" data-colorizer-hint="fill" style="fill:white;stroke:#000000;stroke-miterlimit:10;" cx="108.8" cy="337.6" r="10.6" />
 		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="108.8" cy="337.6" r="9.3" />
 		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="108.8,328.9 112.7,335.5 104.8,335.5
 		108.8,328.9" />
@@ -312,7 +312,7 @@
 
 	<g data-section="networkPumps[2]" transform="translate(10, 0)">
 		<text transform="matrix(1 0 0 1 122.7933 320.3167)" style="font-family:'Roboto'; font-size:10px;">СН3</text>
-		<circle data-state="states['spring2-boiler-room'].networkPumps[2].statusFc" data-colorizer-hint="fill" style="fill:#999999;stroke:#000000;stroke-miterlimit:10;" cx="144.5" cy="337.6" r="10.6" />
+		<circle data-state="states['spring2-boiler-room'].networkPumps[2].statusFc" data-colorizer-hint="fill" style="fill:white;stroke:#000000;stroke-miterlimit:10;" cx="144.5" cy="337.6" r="10.6" />
 		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="144.5" cy="337.6" r="9.3" />
 		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="144.4,328.9 148.4,335.5 140.5,335.5
 		144.4,328.9" />
