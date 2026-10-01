@@ -338,7 +338,7 @@
 		<!-- <polygon style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" points="574.5,191.9 536.4,191.9
 		536.4,191.9 536.4,180.8 536.4,180.8 574.5,180.8 574.5,180.8 574.5,191.9 	" /> -->
 		<rect x="536.4" y="180.8" width="45" height="11.1" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-		<text transform="matrix(1 0 0 1 540 189.4861)" style="font-family:'Roboto'; font-size:9px;">79,2ºC</text>
+		<text transform="matrix(1 0 0 1 540 189.4861)" style="font-family:'Roboto'; font-size:9px;"></text>
 		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="536.4" y1="186.4" x2="526" y2="186.4" />
 		<text transform="matrix(1 0 0 1 542.986 178.7701)" style="font-family:'Roboto'; font-size:10px;">TE13.1</text>
 	</g>
@@ -366,7 +366,7 @@
 	<text transform="matrix(1 0 0 1 574.4985 430.0123)" style="font-family:'Roboto'; font-size:10px;">В1</text>
 	<g>
 		<rect x="503.6" y="237.2" width="45" height="12.3" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-		<text transform="matrix(1 0 0 1 504.9301 247.0511)" style="font-family:'Roboto'; font-size:9px;">156,1м³/ч</text>
+		<text transform="matrix(1 0 0 1 504.9301 247.0511)" style="font-family:'Roboto'; font-size:9px;"></text>
 		<text transform="matrix(1 0 0 1 503.6018 234.7889)" style="font-family:'Roboto'; font-size:10px;">FE1</text>
 	</g>
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="526" y1="330.6" x2="526" y2="249.5" />
@@ -411,14 +411,14 @@
 
 	<g>
 		<rect x="357.8" y="361.6" width="45" height="12.3" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-		<text transform="matrix(1 0 0 1 359.0967 371.4565)" style="font-family:'Roboto'; font-size:9px;">156,1м³/ч</text>
+		<text transform="matrix(1 0 0 1 359.0967 371.4565)" style="font-family:'Roboto'; font-size:9px;"></text>
 		<text transform="matrix(1 0 0 1 372.4722 359.1944)" style="font-family:'Roboto'; font-size:10px;">FE2</text>
 	</g>
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="402.5" y1="367.8" x2="569.2" y2="367.8" />
 	<g>
 		<text transform="matrix(1 0 0 1 308.4973 343.4999)" style="font-family:'Roboto'; font-size:10px;">TE13.2</text>
 		<rect x="305.7" y="346.3" width="45" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-		<text transform="matrix(1 0 0 1 311.8184 355.0416)" style="font-family:'Roboto'; font-size:9px;">89,4ºC</text>
+		<text transform="matrix(1 0 0 1 311.8184 355.0416)" style="font-family:'Roboto'; font-size:9px;"></text>
 		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="324.7" y1="367.7" x2="324.7" y2="357.5" />
 	</g>
 
