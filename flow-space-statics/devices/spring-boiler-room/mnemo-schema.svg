@@ -120,7 +120,7 @@
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="120.3" y1="175.6" x2="120.3" y2="209.5" />
 
 	<g data-section="boilerPumps[0]">
-		<text transform="matrix(1 0 0 1 99.6896 145.0158)" style="font-family:'Arial'; font-size:10px;">НK1</text>
+		<text transform="matrix(1 0 0 1 99.6896 145.0158)" style="font-family:'Roboto'; font-size:10px;">НK1</text>
 		<circle style="fill:#999999;stroke:#000000;stroke-miterlimit:10;" cx="120.3" cy="162.2" r="10.6" />
 		<circle data-state="states['spring-boiler-room'].boilerPumps[0].isFailure;"
 			data-state-eval="element.style.fill = (states['spring-boiler-room'].boilerPumps[0].isFailure ? '#999999': 'white');"
@@ -138,7 +138,7 @@
 	</g>
 
 	<g data-section="boiler[0]">
-		<text transform="matrix(1 0 0 1 141.5219 125.3774)" style="font-family:'Arial'; font-size:10px;">К1</text>
+		<text transform="matrix(1 0 0 1 141.5219 125.3774)" style="font-family:'Roboto'; font-size:10px;">К1</text>
 		<rect x="141.5" y="128.4" style="fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;" width="63.6"
 			height="69.3" />
 		<path data-state="states['spring-boiler-room'].boilers[0].isBurnerFailure;states['spring-boiler-room'].boilers[0].isWorking" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" d="M189.3,194.6h-29.5c-2.5,0-4.5-2-4.5-4.5v-19.9
@@ -167,7 +167,7 @@
 			239.8,170.8 		" />
 		<path data-state="states['spring-boiler-room'].boilerPumps[1].isFailure" style="fill:none;stroke:#FF0000;stroke-width:2;stroke-miterlimit:10;" d="M250.2,175.5h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
 				c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6v21.6C252.8,174.4,251.7,175.5,250.2,175.5z" />
-		<text transform="matrix(1 0 0 1 218.1215 143.9151)" style="font-family:'Arial'; font-size:10px;">НК2</text>
+		<text transform="matrix(1 0 0 1 218.1215 143.9151)" style="font-family:'Roboto'; font-size:10px;">НК2</text>
 		<use
 			data-state="states['spring-boiler-room'].boilerPumps[1].isFailure;"
 			data-state-eval="element.style.display = (states['spring-boiler-room'].boilerPumps[1].isFailure ? 'initial': 'none');"
@@ -176,7 +176,7 @@
 
 	<g data-section="boiler[1]">
 		<rect x="261" y="128.3" style="fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;" width="63.6" height="69.3" />
-		<text transform="matrix(1 0 0 1 260.9538 125.2767)" style="font-family:'Arial'; font-size:10px;">К2</text>
+		<text transform="matrix(1 0 0 1 260.9538 125.2767)" style="font-family:'Roboto'; font-size:10px;">К2</text>
 		<path data-state="states['spring-boiler-room'].boilers[1].isBurnerFailure;states['spring-boiler-room'].boilers[1].isWorking" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" d="M308.7,194.5h-29.5c-2.5,0-4.5-2-4.5-4.5v-19.9
 			c0-2.5,2-4.5,4.5-4.5h29.5c2.5,0,4.5,2,4.5,4.5v19.9C313.2,192.5,311.2,194.5,308.7,194.5z" />
 		<use data-state="states['spring-boiler-room'].boilers[1].isWorking"
@@ -203,7 +203,7 @@
 			359.3,170.7" />
 		<path data-state="states['spring-boiler-room'].boilerPumps[2].isFailure" style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M369.8,175.5h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
 				c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6v21.6C372.4,174.3,371.2,175.5,369.8,175.5z" />
-		<text transform="matrix(1 0 0 1 337.671 143.8647)" style="font-family:'Arial'; font-size:10px;">НК3</text>
+		<text transform="matrix(1 0 0 1 337.671 143.8647)" style="font-family:'Roboto'; font-size:10px;">НК3</text>
 		<use
 			 data-state="states['spring-boiler-room'].boilerPumps[2].isFailure;"
 			data-state-eval="element.style.display = (states['spring-boiler-room'].boilerPumps[2].isFailure ? 'initial': 'none');"
@@ -213,7 +213,7 @@
 	<g data-section="boiler[2]">
 		<rect x="380.5" y="128.2" style="fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;" width="63.6"
 			height="69.3" />
-		<text transform="matrix(1 0 0 1 380.5033 125.2263)" style="font-family:'Arial'; font-size:10px;">К3</text>
+		<text transform="matrix(1 0 0 1 380.5033 125.2263)" style="font-family:'Roboto'; font-size:10px;">К3</text>
 		<path data-state="states['spring-boiler-room'].boilers[2].isBurnerFailure;states['spring-boiler-room'].boilers[2].isWorking" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" d="M428.2,194.5h-29.5c-2.5,0-4.5-2-4.5-4.5v-19.9
 			c0-2.5,2-4.5,4.5-4.5h29.5c2.5,0,4.5,2,4.5,4.5V190C432.7,192.5,430.7,194.5,428.2,194.5z" />
 
@@ -232,7 +232,7 @@
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="479.2" y1="175.4" x2="479.2" y2="209.2" />
 
 	<g data-section="boilerPumps[3]">
-		<text transform="matrix(1 0 0 1 457.6181 143.764)" style="font-family:'Arial'; font-size:10px;">НК4</text>
+		<text transform="matrix(1 0 0 1 457.6181 143.764)" style="font-family:'Roboto'; font-size:10px;">НК4</text>
 		<circle style="fill:#999999;stroke:#000000;stroke-miterlimit:10;" cx="479.2" cy="161.9" r="10.6" />
 		<circle
 			data-state="states['spring-boiler-room'].boilerPumps[3].isFailure;"
@@ -254,7 +254,7 @@
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="412.2" y1="228" x2="531.6" y2="228" />
 
 	<g data-section="boiler[3]">
-		<text transform="matrix(1 0 0 1 500.4504 125.1256)" style="font-family:'Arial'; font-size:10px;">К4</text>
+		<text transform="matrix(1 0 0 1 500.4504 125.1256)" style="font-family:'Roboto'; font-size:10px;">К4</text>
 		<rect x="500.5" y="128.1" style="fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;" width="63.6"
 			height="69.3" />
 		<path data-state="states['spring-boiler-room'].boilers[3].isBurnerFailure;states['spring-boiler-room'].boilers[3].isWorking" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" d="M548.2,194.4h-29.5c-2.5,0-4.5-2-4.5-4.5v-19.9
@@ -270,7 +270,7 @@
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="117" y1="350.9" x2="117" y2="367.8" />
 
 	<g data-section="networkPumps[0]" transform="translate(-20, 0)">
-		<text transform="matrix(1 0 0 1 112.4372 319.2943)" style="font-family:'Arial'; font-size:10px;">СН1</text>
+		<text transform="matrix(1 0 0 1 112.4372 319.2943)" style="font-family:'Roboto'; font-size:10px;">СН1</text>
 		<circle
 			style="fill:#999999;stroke:#000000;stroke-miterlimit:10;" cx="137" cy="337.5" r="10.6" />
 		<circle data-state="states['spring-boiler-room'].networkPumps[0].state"
@@ -305,7 +305,7 @@
 			 data-state-eval="element.style.stroke = (states['spring-boiler-room'].networkPumps[1].isDryRun || states['spring-boiler-room'].networkPumps[1].isAlarm) ? 'red': 'blue'"
 		 style="fill:none;stroke:#0000FF;stroke-width:2;stroke-miterlimit:10;" d="M183.2,350.9h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
 				c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6v21.6C185.8,349.8,184.6,350.9,183.2,350.9z" />
-		<text transform="matrix(1 0 0 1 148.0516 319.3167)" style="font-family:'Arial'; font-size:10px;">СН2</text>
+		<text transform="matrix(1 0 0 1 148.0516 319.3167)" style="font-family:'Roboto'; font-size:10px;">СН2</text>
 
 		<use data-state="states['spring-boiler-room'].networkPumps[1].state;states['spring-boiler-room'].networkPumps[1].isDryRun;states['spring-boiler-room'].networkPumps[1].isAlarm;"
 				data-state-eval="element.style.display = (states['spring-boiler-room'].networkPumps[1].isDryRun || states['spring-boiler-room'].networkPumps[1].isAlarm) ? 'initial': 'none'"
@@ -317,7 +317,7 @@
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="228" y1="350.9" x2="228" y2="367.8" />
 
 	<g data-section="networkPumps[2]" transform="translate(20, 0)">
-		<text transform="matrix(1 0 0 1 183.7291 319.3167)" style="font-family:'Arial'; font-size:10px;">СН3</text>
+		<text transform="matrix(1 0 0 1 183.7291 319.3167)" style="font-family:'Roboto'; font-size:10px;">СН3</text>
 		<circle style="fill:#999999;stroke:#000000;stroke-miterlimit:10;" cx="208.3" cy="337.5" r="10.6" />
 		<circle data-state="states['spring-boiler-room'].networkPumps[2].state"
 			data-state-eval="element.style.fill = (states['spring-boiler-room'].networkPumps[2].state === 1) ? 'white' : '#999999'"
@@ -348,11 +348,11 @@
 	682,367.8 " />
 	<polygon style="fill:#0000FF;stroke:#0000FF;stroke-width:0.5;stroke-miterlimit:10;" points="670,313.5 681,308.1 681,318.9
 	670,313.5 " />
-	<text transform="matrix(1 0 0 1 670.9551 385.3874)" style="font-family:'Arial'; font-size:10px;">Т1</text>
-	<text transform="matrix(1 0 0 1 669.9711 330.5885)" style="font-family:'Arial'; font-size:10px;">Т2</text>
+	<text transform="matrix(1 0 0 1 670.9551 385.3874)" style="font-family:'Roboto'; font-size:10px;">Т1</text>
+	<text transform="matrix(1 0 0 1 669.9711 330.5885)" style="font-family:'Roboto'; font-size:10px;">Т2</text>
 	<polygon style="fill:#0071BC;stroke:#0071BC;stroke-width:0.5;stroke-miterlimit:10;" points="671,427.5 682,422.1 682,432.9
 	671,427.5 " />
-	<text transform="matrix(1 0 0 1 670.9545 447.0123)" style="font-family:'Arial'; font-size:10px;">В1</text>
+	<text transform="matrix(1 0 0 1 670.9545 447.0123)" style="font-family:'Roboto'; font-size:10px;">В1</text>
 	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="228" cy="367.8" r="1.3" />
 	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="172.3" cy="367.8" r="1.3" />
 	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="172.6" cy="297.2" r="1.3" />
@@ -392,39 +392,39 @@
 	</g>
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="349.6" y1="427.4" x2="384.7" y2="427.4" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="411.4" y1="427.7" x2="665" y2="427.7" />
-	<text transform="matrix(0 -1 1 0 380 425)" style="font-family:'Arial'; font-size:10px;">ЧРП ПН</text>
+	<text transform="matrix(0 -1 1 0 380 425)" style="font-family:'Roboto'; font-size:10px;">ЧРП ПН</text>
 	<g>
 		<polygon style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" points="495.1,373.9 440.1,373.9
 		440.1,373.9 440.1,361.6 440.1,361.6 495.1,361.6 495.1,361.6 495.1,373.9 	" />
-		<text data-state="states['spring-vzljot026-1415796'].volumeFlowRateReturnPipe" transform="matrix(1 0 0 1 446.5817 371.4565)" style="font-family:'Arial'; font-size:9px;">11</text>
-		<text transform="matrix(1 0 0 1 457.709 359.1944)" style="font-family:'Arial'; font-size:10px;">FE1</text>
+		<text data-state="states['spring-vzljot026-1415796'].volumeFlowRateReturnPipe" transform="matrix(1 0 0 1 446.5817 371.4565)" style="font-family:'Roboto'; font-size:9px;">11</text>
+		<text transform="matrix(1 0 0 1 457.709 359.1944)" style="font-family:'Roboto'; font-size:10px;">FE1</text>
 	</g>
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="659.9" y1="367.8" x2="495.1" y2="367.8" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="432.2" y1="367.7" x2="432.2" y2="357.5" />
 	<g>
 			<rect x="405" y="346.3" width="50" height="11.2"
       			style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-		<text data-state="states['spring-vzljot026-1415796'].temperatureReturnPipe" transform="matrix(1 0 0 1 410 355.042)" style="font-family:'Arial'; font-size:9px;">11</text>
-		<text transform="matrix(1 0 0 1 419.7805 344.3256)" style="font-family:'Arial'; font-size:10px;">TE1.1</text>
+		<text data-state="states['spring-vzljot026-1415796'].temperatureReturnPipe" transform="matrix(1 0 0 1 410 355.042)" style="font-family:'Roboto'; font-size:9px;">11</text>
+		<text transform="matrix(1 0 0 1 419.7805 344.3256)" style="font-family:'Roboto'; font-size:10px;">TE1.1</text>
 	</g>
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="626" y1="367.8" x2="626" y2="357.5" />
 
 	<g>
-		<text transform="matrix(1 0 0 1 617.4741 344.3259)" style="font-family:'Arial'; font-size:10px;">TE1</text>
+		<text transform="matrix(1 0 0 1 617.4741 344.3259)" style="font-family:'Roboto'; font-size:10px;">TE1</text>
 		<polygon style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" points="648.5,357.5 603.5,357.5
 		603.5,357.5 603.5,346.4 603.5,346.4 648.5,346.4 648.5,346.4 648.5,357.5 	" />
 		<text data-state="states['spring-boiler-room'].tempOutNet" transform="matrix(1 0 0 1 613.1149 355.0663)"
-			style="font-family:'Arial'; font-size:9px;">89,4ºC</text>
+			style="font-family:'Roboto'; font-size:9px;">89,4ºC</text>
 	</g>
 
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="576.1" y1="367.8" x2="576.1" y2="357.4" />
 
 	<g>
-		<text transform="matrix(1 0 0 1 570.0966 342.7905)" style="font-family:'Arial'; font-size:10px;">PE1</text>
+		<text transform="matrix(1 0 0 1 570.0966 342.7905)" style="font-family:'Roboto'; font-size:10px;">PE1</text>
 		<polygon style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" points="600.1,357.5 555.1,357.5
 		555.1,357.5 555.1,346.3 555.1,346.3 600.1,346.3 600.1,346.3 600.1,357.5 	" />
 		<text data-state="states['spring-boiler-room'].pressOutNet" transform="matrix(1 0 0 1 560 355.041)"
-			style="font-family:'Arial'; font-size:9px;">3,0 бар</text>
+			style="font-family:'Roboto'; font-size:9px;">3,0 бар</text>
 	</g>
 
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="349.9" y1="427.4" x2="349.9" y2="369.3" />
@@ -434,10 +434,10 @@
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="501" y1="367.8" x2="501" y2="357.4" />
 
 	<g>
-		<text transform="matrix(1 0 0 1 488.8081 344.3249)" style="font-family:'Arial'; font-size:10px;">PE1.1</text>
+		<text transform="matrix(1 0 0 1 488.8081 344.3249)" style="font-family:'Roboto'; font-size:10px;">PE1.1</text>
 		<rect x="480" y="346.3" width="50" height="11.2"
       style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-		<text data-state="states['spring-vzljot026-1415796'].pressureReturnPipe" transform="matrix(1 0 0 1 486.6518 355.0417)" style="font-family:'Arial'; font-size:9px;">11</text>
+		<text data-state="states['spring-vzljot026-1415796'].pressureReturnPipe" transform="matrix(1 0 0 1 486.6518 355.0417)" style="font-family:'Roboto'; font-size:9px;">11</text>
 	</g>
 
 	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="501" cy="367.7" r="1.3" />
@@ -455,26 +455,26 @@
 			<text transform="translate(403 385)" style="font-family:'Roboto'; font-size:10px;">Тепловычислитель Взлет26</text>
 
 		<g>
-			<text transform="matrix(1 0 0 1 456.8708 304.6798)" style="font-family:'Arial'; font-size:10px;">FE2</text>
+			<text transform="matrix(1 0 0 1 456.8708 304.6798)" style="font-family:'Roboto'; font-size:10px;">FE2</text>
 			<polygon style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" points="495.4,319.4 440.4,319.4
 			440.4,319.4 440.4,307.1 440.4,307.1 495.4,307.1 495.4,307.1 495.4,319.4 	" />
-			<text data-state="states['spring-vzljot026-1415796'].volumeFlowRateInputPipe" transform="matrix(1 0 0 1 446.8359 316.9419)" style="font-family:'Arial'; font-size:9px;">11</text>
+			<text data-state="states['spring-vzljot026-1415796'].volumeFlowRateInputPipe" transform="matrix(1 0 0 1 446.8359 316.9419)" style="font-family:'Roboto'; font-size:9px;">11</text>
 		</g>
 		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="432.5" y1="313.6" x2="432.5" y2="303.3" />
 		<g>
-			<text transform="matrix(1 0 0 1 415.0346 289.8109)" style="font-family:'Arial'; font-size:10px;">TE2.1</text>
+			<text transform="matrix(1 0 0 1 415.0346 289.8109)" style="font-family:'Roboto'; font-size:10px;">TE2.1</text>
 			<rect x="405" y="292.2" width="50" height="11.1"
 				style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
 
 			<text data-state="states['spring-vzljot026-1415796'].temperatureInputPipe"
-			transform="matrix(0.9775 0 0 1 410 300.8748)" style="font-family:'Arial'; font-size:9px;">11</text>
+			transform="matrix(0.9775 0 0 1 410 300.8748)" style="font-family:'Roboto'; font-size:9px;">11</text>
 		</g>
 
 		<g>
-			<text transform="matrix(1 0 0 1 490.322 289.483)" style="font-family:'Arial'; font-size:10px;">PE2.1</text>
+			<text transform="matrix(1 0 0 1 490.322 289.483)" style="font-family:'Roboto'; font-size:10px;">PE2.1</text>
 			<rect x="478.8" y="291.8" width="50" height="11.2"
       		style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-			<text data-state="states['spring-vzljot026-1415796'].pressureInputPipe" transform="matrix(1 0 0 1 486.906 300.5271)" style="font-family:'Arial'; font-size:9px;">11</text>
+			<text data-state="states['spring-vzljot026-1415796'].pressureInputPipe" transform="matrix(1 0 0 1 486.906 300.5271)" style="font-family:'Roboto'; font-size:9px;">11</text>
 		</g>
 	</g>
 
@@ -483,11 +483,11 @@
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="626" y1="313.2" x2="626" y2="303" />
 
 	<g>
-		<text transform="matrix(1 0 0 1 618.5919 289.8109)" style="font-family:'Arial'; font-size:10px;">TE2</text>
+		<text transform="matrix(1 0 0 1 618.5919 289.8109)" style="font-family:'Roboto'; font-size:10px;">TE2</text>
 		<polygon style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" points="648.5,303 603.5,303 603.5,303
 		603.5,291.8 603.5,291.8 648.5,291.8 648.5,291.8 648.5,303 	" />
 		<text data-state="states['spring-boiler-room'].tempInNet" transform="matrix(1 0 0 1 613.1149 300.5269)"
-			style="font-family:'Arial'; font-size:9px;">89,4ºC</text>
+			style="font-family:'Roboto'; font-size:9px;">89,4ºC</text>
 	</g>
 
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="576.7" y1="313.3" x2="576.7" y2="302.9" />
@@ -496,8 +496,8 @@
 		<rect x="554.7" y="291.8" width="45" height="11.2"
 			style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
 		<text data-state="states['spring-boiler-room'].pressInNet" transform="matrix(1 0 0 1 560 300.5271)"
-			style="font-family:'Arial'; font-size:9px;">3,0 бар</text>
-		<text transform="matrix(1 0 0 1 569.3263 289.8113)" style="font-family:'Arial'; font-size:10px;">PE2</text>
+			style="font-family:'Roboto'; font-size:9px;">3,0 бар</text>
+		<text transform="matrix(1 0 0 1 569.3263 289.8113)" style="font-family:'Roboto'; font-size:10px;">PE2</text>
 	</g>
 
 	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="432.5" cy="313.1" r="1.3" />
@@ -516,13 +516,13 @@
 			<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M375.7,74h-65.5c-3.1,0-5.7-2.5-5.7-5.7
 		V49.6c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C381.4,71.4,378.8,74,375.7,74z" />
 			<text transform="matrix(1 0 0 1 322.1674 56.0185)"
-				style="font-family:'Arial'; font-size:10px;">Т12&#160;(н.в.)</text>
+				style="font-family:'Roboto'; font-size:10px;">Т12&#160;(н.в.)</text>
 			<text data-state="states['spring-boiler-room'].tempOutAir" transform="matrix(1 0 0 1 325 68.608)"
-				style="font-family:'Arial'; font-size:9px;">20,56ºC</text>
+				style="font-family:'Roboto'; font-size:9px;">20,56ºC</text>
 		</g>
 		<path style="fill:none;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;" d="M580.5,83.5H104c-5.2,0-9.4-4.2-9.4-9.4V23.4
 		c0-5.2,4.2-9.4,9.4-9.4h476.4c5.2,0,9.4,4.2,9.4,9.4v50.7C589.9,79.3,585.7,83.5,580.5,83.5z" />
-		<text transform="matrix(1 0 0 1 256.8206 31.7009)" style="font-family:'Arial'; font-size:10px;">Прочие параметры
+		<text transform="matrix(1 0 0 1 256.8206 31.7009)" style="font-family:'Roboto'; font-size:10px;">Прочие параметры
 			работы котельной</text>
 
 	</g>
@@ -531,7 +531,7 @@
 			<path data-colorizer-hint="fill" data-state="states['spring-boiler-room'].isConnected"
 				style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;" d="M69.5,146.3h-26c-6.6,0-12-5.4-12-12v-26
 		c0-6.6,5.4-12,12-12h26c6.6,0,12,5.4,12,12v26C81.5,140.9,76.1,146.3,69.5,146.3z" />
-			<text transform="matrix(1 0 0 1 44.0624 138.5239)" style="font-family:'Arial'; font-size:9px;">Связь</text>
+			<text transform="matrix(1 0 0 1 44.0624 138.5239)" style="font-family:'Roboto'; font-size:9px;">Связь</text>
 			<path
 				d="M60.8,110.5c-1.3-0.3-2.5-0.4-3.9-0.4c-3.9,0-7.5,1.3-10.3,3.4c-0.3,0.3-0.3,0.7-0.2,0.9l0.1,0.1c0.3,0.3,0.7,0.3,0.9,0.1
 		c2.8-2,6-3,9.5-3c0.9,0,1.8,0.1,2.6,0.2L60.8,110.5z M57,114.2c-2.7,0-5.2,0.8-7.3,2.2c-0.3,0.2-0.4,0.7-0.2,0.9l0.1,0.1
@@ -548,7 +548,7 @@
 				style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;" d="M69.4,311.2h-26c-6.6,0-12-5.4-12-12v-26
 		c0-6.6,5.4-12,12-12h26c6.6,0,12,5.4,12,12v26C81.4,305.8,76,311.2,69.4,311.2z" />
 			<use href="#carbonMonoxideAlarmIcon" transform=" translate(42 265) scale(0.7)" />
-			<text transform="matrix(1 0 0 1 49 303.373)" style="font-family:'Arial'; font-size:9px;">CO</text>
+			<text transform="matrix(1 0 0 1 49 303.373)" style="font-family:'Roboto'; font-size:9px;">CO</text>
 		</g>
 
 		<g data-section="isCH">
@@ -556,7 +556,7 @@
 				style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;" d="M68.6,365.9h-26c-6.6,0-12-5.4-12-12v-26
 		c0-6.6,5.4-12,12-12h26c6.6,0,12,5.4,12,12v26C80.6,360.5,75.2,365.9,68.6,365.9z" />
 
-			<text transform="matrix(1 0 0 1 49 358.1533)" style="font-family:'Arial'; font-size:9px;">CH</text>
+			<text transform="matrix(1 0 0 1 49 358.1533)" style="font-family:'Roboto'; font-size:9px;">CH</text>
 			<g id="g3517-3_1_" transform="matrix(0.93449242,0,0,0.93449242,-75.04396,-3.2503739)">
 				<path id="path3513-9_1_" d="M155.3,368.9C155.2,368.9,155.2,368.9,155.3,368.9l-3-2.6c-0.3-0.3-0.9-0.5-2-0.1l-2.2-2
 			c0.7-0.9,0.8-0.9,1.1-1.3l0.6,0.5c0.8,0.7,2.1,0.7,2.9,0c0.8-0.7,0.8-1.9,0-2.6l-1.6-1.4c0.3-1,0.5-2,0.5-3c0-0.9-0.1-1.7-0.4-2.6
@@ -604,7 +604,7 @@
 		c0-6.6,5.4-12,12-12h26c6.6,0,12,5.4,12,12v26C81.5,196.2,76.1,201.6,69.5,201.6z" />
 
 			<use href="#fireAlarmIcon" x="0" y="0" transform="translate(43, 158), scale(0.7)" />
-			<text transform="matrix(1 0 0 1 42.1821 193.8071)" style="font-family:'Arial'; font-size:9px;">Пожар</text>
+			<text transform="matrix(1 0 0 1 42.1821 193.8071)" style="font-family:'Roboto'; font-size:9px;">Пожар</text>
 		</g>
 
 		<g data-section="isSecurityAlarm">
@@ -612,17 +612,17 @@
 				style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;" d="M69.5,256.9h-26c-6.6,0-12-5.4-12-12v-26
 		c0-6.6,5.4-12,12-12h26c6.6,0,12,5.4,12,12v26C81.5,251.5,76.1,256.9,69.5,256.9z" />
 			<use href="#securityAlarmIcon" x="0" y="0" transform="translate(41, 208), scale(0.15)" />
-			<text transform="matrix(1 0 0 1 41 249)" style="font-family:'Arial'; font-size:9px;">Охрана</text>
+			<text transform="matrix(1 0 0 1 41 249)" style="font-family:'Roboto'; font-size:9px;">Охрана</text>
 		</g>
 
 		<rect x="8.1" y="88.5" width="81" height="285" rx="9.4" style="fill:none;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;" />
-		<text transform="matrix(0 -1 1 0 21.7044 308.4746)" style="font-family:'Arial'; font-size:10px;">Аварийные события</text>
+		<text transform="matrix(0 -1 1 0 21.7044 308.4746)" style="font-family:'Roboto'; font-size:10px;">Аварийные события</text>
 	</g>
 
 	<g data-section="electroPowerMeters" transform="translate(-50, -50)">
 		<rect style="fill:none;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;" rx="7" ry="7" x="650" y="140"
 				width="95" height="165" />
-		<text transform="matrix(0 -1 1 0 660 260)" style="font-family:'Arial'; font-size:9px;">Электросчетчики</text>
+		<text transform="matrix(0 -1 1 0 660 260)" style="font-family:'Roboto'; font-size:9px;">Электросчетчики</text>
 
 		<g data-section="mercury230-26077096" transform="translate(0, 5)">
 			<use href="#infoIcon"
@@ -633,12 +633,12 @@
 			<g transform="translate(13, 5)">
 				<rect x="650" y="150" width="75" height="11.2"
 					style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-				<text transform="matrix(1 0 0 1 670 148)" style="font-family:'Arial'; font-size:10px;">EM1</text>
+				<text transform="matrix(1 0 0 1 670 148)" style="font-family:'Roboto'; font-size:10px;">EM1</text>
 				<text data-state="states['mercury230-26077096'].energyActiveTotal" transform="matrix(1 0 0 1 655 159)"
-					style="font-family:'Arial'; font-size:9px;"></text>
+					style="font-family:'Roboto'; font-size:9px;"></text>
 				<rect x="650" y="170" width="75" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
 				<text data-state="states['mercury230-26077096'].energyReactiveTotal" transform="matrix(1 0 0 1 655 179)"
-					style="font-family:'Arial'; font-size:9px;"></text>
+					style="font-family:'Roboto'; font-size:9px;"></text>
 			</g>
 		</g>
 		<g data-section="mercury230-26077087" transform="translate(0, 55)">
@@ -649,13 +649,13 @@
 			<g transform="translate(13, 5)">
 				<rect x="650" y="150" width="75" height="11.2"
 					style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-				<text transform="matrix(1 0 0 1 670 148)" style="font-family:'Arial'; font-size:10px;">EM2</text>
+				<text transform="matrix(1 0 0 1 670 148)" style="font-family:'Roboto'; font-size:10px;">EM2</text>
 				<text data-state="states['mercury230-26077087'].energyActiveTotal" transform="matrix(1 0 0 1 655 159)"
-					style="font-family:'Arial'; font-size:9px;"></text>
+					style="font-family:'Roboto'; font-size:9px;"></text>
 
 				<rect x="650" y="170" width="75" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
 				<text  data-state="states['mercury230-26077087'].energyReactiveTotal" transform="matrix(1 0 0 1 655 179)"
-					style="font-family:'Arial'; font-size:9px;"></text>
+					style="font-family:'Roboto'; font-size:9px;"></text>
 			</g>
 		</g>
 	</g>
@@ -670,27 +670,27 @@
 	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="317.7" y1="417.3" x2="317.7" y2="371.5" />
 
 	<g>
-		<text transform="matrix(1 0 0 1 172.6377 407.7655)" style="font-family:'Arial'; font-size:10px;">FE3.1</text>
+		<text transform="matrix(1 0 0 1 172.6377 407.7655)" style="font-family:'Roboto'; font-size:10px;">FE3.1</text>
 		<polygon style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" points="220.8,423.7 155.8,423.7
 		155.8,423.7 155.8,411.4 155.8,411.4 220.8,411.4 220.8,411.4 220.8,423.7 	" />
-		<text data-state="states['spring-ek270-1116061420'].standardVolumeFlow" transform="matrix(1 0 0 1 164.9556 421.2297)" style="font-family:'Arial'; font-size:9px;"></text>
+		<text data-state="states['spring-ek270-1116061420'].standardVolumeFlow" transform="matrix(1 0 0 1 164.9556 421.2297)" style="font-family:'Roboto'; font-size:9px;"></text>
 	</g>
 
 	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="240" y1="417.6" x2="240" y2="407.4" />
 
 	<g>
-		<text transform="matrix(1 0 0 1 227.5563 394.2139)" style="font-family:'Arial'; font-size:10px;">TE14</text>
+		<text transform="matrix(1 0 0 1 227.5563 394.2139)" style="font-family:'Roboto'; font-size:10px;">TE14</text>
 		<polygon style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" points="262.5,407.4 217.5,407.4
 		217.5,407.4 217.5,396.2 217.5,396.2 262.5,396.2 262.5,396.2 262.5,407.4 	" />
-		<text data-state="states['spring-ek270-1116061420'].temperature" transform="matrix(1 0 0 1 227.0793 404.9299)" style="font-family:'Arial'; font-size:9px;"></text>
+		<text data-state="states['spring-ek270-1116061420'].temperature" transform="matrix(1 0 0 1 227.0793 404.9299)" style="font-family:'Roboto'; font-size:9px;"></text>
 	</g>
 	<circle style="fill:#F7931E;stroke:#F7931E;stroke-miterlimit:10;" cx="240" cy="417.5" r="1.3" />
 	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="289.5" y1="417.7" x2="289.5" y2="407.3" />
 	<g>
 		<polygon style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" points="315.2,407.4 265.2,407.4
 		265.2,407.4 265.2,396.2 265.2,396.2 315.2,396.2 315.2,396.2 315.2,407.4 	" />
-		<text data-state="states['spring-ek270-1116061420'].pressure" transform="matrix(0.9091 0 0 1 271.954 404.9297)" style="font-family:'Arial'; font-size:9px;"></text>
-		<text transform="matrix(1 0 0 1 280.1481 393.8525)" style="font-family:'Arial'; font-size:10px;">PE4</text>
+		<text data-state="states['spring-ek270-1116061420'].pressure" transform="matrix(0.9091 0 0 1 271.954 404.9297)" style="font-family:'Roboto'; font-size:9px;"></text>
+		<text transform="matrix(1 0 0 1 280.1481 393.8525)" style="font-family:'Roboto'; font-size:10px;">PE4</text>
 	</g>
 	<circle style="fill:#F7931E;stroke:#F7931E;stroke-miterlimit:10;" cx="289.5" cy="417.3" r="1.3" />
 	<circle style="fill:#F7931E;stroke:#F7931E;stroke-miterlimit:10;" cx="448.5" cy="190.7" r="1.3" />
@@ -708,7 +708,7 @@
 		<text transform="translate(170 440)" style="font-family:'Roboto'; font-size:10px;">Расходомер газа EK270</text>
 	<polygon style="fill:#F7931E;stroke:#F7931E;stroke-width:0.5;stroke-miterlimit:10;" points="129.8,417.6 118.7,423 118.7,412.2
 	129.8,417.6 " />
-	<text transform="matrix(1 0 0 1 118.7411 435.1607)" style="font-family:'Arial'; font-size:10px;">Г1</text>
+	<text transform="matrix(1 0 0 1 118.7411 435.1607)" style="font-family:'Roboto'; font-size:10px;">Г1</text>
 	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="318.1" y1="362.9" x2="318.1" y2="269.6" />
 	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="226.8" y1="269.6" x2="448.5" y2="269.6" />
 	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="226.9" y1="249.5" x2="226.9" y2="190.7" />
@@ -736,7 +736,7 @@
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="589.9" y1="254.8" x2="186.1" y2="254.8" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="172.3" y1="234.8" x2="172.3" y2="241.4" />
 	<g>
-		<text transform="matrix(1 0 0 1 180.8857 238.782)" style="font-family:'Arial'; font-size:10px;">РК1</text>
+		<text transform="matrix(1 0 0 1 180.8857 238.782)" style="font-family:'Roboto'; font-size:10px;">РК1</text>
 		<g>
 			<g>
 				<polygon style="fill:#F2F2F2;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="171.1,254.8 165.9,246.7
