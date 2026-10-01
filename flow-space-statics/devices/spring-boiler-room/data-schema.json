@@ -83,7 +83,7 @@
           "label": {
             "location": "top",
             "showColon": true,
-            "text": "Температура на обратке сетевого контура"
+            "text": "Температура на подаче сетевого контура"
           },
           "editorOptions": {
             "readOnly": true
@@ -102,7 +102,7 @@
           "label": {
             "location": "top",
             "showColon": true,
-            "text": "Давление на обратке сетевого контура"
+            "text": "Давление на подаче сетевого контура"
           },
           "editorOptions": {
             "readOnly": true
@@ -121,7 +121,7 @@
           "label": {
             "location": "top",
             "showColon": true,
-            "text": "Температура на подаче сетевого контура"
+            "text": "Температура на обратке сетевого контура"
           },
           "editorOptions": {
             "readOnly": true
@@ -140,7 +140,7 @@
           "label": {
             "location": "top",
             "showColon": true,
-            "text": "Давление на подаче сетевого контура"
+            "text": "Давление на обратке сетевого контура"
           },
           "editorOptions": {
             "readOnly": true
