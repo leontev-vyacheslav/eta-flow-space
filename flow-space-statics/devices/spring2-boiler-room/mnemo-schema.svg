@@ -452,7 +452,7 @@
 		<use href="#infoIcon"
 			data-state-eval="element.style.fill = (states['spring2-boiler-room'].isConnected === false ? '#F44336': '#0072C6')"
 			data-state="states['spring2-boiler-room'].isConnected;states['spring2-boiler-room'].timestamp"
-			style="fill:#0072C6;" transform="translate(577.1 15) scale(0.55)" />
+			style="fill:#0072C6;" transform="translate(577.1 17) scale(0.55)" />
 		<g transform="translate(42.25, 0)">
 			<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M164,74H98.6c-3.1,0-5.7-2.5-5.7-5.7V49.6
 		c0-3.1,2.5-5.7,5.7-5.7H164c3.1,0,5.7,2.5,5.7,5.7v18.7C169.7,71.4,167.2,74,164,74z" />
@@ -808,11 +808,11 @@
 		<use href="#infoIcon"
 			data-state-eval="element.style.fill = (states['spring2-irvis'].isConnected === false ? '#F44336': '#0072C6')"
 			data-state="states['spring2-irvis'].isConnected;states['spring2-irvis'].timestamp;states['spring2-irvis'].accumulatedVolume;states['spring2-irvis'].timeOfWork"
-			style="fill:#0072C6" transform="translate(105 380) scale(0.55)" />
+			style="fill:#0072C6" transform="translate(353 380) scale(0.55)" />
 		<rect style="fill:none;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;"
 			rx="10" ry="10"
-			 width="255" height="65"  transform="translate(100 375)" />
-		<text transform="translate(170 435)" style="font-family:'Roboto'; font-size:10px;">Расходомер газа Irvis</text>
+			 width="218" height="65"  transform="translate(155 375)" />
+		<text transform="translate(220 435)" style="font-family:'Roboto'; font-size:10px;">Расходомер газа Irvis</text>
 
 
 		<line class="st36" x1="147.4" y1="410.5" x2="349.6" y2="410.5"/>
