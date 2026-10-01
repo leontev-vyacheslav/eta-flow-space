@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 27.3.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
-	y="0px" viewBox="0 0 695.2 462.8" style="enable-background:new 0 0 695.2 462.8;" xml:space="preserve">
+	y="0px" viewBox="0 0 701.2 462.8" style="enable-background:new 0 0 701.2 462.8;" xml:space="preserve">
 
 	<defs>
 		<g id="infoIcon">
@@ -452,7 +452,7 @@
 		<rect style="fill:none;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;"
 				rx="10" ry="10"
 				width="165" height="115"  transform="translate(385 276)" />
-			<text transform="translate(403 385)" style="font-family:'Roboto'; font-size:10px;">Тепловычислитель Взлет26</text>
+			<text transform="translate(403 386)" style="font-family:'Roboto'; font-size:10px;">Тепловычислитель Взлет26</text>
 
 		<g>
 			<text transform="matrix(1 0 0 1 456.8708 304.6798)" style="font-family:'Roboto'; font-size:10px;">FE2</text>
@@ -621,10 +621,10 @@
 
 	<g data-section="electroPowerMeters" transform="translate(-50, -50)">
 		<rect style="fill:none;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;" rx="7" ry="7" x="650" y="140"
-				width="95" height="165" />
-		<text transform="matrix(0 -1 1 0 660 260)" style="font-family:'Roboto'; font-size:9px;">Электросчетчики</text>
+				width="101" height="165" />
+		<text transform="matrix(0 -1 1 0 662 260)" style="font-family:'Roboto'; font-size:9px;">Электросчетчики</text>
 
-		<g data-section="mercury230-26077096" transform="translate(0, 5)">
+		<g data-section="mercury230-26077096" transform="translate(6, 5)">
 			<use href="#infoIcon"
 			data-state-eval="element.style.fill = (states['mercury230-26077096'].isConnected === false ? '#F44336': '#0072C6')"
 			data-state="states['mercury230-26077096'].isConnected;states['mercury230-26077096'].timestamp;states['mercury230-26077096'].energyActiveTariff1;states['mercury230-26077096'].energyActiveTariff2"
@@ -641,7 +641,7 @@
 					style="font-family:'Roboto'; font-size:9px;"></text>
 			</g>
 		</g>
-		<g data-section="mercury230-26077087" transform="translate(0, 55)">
+		<g data-section="mercury230-26077087" transform="translate(6, 55)">
 			<use href="#infoIcon" data-state-eval="element.style.fill = (states['mercury230-26077087'].isConnected === false ? '#F44336': '#0072C6')"
 				data-state="states['mercury230-26077087'].isConnected;states['mercury230-26077087'].timestamp;states['mercury230-26077087'].energyActiveTariff1;states['mercury230-26077087'].energyActiveTariff2"
 				style="fill:#0072C6;" transform="translate(725 140) scale(0.55)" />
