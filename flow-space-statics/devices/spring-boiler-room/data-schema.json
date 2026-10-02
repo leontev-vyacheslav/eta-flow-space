@@ -54,25 +54,6 @@
         "chart": {}
       }
     },
-    "pressGas": {
-      "type": "number",
-      "unit": "бар",
-      "ui": {
-        "group": 1,
-        "editor": {
-          "editorType": "dxNumberBox",
-          "label": {
-            "location": "top",
-            "showColon": true,
-            "text": "Давление газа"
-          },
-          "editorOptions": {
-            "readOnly": true
-          }
-        },
-        "chart": {}
-      }
-    },
     "tempInNet": {
       "type": "number",
       "unit": "°C",
@@ -149,52 +130,6 @@
         "chart": {}
       }
     },
-    "pressOutSrcW": {
-      "type": "number",
-      "unit": "бар",
-      "ui": {
-        "group": 1,
-        "editor": {
-          "editorType": "dxNumberBox",
-          "label": {
-            "location": "top",
-            "showColon": true,
-            "text": "Давление исходной воды"
-          },
-          "editorOptions": {
-            "readOnly": true
-          }
-        },
-        "chart": {}
-      }
-    },
-    "isSourceWaterRelay": {
-      "type": "boolean",
-      "ui": {
-        "group": 7,
-        "editor": {
-          "editorType": "dxCheckBox",
-          "label": {
-            "location": "left",
-            "showColon": true,
-            "text": "Реле давления исходной воды"
-          },
-          "editorOptions": {
-            "readOnly": true
-          }
-        },
-        "colorizer": {
-          "styleProps": [
-            {
-              "fill": {
-                "red": true,
-                "white": false
-              }
-            }
-          ]
-        }
-      }
-    },
     "isCO": {
       "type": "boolean",
       "ui": {
@@ -249,7 +184,7 @@
         }
       }
     },
-     "isSecurityAlarm": {
+    "isSecurityAlarm": {
       "type": "boolean",
       "ui": {
         "group": 7,
@@ -303,33 +238,6 @@
         }
       }
     },
-    "isGasFlap": {
-      "type": "boolean",
-      "ui": {
-        "group": 7,
-        "editor": {
-          "editorType": "dxCheckBox",
-          "label": {
-            "location": "left",
-            "showColon": true,
-            "text": "Клапан отсекатель газа закрыт"
-          },
-          "editorOptions": {
-            "readOnly": true
-          }
-        },
-        "colorizer": {
-          "styleProps": [
-            {
-              "fill": {
-                "red": true,
-                "white": false
-              }
-            }
-          ]
-        }
-      }
-    },
     "isAlarmThreeWayValve": {
       "type": "boolean",
       "ui": {
@@ -347,8 +255,62 @@
         }
       }
     },
+    "isAlarmStopAsmNetworkPumps": {
+      "type": "boolean",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Аварийный останов АСМ сетевых насосов"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "isAlarmAsmNetworkPumps": {
+      "type": "boolean",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Авария АСМ сетевых насосов"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "isWorkingAsmNetworkPumps": {
+      "type": "boolean",
+      "ui": {
+        "group": 3,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Работа АСМ сетевых насосов"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
     "threewayValve": {
       "$ref": "#/$defs/ThreeWayValveModel"
+    },
+    "sensors": {
+      "$ref": "#/$defs/SensorsModel"
     },
     "sourceWaterPumps": {
       "type": "array",
@@ -366,7 +328,6 @@
       "minItems": 4,
       "maxItems": 4
     },
-
     "boilerPumps": {
       "type": "array",
       "items": {
@@ -406,69 +367,26 @@
   "required": [
     "isConnected",
     "tempOutAir",
-    "pressGas",
     "tempInNet",
     "pressInNet",
     "tempOutNet",
     "pressOutNet",
-    "pressOutSrcW",
-    "statusTempRoomAirSensor",
-    "statusTempOutSensor",
-    "statusPressGasSensor",
-    "statusTempInNetSensor",
-    "statusPressInNetSensor",
-    "statusTempOutNetSensor",
-    "statusPressOutNetSensor",
-    "statusPressOutSrcWSensor",
-    "isSourceWaterRelay",
     "isCO",
     "isCH",
-    "isFireAlarm",
     "isSecurityAlarm",
-    "isGasFlap",
+    "isFireAlarm",
+    "isAlarmThreeWayValve",
+    "isAlarmStopAsmNetworkPumps",
+    "isAlarmAsmNetworkPumps",
+    "isWorkingAsmNetworkPumps",
+    "threewayValve",
+    "sensors",
     "sourceWaterPumps",
     "boilers",
-    "boilerOutputValves",
     "boilerPumps",
     "networkPumps"
   ],
   "$defs": {
-    "BoilerState": {
-      "type": "integer",
-      "enum": [
-        1,
-        2,
-        4,
-        8,
-        16,
-        32,
-        64,
-        128
-      ],
-      "enumDescriptions": {
-        "1": "NOT_READY - Нет готовности",
-        "2": "STOPPED - Отключен",
-        "4": "STARTING - Включается",
-        "8": "OPERATION_STAGE1 - Работа (на 1 ступени)",
-        "16": "OPERATION_STAGE2 - Работа (на 2 ступени)",
-        "32": "HOT_RESERVE - В горячем резерве",
-        "64": "STOPPING - Останавливается",
-        "128": "ALARM - Авария"
-      }
-    },
-    "BoilerPumpState": {
-      "type": "integer",
-      "enum": [
-        1,
-        2,
-        3
-      ],
-      "enumDescriptions": {
-        "1": "OPERATING - Работа",
-        "2": "ALARM - Авария",
-        "3": "STOP - Останов"
-      }
-    },
     "NetworkPumpState": {
       "type": "integer",
       "enum": [
@@ -480,7 +398,7 @@
         "1": "WORKING - Работа"
       }
     },
-     "NetworkPumpStatus": {
+    "NetworkPumpStatus": {
       "type": "integer",
       "enum": [
         0,
@@ -491,7 +409,7 @@
         "1": "MAIN - Ocновной"
       }
     },
-     "NetworkPumpMode": {
+    "NetworkPumpMode": {
       "type": "integer",
       "enum": [
         0,
@@ -864,12 +782,441 @@
               ]
             }
           }
+        },
+        "current": {
+          "type": "number",
+          "unit": "А",
+          "ui": {
+            "group": 3,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Ток сетевого насоса"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "chart": {}
+          }
+        },
+        "frequency": {
+          "type": "number",
+          "unit": "Гц",
+          "ui": {
+            "group": 3,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Частота сетевого насоса"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "chart": {}
+          }
+        },
+        "operatingTime": {
+          "type": "integer",
+          "unit": "ч",
+          "ui": {
+            "group": 3,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Наработка сетевого насоса"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "chart": {}
+          }
         }
       },
       "required": [
         "state",
+        "status",
+        "mode",
         "isDryRun",
-        "isAlarm"
+        "isAlarm",
+        "current",
+        "frequency",
+        "operatingTime"
+      ]
+    },
+    "SensorsModel": {
+      "type": "object",
+      "properties": {
+        "isPressInNetSensorError": {
+          "type": "boolean",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Давление подачи. Ошибка датчика"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressInNetHighLevel": {
+          "type": "boolean",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Давление подачи. Верхний аварийный уровень"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressInNetPreHighLevel": {
+          "type": "boolean",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Давление подачи. Верхний предупредительный уровень"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressInNetPreLowLevel": {
+          "type": "boolean",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Давление подачи. Нижний предупредительный уровень"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressInNetLowLevel": {
+          "type": "boolean",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Давление подачи. Нижний аварийный уровень"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressOutNetSensorError": {
+          "type": "boolean",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Давление обратки. Ошибка датчика"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressOutHighLevel": {
+          "type": "boolean",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Давление обратки. Верхний аварийный уровень"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressOutPreHighLevel": {
+          "type": "boolean",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Давление обратки. Верхний предупредительный уровень"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressOutPreLowLevel": {
+          "type": "boolean",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Давление обратки. Нижний предупредительный уровень"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressOutLowLevel": {
+          "type": "boolean",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Давление обратки. Нижний аварийный уровень"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isTempInNetSensorError": {
+          "type": "boolean",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Температура подачи. Ошибка датчика"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isTempInNetHighLevel": {
+          "type": "boolean",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Температура подачи. Верхний аварийный уровень"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isTempInNetPreHighLevel": {
+          "type": "boolean",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Температура подачи. Верхний предупредительный уровень"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isTempInNetPreLowLevel": {
+          "type": "boolean",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Температура подачи. Нижний предупредительный уровень"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isTempInNetLowLevel": {
+          "type": "boolean",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Температура подачи. Нижний аварийный уровень"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isTempOutNetSensorError": {
+          "type": "boolean",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Температура обратки. Ошибка датчика"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isTempOutNetHighLevel": {
+          "type": "boolean",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Температура обратки. Верхний аварийный уровень"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isTempOutNetPreHighLevel": {
+          "type": "boolean",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Температура обратки. Верхний предупредительный уровень"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isTempOutNetPreLowLevel": {
+          "type": "boolean",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Температура обратки. Нижний предупредительный уровень"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isTempOutNetLowLevel": {
+          "type": "boolean",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Температура обратки. Нижний аварийный уровень"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "isPressInNetSensorError",
+        "isPressInNetHighLevel",
+        "isPressInNetPreHighLevel",
+        "isPressInNetPreLowLevel",
+        "isPressInNetLowLevel",
+        "isPressOutNetSensorError",
+        "isPressOutHighLevel",
+        "isPressOutPreHighLevel",
+        "isPressOutPreLowLevel",
+        "isPressOutLowLevel",
+        "isTempInNetSensorError",
+        "isTempInNetHighLevel",
+        "isTempInNetPreHighLevel",
+        "isTempInNetPreLowLevel",
+        "isTempInNetLowLevel",
+        "isTempOutNetSensorError",
+        "isTempOutNetHighLevel",
+        "isTempOutNetPreHighLevel",
+        "isTempOutNetPreLowLevel",
+        "isTempOutNetLowLevel"
       ]
     }
   },
@@ -923,6 +1270,12 @@
         "name": "gasMeter",
         "caption": "Газовый счетчик",
         "order": 160
+      },
+      {
+        "id": 9,
+        "name": "sensors",
+        "caption": "Датчики",
+        "order": 170
       }
     ]
   }
