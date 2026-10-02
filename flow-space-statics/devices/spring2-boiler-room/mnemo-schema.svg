@@ -280,12 +280,12 @@
 
 	<g data-section="networkPumps[0]" transform="translate(-10, 0)">
 		<text transform="matrix(1 0 0 1 52.5014 320.2943)" style="font-family:'Roboto'; font-size:10px;">СН1</text>
-		<circle data-state="states['spring2-boiler-room'].networkPumps[0].statusFc" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="73.2" cy="337.6" r="10.6" />
+		<circle data-state="states['spring2-boiler-room'].networkPumps[0].state" data-state-eval="element.style.fill = ([32, 64].includes(value) ? 'white' : '#808080')" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="73.2" cy="337.6" r="10.6" />
 		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="73.2" cy="337.6" r="9.3" />
 		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="73.1,328.9 77.1,335.5 69.2,335.5 73.1,328.9
 		" />
 		<g>
-			<path data-state="states['spring2-boiler-room'].networkPumps[0].state;states['spring2-boiler-room'].networkPumps[0].statusFc;states['spring2-boiler-room'].networkPumps[0].isDryRun" data-state-eval="element.style.stroke = (states['spring2-boiler-room'].networkPumps[0].state === 512 || states['spring2-boiler-room'].networkPumps[0].statusFc === 2 || states['spring2-boiler-room'].networkPumps[0].isDryRun) ? 'red' : 'black'; element.style.strokeWidth = (states['spring2-boiler-room'].networkPumps[0].state === 512 || states['spring2-boiler-room'].networkPumps[0].statusFc === 2 || states['spring2-boiler-room'].networkPumps[0].isDryRun) ? '2' : '1'" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" d="M62.7,324.2h21c1.4,0,2.6,1.2,2.6,2.6v21.6
+			<path data-state="states['spring2-boiler-room'].networkPumps[0].state;states['spring2-boiler-room'].networkPumps[0].statusFc;states['spring2-boiler-room'].networkPumps[0].isDryRun" data-state-eval="element.style.stroke = (states['spring2-boiler-room'].networkPumps[0].state === 512 || states['spring2-boiler-room'].networkPumps[0].statusFc === 2 || states['spring2-boiler-room'].networkPumps[0].isDryRun) ? 'red' : ([32, 64].includes(states['spring2-boiler-room'].networkPumps[0].state) ? '#0000FF' : 'black'); element.style.strokeWidth = (states['spring2-boiler-room'].networkPumps[0].state === 512 || states['spring2-boiler-room'].networkPumps[0].statusFc === 2 || states['spring2-boiler-room'].networkPumps[0].isDryRun || [32, 64].includes(states['spring2-boiler-room'].networkPumps[0].state)) ? '2' : '1'" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" d="M62.7,324.2h21c1.4,0,2.6,1.2,2.6,2.6v21.6
 			c0,1.4-1.2,2.6-2.6,2.6h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6C60.1,325.3,61.2,324.2,62.7,324.2z" />
 		</g>
 		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="72.8" y1="297.2" x2="72.8" y2="324.2" />
@@ -296,12 +296,12 @@
 
 	<g data-section="networkPumps[1]">
 		<text transform="matrix(1 0 0 1 87.1158 320.3167)" style="font-family:'Roboto'; font-size:10px;">СН2</text>
-		<circle data-state="states['spring2-boiler-room'].networkPumps[1].statusFc" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="108.8" cy="337.6" r="10.6" />
+		<circle data-state="states['spring2-boiler-room'].networkPumps[1].state" data-state-eval="element.style.fill = ([32, 64].includes(value) ? 'white' : '#808080')" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="108.8" cy="337.6" r="10.6" />
 		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="108.8" cy="337.6" r="9.3" />
 		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="108.8,328.9 112.7,335.5 104.8,335.5
 		108.8,328.9" />
 		<g>states['spring2-boiler-room']
-			<path data-state="states['spring2-boiler-room'].networkPumps[1].state;states['spring2-boiler-room'].networkPumps[1].statusFc;states['spring2-boiler-room'].networkPumps[1].isDryRun" data-state-eval="element.style.stroke = (states['spring2-boiler-room'].networkPumps[1].state === 512 || states['spring2-boiler-room'].networkPumps[1].statusFc === 2 || states['spring2-boiler-room'].networkPumps[1].isDryRun) ? 'red' : 'black'; element.style.strokeWidth = (states['spring2-boiler-room'].networkPumps[1].state === 512 || states['spring2-boiler-room'].networkPumps[1].statusFc === 2 || states['spring2-boiler-room'].networkPumps[1].isDryRun) ? '2' : '1'" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" d="M98.3,324.2h21c1.4,0,2.6,1.2,2.6,2.6v21.6
+			<path data-state="states['spring2-boiler-room'].networkPumps[1].state;states['spring2-boiler-room'].networkPumps[1].statusFc;states['spring2-boiler-room'].networkPumps[1].isDryRun" data-state-eval="element.style.stroke = (states['spring2-boiler-room'].networkPumps[1].state === 512 || states['spring2-boiler-room'].networkPumps[1].statusFc === 2 || states['spring2-boiler-room'].networkPumps[1].isDryRun) ? 'red' : ([32, 64].includes(states['spring2-boiler-room'].networkPumps[1].state) ? '#0000FF' : 'black'); element.style.strokeWidth = (states['spring2-boiler-room'].networkPumps[1].state === 512 || states['spring2-boiler-room'].networkPumps[1].statusFc === 2 || states['spring2-boiler-room'].networkPumps[1].isDryRun || [32, 64].includes(states['spring2-boiler-room'].networkPumps[1].state)) ? '2' : '1'" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" d="M98.3,324.2h21c1.4,0,2.6,1.2,2.6,2.6v21.6
 			c0,1.4-1.2,2.6-2.6,2.6h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6C95.7,325.3,96.8,324.2,98.3,324.2z" />
 		</g>
 		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="108.7" y1="307.2" x2="108.7" y2="324.2" />
@@ -312,12 +312,12 @@
 
 	<g data-section="networkPumps[2]" transform="translate(10, 0)">
 		<text transform="matrix(1 0 0 1 122.7933 320.3167)" style="font-family:'Roboto'; font-size:10px;">СН3</text>
-		<circle data-state="states['spring2-boiler-room'].networkPumps[2].statusFc" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="144.5" cy="337.6" r="10.6" />
+		<circle data-state="states['spring2-boiler-room'].networkPumps[2].state" data-state-eval="element.style.fill = ([32, 64].includes(value) ? 'white' : '#808080')" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="144.5" cy="337.6" r="10.6" />
 		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="144.5" cy="337.6" r="9.3" />
 		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="144.4,328.9 148.4,335.5 140.5,335.5
 		144.4,328.9" />
 		<g>
-			<path data-state="states['spring2-boiler-room'].networkPumps[2].state;states['spring2-boiler-room'].networkPumps[2].statusFc;states['spring2-boiler-room'].networkPumps[2].isDryRun" data-state-eval="element.style.stroke = (states['spring2-boiler-room'].networkPumps[2].state === 512 || states['spring2-boiler-room'].networkPumps[2].statusFc === 2 || states['spring2-boiler-room'].networkPumps[2].isDryRun) ? 'red' : 'black'; element.style.strokeWidth = (states['spring2-boiler-room'].networkPumps[2].state === 512 || states['spring2-boiler-room'].networkPumps[2].statusFc === 2 || states['spring2-boiler-room'].networkPumps[2].isDryRun) ? '2' : '1'" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" d="M133.9,324.2h21c1.4,0,2.6,1.2,2.6,2.6v21.6
+			<path data-state="states['spring2-boiler-room'].networkPumps[2].state;states['spring2-boiler-room'].networkPumps[2].statusFc;states['spring2-boiler-room'].networkPumps[2].isDryRun" data-state-eval="element.style.stroke = (states['spring2-boiler-room'].networkPumps[2].state === 512 || states['spring2-boiler-room'].networkPumps[2].statusFc === 2 || states['spring2-boiler-room'].networkPumps[2].isDryRun) ? 'red' : ([32, 64].includes(states['spring2-boiler-room'].networkPumps[2].state) ? '#0000FF' : 'black'); element.style.strokeWidth = (states['spring2-boiler-room'].networkPumps[2].state === 512 || states['spring2-boiler-room'].networkPumps[2].statusFc === 2 || states['spring2-boiler-room'].networkPumps[2].isDryRun || [32, 64].includes(states['spring2-boiler-room'].networkPumps[2].state)) ? '2' : '1'" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" d="M133.9,324.2h21c1.4,0,2.6,1.2,2.6,2.6v21.6
 			c0,1.4-1.2,2.6-2.6,2.6h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6C131.4,325.3,132.5,324.2,133.9,324.2z" />
 		</g>
 		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="144.4" y1="297.2" x2="144.4" y2="324.2" />
