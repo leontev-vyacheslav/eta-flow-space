@@ -264,7 +264,7 @@
           "label": {
             "location": "left",
             "showColon": true,
-            "text": "Аварийный останов АСМ сетевых насосов"
+            "text": "\"Аварийный стоп\" АСУ сетевых насосов"
           },
           "editorOptions": {
             "readOnly": true
@@ -281,7 +281,7 @@
           "label": {
             "location": "left",
             "showColon": true,
-            "text": "Авария АСМ сетевых насосов"
+            "text": "Авария АСУ сетевых насосов"
           },
           "editorOptions": {
             "readOnly": true
@@ -298,7 +298,7 @@
           "label": {
             "location": "left",
             "showColon": true,
-            "text": "Работа АСМ сетевых насосов"
+            "text": "Работа АСУ сетевых насосов"
           },
           "editorOptions": {
             "readOnly": true

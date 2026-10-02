@@ -504,7 +504,7 @@
 	<g data-section="parameters">
 		<use href="#infoIcon"
 		data-state-eval="element.style.fill = (states['spring-boiler-room'].isConnected === false ? '#F44336': '#0072C6')"
-		data-state="states['spring-boiler-room'].isConnected;states['spring-boiler-room'].timestamp"
+		data-state="states['spring-boiler-room'].isConnected;states['spring-boiler-room'].timestamp;states['spring-boiler-room'].isWorkingAsmNetworkPumps;states['spring-boiler-room'].isAlarmAsmNetworkPumps;states['spring-boiler-room'].isAlarmStopAsmNetworkPumps"
 		 style="fill:#0072C6;" transform="translate(569.9 19) scale(0.55)" />
 		<g transform="translate(-200 0)">
 			<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M375.7,74h-65.5c-3.1,0-5.7-2.5-5.7-5.7
