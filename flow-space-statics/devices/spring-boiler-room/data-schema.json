@@ -643,13 +643,13 @@
                 {
                   "stroke-width": {
                     "1": false,
-                    "2  ": true
+                    "2": true
                   }
                 },
                 {
                   "stroke": {
                     "red": true,
-                    "blue": false
+                    "#000000": false
                   }
                 }
               ]
