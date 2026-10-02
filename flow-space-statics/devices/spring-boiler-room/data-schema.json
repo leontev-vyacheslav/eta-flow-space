@@ -330,6 +330,26 @@
         }
       }
     },
+    "isAlarmThreeWayValve": {
+      "type": "boolean",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Авария 3-х ходового клапана"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "threewayValve": {
+      "$ref": "#/$defs/ThreeWayValveModel"
+    },
     "sourceWaterPumps": {
       "type": "array",
       "items": {
@@ -481,6 +501,61 @@
         "0": "MANUAL - Ручной",
         "1": "AUTO - Автоматический"
       }
+    },
+    "ThreeWayValveStatus": {
+      "type": "integer",
+      "enum": [
+        0,
+        1,
+        2
+      ],
+      "enumDescriptions": {
+        "0": "INTERMEDIATE - Промежуточное",
+        "1": "CLOSED - Закрыт",
+        "2": "OPEN - Открыт"
+      }
+    },
+    "ThreeWayValveModel": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/$defs/ThreeWayValveStatus",
+          "ui": {
+            "group": 6,
+            "editor": {
+              "editorType": "dxSelectBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Состояние 3-х ходового клапана"
+              },
+              "editorOptions": {
+                "readOnly": true,
+                "valueExpr": "id",
+                "displayExpr": "description"
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "white": [
+                      2
+                    ],
+                    "#808080": [
+                      0,
+                      1
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "required": [
+        "status"
+      ]
     },
     "SourceWaterPumpModel": {
       "type": "object",
