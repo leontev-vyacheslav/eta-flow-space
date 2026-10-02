@@ -774,8 +774,8 @@
           "styleProps": [
             {
               "fill": {
-                "red": true,
-                "white": false
+                "white": true,
+                "#808080": false
               }
             }
           ]
