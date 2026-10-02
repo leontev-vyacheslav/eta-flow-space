@@ -1283,7 +1283,7 @@
         <text data-state="states['tsarevo-boiler-room'].boilers[0].status" transform="matrix(1 0 0 1 16.8068 101.2963)"
             style="font-family:'Roboto'; font-size:10px;">{{statusBoiler_1}}</text>
         <text data-state="states['tsarevo-boiler-room'].boilers[0].powerBurner" transform="matrix(1 0 0 1 15.6437 191.3998)"
-            style="font-family:'Roboto'; font-size:8px;">{{powerBurner_1}} %</text>
+            style="font-family:'Roboto'; font-size:10px;">{{powerBurner_1}} %</text>
         <text data-state="states['tsarevo-boiler-room'].boilers[0].alarm" transform="matrix(1 0 0 1 17.0869 114.4408)"
             style="font-family:'Roboto'; font-size:10px;">{{alarmBoiler_1}}</text>
         <g>
@@ -1494,7 +1494,7 @@
         <text data-state="states['tsarevo-boiler-room'].boilers[1].status" transform="matrix(1 0 0 1 16.3459 286.052)"
             style="font-family:'Roboto'; font-size:10px;">{{statusBoiler_2}}</text>
         <text data-state="states['tsarevo-boiler-room'].boilers[1].powerBurner" transform="matrix(1 0 0 1 16.9227 375.0345)"
-            style="font-family:'Roboto'; font-size:8px;">{{powerBurner_2}} %</text>
+            style="font-family:'Roboto'; font-size:10px;">{{powerBurner_2}} %</text>
         <text data-state="states['tsarevo-boiler-room'].boilers[1].alarm" transform="matrix(1 0 0 1 16.6259 299.1965)"
             style="font-family:'Roboto'; font-size:10px;">{{alarmBoiler_2}}</text>
         <g>
@@ -1668,7 +1668,7 @@
         <text data-state="states['tsarevo-boiler-room'].boilers[2].status" transform="matrix(1 0 0 1 16.1155 471.0844)"
             style="font-family:'Roboto'; font-size:10px;">{{statusBoiler_3}}</text>
         <text data-state="states['tsarevo-boiler-room'].boilers[2].powerBurner" transform="matrix(1 0 0 1 15.8427 560.5082)"
-            style="font-family:'Roboto'; font-size:8px;">{{powerBurner_3}} %</text>
+            style="font-family:'Roboto'; font-size:10px;">{{powerBurner_3}} %</text>
         <text data-state="states['tsarevo-boiler-room'].boilers[2].alarm" transform="matrix(1 0 0 1 16.3955 484.2289)"
             style="font-family:'Roboto'; font-size:10px;">{{alarmBoiler_3}}</text>
         <g>
@@ -1843,7 +1843,7 @@
         <text data-state="states['tsarevo-boiler-room'].boilers[3].status" transform="matrix(1 0 0 1 15.6546 656.8401)"
             style="font-family:'Roboto'; font-size:10px;">{{statusBoiler_4}}</text>
         <text data-state="states['tsarevo-boiler-room'].boilers[3].powerBurner" transform="matrix(1 0 0 1 15.8427 746.3589)"
-            style="font-family:'Roboto'; font-size:8px;">{{powerBurner_4}} %</text>
+            style="font-family:'Roboto'; font-size:10px;">{{powerBurner_4}} %</text>
         <text data-state="states['tsarevo-boiler-room'].boilers[3].alarm" transform="matrix(1 0 0 1 15.9346 669.9846)"
             style="font-family:'Roboto'; font-size:10px;">{{alarmBoiler_4}}</text>
         <g>
@@ -2595,14 +2595,14 @@
         839.8,279.8 835.2,287.6 	" /></g>
         <path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M978.3,124.4h-65.5c-3.1,0-5.7-2.5-5.7-5.7
         V100c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C983.9,121.8,981.4,124.4,978.3,124.4z" />
-        <text data-state="states['tsarevo-boiler-room'].tempOutNet" transform="matrix(1 0 0 1 935 118.2395)"
-            style="font-family:'Roboto'; font-size:8px;">{{tempOutNet}} ºC</text>
+        <text data-state="states['tsarevo-boiler-room'].tempOutNet" transform="matrix(1 0 0 1 945.5 118.2395)"
+            style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">{{tempOutNet}} ºC</text>
         <path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M874,124.4h-65.5c-3.1,0-5.7-2.5-5.7-5.7
         V100c0-3.1,2.5-5.7,5.7-5.7H874c3.1,0,5.7,2.5,5.7,5.7v18.7C879.6,121.8,877.1,124.4,874,124.4z" />
         <text transform="matrix(1 0 0 1 823.4235 105.7036)"
             style="font-family:'Roboto'; font-size:10px;">Рподачи</text>
-        <text data-state="states['tsarevo-boiler-room'].pressOutNet" transform="matrix(1 0 0 1 830 118.2395)"
-            style="font-family:'Roboto'; font-size:8px;">{{pressOutNet}} бар</text>
+        <text data-state="states['tsarevo-boiler-room'].pressOutNet" transform="matrix(1 0 0 1 841.2 118.2395)"
+            style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">{{pressOutNet}} бар</text>
 
         <linearGradient id="SVGID_00000031178680862100717090000001107882823616698033_" gradientUnits="userSpaceOnUse"
             x1="985.674" y1="111.4116" x2="993.0195" y2="111.4116">
@@ -2696,14 +2696,14 @@
             style="font-family:'Roboto'; font-size:10px;">Тподачи</text>
         <text transform="matrix(1 0 0 1 925.6754 187.478)"
             style="font-family:'Roboto'; font-size:10px;">Тобратки</text>
-        <text data-state="states['tsarevo-boiler-room'].tempInNet" transform="matrix(1 0 0 1 935 198.8877)"
-            style="font-family:'Roboto'; font-size:8px;">{{tempInNet}} ºC</text>
+        <text data-state="states['tsarevo-boiler-room'].tempInNet" transform="matrix(1 0 0 1 945.6 198.8877)"
+            style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">{{tempInNet}} ºC</text>
         <path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M874.1,205h-65.5c-3.1,0-5.7-2.5-5.7-5.7
         v-18.7c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C879.8,202.5,877.3,205,874.1,205z" />
         <text transform="matrix(1 0 0 1 823.5717 186.3518)"
             style="font-family:'Roboto'; font-size:10px;">Робратки</text>
-        <text data-state="states['tsarevo-boiler-room'].pressInNet" transform="matrix(1 0 0 1 830 198.8877)"
-            style="font-family:'Roboto'; font-size:8px;">{{pressInNet}} бар</text>
+        <text data-state="states['tsarevo-boiler-room'].pressInNet" transform="matrix(1 0 0 1 841.3 198.8877)"
+            style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">{{pressInNet}} бар</text>
 
         <linearGradient id="SVGID_00000134929321783903621140000008810266501241585034_" gradientUnits="userSpaceOnUse"
             x1="985.8223" y1="192.0598" x2="993.1677" y2="192.0598">
@@ -2804,34 +2804,34 @@
             V51.1c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C675,73,672.5,75.5,669.3,75.5z" />
             <text transform="matrix(1 0 0 1 627.4408 57.6312)"
                 style="font-family:'Roboto'; font-size:10px;">Тн.в.</text>
-            <text data-state="states['tsarevo-boiler-room'].tempOutAir" transform="matrix(1 0 0 1 623 70.1671)"
-                style="font-family:'Roboto'; font-size:8px;">{{tempOutAir}} ºC</text>
+            <text data-state="states['tsarevo-boiler-room'].tempOutAir" transform="matrix(1 0 0 1 636.5 70.1671)"
+                style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">{{tempOutAir}} ºC</text>
 
             <path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M753.4,75.5h-65.5c-3.1,0-5.7-2.5-5.7-5.7
             V51.1c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C759,73,756.5,75.5,753.4,75.5z" />
             <text transform="matrix(1 0 0 1 711.4624 57.6312)"
                 style="font-family:'Roboto'; font-size:10px;">Ргаза</text>
-            <text data-state="states['tsarevo-boiler-room'].pressGas" transform="matrix(1 0 0 1 710 70.1671)"
-                style="font-family:'Roboto'; font-size:8px;">{{pressGas}} кПа</text>
+            <text data-state="states['tsarevo-boiler-room'].pressGas" transform="matrix(1 0 0 1 720.7 70.1671)"
+                style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">{{pressGas}} кПа</text>
 
             <path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M839.6,75.5h-65.5c-3.1,0-5.7-2.5-5.7-5.7
             V51.1c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C845.3,73,842.7,75.5,839.6,75.5z" />
             <text transform="matrix(1 0 0 1 779.3279 57.6312)"
                 style="font-family:'Roboto'; font-size:10px;">Уровень ДТ1</text>
-            <text data-state="states['tsarevo-boiler-room'].levelDt1" transform="matrix(1 0 0 1 800 70.1671)"
-                style="font-family:'Roboto'; font-size:8px;">{{levelDT_1}} %</text>
+            <text data-state="states['tsarevo-boiler-room'].levelDt1" transform="matrix(1 0 0 1 806.8 70.1671)"
+                style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">{{levelDT_1}} %</text>
             <path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M926.9,75.5h-65.5c-3.1,0-5.7-2.5-5.7-5.7
             V51.1c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C932.6,73,930,75.5,926.9,75.5z" />
             <text transform="matrix(1 0 0 1 866.605 57.6312)"
                 style="font-family:'Roboto'; font-size:10px;">Уровень ДТ2</text>
-            <text data-state="states['tsarevo-boiler-room'].levelDt2" transform="matrix(1 0 0 1 885 70.1671)"
-                style="font-family:'Roboto'; font-size:8px;">{{levelDT_2}} %</text>
+            <text data-state="states['tsarevo-boiler-room'].levelDt2" transform="matrix(1 0 0 1 894.2 70.1671)"
+                style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">{{levelDT_2}} %</text>
             <path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M585,75.5h-65.5c-3.1,0-5.7-2.5-5.7-5.7
             V51.1c0-3.1,2.5-5.7,5.7-5.7H585c3.1,0,5.7,2.5,5.7,5.7v18.7C590.7,73,588.1,75.5,585,75.5z" />
             <text transform="matrix(1 0 0 1 541.7527 57.6312)"
                 style="font-family:'Roboto'; font-size:10px;">Тпом.</text>
-            <text data-state="states['tsarevo-boiler-room'].tempRoomAir" transform="matrix(1 0 0 1 540 70.1671)"
-                style="font-family:'Roboto'; font-size:8px;">{{tempRoomAir}} ºC</text>
+            <text data-state="states['tsarevo-boiler-room'].tempRoomAir" transform="matrix(1 0 0 1 552.2 70.1671)"
+                style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">{{tempRoomAir}} ºC</text>
         </g>
 
         <linearGradient id="SVGID_00000034066932443557695660000001516347545508789692_" gradientUnits="userSpaceOnUse"
@@ -3625,8 +3625,8 @@
         v-18.7c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C652.5,427.4,650,429.9,646.8,429.9z" />
         <text transform="matrix(1 0 0 1 579.3 409.7596)"
             style="font-family:'Roboto'; font-size:10px;">Рвых.исх.воды</text>
-        <text data-state="states['tsarevo-boiler-room'].pressOutSrcW" transform="matrix(1 0 0 1 602 423)"
-            style="font-family:'Roboto'; font-size:8px;">{{pressOutSrcW}} бар</text>
+        <text data-state="states['tsarevo-boiler-room'].pressOutSrcW" transform="matrix(1 0 0 1 614.1 423)"
+            style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">{{pressOutSrcW}} бар</text>
 
         <radialGradient id="SVGID_00000061455499762677690960000013399016040191865532_" cx="663.5219" cy="417.1263"
             r="7.4034" gradientUnits="userSpaceOnUse">
