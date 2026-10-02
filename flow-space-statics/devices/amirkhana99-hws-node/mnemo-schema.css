@@ -13,6 +13,7 @@ svg tspan[data-state]:hover {
 
 circle[data-state]:hover,
 path[data-state]:hover,
+rect[data-state]:hover,
 polygon[data-state]:hover {
   stroke: #ffeb3b !important;
   stroke-width: 2px !important;
