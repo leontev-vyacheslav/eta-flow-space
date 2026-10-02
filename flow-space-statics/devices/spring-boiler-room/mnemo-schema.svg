@@ -704,8 +704,8 @@
 			style="fill:#0072C6" transform="translate(325 380) scale(0.55)" />
 		<rect style="fill:none;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;"
 			rx="10" ry="10"
-			 width="245" height="70"  transform="translate(100 375)" />
-		<text transform="translate(170 440)" style="font-family:'Roboto'; font-size:10px;">Расходомер газа EK270</text>
+			 width="202" height="70"  transform="translate(143 375)" />
+		<text transform="translate(197 440)" style="font-family:'Roboto'; font-size:10px;">Расходомер газа EK270</text>
 	<polygon style="fill:#F7931E;stroke:#F7931E;stroke-width:0.5;stroke-miterlimit:10;" points="129.8,417.6 118.7,423 118.7,412.2
 	129.8,417.6 " />
 	<text transform="matrix(1 0 0 1 118.7411 435.1607)" style="font-family:'Roboto'; font-size:10px;">Г1</text>
