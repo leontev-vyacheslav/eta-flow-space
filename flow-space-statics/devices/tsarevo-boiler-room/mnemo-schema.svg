@@ -2581,6 +2581,7 @@
         <g transform="translate(18 0)"><polygon data-state="states['tsarevo-boiler-room'].networkPumps[3].status"
             style="fill:#4D4D4D;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="835.2,287.6 830.5,279.8
         839.8,279.8 835.2,287.6 	" /></g>
+        <g transform="translate(-71.2 0)">
         <path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M978.3,124.4h-65.5c-3.1,0-5.7-2.5-5.7-5.7
         V100c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C983.9,121.8,981.4,124.4,978.3,124.4z" />
         <text data-state="states['tsarevo-boiler-room'].tempOutNet" transform="matrix(1 0 0 1 945.5 119.2)"
@@ -2779,6 +2780,7 @@
         </g>
         <line style="fill:none;stroke:#4D4D4D;stroke-width:0.5;stroke-miterlimit:10;" x1="890.8" y1="206.3" x2="890.8"
             y2="208.3" />
+        </g>
 
         <g>
             <use href="#infoIcon"
