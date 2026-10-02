@@ -18,7 +18,14 @@ export function create({ signal } = {}) {
         mnemoschemaElement.style.flex = (isSmall || isXSmall) ? '1' : '';
     }
 
-    function setLevelSupplyWaterTank(mnemoschemaElement, deviceState) {
+    // the diagram's own device code, read from its level label bindings, so the same script serves every diagram with this tank
+    function getDeviceCode(mnemoschemaElement) {
+        const levelStateElement = mnemoschemaElement.querySelector('[data-state$=".isSupplyWaterLevelEmergencyMin"]');
+
+        return levelStateElement?.getAttribute('data-state').match(/^states\['([^']+)'\]/)?.[1];
+    }
+
+    function setLevelSupplyWaterTank(mnemoschemaElement, deviceState, deviceCode) {
         const baseBottom = 555;
 
         const supplyWaterLevelElement = mnemoschemaElement.querySelector('[data-section="supplyWaterLevel"] rect');
@@ -40,7 +47,7 @@ export function create({ signal } = {}) {
         ];
 
         levels.forEach(p => {
-            const levelStateElement = mnemoschemaElement.querySelector(`[data-state="states['statum-boiler-room'].${p.state}"]`);
+            const levelStateElement = mnemoschemaElement.querySelector(`[data-state="states['${deviceCode}'].${p.state}"]`);
             if (!levelStateElement) {
                 return;
             }
@@ -54,7 +61,7 @@ export function create({ signal } = {}) {
             }
         });
         if (!isMaxLevel) {
-            const isSupplyWaterLevelEmergencyMinElement = mnemoschemaElement.querySelector('[data-state="states[\'statum-boiler-room\'].isSupplyWaterLevelEmergencyMin"]');
+            const isSupplyWaterLevelEmergencyMinElement = mnemoschemaElement.querySelector(`[data-state="states['${deviceCode}'].isSupplyWaterLevelEmergencyMin"]`);
             if (isSupplyWaterLevelEmergencyMinElement) {
                 isSupplyWaterLevelEmergencyMinElement.style.display = 'inline';
             }
@@ -73,10 +80,11 @@ export function create({ signal } = {}) {
 
     return {
         onBeforeMount(mnemoschemaElement, deviceStates) {
-            const deviceState = deviceStates['statum-boiler-room'];
+            const deviceCode = getDeviceCode(mnemoschemaElement);
+            const deviceState = deviceStates[deviceCode];
             applyMnemoschemaSize(mnemoschemaElement);
             if (deviceState && deviceState.state) {
-                setLevelSupplyWaterTank(mnemoschemaElement, deviceState);
+                setLevelSupplyWaterTank(mnemoschemaElement, deviceState, deviceCode);
             }
         },
 
