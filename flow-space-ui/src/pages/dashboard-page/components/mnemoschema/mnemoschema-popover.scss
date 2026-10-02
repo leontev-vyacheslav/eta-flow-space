@@ -38,6 +38,22 @@
     }
 
     .simple-grid {
+        width: 100% !important;
         margin: 0px !important;
+    }
+
+    // the header table and the scrolling body table are drawn as one grid
+    .simple-grid-body-scroller {
+        table {
+            border-top: none !important;
+        }
+
+        tbody tr:first-child {
+            border-top: none !important;
+
+            td {
+                border-top: none !important;
+            }
+        }
     }
 }

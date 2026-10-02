@@ -63,63 +63,70 @@ export const useMnemoschemaPopover = () => {
         const linkedDevicesCount = dataschemas ? Object.keys(dataschemas).length : 1;
 
         return (
-            <table className='simple-grid'>
-                <thead>
-                    <tr><th colSpan={2}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 5, justifyContent: 'center' }}>
-                            <VariableIcon size={16} />Свойства</div>
-                    </th></tr>
-                </thead>
-                <tbody>
-                    {Object.keys(propertyInfosDict).map((deviceCode, index) => {
-                        const propertyInfos = propertyInfosDict[deviceCode];
-
-                        return (
-                            <React.Fragment key={`${deviceCode}-${index}`}>
-                                {linkedDevicesCount > 1 ? <tr>
-                                    <td colSpan={2}>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
-                                            <DashboardIcon size={16} />
-                                            <strong>{device?.linkedDevices.find(d => d.code === deviceCode)?.description}</strong>
-                                        </div>
-                                    </td>
-                                </tr> : null}
-                                {propertyInfos.map((propertyInfo: SchemaTypeInfoPropertiesChainModel) => {
-                                    const value = formattedValues.get(propertyInfo);
-
-                                    return (
-                                        <tr key={propertyInfo.propertiesChainValuePair.propertiesChain}>
-                                            <td>
-                                                <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
-                                                    <span style={{ fontSize: '1em' }}>{propertyInfo.typeInfo?.ui.editor.label.text ?? ''}</span>
-                                                    {isAdmin ?
-                                                        <>
-                                                            <span style={{ display: 'flex', alignItems: 'center', fontSize: '0.85em', color: 'gray', gap: 5 }} >
-                                                                <VariableIcon size={12} />
-                                                                {propertyInfo.propertiesChainValuePair.propertiesChain}
-                                                            </span>
-                                                            <span style={{ display: 'flex', alignItems: 'center', fontSize: '0.85em', color: 'gray', gap: 5 }}>
-                                                                <TypeIcon size={12} />
-                                                                {propertyInfo.typeInfo?.typeName}
-                                                            </span>
-                                                        </>
-                                                        : null}
+            <>
+                <table className='simple-grid'>
+                    <thead>
+                        <tr><th colSpan={2}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 5, justifyContent: 'center' }}>
+                                <VariableIcon size={16} />Свойства</div>
+                        </th></tr>
+                    </thead>
+                </table>
+                {/* the rows scroll under the fixed header, like the emergency popover */}
+                <div className="simple-grid-body-scroller" style={{ overflowY: 'auto', maxHeight: '250px' }}>
+                    <table className='simple-grid'>
+                        <tbody>
+                            {Object.keys(propertyInfosDict).map((deviceCode, index) => {
+                                const propertyInfos = propertyInfosDict[deviceCode];
+        
+                                return (
+                                    <React.Fragment key={`${deviceCode}-${index}`}>
+                                        {linkedDevicesCount > 1 ? <tr>
+                                            <td colSpan={2}>
+                                                <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+                                                    <DashboardIcon size={16} />
+                                                    <strong>{device?.linkedDevices.find(d => d.code === deviceCode)?.description}</strong>
                                                 </div>
                                             </td>
-                                            <td >
-                                                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                                                    <b style={{ width: '100%' }}>{value}</b>
-                                                    {propertyInfo.typeInfo?.ui.chart ? <GraphIcon data-state-graph={propertyInfo.propertiesChainValuePair.propertiesChain} alignmentBaseline="middle" size={16} style={{ cursor: 'pointer' }} /> : null}
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    );
-                                })}
-                            </React.Fragment>
-                        );
-                    })}
-                </tbody>
-            </table>
+                                        </tr> : null}
+                                        {propertyInfos.map((propertyInfo: SchemaTypeInfoPropertiesChainModel) => {
+                                            const value = formattedValues.get(propertyInfo);
+        
+                                            return (
+                                                <tr key={propertyInfo.propertiesChainValuePair.propertiesChain}>
+                                                    <td>
+                                                        <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+                                                            <span style={{ fontSize: '1em' }}>{propertyInfo.typeInfo?.ui.editor.label.text ?? ''}</span>
+                                                            {isAdmin ?
+                                                                <>
+                                                                    <span style={{ display: 'flex', alignItems: 'center', fontSize: '0.85em', color: 'gray', gap: 5 }} >
+                                                                        <VariableIcon size={12} />
+                                                                        {propertyInfo.propertiesChainValuePair.propertiesChain}
+                                                                    </span>
+                                                                    <span style={{ display: 'flex', alignItems: 'center', fontSize: '0.85em', color: 'gray', gap: 5 }}>
+                                                                        <TypeIcon size={12} />
+                                                                        {propertyInfo.typeInfo?.typeName}
+                                                                    </span>
+                                                                </>
+                                                                : null}
+                                                        </div>
+                                                    </td>
+                                                    <td >
+                                                        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                                                            <b style={{ width: '100%' }}>{value}</b>
+                                                            {propertyInfo.typeInfo?.ui.chart ? <GraphIcon data-state-graph={propertyInfo.propertiesChainValuePair.propertiesChain} alignmentBaseline="middle" size={16} style={{ cursor: 'pointer' }} /> : null}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            );
+                                        })}
+                                    </React.Fragment>
+                                );
+                            })}
+                        </tbody>
+                    </table>
+                </div>
+            </>
         );
     }, [dataschemas, device, isAdmin]);
 
