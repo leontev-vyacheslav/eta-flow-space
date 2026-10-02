@@ -284,8 +284,8 @@
         "colorizer": {
           "styleProps": [
             {
-              "stroke": {
-                "#000000": [
+              "fill": {
+                "#00FF00": [
                   1
                 ],
                 "yellow": [
