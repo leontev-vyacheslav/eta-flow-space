@@ -756,9 +756,9 @@
 			<polygon data-state="states['statum-boiler-room'].boilerValves[0].status" data-state-eval="if(value === 1) {element.style.fill = 'none'}" style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="231.6,38.4 236.3,46.2 227,46.2
 			231.6,38.4" />
 		</g>
-		<rect x="246.6" y="29.4" width="107.8" height="33.9" rx="5.7" style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-		<text transform="matrix(1 0 0 1 252.7273 39.7241)" style="font-family:'Roboto'; font-size:10px;">Задвижка котла №1</text>
-		<text data-state="states['statum-boiler-room'].boilerValves[0].status" transform="matrix(1 0 0 1 252 54.6985)" style="font-family:'Roboto'; font-size:10px;">{{statusValve_1}}</text>
+		<rect x="250.6" y="29.4" width="107.8" height="33.9" rx="5.7" style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
+		<text transform="matrix(1 0 0 1 256.7273 39.7241)" style="font-family:'Roboto'; font-size:10px;">Задвижка котла №1</text>
+		<text data-state="states['statum-boiler-room'].boilerValves[0].status" transform="matrix(1 0 0 1 256 54.6985)" style="font-family:'Roboto'; font-size:10px;">{{statusValve_1}}</text>
 
 		<linearGradient id="SVGID_00000134937162387679004110000005699637183612159658_" gradientUnits="userSpaceOnUse" x1="203.8741" y1="25.8264" x2="211.0045" y2="25.8264">
 			<stop offset="5.586592e-03" style="stop-color:#2A97FF" />
@@ -930,9 +930,9 @@
 			<polygon data-state="states['statum-boiler-room'].boilerValves[1].status" data-state-eval="if(value === 1) {element.style.fill = 'none'}" style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="231.2,223.1 235.8,230.9
 			226.5,230.9 231.2,223.1 		" />
 		</g>
-		<rect x="246.1" y="214.2" width="107.8" height="33.9" rx="5.7" style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-		<text transform="matrix(1 0 0 1 252.2664 224.4798)" style="font-family:'Roboto'; font-size:10px;">Задвижка котла №2</text>
-		<text data-state="states['statum-boiler-room'].boilerValves[1].status" transform="matrix(1 0 0 1 252 239.4542)" style="font-family:'Roboto'; font-size:10px;">{{statusValve_2}}</text>
+		<rect x="250.4" y="214.2" width="107.8" height="33.9" rx="5.7" style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
+		<text transform="matrix(1 0 0 1 256.5664 224.4798)" style="font-family:'Roboto'; font-size:10px;">Задвижка котла №2</text>
+		<text data-state="states['statum-boiler-room'].boilerValves[1].status" transform="matrix(1 0 0 1 256.3 239.4542)" style="font-family:'Roboto'; font-size:10px;">{{statusValve_2}}</text>
 
 		<linearGradient id="SVGID_00000087381517463672922280000012892793884056366765_" gradientUnits="userSpaceOnUse" x1="203.4132" y1="210.5821" x2="210.5435" y2="210.5821">
 			<stop offset="5.586592e-03" style="stop-color:#2A97FF" />
@@ -1072,9 +1072,9 @@
 			<polygon data-state="states['statum-boiler-room'].boilerValves[2].status" data-state-eval="if(value === 1) {element.style.fill = 'none'}" style="fill:#00FF00;stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="230.9,408.2 235.6,416 226.3,416
 			230.9,408.2 		" />
 		</g>
-		<rect x="245.9" y="399.2" width="107.8" height="33.9" rx="5.7" style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-		<text transform="matrix(1 0 0 1 252.0359 409.5121)" style="font-family:'Roboto'; font-size:10px;">Задвижка котла №3</text>
-		<text data-state="states['statum-boiler-room'].boilerValves[2].status" transform="matrix(1 0 0 1 252 424.4866)" style="font-family:'Roboto'; font-size:10px;">{{statusValve_3}}</text>
+		<rect x="250.2" y="399.2" width="107.8" height="33.9" rx="5.7" style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
+		<text transform="matrix(1 0 0 1 256.3359 409.5121)" style="font-family:'Roboto'; font-size:10px;">Задвижка котла №3</text>
+		<text data-state="states['statum-boiler-room'].boilerValves[2].status" transform="matrix(1 0 0 1 256.3 424.4866)" style="font-family:'Roboto'; font-size:10px;">{{statusValve_3}}</text>
 
 		<linearGradient id="SVGID_00000016783601886572885550000016225782024021560207_" gradientUnits="userSpaceOnUse" x1="203.1828" y1="395.6145" x2="210.3131" y2="395.6145">
 			<stop offset="5.586592e-03" style="stop-color:#2A97FF" />
@@ -1617,11 +1617,11 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 		839.8,279.8 835.2,287.6 	" /></g>
 		<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M978.3,124.4h-65.5c-3.1,0-5.7-2.5-5.7-5.7
 		V100c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C983.9,121.8,981.4,124.4,978.3,124.4z" />
-		<text data-state="states['statum-boiler-room'].tempOutNet" transform="matrix(1 0 0 1 945.5 118.2395)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">{{tempOutNet}} ºC</text>
+		<text data-state="states['statum-boiler-room'].tempOutNet" transform="matrix(1 0 0 1 945.5 119.2)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">{{tempOutNet}} ºC</text>
 		<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M874,124.4h-65.5c-3.1,0-5.7-2.5-5.7-5.7
 		V100c0-3.1,2.5-5.7,5.7-5.7H874c3.1,0,5.7,2.5,5.7,5.7v18.7C879.6,121.8,877.1,124.4,874,124.4z" />
-		<text transform="matrix(1 0 0 1 823.4235 105.7036)" style="font-family:'Roboto'; font-size:10px;">Рподачи</text>
-		<text data-state="states['statum-boiler-room'].pressOutNet" transform="matrix(1 0 0 1 841.2 118.2395)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">{{pressOutNet}} бар</text>
+		<text transform="matrix(1 0 0 1 823.4235 104.9)" style="font-family:'Roboto'; font-size:10px;">Рподачи</text>
+		<text data-state="states['statum-boiler-room'].pressOutNet" transform="matrix(1 0 0 1 841.2 119.2)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">{{pressOutNet}} бар</text>
 
 		<linearGradient id="SVGID_00000031178680862100717090000001107882823616698033_" gradientUnits="userSpaceOnUse" x1="985.674" y1="111.4116" x2="993.0195" y2="111.4116">
 			<stop offset="8.379889e-03" style="stop-color:#808080" />
@@ -1682,13 +1682,13 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 		<line style="fill:none;stroke:#4D4D4D;stroke-width:0.5;stroke-miterlimit:10;" x1="890.7" y1="125.7" x2="890.7" y2="127.6" />
 		<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M978.4,205h-65.5c-3.1,0-5.7-2.5-5.7-5.7
 		v-18.7c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C984.1,202.5,981.5,205,978.4,205z" />
-		<text transform="matrix(1 0 0 1 925.6754 105.7033)" style="font-family:'Roboto'; font-size:10px;">Тподачи</text>
-		<text transform="matrix(1 0 0 1 925.6754 187.478)" style="font-family:'Roboto'; font-size:10px;">Тобратки</text>
-		<text data-state="states['statum-boiler-room'].tempInNet" transform="matrix(1 0 0 1 945.6 198.8877)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">{{tempInNet}} ºC</text>
+		<text transform="matrix(1 0 0 1 925.6754 104.9)" style="font-family:'Roboto'; font-size:10px;">Тподачи</text>
+		<text transform="matrix(1 0 0 1 925.6754 185.5)" style="font-family:'Roboto'; font-size:10px;">Тобратки</text>
+		<text data-state="states['statum-boiler-room'].tempInNet" transform="matrix(1 0 0 1 945.6 199.8)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">{{tempInNet}} ºC</text>
 		<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M874.1,205h-65.5c-3.1,0-5.7-2.5-5.7-5.7
 		v-18.7c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C879.8,202.5,877.3,205,874.1,205z" />
-		<text transform="matrix(1 0 0 1 823.5717 186.3518)" style="font-family:'Roboto'; font-size:10px;">Робратки</text>
-		<text data-state="states['statum-boiler-room'].pressInNet" transform="matrix(1 0 0 1 841.3 198.8877)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">{{pressInNet}} бар</text>
+		<text transform="matrix(1 0 0 1 823.5717 185.5)" style="font-family:'Roboto'; font-size:10px;">Робратки</text>
+		<text data-state="states['statum-boiler-room'].pressInNet" transform="matrix(1 0 0 1 841.3 199.8)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">{{pressInNet}} бар</text>
 
 		<linearGradient id="SVGID_00000134929321783903621140000008810266501241585034_" gradientUnits="userSpaceOnUse" x1="985.8223" y1="192.0598" x2="993.1677" y2="192.0598">
 			<stop offset="8.379889e-03" style="stop-color:#808080" />
@@ -1759,26 +1759,26 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 			c0-5.2,4.2-9.4,9.4-9.4h618.1c5.2,0,9.4,4.2,9.4,9.4v50.7C1145.3,78.8,1141.1,83.1,1135.9,83.1z" />
 			<text transform="matrix(1 0 0 1 735.3401 33.26)" style="font-family:'Roboto'; font-size:12px;"><tspan>Прочие параметры работы котельной</tspan></text>
 
-			<text transform="matrix(1 0 0 1 627.4408 57.6312)" style="font-family:'Roboto'; font-size:10px;">Тн.в.</text>
-			<text data-state="states['statum-boiler-room'].tempOutAir" transform="matrix(1 0 0 1 636.5 70.1671)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">{{tempOutAir}} ºC</text>
+			<text transform="matrix(1 0 0 1 627.4408 56)" style="font-family:'Roboto'; font-size:10px;">Тн.в.</text>
+			<text data-state="states['statum-boiler-room'].tempOutAir" transform="matrix(1 0 0 1 636.5 70.3)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">{{tempOutAir}} ºC</text>
 
 			<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M753.4,75.5h-65.5c-3.1,0-5.7-2.5-5.7-5.7
 			V51.1c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C759,73,756.5,75.5,753.4,75.5z" />
-			<text transform="matrix(1 0 0 1 711.4624 57.6312)" style="font-family:'Roboto'; font-size:10px;">Ргаза</text>
-			<text data-state="states['statum-boiler-room'].pressGas" transform="matrix(1 0 0 1 720.7 70.1671)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">{{pressGas}} кПа</text>
+			<text transform="matrix(1 0 0 1 711.4624 56)" style="font-family:'Roboto'; font-size:10px;">Ргаза</text>
+			<text data-state="states['statum-boiler-room'].pressGas" transform="matrix(1 0 0 1 720.7 70.3)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">{{pressGas}} кПа</text>
 
 			<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M839.6,75.5h-65.5c-3.1,0-5.7-2.5-5.7-5.7
 			V51.1c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C845.3,73,842.7,75.5,839.6,75.5z" />
-			<text transform="matrix(1 0 0 1 779.3279 57.6312)" style="font-family:'Roboto'; font-size:10px;">Уровень ДТ1</text>
-			<text data-state="states['statum-boiler-room'].levelDt1" transform="matrix(1 0 0 1 806.8 70.1671)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">{{levelDT_1}} %</text>
+			<text transform="matrix(1 0 0 1 779.3279 56)" style="font-family:'Roboto'; font-size:10px;">Уровень ДТ1</text>
+			<text data-state="states['statum-boiler-room'].levelDt1" transform="matrix(1 0 0 1 806.8 70.3)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">{{levelDT_1}} %</text>
 			<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M926.9,75.5h-65.5c-3.1,0-5.7-2.5-5.7-5.7
 			V51.1c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C932.6,73,930,75.5,926.9,75.5z" />
-			<text transform="matrix(1 0 0 1 866.605 57.6312)" style="font-family:'Roboto'; font-size:10px;">Уровень ДТ2</text>
-			<text data-state="states['statum-boiler-room'].levelDt2" transform="matrix(1 0 0 1 894.2 70.1671)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">{{levelDT_2}} %</text>
+			<text transform="matrix(1 0 0 1 866.605 56)" style="font-family:'Roboto'; font-size:10px;">Уровень ДТ2</text>
+			<text data-state="states['statum-boiler-room'].levelDt2" transform="matrix(1 0 0 1 894.2 70.3)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">{{levelDT_2}} %</text>
 			<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M585,75.5h-65.5c-3.1,0-5.7-2.5-5.7-5.7
 			V51.1c0-3.1,2.5-5.7,5.7-5.7H585c3.1,0,5.7,2.5,5.7,5.7v18.7C590.7,73,588.1,75.5,585,75.5z" />
-			<text transform="matrix(1 0 0 1 541.7527 57.6312)" style="font-family:'Roboto'; font-size:10px;">Тпом.</text>
-			<text data-state="states['statum-boiler-room'].tempRoomAir" transform="matrix(1 0 0 1 552.2 70.1671)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">{{tempRoomAir}} ºC</text>
+			<text transform="matrix(1 0 0 1 541.7527 56)" style="font-family:'Roboto'; font-size:10px;">Тпом.</text>
+			<text data-state="states['statum-boiler-room'].tempRoomAir" transform="matrix(1 0 0 1 552.2 70.3)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">{{tempRoomAir}} ºC</text>
 		</g>
 
 		<linearGradient id="SVGID_00000034066932443557695660000001516347545508789692_" gradientUnits="userSpaceOnUse" x1="202.7239" y1="-554.512" x2="209.8542" y2="-554.512" gradientTransform="matrix(1 0 0 1 274.0056 1018.7068)">
@@ -2423,8 +2423,8 @@ c 1.9,0 3.4,1.001421 3.4,2.269888 V 392.53011 c 0.1,1.20171 -1.4,2.20313 -3.2,2.
 
 		<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M646.8,429.9h-65.5c-3.1,0-5.7-2.5-5.7-5.7
 		v-18.7c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C652.5,427.4,650,429.9,646.8,429.9z" />
-		<text transform="matrix(1 0 0 1 579.3 409.7596)" style="font-family:'Roboto'; font-size:10px;">Рвых.исх.воды</text>
-		<text data-state="states['statum-boiler-room'].pressOutSrcW" transform="matrix(1 0 0 1 614.1 423)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">{{pressOutSrcW}} бар</text>
+		<text transform="matrix(1 0 0 1 579.3 410.4)" style="font-family:'Roboto'; font-size:10px;">Рвых.исх.воды</text>
+		<text data-state="states['statum-boiler-room'].pressOutSrcW" transform="matrix(1 0 0 1 614.1 424.7)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">{{pressOutSrcW}} бар</text>
 
 		<radialGradient id="SVGID_00000061455499762677690960000013399016040191865532_" cx="663.5219" cy="417.1263" r="7.4034" gradientUnits="userSpaceOnUse">
 			<stop offset="0" style="stop-color:#E6E6E6" />
