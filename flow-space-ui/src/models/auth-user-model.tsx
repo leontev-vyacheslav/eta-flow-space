@@ -6,6 +6,4 @@ export type AuthUserModel = {
   login: string;
 
   accessToken: string;
-
-  refreshToken: string;
 };

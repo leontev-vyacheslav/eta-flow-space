@@ -29,14 +29,34 @@ const REFRESH_REJECTED_STATUSES: number[] = [
   HttpConstants.StatusCodes.Forbidden,
 ];
 
-function readStoredUser(): AuthUserModel | null {
+// The refresh token lives in an HttpOnly cookie that the API sets and scripts cannot read; the auth calls send
+// it with withCredentials (needed in dev, where the API is on another port). UIs released before the cookie
+// stored it here: such a leftover is sent once in the body, the API answers with the cookie, and it is dropped.
+type StoredAuthData = AuthUserModel & { refreshToken?: string };
+
+const authRequestConfig = { withCredentials: true };
+
+function readStoredUser(): StoredAuthData | null {
   try {
     const raw = localStorage.getItem('@userAuthData');
-    return raw ? (JSON.parse(raw) as AuthUserModel) : null;
+    return raw ? (JSON.parse(raw) as StoredAuthData) : null;
   } catch (e) {
     console.error('Failed to read auth storage:', e);
     return null;
   }
+}
+
+// keeps only what the UI needs; never the refresh token
+function storeUser(data: AuthUserModel): AuthUserModel {
+  const user: AuthUserModel = { login: data.login, role: data.role, accessToken: data.accessToken };
+  localStorage.setItem('@userAuthData', JSON.stringify(user));
+
+  return user;
+}
+
+// body for /refresh and /sign-out: empty, or the leftover token of a session started before the cookie
+function legacyRefreshTokenBody(stored: StoredAuthData | null) {
+  return stored?.refreshToken ? { refreshToken: stored.refreshToken } : {};
 }
 
 export const useAuthStore = create<AuthState>((set, get) => ({
@@ -54,13 +74,12 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   signIn: async (signInModel: SignInModel) => {
     const response = await axios.post(
       `${routes.host}${routes.accountSignIn}`,
-      signInModel
+      signInModel,
+      authRequestConfig
     );
 
     if (response?.status === HttpConstants.StatusCodes.Ok && response.data) {
-      const userAuthData: AuthUserModel = response.data;
-      localStorage.setItem('@userAuthData', JSON.stringify(userAuthData));
-      set({ user: userAuthData });
+      set({ user: storeUser(response.data) });
     }
   },
 
@@ -70,22 +89,18 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     }
 
     refreshPromise = (async (): Promise<RefreshAccessTokenResult> => {
-      const stored = get().getUserAuthDataFromStorage();
-      if (!stored?.refreshToken) return { status: 'rejected' };
+      const stored = readStoredUser();
+      if (!stored) return { status: 'rejected' };
 
       try {
         const response = await axios.post(
           `${routes.host}${routes.accountRefresh}`,
-          { refreshToken: stored.refreshToken }
+          legacyRefreshTokenBody(stored),
+          authRequestConfig
         );
 
         if (response?.status === HttpConstants.StatusCodes.Ok && response.data) {
-          const updated: AuthUserModel = {
-            ...stored,
-            accessToken: response.data.accessToken,
-            refreshToken: response.data.refreshToken,
-          };
-          localStorage.setItem('@userAuthData', JSON.stringify(updated));
+          const updated = storeUser({ ...stored, accessToken: response.data.accessToken });
           set({ user: updated });
           return { status: 'refreshed', accessToken: updated.accessToken };
         }
@@ -109,14 +124,14 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   },
 
   signOut: async () => {
-    const stored = get().getUserAuthDataFromStorage();
+    const stored = readStoredUser();
     if (stored) {
       try {
-        // revoke the refresh token on the server; the endpoint needs nothing else
+        // revoke the refresh token (from the cookie) on the server and clear the cookie
         await axios.post(
           `${routes.host}${routes.accountSignOut}`,
-          { refreshToken: stored.refreshToken },
-          { headers: HttpConstants.Headers.ContentTypeJson }
+          legacyRefreshTokenBody(stored),
+          authRequestConfig
         );
       } catch {
         console.error('Sign-out revocation failed');
