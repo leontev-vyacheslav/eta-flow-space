@@ -1,4 +1,5 @@
-const APP_VERSION = 'v.0.0.1.20260128-151745';
+// generated at build time (see vite.config.ts)
+const APP_VERSION = __APP_VERSION__;
 
 const AppConstants = {
     appInfo: {
