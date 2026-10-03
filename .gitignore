@@ -22,3 +22,5 @@ dist/
 certs/
 sync-cert.env
 sync-cert.log
+
+.reports/
