@@ -1,4 +1,5 @@
-import { Controller, Post, Body, Get, HttpCode, HttpStatus, UnauthorizedException, UseGuards, Logger } from '@nestjs/common';
+import { Controller, Post, Body, Get, HttpCode, HttpStatus, UnauthorizedException, UseGuards, Logger, Req, Res } from '@nestjs/common';
+import { CookieOptions, Request, Response } from 'express';
 import { AuthService } from './auth.service';
 import { UserService } from '../user/user.service';
 import { createHash, timingSafeEqual } from 'crypto';
@@ -8,6 +9,11 @@ import { I18nService } from 'nestjs-i18n';
 import * as bcrypt from 'bcrypt';
 import { UserDataModel } from '../database/models';
 import { AuthThrottlerGuard } from './guards/auth-throttler.guard';
+
+const REFRESH_COOKIE = 'refreshToken';
+
+// HttpOnly keeps the token away from page scripts; SameSite=Strict stops other sites from triggering a refresh or sign-out.
+const REFRESH_COOKIE_OPTIONS: CookieOptions = { httpOnly: true, secure: true, sameSite: 'strict', path: '/' };
 
 @Controller()
 export class AuthController {
@@ -22,7 +28,7 @@ export class AuthController {
     @Post('sign-in')
     @HttpCode(HttpStatus.OK)
     @UseGuards(AuthThrottlerGuard)
-    async signIn(@Body() signIn: SignInModel) {
+    async signIn(@Body() signIn: SignInModel, @Res({ passthrough: true }) res: Response) {
         const user = await this.usersService.getByName(signIn.login);
 
         if (!user) {
@@ -57,17 +63,21 @@ export class AuthController {
             }
         }
 
-        return this.authService.signIn({
+        const userAuthData = await this.authService.signIn({
             login: user.name,
             userId: user.id,
             roleId: user.roleId,
         });
+        this.setRefreshCookie(res, userAuthData.refreshToken);
+
+        return userAuthData;
     }
 
     @Post('refresh')
     @HttpCode(HttpStatus.OK)
     @UseGuards(AuthThrottlerGuard)
-    async refresh(@Body('refreshToken') refreshToken: string) {
+    async refresh(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
+        const refreshToken = this.getRefreshTokens(req)[0];
         if (!refreshToken) {
             throw new UnauthorizedException(this.i18n.t('errors.TOKEN_EXPIRED_OR_INVALID'));
         }
@@ -75,6 +85,8 @@ export class AuthController {
         if (!userAuthData) {
             throw new UnauthorizedException(this.i18n.t('errors.TOKEN_EXPIRED_OR_INVALID'));
         }
+        this.setRefreshCookie(res, userAuthData.refreshToken);
+
         return userAuthData;
     }
 
@@ -83,10 +95,11 @@ export class AuthController {
     @Post('sign-out')
     @HttpCode(HttpStatus.NO_CONTENT)
     @UseGuards(AuthThrottlerGuard)
-    async signOut(@Body('refreshToken') refreshToken: unknown) {
-        if (typeof refreshToken === 'string' && refreshToken) {
+    async signOut(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
+        for (const refreshToken of this.getRefreshTokens(req)) {
             await this.authService.signOut(refreshToken);
         }
+        res.clearCookie(REFRESH_COOKIE, REFRESH_COOKIE_OPTIONS);
     }
 
     @Get('health-check')
@@ -96,5 +109,20 @@ export class AuthController {
         return {
             message: 'Пользователь аутентифицирован.',
         };
+    }
+
+    private setRefreshCookie(res: Response, refreshToken: string) {
+        res.cookie(REFRESH_COOKIE, refreshToken, { ...REFRESH_COOKIE_OPTIONS, maxAge: this.authService.refreshTtlSeconds * 1000 });
+    }
+
+    // The cookie first, then the request body: UIs released before the cookie still send the token in the body,
+    // and their next refresh moves it into the cookie. Responses keep the token in the body for the same UIs,
+    // which sign out when it is missing. Drop both body paths once every user has refreshed (7 days after release).
+    private getRefreshTokens(req: Request): string[] {
+        const fromCookie: unknown = req.cookies?.[REFRESH_COOKIE];
+        const fromBody = (req.body as { refreshToken?: unknown } | undefined)?.refreshToken;
+        const tokens = [fromCookie, fromBody].filter((t): t is string => typeof t === 'string' && t !== '');
+
+        return [...new Set(tokens)];
     }
 }

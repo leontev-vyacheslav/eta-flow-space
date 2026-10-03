@@ -12,7 +12,7 @@ export class AuthService {
     private readonly refreshSecret: string;
     private readonly accessExpiresIn: string;
     private readonly refreshExpiresIn: string;
-    private readonly refreshTtlSeconds: number;
+    readonly refreshTtlSeconds: number;
     private readonly logger = new Logger(AuthService.name);
 
     constructor(
