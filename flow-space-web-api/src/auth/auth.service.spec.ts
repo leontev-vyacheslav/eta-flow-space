@@ -4,11 +4,13 @@ import { JwtService } from '@nestjs/jwt';
 import { I18nService } from 'nestjs-i18n';
 import { ConfigService } from '@nestjs/config';
 import { SharedStoreService } from '../common/services/shared-store/shared-store.service';
+import { UserService } from '../user/user.service';
 
 describe('AuthService', () => {
     let service: AuthService;
     let jwtService: jest.Mocked<JwtService>;
     let sharedStoreService: jest.Mocked<SharedStoreService>;
+    let userService: { getById: jest.Mock };
 
     const mockJwtConfig = {
         secret: 'test-secret',
@@ -49,12 +51,19 @@ describe('AuthService', () => {
                         deleteRefreshToken: jest.fn().mockResolvedValue(undefined),
                     },
                 },
+                {
+                    provide: UserService,
+                    useValue: {
+                        getById: jest.fn().mockResolvedValue({ id: 1, name: 'alice', roleId: 1 }),
+                    },
+                },
             ],
         }).compile();
 
         service = module.get<AuthService>(AuthService);
         jwtService = module.get(JwtService);
         sharedStoreService = module.get(SharedStoreService);
+        userService = module.get(UserService);
     });
 
     it('should generate both access and refresh tokens on signIn', async () => {
@@ -94,9 +103,33 @@ describe('AuthService', () => {
         expect(result).toEqual({
             accessToken: 'new-access-token',
             refreshToken: 'new-refresh-token',
-            login: '',
+            login: 'alice',
             role: 1,
         });
+    });
+
+    it('should reject refresh and revoke the token when the user no longer exists', async () => {
+        sharedStoreService.getRefreshTokenUserId.mockResolvedValue(1);
+        jwtService.verifyAsync.mockResolvedValue({ userId: 1, roleId: 1, type: 'refresh' });
+        userService.getById.mockResolvedValue(null);
+
+        await expect(service.refresh('deleted-user-token')).rejects.toThrow();
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+        expect(sharedStoreService.deleteRefreshToken).toHaveBeenCalledWith('deleted-user-token');
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+        expect(sharedStoreService.saveRefreshToken).not.toHaveBeenCalled();
+    });
+
+    it('should take the role from the database on refresh, not from the old token', async () => {
+        sharedStoreService.getRefreshTokenUserId.mockResolvedValue(1);
+        jwtService.verifyAsync.mockResolvedValue({ userId: 1, roleId: 1, type: 'refresh' });
+        userService.getById.mockResolvedValue({ id: 1, name: 'alice', roleId: 2 });
+
+        const result = await service.refresh('old-refresh-token');
+
+        expect(result.role).toBe(2);
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+        expect(jwtService.signAsync).toHaveBeenCalledWith(expect.objectContaining({ roleId: 2, type: 'refresh' }), expect.anything());
     });
 
     it('should reject refresh with invalid token', async () => {
@@ -139,5 +172,30 @@ describe('AuthService', () => {
         sharedStoreService.getRefreshTokenUserId.mockResolvedValue(null);
 
         await expect(service.refresh('expired-token')).rejects.toThrow();
+    });
+
+    it('should issue different refresh tokens for the same user in the same second (jti)', async () => {
+        const realJwt = new JwtService({ secret: 'test-secret' });
+        const module = await Test.createTestingModule({
+            providers: [
+                AuthService,
+                { provide: JwtService, useValue: realJwt },
+                { provide: I18nService, useValue: { t: jest.fn() } },
+                { provide: ConfigService, useValue: { get: jest.fn().mockReturnValue(mockJwtConfig) } },
+                { provide: SharedStoreService, useValue: { saveRefreshToken: jest.fn() } },
+                { provide: UserService, useValue: { getById: jest.fn() } },
+            ],
+        }).compile();
+        const realService = module.get(AuthService);
+
+        const [first, second] = await Promise.all([
+            realService.signIn({ login: 'alice', userId: 1, roleId: 1 }),
+            realService.signIn({ login: 'alice', userId: 1, roleId: 1 }),
+        ]);
+        const payload = realJwt.decode<{ jti?: string; iat: number }>(first.refreshToken);
+
+        expect(first.refreshToken).not.toBe(second.refreshToken);
+        expect(payload.jti).toMatch(/^[0-9a-f-]{36}$/);
+        expect(payload.iat).toBe(realJwt.decode<{ iat: number }>(second.refreshToken).iat);
     });
 });

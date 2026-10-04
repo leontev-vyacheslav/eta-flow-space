@@ -13,6 +13,7 @@ import { UserService } from '../user/user.service';
 describe('AuthController refresh-token cookie', () => {
     let app: INestApplication<App>;
     let authService: { signIn: jest.Mock; refresh: jest.Mock; signOut: jest.Mock; refreshTtlSeconds: number };
+    let userService: { getByName: jest.Mock };
 
     const tokens = (refreshToken: string) => ({ accessToken: 'access', refreshToken, login: 'alice', role: 1 });
     const refreshCookie = (res: request.Response) => ([] as string[]).concat(res.headers['set-cookie'] ?? []).find((c) => c.startsWith('refreshToken='));
@@ -25,13 +26,14 @@ describe('AuthController refresh-token cookie', () => {
             refreshTtlSeconds: 7 * 24 * 60 * 60,
         };
         const password = await bcrypt.hash('secret', 4);
+        userService = { getByName: jest.fn().mockResolvedValue({ id: 1, name: 'alice', password, roleId: 1 }) };
 
         const module = await Test.createTestingModule({
             imports: [ThrottlerModule.forRoot({ throttlers: [{ ttl: 60_000, limit: 100 }] })],
             controllers: [AuthController],
             providers: [
                 { provide: AuthService, useValue: authService },
-                { provide: UserService, useValue: { getByName: jest.fn().mockResolvedValue({ id: 1, name: 'alice', password, roleId: 1 }) } },
+                { provide: UserService, useValue: userService },
                 { provide: I18nService, useValue: { t: (key: string) => key } },
             ],
         }).compile();
@@ -41,6 +43,14 @@ describe('AuthController refresh-token cookie', () => {
     });
 
     afterEach(() => app.close());
+
+    it('sign-in refuses an old SHA-256 password hash', async () => {
+        const sha256 = 'K7gNU3sdo+OL0wNhqoVWhr3g6s1xYv72ol/pe/Unols='; // base64 SHA-256 of "secret", the old format
+        userService.getByName.mockResolvedValue({ id: 1, name: 'alice', password: sha256, roleId: 1 });
+
+        await request(app.getHttpServer()).post('/sign-in').send({ login: 'alice', password: 'secret' }).expect(401);
+        expect(authService.signIn).not.toHaveBeenCalled();
+    });
 
     it('sign-in sets an HttpOnly, Secure, SameSite=Strict cookie and keeps the token out of the body', async () => {
         const res = await request(app.getHttpServer()).post('/sign-in').send({ login: 'alice', password: 'secret' }).expect(200);

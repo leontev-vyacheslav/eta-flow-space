@@ -17,6 +17,10 @@ export class UserService {
         return await this.userModel.findOne({ attributes: ['id', 'name', 'password', 'roleId'], where: { name } });
     }
 
+    async getById(userId: number): Promise<Pick<UserDataModel, 'id' | 'name' | 'roleId'> | null> {
+        return await this.userModel.findByPk(userId, { attributes: ['id', 'name', 'roleId'] });
+    }
+
     async getSettings(userId: number): Promise<Record<string, unknown>> {
         const user = await this.userModel.findByPk(userId, {
             attributes: ['settings'],

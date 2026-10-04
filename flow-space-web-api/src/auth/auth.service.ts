@@ -6,6 +6,8 @@ import { ConfigService } from '@nestjs/config';
 import { SharedStoreService } from '../common/services/shared-store/shared-store.service';
 import { JwtConfigModel } from '../models/configs/jwt-config.model';
 import type { StringValue } from 'ms';
+import { randomUUID } from 'crypto';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class AuthService {
@@ -20,6 +22,7 @@ export class AuthService {
         private readonly i18n: I18nService,
         private readonly configService: ConfigService,
         private readonly sharedStoreService: SharedStoreService,
+        private readonly userService: UserService,
     ) {
         const jwtConfig = this.configService.get('jwt') as JwtConfigModel;
         this.refreshSecret = jwtConfig.refreshSecret;
@@ -44,9 +47,11 @@ export class AuthService {
             this.jwtService.signAsync(accessPayload, {
                 expiresIn: this.accessExpiresIn as StringValue,
             }),
+            // the random id keeps two refresh tokens issued in the same second apart (revoking one must not revoke the other)
             this.jwtService.signAsync(refreshPayload, {
                 secret: this.refreshSecret,
                 expiresIn: this.refreshExpiresIn as StringValue,
+                jwtid: randomUUID(),
             }),
         ]);
 
@@ -82,7 +87,13 @@ export class AuthService {
 
         await this.sharedStoreService.deleteRefreshToken(refreshToken);
 
-        return this.signIn({ login: '', userId: payload.userId, roleId: payload.roleId });
+        // the account may have been deleted or its role changed since the token was issued
+        const user = await this.userService.getById(payload.userId);
+        if (!user) {
+            throw new UnauthorizedException(this.i18n.t('errors.TOKEN_EXPIRED_OR_INVALID'));
+        }
+
+        return this.signIn({ login: user.name, userId: user.id, roleId: user.roleId });
     }
 
     async signOut(refreshToken: string) {
