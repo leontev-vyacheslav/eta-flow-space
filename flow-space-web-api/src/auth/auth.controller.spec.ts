@@ -42,11 +42,11 @@ describe('AuthController refresh-token cookie', () => {
 
     afterEach(() => app.close());
 
-    it('sign-in sets an HttpOnly, Secure, SameSite=Strict cookie and still returns the token in the body', async () => {
+    it('sign-in sets an HttpOnly, Secure, SameSite=Strict cookie and keeps the token out of the body', async () => {
         const res = await request(app.getHttpServer()).post('/sign-in').send({ login: 'alice', password: 'secret' }).expect(200);
 
         expect(refreshCookie(res)).toMatch(/^refreshToken=rt-1; Max-Age=604800; Path=\/; Expires=.+; HttpOnly; Secure; SameSite=Strict$/);
-        expect((res.body as { refreshToken: string }).refreshToken).toBe('rt-1');
+        expect(res.body).toEqual({ accessToken: 'access', login: 'alice', role: 1 });
     });
 
     it('refresh reads the token from the cookie and rotates the cookie', async () => {
@@ -54,19 +54,13 @@ describe('AuthController refresh-token cookie', () => {
 
         expect(authService.refresh).toHaveBeenCalledWith('rt-1');
         expect(refreshCookie(res)).toMatch(/^refreshToken=rt-2;/);
+        expect(res.body).toEqual({ accessToken: 'access', login: 'alice', role: 1 });
     });
 
-    it('refresh prefers the cookie over the body', async () => {
-        await request(app.getHttpServer()).post('/refresh').set('Cookie', 'refreshToken=rt-cookie').send({ refreshToken: 'rt-body' }).expect(200);
+    it('refresh ignores a token in the body', async () => {
+        await request(app.getHttpServer()).post('/refresh').send({ refreshToken: 'rt-body' }).expect(401);
 
-        expect(authService.refresh).toHaveBeenCalledWith('rt-cookie');
-    });
-
-    it('refresh still accepts a body token from UIs released before the cookie and moves it into the cookie', async () => {
-        const res = await request(app.getHttpServer()).post('/refresh').send({ refreshToken: 'rt-1' }).expect(200);
-
-        expect(authService.refresh).toHaveBeenCalledWith('rt-1');
-        expect(refreshCookie(res)).toMatch(/^refreshToken=rt-2;/);
+        expect(authService.refresh).not.toHaveBeenCalled();
     });
 
     it('refresh without any token is 401 and does not reach the service', async () => {
@@ -82,11 +76,11 @@ describe('AuthController refresh-token cookie', () => {
         expect(refreshCookie(res)).toBeUndefined();
     });
 
-    it('sign-out revokes the cookie and body tokens and clears the cookie', async () => {
+    it('sign-out revokes the cookie token, ignores the body and clears the cookie', async () => {
         const res = await request(app.getHttpServer()).post('/sign-out').set('Cookie', 'refreshToken=rt-cookie').send({ refreshToken: 'rt-body' }).expect(204);
 
+        expect(authService.signOut).toHaveBeenCalledTimes(1);
         expect(authService.signOut).toHaveBeenCalledWith('rt-cookie');
-        expect(authService.signOut).toHaveBeenCalledWith('rt-body');
         expect(refreshCookie(res)).toMatch(/^refreshToken=; Path=\/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly; Secure; SameSite=Strict$/);
     });
 

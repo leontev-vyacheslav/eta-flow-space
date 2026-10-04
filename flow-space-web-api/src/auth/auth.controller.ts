@@ -63,12 +63,12 @@ export class AuthController {
             }
         }
 
-        const userAuthData = await this.authService.signIn({
+        const { refreshToken, ...userAuthData } = await this.authService.signIn({
             login: user.name,
             userId: user.id,
             roleId: user.roleId,
         });
-        this.setRefreshCookie(res, userAuthData.refreshToken);
+        this.setRefreshCookie(res, refreshToken);
 
         return userAuthData;
     }
@@ -77,15 +77,12 @@ export class AuthController {
     @HttpCode(HttpStatus.OK)
     @UseGuards(AuthThrottlerGuard)
     async refresh(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
-        const refreshToken = this.getRefreshTokens(req)[0];
+        const refreshToken = this.getRefreshToken(req);
         if (!refreshToken) {
             throw new UnauthorizedException(this.i18n.t('errors.TOKEN_EXPIRED_OR_INVALID'));
         }
-        const userAuthData = await this.authService.refresh(refreshToken);
-        if (!userAuthData) {
-            throw new UnauthorizedException(this.i18n.t('errors.TOKEN_EXPIRED_OR_INVALID'));
-        }
-        this.setRefreshCookie(res, userAuthData.refreshToken);
+        const { refreshToken: newRefreshToken, ...userAuthData } = await this.authService.refresh(refreshToken);
+        this.setRefreshCookie(res, newRefreshToken);
 
         return userAuthData;
     }
@@ -96,7 +93,8 @@ export class AuthController {
     @HttpCode(HttpStatus.NO_CONTENT)
     @UseGuards(AuthThrottlerGuard)
     async signOut(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
-        for (const refreshToken of this.getRefreshTokens(req)) {
+        const refreshToken = this.getRefreshToken(req);
+        if (refreshToken) {
             await this.authService.signOut(refreshToken);
         }
         res.clearCookie(REFRESH_COOKIE, REFRESH_COOKIE_OPTIONS);
@@ -115,14 +113,9 @@ export class AuthController {
         res.cookie(REFRESH_COOKIE, refreshToken, { ...REFRESH_COOKIE_OPTIONS, maxAge: this.authService.refreshTtlSeconds * 1000 });
     }
 
-    // The cookie first, then the request body: UIs released before the cookie still send the token in the body,
-    // and their next refresh moves it into the cookie. Responses keep the token in the body for the same UIs,
-    // which sign out when it is missing. Drop both body paths once every user has refreshed (7 days after release).
-    private getRefreshTokens(req: Request): string[] {
-        const fromCookie: unknown = req.cookies?.[REFRESH_COOKIE];
-        const fromBody = (req.body as { refreshToken?: unknown } | undefined)?.refreshToken;
-        const tokens = [fromCookie, fromBody].filter((t): t is string => typeof t === 'string' && t !== '');
+    private getRefreshToken(req: Request): string | undefined {
+        const token: unknown = req.cookies?.[REFRESH_COOKIE];
 
-        return [...new Set(tokens)];
+        return typeof token === 'string' && token !== '' ? token : undefined;
     }
 }

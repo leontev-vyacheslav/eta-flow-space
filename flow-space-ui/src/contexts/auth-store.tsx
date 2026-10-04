@@ -30,16 +30,14 @@ const REFRESH_REJECTED_STATUSES: number[] = [
 ];
 
 // The refresh token lives in an HttpOnly cookie that the API sets and scripts cannot read; the auth calls send
-// it with withCredentials (needed in dev, where the API is on another port). UIs released before the cookie
-// stored it here: such a leftover is sent once in the body, the API answers with the cookie, and it is dropped.
-type StoredAuthData = AuthUserModel & { refreshToken?: string };
+// it with withCredentials (needed in dev, where the API is on another port).
 
 const authRequestConfig = { withCredentials: true };
 
-function readStoredUser(): StoredAuthData | null {
+function readStoredUser(): AuthUserModel | null {
   try {
     const raw = localStorage.getItem('@userAuthData');
-    return raw ? (JSON.parse(raw) as StoredAuthData) : null;
+    return raw ? (JSON.parse(raw) as AuthUserModel) : null;
   } catch (e) {
     console.error('Failed to read auth storage:', e);
     return null;
@@ -52,11 +50,6 @@ function storeUser(data: AuthUserModel): AuthUserModel {
   localStorage.setItem('@userAuthData', JSON.stringify(user));
 
   return user;
-}
-
-// body for /refresh and /sign-out: empty, or the leftover token of a session started before the cookie
-function legacyRefreshTokenBody(stored: StoredAuthData | null) {
-  return stored?.refreshToken ? { refreshToken: stored.refreshToken } : {};
 }
 
 export const useAuthStore = create<AuthState>((set, get) => ({
@@ -95,7 +88,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       try {
         const response = await axios.post(
           `${routes.host}${routes.accountRefresh}`,
-          legacyRefreshTokenBody(stored),
+          undefined,
           authRequestConfig
         );
 
@@ -130,7 +123,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         // revoke the refresh token (from the cookie) on the server and clear the cookie
         await axios.post(
           `${routes.host}${routes.accountSignOut}`,
-          legacyRefreshTokenBody(stored),
+          undefined,
           authRequestConfig
         );
       } catch {
