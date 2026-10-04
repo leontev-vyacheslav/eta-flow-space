@@ -90,15 +90,6 @@ export class AuthService {
         await this.sharedStoreService.deleteRefreshToken(refreshToken);
     }
 
-    async verifyToken(token: string) {
-        try {
-            return await this.jwtService.verifyAsync<JwtPayloadModel & object>(token);
-        } catch (error) {
-            this.logger.error('Invalid token', error);
-            throw new UnauthorizedException(this.i18n.t('errors.TOKEN_EXPIRED_OR_INVALID'));
-        }
-    }
-
     private parseDurationToSeconds(duration: string): number {
         const match = duration.match(/^(\d+)([smhd])$/);
         if (!match) return 7 * 24 * 60 * 60;

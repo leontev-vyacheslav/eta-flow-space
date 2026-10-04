@@ -16,7 +16,6 @@ import ContentNonAuth from './content-non-auth';
 import Loader from './components/loader/loader';
 import { EmergencyContextProvider } from './contexts/emergency-context';
 import { AppSettingsInitializer } from './contexts/app-settings-initializer';
-import { AuthInitializer } from './contexts/auth-initializer';
 import { selectUser } from './contexts/auth-selectors';
 import { useAuthStore } from './contexts/auth-store';
 
@@ -64,7 +63,6 @@ function Main() {
 
     return (
         <BrowserRouter>
-            <AuthInitializer />
             <SharedAreaProvider>
                 <AppDataProvider>
                     <AppSettingsInitializer />

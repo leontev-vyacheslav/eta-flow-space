@@ -33,10 +33,7 @@ export const useAuthHttpRequest = () => {
             config.headers = config.headers || {};
             config.headers = { ...config.headers, ...HttpConstants.Headers.AcceptJson };
             config.timeoutErrorMessage = 'Сервер не ответил в установленный период времени 10 сек.'
-            if (userAuthData) {
-                config.headers.Authorization = `Bearer ${userAuthData.accessToken}`;
-                config.headers['X-Requested-User'] = userAuthData.login
-            }
+            config.headers.Authorization = `Bearer ${userAuthData.accessToken}`;
 
             try {
                 if (!suppressLoader) {

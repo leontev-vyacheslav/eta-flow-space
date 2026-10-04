@@ -11,7 +11,6 @@ export interface AuthState {
   user: AuthUserModel | null;
 
   // Actions
-  initFromStorage: () => void;
   signIn: (signIn: SignInModel) => Promise<void>;
   signOut: () => Promise<void>;
   refreshAccessToken: RefreshAccessTokenFunc;
@@ -52,17 +51,12 @@ function storeUser(data: AuthUserModel): AuthUserModel {
   return user;
 }
 
-export const useAuthStore = create<AuthState>((set, get) => ({
+export const useAuthStore = create<AuthState>((set) => ({
   // read synchronously so the first render already uses the signed-in routes;
   // starting with null let the sign-in routes redirect to /sign-in and lose the current URL on reload
   user: readStoredUser(),
 
   getUserAuthDataFromStorage: readStoredUser,
-
-  initFromStorage: () => {
-    const user = get().getUserAuthDataFromStorage();
-    set({ user });
-  },
 
   signIn: async (signInModel: SignInModel) => {
     const response = await axios.post(

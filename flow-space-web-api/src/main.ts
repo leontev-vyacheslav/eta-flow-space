@@ -28,7 +28,7 @@ async function bootstrap() {
         origin: ['http://localhost:3000'],
         credentials: true,
         methods: ['GET', 'POST'],
-        allowedHeaders: 'Authorization,content-type,x-requested-user',
+        allowedHeaders: 'Authorization,content-type',
     });
 
     app.useGlobalPipes(new I18nValidationPipe());
