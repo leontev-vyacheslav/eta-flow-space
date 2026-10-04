@@ -14,7 +14,7 @@ export class UserService {
     ) {}
 
     async getByName(name: string): Promise<AuthUserModel | null> {
-        return (await this.userModel.findOne({ attributes: ['id', 'name', 'password', 'roleId'], where: { name } })) as AuthUserModel;
+        return await this.userModel.findOne({ attributes: ['id', 'name', 'password', 'roleId'], where: { name } });
     }
 
     async getSettings(userId: number): Promise<Record<string, unknown>> {

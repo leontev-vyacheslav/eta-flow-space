@@ -1,4 +1,4 @@
-FROM node:24.14-alpine AS build
+FROM node:24.21-alpine AS build
 
 WORKDIR /app
 
@@ -11,13 +11,13 @@ COPY . .
 RUN npm run build
 
 # Production stage
-FROM node:24.14-alpine
+FROM node:24.21-alpine
 
 WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm ci --only=production
+RUN npm ci --omit=dev
 
 COPY --from=build /app/dist ./dist
 

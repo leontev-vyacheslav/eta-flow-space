@@ -144,7 +144,7 @@ export class EmergencyStateDispatcherService {
                     ) {
                         emergencyStates.push({
                             deviceId: device.id,
-                            state: emergencyState as Record<string, unknown>,
+                            state: emergencyState,
                         });
                     }
                 }

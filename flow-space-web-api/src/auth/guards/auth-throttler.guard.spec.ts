@@ -1,7 +1,7 @@
 import { Body, Controller, HttpCode, HttpStatus, INestApplication, Post, UseGuards } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import { ThrottlerModule, seconds } from '@nestjs/throttler';
-import * as request from 'supertest';
+import request from 'supertest';
 import { App } from 'supertest/types';
 import { AuthThrottlerGuard } from './auth-throttler.guard';
 

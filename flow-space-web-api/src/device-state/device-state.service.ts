@@ -122,12 +122,12 @@ export class DeviceStateService {
         if (!deviceState) {
             return {
                 state: { isConnected: false },
-            } as Partial<DeviceStateDataModel>;
+            };
         }
 
         return {
-            ...deviceState.toJSON(),
+            ...deviceState.toJSON<Record<string, unknown>>(),
             state: { isConnected: false, ...deviceState.state },
-        } as Partial<DeviceStateDataModel>;
+        };
     }
 }
