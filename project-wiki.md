@@ -72,6 +72,11 @@ rename the header to `Content-Security-Policy-Report-Only` for a while (console 
 bind-mounted on its own, and `git pull` replaces it with a new file, so a restarted container can keep serving the
 old one. Check with `docker exec eta-flow-space-gateway nginx -T | grep Content-Security`.
 
+**Recreating the UI, web API or reporting container** needs nothing on the gateway: it looks the container names up
+through Docker's DNS (`resolver 127.0.0.11 valid=10s`), so it finds a recreated container's new address by itself,
+within about 10 seconds (requests in that window can get 502). It also starts while one of those containers is down;
+only that container's routes answer 502 until it is back.
+
 **Rollback:** `git checkout <previous commit> -- nginx.conf docker-compose.yaml` and
 `docker compose up -d eta-flow-space-gateway` bring back plain HTTP on 3000 (the UI build works with both).
 
