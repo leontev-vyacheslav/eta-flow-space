@@ -41,7 +41,8 @@ const models = [
                 logging: configService.get<boolean | ((sql: string, timing?: number) => void)>('database.logging'),
                 models,
                 autoLoadModels: true,
-                synchronize: true,
+                // the schema lives in database/schema.sql (see database/README.md); the models never create or alter tables
+                synchronize: false,
             }),
         }),
     ],

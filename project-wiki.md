@@ -94,3 +94,9 @@ VITE_REPORTING_HOST=http://localhost:8000/api
 ```
 
 Restart `npm run dev` after creating or removing that file.
+
+### 4. Database schema
+
+The schema is versioned in `database/schema.sql` (tables, indexes, the `cleanup()` retention procedure); the web API's
+models no longer create tables. A fresh install gets it automatically; schema changes go through
+`database/migrations/` and a refreshed `schema.sql` — see `database/README.md`.
