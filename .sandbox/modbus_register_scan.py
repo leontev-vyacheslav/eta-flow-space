@@ -33,8 +33,12 @@ def receive(sock, size):
 
 def read_holding_registers(sock, transaction_id, unit_id, address, quantity):
     sock.sendall(struct.pack('>HHHBBHH', transaction_id, 0, 6, unit_id, 3, address, quantity))
-    header = receive(sock, 7)
-    body = receive(sock, struct.unpack('>H', header[4:6])[0] - 1)
+    while True:
+        header = receive(sock, 7)
+        body = receive(sock, struct.unpack('>H', header[4:6])[0] - 1)
+        # Skip a late answer to an earlier request that already timed out.
+        if struct.unpack('>H', header[0:2])[0] == transaction_id:
+            break
     if body[0] & 0x80:
         raise IOError(f'Modbus exception code {body[1]}')
     return list(struct.unpack(f'>{quantity}H', body[2:2 + 2 * quantity]))
@@ -54,7 +58,12 @@ arguments.add_argument('--timeout', type=float, default=5)
 options = arguments.parse_args()
 
 print(time.strftime('%Y-%m-%d %H:%M:%S'), f'{options.host}:{options.port} unit {options.unit}')
-sock = socket.create_connection((options.host, options.port), timeout=options.timeout)
+try:
+    sock = socket.create_connection((options.host, options.port), timeout=options.timeout)
+except OSError as error:
+    # The controller may accept only a few connections at once (Node-RED holds one); just try again later.
+    print(f'ERROR connect: {error}')
+    raise SystemExit(1)
 sock.settimeout(options.timeout)
 try:
     transaction_id = 0
