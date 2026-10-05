@@ -4,7 +4,7 @@ import { useDashboardPage } from "../../dashboard-page-context"
 import dxPopover from "devextreme/ui/popover";
 import { DashboardIcon, GraphIcon, HelpIcon, TypeIcon, VariableIcon } from "../../../../constants/app-icons";
 import type { SchemaTypeInfoPropertiesChainModel } from "../../../../helpers/data-helper";
-// import { showAlertDialog } from "../../../../utils/dialogs";
+import { showAlertDialog } from "../../../../utils/dialogs";
 import { formatDateTime, formatNumber, getEnumDescription, isDateTime } from "../../../../helpers/state-value-format";
 
 import './mnemoschema-popover.scss';
@@ -25,36 +25,37 @@ export const useMnemoschemaPopover = () => {
     const popoverTitleContainerRef = useRef<HTMLDivElement>(null);
     const popoverTitleReactRootRef = useRef<ReturnType<typeof createRoot> | null>(null);
 
-    // const showEnumReference = useCallback((propertyInfo: SchemaTypeInfoPropertiesChainModel) => {
-    //     showAlertDialog({
-    //         title: 'Информация',
-    //         textRender: () => {
-    //             return (
-    //                 <>
-    //                     <div style={{ display: 'flex', flexDirection: 'column', gap: 5, marginBottom: 10 }} >
-    //                         <div style={{ fontSize: 12, fontWeight: 500 }}>{propertyInfo.typeInfo!.ui.editor.label.text}</div>
-    //                         <div style={{ fontSize: 10, color: 'rgb(118, 118, 118)' }}>{propertyInfo.propertiesChainValuePair.propertiesChain}</div>
-    //                     </div>
-    //                     <table className='simple-grid' style={{ margin: 0, width: '100%', minWidth: '350px' }}>
-    //                         <tbody>
-    //                             {
-    //                                 Object.entries(dataschema.$defs[propertyInfo.typeInfo!.typeName].enumDescriptions).map(
-    //                                     ([key, value]) =>
-    //                                         <tr key={key} >
-    //                                             <td style={{ width: 30 }}>{key}</td>
-    //                                             <td> {(value as any).split(' - ').shift()}</td>
-    //                                             <td> {(value as any).split(' - ').pop()}</td>
-    //                                         </tr>
-    //                                 )
-    //                             }
-    //                         </tbody>
-    //                     </table>
-    //                 </>
-    //             )
-    //         },
-    //         callback: async () => { }
-    //     });
-    // }, [dataschema]);
+    const showEnumReference = useCallback((deviceCode: string, propertyInfo: SchemaTypeInfoPropertiesChainModel) => {
+        const enumDescriptions: Record<string, string> = dataschemas?.[deviceCode]?.$defs?.[propertyInfo.typeInfo!.typeName]?.enumDescriptions ?? {};
+        showAlertDialog({
+            title: 'Информация',
+            textRender: () => {
+                return (
+                    <>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: 5, marginBottom: 10 }} >
+                            <div style={{ fontSize: 12, fontWeight: 500 }}>{propertyInfo.typeInfo?.ui.editor.label.text ?? ''}</div>
+                            <div style={{ fontSize: 10, color: 'rgb(118, 118, 118)' }}>{propertyInfo.propertiesChainValuePair.propertiesChain}</div>
+                        </div>
+                        <table className='simple-grid' style={{ margin: 0, width: '100%', minWidth: '350px' }}>
+                            <tbody>
+                                {
+                                    Object.entries(enumDescriptions).map(
+                                        ([key, value]) =>
+                                            <tr key={key} >
+                                                <td style={{ width: 30 }}>{key}</td>
+                                                <td>{value.split(' - ').shift()}</td>
+                                                <td>{value.split(' - ').pop()}</td>
+                                            </tr>
+                                    )
+                                }
+                            </tbody>
+                        </table>
+                    </>
+                )
+            },
+            callback: async () => { }
+        });
+    }, [dataschemas]);
 
     const PropertyInfoTable = useCallback(({ propertyInfosDict, formattedValues }: {
         propertyInfosDict: Record<string, SchemaTypeInfoPropertiesChainModel[]>,
@@ -158,7 +159,7 @@ export const useMnemoschemaPopover = () => {
                                 <span>{value}</span>
                                 <HelpIcon style={{ cursor: 'pointer' }} size={14} onClick={() => {
                                     popoverInstance.current!.hide();
-                                    // showEnumReference(propertyInfo);
+                                    showEnumReference(deviceCode, propertyInfo);
                                 }} />
                             </div>
                         );
@@ -176,7 +177,7 @@ export const useMnemoschemaPopover = () => {
         return (
             <PropertyInfoTable propertyInfosDict={propertyInfosDict} formattedValues={formattedValues} />
         );
-    }, [PropertyInfoTable, dataschemas, isAdmin]);
+    }, [PropertyInfoTable, dataschemas, isAdmin, showEnumReference]);
 
     useEffect(() => {
         return () => {
