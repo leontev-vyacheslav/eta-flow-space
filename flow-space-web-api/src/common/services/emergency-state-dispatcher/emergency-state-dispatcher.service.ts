@@ -9,14 +9,16 @@ import { Sequelize } from 'sequelize-typescript';
 import { EmergencyReasonModel, EmergencyStateModel } from '../../../models';
 import { DataSchemasService } from '../data-schemas/data-schemas.service';
 import { ExpressionEvaluatorService } from '../expression-evaluator/expression-evaluator.service';
+import { createRuleHelpers, RuleHelpers } from '../expression-evaluator/rule-helpers';
 
 @Injectable()
 export class EmergencyStateDispatcherService {
     private isRunning = false;
     private readonly logger = new Logger(EmergencyStateDispatcherService.name);
+    private readonly ruleHelpers: RuleHelpers;
 
     constructor(
-        private readonly dataSchemasService: DataSchemasService,
+        dataSchemasService: DataSchemasService,
         private readonly expressionEvaluatorService: ExpressionEvaluatorService,
         private readonly sharedStoreService: SharedStoreService,
 
@@ -34,7 +36,9 @@ export class EmergencyStateDispatcherService {
 
         @InjectModel(EmergencyStateDataModel)
         private readonly emergencyStateDataModel: typeof EmergencyStateDataModel,
-    ) {}
+    ) {
+        this.ruleHelpers = createRuleHelpers(dataSchemasService);
+    }
 
     @Cron(CronExpression.EVERY_MINUTE)
     async storeEmergencyState() {
@@ -113,7 +117,7 @@ export class EmergencyStateDispatcherService {
                     });
                 }
 
-                const context = { state, dss: this.dataSchemasService, flowCode: device.flow?.code };
+                const context = { state, dss: this.ruleHelpers, flowCode: device.flow?.code };
 
                 for (const emergencyReason of device.emergencies.reasons as EmergencyReasonModel[]) {
                     try {

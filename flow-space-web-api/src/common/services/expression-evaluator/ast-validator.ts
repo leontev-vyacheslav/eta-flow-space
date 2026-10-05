@@ -59,9 +59,10 @@ function validateNode(node: AstNode): void {
             ) {
                 throw new Error('Forbidden: CallExpression on non-whitelisted object');
             }
+            // only dss.<allowed name>(...): a computed name (dss['...']) would skip the check
             const prop = callee.property as AstNode;
-            if (prop.type === 'Identifier' && !ALLOWED_DSS_METHODS.has(prop.name as string)) {
-                throw new Error(`Forbidden: dss.${prop.name as string} is not allowed`);
+            if (callee.computed || prop.type !== 'Identifier' || !ALLOWED_DSS_METHODS.has(prop.name as string)) {
+                throw new Error(`Forbidden: dss.${prop.type === 'Identifier' ? (prop.name as string) : '[computed]'} is not allowed`);
             }
             for (const arg of node.arguments as AstNode[]) {
                 validateNode(arg);

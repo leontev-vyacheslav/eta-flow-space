@@ -102,6 +102,11 @@ describe('ExpressionEvaluatorService', () => {
             await expect(service.evaluateExpression('import("fs")', context)).rejects.toThrow('Forbidden');
         });
 
+        it('should refuse a computed dss method name', async () => {
+            await expect(service.evaluateExpression("dss['getEnumDescription'](flowCode, 'Mode', 1)", context)).rejects.toThrow('Forbidden');
+            await expect(service.evaluateExpression("dss['constructor']('x')", context)).rejects.toThrow('Forbidden');
+        });
+
         it('should throw on nested function', async () => {
             await expect(service.evaluateExpression('(() => 1)()', context)).rejects.toThrow('Forbidden');
         });
