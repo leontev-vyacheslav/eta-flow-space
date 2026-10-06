@@ -1,5 +1,5 @@
-import Drawer from 'devextreme-react/drawer';
-import ScrollView from 'devextreme-react/scroll-view';
+import { Drawer } from 'devextreme-react/drawer';
+import { ScrollView } from 'devextreme-react/scroll-view';
 import React, { type ReactElement, useCallback, useRef, useState } from 'react';
 import { matchPath, useLocation, useNavigate } from 'react-router';
 import { Footer, Header, SideNavigationMenu } from '../../components';

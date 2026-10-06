@@ -1,5 +1,5 @@
 import 'devextreme-react/switch';
-import Form, { GroupItem, SimpleItem, Tab, TabbedItem } from 'devextreme-react/form';
+import { Form, GroupItem, SimpleItem, Tab, TabbedItem } from 'devextreme-react/form';
 import { formatMessage } from 'devextreme/localization';
 import { useCallback, useMemo, useRef } from 'react';
 import { useDashboardPage } from '../../dashboard-page-context';

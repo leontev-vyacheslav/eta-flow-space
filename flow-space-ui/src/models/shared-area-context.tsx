@@ -1,6 +1,6 @@
 import type { ProcFunc } from './primitive-type';
 import { type RefObject } from 'react';
-import TreeView from 'devextreme-react/tree-view';
+import { TreeView } from 'devextreme-react/tree-view';
 import type { TreeViewItemModel } from './tree-view-item';
 
 export type SharedAreaContextModel = {

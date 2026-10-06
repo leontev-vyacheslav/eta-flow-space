@@ -1,5 +1,5 @@
 import React from 'react';
-import DateBox from 'devextreme-react/date-box';
+import { DateBox } from 'devextreme-react/date-box';
 import type { WorkDatePickerProps } from '../../models/work-date-picker-props';
 import { useAppSettingsStore } from '../../contexts/app-settings-store';
 

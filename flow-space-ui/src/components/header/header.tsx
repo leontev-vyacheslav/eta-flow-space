@@ -1,5 +1,5 @@
-import Toolbar, { Item } from 'devextreme-react/toolbar';
-import Button from 'devextreme-react/button';
+import { Toolbar, Item } from 'devextreme-react/toolbar';
+import { Button } from 'devextreme-react/button';
 import AppLogo from '../../assets/app-logo.svg?react';
 import { AccountIcon, AdminIcon, ExitIcon, MenuIcon, SettingsIcon, UserIcon, WideScreenExitIcon, WideScreenIcon } from '../../constants/app-icons';
 import type { HeaderProps } from '../../models/header-props';

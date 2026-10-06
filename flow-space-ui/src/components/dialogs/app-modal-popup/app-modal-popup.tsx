@@ -1,5 +1,5 @@
 import React, { forwardRef } from "react";
-import Popup, { Popup as PopupRef, type IPopupOptions } from "devextreme-react/popup";
+import { Popup, Popup as PopupRef, type IPopupOptions } from "devextreme-react/popup";
 import { DialogConstants } from "../../../constants/app-dialog-constant";
 import type { AppModalPopupProps } from "../../../models/app-modal-popup-props";
 import { useScreenSize } from "../../../utils/media-query";

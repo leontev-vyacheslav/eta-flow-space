@@ -1,7 +1,7 @@
 import type { RefObject } from 'react';
 import { Button } from 'devextreme-react/button';
 import { GridAdditionalMenuIcon } from '../../constants/app-icons';
-import ContextMenu from 'devextreme-react/context-menu';
+import { ContextMenu } from 'devextreme-react/context-menu';
 import type { ContextMenuItemItemModel } from '../../models/context-menu-item-props';
 
 const onDataGridToolbarPreparing = (e: any) => {

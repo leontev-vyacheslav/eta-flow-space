@@ -1,5 +1,5 @@
 import ProgressGear from '../../assets/progress-gears.svg?react';
-import LoadPanel from 'devextreme-react/load-panel';
+import { LoadPanel } from 'devextreme-react/load-panel';
 import './loader.scss';
 
 const Loader = () => {

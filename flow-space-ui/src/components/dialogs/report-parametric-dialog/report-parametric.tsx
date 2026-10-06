@@ -1,4 +1,4 @@
-import Form, { Item, Label } from "devextreme-react/form";
+import { Form, Item, Label } from "devextreme-react/form";
 import type { ParameterModel } from "../../../models/flows/parameter-model";
 
 export const ReportParametric = ({ parameters, parameterValues, onParameterValuesChange }: { parameters: ParameterModel[]; parameterValues: any; onParameterValuesChange: (values: any) => void }) => {

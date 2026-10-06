@@ -4,7 +4,7 @@ import { Popup as PopupRef } from "devextreme-react/popup";
 import type { AppModalPopupProps } from "../../../models/app-modal-popup-props";
 import { useScreenSize } from "../../../utils/media-query";
 import AppModalPopup from "../app-modal-popup/app-modal-popup";
-import Button from "devextreme-react/button";
+import { Button } from "devextreme-react/button";
 import type { ReportModel } from "../../../models/flows/report-model";
 import { ReportParametric } from "./report-parametric";
 import type { ParameterModel } from "../../../models/flows/parameter-model";

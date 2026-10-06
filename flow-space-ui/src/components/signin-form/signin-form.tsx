@@ -1,7 +1,7 @@
 import './signin-form.scss';
 import { useState, useCallback, type FormEvent, useMemo } from 'react';
-import Form, { Item, Label, ButtonItem, ButtonOptions, RequiredRule } from 'devextreme-react/form';
-import LoadIndicator from 'devextreme-react/load-indicator';
+import { Form, Item, Label, ButtonItem, ButtonOptions, RequiredRule } from 'devextreme-react/form';
+import { LoadIndicator } from 'devextreme-react/load-indicator';
 import { proclaim, proclaimError } from '../../utils/proclaim';
 import type { SignInModel } from '../../models/signin-model';
 import { useAuthStore } from '../../contexts/auth-store';

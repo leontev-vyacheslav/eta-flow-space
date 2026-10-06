@@ -5,7 +5,7 @@ import { SharedAreaProvider } from "../../../contexts/shared-area";
 import AppModalPopup from "../app-modal-popup/app-modal-popup";
 import { RootDialogService } from "../root-dialog-service";
 import { useScreenSize } from "../../../utils/media-query";
-import Form, { Item, Label } from "devextreme-react/form";
+import { Form, Item, Label } from "devextreme-react/form";
 import { Button } from "devextreme-react/button";
 import { useAppSettingsStore } from "../../../contexts/app-settings-store";
 import { selectIsAdmin } from "../../../contexts/auth-selectors";

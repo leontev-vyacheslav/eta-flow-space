@@ -1,4 +1,4 @@
-import Chart, { Tooltip } from "devextreme-react/chart";
+import { Chart, Tooltip } from "devextreme-react/chart";
 import { formatMessage } from "devextreme/localization";
 import type { GraphChartProps } from "../../../models/graph-dialog-props";
 import { useEffect, useRef } from "react";

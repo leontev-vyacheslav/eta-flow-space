@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { DeleteIcon, EditIcon } from '../../constants/app-icons';
-import ContextMenu from 'devextreme-react/context-menu';
+import { ContextMenu } from 'devextreme-react/context-menu';
 import ContextMenuItem from '../context-menu-item/context-menu-item';
 import type { ContextMenuProps } from '../../models/context-menu-props';
 import type { ItemContextMenuEvent } from 'devextreme/ui/context_menu';

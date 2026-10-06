@@ -5,7 +5,7 @@ import AppConstants from '../constants/app-constants';
 import type { ProcFunc } from '../models/primitive-type';
 import type { SharedAreaContextModel } from '../models/shared-area-context';
 import type { AppBaseProviderProps } from '../models/app-base-provider-props';
-import TreeView from 'devextreme-react/tree-view';
+import { TreeView } from 'devextreme-react/tree-view';
 import type { TreeViewItemModel } from '../models/tree-view-item';
 import { useAuthStore } from './auth-store';
 

@@ -1,4 +1,4 @@
-import ScrollView from 'devextreme-react/scroll-view';
+import { ScrollView } from 'devextreme-react/scroll-view';
 import AppLogo from '../../assets/app-logo.svg?react';
 import AppConstants from '../../constants/app-constants';
 import './single-card.scss';
