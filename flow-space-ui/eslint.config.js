@@ -12,7 +12,7 @@ export default defineConfig([
     extends: [
       js.configs.recommended,
       tseslint.configs.recommended,
-      reactHooks.configs['recommended-latest'],
+      reactHooks.configs.flat['recommended-latest'],
       reactRefresh.configs.vite,
     ],
     rules: {
@@ -22,6 +22,11 @@ export default defineConfig([
       // '@typescript-eslint/no-unsafe-member-access': 'off',
       // '@typescript-eslint/no-unsafe-return': 'off'
       'react-refresh/only-export-components': 'off',
+      // React Compiler rules new in eslint-plugin-react-hooks 7; existing code they flag is left for later,
+      // so they warn instead of failing the lint
+      'react-hooks/set-state-in-effect': 'warn',
+      'react-hooks/immutability': 'warn',
+      'react-hooks/static-components': 'warn',
     },
     languageOptions: {
       ecmaVersion: 2020,
