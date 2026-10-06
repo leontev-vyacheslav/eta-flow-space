@@ -40,6 +40,40 @@ data**: sign-in, device states, settings and reports are real.
 | `npm run build` | Type check (`tsc -b`) and production build into `dist/` |
 | `npm run lint` | ESLint |
 | `npm run preview` | Serve the production build locally |
+| `npm run e2e` | Smoke tests in a headless browser (see below) |
+
+## Smoke tests
+
+A quick check that the site works, meant to be run after every deployment. The tests sign in, open a
+diagram and its properties popover, the parameters tab, the map and the About page, fail on any browser
+console error (Content-Security-Policy violations included), check the security headers, and sign out.
+They are **read-only**: they never change settings or send commands to the equipment.
+
+Once per machine:
+
+```bash
+npx playwright install chromium                # the browser, into ~/.cache/ms-playwright
+npx playwright install-deps chromium           # its system libraries (Linux / WSL); asks for the sudo password
+```
+
+The login is read from `.env.e2e.local` (git-ignored, like every `*.local` file):
+
+```bash
+E2E_LOGIN=...
+E2E_PASSWORD=...
+```
+
+Run:
+
+```bash
+E2E_BASE_URL=https://eta24.ru:3000 npm run e2e   # production, after a deployment
+npm run e2e                                      # the dev server (npm run dev); the header check is skipped
+npx playwright test --ui                         # interactive: watch the steps, rerun one test
+npm run e2e:report                               # report of the last run: screenshot and trace of a failure
+```
+
+The tests are in `e2e/`, the settings in `playwright.config.ts`; each run writes its report to
+`e2e/playwright-report/` and the failure screenshots and traces to `e2e/test-results/` (both git-ignored).
 
 ## Build and deployment
 
@@ -85,7 +119,9 @@ flow-space-ui/
 │   ├── utils/           # Dialogs, notifications, Excel export
 │   ├── app.tsx          # Providers and the hash router
 │   └── main.tsx         # Entry point
+├── e2e/                 # Smoke tests (Playwright)
 ├── Dockerfile.ui        # Production image: build, then nginx
 ├── nginx.conf           # nginx config of the UI container
+├── playwright.config.ts # Smoke test settings
 └── vite.config.ts       # Build config, build-time version
 ```
