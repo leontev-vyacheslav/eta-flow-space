@@ -1,4 +1,4 @@
-import {  Route, Routes } from 'react-router-dom';
+import {  Route, Routes } from 'react-router';
 import { useEffect } from 'react';
 import { useAuthStore } from '../../contexts/auth-store';
 

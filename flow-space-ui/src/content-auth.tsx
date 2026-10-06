@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router';
 import routes from './constants/app-routes';
 import { SideNavOuterToolbar as SideNavBarLayout } from './layouts';
 import AppConstants from './constants/app-constants';

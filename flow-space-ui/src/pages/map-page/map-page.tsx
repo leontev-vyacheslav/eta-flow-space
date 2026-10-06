@@ -15,7 +15,7 @@ import { useLongPress } from "use-long-press";
 import { isSuppressedForLongPress } from "../../helpers/map-helpers";
 import { createMapMarkerIcon } from "./map-marker-icon";
 import { getQuickGuid } from "../../utils/uuid";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router";
 import { useSharedArea } from "../../contexts/shared-area";
 import { MapMarkerIconEmergencyTypes } from "../../models/enums/map-icon-emergency-types";
 import { MapSizeWatcher } from "./map-size-watcher";

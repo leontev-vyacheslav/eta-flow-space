@@ -4,7 +4,7 @@ import './themes/generated/theme.additional.css';
 import './themes/roboto.css';
 import './dx-styles.scss';
 
-import { HashRouter as BrowserRouter } from 'react-router-dom';
+import { HashRouter as BrowserRouter } from 'react-router';
 import { NavigationProvider } from './contexts/navigation';
 import { useScreenSizeClass } from './utils/media-query';
 import { AppDataProvider } from './contexts/app-data/app-data';
