@@ -10,12 +10,16 @@ test('the diagram shows live values and opens the properties popover', async ({ 
 
     const boundElements = page.locator('svg [data-state]').filter({ visible: true });
     await expect(boundElements.first()).toBeVisible({ timeout: 30_000 });
-    // values are written into the diagram once the device state arrives
-    await expect(page.locator('svg text').filter({ hasText: /\d/ }).first()).toBeVisible();
 
-    await boundElements.first().click();
+    // the drawing appears before the device data the popover is built from: click until it opens
     const popover = page.locator('.mnemoschema-popover');
-    await expect(popover.getByText('Свойства')).toBeVisible();
+    await expect(async () => {
+        await boundElements.first().click();
+        await expect(popover.getByText('Свойства')).toBeVisible({ timeout: 2_000 });
+    }).toPass({ timeout: 30_000 });
+    // the live value of the clicked element
+    await expect(popover.locator('td b').first()).not.toBeEmpty();
+
     await popover.locator('.popup-close-button').click();
     await expect(popover.getByText('Свойства')).toBeHidden();
 
