@@ -57,6 +57,19 @@ test('the About page shows the build version', async ({ page }) => {
     expect(errors).toEqual([]);
 });
 
+test('version.json carries the version the page runs (the new-version notice compares them)', async ({ page, request, baseURL }) => {
+    // written by the production build only
+    test.skip(new URL(baseURL!).hostname === 'localhost', 'production only');
+
+    const response = await request.get('/version.json');
+    expect(response.status()).toBe(200);
+    expect(response.headers()['cache-control']).toContain('no-cache');
+    const { version } = await response.json();
+
+    await page.goto('/#/about');
+    await expect(page.locator('.about-app-title')).toContainText(version);
+});
+
 test('security headers are sent with the page, the bundles and the static files', async ({ page, request, baseURL }) => {
     // the dev server sends none of them; they come from the nginx configs
     test.skip(new URL(baseURL!).hostname === 'localhost', 'production only');

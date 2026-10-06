@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
 import svgr from "vite-plugin-svgr";
 import { execSync } from "node:child_process";
@@ -24,10 +24,24 @@ function appVersion(): string {
   return `v.${version}.${stamp}${commit ? `-${commit}` : ""}`;
 }
 
+const APP_VERSION = appVersion();
+
+// writes version.json next to index.html: an open tab compares it with its own version
+// and offers to reload once a new one is deployed (src/components/new-version-notice)
+function versionFile(): Plugin {
+  return {
+    name: "version-file",
+    apply: "build",
+    generateBundle() {
+      this.emitFile({ type: "asset", fileName: "version.json", source: JSON.stringify({ version: APP_VERSION }) });
+    },
+  };
+}
+
 export default defineConfig({
-  plugins: [svgr(), react()],
+  plugins: [svgr(), react(), versionFile()],
   define: {
-    __APP_VERSION__: JSON.stringify(appVersion()),
+    __APP_VERSION__: JSON.stringify(APP_VERSION),
   },
   server: {
     port: 3000,

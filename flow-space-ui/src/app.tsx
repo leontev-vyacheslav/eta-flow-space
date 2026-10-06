@@ -14,6 +14,7 @@ import { locale, loadMessages } from 'devextreme/localization';
 import ContentAuth from './content-auth';
 import ContentNonAuth from './content-non-auth';
 import Loader from './components/loader/loader';
+import { NewVersionNotice } from './components/new-version-notice/new-version-notice';
 import { EmergencyContextProvider } from './contexts/emergency-context';
 import { AppSettingsInitializer } from './contexts/app-settings-initializer';
 import { selectUser } from './contexts/auth-selectors';
@@ -70,6 +71,7 @@ function Main() {
                         <div className={`app ${screenSizeClass}`}>
                             <App />
                             <Loader />
+                            <NewVersionNotice />
                         </div>
                     </NavigationProvider>
                 </AppDataProvider>

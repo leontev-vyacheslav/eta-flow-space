@@ -48,7 +48,8 @@ data**: sign-in, device states, settings and reports are real.
 
 A quick check that the site works, meant to be run after every deployment. The tests sign in, open a
 diagram and its properties popover, the parameters tab, the map and the About page, fail on any browser
-console error (Content-Security-Policy violations included), check the security headers, and sign out.
+console error (Content-Security-Policy violations included), check the security headers and that `version.json`
+matches the running version, and sign out.
 They are **read-only**: they never change settings or send commands to the equipment.
 
 Once per machine:
@@ -93,6 +94,9 @@ docker compose up -d --build eta-flow-space-ui     # from the repository root
 - **Caching:** `index.html` is revalidated on every load, while the hashed bundles in `assets/` are cached for a
   year. A tab opened before a deployment still asks for the old lazy chunks; when one is gone, `src/main.tsx`
   reloads the page once to pick up the new build.
+- **New-version notice:** the build also writes `version.json` (the same version). An open tab checks it every
+  5 minutes and whenever it comes back into view; after a deployment it shows "Доступна новая версия приложения"
+  with an "Обновить" button (`src/components/new-version-notice`). nginx serves `version.json` uncached.
 - **Security headers:** a location with its own `add_header` in `nginx.conf` does not inherit the server-level
   ones, so they are repeated there. The Content-Security-Policy is sent by the gateway (no `eval`, no inline or
   foreign scripts).
