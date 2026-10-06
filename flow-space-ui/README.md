@@ -1,73 +1,91 @@
-# React + TypeScript + Vite
+# Flow Space UI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Web dashboard of the Eta Flow Space platform (FlowSpace ETA24™): boiler room diagrams with live
+values and alarms, device parameters and control, a map of the objects, and PDF reports.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **React 19** + **TypeScript**, built with **Vite**
+- **DevExtreme 23.1** - UI components (grids, forms, popups, charts)
+- **zustand** - auth and app settings stores
+- **axios** - HTTP client
+- **Leaflet** / **react-leaflet** - the objects map
 
-## React Compiler
+## Development
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install --legacy-peer-deps
+npm run dev            # http://localhost:3000
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The dev server talks to the API on `http://localhost:3002`. That port is the developer SSH tunnel
+(`../tunnel.sh` starts and stops it) to the production gateway, so **the dev UI works with production
+data**: sign-in, device states, settings and reports are real.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- Open the UI as `http://localhost:3000`, not `127.0.0.1`: the API only allows the `localhost` origin.
+- Diagrams and their plugins (`/static/devices/<device code>/`) come from production too, so a local
+  change in `../flow-space-statics` is not visible in the dev UI until it is deployed.
+- To work on reports against a local `flow-space-reporting`, create `.env.development.local`
+  (not committed) and restart `npm run dev`:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+  ```bash
+  VITE_REPORTING_HOST=http://localhost:8000/api
+  ```
+
+## Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Dev server with hot reload on port 3000 |
+| `npm run build` | Type check (`tsc -b`) and production build into `dist/` |
+| `npm run lint` | ESLint |
+| `npm run preview` | Serve the production build locally |
+
+## Build and deployment
+
+The production image (`Dockerfile.ui`) builds the app and serves `dist/` with nginx (`nginx.conf`).
+The gateway in front of it (`../nginx.conf`) serves the UI and the API on one address
+(`https://eta24.ru:3000`), so a production build calls the API on its own origin.
+
+```bash
+docker compose up -d --build eta-flow-space-ui     # from the repository root
+```
+
+- **Version:** `vite.config.ts` generates it at build time
+  (`v.<package.json version>.<YYYYMMDD-HHMMSS Moscow time>[-<git commit>]`); it is shown on the About page.
+  The commit is missing in the Docker build, which has no `.git`.
+- **Caching:** `index.html` is revalidated on every load, while the hashed bundles in `assets/` are cached for a
+  year. A tab opened before a deployment still asks for the old lazy chunks; when one is gone, `src/main.tsx`
+  reloads the page once to pick up the new build.
+- **Security headers:** a location with its own `add_header` in `nginx.conf` does not inherit the server-level
+  ones, so they are repeated there. The Content-Security-Policy is sent by the gateway (no `eval`, no inline or
+  foreign scripts).
+
+## Diagrams
+
+A device's diagram (mnemoschema) is an SVG with a plugin script and stylesheet, kept in
+`../flow-space-statics/devices/<device code>/` and loaded at run time. Elements with a `data-state` attribute show
+values from the device state and open the properties popover on click. Files are fetched with the hash from
+`../flow-space-statics/manifest.json` as a cache buster, so run `generate-manifest.sh` there after changing them.
+
+## Project Structure
+
+```
+flow-space-ui/
+├── src/
+│   ├── components/      # Shared components and dialogs (graphs, emergency log, ...)
+│   ├── constants/       # API routes, app routes, navigation, icons, constants
+│   ├── contexts/        # Auth and settings stores, data access (app-data/), emergency polling
+│   ├── helpers/         # State formatting, data schema helpers, map helpers
+│   ├── layouts/         # Side navigation layout, single card layout (sign-in)
+│   ├── models/          # Types
+│   ├── pages/           # Dashboard (diagram, parameters, control), map, reports, about, sign-out
+│   ├── services/        # Alarm sound mute manager
+│   ├── themes/          # DevExtreme theme
+│   ├── utils/           # Dialogs, notifications, Excel export
+│   ├── app.tsx          # Providers and the hash router
+│   └── main.tsx         # Entry point
+├── Dockerfile.ui        # Production image: build, then nginx
+├── nginx.conf           # nginx config of the UI container
+└── vite.config.ts       # Build config, build-time version
 ```
