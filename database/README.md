@@ -29,3 +29,4 @@ the web API's Sequelize models only describe it and no longer create tables (`sy
 | File | Applied on production |
 |---|---|
 | `2026-10-05-drop-sequelize-meta.sql` | 2026-10-05 |
+| `2026-10-06-add-device-order.sql` | not yet |

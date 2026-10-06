@@ -68,12 +68,15 @@ class EmergencySummaryRepository:
             .group_by(
                 EmergencyState.device_id,
                 Device.name,
+                Device.order,
                 period_begin,
                 reason_id,
                 reason_description,
             )
             .order_by(
                 period_begin,
+                # devices in the same order as in the dashboard's side menu
+                Device.order.asc().nulls_last(),
                 EmergencyState.device_id,
                 reason_id,
                 text("occurrences DESC"),

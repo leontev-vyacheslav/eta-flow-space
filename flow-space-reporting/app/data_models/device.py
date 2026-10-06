@@ -33,6 +33,8 @@ class Device(Base, TimestampMixin):
     object_location_id: Mapped[int | None] = mapped_column(
         ForeignKey("object_location.id"), name="objectLocationId"
     )
+    # position in device lists, ascending; devices without one come after the ordered ones
+    order: Mapped[int | None] = mapped_column(Integer)
 
     flow: Mapped[Optional["Flow"]] = relationship(back_populates="devices")
     object_location: Mapped[Optional["ObjectLocation"]] = relationship(

@@ -12,6 +12,9 @@ export interface DeviceModel extends EntityModel, DescriptiveBaseModel, Timestam
 
     lastStateUpdate: Date;
 
+    // position in device lists; the API already returns devices (and flows) in this order
+    order: number | null;
+
     flow?: FlowModel;
 
     objectLocation?: ObjectLocationModel;

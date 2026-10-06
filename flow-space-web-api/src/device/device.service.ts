@@ -8,7 +8,13 @@ import {
     UserDeviceLinkDataModel,
 } from '../database/models';
 import { InjectModel } from '@nestjs/sequelize';
-import { Includeable } from 'sequelize';
+import { Includeable, Order } from 'sequelize';
+
+// device lists: by "order" ascending, devices without one last, ties by id
+export const DEVICE_LIST_ORDER: Order = [
+    ['order', 'ASC NULLS LAST'],
+    ['id', 'ASC'],
+];
 @Injectable()
 export class DeviceService {
     private readonly BASE_DEVICE_INCLUDES: Includeable[] = [
@@ -83,6 +89,7 @@ export class DeviceService {
                     attributes: [],
                 },
             ],
+            order: DEVICE_LIST_ORDER,
         });
 
         return devices;

@@ -94,8 +94,16 @@ CREATE TABLE public.device (
     "updateStateInterval" integer NOT NULL,
     "lastStateUpdate" timestamp with time zone,
     "createdAt" timestamp with time zone NOT NULL,
-    "updatedAt" timestamp with time zone NOT NULL
+    "updatedAt" timestamp with time zone NOT NULL,
+    "order" integer
 );
+
+
+--
+-- Name: COLUMN device."order"; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.device."order" IS 'Position in device lists (ascending); NULL = after the ordered devices';
 
 
 --

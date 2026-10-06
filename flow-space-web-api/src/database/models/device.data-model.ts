@@ -69,6 +69,13 @@ export class DeviceDataModel extends Model {
     })
     declare lastStateUpdate: Date;
 
+    // position in device lists, ascending; devices without one come after the ordered ones
+    @Column({
+        type: DataType.INTEGER,
+        allowNull: true,
+    })
+    declare order: number | null;
+
     @HasOne(() => MnemoschemaSelectorDataModel, 'deviceId')
     declare mnemoschemaSelector?: MnemoschemaSelectorDataModel;
 
