@@ -13,6 +13,8 @@ values and alarms, device parameters and control, a map of the objects, and PDF 
 
 ## Development
 
+Node.js 24 (`.nvmrc`; with nvm: `nvm use`), the same version the Docker build uses.
+
 ```bash
 npm install --legacy-peer-deps
 npm run dev            # http://localhost:3000
