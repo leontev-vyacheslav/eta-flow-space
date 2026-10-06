@@ -212,32 +212,6 @@ body {
   }
 }
 
-/* Buttons */
-.app-command-button {
-  border-radius: 50%;
-  box-shadow: 0 0 transparent;
-}
-
-.app-command-button-small {
-  width: 30px;
-  height: 30px;
-  min-height: 30px;
-  min-width: 30px;
-}
-
-.dx-row-focused .app-command-button {
-  background-color: inherit;
-  border-radius: 50%;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
-}
-
-.app-command-button .dx-button-content {
-  padding: initial;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 /* Popups */
 .app-popup {
   outline: 0;

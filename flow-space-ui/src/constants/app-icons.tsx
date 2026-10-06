@@ -16,10 +16,7 @@ export { IoHomeOutline as HomeIcon } from 'react-icons/io5';
 export { IoInformationCircleOutline as AboutIcon } from 'react-icons/io5';
 export { IoInformationCircleOutline as InfoIcon } from 'react-icons/io5';
 export { IoExitOutline as ExitIcon } from 'react-icons/io5';
-export { CgRemoveR as DeleteIcon } from 'react-icons/cg';
 export { RiDeleteBin7Line as DeleteAllIcon } from 'react-icons/ri';
-export { CgAddR as AddIcon } from 'react-icons/cg';
-export { BiEdit as EditIcon } from 'react-icons/bi';
 export { IoWarningSharp as WarningIcon } from 'react-icons/io5';
 export { IoWarningOutline as WarningLogIcon } from 'react-icons/io5';
 export { IoInformationCircleSharp as InformationIcon } from 'react-icons/io5';
@@ -29,7 +26,6 @@ export { IoTodayOutline as WorkDateTodayIcon } from 'react-icons/io5';
 export { IoCloseOutline as CloseIcon } from 'react-icons/io5';
 export { IoCloseCircleOutline as CloseCircleIcon } from 'react-icons/io5';
 
-export { RiFileExcel2Line as ExportToXlsxIcon } from 'react-icons/ri';
 export { MdMailOutline as EmailIcon } from 'react-icons/md';
 
 export { MdErrorOutline as ErrorIcon } from 'react-icons/md';
@@ -126,9 +122,5 @@ export {MdOutlineFitScreen as WideScreenIcon} from 'react-icons/md';
 export {MdOutlineFullscreenExit as WideScreenExitIcon} from 'react-icons/md';
 // import { HiOutlineRectangleGroup } from "react-icons/hi2";
 export { HiRectangleGroup as FlowDevicesGroupIcon } from "react-icons/hi2";
-
-
-import { MdMoreVert } from 'react-icons/md';
-export const GridAdditionalMenuIcon = () => <MdMoreVert style={{ cursor: 'pointer' }} size={18} />
 
 
