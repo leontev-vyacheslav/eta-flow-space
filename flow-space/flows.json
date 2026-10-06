@@ -8,6 +8,14 @@
         "env": []
     },
     {
+        "id": "8c7f93e2ebca7614",
+        "type": "tab",
+        "label": "tsarevo1-boiler-automation",
+        "disabled": true,
+        "info": "Котельная ЖК Царёво-1. Disabled until the controller address and Modbus register map are known; collect-device-state must call storeDeviceStateToCacheAsync with this tab's id (flow.uid in the database).",
+        "env": []
+    },
+    {
         "id": "a03807f6777b0746",
         "type": "tab",
         "label": "spring-boiler-automation",
@@ -3631,6 +3639,16 @@
         "info": "",
         "x": 470,
         "y": 100,
+        "wires": []
+    },
+    {
+        "id": "53a2fa2e3e999267",
+        "type": "comment",
+        "z": "8c7f93e2ebca7614",
+        "name": "tsarevo1-boiler-room [23]",
+        "info": "Polling is not built yet: the controller address and register map are unknown.",
+        "x": 160,
+        "y": 40,
         "wires": []
     }
 ]
