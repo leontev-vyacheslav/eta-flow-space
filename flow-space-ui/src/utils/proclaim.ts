@@ -1,7 +1,6 @@
 import { AxiosError } from 'axios';
 import devices from 'devextreme/core/devices';
 import notify from 'devextreme/ui/notify';
-import type { MessageModel } from '../models/message-model';
 
 
 export function proclaim(options: any) {
@@ -29,27 +28,6 @@ export function proclaim(options: any) {
     }, {
         position: 'bottom center',
         direction: 'up-push'
-    });
-}
-
-export async function  proclaimError_(error: unknown) {
-    let errorMessage = (error as AxiosError).message;
-
-    if ((error as AxiosError).response && (error as AxiosError).response?.data) {
-        errorMessage = ((error as AxiosError).response?.data as MessageModel).message
-        if (!errorMessage && (error as AxiosError).response?.data instanceof Blob) {
-            const json = await ((error as AxiosError).response?.data as Blob).text();
-            errorMessage = JSON.parse(json).message;
-        }
-    }
-
-    errorMessage = !errorMessage ? (error as AxiosError).message : errorMessage;
-    if (errorMessage === 'Network Error') {
-        errorMessage = 'Сетевая ошибка. Отсутствует связь с сервером или сетевое соединение.'
-    }
-    proclaim({
-        type: 'error',
-        message: errorMessage,
     });
 }
 

@@ -1,5 +1,5 @@
 import dxPopover from "devextreme/ui/popover";
-import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useRef, type ReactNode } from "react";
 import { EmergencyWarning, EmergencyWarningOff, WarningIcon } from "../constants/app-icons";
 import { createRoot } from "react-dom/client";
 import { renderToStaticMarkup } from "react-dom/server";
@@ -17,7 +17,6 @@ export interface EmergencyContextModel {
     // draws the icons from the last poll again, e.g. once the side menu has (re)rendered its icon slots
     redrawEmergencyIcons: () => void;
     showEmergencyPopover: (position: { x: number; y: number }, emergencyState: EmergencyModel) => void;
-    emergencyStates: EmergencyModel[];
 }
 
 interface EmergencyContextProviderProps {
@@ -39,7 +38,6 @@ function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
     }, [flows, appSettingsData]);
     const hasFlows = !!flows && flows.length > 0;
     const lastEmergencyStatesRef = useRef<EmergencyModel[] | null>(null);
-    const [emergencyStates] = useState<EmergencyModel[]>([]);
     const popoverContentContainerRef = useRef<HTMLDivElement>(null);
     const popoverContentReactRootRef = useRef<ReturnType<typeof createRoot> | null>(null);
     const popoverContainerRef = useRef<HTMLDivElement>(null);
@@ -246,7 +244,6 @@ function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
         refreshEmergencyStates,
         redrawEmergencyIcons: drawEmergencyIcons,
         showEmergencyPopover,
-        emergencyStates,
     };
 
     return <EmergencyContext.Provider value={contextValue}>{children}</EmergencyContext.Provider>;
