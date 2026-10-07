@@ -17,8 +17,19 @@
  *      -> device replies with a plain <ACK> (0x06)
  *   4. Each parameter:      SOH R1 STX "<address>()" ETX BCC
  *      -> device replies:   STX "<address>(<value>)" ETX BCC
+ *         The echoed address can carry an archive prefix and a different
+ *         value index: "2:302.0" -> "7-2:302.2", "1:400.0" -> "1:400.2".
  *
- * CRC/BCC: XOR of all bytes from right after SOH through ETX inclusive.
+ * CRC/BCC: XOR of all bytes from right after SOH/STX through ETX inclusive.
+ *
+ * Shared line: the corrector can be polled by another master on the same
+ * serial line (seen on 94.180.248.157:5021: archive reads, its own handshake,
+ * NAKs that make the corrector repeat its last reply). The gateway forwards
+ * all of that traffic to this socket. So a reply is accepted only when it is
+ * a complete STX..ETX frame with a valid BCC whose echoed address matches the
+ * request; any other frame is skipped. A parameter that gets no valid reply
+ * within stepTimeoutMs is requested again (retries times), and if it still
+ * gets none the whole read() fails — a shifted value is never returned.
  *
  * Parity: the source driver has a `_useEvenParity` flag that sets/strips a
  * parity bit on every byte of these framed (SOH/STX/ETX) commands specifically.
@@ -65,6 +76,10 @@ const PARAMETERS = {
 // Fields that stay strings — identifiers/version labels, not measurements.
 const STRING_FIELDS = new Set(['factoryNumber', 'firmware']);
 
+// Device identification line, e.g. "/Els6EK270\r\n" — "/" + 3-letter maker
+// code + baud-rate digit. Does not match another master's "/?1!\r\n" request.
+const IDENTIFICATION_PATTERN = /\/[A-Za-z]{3}\d[^\r\n]*\r\n/;
+
 class Ek270Iec61107Client {
     /**
      * @param {object} options
@@ -72,9 +87,11 @@ class Ek270Iec61107Client {
      * @param {number} options.port - TCP port (e.g. 5021).
      * @param {boolean} [options.evenParity=false] - Set/strip even parity on framed commands.
      * @param {number} [options.stepDelayMs=300] - Pause between handshake steps.
+     * @param {number} [options.stepTimeoutMs=5000] - Wait for a valid reply to one parameter request.
+     * @param {number} [options.retries=1] - Extra requests for a parameter that got no valid reply.
      * @param {number} [options.responseTimeoutMs=30000] - Overall timeout for a full read() call.
      */
-    constructor({ host, port, evenParity = false, stepDelayMs = 300, responseTimeoutMs = 30000 } = {}) {
+    constructor({ host, port, evenParity = false, stepDelayMs = 300, stepTimeoutMs = 5000, retries = 1, responseTimeoutMs = 30000 } = {}) {
         if (!host) throw new Error('Ek270Iec61107Client: "host" is required');
         if (!port) throw new Error('Ek270Iec61107Client: "port" is required');
 
@@ -82,6 +99,8 @@ class Ek270Iec61107Client {
         this.port = port;
         this.evenParity = evenParity;
         this.stepDelayMs = stepDelayMs;
+        this.stepTimeoutMs = stepTimeoutMs;
+        this.retries = retries;
         this.responseTimeoutMs = responseTimeoutMs;
     }
 
@@ -132,20 +151,42 @@ class Ek270Iec61107Client {
         return this._buildFrame('W', `${address}(${value})`);
     }
 
-    // Pulls the "(value)" content out of a STX...ETX data frame, dropping any
-    // unit suffix (device sends "value*unit", e.g. "260.63*м3" — units are
-    // legacy-encoded and not needed here). Always returns the raw string;
-    // typing happens in _finalizeResults().
-    _extractValue(buffer) {
-        const unparitied = this._removeParity(buffer);
-        const text = unparitied.toString('latin1');
-        const stxIdx = text.indexOf(String.fromCharCode(STX));
-        const etxIdx = text.indexOf(String.fromCharCode(ETX));
-        if (stxIdx === -1 || etxIdx === -1) return null;
-        const inner = text.slice(stxIdx + 1, etxIdx);
-        const match = inner.match(/\(([^)]*)\)/);
-        const value = match ? match[1] : inner;
-        return value.split('*')[0];
+    // Cuts the first complete frame (SOH/STX ... ETX BCC) off `buffer`,
+    // dropping any bytes before it (stray ACK/NAK, wake-up zeros, ...).
+    // Returns { frame, bccOk, rest }; frame is null while none is complete.
+    _takeFrame(buffer) {
+        const start = buffer.findIndex((b) => b === SOH || b === STX);
+        if (start === -1) return { frame: null, bccOk: false, rest: Buffer.alloc(0) };
+
+        const etx = buffer.indexOf(ETX, start);
+        if (etx === -1 || etx + 1 >= buffer.length) {
+            return { frame: null, bccOk: false, rest: buffer.subarray(start) };
+        }
+
+        const frame = buffer.subarray(start, etx + 2);
+        const bccOk = this._xorBcc(frame.subarray(1, frame.length - 1)) === frame[frame.length - 1];
+        return { frame, bccOk, rest: buffer.subarray(etx + 2) };
+    }
+
+    // Splits a data frame STX "<address>(<value>)" ETX BCC into the echoed
+    // address and the value, dropping any unit suffix (device sends
+    // "value*unit", e.g. "260.63*м3" — units are legacy-encoded and not
+    // needed here). Only STX frames are replies: an SOH frame is a request
+    // (possibly another master's "R1 2:302.0(0)") and must never be taken
+    // as a value. Always returns the raw string; typing happens in
+    // _finalizeResults().
+    _parseDataFrame(frame) {
+        if (frame[0] !== STX) return null;
+        const match = frame.toString('latin1').match(/^\x02([^(]*)\(([^)]*)\)/);
+        if (!match) return null;
+        return { address: match[1], value: match[2].split('*')[0] };
+    }
+
+    // "7-2:302.2" -> "2:302", "6:310_1.0" -> "6:310_1": compares a request
+    // address with the echoed one, ignoring the archive prefix and value index.
+    _coreAddress(address) {
+        const match = String(address).match(/^(?:\d+-)?(\d+:[0-9A-Za-z_]+)\.\d+$/);
+        return match ? match[1] : address;
     }
 
     // Device clock, sent as "YYYY-MM-DD,HH:mm:ss" — converted to epoch ms so
@@ -186,10 +227,14 @@ class Ek270Iec61107Client {
      * measurements as `number`, factoryNumber/firmware as `string`,
      * deviceTime as epoch ms `integer`, plus isConnected and timestamp.
      *
-     * Rejects on connection/protocol failure; the rejected Error carries a
-     * `.partialResults` property with whatever was read before the failure
-     * (typed and finalized the same way, with isConnected: false), so a
-     * caller that wants "best effort" data on failure can still access it.
+     * Every value comes from a reply whose BCC is valid and whose echoed
+     * address matches the request; frames from another master on the line
+     * are skipped. Rejects when a parameter gets no such reply after
+     * `retries` repeated requests, or on connection/protocol failure; the
+     * rejected Error carries a `.partialResults` property with whatever was
+     * read before the failure (typed and finalized the same way, with
+     * isConnected: false), so a caller that wants "best effort" data on
+     * failure can still access it.
      *
      * Does not serialize access to a shared host:port — see the class doc
      * comment above if this device shares a gateway with others.
@@ -203,10 +248,20 @@ class Ek270Iec61107Client {
             let step = 'start';
             const paramEntries = Object.entries(PARAMETERS);
             let paramIndex = 0;
+            let attempt = 0;
+            let stepTimer = null;
+            let finished = false;
             const results = {};
 
-            const fail = (err) => {
+            const stop = () => {
+                finished = true;
                 clearTimeout(overallTimeout);
+                clearTimeout(stepTimer);
+            };
+
+            const fail = (err) => {
+                if (finished) return;
+                stop();
                 socket.destroy();
                 err.partialResults = this._finalizeResults(results, false);
                 reject(err);
@@ -216,20 +271,49 @@ class Ek270Iec61107Client {
                 fail(new Error(`Ek270Iec61107Client: timed out waiting on step "${step}"`));
             }, this.responseTimeoutMs);
 
+            // Anything still buffered when a request goes out belongs to an
+            // earlier exchange (or to another master), so it is dropped.
             const send = (frame) => {
+                if (finished) return;
                 buffer = Buffer.alloc(0);
                 socket.write(frame);
             };
 
+            const later = (fn) => setTimeout(() => { if (!finished) fn(); }, this.stepDelayMs);
+
+            const takeFrame = () => {
+                const { frame, bccOk, rest } = this._takeFrame(buffer);
+                buffer = rest;
+                return frame ? { frame, bccOk } : null;
+            };
+
+            const requestParam = () => {
+                const [, address] = paramEntries[paramIndex];
+                send(this._readCommand(address));
+                clearTimeout(stepTimer);
+                stepTimer = setTimeout(onStepTimeout, this.stepTimeoutMs);
+            };
+
+            const onStepTimeout = () => {
+                const [name, address] = paramEntries[paramIndex];
+                if (attempt < this.retries) {
+                    attempt += 1;
+                    requestParam();
+                    return;
+                }
+                fail(new Error(`Ek270Iec61107Client: no valid reply for "${name}" (${address})`));
+            };
+
             const nextParam = () => {
+                clearTimeout(stepTimer);
+                attempt = 0;
                 if (paramIndex >= paramEntries.length) {
-                    clearTimeout(overallTimeout);
+                    stop();
                     socket.end();
                     resolve(this._finalizeResults(results, true));
                     return;
                 }
-                const [, address] = paramEntries[paramIndex];
-                setTimeout(() => send(this._readCommand(address)), this.stepDelayMs);
+                later(requestParam);
             };
 
             socket.connect(this.port, this.host, () => {
@@ -237,20 +321,28 @@ class Ek270Iec61107Client {
             });
 
             socket.on('data', (chunk) => {
-                buffer = Buffer.concat([buffer, chunk]);
+                if (finished) return;
+                buffer = Buffer.concat([buffer, this._removeParity(chunk)]);
 
-                if (step === 'start' && buffer.includes(LF)) {
+                if (step === 'start') {
+                    if (!IDENTIFICATION_PATTERN.test(buffer.toString('latin1'))) return;
                     step = 'setBaudRate';
-                    setTimeout(() => send(Buffer.from([ACK, 0x30, 0x36, 0x31, CR, LF])), this.stepDelayMs); // <ACK>061
+                    later(() => send(Buffer.from([ACK, 0x30, 0x36, 0x31, CR, LF]))); // <ACK>061
                     return;
                 }
 
                 // Password-challenge frame from the device (contains "P0(1234567)").
                 // Not answered — the real driver unlocks via a direct write instead.
-                // Just wait for a full STX...ETX frame before moving on.
-                if (step === 'setBaudRate' && buffer.includes(ETX)) {
-                    step = 'unlock';
-                    setTimeout(() => send(this._writeCommand('4:171.0', '0')), this.stepDelayMs);
+                // Just wait for a complete, valid frame before moving on.
+                if (step === 'setBaudRate') {
+                    let got;
+                    while ((got = takeFrame())) {
+                        if (got.bccOk && got.frame.toString('latin1').includes('P0')) {
+                            step = 'unlock';
+                            later(() => send(this._writeCommand('4:171.0', '0')));
+                            return;
+                        }
+                    }
                     return;
                 }
 
@@ -260,17 +352,25 @@ class Ek270Iec61107Client {
                     return;
                 }
 
-                if (step === 'read' && buffer.includes(ETX)) {
-                    const [name] = paramEntries[paramIndex];
-                    results[name] = this._extractValue(buffer);
-                    paramIndex += 1;
-                    nextParam();
-                    return;
+                if (step === 'read') {
+                    const [name, address] = paramEntries[paramIndex];
+                    let got;
+                    while ((got = takeFrame())) {
+                        const reply = got.bccOk ? this._parseDataFrame(got.frame) : null;
+                        if (reply && this._coreAddress(reply.address) === this._coreAddress(address)) {
+                            results[name] = reply.value;
+                            paramIndex += 1;
+                            nextParam();
+                            return;
+                        }
+                        // Foreign frame: a repeat of an earlier reply, another
+                        // master's request or reply, or a corrupted frame — skipped.
+                    }
                 }
             });
 
             socket.on('error', (err) => fail(err));
-            socket.on('timeout', () => fail(new Error('Ek270Iec61107Client: socket timeout')));
+            socket.on('close', () => fail(new Error(`Ek270Iec61107Client: connection closed on step "${step}"`)));
         });
     }
 }
