@@ -2,7 +2,7 @@ from datetime import date, timedelta
 from typing import Annotated
 from fastapi.params import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import String, and_, select, text, func, cast, Integer, true, column, literal, literal_column
+from sqlalchemy import String, and_, select, func, cast, Integer, true, column, literal, literal_column
 from sqlalchemy.dialects.postgresql import INTERVAL, TIMESTAMP
 
 from app.data_models import Device, EmergencyState, UserDeviceLink
@@ -27,17 +27,10 @@ class EmergencySummaryRepository:
         **kwargs,
     ) -> list[EmergencySummaryReportRowModel]:
         user_id = token_payload.get("userId")
-        created_at_tz = func.timezone(time_zone, EmergencyState.created_at)
-        period_begin = func.date_trunc(period_type.value, created_at_tz)
-        period_end = period_begin + cast(literal(f"1 {period_type.value}"), INTERVAL) - cast(literal("1 millisecond"), INTERVAL)
-
-        reasons_table = func.jsonb_array_elements(EmergencyState.state["reasons"]).table_valued(column("reason"), name="reason").lateral("reason")
-        reason_description = literal_column("COALESCE(reason->>'title', reason->>'description')", String)
-        reason_id = cast(literal_column("reason->>'id'", String), Integer)
 
         # Only snapshots that carry a reasons array (every row today); deviceId/createdAt use idx_emergency_state_device
         conditions = [
-            UserDeviceLink.user_id == user_id,
+            EmergencyState.device_id.in_(select(UserDeviceLink.device_id).where(UserDeviceLink.user_id == user_id)),
             EmergencyState.state.has_key(literal_column("'reasons'")),
         ]
         if device_id is not None:
@@ -48,38 +41,66 @@ class EmergencySummaryRepository:
         if date_to is not None:
             conditions.append(EmergencyState.created_at < func.timezone(time_zone, cast(date_to + timedelta(days=1), TIMESTAMP)))
 
-        query = (
+        # Keep only the reasons of each snapshot before anything is sorted or grouped: carried along, the whole
+        # state (~750 bytes a row) made the sorts spill tens of MB to disk. MATERIALIZED stops the planner
+        # from inlining the CTE and pulling the state back in.
+        snapshots = (
             select(
-                EmergencyState.device_id,
-                Device.name.label("device_name"),
+                EmergencyState.device_id.label("device_id"),
+                EmergencyState.created_at.label("created_at"),
+                EmergencyState.state["reasons"].label("reasons"),
+            )
+            .where(and_(*conditions))
+            .cte("snapshots")
+            .prefix_with("MATERIALIZED")
+        )
+
+        created_at_tz = func.timezone(time_zone, snapshots.c.created_at)
+        period_begin = func.date_trunc(period_type.value, created_at_tz)
+
+        reasons_table = func.jsonb_array_elements(snapshots.c.reasons).table_valued(column("reason"), name="reason").lateral("reason")
+        reason_description = literal_column("COALESCE(reason->>'title', reason->>'description')", String)
+        reason_id = cast(literal_column("reason->>'id'", String), Integer)
+
+        # Group the reasons first and join the device (name, list order) only to the grouped rows
+        grouped = (
+            select(
+                snapshots.c.device_id,
                 period_begin.label("period_begin"),
-                period_end.label("period_end"),
                 reason_description.label("emergency_type"),
                 reason_id.label("reason_id"),
                 func.count().label("occurrences"),
                 func.min(created_at_tz).label("first_occurrence"),
                 func.max(created_at_tz).label("last_occurrence"),
             )
-            .select_from(EmergencyState)
-            .join(Device, EmergencyState.device_id == Device.id)
-            .join(UserDeviceLink, Device.id == UserDeviceLink.device_id)
+            .select_from(snapshots)
             .join(reasons_table, true())
-            .where(and_(*conditions))
-            .group_by(
-                EmergencyState.device_id,
-                Device.name,
-                Device.order,
-                period_begin,
-                reason_id,
-                reason_description,
+            .group_by(snapshots.c.device_id, period_begin, reason_id, reason_description)
+            .subquery("grouped")
+        )
+
+        period_end = grouped.c.period_begin + cast(literal(f"1 {period_type.value}"), INTERVAL) - cast(literal("1 millisecond"), INTERVAL)
+
+        query = (
+            select(
+                grouped.c.device_id,
+                Device.name.label("device_name"),
+                grouped.c.period_begin,
+                period_end.label("period_end"),
+                grouped.c.emergency_type,
+                grouped.c.reason_id,
+                grouped.c.occurrences,
+                grouped.c.first_occurrence,
+                grouped.c.last_occurrence,
             )
+            .join(Device, Device.id == grouped.c.device_id)
             .order_by(
-                period_begin,
+                grouped.c.period_begin,
                 # devices in the same order as in the dashboard's side menu
                 Device.order.asc().nulls_last(),
-                EmergencyState.device_id,
-                reason_id,
-                text("occurrences DESC"),
+                grouped.c.device_id,
+                grouped.c.reason_id,
+                grouped.c.occurrences.desc(),
             )
         )
 
