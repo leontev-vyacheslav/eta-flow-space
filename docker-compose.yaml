@@ -27,7 +27,8 @@ services:
     ports:
       # only for the developer SSH tunnel (read-only access); containers use eta-flow-space-database:5432
       - "127.0.0.1:35432:5432"
-    command: ["postgres", "-c", "shared_preload_libraries=pg_stat_statements"]
+    # jit=off: every query here is short; JIT compiling cost more than it saved (e.g. 675 ms of the 888 ms emergency summary)
+    command: ["postgres", "-c", "shared_preload_libraries=pg_stat_statements", "-c", "jit=off"]
     environment:
       - POSTGRES_DB=eta_flow_space_database
     env_file:
