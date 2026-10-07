@@ -309,7 +309,10 @@ class Ek270Iec61107Client {
                 attempt = 0;
                 if (paramIndex >= paramEntries.length) {
                     stop();
-                    socket.end();
+                    // Every reply is in; destroy instead of end(), since the
+                    // gateway never closes its side and a half-open socket
+                    // would linger after each poll.
+                    socket.destroy();
                     resolve(this._finalizeResults(results, true));
                     return;
                 }
