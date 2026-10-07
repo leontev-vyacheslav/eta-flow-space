@@ -606,20 +606,6 @@ CREATE INDEX idx_emergency_state_device ON public.emergency_state USING btree ("
 
 
 --
--- Name: idx_emergency_state_device_created; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX idx_emergency_state_device_created ON public.emergency_state USING btree ("deviceId", "createdAt" DESC) WHERE (state ? 'reasons'::text);
-
-
---
--- Name: idx_emergency_state_reasons; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX idx_emergency_state_reasons ON public.emergency_state USING gin (((state -> 'reasons'::text)));
-
-
---
 -- Name: device device_flowId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 

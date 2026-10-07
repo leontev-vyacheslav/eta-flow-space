@@ -35,7 +35,7 @@ class EmergencySummaryRepository:
         reason_description = literal_column("COALESCE(reason->>'title', reason->>'description')", String)
         reason_id = cast(literal_column("reason->>'id'", String), Integer)
 
-        # Constant predicate so the planner can use the partial index idx_emergency_state_device_created
+        # Only snapshots that carry a reasons array (every row today); deviceId/createdAt use idx_emergency_state_device
         conditions = [
             UserDeviceLink.user_id == user_id,
             EmergencyState.state.has_key(literal_column("'reasons'")),
