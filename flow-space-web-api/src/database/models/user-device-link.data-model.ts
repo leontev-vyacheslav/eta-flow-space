@@ -6,6 +6,7 @@ import { DeviceDataModel } from './device.data-model';
     tableName: 'user_device_link',
     freezeTableName: true,
     timestamps: true,
+    indexes: [{ name: 'user_device_link_user_device_unique', unique: true, fields: ['userId', 'deviceId'] }],
 })
 export class UserDeviceLinkDataModel extends Model {
     @PrimaryKey

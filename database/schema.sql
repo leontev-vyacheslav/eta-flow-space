@@ -584,6 +584,14 @@ ALTER TABLE ONLY public.user_device_link
 
 
 --
+-- Name: user_device_link user_device_link_user_device_unique; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_device_link
+    ADD CONSTRAINT user_device_link_user_device_unique UNIQUE ("userId", "deviceId");
+
+
+--
 -- Name: user user_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
