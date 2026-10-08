@@ -34,3 +34,4 @@ the web API's Sequelize models only describe it and no longer create tables (`sy
 | `2026-10-06-rename-tsarevo-to-tsarevo2.sql` | yes (verified 2026-10-07) |
 | `2026-10-07-drop-unused-emergency-state-indexes.sql` | yes (verified 2026-10-07) |
 | `2026-10-07-unique-user-device-link.sql` | yes (verified 2026-10-07) |
+| `2026-10-08-add-spring2-vkt.sql` | not yet |

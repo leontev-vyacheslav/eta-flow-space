@@ -3587,6 +3587,95 @@
         "wires": []
     },
     {
+        "id": "705c451e1b399aae",
+        "type": "comment",
+        "z": "2d15e59c76504bcb",
+        "name": "spring2-vkt-289452 [24]",
+        "info": "",
+        "x": 150,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "56fd4f4ecec5b2fa",
+        "type": "inject",
+        "z": "2d15e59c76504bcb",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 1040,
+        "wires": [
+            [
+                "ba4e431e10dc83ca"
+            ]
+        ]
+    },
+    {
+        "id": "ba4e431e10dc83ca",
+        "type": "subflow:vkt7reader00000000",
+        "z": "2d15e59c76504bcb",
+        "name": "VKT-7",
+        "x": 330,
+        "y": 1040,
+        "wires": [
+            [
+                "1e7fd4415421665f"
+            ]
+        ]
+    },
+    {
+        "id": "1e7fd4415421665f",
+        "type": "function",
+        "z": "2d15e59c76504bcb",
+        "name": "collect-device-state",
+        "func": "const { storeDeviceStateToCacheAsync } = global.get('helpers');\n\nconst payload = msg.payload;\n\nconst deviceState = {\n    ...payload,\n\n    // Timestamp\n    timestamp: Date.now(),\n};\n\n// Index 2: the VKT-7 [24] is the third device of this flow by id (after 9 and 17).\nconst flowUid = node.path.split('/').find(_ => true);\nawait storeDeviceStateToCacheAsync(global, flowUid, deviceState, 2);\nmsg.deviceState = deviceState;\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 1040,
+        "wires": [
+            [
+                "150a55ac5d09a465"
+            ]
+        ]
+    },
+    {
+        "id": "150a55ac5d09a465",
+        "type": "debug",
+        "z": "2d15e59c76504bcb",
+        "name": "debug vkt",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "deviceState",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 780,
+        "y": 1040,
+        "wires": []
+    },
+    {
         "id": "263e0bb65e1f4a26",
         "type": "function",
         "z": "f86b501c2fcfb0fb",
