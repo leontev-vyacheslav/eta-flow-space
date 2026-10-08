@@ -11,7 +11,7 @@ services:
       - ./flow-space:/data
     restart: unless-stopped
     environment:
-      - TZ=Russia/Moscow
+      - TZ=Europe/Moscow
       - NODE_RED_ENABLE_PROJECTS=false
     entrypoint: >
       sh -c "
