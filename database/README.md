@@ -35,4 +35,5 @@ the web API's Sequelize models only describe it and no longer create tables (`sy
 | `2026-10-07-drop-unused-emergency-state-indexes.sql` | yes (verified 2026-10-07) |
 | `2026-10-07-unique-user-device-link.sql` | yes (verified 2026-10-07) |
 | `2026-10-08-add-spring2-vkt.sql` | yes (verified 2026-10-08) |
-| `2026-10-08-add-tsarevo1-km5.sql` | not yet |
+| `2026-10-08-add-tsarevo1-km5.sql` | yes (verified 2026-10-08) |
+| `2026-10-08-link-tsarevo1-users.sql` | not yet |
