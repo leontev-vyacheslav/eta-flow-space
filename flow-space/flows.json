@@ -247,6 +247,70 @@
         }
     },
     {
+        "id": "km5reader000000000",
+        "type": "subflow",
+        "name": "KM5 Client",
+        "info": "Reads current values (G1, G2 mass flow rates, t1, t2, P1, P2, heat power W, temperature inside the meter) and totals (M1, M2, V1, V2, Q, normal operation time) from a TBN KM-5 heat meter over TCP (e.g. a Maestro modem on its RS-485 port), via the shared Km5Client class registered on functionGlobalContext in settings.js. Send any message in to trigger a read; the same message comes out with `msg.payload` set to the result (numbers, firmware string, deviceTime/timestamp as epoch ms, isConnected). On failure nothing goes out and node.error() is called. ADDRESS is the meter's network number, which is its factory number (e.g. 418200).",
+        "category": "subflows",
+        "in": [
+            {
+                "x": 80,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "km5reader000000001"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 400,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "km5reader000000001",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "HOST",
+                "type": "str",
+                "value": "178.205.241.58"
+            },
+            {
+                "name": "PORT",
+                "type": "num",
+                "value": "5011"
+            },
+            {
+                "name": "ADDRESS",
+                "type": "num",
+                "value": "418200"
+            },
+            {
+                "name": "RESPONSE_TIMEOUT_MS",
+                "type": "num",
+                "value": "30000"
+            }
+        ],
+        "meta": {},
+        "color": "#DDBB99",
+        "status": {
+            "x": 420,
+            "y": 220,
+            "wires": [
+                {
+                    "id": "km5reader000000002",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
         "id": "17c1930de88ea78c",
         "type": "modbus-client",
         "name": "statum_boiler",
@@ -552,70 +616,6 @@
         ]
     },
     {
-        "id": "km5reader000000000",
-        "type": "subflow",
-        "name": "KM5 Client",
-        "info": "Reads current values (G1, G2 mass flow rates, t1, t2, P1, P2, heat power W, temperature inside the meter) and totals (M1, M2, V1, V2, Q, normal operation time) from a TBN KM-5 heat meter over TCP (e.g. a Maestro modem on its RS-485 port), via the shared Km5Client class registered on functionGlobalContext in settings.js. Send any message in to trigger a read; the same message comes out with `msg.payload` set to the result (numbers, firmware string, deviceTime/timestamp as epoch ms, isConnected). On failure nothing goes out and node.error() is called. ADDRESS is the meter's network number, which is its factory number (e.g. 418200).",
-        "category": "subflows",
-        "in": [
-            {
-                "x": 80,
-                "y": 80,
-                "wires": [
-                    {
-                        "id": "km5reader000000001"
-                    }
-                ]
-            }
-        ],
-        "out": [
-            {
-                "x": 400,
-                "y": 80,
-                "wires": [
-                    {
-                        "id": "km5reader000000001",
-                        "port": 0
-                    }
-                ]
-            }
-        ],
-        "env": [
-            {
-                "name": "HOST",
-                "type": "str",
-                "value": "178.205.241.58"
-            },
-            {
-                "name": "PORT",
-                "type": "num",
-                "value": "5011"
-            },
-            {
-                "name": "ADDRESS",
-                "type": "num",
-                "value": "418200"
-            },
-            {
-                "name": "RESPONSE_TIMEOUT_MS",
-                "type": "num",
-                "value": "30000"
-            }
-        ],
-        "meta": {},
-        "color": "#DDBB99",
-        "status": {
-            "x": 420,
-            "y": 220,
-            "wires": [
-                {
-                    "id": "km5reader000000002",
-                    "port": 0
-                }
-            ]
-        }
-    },
-    {
         "id": "km5reader000000001",
         "type": "function",
         "z": "km5reader000000000",
@@ -659,9 +659,9 @@
         "id": "8265171f6b4ea509",
         "type": "comment",
         "z": "8c7f93e2ebca7614",
-        "name": "tsarevo1-km5-418200",
+        "name": "tsarevo1-km5-418200 (example from the IHN on Tabeev Street, 5)",
         "info": "",
-        "x": 150,
+        "x": 290,
         "y": 120,
         "wires": []
     },
@@ -679,7 +679,7 @@
                 "vt": "str"
             }
         ],
-        "repeat": "60",
+        "repeat": "300",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
@@ -1886,9 +1886,9 @@
         "id": "41a39b2e29612148",
         "type": "comment",
         "z": "a03807f6777b0746",
-        "name": "mercury230-26077096 [14] = mock (Mercury230-29930705)",
+        "name": "mercury230-26077096 [14]",
         "info": "",
-        "x": 280,
+        "x": 170,
         "y": 560,
         "wires": []
     },
@@ -1962,9 +1962,9 @@
         "id": "20161772db3eeffc",
         "type": "comment",
         "z": "a03807f6777b0746",
-        "name": "mercury230-26077087 [19] = mock (Mercury230-29930645)",
+        "name": "mercury230-26077087 [19]",
         "info": "",
-        "x": 280,
+        "x": 170,
         "y": 680,
         "wires": []
     },
