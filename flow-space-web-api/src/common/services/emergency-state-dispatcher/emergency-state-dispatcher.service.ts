@@ -91,7 +91,8 @@ export class EmergencyStateDispatcherService {
                     const deviceState = await this.deviceStateDataModel.findOne({
                         where: {
                             deviceId: device.id,
-                            [Op.and]: [literal(`state::text <> '{}'`), { state: { [Op.ne]: null } }],
+                            // a jsonb comparison; the ::text cast was needed only while the column was json (before 618c3db)
+                            [Op.and]: [literal(`state <> '{}'::jsonb`), { state: { [Op.ne]: null } }],
                         },
                         order: [['createdAt', 'DESC']],
                     });
