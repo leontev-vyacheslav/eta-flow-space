@@ -3,8 +3,8 @@
         "id": "8c7f93e2ebca7614",
         "type": "tab",
         "label": "tsarevo1-boiler-automation",
-        "disabled": true,
-        "info": "Котельная ЖК Царёво-1. Disabled until the controller address and Modbus register map are known; collect-device-state must call storeDeviceStateToCacheAsync with this tab's id (flow.uid in the database).",
+        "disabled": false,
+        "info": "Котельная ЖК Царёво-1. The KM-5 heat meter (418200) is polled every 60 s; the boiler controller is not polled yet (its address and Modbus register map are unknown). collect-device-state calls storeDeviceStateToCacheAsync with this tab's id (flow.uid in the database) and the device index.",
         "env": []
     },
     {
@@ -552,6 +552,100 @@
         ]
     },
     {
+        "id": "km5reader000000000",
+        "type": "subflow",
+        "name": "KM5 Client",
+        "info": "Reads current values (G1, G2 mass flow rates, t1, t2, P1, P2, heat power W, temperature inside the meter) and totals (M1, M2, V1, V2, Q, normal operation time) from a TBN KM-5 heat meter over TCP (e.g. a Maestro modem on its RS-485 port), via the shared Km5Client class registered on functionGlobalContext in settings.js. Send any message in to trigger a read; the same message comes out with `msg.payload` set to the result (numbers, firmware string, deviceTime/timestamp as epoch ms, isConnected). On failure nothing goes out and node.error() is called. ADDRESS is the meter's network number, which is its factory number (e.g. 418200).",
+        "category": "subflows",
+        "in": [
+            {
+                "x": 80,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "km5reader000000001"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 400,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "km5reader000000001",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "HOST",
+                "type": "str",
+                "value": "178.205.241.58"
+            },
+            {
+                "name": "PORT",
+                "type": "num",
+                "value": "5011"
+            },
+            {
+                "name": "ADDRESS",
+                "type": "num",
+                "value": "418200"
+            },
+            {
+                "name": "RESPONSE_TIMEOUT_MS",
+                "type": "num",
+                "value": "30000"
+            }
+        ],
+        "meta": {},
+        "color": "#DDBB99",
+        "status": {
+            "x": 420,
+            "y": 220,
+            "wires": [
+                {
+                    "id": "km5reader000000002",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "km5reader000000001",
+        "type": "function",
+        "z": "km5reader000000000",
+        "name": "get-measurements",
+        "func": "const HOST = env.get('HOST');\nconst PORT = Number(env.get('PORT'));\nconst ADDRESS = Number(env.get('ADDRESS'));\nconst RESPONSE_TIMEOUT_MS = Number(env.get('RESPONSE_TIMEOUT_MS')) || 30000;\n\nconst { Km5Client } = global.get('km5');\nconst { withConnectionLock } = global.get('withConnectionLock');\n\n(async () => {\n    try {\n        const deviceState = await withConnectionLock(HOST, PORT, async () => {\n            const client = new Km5Client({\n                host: HOST,\n                port: PORT,\n                address: ADDRESS,\n                responseTimeoutMs: RESPONSE_TIMEOUT_MS,\n            });\n            // Km5Client.read() opens the socket, reads the firmware,\n            // current values, totals and clock, and closes the socket itself.\n            return await client.read();\n        });\n\n        msg.payload = deviceState;\n        node.send(msg);\n        node.status({ fill: 'green', shape: 'dot', text: 'ok ' + new Date().toLocaleTimeString() });\n    } catch (err) {\n        // Full read failed — nothing goes out. No partial/incomplete set is sent downstream.\n        node.error('KM-5 read failed: ' + err.message, msg);\n        node.status({ fill: 'red', shape: 'ring', text: 'error' });\n    }\n})();\n\nreturn null;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 220,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "km5reader000000002",
+        "type": "status",
+        "z": "km5reader000000000",
+        "name": "",
+        "scope": null,
+        "x": 140,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
         "id": "53a2fa2e3e999267",
         "type": "comment",
         "z": "8c7f93e2ebca7614",
@@ -559,6 +653,112 @@
         "info": "Polling is not built yet: the controller address and register map are unknown.",
         "x": 160,
         "y": 40,
+        "wires": []
+    },
+    {
+        "id": "8265171f6b4ea509",
+        "type": "comment",
+        "z": "8c7f93e2ebca7614",
+        "name": "tsarevo1-km5-418200",
+        "info": "",
+        "x": 150,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "c6f8c606b4ac60cf",
+        "type": "inject",
+        "z": "8c7f93e2ebca7614",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 180,
+        "wires": [
+            [
+                "4a6d5a2e9a8eff5f"
+            ]
+        ]
+    },
+    {
+        "id": "4a6d5a2e9a8eff5f",
+        "type": "subflow:km5reader000000000",
+        "z": "8c7f93e2ebca7614",
+        "name": "km5-418200",
+        "env": [
+            {
+                "name": "HOST",
+                "value": "178.205.241.58",
+                "type": "str"
+            },
+            {
+                "name": "PORT",
+                "value": "5011",
+                "type": "num"
+            },
+            {
+                "name": "ADDRESS",
+                "value": "418200",
+                "type": "num"
+            }
+        ],
+        "x": 340,
+        "y": 180,
+        "wires": [
+            [
+                "6fd3f407db377359"
+            ]
+        ]
+    },
+    {
+        "id": "6fd3f407db377359",
+        "type": "function",
+        "z": "8c7f93e2ebca7614",
+        "name": "collect-device-state",
+        "func": "const { storeDeviceStateToCacheAsync } = global.get('helpers');\n\nconst payload = msg.payload;\n\nconst deviceState = {\n    ...payload,\n\n    // Timestamp\n    timestamp: Date.now(),\n};\n\n// Index 1: the KM-5 is the second device of this flow by id (after the boiler room, 23).\nconst flowUid = node.path.split('/').find(_ => true);\nawait storeDeviceStateToCacheAsync(global, flowUid, deviceState, 1);\nmsg.deviceState = deviceState;\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 180,
+        "wires": [
+            [
+                "dfb9118084e1d0c9"
+            ]
+        ]
+    },
+    {
+        "id": "dfb9118084e1d0c9",
+        "type": "debug",
+        "z": "8c7f93e2ebca7614",
+        "name": "debug km5",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "deviceState",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 790,
+        "y": 180,
         "wires": []
     },
     {
