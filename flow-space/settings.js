@@ -547,6 +547,7 @@ module.exports = {
         withConnectionLock: require('./src/device-readers/with-connection-lock.js'),
         mercury230: require('./src/device-readers/mercury230-client.js'),
         ek270Iec61107: require('./src/device-readers/ek270-iec61107-client.js'),
+        vkt7: require('./src/device-readers/vkt7-client.js'),
     },
 
     /** The maximum number of messages nodes will buffer internally as part of their

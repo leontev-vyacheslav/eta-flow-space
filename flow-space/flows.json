@@ -178,6 +178,75 @@
         }
     },
     {
+        "id": "vkt7reader00000000",
+        "type": "subflow",
+        "name": "VKT7 Client",
+        "info": "Reads current values (t1, t2, G1, G2, P1, P2 of heat input 1) and hourly totals (Q, V1, V2, M1, M2, normal operation and no-count time) from a Teplokom VKT-7 heat calculator over TCP (e.g. a Wiznet modem on its serial port), via the shared Vkt7Client class registered on functionGlobalContext in settings.js. Send any message in to trigger a read; the same message comes out with `msg.payload` set to the result (numbers, null for elements outside the measurement scheme or with bad quality, firmware string, deviceTime/timestamp as epoch ms, isConnected). On failure nothing goes out and node.error() is called. ADDRESS is the calculator's network number (the built-in RS-485 adapter does not answer 0); WAKE_UP_BYTES is the count of 0xFF bytes before each request (2 for RS-232, 0 is fine for RS-485).",
+        "category": "subflows",
+        "in": [
+            {
+                "x": 80,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "vkt7reader00000001"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 400,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "vkt7reader00000001",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "HOST",
+                "type": "str",
+                "value": "94.180.252.2"
+            },
+            {
+                "name": "PORT",
+                "type": "num",
+                "value": "505"
+            },
+            {
+                "name": "ADDRESS",
+                "type": "num",
+                "value": "1"
+            },
+            {
+                "name": "WAKE_UP_BYTES",
+                "type": "num",
+                "value": "2"
+            },
+            {
+                "name": "RESPONSE_TIMEOUT_MS",
+                "type": "num",
+                "value": "60000"
+            }
+        ],
+        "meta": {},
+        "color": "#DDAA99",
+        "status": {
+            "x": 420,
+            "y": 220,
+            "wires": [
+                {
+                    "id": "vkt7reader00000002",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
         "id": "17c1930de88ea78c",
         "type": "modbus-client",
         "name": "statum_boiler",
@@ -444,6 +513,36 @@
         "id": "b6b689632e73322d",
         "type": "status",
         "z": "ek270iec61107reader00",
+        "name": "",
+        "scope": null,
+        "x": 140,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "vkt7reader00000001",
+        "type": "function",
+        "z": "vkt7reader00000000",
+        "name": "get-measurements",
+        "func": "const HOST = env.get('HOST');\nconst PORT = Number(env.get('PORT'));\nconst ADDRESS = Number(env.get('ADDRESS'));\nconst WAKE_UP_BYTES = Number(env.get('WAKE_UP_BYTES'));\nconst RESPONSE_TIMEOUT_MS = Number(env.get('RESPONSE_TIMEOUT_MS')) || 60000;\n\nconst { Vkt7Client } = global.get('vkt7');\nconst { withConnectionLock } = global.get('withConnectionLock');\n\n(async () => {\n    try {\n        const deviceState = await withConnectionLock(HOST, PORT, async () => {\n            const client = new Vkt7Client({\n                host: HOST,\n                port: PORT,\n                address: ADDRESS,\n                wakeUpBytes: Number.isNaN(WAKE_UP_BYTES) ? 2 : WAKE_UP_BYTES,\n                responseTimeoutMs: RESPONSE_TIMEOUT_MS,\n            });\n            // Vkt7Client.read() opens the socket, runs the whole session\n            // (properties, current values, hourly totals, clock) and\n            // closes the socket itself.\n            return await client.read();\n        });\n\n        msg.payload = deviceState;\n        node.send(msg);\n        node.status({ fill: 'green', shape: 'dot', text: 'ok ' + new Date().toLocaleTimeString() });\n    } catch (err) {\n        // Full read failed — nothing goes out. No partial/incomplete set is sent downstream.\n        node.error('VKT-7 read failed: ' + err.message, msg);\n        node.status({ fill: 'red', shape: 'ring', text: 'error' });\n    }\n})();\n\nreturn null;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 220,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "vkt7reader00000002",
+        "type": "status",
+        "z": "vkt7reader00000000",
         "name": "",
         "scope": null,
         "x": 140,
