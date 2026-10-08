@@ -13,6 +13,7 @@ flow-space-backups/
 .env-*
 .env
 !.env.example
+!.env-backup.example
 
 dist/
 *.rdb

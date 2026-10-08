@@ -58,7 +58,9 @@ services:
     build:
       dockerfile: ./Dockerfile.backup
     container_name: eta-flow-space-database-backup
-    privileged: true
+    # PGPASSWORD for pg_dump and psql (crontab, cleanup.sh); not in git, see .env-backup.example
+    env_file:
+      - ./.env-backup
     volumes:
       - ./flow-space-backups:/backups
     restart: unless-stopped

@@ -1,5 +1,8 @@
 @baseUrl = http://localhost:3001
 
+# set locally, never commit a real password:
+@password = 
+
 ###
 @authToken = {{signIn.response.body.accessToken}}
 
@@ -10,7 +13,7 @@ content-type: application/json
 
 {
     "login": "admin-boiler-watcher",
-    "password": "0987654321"
+    "password": "{{password}}"
 }
 
 ###

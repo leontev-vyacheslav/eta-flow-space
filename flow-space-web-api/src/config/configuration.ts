@@ -12,7 +12,7 @@ const requireEnv = (name: string): string => {
 export const configuration = (): ConfigModel => ({
     database: {
         username: process.env.DB_USERNAME || 'postgres',
-        password: process.env.DB_PASSWORD || '0987654321',
+        password: requireEnv('DB_PASSWORD'),
         database: process.env.DB_DATABASE || 'eta_flow_space_database',
         host: process.env.DB_HOST || 'localhost',
         port: parseInt(process.env.DB_PORT || '35432', 10),

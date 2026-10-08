@@ -29,4 +29,8 @@ the web API's Sequelize models only describe it and no longer create tables (`sy
 | File | Applied on production |
 |---|---|
 | `2026-10-05-drop-sequelize-meta.sql` | 2026-10-05 |
-| `2026-10-06-add-device-order.sql` | not yet |
+| `2026-10-06-add-device-order.sql` | yes (verified 2026-10-07) |
+| `2026-10-06-add-tsarevo1-boiler-room.sql` | yes (verified 2026-10-07) |
+| `2026-10-06-rename-tsarevo-to-tsarevo2.sql` | yes (verified 2026-10-07) |
+| `2026-10-07-drop-unused-emergency-state-indexes.sql` | yes (verified 2026-10-07) |
+| `2026-10-07-unique-user-device-link.sql` | yes (verified 2026-10-07) |
