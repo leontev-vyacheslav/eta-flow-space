@@ -1,0 +1,429 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "tsarevo1-km5-418200",
+    "type": "object",
+    "properties": {
+        "isConnected": {
+            "type": "boolean",
+            "ui": {
+                "group": 10,
+                "editor": {
+                    "editorType": "dxCheckBox",
+                    "editorOptions": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "left",
+                        "showColon": true,
+                        "text": "На связи"
+                    }
+                },
+                "colorizer": {
+                    "styleProps": [
+                        {
+                            "fill": {
+                                "red": false,
+                                "white": true
+                            },
+                            "stroke": {
+                                "yellow": false,
+                                "black": true
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        "temperatureInputPipe": {
+            "type": "number",
+            "unit": "°C",
+            "ui": {
+                "group": 1,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "editorOptions": {
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Температура воды в подающем трубопроводе"
+                    }
+                },
+                "chart": {}
+            }
+        },
+        "temperatureReturnPipe": {
+            "type": "number",
+            "unit": "°C",
+            "ui": {
+                "group": 1,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "editorOptions": {
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Температура воды в обратном трубопроводе"
+                    }
+                },
+                "chart": {}
+            }
+        },
+        "temperatureInsideDevice": {
+            "type": "number",
+            "unit": "°C",
+            "ui": {
+                "group": 1,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "editorOptions": {
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Температура внутри прибора"
+                    }
+                },
+                "chart": {}
+            }
+        },
+        "massFlowRateInputPipe": {
+            "type": "number",
+            "unit": "т/ч",
+            "ui": {
+                "group": 2,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "editorOptions": {
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Массовый расход в подающем трубопроводе"
+                    }
+                },
+                "chart": {}
+            }
+        },
+        "massFlowRateReturnPipe": {
+            "type": "number",
+            "unit": "т/ч",
+            "ui": {
+                "group": 2,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "editorOptions": {
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Массовый расход в обратном трубопроводе"
+                    }
+                },
+                "chart": {}
+            }
+        },
+        "pressureInputPipe": {
+            "type": "number",
+            "unit": "кгс/см²",
+            "ui": {
+                "group": 3,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "editorOptions": {
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Давление теплоносителя в подающем трубопроводе"
+                    }
+                },
+                "chart": {}
+            }
+        },
+        "pressureReturnPipe": {
+            "type": "number",
+            "unit": "кгс/см²",
+            "ui": {
+                "group": 3,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "editorOptions": {
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Давление теплоносителя в обратном трубопроводе"
+                    }
+                },
+                "chart": {}
+            }
+        },
+        "heatPower": {
+            "type": "number",
+            "unit": "Гкал/ч",
+            "ui": {
+                "group": 9,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "editorOptions": {
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Тепловая мощность"
+                    }
+                },
+                "chart": {}
+            }
+        },
+        "totalHeatConsumption": {
+            "type": "number",
+            "unit": "Гкал",
+            "ui": {
+                "group": 4,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "editorOptions": {
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Тепловая энергия полная"
+                    }
+                },
+                "chart": {}
+            }
+        },
+        "volumeInputPipe": {
+            "type": "number",
+            "unit": "м³",
+            "ui": {
+                "group": 5,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "editorOptions": {
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Объем воды в подающем трубопроводе"
+                    }
+                },
+                "chart": {}
+            }
+        },
+        "volumeReturnPipe": {
+            "type": "number",
+            "unit": "м³",
+            "ui": {
+                "group": 5,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "editorOptions": {
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Объем воды в обратном трубопроводе"
+                    }
+                },
+                "chart": {}
+            }
+        },
+        "massInputPipe": {
+            "type": "number",
+            "unit": "т",
+            "ui": {
+                "group": 6,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "editorOptions": {
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Масса воды в подающем трубопроводе"
+                    }
+                },
+                "chart": {}
+            }
+        },
+        "massReturnPipe": {
+            "type": "number",
+            "unit": "т",
+            "ui": {
+                "group": 6,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "editorOptions": {
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Масса воды в обратном трубопроводе"
+                    }
+                },
+                "chart": {}
+            }
+        },
+        "normalOperationTime": {
+            "type": "number",
+            "unit": "ч",
+            "ui": {
+                "group": 7,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "editorOptions": {
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Время нормальной работы"
+                    }
+                },
+                "chart": {}
+            }
+        },
+        "firmware": {
+            "type": "string",
+            "ui": {
+                "group": 8,
+                "editor": {
+                    "editorType": "dxTextBox",
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Версия ПО"
+                    },
+                    "editorOptions": {
+                        "readOnly": true
+                    }
+                }
+            }
+        },
+        "deviceTime": {
+            "type": "integer",
+            "ui": {
+                "group": 10,
+                "editor": {
+                    "editorType": "dxDateBox",
+                    "editorOptions": {
+                        "type": "datetime",
+                        "displayFormat": "dd.MM.yyyy HH:mm:ss",
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Текущее время прибора"
+                    }
+                }
+            }
+        },
+        "timestamp": {
+            "type": "integer",
+            "ui": {
+                "group": 10,
+                "editor": {
+                    "editorType": "dxDateBox",
+                    "editorOptions": {
+                        "type": "datetime",
+                        "displayFormat": "dd.MM.yyyy HH:mm:ss",
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Время опроса"
+                    }
+                }
+            }
+        }
+    },
+    "required": [
+        "isConnected",
+        "timestamp"
+    ],
+    "ui": {
+        "useTabs": true,
+        "groups": [
+            {
+                "id": 1,
+                "name": "temperature",
+                "caption": "Температура",
+                "order": 100
+            },
+            {
+                "id": 2,
+                "name": "flow",
+                "caption": "Массовый расход",
+                "order": 200
+            },
+            {
+                "id": 3,
+                "name": "pressure",
+                "caption": "Давление",
+                "order": 300
+            },
+            {
+                "id": 9,
+                "name": "power",
+                "caption": "Тепловая мощность",
+                "order": 350
+            },
+            {
+                "id": 4,
+                "name": "heat",
+                "caption": "Энергия",
+                "order": 400
+            },
+            {
+                "id": 5,
+                "name": "volume",
+                "caption": "Объем",
+                "order": 500
+            },
+            {
+                "id": 6,
+                "name": "mass",
+                "caption": "Масса",
+                "order": 600
+            },
+            {
+                "id": 7,
+                "name": "time",
+                "caption": "Промежуток времени",
+                "order": 700
+            },
+            {
+                "id": 8,
+                "name": "device",
+                "caption": "Информация о приборе",
+                "order": 800
+            },
+            {
+                "id": 10,
+                "name": "state",
+                "caption": "Состояния",
+                "order": 1
+            }
+        ]
+    }
+}
