@@ -557,11 +557,10 @@ class Vkt7Client {
      * Resolves with every name of CURRENT_ELEMENTS and TOTAL_ELEMENTS
      * (number, or null when the element is not in the measurement scheme
      * or has bad quality, e.g. a failed pressure sensor), plus
-     * firmware (string), deviceTime (epoch ms), isConnected and timestamp.
+     * firmware (string), deviceTime (epoch ms) and timestamp.
      *
      * Rejects on connection/protocol failure; the Error carries a
-     * `.partialResults` property with whatever was read before it, with
-     * isConnected: false.
+     * `.partialResults` property with whatever was read before it.
      *
      * @returns {Promise<Record<string, number|string|boolean|null>>}
      */
@@ -578,9 +577,9 @@ class Vkt7Client {
                 }, this.responseTimeoutMs);
             });
             await Promise.race([this._readSession(connection, results), timeout]);
-            return { ...results, isConnected: true, timestamp: Date.now() };
+            return { ...results, timestamp: Date.now() };
         } catch (err) {
-            err.partialResults = { ...results, isConnected: false, timestamp: Date.now() };
+            err.partialResults = { ...results, timestamp: Date.now() };
             throw err;
         } finally {
             clearTimeout(overallTimer);

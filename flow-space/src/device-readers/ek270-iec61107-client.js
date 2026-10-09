@@ -201,8 +201,8 @@ class Ek270Iec61107Client {
     }
 
     // Converts raw string results into properly typed values per the ek270
-    // JSON schema, and adds isConnected/timestamp to match its "state" fields.
-    _finalizeResults(rawResults, isConnected) {
+    // JSON schema, and adds timestamp to match its "state" fields.
+    _finalizeResults(rawResults) {
         const out = {};
         for (const [name, raw] of Object.entries(rawResults)) {
             if (raw === null || raw === undefined) {
@@ -216,7 +216,6 @@ class Ek270Iec61107Client {
                 out[name] = Number.isNaN(num) ? null : num;
             }
         }
-        out.isConnected = isConnected;
         out.timestamp = Date.now();
         return out;
     }
@@ -225,16 +224,15 @@ class Ek270Iec61107Client {
      * Reads all parameters from the EK270 over TCP, in one session.
      * Resolves with values typed per the ek270 JSON schema: numeric
      * measurements as `number`, factoryNumber/firmware as `string`,
-     * deviceTime as epoch ms `integer`, plus isConnected and timestamp.
+     * deviceTime as epoch ms `integer`, plus timestamp.
      *
      * Every value comes from a reply whose BCC is valid and whose echoed
      * address matches the request; frames from another master on the line
      * are skipped. Rejects when a parameter gets no such reply after
      * `retries` repeated requests, or on connection/protocol failure; the
      * rejected Error carries a `.partialResults` property with whatever was
-     * read before the failure (typed and finalized the same way, with
-     * isConnected: false), so a caller that wants "best effort" data on
-     * failure can still access it.
+     * read before the failure (typed and finalized the same way), so a
+     * caller that wants "best effort" data on failure can still access it.
      *
      * Does not serialize access to a shared host:port — see the class doc
      * comment above if this device shares a gateway with others.
@@ -263,7 +261,7 @@ class Ek270Iec61107Client {
                 if (finished) return;
                 stop();
                 socket.destroy();
-                err.partialResults = this._finalizeResults(results, false);
+                err.partialResults = this._finalizeResults(results);
                 reject(err);
             };
 
@@ -313,7 +311,7 @@ class Ek270Iec61107Client {
                     // gateway never closes its side and a half-open socket
                     // would linger after each poll.
                     socket.destroy();
-                    resolve(this._finalizeResults(results, true));
+                    resolve(this._finalizeResults(results));
                     return;
                 }
                 later(requestParam);
