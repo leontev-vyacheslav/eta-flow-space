@@ -3,6 +3,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { DeviceDataModel } from './models/device.data-model';
 import { DeviceStateDataModel } from './models/device-state.data-model';
+import { DeviceTypeDataModel } from './models/device-type.data-model';
 import { EmergencyDataModel } from './models/emergency.data-model';
 import { EmergencyStateDataModel } from './models/emergency-state.data-model';
 import { FlowDataModel } from './models/flow.data-model';
@@ -15,6 +16,7 @@ import { MnemoschemaSelectorDataModel } from './models/mnemoschema-selector.data
 const models = [
     DeviceDataModel,
     DeviceStateDataModel,
+    DeviceTypeDataModel,
     EmergencyDataModel,
     EmergencyStateDataModel,
     FlowDataModel,

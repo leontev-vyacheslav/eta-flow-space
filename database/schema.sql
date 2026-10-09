@@ -95,7 +95,8 @@ CREATE TABLE public.device (
     "lastStateUpdate" timestamp with time zone,
     "createdAt" timestamp with time zone NOT NULL,
     "updatedAt" timestamp with time zone NOT NULL,
-    "order" integer
+    "order" integer,
+    "deviceTypeId" integer
 );
 
 
@@ -157,6 +158,41 @@ CREATE SEQUENCE public.device_state_id_seq
 --
 
 ALTER SEQUENCE public.device_state_id_seq OWNED BY public.device_state.id;
+
+
+--
+-- Name: device_type; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.device_type (
+    id integer NOT NULL,
+    code character varying(32) NOT NULL,
+    name character varying(32) NOT NULL,
+    description character varying(64),
+    settings json,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL
+);
+
+
+--
+-- Name: device_type_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.device_type_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: device_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.device_type_id_seq OWNED BY public.device_type.id;
 
 
 --
@@ -448,6 +484,13 @@ ALTER TABLE ONLY public.device_state ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
+-- Name: device_type id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.device_type ALTER COLUMN id SET DEFAULT nextval('public.device_type_id_seq'::regclass);
+
+
+--
 -- Name: emergency id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -517,6 +560,22 @@ ALTER TABLE ONLY public.device
 
 ALTER TABLE ONLY public.device_state
     ADD CONSTRAINT device_state_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: device_type device_type_code_unique; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.device_type
+    ADD CONSTRAINT device_type_code_unique UNIQUE (code);
+
+
+--
+-- Name: device_type device_type_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.device_type
+    ADD CONSTRAINT device_type_pkey PRIMARY KEY (id);
 
 
 --
@@ -611,6 +670,14 @@ CREATE INDEX idx_device_state_device_created ON public.device_state USING btree 
 --
 
 CREATE INDEX idx_emergency_state_device ON public.emergency_state USING btree ("deviceId", "createdAt" DESC);
+
+
+--
+-- Name: device device_deviceTypeId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.device
+    ADD CONSTRAINT "device_deviceTypeId_fkey" FOREIGN KEY ("deviceTypeId") REFERENCES public.device_type(id) ON UPDATE CASCADE ON DELETE SET NULL;
 
 
 --

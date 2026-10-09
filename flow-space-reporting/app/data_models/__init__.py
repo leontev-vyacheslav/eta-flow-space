@@ -1,6 +1,7 @@
 from app.data_models.base import Base, TimestampMixin
 from app.data_models.device import Device
 from app.data_models.device_state import DeviceState
+from app.data_models.device_type import DeviceType
 from app.data_models.emergency import Emergency
 from app.data_models.emergency_state import EmergencyState
 from app.data_models.enums import UserRoles
@@ -15,6 +16,7 @@ __all__ = [
     "TimestampMixin",
     "Device",
     "DeviceState",
+    "DeviceType",
     "Emergency",
     "EmergencyState",
     "Flow",

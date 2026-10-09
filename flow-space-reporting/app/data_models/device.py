@@ -9,6 +9,7 @@ from app.data_models.base import Base, TimestampMixin
 if TYPE_CHECKING:
     from app.data_models.user_device_link import UserDeviceLink
     from app.data_models.flow import Flow
+    from app.data_models.device_type import DeviceType
     from app.data_models.object_location import ObjectLocation
     from app.data_models.device_state import DeviceState
     from app.data_models.emergency_state import EmergencyState
@@ -22,21 +23,25 @@ class Device(Base, TimestampMixin):
     code: Mapped[str | None] = mapped_column(String(32))
     name: Mapped[str | None] = mapped_column(String(32))
     description: Mapped[str | None] = mapped_column(String(32))
+    device_type_id: Mapped[int | None] = mapped_column(
+        ForeignKey("device_type.id"), name="deviceTypeId"
+    )
     flow_id: Mapped[int | None] = mapped_column(ForeignKey("flow.id"), name="flowId")
+    object_location_id: Mapped[int | None] = mapped_column(
+        ForeignKey("object_location.id"), name="objectLocationId"
+    )
     settings: Mapped[dict | None] = mapped_column(JSON)
+    # position in device lists, ascending; devices without one come after the ordered ones
+    order: Mapped[int | None] = mapped_column(Integer)
     update_state_interval: Mapped[int | None] = mapped_column(
         Integer, name="updateStateInterval"
     )
     last_state_update: Mapped[datetime | None] = mapped_column(
         DateTime, name="lastStateUpdate"
     )
-    object_location_id: Mapped[int | None] = mapped_column(
-        ForeignKey("object_location.id"), name="objectLocationId"
-    )
-    # position in device lists, ascending; devices without one come after the ordered ones
-    order: Mapped[int | None] = mapped_column(Integer)
 
     flow: Mapped[Optional["Flow"]] = relationship(back_populates="devices")
+    device_type: Mapped[Optional["DeviceType"]] = relationship(back_populates="devices")
     object_location: Mapped[Optional["ObjectLocation"]] = relationship(
         back_populates="devices"
     )

@@ -1,5 +1,6 @@
 // Export all database models
 export { DeviceDataModel } from './device.data-model';
+export { DeviceTypeDataModel } from './device-type.data-model';
 export { DeviceStateDataModel } from './device-state.data-model';
 export { EmergencyDataModel } from './emergency.data-model';
 export { EmergencyStateDataModel } from './emergency-state.data-model';

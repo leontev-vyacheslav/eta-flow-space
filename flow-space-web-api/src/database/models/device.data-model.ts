@@ -1,5 +1,6 @@
 import { Table, Column, Model, DataType, PrimaryKey, AutoIncrement, ForeignKey, BelongsTo, HasMany, HasOne } from 'sequelize-typescript';
 import { FlowDataModel } from './flow.data-model';
+import { DeviceTypeDataModel } from './device-type.data-model';
 import { MnemoschemaSelectorDataModel } from './mnemoschema-selector.data-model';
 import { ObjectLocationDataModel } from './object-location.data-model';
 import { DeviceStateDataModel } from './device-state.data-model';
@@ -37,6 +38,13 @@ export class DeviceDataModel extends Model {
     })
     declare description: string;
 
+    @ForeignKey(() => DeviceTypeDataModel)
+    @Column(DataType.INTEGER)
+    declare deviceTypeId: number | null;
+
+    @BelongsTo(() => DeviceTypeDataModel, 'deviceTypeId')
+    declare deviceType?: DeviceTypeDataModel;
+
     @ForeignKey(() => FlowDataModel)
     @Column(DataType.INTEGER)
     declare flowId: number;
@@ -57,6 +65,13 @@ export class DeviceDataModel extends Model {
     })
     declare settings: Record<string, any>;
 
+    // position in device lists, ascending; devices without one come after the ordered ones
+    @Column({
+        type: DataType.INTEGER,
+        allowNull: true,
+    })
+    declare order: number | null;
+
     @Column({
         type: DataType.INTEGER,
         allowNull: true,
@@ -68,13 +83,6 @@ export class DeviceDataModel extends Model {
         allowNull: true,
     })
     declare lastStateUpdate: Date;
-
-    // position in device lists, ascending; devices without one come after the ordered ones
-    @Column({
-        type: DataType.INTEGER,
-        allowNull: true,
-    })
-    declare order: number | null;
 
     @HasOne(() => MnemoschemaSelectorDataModel, 'deviceId')
     declare mnemoschemaSelector?: MnemoschemaSelectorDataModel;
