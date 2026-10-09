@@ -3,7 +3,7 @@ import * as acorn from 'acorn';
 const BLOCKED_IDENTIFIERS = new Set(['process', 'require', 'global', 'module', 'eval', 'Function', 'this', 'console']);
 
 const ALLOWED_CALLEE_OBJECTS = new Set(['dss']);
-const ALLOWED_MEMBER_OBJECTS = new Set(['state', 'dss', 'flowCode']);
+const ALLOWED_MEMBER_OBJECTS = new Set(['state', 'dss', 'deviceCode']);
 
 const ALLOWED_DSS_METHODS = new Set(['getEnumDescription', 'formatNumber']);
 

@@ -29,7 +29,7 @@ export class DataSchemasService {
         }
 
         const appConfig = this.configService.get<AppConfigModel>('app')!;
-        const schemaPath = join(appConfig.staticsPath, `flows/${deviceCode}/${deviceCode}-data-schema.json`);
+        const schemaPath = join(appConfig.staticsPath, `devices/${deviceCode}/data-schema.json`);
 
         let raw: string;
         try {

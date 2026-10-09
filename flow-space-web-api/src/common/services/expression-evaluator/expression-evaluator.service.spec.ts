@@ -19,7 +19,7 @@ describe('ExpressionEvaluatorService', () => {
                 getEnumDescription: jest.fn().mockResolvedValue('Heating'),
                 formatNumber: jest.fn().mockReturnValue('85,0'),
             },
-            flowCode: 'boiler-1',
+            deviceCode: 'boiler-1',
         };
 
         it('should evaluate simple equality', async () => {
@@ -48,7 +48,7 @@ describe('ExpressionEvaluatorService', () => {
         });
 
         it('should evaluate async dss call', async () => {
-            const result = await service.evaluateExpression('await dss.getEnumDescription(flowCode, "Mode", state.mode)', context);
+            const result = await service.evaluateExpression('await dss.getEnumDescription(deviceCode, "Mode", state.mode)', context);
             expect(result).toBe(true);
             expect(context.dss.getEnumDescription).toHaveBeenCalledWith('boiler-1', 'Mode', 1);
         });
@@ -57,7 +57,7 @@ describe('ExpressionEvaluatorService', () => {
             const ctx = {
                 state: { networkPumps: [{ status: 512, alarm: 3 }] },
                 dss: { getEnumDescription: jest.fn().mockResolvedValue('Overheat'), formatNumber: jest.fn() },
-                flowCode: 'boiler-1',
+                deviceCode: 'boiler-1',
             };
             const result = await service.evaluateExpression('state.networkPumps[0].status === 512', ctx);
             expect(result).toBe(true);
@@ -67,9 +67,9 @@ describe('ExpressionEvaluatorService', () => {
             const ctx = {
                 state: { networkPumps: [{ status: 512, alarm: 3 }] },
                 dss: { getEnumDescription: jest.fn().mockResolvedValue('Overheat'), formatNumber: jest.fn() },
-                flowCode: 'boiler-1',
+                deviceCode: 'boiler-1',
             };
-            const result = await service.evaluateExpression('await dss.getEnumDescription(flowCode, "NetworkPumpAlarm", state.networkPumps[0].alarm)', ctx);
+            const result = await service.evaluateExpression('await dss.getEnumDescription(deviceCode, "NetworkPumpAlarm", state.networkPumps[0].alarm)', ctx);
             expect(result).toBe(true);
             expect(ctx.dss.getEnumDescription).toHaveBeenCalledWith('boiler-1', 'NetworkPumpAlarm', 3);
         });
@@ -103,7 +103,7 @@ describe('ExpressionEvaluatorService', () => {
         });
 
         it('should refuse a computed dss method name', async () => {
-            await expect(service.evaluateExpression("dss['getEnumDescription'](flowCode, 'Mode', 1)", context)).rejects.toThrow('Forbidden');
+            await expect(service.evaluateExpression("dss['getEnumDescription'](deviceCode, 'Mode', 1)", context)).rejects.toThrow('Forbidden');
             await expect(service.evaluateExpression("dss['constructor']('x')", context)).rejects.toThrow('Forbidden');
         });
 
@@ -116,7 +116,7 @@ describe('ExpressionEvaluatorService', () => {
         const context = {
             state: { temperature: 85 },
             dss: { getEnumDescription: jest.fn().mockResolvedValue('Heating'), formatNumber: jest.fn() },
-            flowCode: 'boiler-1',
+            deviceCode: 'boiler-1',
         };
 
         it('should return static text as-is', async () => {

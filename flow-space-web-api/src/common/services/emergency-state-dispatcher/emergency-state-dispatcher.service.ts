@@ -1,6 +1,6 @@
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { Injectable, Logger } from '@nestjs/common';
-import { DeviceDataModel, DeviceStateDataModel, EmergencyDataModel, EmergencyStateDataModel, FlowDataModel } from '../../../database/models';
+import { DeviceDataModel, DeviceStateDataModel, EmergencyDataModel, EmergencyStateDataModel } from '../../../database/models';
 import { InjectConnection, InjectModel } from '@nestjs/sequelize';
 import { Op, literal } from 'sequelize';
 import { SharedStoreService } from '../shared-store/shared-store.service';
@@ -50,17 +50,12 @@ export class EmergencyStateDispatcherService {
         this.isRunning = true;
         try {
             const devices = await this.deviceDataModel.findAll({
-                attributes: ['id'],
+                attributes: ['id', 'code'],
                 include: [
                     {
                         model: EmergencyDataModel,
                         as: 'emergencies',
                         attributes: ['reasons', 'updateStateInterval', 'lastStateUpdate'],
-                    },
-                    {
-                        model: FlowDataModel,
-                        as: 'flow',
-                        attributes: ['code'],
                     },
                 ],
             });
@@ -118,7 +113,8 @@ export class EmergencyStateDispatcherService {
                     });
                 }
 
-                const context = { state, dss: this.ruleHelpers, flowCode: device.flow?.code };
+                // deviceCode names the device's data schema (devices/<deviceCode>/data-schema.json) for dss.getEnumDescription
+                const context = { state, dss: this.ruleHelpers, deviceCode: device.code };
 
                 for (const emergencyReason of device.emergencies.reasons as EmergencyReasonModel[]) {
                     try {

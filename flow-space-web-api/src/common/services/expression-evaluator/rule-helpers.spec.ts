@@ -10,11 +10,11 @@ describe('createRuleHelpers', () => {
         getEnumDescription: jest.fn().mockResolvedValue('Авария'),
         formatNumber: jest.fn().mockReturnValue('70,5'),
     } as unknown as DataSchemasService;
-    const context = { state: { t: 70.456, alarm: 2 }, dss: createRuleHelpers(dataSchemas), flowCode: 'spring' };
+    const context = { state: { t: 70.456, alarm: 2 }, dss: createRuleHelpers(dataSchemas), deviceCode: 'spring' };
 
     it('passes the two rule functions through to the service', async () => {
         const text = await evaluator.evaluateDescription(
-            "`Насос: ${await dss.getEnumDescription(flowCode, 'NetworkPumpAlarm', state.alarm)}, ${dss.formatNumber(state.t)} °C`",
+            "`Насос: ${await dss.getEnumDescription(deviceCode, 'NetworkPumpAlarm', state.alarm)}, ${dss.formatNumber(state.t)} °C`",
             context,
         );
 
