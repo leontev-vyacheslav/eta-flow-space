@@ -4,7 +4,7 @@
         "type": "tab",
         "label": "tsarevo1-boiler-automation",
         "disabled": false,
-        "info": "Котельная ЖК Царёво-1. The KM-5 heat meter (418200) is polled every 60 s; the boiler controller is not polled yet (its address and Modbus register map are unknown). collect-device-state calls storeDeviceStateToCacheAsync with this tab's id (flow.uid in the database) and the device index.",
+        "info": "Котельная ЖК Царёво-1. The KM-5 heat meter (418200) and the TV7 heat calculator (19072584) are polled every 300 s; the boiler controller is not polled yet (its address and Modbus register map are unknown). collect-device-state calls storeDeviceStateToCacheAsync with this tab's id (flow.uid in the database) and the device index.",
         "env": []
     },
     {
@@ -646,6 +646,105 @@
         ]
     },
     {
+        "id": "tv7reader000000000",
+        "type": "subflow",
+        "name": "TV7 Client",
+        "info": "Reads every current value of a Termotronic TV7 heat calculator over TCP (e.g. a Wiznet modem on its RS-232/RS-485 port), via the shared Tv7Client class registered on functionGlobalContext in settings.js: device info, instant values and totals for heat inputs input1/input2 and their pipes pipe1-pipe3, raw in SI units (GJ, MPa, m3, t) and named after the protocol tables (t, P, Go, Gm, F, V, M, Ftv, Qtv, VNR, VOS, NS...). Choosing the supply/return pipe and converting units is left to the flow's collect-device-state. Send any message in to trigger a read; the same message comes out with `msg.payload` set to the result (deviceTime/timestamp as epoch ms). On failure nothing goes out and node.error() is called. ADDRESS is the Modbus network address (1 by default); SERIAL_NUMBER, when set, is checked against the device's factory number.",
+        "category": "subflows",
+        "in": [
+            {
+                "x": 80,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "tv7reader000000001"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 400,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "tv7reader000000001",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "HOST",
+                "type": "str",
+                "value": "178.207.154.38"
+            },
+            {
+                "name": "PORT",
+                "type": "num",
+                "value": "5011"
+            },
+            {
+                "name": "ADDRESS",
+                "type": "num",
+                "value": "1"
+            },
+            {
+                "name": "SERIAL_NUMBER",
+                "type": "num",
+                "value": "19072584"
+            },
+            {
+                "name": "RESPONSE_TIMEOUT_MS",
+                "type": "num",
+                "value": "30000"
+            }
+        ],
+        "meta": {},
+        "color": "#DDBB99",
+        "status": {
+            "x": 420,
+            "y": 220,
+            "wires": [
+                {
+                    "id": "tv7reader000000002",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "tv7reader000000001",
+        "type": "function",
+        "z": "tv7reader000000000",
+        "name": "get-measurements",
+        "func": "const HOST = env.get('HOST');\nconst PORT = Number(env.get('PORT'));\nconst ADDRESS = Number(env.get('ADDRESS'));\nconst SERIAL_NUMBER = Number(env.get('SERIAL_NUMBER')) || null;\nconst RESPONSE_TIMEOUT_MS = Number(env.get('RESPONSE_TIMEOUT_MS')) || 30000;\n\nconst { Tv7Client } = global.get('tv7');\nconst { withConnectionLock } = global.get('withConnectionLock');\n\n(async () => {\n    try {\n        const deviceState = await withConnectionLock(HOST, PORT, async () => {\n            const client = new Tv7Client({\n                host: HOST,\n                port: PORT,\n                address: ADDRESS,\n                serialNumber: SERIAL_NUMBER,\n                responseTimeoutMs: RESPONSE_TIMEOUT_MS,\n            });\n            // Tv7Client.read() opens the socket, reads the device info,\n            // current instant values and current totals, and closes the\n            // socket itself.\n            return await client.read();\n        });\n\n        msg.payload = deviceState;\n        node.send(msg);\n        node.status({ fill: 'green', shape: 'dot', text: 'ok ' + new Date().toLocaleTimeString() });\n    } catch (err) {\n        // Full read failed — nothing goes out. No partial/incomplete set is sent downstream.\n        node.error('TV7 read failed: ' + err.message, msg);\n        node.status({ fill: 'red', shape: 'ring', text: 'error' });\n    }\n})();\n\nreturn null;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 220,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "tv7reader000000002",
+        "type": "status",
+        "z": "tv7reader000000000",
+        "name": "",
+        "scope": null,
+        "x": 140,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
         "id": "53a2fa2e3e999267",
         "type": "comment",
         "z": "8c7f93e2ebca7614",
@@ -759,6 +858,117 @@
         "statusType": "auto",
         "x": 790,
         "y": 180,
+        "wires": []
+    },
+    {
+        "id": "4d8a47e4a7dd4dfc",
+        "type": "comment",
+        "z": "8c7f93e2ebca7614",
+        "name": "tsarevo1-tv7-19072584 (TV7 heat calculator)",
+        "info": "",
+        "x": 250,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "d57248b0aa82e2a6",
+        "type": "inject",
+        "z": "8c7f93e2ebca7614",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "300",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 320,
+        "wires": [
+            [
+                "eb875e7a11db766f"
+            ]
+        ]
+    },
+    {
+        "id": "eb875e7a11db766f",
+        "type": "subflow:tv7reader000000000",
+        "z": "8c7f93e2ebca7614",
+        "name": "tv7-19072584",
+        "env": [
+            {
+                "name": "HOST",
+                "value": "178.207.154.38",
+                "type": "str"
+            },
+            {
+                "name": "PORT",
+                "value": "5011",
+                "type": "num"
+            },
+            {
+                "name": "ADDRESS",
+                "value": "1",
+                "type": "num"
+            },
+            {
+                "name": "SERIAL_NUMBER",
+                "value": "19072584",
+                "type": "num"
+            }
+        ],
+        "x": 340,
+        "y": 320,
+        "wires": [
+            [
+                "e2140d6fea474070"
+            ]
+        ]
+    },
+    {
+        "id": "e2140d6fea474070",
+        "type": "function",
+        "z": "8c7f93e2ebca7614",
+        "name": "collect-device-state",
+        "func": "const { storeDeviceStateToCacheAsync } = global.get('helpers');\n\n// The TV7 sends SI units (see tv7-client.js); the state keeps Gcal and\n// kgf/cm², as the other heat meters do.\nconst GJ_PER_GCAL = 4.1868;\nconst KGF_CM2_PER_MPA = 10.1972;\n\n// null stays null (a value outside the measurement scheme).\nconst convert = (value, factor, digits = 7) =>\n    value === null || value === undefined ? null : Number((value * factor).toPrecision(digits));\n\nconst { input1, firmware, deviceTime } = msg.payload;\n// Heat input 1: pipe 1 is the supply, pipe 2 the return.\nconst input = input1.pipe1;\nconst ret = input1.pipe2;\n\nconst deviceState = {\n    // Temperature, °C\n    temperatureInputPipe: input.t,\n    temperatureReturnPipe: ret.t,\n\n    // Pressure, kgf/cm²\n    pressureInputPipe: convert(input.P, KGF_CM2_PER_MPA),\n    pressureReturnPipe: convert(ret.P, KGF_CM2_PER_MPA),\n\n    // Volume flow rate, m³/h\n    volumeFlowRateInputPipe: input.Go,\n    volumeFlowRateReturnPipe: ret.Go,\n\n    // Mass flow rate, t/h\n    massFlowRateInputPipe: input.Gm,\n    massFlowRateReturnPipe: ret.Gm,\n\n    // Heat power, Gcal/h\n    heatPowerInputPipe: convert(input.F, 1 / GJ_PER_GCAL),\n    heatPowerReturnPipe: convert(ret.F, 1 / GJ_PER_GCAL),\n\n    // Heat, Gcal\n    totalHeatConsumption: convert(input1.Qtv, 1 / GJ_PER_GCAL, 12),\n\n    // Mass, t\n    massInputPipe: input.M,\n    massReturnPipe: ret.M,\n\n    // Volume, m³\n    volumeInputPipe: input.V,\n    volumeReturnPipe: ret.V,\n\n    // Time intervals, h\n    normalOperationTime: input1.VNR,\n    noCountTime: input1.VOS,\n\n    // Device info and the meter's own clock\n    firmware,\n    deviceTime,\n\n    // Timestamp\n    timestamp: Date.now(),\n};\n\n// Index 2: the TV7 is the third device of this flow by id (after the boiler\n// room, 23, and the KM-5, 25).\nconst flowUid = node.path.split('/').find(_ => true);\nawait storeDeviceStateToCacheAsync(global, flowUid, deviceState, 2);\nmsg.deviceState = deviceState;\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 320,
+        "wires": [
+            [
+                "e4f825bd35445a1b"
+            ]
+        ]
+    },
+    {
+        "id": "e4f825bd35445a1b",
+        "type": "debug",
+        "z": "8c7f93e2ebca7614",
+        "name": "debug tv7",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "deviceState",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 790,
+        "y": 320,
         "wires": []
     },
     {

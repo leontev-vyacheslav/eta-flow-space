@@ -36,6 +36,7 @@ the web API's Sequelize models only describe it and no longer create tables (`sy
 | `2026-10-07-unique-user-device-link.sql` | yes (verified 2026-10-07) |
 | `2026-10-08-add-spring2-vkt.sql` | yes (verified 2026-10-08) |
 | `2026-10-08-add-tsarevo1-km5.sql` | yes (verified 2026-10-08) |
-| `2026-10-08-link-tsarevo1-users.sql` | not yet |
-| `2026-10-09-add-device-type.sql` | not yet |
-| `2026-10-09-emergency-rules-device-code.sql` | not yet |
+| `2026-10-08-link-tsarevo1-users.sql` | yes (verified 2026-10-09) |
+| `2026-10-09-add-device-type.sql` | yes (verified 2026-10-09) |
+| `2026-10-09-emergency-rules-device-code.sql` | yes (verified 2026-10-09) |
+| `2026-10-09-add-tsarevo1-tv7.sql` | not yet |

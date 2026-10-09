@@ -549,6 +549,7 @@ module.exports = {
         ek270Iec61107: require('./src/device-readers/ek270-iec61107-client.js'),
         vkt7: require('./src/device-readers/vkt7-client.js'),
         km5: require('./src/device-readers/km5-client.js'),
+        tv7: require('./src/device-readers/tv7-client.js'),
     },
 
     /** The maximum number of messages nodes will buffer internally as part of their
