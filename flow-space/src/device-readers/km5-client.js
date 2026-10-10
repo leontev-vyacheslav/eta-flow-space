@@ -18,14 +18,30 @@
  * the command: 0xF1 "resource busy" (repeat the request), 0xEF bad
  * parameter, 0xF0 bad command, 0xFB-0xFF PPS/RTC/EEPROM errors.
  *
+ * read() returns every current value the read commands below offer, raw,
+ * in the device's units, named after the protocol (Cyrillic letters
+ * transliterated). Which pipe is the supply or the return is decided by the
+ * Node-RED mapping (collect-device-state). Archives are not read.
+ *
  * Commands used by read():
- *    9  firmware version, 5 ASCII characters ("02.33")
+ *    9  firmware version, 5 ASCII characters ("02.33"), then the max stack
+ *       byte and the 4-character type ("KM  ")
+ *    8  status bytes 1-8 (table 3): hot-water mode, empty-pipe flags,
+ *       hardware error flags, manual hot-water mode, flag bytes 5-8
  *  123  current values, IEEE754 float LE from data byte 1: G1, G2, G3 t/h,
  *       t1, t2, tx, ta °C, P1, P2, P3 atm, W Gcal/h, t2 PPS, tx PPS,
- *       t inside the device °C, W2 Gcal/h, t hot water °C
+ *       t inside the device °C, W2 Gcal/h, t hot water °C, then the
+ *       second-cycle counter byte
+ *   94  current values: G1, G2, G3 m3/h, P3 atm (as in 123), t2 PPS,
+ *       t3 PPS °C, flow speed v m/s, P4 atm
  *   95  clock and totals: date/time (EE, day, month, year, model, hour,
  *       minute, second; BCD), then floats M1, M2 t, Vi, V1, V2 m3,
- *       Q Gcal, operation time h
+ *       Q Gcal, operation time h; firmware v1N_2.33-201 and later add the
+ *       time counters Tw, Tmin, Tmax, Tdt, Tf, Tep, Tpt1 h (older firmware
+ *       sends zeros there, returned as null)
+ *
+ * Values from the second-flow unit (PPS: t2pps, txpps, t2p, t3p) are
+ * meaningless when no PPS is connected; the mapping ignores them then.
  *
  * (The protocol tables number data bytes from 2 for these commands; the
  * floats really start right after the command byte, checked against the
@@ -55,7 +71,9 @@ const net = require('net');
 const REQUEST_LENGTH = 16;
 
 const COMMAND_VERSION = 9;
+const COMMAND_STATUS = 8;
 const COMMAND_CURRENT = 123;
+const COMMAND_CURRENT_VOLUME = 94;
 const COMMAND_TOTALS = 95;
 
 const ERROR_BUSY = 0xf1;
@@ -75,26 +93,73 @@ const DATE_TIME_MARKER = 0xee;
 // Reply offset of the first data byte (right after the command).
 const DATA_OFFSET = 5;
 
-// Current values (command 123): name -> index of the float.
+// Current values (command 123): name -> index of the float. GM: mass flow
+// rate, t/h.
 const CURRENT_FLOATS = {
-    massFlowRateInputPipe: 0,
-    massFlowRateReturnPipe: 1,
-    temperatureInputPipe: 3,
-    temperatureReturnPipe: 4,
-    pressureInputPipe: 7,
-    pressureReturnPipe: 8,
-    heatPower: 10,
-    temperatureInsideDevice: 13,
+    GM1: 0,
+    GM2: 1,
+    GM3: 2,
+    t1: 3,
+    t2: 4,
+    tx: 5,
+    ta: 6,
+    P1: 7,
+    P2: 8,
+    P3: 9,
+    W: 10,
+    t2pps: 11,
+    txpps: 12,
+    tin: 13,
+    W2: 14,
+    tgvs: 15,
+};
+// Byte after the 16 floats: second-cycle counter; its high bit says the
+// PPS values may not be processed yet.
+const CYCLE_COUNTER_OFFSET = 16 * 4;
+
+// Current values (command 94): name -> index of the float. GV: volume flow
+// rate, m3/h. Float 3 is P3 again (as in command 123).
+const CURRENT_VOLUME_FLOATS = {
+    GV1: 0,
+    GV2: 1,
+    GV3: 2,
+    t2p: 4,
+    t3p: 5,
+    v: 6,
+    P4: 7,
 };
 
 // Totals (command 95), after the 8 date/time bytes: name -> index of the float.
 const TOTAL_FLOATS = {
-    massInputPipe: 0,
-    massReturnPipe: 1,
-    volumeInputPipe: 3,
-    volumeReturnPipe: 4,
-    totalHeatConsumption: 5,
-    normalOperationTime: 6,
+    M1: 0,
+    M2: 1,
+    Vi: 2,
+    V1: 3,
+    V2: 4,
+    Q: 5,
+    Tr: 6,
+};
+// Time counters of firmware v1N_2.33-201 and later, after the totals.
+const TIME_COUNTER_FLOATS = {
+    Tw: 7,
+    Tmin: 8,
+    Tmax: 9,
+    Tdt: 10,
+    Tf: 11,
+    Tep: 12,
+    Tpt1: 13,
+};
+
+// Status bytes (command 8, table 3): name -> data byte index.
+const STATUS_BYTES = {
+    hotWaterMode: 0,
+    emptyPipeFlags: 1,
+    hardwareErrorFlags: 2,
+    hotWaterModeSet: 3,
+    flags5: 4,
+    flags6: 5,
+    flags7: 6,
+    flags8: 7,
 };
 
 function replyLength(command) {
@@ -157,14 +222,6 @@ class Km5Client {
         this.retries = retries;
         this.responseTimeoutMs = responseTimeoutMs;
         this.trace = trace;
-    }
-
-    static get CURRENT_FLOATS() {
-        return CURRENT_FLOATS;
-    }
-
-    static get TOTAL_FLOATS() {
-        return TOTAL_FLOATS;
     }
 
     // 418200 -> [0x00, 0x82, 0x41, 0x00]
@@ -315,29 +372,57 @@ class Km5Client {
     async _readSession(connection, results) {
         const version = await connection.request(this.buildRequest(COMMAND_VERSION));
         results.firmware = version.subarray(DATA_OFFSET, DATA_OFFSET + 5).toString('latin1');
+        results.type = version.subarray(DATA_OFFSET + 6, DATA_OFFSET + 10).toString('latin1').trim();
+
+        const status = await connection.request(this.buildRequest(COMMAND_STATUS));
+        for (const [name, index] of Object.entries(STATUS_BYTES)) {
+            results[name] = status[DATA_OFFSET + index];
+        }
 
         const current = await connection.request(this.buildRequest(COMMAND_CURRENT));
         for (const [name, index] of Object.entries(CURRENT_FLOATS)) {
             results[name] = readFloat(current, DATA_OFFSET + index * 4);
         }
+        results.cycleCounter = current[DATA_OFFSET + CYCLE_COUNTER_OFFSET];
+
+        const currentVolume = await connection.request(this.buildRequest(COMMAND_CURRENT_VOLUME));
+        for (const [name, index] of Object.entries(CURRENT_VOLUME_FLOATS)) {
+            results[name] = readFloat(currentVolume, DATA_OFFSET + index * 4);
+        }
 
         const totals = await connection.request(this.buildRequest(COMMAND_TOTALS));
         results.deviceTime = Km5Client._parseDateTime(totals.subarray(DATA_OFFSET, DATA_OFFSET + 8));
+        results.model = fromBcd(totals[DATA_OFFSET + 4]);
         for (const [name, index] of Object.entries(TOTAL_FLOATS)) {
             results[name] = readFloat(totals, DATA_OFFSET + 8 + index * 4);
         }
+        // Older firmware sends zeros for the time counters; a running meter
+        // that supports them has a normal operation time Tw above zero.
+        const counters = Object.entries(TIME_COUNTER_FLOATS)
+            .map(([name, index]) => [name, readFloat(totals, DATA_OFFSET + 8 + index * 4)]);
+        const supported = counters.find(([name]) => name === 'Tw')[1] > 0;
+        for (const [name, value] of counters) results[name] = supported ? value : null;
     }
 
     /**
-     * Reads the firmware, current values, totals and clock in one session.
-     * Resolves with every name of CURRENT_FLOATS and TOTAL_FLOATS
-     * (number), plus firmware (string), deviceTime (epoch ms, or null) and
-     * timestamp.
+     * Reads the firmware, status bytes, current values, totals and clock in
+     * one session. Resolves with (device units, null for a value that is
+     * not a finite number):
+     *
+     *   firmware, type (strings), model (0 = КМ-5-1 ... 5 = КМ-5-6)
+     *   hotWaterMode, emptyPipeFlags, hardwareErrorFlags, hotWaterModeSet,
+     *   flags5..flags8   status bytes 1-8 (command 8, table 3)
+     *   GM1, GM2, GM3 t/h, GV1, GV2, GV3 m3/h, t1, t2, tx, ta, tin, tgvs °C,
+     *   P1, P2, P3, P4 atm, W, W2 Gcal/h, v m/s,
+     *   t2pps, txpps, t2p, t3p °C (PPS), cycleCounter
+     *   M1, M2 t, Vi, V1, V2 m3, Q Gcal, Tr h (totals)
+     *   Tw, Tmin, Tmax, Tdt, Tf, Tep, Tpt1 h (null on older firmware)
+     *   deviceTime (epoch ms, or null), timestamp
      *
      * Rejects on connection/protocol failure; the Error carries a
      * `.partialResults` property with whatever was read before it.
      *
-     * @returns {Promise<Record<string, number|string|boolean|null>>}
+     * @returns {Promise<Record<string, number|string|null>>}
      */
     async read() {
         const results = {};
