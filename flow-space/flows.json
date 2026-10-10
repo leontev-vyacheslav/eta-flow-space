@@ -417,7 +417,7 @@
     {
         "id": "310e36d12525281e",
         "type": "modbus-client",
-        "name": "ceasar_boiler",
+        "name": "tsarevo2_boiler",
         "clienttype": "tcp",
         "bufferCommands": true,
         "stateLogEnabled": false,
@@ -741,6 +741,105 @@
         "id": "tv7reader000000002",
         "type": "status",
         "z": "tv7reader000000000",
+        "name": "",
+        "scope": null,
+        "x": 140,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "vzljot026reader000",
+        "type": "subflow",
+        "name": "Vzljot026 Client",
+        "info": "Reads every current value of a Vzljot TSRV-026M heat calculator over TCP (a gateway on its RS-485 port; plain Modbus RTU, input registers), via the shared Vzljot026Client class registered on functionGlobalContext in settings.js: serial number, clock, states, the flow (PR1-PR4, LOG1-LOG2), temperature (PT1-PT5) and pressure (PD1-PD4) channels, the pipes TR1-TR4 and the heat system TS, raw in the device's units (m3/h, °C, MPa, Gcal, t, m3) and named after the register list. Choosing the supply/return pipe and converting units is left to the flow's collect-device-state. Send any message in to trigger a read; the same message comes out with `msg.payload` set to the result (deviceTime/timestamp as epoch ms). On failure nothing goes out and node.error() is called. ADDRESS is the Modbus address (1 by default); SERIAL_NUMBER, when set, is checked against the device's serial number.",
+        "category": "subflows",
+        "in": [
+            {
+                "x": 80,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "vzljot026reader001"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 400,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "vzljot026reader001",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "HOST",
+                "type": "str",
+                "value": "94.180.248.157"
+            },
+            {
+                "name": "PORT",
+                "type": "num",
+                "value": "5023"
+            },
+            {
+                "name": "ADDRESS",
+                "type": "num",
+                "value": "1"
+            },
+            {
+                "name": "SERIAL_NUMBER",
+                "type": "num",
+                "value": "1415796"
+            },
+            {
+                "name": "RESPONSE_TIMEOUT_MS",
+                "type": "num",
+                "value": "30000"
+            }
+        ],
+        "meta": {},
+        "color": "#DDBB99",
+        "status": {
+            "x": 420,
+            "y": 220,
+            "wires": [
+                {
+                    "id": "vzljot026reader002",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "vzljot026reader001",
+        "type": "function",
+        "z": "vzljot026reader000",
+        "name": "get-measurements",
+        "func": "const HOST = env.get('HOST');\nconst PORT = Number(env.get('PORT'));\nconst ADDRESS = Number(env.get('ADDRESS'));\nconst SERIAL_NUMBER = Number(env.get('SERIAL_NUMBER')) || null;\nconst RESPONSE_TIMEOUT_MS = Number(env.get('RESPONSE_TIMEOUT_MS')) || 30000;\n\nconst { Vzljot026Client } = global.get('vzljot026');\nconst { withConnectionLock } = global.get('withConnectionLock');\n\n(async () => {\n    try {\n        const deviceState = await withConnectionLock(HOST, PORT, async () => {\n            const client = new Vzljot026Client({\n                host: HOST,\n                port: PORT,\n                address: ADDRESS,\n                serialNumber: SERIAL_NUMBER,\n                responseTimeoutMs: RESPONSE_TIMEOUT_MS,\n            });\n            // Vzljot026Client.read() opens the socket, reads every block of\n            // input registers and closes the socket itself.\n            return await client.read();\n        });\n\n        msg.payload = deviceState;\n        node.send(msg);\n        node.status({ fill: 'green', shape: 'dot', text: 'ok ' + new Date().toLocaleTimeString() });\n    } catch (err) {\n        // Full read failed — nothing goes out. No partial/incomplete set is sent downstream.\n        node.error('Vzljot026 read failed: ' + err.message, msg);\n        node.status({ fill: 'red', shape: 'ring', text: 'error' });\n    }\n})();\n\nreturn null;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 220,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "vzljot026reader002",
+        "type": "status",
+        "z": "vzljot026reader000",
         "name": "",
         "scope": null,
         "x": 140,
@@ -1729,7 +1828,7 @@
         "id": "8f732c53378a35c9",
         "type": "modbus-getter",
         "z": "a03807f6777b0746",
-        "name": "pumps-preasures",
+        "name": "pumps-pressures",
         "showStatusActivities": false,
         "showErrors": false,
         "showWarnings": true,
@@ -2247,7 +2346,7 @@
         "id": "3b2dd360db804c04",
         "type": "comment",
         "z": "a03807f6777b0746",
-        "name": "spring-vzljot026-1415796 [22] / mock (VZLJOT_026M-1413560)",
+        "name": "spring-vzljot026-1415796 [22] (old Modbus-node polling, disabled; see the Vzljot026 Client below)",
         "info": "",
         "x": 290,
         "y": 800,
@@ -2257,6 +2356,7 @@
         "id": "1c452a002ba73ce2",
         "type": "modbus-read",
         "z": "a03807f6777b0746",
+        "d": true,
         "name": "",
         "topic": "",
         "showStatusActivities": false,
@@ -2292,7 +2392,7 @@
         "type": "function",
         "z": "a03807f6777b0746",
         "name": "data-convert",
-        "func": "function floatsFromRegs(regs, offset, count) {\n    const result = [];\n    for (let i = offset; i < offset + count * 2; i += 2) {\n        const buf = Buffer.alloc(4);\n        buf.writeUInt16BE(regs[i], 0);\n        buf.writeUInt16BE(regs[i + 1], 2);\n\n        result.push(buf.readFloatBE(0));\n    }\n\n    return result;\n}\n\nconst regs = msg.payload.data;\n\nif (!regs || regs.length < 30) {\n    node.error(\"Unexpected register count: \" + (regs ? regs.length : \"undefined\"));\n    \n    return null;\n}\n\nconst flowRates = floatsFromRegs(regs, 0, 4);   // 0xC01E - flow rates\nconst temperatures = floatsFromRegs(regs, 12, 4);  // 0xC02A - temperatures\nconst preasures = floatsFromRegs(regs, 22, 4);  // 0xC034 - pressures\n\nmsg.payload = {\n    volumeFlowRate1: flowRates[0],\n    volumeFlowRate2: flowRates[1],\n    volumeFlowRate3: flowRates[2],\n    volumeFlowRate4: flowRates[3],\n    temperature1: temperatures[0],\n    temperature2: temperatures[1],\n    temperature3: temperatures[2],\n    temperature4: temperatures[3],\n    presure1: preasures[0],\n    presure2: preasures[1],\n    presure3: preasures[2],\n    presure4: preasures[3]\n};\n\n\n\nreturn msg;\n",
+        "func": "function floatsFromRegs(regs, offset, count) {\n    const result = [];\n    for (let i = offset; i < offset + count * 2; i += 2) {\n        const buf = Buffer.alloc(4);\n        buf.writeUInt16BE(regs[i], 0);\n        buf.writeUInt16BE(regs[i + 1], 2);\n\n        result.push(buf.readFloatBE(0));\n    }\n\n    return result;\n}\n\nconst regs = msg.payload.data;\n\nif (!regs || regs.length < 30) {\n    node.error(\"Unexpected register count: \" + (regs ? regs.length : \"undefined\"));\n    \n    return null;\n}\n\nconst flowRates = floatsFromRegs(regs, 0, 4);   // 0xC01E - flow rates\nconst temperatures = floatsFromRegs(regs, 12, 4);  // 0xC02A - temperatures\nconst pressures = floatsFromRegs(regs, 22, 4);  // 0xC034 - pressures\n\nmsg.payload = {\n    volumeFlowRate1: flowRates[0],\n    volumeFlowRate2: flowRates[1],\n    volumeFlowRate3: flowRates[2],\n    volumeFlowRate4: flowRates[3],\n    temperature1: temperatures[0],\n    temperature2: temperatures[1],\n    temperature3: temperatures[2],\n    temperature4: temperatures[3],\n    pressure1: pressures[0],\n    pressure2: pressures[1],\n    pressure3: pressures[2],\n    pressure4: pressures[3]\n};\n\n\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -2643,6 +2743,95 @@
                 "077f8a7615c4ef33"
             ]
         ]
+    },
+    {
+        "id": "bb766a40dd68bcc5",
+        "type": "comment",
+        "z": "a03807f6777b0746",
+        "name": "spring-vzljot026-1415796 [22] (Vzljot026 Client, every 60 s)",
+        "info": "",
+        "x": 300,
+        "y": 1420,
+        "wires": []
+    },
+    {
+        "id": "e28868c56250a3d1",
+        "type": "inject",
+        "z": "a03807f6777b0746",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 1480,
+        "wires": [
+            [
+                "e97a3bdd89dcde03"
+            ]
+        ]
+    },
+    {
+        "id": "e97a3bdd89dcde03",
+        "type": "subflow:vzljot026reader000",
+        "z": "a03807f6777b0746",
+        "name": "vzljot026-1415796",
+        "env": [],
+        "x": 350,
+        "y": 1480,
+        "wires": [
+            [
+                "19c5ecba25e012f1"
+            ]
+        ]
+    },
+    {
+        "id": "19c5ecba25e012f1",
+        "type": "function",
+        "z": "a03807f6777b0746",
+        "name": "collect-device-state",
+        "func": "const { storeDeviceStateToCacheAsync } = global.get('helpers');\n\n// The Vzljot026 sends MPa; the state keeps pressure in kgf/cm², as the\n// other heat meters do. Its pressure channels PD1/PD2 are switched off, so\n// TR1.P/TR2.P are the pressures set in the calculator for its calculation.\nconst KGF_CM2_PER_MPA = 10.1972;\nconst convert = (value, factor) =>\n    value === null || value === undefined ? null : Number((value * factor).toPrecision(7));\n\nconst { TR1: input, TR2: ret, TS } = msg.payload;\n\nconst deviceState = {\n    // Pipe 1 (TR1) is the supply, pipe 2 (TR2) the return.\n\n    // Volume flow rate, m³/h\n    volumeFlowRateInputPipe: input.Q,\n    volumeFlowRateReturnPipe: ret.Q,\n\n    // Temperature, °C\n    temperatureInputPipe: input.t,\n    temperatureReturnPipe: ret.t,\n\n    // Pressure, kgf/cm²\n    pressureInputPipe: convert(input.P, KGF_CM2_PER_MPA),\n    pressureReturnPipe: convert(ret.P, KGF_CM2_PER_MPA),\n\n    // Heat consumed by the heat system, Gcal\n    totalHeatConsumption: TS.W,\n\n    // Mass, t\n    massInputPipe: input.M,\n    massReturnPipe: ret.M,\n\n    // Volume, m³\n    volumeInputPipe: input.V,\n    volumeReturnPipe: ret.V,\n\n    // Timestamp\n    timestamp: Date.now(),\n};\n\n// Index 4: the Vzljot026 [22] is the fifth device of this flow by id.\nconst flowUid = node.path.split('/').find(_ => true);\nawait storeDeviceStateToCacheAsync(global, flowUid, deviceState, 4);\nmsg.deviceState = deviceState;\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 1480,
+        "wires": [
+            [
+                "49d293d06fb2b85e"
+            ]
+        ]
+    },
+    {
+        "id": "49d293d06fb2b85e",
+        "type": "debug",
+        "z": "a03807f6777b0746",
+        "name": "debug vzljot026",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 800,
+        "y": 1480,
+        "wires": []
     },
     {
         "id": "13bfc5999f0041c0",

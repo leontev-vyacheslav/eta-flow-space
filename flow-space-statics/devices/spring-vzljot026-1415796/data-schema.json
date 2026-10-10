@@ -113,7 +113,7 @@
         },
         "pressureInputPipe": {
             "type": "number",
-            "unit": "кПа",
+            "unit": "кгс/см²",
             "ui": {
                 "group": 1,
                 "editor": {
@@ -132,7 +132,7 @@
         },
         "pressureReturnPipe": {
             "type": "number",
-            "unit": "кПа",
+            "unit": "кгс/см²",
             "ui": {
                 "group": 1,
                 "editor": {
