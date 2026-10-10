@@ -10,29 +10,48 @@
  * meaning for the "start address" field:
  *
  *   0x3FFF write  start session (fixed tail CC 80 00 00 00) / element list
- *   0x3FFD write  value type: 4 current, 5 hourly totals, 6 properties
+ *   0x3FFD write  value type: 4 current, 5 current totals, 6 properties
  *   0x3FFC read   list of active elements: { id: u32 LE, size: u16 LE }[]
  *   0x3FFE read   data for the written element list
- *   0x3FF9 read   service info (firmware in byte 0: 0x27 = "2.7")
+ *   0x3FF9 read   service info: firmware, scheme words, subscriber id,
+ *                 network number, report date, model
  *   0x3FFB read   device date and time (firmware 1.9+)
+ *   0x3ECD/0x3F5B read  measurement scheme number of heat input 1/2 (1.9+)
+ *   0x3FE9 read   active settings database (1.9+)
+ *   0x3FEE read   discrete output states (2.0+)
+ *
+ * read() returns every current value the protocol offers, raw, named after
+ * the protocol's element table (Cyrillic letters transliterated): the
+ * "Текущие значения" and "Итоговые текущие значения" lists for both heat
+ * inputs (input1, input2 = Тв1, Тв2) and the device-wide elements, plus the
+ * service info and the units the device reports. Which pipe is the supply
+ * or the return is decided by the Node-RED mapping (collect-device-state).
+ * Archives and the НС durations (QntNS, archive-only) are not read.
  *
  * Sequence per read():
  *   1. Start session, then one data read: byte 64 of that reply is the
  *      "server version", which says how unit names are encoded.
- *   2. Service info -> firmware.
- *   3. Properties (type 6): decimal places for t, V, M, P, Q. Every value
- *      except flow rates and the additional input comes as a scaled
- *      integer: 12345 with 2 decimal places is 123.45.
+ *   2. Service info.
+ *   3. Properties (type 6): unit names and decimal places of every
+ *      quantity. Every value except flow rates and the additional input
+ *      comes as a scaled integer: 12345 with 2 decimal places is 123.45.
+ *      If the device rejects the full property list, the 16 properties of
+ *      the protocol's example are read instead.
  *   4. Active element list: which elements this measurement scheme uses
  *      and how many bytes each one takes in a data reply.
- *   5. Current values (type 4), then hourly totals (type 5): writes the
- *      wanted elements that are active, reads their data. A long list is
- *      split so that one reply stays well below the 264-byte frame limit.
+ *   5. Current values (type 4), then the active database, the scheme
+ *      numbers and the discrete outputs, which need a value type written
+ *      first; then current totals (type 5), which are integrals from the
+ *      archive reset to the end of the previous hour. For each group only
+ *      the elements of that group's list that are active are written; a
+ *      long list is split so that one reply stays well below the 264-byte
+ *      frame limit.
  *   6. Device clock (firmware 1.9+ only).
  *
  * Every element in a data reply is followed by a quality byte (0xC0 good,
  * 0x00 bad: out of range or not in the scheme) and an abnormal-situation
- * byte. Values with bad quality are returned as null.
+ * byte. Values with bad quality, and elements that are not active, are
+ * returned as null.
  *
  * A reply is accepted only when its CRC is valid, it comes from the
  * requested address and function, and a data reply has exactly the length
@@ -70,6 +89,9 @@ const ADDRESS_VALUE_TYPE = 0x3ffd;
 const ADDRESS_ACTIVE_ELEMENTS = 0x3ffc;
 const ADDRESS_DATE_TIME = 0x3ffb;
 const ADDRESS_SERVICE_INFO = 0x3ff9;
+const ADDRESS_OUTPUTS = 0x3fee;
+const ADDRESS_ACTIVE_DB = 0x3fe9;
+const ADDRESS_SCHEME = { input1: 0x3ecd, input2: 0x3f5b };
 
 const VALUE_TYPE_CURRENT = 4;
 const VALUE_TYPE_TOTALS = 5;
@@ -84,61 +106,88 @@ const QUALITY_BAD = 0x00;
 // Exception code of a data read: the measurement scheme changed, so the
 // active element list has to be read and written again.
 const EXCEPTION_SCHEME_CHANGED = 5;
+// Exception code of a write: the element does not exist.
+const EXCEPTION_NO_ELEMENT = 2;
+// Exception code of the discrete output read: not remotely controllable.
+const EXCEPTION_OUTPUTS_NOT_REMOTE = 7;
 
 // "Start session" write after the register count: a byte count of 0xCC
 // that deliberately does not match the 4 data bytes (protocol, 2.1).
 const START_SESSION_TAIL = [0xcc, 0x80, 0x00, 0x00, 0x00];
 const SERVER_VERSION_OFFSET = 64;
 
-// Properties read in step 3: [element id, decimal-places key]. Unit names
-// come first (7 bytes each in the element list), then decimal places
-// (1 byte each), in the order of the protocol description.
+// Unit-name properties: name -> element id (tTypeM ... QntTypeM). QntTypeM
+// is the unit of the time counters, or of the additional input when DI is
+// active.
 const UNIT_ELEMENTS = {
-    temperature: 44,
-    flowRate: 45,
-    volume: 46,
-    mass: 47,
-    pressure: 48,
-    heat: 53,
-    normalOperationTime: 55,
-    stopTimeOrAdditionalInput: 56,
+    t: 44, G: 45, V: 46, M: 47, P: 48, dt: 49, tx: 50, ta: 51, Mg: 52, Qo: 53, Qg: 54, VNR: 55, VOS: 56,
 };
-const DECIMAL_ELEMENTS = {
-    t: 57,
-    v1: 59,
-    m1: 60,
-    p: 61,
-    q1: 66,
-    m2: 70,
-    v2: 69,
-    q2: 76,
-};
+// Decimal-place properties (tTypeFractDiNum ... QoTypeFractDigNum2): element
+// ids 57-76; 58, 67 and 68 are reserved.
+const DECIMAL_IDS = Array.from({ length: 20 }, (_, i) => 57 + i);
+// Fallback when the full property list is rejected: the 16 properties of
+// the protocol's example (5.2).
+const BASIC_UNIT_NAMES = ['t', 'G', 'V', 'M', 'P', 'Qo', 'VNR', 'VOS'];
+const BASIC_DECIMAL_IDS = [57, 59, 60, 61, 66, 70, 69, 76];
+// Decimal places to use when a property was not read: id -> fallback id.
+const DECIMAL_FALLBACK = { 62: 57, 63: 57, 64: 57, 65: 60, 71: 61, 72: 57, 75: 70 };
 const UNIT_SIZE = 7;
 const DECIMAL_SIZE = 1;
 
-// Wanted elements (heat input 1): name -> [element id, kind,
-// decimal-places key]. kind: 'int' scaled integer, 'float' IEEE754 LE,
-// 'count' plain integer. Names follow the Взлёт 026 state.
+// Elements: name -> [element id, kind, decimal-places element id].
+// kind: 'int' scaled integer, 'float' IEEE754 LE, 'count' plain integer,
+// 'flag' printable '*' (true) or ' ' (false).
+const inputCurrent = (t1, t2, t3, p1, p2, dt, g1, ns, pDecimals, dtDecimals) => ({
+    t1: [t1, 'int', 57],
+    t2: [t2, 'int', 57],
+    t3: [t3, 'int', 57],
+    P1: [p1, 'int', pDecimals],
+    P2: [p2, 'int', pDecimals],
+    dt: [dt, 'int', dtDecimals],
+    G1: [g1, 'float'],
+    G2: [g1 + 1, 'float'],
+    G3: [g1 + 2, 'float'],
+    NS: [ns, 'flag'],
+});
+const inputTotals = (v1, mg, vnr, vDecimals, mDecimals, mgDecimals, qDecimals) => ({
+    V1: [v1, 'int', vDecimals],
+    V2: [v1 + 1, 'int', vDecimals],
+    V3: [v1 + 2, 'int', vDecimals],
+    M1: [v1 + 3, 'int', mDecimals],
+    M2: [v1 + 4, 'int', mDecimals],
+    M3: [v1 + 5, 'int', mDecimals],
+    Mg: [mg, 'int', mgDecimals],
+    Qo: [mg + 1, 'int', qDecimals],
+    Qg: [mg + 2, 'int', qDecimals],
+    VNR: [vnr, 'count'],
+    VOS: [vnr + 1, 'count'],
+});
+
+// "Текущие значения": group -> elements (group null = device-wide).
 const CURRENT_ELEMENTS = {
-    temperatureInputPipe: [0, 'int', 't'],
-    temperatureReturnPipe: [1, 'int', 't'],
-    pressureInputPipe: [9, 'int', 'p'],
-    pressureReturnPipe: [10, 'int', 'p'],
-    volumeFlowRateInputPipe: [19, 'float'],
-    volumeFlowRateReturnPipe: [20, 'float'],
+    input1: inputCurrent(0, 1, 2, 9, 10, 14, 19, 77, 61, 62),
+    input2: inputCurrent(22, 23, 24, 31, 32, 36, 41, 78, 71, 72),
+    device: {
+        tx: [15, 'int', 63],
+        ta: [16, 'int', 64],
+        P3: [82, 'int', 61],
+        // The additional input (DopInpImpP_Type), instant value.
+        DIrate: [81, 'float'],
+    },
 };
 
-// Hourly totals: integrals from the archive reset to the end of the
-// previous hour.
+// "Итоговые текущие значения".
 const TOTAL_ELEMENTS = {
-    volumeInputPipe: [3, 'int', 'v1'],
-    volumeReturnPipe: [4, 'int', 'v1'],
-    massInputPipe: [6, 'int', 'm1'],
-    massReturnPipe: [7, 'int', 'm1'],
-    totalHeatConsumption: [12, 'int', 'q1'],
-    normalOperationTime: [17, 'count'],
-    noCountTime: [18, 'count'],
+    input1: inputTotals(3, 11, 17, 59, 60, 65, 66),
+    input2: inputTotals(25, 33, 39, 69, 70, 75, 76),
+    device: {
+        // The additional input, total.
+        DI: [81, 'float'],
+    },
 };
+
+// A float32 carries ~7 significant digits; more would be noise.
+const roundFloat = (value) => (Number.isFinite(value) ? Number(value.toPrecision(7)) : null);
 
 // CP866 (OEM) letters used in unit names; anything else outside ASCII -> '?'.
 function decodeOem(bytes) {
@@ -204,10 +253,6 @@ class Vkt7Client {
         this.maxReplyDataBytes = maxReplyDataBytes;
         this.responseTimeoutMs = responseTimeoutMs;
         this.trace = trace;
-
-        // Filled by read(): server version, unit names and decimal places
-        // as the device reported them (for commissioning; not in the state).
-        this.properties = null;
     }
 
     static get CURRENT_ELEMENTS() {
@@ -240,9 +285,10 @@ class Vkt7Client {
     }
 
     // Request without wake-up bytes. Start address and register count are
-    // big-endian; every other multi-byte field is little-endian.
-    buildReadRequest(startAddress) {
-        return Vkt7Client._withCrc([this.address, FUNCTION_READ, startAddress >>> 8, startAddress & 0xff, 0, 0]);
+    // big-endian; every other multi-byte field is little-endian. The
+    // register count is ignored by most requests (protocol, 2.1).
+    buildReadRequest(startAddress, count = 0) {
+        return Vkt7Client._withCrc([this.address, FUNCTION_READ, startAddress >>> 8, startAddress & 0xff, count >>> 8, count & 0xff]);
     }
 
     buildWriteRequest(startAddress, body) {
@@ -393,15 +439,15 @@ class Vkt7Client {
         });
     }
 
-    // Parses the properties reply: 8 unit names, then 8 decimal places,
-    // each followed by quality and abnormal-situation bytes. Server
-    // version 0 sends unit names as 7 OEM characters, version 1 as a u16
-    // length plus the characters. Returns null when the layout does not
-    // consume the reply exactly.
-    _parseProperties(data, serverVersion) {
+    // Parses the properties reply for the requested list (unit names, then
+    // decimal places), each followed by quality and abnormal-situation
+    // bytes. Server version 0 sends unit names as 7 OEM characters,
+    // version 1 as a u16 length plus the characters. Returns null when the
+    // layout does not consume the reply exactly.
+    _parseProperties(data, serverVersion, unitNames, decimalIds) {
         let offset = 0;
         const units = {};
-        for (const name of Object.keys(UNIT_ELEMENTS)) {
+        for (const name of unitNames) {
             let length = UNIT_SIZE;
             if (serverVersion === 1) {
                 if (offset + 2 > data.length) return null;
@@ -413,36 +459,65 @@ class Vkt7Client {
             offset += length + 2;
         }
         const decimals = {};
-        for (const key of Object.keys(DECIMAL_ELEMENTS)) {
+        for (const id of decimalIds) {
             if (offset + DECIMAL_SIZE + 2 > data.length) return null;
-            decimals[key] = data[offset];
+            decimals[id] = data[offset];
             offset += DECIMAL_SIZE + 2;
         }
         if (offset !== data.length) return null;
-        return { serverVersion, units, decimals };
+        return { units, decimals };
+    }
+
+    async _readProperties(connection, serverVersion, unitNames, decimalIds) {
+        await connection.request(this.buildWriteRequest(ADDRESS_VALUE_TYPE, [VALUE_TYPE_PROPERTIES, 0]));
+        await connection.request(this.buildElementListRequest([
+            ...unitNames.map((name) => ({ id: UNIT_ELEMENTS[name], size: UNIT_SIZE })),
+            ...decimalIds.map((id) => ({ id, size: DECIMAL_SIZE })),
+        ]));
+        const data = await connection.request(this.buildReadRequest(ADDRESS_DATA));
+        // The reported server version is tried first; the other layout is
+        // the fallback, accepted only if it fits exactly.
+        const versions = serverVersion === 0 ? [0, 1] : [1, 0];
+        const properties = versions.map((v) => this._parseProperties(data, v, unitNames, decimalIds)).find(Boolean);
+        if (!properties) throw new Error('Vkt7Client: properties reply does not match either unit layout');
+        return properties;
+    }
+
+    _decimalPlaces(decimals, id) {
+        if (decimals[id] !== undefined) return decimals[id];
+        const fallback = DECIMAL_FALLBACK[id];
+        return fallback !== undefined && decimals[fallback] !== undefined ? decimals[fallback] : 0;
     }
 
     _decodeValue(bytes, kind, decimals) {
-        if (kind === 'float') return bytes.length >= 4 ? bytes.readFloatLE(0) : null;
+        if (kind === 'float') return bytes.length >= 4 ? roundFloat(bytes.readFloatLE(0)) : null;
+        if (kind === 'flag') return bytes.length >= 1 ? bytes[0] === 0x2a : null; // '*'
         let raw;
         if (bytes.length <= 6) raw = bytes.readIntLE(0, bytes.length);
         else if (bytes.length === 8) raw = Number(bytes.readBigInt64LE(0));
         else return null;
-        return kind === 'int' ? raw / 10 ** decimals : raw;
+        return kind === 'int' ? Number((raw / 10 ** decimals).toFixed(decimals)) : raw;
     }
 
-    // Reads one group of elements (current values or hourly totals) into
+    // Reads one group of elements (current values or current totals) into
     // `results`: writes the value type, then element lists in chunks that
     // keep a data reply within maxReplyDataBytes, and decodes each reply.
-    async _readGroup(connection, valueType, wanted, activeSizes, decimals, results) {
+    // An element that is not active is set to null.
+    async _readGroup(connection, valueType, groups, activeSizes, decimals, results) {
         await connection.request(this.buildWriteRequest(ADDRESS_VALUE_TYPE, [valueType, 0]));
 
         const elements = [];
-        for (const [name, [id, kind, decimalsKey]] of Object.entries(wanted)) {
-            if (activeSizes.has(id)) {
-                elements.push({ name, id, kind, size: activeSizes.get(id), decimals: decimals[decimalsKey] ?? 0 });
-            } else {
-                results[name] = null;
+        for (const [group, wanted] of Object.entries(groups)) {
+            const target = group === 'device' ? results : results[group];
+            for (const [name, [id, kind, decimalsId]] of Object.entries(wanted)) {
+                if (activeSizes.has(id)) {
+                    elements.push({
+                        target, name, id, kind, size: activeSizes.get(id),
+                        decimals: this._decimalPlaces(decimals, decimalsId),
+                    });
+                } else {
+                    target[name] = null;
+                }
             }
         }
 
@@ -472,7 +547,7 @@ class Vkt7Client {
                 const value = data.subarray(offset, offset + element.size);
                 const quality = data[offset + element.size];
                 offset += element.size + 2;
-                results[element.name] = (quality & QUALITY_MASK) === QUALITY_BAD
+                element.target[element.name] = (quality & QUALITY_MASK) === QUALITY_BAD
                     ? null
                     : this._decodeValue(value, element.kind, element.decimals);
             }
@@ -493,17 +568,49 @@ class Vkt7Client {
 
     // Reads a group again with a fresh active element list when the device
     // reports that the measurement scheme changed.
-    async _readGroupWithSchemeCheck(connection, valueType, wanted, state) {
+    async _readGroupWithSchemeCheck(connection, valueType, groups, state) {
         try {
-            await this._readGroup(connection, valueType, wanted, state.activeSizes, state.decimals, state.results);
+            await this._readGroup(connection, valueType, groups, state.activeSizes, state.decimals, state.results);
         } catch (err) {
             if (!(err instanceof Vkt7ExceptionError) || err.code !== EXCEPTION_SCHEME_CHANGED) throw err;
             state.activeSizes = await this._readActiveSizes(connection);
-            await this._readGroup(connection, valueType, wanted, state.activeSizes, state.decimals, state.results);
+            await this._readGroup(connection, valueType, groups, state.activeSizes, state.decimals, state.results);
         }
     }
 
+    // One value byte followed by quality and abnormal-situation bytes (the
+    // scheme number and active database requests); null on bad quality.
+    async _readValueByte(connection, startAddress) {
+        const data = await connection.request(this.buildReadRequest(startAddress, 1));
+        return data.length >= 2 && (data[1] & QUALITY_MASK) !== QUALITY_BAD ? data[0] : null;
+    }
+
+    // Service info: firmware (high nibble major, low nibble minor), the
+    // scheme words of both heat inputs (scheme, ТР3 and t5 assignment bits,
+    // raw), subscriber id, network number, report date, model.
+    _parseServiceInfo(info, results) {
+        if (info.length === 1) {
+            results.firmware = null;
+            results.reportDate = info[0];
+            return null;
+        }
+        const firmwareByte = info.length ? info[0] : null;
+        results.firmware = firmwareByte === null ? null : `${firmwareByte >> 4}.${firmwareByte & 0x0f}`;
+        if (info.length >= 16) {
+            results.input1.schemeInfo = info.readUInt16LE(1);
+            results.input2.schemeInfo = info.readUInt16LE(3);
+            results.subscriberId = info.subarray(5, 13).toString('latin1').replace(/\0/g, '').trim();
+            results.networkNumber = info[13];
+            results.reportDate = info[14];
+            results.model = info[15];
+        }
+        return firmwareByte;
+    }
+
     async _readSession(connection, results) {
+        results.input1 = {};
+        results.input2 = {};
+
         // 1. Start session; its reply needs no analysis. The first data
         // read after it carries the server version.
         await connection.request(this.buildStartSessionRequest());
@@ -516,53 +623,83 @@ class Vkt7Client {
             if (!(err instanceof Vkt7ExceptionError)) throw err;
         }
 
-        // 2. Firmware: high nibble major, low nibble minor.
-        const info = await connection.request(this.buildReadRequest(ADDRESS_SERVICE_INFO));
-        const firmwareByte = info.length ? info[0] : null;
-        results.firmware = firmwareByte === null ? null : `${firmwareByte >> 4}.${firmwareByte & 0x0f}`;
+        // 2. Service info.
+        const firmwareByte = this._parseServiceInfo(
+            await connection.request(this.buildReadRequest(ADDRESS_SERVICE_INFO)), results);
 
-        // 3. Properties. The reported server version is tried first; the
-        // other layout is the fallback, accepted only if it fits exactly.
-        await connection.request(this.buildWriteRequest(ADDRESS_VALUE_TYPE, [VALUE_TYPE_PROPERTIES, 0]));
-        await connection.request(this.buildElementListRequest([
-            ...Object.values(UNIT_ELEMENTS).map((id) => ({ id, size: UNIT_SIZE })),
-            ...Object.values(DECIMAL_ELEMENTS).map((id) => ({ id, size: DECIMAL_SIZE })),
-        ]));
-        const propertiesData = await connection.request(this.buildReadRequest(ADDRESS_DATA));
-        const versions = serverVersion === 0 ? [0, 1] : [1, 0];
-        const properties = versions.map((v) => this._parseProperties(propertiesData, v)).find(Boolean);
-        if (!properties) throw new Error('Vkt7Client: properties reply does not match either unit layout');
-        this.properties = properties;
+        // 3. Properties: every unit and decimal place, or the protocol's
+        // basic 16 when the device does not know the others.
+        let properties;
+        try {
+            properties = await this._readProperties(connection, serverVersion, Object.keys(UNIT_ELEMENTS), DECIMAL_IDS);
+        } catch (err) {
+            if (!(err instanceof Vkt7ExceptionError) || err.code !== EXCEPTION_NO_ELEMENT) throw err;
+            properties = await this._readProperties(connection, serverVersion, BASIC_UNIT_NAMES, BASIC_DECIMAL_IDS);
+        }
+        results.units = properties.units;
 
-        // 4-5. Active elements, current values, hourly totals.
+        // 4-5. Active elements, current values, then the requests that need
+        // a value type written, then current totals.
         const state = {
             activeSizes: await this._readActiveSizes(connection),
             decimals: properties.decimals,
             results,
         };
         await this._readGroupWithSchemeCheck(connection, VALUE_TYPE_CURRENT, CURRENT_ELEMENTS, state);
+
+        const atLeast = (version) => firmwareByte !== null && firmwareByte >= version;
+        results.activeDb = atLeast(0x19) ? await this._readValueByte(connection, ADDRESS_ACTIVE_DB) : null;
+        for (const input of ['input1', 'input2']) {
+            results[input].scheme = atLeast(0x19) ? await this._readValueByte(connection, ADDRESS_SCHEME[input]) : null;
+        }
+        results.output1 = null;
+        results.output2 = null;
+        if (atLeast(0x20)) {
+            try {
+                const outputs = await connection.request(this.buildReadRequest(ADDRESS_OUTPUTS));
+                if (outputs.length >= 2) [results.output1, results.output2] = [outputs[0], outputs[1]];
+            } catch (err) {
+                if (!(err instanceof Vkt7ExceptionError) || err.code !== EXCEPTION_OUTPUTS_NOT_REMOTE) throw err;
+            }
+        }
+
         await this._readGroupWithSchemeCheck(connection, VALUE_TYPE_TOTALS, TOTAL_ELEMENTS, state);
 
         // 6. Device clock, local wall-clock time (no TZ in the protocol);
         // firmware before 2.7 sends minutes and seconds as 0.
         results.deviceTime = null;
-        if (firmwareByte !== null && firmwareByte >= 0x19) {
+        if (atLeast(0x19)) {
             const t = await connection.request(this.buildReadRequest(ADDRESS_DATE_TIME));
             if (t.length >= 6) results.deviceTime = new Date(2000 + t[2], t[1] - 1, t[0], t[3], t[4], t[5]).getTime();
         }
     }
 
     /**
-     * Reads current values and hourly totals from the VKT-7 in one session.
-     * Resolves with every name of CURRENT_ELEMENTS and TOTAL_ELEMENTS
-     * (number, or null when the element is not in the measurement scheme
-     * or has bad quality, e.g. a failed pressure sensor), plus
-     * firmware (string), deviceTime (epoch ms) and timestamp.
+     * Reads the service info, properties, current values and current
+     * totals from the VKT-7 in one session. Resolves with (units as the
+     * device reports them in `units`; null when an element is not in the
+     * measurement scheme or has bad quality, e.g. a failed pressure sensor):
+     *
+     *   firmware (string), model, networkNumber, reportDate, subscriberId
+     *   units         t, G, V, M, P, dt, tx, ta, Mg, Qo, Qg, VNR, VOS
+     *                 (VOS: the time counters' unit, or the additional
+     *                 input's when DI is active)
+     *   input1, input2 (Тв1, Тв2), each with
+     *     t1, t2, t3, P1, P2, dt, G1, G2, G3 (current values),
+     *     NS (abnormal situation on the input, boolean),
+     *     V1, V2, V3, M1, M2, M3, Mg (Mг), Qo (Qо), Qg (Qг), VNR (ВНР),
+     *     VOS (ВОС) (current totals, to the end of the previous hour),
+     *     scheme (measurement scheme number), schemeInfo (raw scheme word)
+     *   tx, ta, P3    device-wide current values
+     *   DIrate, DI    additional input, current value and total
+     *   activeDb      0 БД1, 1 БД2
+     *   output1, output2  discrete outputs (null when not remotely controllable)
+     *   deviceTime    epoch ms, timestamp
      *
      * Rejects on connection/protocol failure; the Error carries a
      * `.partialResults` property with whatever was read before it.
      *
-     * @returns {Promise<Record<string, number|string|boolean|null>>}
+     * @returns {Promise<Record<string, any>>}
      */
     async read() {
         const results = {};
@@ -591,21 +728,21 @@ class Vkt7Client {
 module.exports = { Vkt7Client, Vkt7ExceptionError };
 
 // Run directly for a quick standalone test (prints every frame):
-//   node vkt7-client.js <host> <port> [address]
+//   node vkt7-client.js <host> <port> [address] [wake-up bytes]
 if (require.main === module) {
-    const [, , host, port, address] = process.argv;
+    const [, , host, port, address, wakeUpBytes] = process.argv;
     const hex = (bytes) => [...bytes].map((b) => b.toString(16).padStart(2, '0')).join(' ');
     const client = new Vkt7Client({
         host,
         port: Number(port),
         address: Number(address) || 0,
+        wakeUpBytes: wakeUpBytes === undefined ? 2 : Number(wakeUpBytes),
         trace: (direction, bytes) => console.error(direction, hex(bytes)),
     });
 
     client.read()
         .then((results) => {
-            console.log('Properties:', JSON.stringify(client.properties, null, 2));
-            console.log(JSON.stringify(results, null, 2));
+            console.log(JSON.stringify({ ...results, deviceTimeLocal: new Date(results.deviceTime).toString() }, null, 2));
         })
         .catch((err) => {
             console.error('Error:', err.message);
