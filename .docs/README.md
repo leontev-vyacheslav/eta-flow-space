@@ -1,0 +1,26 @@
+# Documentation
+
+Meter manuals and protocol descriptions, one folder per device type (named like `device_type.code` in the database).
+File names are ASCII: `<type>-<kind>-<edition>.pdf`. The original titles and where each file came from are listed
+below; look there for a newer edition.
+
+| File | Original title | Source |
+|---|---|---|
+| `tv7/tv7-protocol-r7.09.pdf` | Описание протокола обмена тепловычислителя «ТВ7» с системой верхнего уровня, ред. 7.09 (Термотроник, 2025) | [termotronic.ru](https://termotronic.ru/upload/files/tv7_protokol_obmena_red.7-09.pdf) |
+| `tv7/tv7m-manual-r1.09.pdf` | Тепловычислитель ТВ7 исполнение М. Руководство по эксплуатации РЭПР.407290.007 РЭ1, ред. 1.09 (Термотроник) | [termotronic.ru](http://termotronic.ru/upload/files/tv7_ispolnenie_m_rukovodstvo_po_ekspluatacii_red.1.09.pdf) |
+| `vkt7/vkt7-protocol.pdf` | Реализация протокола обмена для связи с вычислителем ВКТ-7 (НПФ Теплоком) | [ftp.owen.ru](https://ftp.owen.ru/CoDeSys3/04_Library/05_3.5.11.5/02_Libraries/02_vendor_protocols/vkt7_protocol.pdf) |
+| `vkt7/vkt7-manual-r5.2.pdf` | Вычислитель количества теплоты ВКТ-7. Руководство по эксплуатации РБЯК.400880.036 РЭ, ред. 5.2 (НПФ Теплоком); ред. 5.4 exists, the copies found were broken | [emis-kip.ru](https://emis-kip.ru/upload/iblock/185/6839qp7vgzbl6ekanwjp2821601hn9i7.pdf) |
+| `km5/km5-protocol-v1n-2019.pdf` | Протокол обмена между ПК и КМ-5 v1N с поддержкой новых Правил коммерческого учета тепловой энергии (17-09-2019) (ТБН Энергосервис) | [tbnenergo.ru](https://www.tbnenergo.ru/file/km5v1.pdf.pdf) |
+| `km5/km5-protocol-2009.pdf` | Протокол обмена между ПК и КМ-5 (05-11-2009) (ТБН Энергосервис) | [tbnenergo.ru](https://www.tbnenergo.ru/file/protokol_obmena_mejdu_pk_i_priborami_ucheta_seriy_km-5_krome_km-5m_rm-5.pdf) |
+| `km5/km5-manual.pdf` | Теплосчётчики КМ-5 модификации КМ-5-1…КМ-5-7. Руководство по эксплуатации РЭ 4218-010-42968951 (ТБН Энергосервис) | [tbnenergo.ru](https://www.tbnenergo.ru/file/rukovodstvo-po-ekspluatatsii-KM-5.pdf) |
+| `ek270/ek270-manual-lgti.407229.170.pdf` | Корректор объема газа ЕК270. Руководство по эксплуатации ЛГТИ.407229.170 РЭ (Эльстер Газэлектроника); the parameter lists give the IEC 61107 addresses the client reads (`1:180`, `1:400`, `2:302`, `5:310`, `4:171`...) | [packo.ru](https://packo.ru/catalog_files/39.47836_lgti.407229.170re-korrektory-obema-gaza-ek270-rukovodstvo-po-ekspluatatsii-_tipografskiy_-izm.25.pdf) |
+| `ek270/ek270-protocol-iec61107-gost-r-2001.pdf` | ГОСТ Р МЭК 61107-2001. Обмен данными при считывании показаний счетчиков, тарификации и управлении нагрузкой. Прямой локальный обмен данными: the protocol the EK270 client speaks (mode C, programming mode, SOH/STX/ETX frames, BCC) | [meganorm.ru](https://meganorm.ru/Data2/1/4294815/4294815804.pdf) |
+| `ek270/ek270-protocol-modbus-v4.00.pdf` | EK270 Modbus RS-485 manual, Modbus 4.00, 30.11.2012 (Эльстер Газэлектроника); not used: the client reads the EK270 over IEC 61107 | — |
+| `irvis/irvis-protocol-modbus-ri.pdf` | Протокол обмена регистраторов РИ-3\|4\|5\|7, РИА-1 в приборах ВРСГ-1, ИРВИС-РС4, ИРВИС-РС4М, ИРВИС-РС4-Ультра, ИРВИС-РС4М-Ультра, ИРВИС-Ультра (НПП Ирвис): Modbus RTU map of the registrar; current values of ПП1 from register 0x0089 (137), as the spring2 Modbus reader reads them | [gorgaz.ru](https://www.gorgaz.ru/fs/a_files/4_file_rs4_protocol_ri3.pdf) |
+| `irvis/irvis-manual-ultra-pp16-re7.pdf` | Расходомеры-счетчики ультразвуковые ИРВИС-Ультра. Руководство по эксплуатации ИРВС 9100.0000.00 РЭ7, ИРВИС-Ультра-Пп-16 (НПП Ирвис). Our meter (29804) works at ~0.38 MPa abs., a 1.6 MPa model; if it is the АП or Пр variant, see [Пп16-АП](https://www.gorgaz.ru/fs/a_files/137_file_manual_ultra_AP_1dot6mpa.pdf), [Пр16](https://www.gorgaz.ru/fs/a_files/138_file_manual_ultra-pr-1dot6mpa.pdf) | [gorgaz.ru](https://www.gorgaz.ru/fs/a_files/141_file_manual_ultra-pp-1dot6mpa.pdf) |
+| `irvis/irvis-manual-telemetry.pdf` | Счетчики ИРВИС — подключение к системам телеметрии (НПП Ирвис): ports, wiring, byte order (Uint16 1-0, Float/Uint32 1-0-3-2), example request for the pressure | [gorgaz.ru](https://www.gorgaz.ru/fs/a_files/176_file_irvis_connecting_to_telemetry_systems.pdf) |
+| `irvis/irvis-manual-hart-converter-i9101-255.pdf` | ИРВИС-Ультра. Описание взаимодействия с оборудованием «HART», инструкция И9101-255 ред. 1 (НПП Ирвис): the Modbus RTU – HART converter | [gorgaz.ru](https://www.gorgaz.ru/fs/a_files/206_file_I9101-255.pdf) |
+| `vzljot026/vzljot026-protocol-modbus.pdf` | Список ModBus-регистров. Тепловычислитель «Взлет ТСРВ», исполнение ТСРВ-026М (Взлет) | — |
+
+Other files: `new-tsarevo-1.svg` and `old-tsarevo-1.svg` (Царёво-1 diagram drafts), `spring-modicons-modbus-map.xlsx`
+(Modbus register map of the Весна Modicon controllers).
