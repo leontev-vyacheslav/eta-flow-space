@@ -1,196 +1,442 @@
-function crc16modbus(buffer) {
-    let crc = 0xFFFF;
-    for (let pos = 0; pos < buffer.length; pos++) {
-        crc ^= buffer[pos];
-        for (let i = 0; i < 8; i++) {
-            crc = (crc & 1) ? (crc >> 1) ^ 0xA001 : crc >> 1;
-        }
-    }
-    return Buffer.from([crc & 0xFF, (crc >> 8) & 0xFF]);
-}
+'use strict';
+/**
+ * Mercury230Client
+ *
+ * TCP client for the Incotex "Меркурий 230" three-phase electricity meter,
+ * connected through a transparent TCP-serial gateway to its RS-485 port.
+ * Implements "Описание системы команд приборов учета электроэнергии
+ * Меркурий 150, 203.2TD, 204, 208, 230, 231, 234, 236, 238, 350" (Incotex,
+ * 30.08.2024): request = address | request code | parameters | CRC16
+ * (0xA001, low byte first); reply = address | data | CRC16. A reply with
+ * one data byte is an exchange status: 0 OK, 1 bad command or parameter,
+ * 2 internal error, 3 access level too low, 4 clock already corrected,
+ * 5 channel not open.
+ *
+ * read() returns every current value the meter offers, raw, named after
+ * the protocol. The Node-RED mapping (collect-device-state) gives them
+ * their meaning.
+ *
+ * Requests used by read():
+ *   01h  open the channel (access level, 6-byte password; these meters
+ *        expect the digits as binary values 01..09, not ASCII, so
+ *        "111111" is sent as 01 01 01 01 01 01)
+ *   08h 00h  serial number (4 bytes, each byte two decimal digits) and
+ *            manufacture date (day, month, year)
+ *   08h 03h  firmware version (3 bytes)
+ *   08h 0Ah  status word (6 bytes, appendix A)
+ *   08h 12h  meter variant (6 or 12 bytes, 4.4.16), returned as hex
+ *   04h 00h  clock: BCD seconds, minutes, hours, weekday, day, month,
+ *            year, winter flag
+ *   08h 16h A0h  fast read of the auxiliary parameters (4.4.1 note 3):
+ *            P, Q, S (sum, phases 1-3), U1-U3, angles between phase
+ *            voltages, I1-I3, cos φ (sum, phases 1-3), frequency; newer
+ *            firmware adds voltage distortion coefficients, the temperature
+ *            and line voltages (null when the reply is shorter)
+ *   05h 00h N  energy since reset A+, A-, R+, R- for the tariff sum (N=0)
+ *            and tariffs 1-4
+ *   05h 60h 00h  forward active energy A+ per phase
+ *   02h  close the channel
+ *
+ * Value encoding: a 3-byte auxiliary value is sent as 1st, 3rd, 2nd byte
+ * (1st = most significant); bit 7 of the 1st byte is the direction of
+ * active power, bit 6 the direction of reactive power (1 = reverse). P and
+ * cos φ carry the active direction as their sign, Q the reactive one. A
+ * 4-byte energy value is sent as 2nd, 1st, 4th, 3rd byte; FFFFFFFF marks a
+ * kind of energy the meter does not count (null). Units: W, var, VA, V, A,
+ * degrees, Hz, °C, kWh, kvarh.
+ *
+ * A reply is accepted only when its CRC is valid, it comes from the
+ * requested address and it has the length the request expects (or is a
+ * status reply). Anything else fails the whole read() — a value is never
+ * stored under the wrong meter (see the EK270 shared-line incident).
+ *
+ * Usage:
+ *   const client = new Mercury230Client({ host: '94.180.248.157', port: 5012, address: 96 });
+ *   const results = await client.read();
+ *
+ * Channel sharing: this class is transport-only and does NOT serialize
+ * access to a shared host:port itself — the caller wraps read() in
+ * withConnectionLock() from ./with-connection-lock.js, as the Node-RED
+ * subflow does.
+ */
 
-function buildFrame(address, codeBytes) {
-    const body = Buffer.concat([Buffer.from([address]), Buffer.from(codeBytes)]);
-    return Buffer.concat([body, crc16modbus(body)]);
-}
+const net = require('net');
 
-function decode3ByteValues(buf, count) {
-    const out = [];
-    for (let i = 0; i < count; i++) {
-        const o = i * 3;
-        const b0 = buf[o], b1 = buf[o + 1], b2 = buf[o + 2];
-        out.push(((b0 & 0x0F) << 16) | (b2 << 8) | b1);
-    }
-    return out;
-}
+const REQUEST_OPEN = 0x01;
+const REQUEST_CLOSE = 0x02;
+const REQUEST_TIME = 0x04;
+const REQUEST_ENERGY = 0x05;
+const REQUEST_PARAMETER = 0x08;
 
-function decode4ByteEnergy(buf, offset = 0) {
-    const b0 = buf[offset], b1 = buf[offset + 1], b2 = buf[offset + 2], b3 = buf[offset + 3];
-    if (b0 === 0xFF && b1 === 0xFF && b2 === 0xFF && b3 === 0xFF) return null;
-    return (b1 << 24) | (b0 << 16) | (b3 << 8) | b2;
-}
+const PARAMETER_SERIAL = 0x00;
+const PARAMETER_VERSION = 0x03;
+const PARAMETER_STATUS = 0x0a;
+const PARAMETER_VARIANT = 0x12;
+const PARAMETER_AUX = 0x16;
+const BWRI_FAST_READ = 0xa0;
 
-const INSTANT_FIELDS = [
-    { name: 'Psum',    factor: 0.01 },
-    { name: 'P1',      factor: 0.01 },
-    { name: 'P2',      factor: 0.01 },
-    { name: 'P3',      factor: 0.01 },
-    { name: 'Qsum',    factor: 0.01 },
-    { name: 'Q1',      factor: 0.01 },
-    { name: 'Q2',      factor: 0.01 },
-    { name: 'Q3',      factor: 0.01 },
-    { name: 'Ssum',    factor: 0.01 },
-    { name: 'S1',      factor: 0.01 },
-    { name: 'S2',      factor: 0.01 },
-    { name: 'S3',      factor: 0.01 },
-    { name: 'U1',      factor: 0.01 },
-    { name: 'U2',      factor: 0.01 },
-    { name: 'U3',      factor: 0.01 },
-    { name: 'Fab',     factor: 0.01 },
-    { name: 'Fac',     factor: 0.01 },
-    { name: 'Fbc',     factor: 0.01 },
-    { name: 'I1',      factor: 0.01 },
-    { name: 'I2',      factor: 0.01 },
-    { name: 'I3',      factor: 0.01 },
-    { name: 'cosFsum', factor: 0.001 },
-    { name: 'cosF1',   factor: 0.001 },
-    { name: 'cosF2',   factor: 0.001 },
-    { name: 'cosF3',   factor: 0.001 },
-    { name: 'Hz',      factor: 0.01 },
+const ENERGY_SINCE_RESET = 0x00;
+const ENERGY_PHASES = 0x60;
+
+const STATUS_CODES = {
+    1: 'bad command or parameter',
+    2: 'internal error',
+    3: 'access level too low',
+    4: 'clock already corrected',
+    5: 'channel not open',
+};
+
+// Fast-read auxiliary parameters: [name, kind, divisor] in reply order.
+// kind: 'P' signed by the active direction bit, 'Q' signed by the
+// reactive one, 'u' unsigned.
+const AUX_VALUES = [
+    ['Psum', 'P', 100], ['P1', 'P', 100], ['P2', 'P', 100], ['P3', 'P', 100],
+    ['Qsum', 'Q', 100], ['Q1', 'Q', 100], ['Q2', 'Q', 100], ['Q3', 'Q', 100],
+    ['Ssum', 'u', 100], ['S1', 'u', 100], ['S2', 'u', 100], ['S3', 'u', 100],
+    ['U1', 'u', 100], ['U2', 'u', 100], ['U3', 'u', 100],
+    ['Fab', 'u', 100], ['Fac', 'u', 100], ['Fbc', 'u', 100],
+    ['I1', 'u', 1000], ['I2', 'u', 1000], ['I3', 'u', 1000],
+    ['cosFsum', 'P', 1000], ['cosF1', 'P', 1000], ['cosF2', 'P', 1000], ['cosF3', 'P', 1000],
+    ['Hz', 'u', 100],
 ];
+const AUX_BASIC_LENGTH = AUX_VALUES.length * 3; // 78
+// Optional tail of newer firmware: distortion coefficients (2 bytes per
+// phase, low byte first), temperature (2 bytes), line voltages (3 x 3).
+const AUX_EXTENDED_LENGTH = AUX_BASIC_LENGTH + 6 + 2 + 9;
 
+const ENERGY_KINDS = ['Aplus', 'Aminus', 'Rplus', 'Rminus'];
+const TARIFFS = { sum: 0, T1: 1, T2: 2, T3: 3, T4: 4 };
+
+function crc16(bytes) {
+    let crc = 0xffff;
+    for (const b of bytes) {
+        crc ^= b;
+        for (let i = 0; i < 8; i++) crc = crc & 1 ? (crc >> 1) ^ 0xa001 : crc >> 1;
+    }
+    return crc;
+}
+
+function crcOk(frame) {
+    return frame.length >= 3 && crc16(frame.subarray(0, frame.length - 2)) === frame.readUInt16LE(frame.length - 2);
+}
+
+const fromBcd = (byte) => (byte >> 4) * 10 + (byte & 0x0f);
+const round = (value, digits) => Number(value.toFixed(digits));
+
+// 3-byte auxiliary value sent as 1st, 3rd, 2nd byte; direction bits 7/6.
+function decodeAux(data, offset, kind, divisor) {
+    const b1 = data[offset], b3 = data[offset + 1], b2 = data[offset + 2];
+    const magnitude = ((b1 & 0x3f) << 16) | (b2 << 8) | b3;
+    const reverse = kind === 'P' ? b1 & 0x80 : kind === 'Q' ? b1 & 0x40 : 0;
+    const value = magnitude / divisor;
+    return round(reverse ? -value : value, Math.log10(divisor));
+}
+
+// 4-byte energy value sent as 2nd, 1st, 4th, 3rd byte; FFFFFFFF = not counted.
+function decodeEnergy(data, offset) {
+    const [b2, b1, b4, b3] = data.subarray(offset, offset + 4);
+    if (b1 === 0xff && b2 === 0xff && b3 === 0xff && b4 === 0xff) return null;
+    return round((((b1 << 24) >>> 0) + (b2 << 16) + (b3 << 8) + b4) / 1000, 3);
+}
+
+class Mercury230StatusError extends Error {
+    constructor(request, code) {
+        super(`Mercury230Client: status ${code} (${STATUS_CODES[code] || 'unknown'}) on request 0x${request.toString(16)}`);
+        this.code = code;
+    }
+}
 
 class Mercury230Client {
-    constructor(net, host, port, address, socketTimeout = 15000) {
-        this.net = net;             // передаём модуль net явно (в Function node нет require)
+    /**
+     * @param {object} options
+     * @param {string} options.host - TCP-serial gateway IP/hostname.
+     * @param {number} options.port - Gateway TCP port.
+     * @param {number} options.address - Network address of the meter (1-247).
+     * @param {string} [options.password='111111'] - Channel password (6 characters).
+     * @param {boolean} [options.asciiPassword=false] - Send the password as ASCII characters instead of digit values.
+     * @param {number} [options.accessLevel=1] - 1 consumer, 2 owner.
+     * @param {number} [options.stepDelayMs=50] - Pause after a reply before the next request.
+     * @param {number} [options.stepTimeoutMs=1500] - Wait for a valid reply to one request.
+     * @param {number} [options.retries=2] - Extra requests after a request got no valid reply.
+     * @param {number} [options.responseTimeoutMs=30000] - Overall timeout for a full read() call.
+     * @param {(direction: string, bytes: Buffer) => void} [options.trace] - Called with every frame sent ('>') and received ('<').
+     */
+    constructor({
+        host,
+        port,
+        address,
+        password = '111111',
+        asciiPassword = false,
+        accessLevel = 1,
+        stepDelayMs = 50,
+        stepTimeoutMs = 1500,
+        retries = 2,
+        responseTimeoutMs = 30000,
+        trace = null,
+    } = {}) {
+        if (!host) throw new Error('Mercury230Client: "host" is required');
+        if (!port) throw new Error('Mercury230Client: "port" is required');
+        if (!Number.isInteger(address) || address < 1 || address > 247) {
+            throw new Error('Mercury230Client: "address" must be 1-247');
+        }
+        if (typeof password !== 'string' || password.length !== 6
+            || (!asciiPassword && !/^\d{6}$/.test(password))) {
+            throw new Error('Mercury230Client: "password" must be 6 characters (6 digits unless asciiPassword)');
+        }
+
         this.host = host;
         this.port = port;
         this.address = address;
-        this.socketTimeout = socketTimeout;
-        this.socket = null;
+        this.password = password;
+        this.asciiPassword = asciiPassword;
+        this.accessLevel = accessLevel;
+        this.stepDelayMs = stepDelayMs;
+        this.stepTimeoutMs = stepTimeoutMs;
+        this.retries = retries;
+        this.responseTimeoutMs = responseTimeoutMs;
+        this.trace = trace;
     }
 
-    async connect() {
-        this.socket = new this.net.Socket();
-        this.socket.setTimeout(this.socketTimeout);
-        await new Promise((resolve, reject) => {
-            this.socket.once('error', reject);
-            this.socket.connect(this.port, this.host, resolve);
-        });
+    buildRequest(bytes) {
+        const body = Buffer.from([this.address, ...bytes]);
+        const crc = crc16(body);
+        return Buffer.concat([body, Buffer.from([crc & 0xff, crc >> 8])]);
     }
 
-    disconnect() {
-        if (this.socket) {
-            this.socket['destroy']();
-            this.socket = null;
-        }
-    }
-
-    sendCommand(codeBytes, timeoutMs = 5000) {
-        const socket = this.socket;
-        const frame = buildFrame(this.address, codeBytes);
-
+    // Opens the socket and returns { request, close }. request(bytes,
+    // dataLengths) resolves with the reply's data bytes when a reply of one
+    // of the expected data lengths arrives; a 1-byte status reply resolves
+    // with that byte for requests that expect it ([1]) and otherwise rejects
+    // with Mercury230StatusError.
+    _connect() {
         return new Promise((resolve, reject) => {
+            const socket = new net.Socket();
             let buffer = Buffer.alloc(0);
-            let quietTimer = null;
-            let overallTimer = null;
+            let pending = null;
+            let closedError = null;
 
-            const cleanup = () => {
-                socket.removeListener('data', onData);
-                if (quietTimer) clearTimeout(quietTimer);
-                if (overallTimer) clearTimeout(overallTimer);
+            const settle = (fn, value) => {
+                const current = pending;
+                if (!current) return;
+                pending = null;
+                clearTimeout(current.timer);
+                fn === 'resolve' ? current.resolve(value) : current.reject(value);
             };
 
-            const finish = () => {
-                cleanup();
-                if (buffer.length < 3) { reject(new Error('Empty/short response')); return; }
-                const received = buffer.slice(0, -2);
-                const crcReceived = buffer.slice(-2);
-                if (!crc16modbus(received).equals(crcReceived)) {
-                    reject(new Error('CRC mismatch')); return;
+            // Looks for a frame from our address with a valid CRC and an
+            // expected length; skips anything before it (an echo of the
+            // request, another master's traffic on a shared line).
+            const check = () => {
+                if (!pending) return;
+                const { frame, dataLengths } = pending;
+                if (buffer.length >= frame.length && buffer.subarray(0, frame.length).equals(frame)) {
+                    buffer = buffer.subarray(frame.length);
                 }
-                resolve(received.slice(1));
+                const lengths = [...new Set([...dataLengths, 1])].sort((a, b) => b - a);
+                for (let at = 0; at < buffer.length; at++) {
+                    if (buffer[at] !== this.address) continue;
+                    for (const dataLength of lengths) {
+                        const reply = buffer.subarray(at, at + dataLength + 3);
+                        if (reply.length !== dataLength + 3 || !crcOk(reply)) continue;
+                        const data = Buffer.from(reply.subarray(1, -2));
+                        if (dataLength === 1 && !dataLengths.includes(1)) {
+                            settle('reject', new Mercury230StatusError(frame[1], data[0]));
+                        } else {
+                            settle('resolve', data);
+                        }
+                        return;
+                    }
+                }
             };
 
-            const onData = (chunk) => {
+            const request = (bytes, dataLengths) => new Promise((res, rej) => {
+                if (closedError) {
+                    rej(closedError);
+                    return;
+                }
+                const frame = this.buildRequest(bytes);
+                buffer = Buffer.alloc(0);
+                pending = {
+                    frame,
+                    dataLengths,
+                    resolve: res,
+                    reject: rej,
+                    timer: setTimeout(() => settle('reject', new Error(
+                        `Mercury230Client: no valid reply to request 0x${bytes[0].toString(16)}`)), this.stepTimeoutMs),
+                };
+                if (this.trace) this.trace('>', frame);
+                socket.write(frame);
+            });
+
+            socket.on('data', (chunk) => {
+                if (this.trace) this.trace('<', chunk);
                 buffer = Buffer.concat([buffer, chunk]);
-                if (quietTimer) clearTimeout(quietTimer);
-                quietTimer = setTimeout(finish, 300);
+                check();
+            });
+
+            const onClosed = (err) => {
+                if (!closedError) closedError = err;
+                settle('reject', closedError);
+                reject(closedError);
             };
+            socket.on('error', (err) => onClosed(err));
+            socket.on('close', () => onClosed(new Error('Mercury230Client: connection closed')));
 
-            overallTimer = setTimeout(() => {
-                cleanup();
-                reject(new Error('No response (timeout)'));
-            }, timeoutMs);
-
-            socket.on('data', onData);
-            socket.write(frame);
+            socket.connect(this.port, this.host, () => {
+                resolve({
+                    // Repeats a request that got no valid reply; a status
+                    // reply is the meter's answer and is not repeated.
+                    request: async (bytes, dataLengths) => {
+                        for (let attempt = 0; ; attempt++) {
+                            try {
+                                const data = await request(bytes, dataLengths);
+                                await new Promise((r) => setTimeout(r, this.stepDelayMs));
+                                return data;
+                            } catch (err) {
+                                if (err instanceof Mercury230StatusError || closedError || attempt >= this.retries) throw err;
+                            }
+                        }
+                    },
+                    // destroy() instead of end(): the gateway never closes
+                    // its side, so a half-open socket would linger.
+                    close: () => {
+                        closedError = closedError || new Error('Mercury230Client: connection closed');
+                        socket.destroy();
+                    },
+                });
+            });
         });
     }
 
-    openChannel() {
-        return this.sendCommand([0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01]);
+    async _openChannel(connection) {
+        const password = this.asciiPassword
+            ? [...Buffer.from(this.password, 'latin1')]
+            : [...this.password].map(Number);
+        const [status] = await connection.request([REQUEST_OPEN, this.accessLevel, ...password], [1]);
+        if (status !== 0) throw new Mercury230StatusError(REQUEST_OPEN, status);
     }
 
-    closeChannel() {
-        return this.sendCommand([0x02]);
-    }
+    async _readSession(connection, results) {
+        await this._openChannel(connection);
 
-    async readInstantaneous() {
-        const raw = await this.sendCommand([0x08, 0x16, 0xA0]);
-        const values = decode3ByteValues(raw, INSTANT_FIELDS.length);
-        const result = {};
-        INSTANT_FIELDS.forEach((field, i) => {
-            result[field.name] = values[i] * field.factor;
+        const serial = await connection.request([REQUEST_PARAMETER, PARAMETER_SERIAL], [7]);
+        results.serialNumber = [...serial.subarray(0, 4)].map((b) => String(b).padStart(2, '0')).join('');
+        results.manufactureDate = `20${String(serial[6]).padStart(2, '0')}-${String(serial[5]).padStart(2, '0')}-${String(serial[4]).padStart(2, '0')}`;
+
+        const version = await connection.request([REQUEST_PARAMETER, PARAMETER_VERSION], [3]);
+        results.firmware = [...version].join('.');
+
+        const status = await connection.request([REQUEST_PARAMETER, PARAMETER_STATUS], [6]);
+        results.statusWord = status.toString('hex');
+
+        const variant = await connection.request([REQUEST_PARAMETER, PARAMETER_VARIANT], [6, 12]);
+        results.variant = variant.toString('hex');
+
+        const time = await connection.request([REQUEST_TIME, 0x00], [8]);
+        const [second, minute, hour, , day, month, year] = [...time.subarray(0, 7)].map(fromBcd);
+        const date = new Date(2000 + year, month - 1, day, hour, minute, second);
+        results.deviceTime = date.getDate() === day && date.getMonth() === month - 1 ? date.getTime() : null;
+        results.winterTime = time[7] === 1;
+
+        const aux = await connection.request([REQUEST_PARAMETER, PARAMETER_AUX, BWRI_FAST_READ],
+            [AUX_EXTENDED_LENGTH, AUX_BASIC_LENGTH]);
+        AUX_VALUES.forEach(([name, kind, divisor], i) => {
+            results[name] = decodeAux(aux, i * 3, kind, divisor);
         });
-        return result;
-    }
+        const extended = aux.length >= AUX_EXTENDED_LENGTH;
+        let offset = AUX_BASIC_LENGTH;
+        for (const name of ['KU1', 'KU2', 'KU3']) {
+            results[name] = extended ? round(aux.readUInt16LE(offset) / 100, 2) : null;
+            offset += 2;
+        }
+        results.T = extended ? aux.readInt16BE(offset) : null;
+        offset += 2;
+        for (const name of ['U12', 'U23', 'U13']) {
+            results[name] = extended ? decodeAux(aux, offset, 'u', 100) : null;
+            offset += 3;
+        }
 
-    // Читаем накопленную энергию (активную и реактивную) для заданного тарифа.
-    // tariff: 0x00 = сумма по всем тарифам, 0x01..0x04 = тариф 1..4
-    // Ответ содержит все 4 группы: A+ (актив. прямая), A- (актив. обратная, не используется),
-    // R+ (реакт. прямая), R- (реакт. обратная, не используется) -- считываем их все за один запрос.
-    async readEnergyBlock(tariff) {
-        const raw = await this.sendCommand([0x05, 0x00, tariff]); // byte3=0x00 (текущий период, месяц не важен)
-        const activeForward = decode4ByteEnergy(raw, 0);   // A+
-        const reactiveForward = decode4ByteEnergy(raw, 8); // R+
-        return {
-            active: activeForward !== null ? activeForward / 1000 : null,     // кВт·ч
-            reactive: reactiveForward !== null ? reactiveForward / 1000 : null, // кВАр·ч
+        results.energy = {};
+        for (const [name, tariff] of Object.entries(TARIFFS)) {
+            const data = await connection.request([REQUEST_ENERGY, ENERGY_SINCE_RESET, tariff], [16]);
+            results.energy[name] = Object.fromEntries(ENERGY_KINDS.map((kind, i) => [kind, decodeEnergy(data, i * 4)]));
+        }
+        const phases = await connection.request([REQUEST_ENERGY, ENERGY_PHASES, 0x00], [12]);
+        results.energy.phases = {
+            Aplus1: decodeEnergy(phases, 0),
+            Aplus2: decodeEnergy(phases, 4),
+            Aplus3: decodeEnergy(phases, 8),
         };
+
+        await connection.request([REQUEST_CLOSE], [1]);
     }
 
-
-    async readAllEnergy() {
-        const sum = await this.readEnergyBlock(0x00);
-        const t1 = await this.readEnergyBlock(0x01);
-        const t2 = await this.readEnergyBlock(0x02);
-        const t3 = await this.readEnergyBlock(0x03);
-        const t4 = await this.readEnergyBlock(0x04);
-
-        return {
-            energyActiveTotal: sum.active,          // суммарная активная энергия (кВт·ч)
-            energyReactiveTotal: sum.reactive,      // суммарная реактивная энергия (кВАр·ч)
-
-            energyActiveTariff1: t1.active,         // активная энергия, тариф 1
-            energyActiveTariff2: t2.active,         // активная энергия, тариф 2
-            energyActiveTariff3: t3.active,         // активная энергия, тариф 3
-            energyActiveTariff4: t4.active,         // активная энергия, тариф 4
-
-            energyReactiveTariff1: t1.reactive,     // реактивная энергия, тариф 1
-            energyReactiveTariff2: t2.reactive,     // реактивная энергия, тариф 2
-            energyReactiveTariff3: t3.reactive,     // реактивная энергия, тариф 3
-            energyReactiveTariff4: t4.reactive,     // реактивная энергия, тариф 4
-        };
-    }
-
-    async readFullState() {
-        await this.openChannel();
-        const instantData = await this.readInstantaneous();
-        const energyData = await this.readAllEnergy();
-        await this.closeChannel();
-        return { ...instantData, ...energyData };
+    /**
+     * Reads the identity, status, clock, auxiliary parameters and energy
+     * registers in one session. Resolves with:
+     *
+     *   serialNumber, manufactureDate ('YYYY-MM-DD'), firmware ('2.3.5'),
+     *   statusWord, variant (hex strings), deviceTime (epoch ms), winterTime
+     *   Psum, P1..P3 W, Qsum, Q1..Q3 var (signed by direction),
+     *   Ssum, S1..S3 VA, U1..U3 V, Fab, Fac, Fbc degrees, I1..I3 A,
+     *   cosFsum, cosF1..cosF3 (signed by the active direction), Hz,
+     *   KU1..KU3 %, T °C, U12, U23, U13 V (null on firmware without them)
+     *   energy.sum / energy.T1..T4: { Aplus, Aminus, Rplus, Rminus } kWh,
+     *     kvarh since reset (null for a kind the meter does not count)
+     *   energy.phases: { Aplus1, Aplus2, Aplus3 } kWh
+     *   timestamp
+     *
+     * Rejects on connection/protocol failure; the Error carries a
+     * `.partialResults` property with whatever was read before it.
+     *
+     * @returns {Promise<Record<string, any>>}
+     */
+    async read() {
+        const results = {};
+        let connection = null;
+        let overallTimer = null;
+        try {
+            connection = await this._connect();
+            const timeout = new Promise((_, reject) => {
+                overallTimer = setTimeout(() => {
+                    reject(new Error('Mercury230Client: timed out'));
+                    connection.close();
+                }, this.responseTimeoutMs);
+            });
+            await Promise.race([this._readSession(connection, results), timeout]);
+            return { ...results, timestamp: Date.now() };
+        } catch (err) {
+            err.partialResults = { ...results, timestamp: Date.now() };
+            throw err;
+        } finally {
+            clearTimeout(overallTimer);
+            if (connection) connection.close();
+        }
     }
 }
 
-module.exports = { Mercury230Client };
+module.exports = { Mercury230Client, Mercury230StatusError };
+
+// Run directly for a quick standalone test (prints every frame):
+//   node mercury230-client.js <host> <port> <address> [password]
+if (require.main === module) {
+    const [, , host, port, address, password] = process.argv;
+    const hex = (bytes) => [...bytes].map((b) => b.toString(16).padStart(2, '0')).join(' ');
+    const client = new Mercury230Client({
+        host,
+        port: Number(port),
+        address: Number(address),
+        ...(password ? { password } : {}),
+        trace: (direction, bytes) => console.error(direction, hex(bytes)),
+    });
+
+    client.read()
+        .then((results) => {
+            console.log(JSON.stringify({ ...results, deviceTimeLocal: new Date(results.deviceTime).toString() }, null, 2));
+        })
+        .catch((err) => {
+            console.error('Error:', err.message);
+            console.error('Partial results:', err.partialResults);
+            process.exit(1);
+        });
+}

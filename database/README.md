@@ -40,3 +40,4 @@ the web API's Sequelize models only describe it and no longer create tables (`sy
 | `2026-10-09-add-device-type.sql` | yes (verified 2026-10-09) |
 | `2026-10-09-emergency-rules-device-code.sql` | yes (verified 2026-10-09) |
 | `2026-10-09-add-tsarevo1-tv7.sql` | yes (verified 2026-10-10) |
+| `2026-10-10-fix-mercury230-current-scale.sql` | not yet |
