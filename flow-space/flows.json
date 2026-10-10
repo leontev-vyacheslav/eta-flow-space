@@ -311,6 +311,75 @@
         }
     },
     {
+        "id": "tv7reader000000000",
+        "type": "subflow",
+        "name": "TV7 Client",
+        "info": "Reads every current value of a Termotronic TV7 heat calculator over TCP (e.g. a Wiznet modem on its RS-232/RS-485 port), via the shared Tv7Client class registered on functionGlobalContext in settings.js: device info, instant values and totals for heat inputs input1/input2 and their pipes pipe1-pipe3, raw in SI units (GJ, MPa, m3, t) and named after the protocol tables (t, P, Go, Gm, F, V, M, Ftv, Qtv, VNR, VOS, NS...). Choosing the supply/return pipe and converting units is left to the flow's collect-device-state. Send any message in to trigger a read; the same message comes out with `msg.payload` set to the result (deviceTime/timestamp as epoch ms). On failure nothing goes out and node.error() is called. ADDRESS is the Modbus network address (1 by default); SERIAL_NUMBER, when set, is checked against the device's factory number.",
+        "category": "subflows",
+        "in": [
+            {
+                "x": 80,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "tv7reader000000001"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 400,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "tv7reader000000001",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "HOST",
+                "type": "str",
+                "value": "178.207.154.38"
+            },
+            {
+                "name": "PORT",
+                "type": "num",
+                "value": "5011"
+            },
+            {
+                "name": "ADDRESS",
+                "type": "num",
+                "value": "1"
+            },
+            {
+                "name": "SERIAL_NUMBER",
+                "type": "num",
+                "value": "19072584"
+            },
+            {
+                "name": "RESPONSE_TIMEOUT_MS",
+                "type": "num",
+                "value": "30000"
+            }
+        ],
+        "meta": {},
+        "color": "#DDBB99",
+        "status": {
+            "x": 420,
+            "y": 220,
+            "wires": [
+                {
+                    "id": "tv7reader000000002",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
         "id": "17c1930de88ea78c",
         "type": "modbus-client",
         "name": "statum_boiler",
@@ -646,75 +715,6 @@
         ]
     },
     {
-        "id": "tv7reader000000000",
-        "type": "subflow",
-        "name": "TV7 Client",
-        "info": "Reads every current value of a Termotronic TV7 heat calculator over TCP (e.g. a Wiznet modem on its RS-232/RS-485 port), via the shared Tv7Client class registered on functionGlobalContext in settings.js: device info, instant values and totals for heat inputs input1/input2 and their pipes pipe1-pipe3, raw in SI units (GJ, MPa, m3, t) and named after the protocol tables (t, P, Go, Gm, F, V, M, Ftv, Qtv, VNR, VOS, NS...). Choosing the supply/return pipe and converting units is left to the flow's collect-device-state. Send any message in to trigger a read; the same message comes out with `msg.payload` set to the result (deviceTime/timestamp as epoch ms). On failure nothing goes out and node.error() is called. ADDRESS is the Modbus network address (1 by default); SERIAL_NUMBER, when set, is checked against the device's factory number.",
-        "category": "subflows",
-        "in": [
-            {
-                "x": 80,
-                "y": 80,
-                "wires": [
-                    {
-                        "id": "tv7reader000000001"
-                    }
-                ]
-            }
-        ],
-        "out": [
-            {
-                "x": 400,
-                "y": 80,
-                "wires": [
-                    {
-                        "id": "tv7reader000000001",
-                        "port": 0
-                    }
-                ]
-            }
-        ],
-        "env": [
-            {
-                "name": "HOST",
-                "type": "str",
-                "value": "178.207.154.38"
-            },
-            {
-                "name": "PORT",
-                "type": "num",
-                "value": "5011"
-            },
-            {
-                "name": "ADDRESS",
-                "type": "num",
-                "value": "1"
-            },
-            {
-                "name": "SERIAL_NUMBER",
-                "type": "num",
-                "value": "19072584"
-            },
-            {
-                "name": "RESPONSE_TIMEOUT_MS",
-                "type": "num",
-                "value": "30000"
-            }
-        ],
-        "meta": {},
-        "color": "#DDBB99",
-        "status": {
-            "x": 420,
-            "y": 220,
-            "wires": [
-                {
-                    "id": "tv7reader000000002",
-                    "port": 0
-                }
-            ]
-        }
-    },
-    {
         "id": "tv7reader000000001",
         "type": "function",
         "z": "tv7reader000000000",
@@ -864,9 +864,9 @@
         "id": "4d8a47e4a7dd4dfc",
         "type": "comment",
         "z": "8c7f93e2ebca7614",
-        "name": "tsarevo1-tv7-19072584 (TV7 heat calculator)",
+        "name": "tsarevo1-tv7-19072584 (example from the IHN on Tabeev Street, 1)",
         "info": "",
-        "x": 250,
+        "x": 320,
         "y": 260,
         "wires": []
     },
@@ -3606,6 +3606,7 @@
         "id": "2af5b428ab2a778c",
         "type": "inject",
         "z": "2d15e59c76504bcb",
+        "d": true,
         "name": "",
         "props": [
             {
@@ -3694,6 +3695,7 @@
         "id": "1358736b8195d963",
         "type": "inject",
         "z": "2d15e59c76504bcb",
+        "d": true,
         "name": "",
         "props": [
             {
