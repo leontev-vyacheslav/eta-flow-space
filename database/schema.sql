@@ -85,7 +85,7 @@ SET default_table_access_method = heap;
 
 CREATE TABLE public.device (
     id integer NOT NULL,
-    code character varying(32),
+    code character varying(32) NOT NULL,
     name character varying(32),
     description character varying(64),
     "flowId" integer,
@@ -552,6 +552,14 @@ ALTER TABLE ONLY public.user_device_link ALTER COLUMN id SET DEFAULT nextval('pu
 
 ALTER TABLE ONLY public.device
     ADD CONSTRAINT device_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: device device_code_unique; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.device
+    ADD CONSTRAINT device_code_unique UNIQUE (code);
 
 
 --

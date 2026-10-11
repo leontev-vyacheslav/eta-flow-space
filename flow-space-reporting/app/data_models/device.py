@@ -20,7 +20,7 @@ class Device(Base, TimestampMixin):
     __tablename__ = "device"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    code: Mapped[str | None] = mapped_column(String(32))
+    code: Mapped[str] = mapped_column(String(32), nullable=False, unique=True)
     name: Mapped[str | None] = mapped_column(String(32))
     description: Mapped[str | None] = mapped_column(String(32))
     device_type_id: Mapped[int | None] = mapped_column(

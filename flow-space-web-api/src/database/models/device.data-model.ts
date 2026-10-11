@@ -22,7 +22,8 @@ export class DeviceDataModel extends Model {
 
     @Column({
         type: DataType.STRING(32),
-        allowNull: true,
+        allowNull: false,
+        unique: true,
     })
     declare code: string;
 
