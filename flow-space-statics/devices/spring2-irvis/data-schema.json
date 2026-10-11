@@ -35,7 +35,7 @@
                 }
             }
         },
-        "accumulatedVolume": {
+        "volumeStandard": {
             "type": "number",
             "unit": "м3",
             "formatting": {
@@ -61,7 +61,7 @@
                 "chart": {}
             }
         },
-        "timeOfWork": {
+        "operatingTime": {
             "type": "number",
             "unit": "час",
             "ui": {
@@ -77,10 +77,10 @@
                         "readOnly": true
                     }
                 },
-                 "chart": {}
+                "chart": {}
             }
         },
-        "currentPressure": {
+        "pressure": {
             "type": "number",
             "unit": "кПа",
             "formatting": {
@@ -106,7 +106,7 @@
                 "chart": {}
             }
         },
-        "currentTemp": {
+        "temperature": {
             "type": "number",
             "unit": "°C",
             "formatting": {
@@ -132,7 +132,7 @@
                 "chart": {}
             }
         },
-        "currentFlowRateNc": {
+        "volumeFlowRateStandard": {
             "type": "number",
             "unit": "н.м3/ч",
             "formatting": {
@@ -158,7 +158,7 @@
                 "chart": {}
             }
         },
-        "currentFlowRateWc": {
+        "volumeFlowRateWorking": {
             "type": "number",
             "unit": "р.м3/ч",
             "formatting": {
@@ -206,9 +206,9 @@
     },
     "required": [
         "isConnected",
-        "timeOfWork",
-        "currentPressure",
-        "currentTemp"
+        "operatingTime",
+        "pressure",
+        "temperature"
     ],
     "additionalProperties": false,
     "ui": {

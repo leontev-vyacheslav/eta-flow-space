@@ -42,4 +42,4 @@ the web API's Sequelize models only describe it and no longer create tables (`sy
 | `2026-10-09-add-tsarevo1-tv7.sql` | yes (verified 2026-10-10) |
 | `2026-10-10-fix-mercury230-current-scale.sql` | not yet |
 | `2026-10-10-null-vzljot026-zero-pressures.sql` | not yet (run after the Vzljot026 reader is deployed) |
-| `2026-10-11-irvis-flags-from-raw-words.sql` | not yet (run after the Irvis reader is deployed) |
+| `2026-10-11-irvis-state-names-and-flags.sql` | not yet (with the deploy of the renamed Irvis state) |

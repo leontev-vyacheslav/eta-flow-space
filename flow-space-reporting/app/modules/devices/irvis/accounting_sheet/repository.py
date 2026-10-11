@@ -12,6 +12,6 @@ class AccountingSheetRepository(AccountingSheetBaseRepository):
         super().__init__(session)
 
         self.METRICS = [
-            ("accumulatedVolume", "accumulatedVolume"),
+            ("volumeStandard", "volumeStandard"),
         ]
 
