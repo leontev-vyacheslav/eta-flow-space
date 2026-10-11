@@ -56,8 +56,10 @@ mapping, and nothing the meter can tell us is thrown away.
 
 ## File shape (copy an existing client)
 
-Use `tv7-client.js`, `vzljot026-client.js` (Modbus RTU), `km5-client.js` (own binary protocol),
-`vkt7-client.js` (element lists) or `mercury230-client.js` as the template:
+Use `tv7-client.js`, `vzljot026-client.js` (Modbus RTU, register blocks), `irvis-client.js` (Modbus RTU +
+function 17 identity), `km5-client.js` (own binary protocol), `vkt7-client.js` (element lists),
+`mercury230-client.js` (channel open/close, password) or `ek270-iec61107-client.js` (IEC 61107, values keyed
+by address — touch its handshake only with great care) as the template:
 
 1. Header comment: device, connection, the protocol document (title as in `.docs/README.md`), every
    request/register block and what it returns, encoding/byte order, the strict-matching paragraph, usage,

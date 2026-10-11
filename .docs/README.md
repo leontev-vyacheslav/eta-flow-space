@@ -31,4 +31,4 @@ below; look there for a newer edition.
 | `vzljot026/vzljot026-manual-part2-v84.00.pdf` | Тепловычислитель Взлет ТСРВ исполнения ТСРВ-026, -026М. Руководство по эксплуатации, часть II, В84.00-00.00 РЭ (Взлет) | [vzljot.ru](https://vzljot.ru/upload/iblock/7e6/8w2nv9vw6759um50p5uy7vs1i373rd7d/re2_tsrv_026_doc2_3.pdf) |
 
 Other files: `new-tsarevo-1.svg` and `old-tsarevo-1.svg` (Царёво-1 diagram drafts), `spring1-modicons-modbus-map.xlsx`
-(Modbus register map of the Весна Modicon controllers).
+(Modbus register map of the Весна-1 Modicon controllers).

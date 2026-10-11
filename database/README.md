@@ -47,4 +47,5 @@ the web API's Sequelize models only describe it and no longer create tables (`sy
 | `2026-10-11-device-code-unique.sql` | yes (verified 2026-10-11) |
 | `2026-10-11-uniform-device-codes.sql` | yes (verified 2026-10-11) |
 | `2026-10-11-rename-spring2-vkt-to-vkt7.sql` | yes (verified 2026-10-11) |
-| `2026-10-11-spring1-and-flow-codes.sql` | not yet |
+| `2026-10-11-spring1-and-flow-codes.sql` | yes (verified 2026-10-11) |
+| `2026-10-11-spring1-display-names.sql` | not yet |

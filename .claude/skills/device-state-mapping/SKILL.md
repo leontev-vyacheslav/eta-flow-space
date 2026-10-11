@@ -66,7 +66,8 @@ Rules:
   `2026-10-11-device-code-unique.sql`); passing `flowUid` makes the helper throw if the device belongs to
   another tab, and an unknown code throws too — a wrong code shows up as a Node-RED error instead of
   storing under another device. The old index form `(global, flowUid, deviceState, N)` only survives as
-  a legacy fallback with a warning; don't write it.
+  a legacy fallback with a warning; don't write it. Device codes follow the naming conventions in the
+  `meter-integration` skill (`<site>-<type code>-<serial>`); renaming a code is described there too.
 
 ## Keeping the stored state identical (when reworking)
 

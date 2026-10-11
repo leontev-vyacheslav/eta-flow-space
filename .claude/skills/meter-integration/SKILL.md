@@ -9,6 +9,21 @@ Combines the two project rules: **the reader reads everything raw** (`device-rea
 mapping gives the meaning** (`device-state-mapping`). Work in this order; report findings from the live
 device to the user as you go.
 
+## Naming conventions
+
+- **Site codes**: `spring1` (Весна-1), `spring2` (Весна-2), `tsarevo1`, `tsarevo2`, `statum`, `amirkhana99`.
+  A new site gets a code in the same style (Latin, number for the site's part, never a bare "spring").
+- **Device code** = `<site>-<type code>-<serial>`, the type code being `device_type.code` (`tv7`, `vkt7`,
+  `km5`, `ek270`, `irvis`, `mercury230`, `vzljot026`...): `spring2-vkt7-289452`, `spring1-mercury230-26077096`.
+  Boiler rooms: `<site>-boiler-room`. Unique and NOT NULL in the database.
+- **Node-RED tab label = `flow.code`** = the site's main device code (`spring1-boiler-room`,
+  `amirkhana99-hws-node`); the UI's routes are `/flow/<flow.code>`.
+- **Reader instance name** on the tab: `<type>-<serial>` (`vkt7-289452`, `irvis-29804`); tab comment
+  `<device code> [<id>] (...)`; Node-RED connection (config) nodes named after the site (`spring1-boilers`).
+- **Statics folder** `flow-space-statics/devices/<device code>/`, data schema `"title"` = the device code.
+- **Display names** (`device.name`, `flow.name`): Russian, with the site number ("Котельная ЖК Весна-1"),
+  no leading/trailing spaces.
+
 ## 1. Documents
 
 - Protocol description + operating manual from the manufacturer into `.docs/<device_type code>/`
@@ -39,7 +54,9 @@ device to the user as you go.
 ## 4. Site tab
 
 - Comment (`<device code> [<id>] (...)`), inject (interval agreed: 60 s typical, 180–300 s for slow or
-  battery devices), subflow instance, `collect-device-state` per `device-state-mapping`, inactive debug.
+  battery devices), subflow instance (`<type>-<serial>`), `collect-device-state` per
+  `device-state-mapping` (`DEVICE_CODE`), inactive debug.
+- A new site's tab is labelled with its boiler-room device code, and its `flow` row gets the same `code`.
 
 ## 5. Database and statics (new devices)
 
@@ -54,6 +71,23 @@ device to the user as you go.
   (same groups, labels, units as the state), then regenerate the manifest.
 - Diagram bindings only if the user asks; render a preview with real state for any visual change.
 
+## Renaming a device code (or a site)
+
+Everything keyed by the code moves together, in one commit:
+- `git mv` the statics folder (`flow-space-statics/devices/<old>` → `<new>`), update the schema `"title"`,
+  regenerate `manifest.json`;
+- diagram bindings `states['<old>']` in every `mnemo-schema.svg` (CRLF-safe edit);
+- `DEVICE_CODE` and the comments in `flows.json`, the tab label / reader instance name if they carry it;
+- docs, skills, memory; old migrations stay untouched (history);
+- a migration renaming `device.code` (and `flow.code` if needed; match flows by `uid`), idempotent
+  (`WHERE code = '<old>'`).
+Find every use first with a word-boundary search that cannot hit a similar code (renaming `spring` must not
+touch `spring2`): `git grep -nP "(?<![\w-])<old>(?![\w-])"`, plus the database text columns
+(`emergency.reasons`, `report.settings`, `user.settings`, `device.settings`). Deploy: migration, then restart
+the web API (it reloads the device cache in Redis on startup) and Node-RED; until both are done Node-RED
+reports "device … is not in the device cache" for a few minutes — expected. Old UI bookmarks with the code
+stop working; renamed flows reset the saved diagram zoom once.
+
 ## 6. Verify
 
 - Old vs new state field by field against the live meter (see `device-state-mapping`).
@@ -67,7 +101,11 @@ device to the user as you go.
   open Node-RED editor tabs before any Deploy (a stale editor writes old flows back — check drift with
   `python3 flow-space/flows-diff.py`).
 - Migrations: the command is in `database/README.md`; say whether to run before or after the restart
-  (data fixes that old polling would undo: after).
+  (data fixes that old polling would undo: after) and whether another migration must run first (one that
+  finds devices by a code that a rename changes must run before the rename).
+- After the user applies them, verify each on production read-only by its effect (rows still in the old
+  form, the constraint present) and mark it "yes (verified <date>)" in `database/README.md`. A row written
+  between the migration and the restart can keep the old form — run the (idempotent) migration once more.
 - Reporting service restart if reports changed.
 
 ## Pitfalls seen in this project
@@ -78,5 +116,8 @@ device to the user as you go.
   factor against the document and a physical identity (S = U·I, T1+T2 = total, W1 − W2 = W).
 - Passwords may be sent as digit values, not ASCII (Меркурий 230).
 - Preserve file formatting: CRLF SVGs, 2-space JSON without a final newline — check `git diff --stat`.
+- Rename files and folders with `git mv` so history follows; regex renames need word boundaries.
+- Node-RED `flows.json` on production drifts (editor Deploys): build on the user's `sync: flows` commits,
+  never overwrite them; check them node by node with `flows-diff.py`.
 - Every meter follows the raw/mapping pattern now; boiler controllers (Modicon, Siemens, Statum,
   Царёво-2) stay on the stock Modbus nodes on purpose.

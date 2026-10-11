@@ -1,5 +1,5 @@
 """
-Read-only probe of the two Modicon controllers of the Весна boiler room
+Read-only probe of the two Modicon controllers of the Весна-1 boiler room
 (boilers and pumps). Prints the raw holding registers as JSON, to compare
 with .docs/spring1-modicons-modbus-map.xlsx and with the Node-RED flow.
 
