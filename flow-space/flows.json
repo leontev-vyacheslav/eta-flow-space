@@ -385,6 +385,139 @@
         }
     },
     {
+        "id": "vzljot026reader000",
+        "type": "subflow",
+        "name": "Vzljot026 Client",
+        "info": "Reads every current value of a Vzljot TSRV-026M heat calculator over TCP (a gateway on its RS-485 port; plain Modbus RTU, input registers), via the shared Vzljot026Client class registered on functionGlobalContext in settings.js: serial number, clock, states, the flow (PR1-PR4, LOG1-LOG2), temperature (PT1-PT5) and pressure (PD1-PD4) channels, the pipes TR1-TR4 and the heat system TS, raw in the device's units (m3/h, °C, MPa, Gcal, t, m3) and named after the register list. Choosing the supply/return pipe and converting units is left to the flow's collect-device-state. Send any message in to trigger a read; the same message comes out with `msg.payload` set to the result (deviceTime/timestamp as epoch ms). On failure nothing goes out and node.error() is called. ADDRESS is the Modbus address (1 by default); SERIAL_NUMBER, when set, is checked against the device's serial number.",
+        "category": "subflows",
+        "in": [
+            {
+                "x": 80,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "vzljot026reader001"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 400,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "vzljot026reader001",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "HOST",
+                "type": "str",
+                "value": "94.180.248.157"
+            },
+            {
+                "name": "PORT",
+                "type": "num",
+                "value": "5023"
+            },
+            {
+                "name": "ADDRESS",
+                "type": "num",
+                "value": "1"
+            },
+            {
+                "name": "SERIAL_NUMBER",
+                "type": "num",
+                "value": "1415796"
+            },
+            {
+                "name": "RESPONSE_TIMEOUT_MS",
+                "type": "num",
+                "value": "30000"
+            }
+        ],
+        "meta": {},
+        "color": "#DDBB99",
+        "status": {
+            "x": 420,
+            "y": 220,
+            "wires": [
+                {
+                    "id": "vzljot026reader002",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "irvisreader0000000",
+        "type": "subflow",
+        "name": "Irvis Client",
+        "info": "Reads the current values of an IRVIS gas flow meter (ИРВИС-Ультра, ИРВИС-РС4М...) from its registrar over TCP (a gateway on its RS-485 port; plain Modbus RTU), via the shared IrvisClient class registered on functionGlobalContext in settings.js: registrar id, clock, operating time, Vnc, Qnc, Qwc, P (kPa), T (K) and the flag words Fl_a/Fl_b of flow meter 1, raw and named after the protocol. Converting units and decoding the flags is left to the flow's collect-device-state. Send any message in to trigger a read; the same message comes out with `msg.payload` set to the result (deviceTime/timestamp as epoch ms). On failure nothing goes out and node.error() is called. ADDRESS is the registrar's Modbus address (set at shipping from the serial number, e.g. 29804 -> 104).",
+        "category": "subflows",
+        "in": [
+            {
+                "x": 80,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "irvisreader0000001"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 400,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "irvisreader0000001",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "HOST",
+                "type": "str",
+                "value": "94.180.252.2"
+            },
+            {
+                "name": "PORT",
+                "type": "num",
+                "value": "504"
+            },
+            {
+                "name": "ADDRESS",
+                "type": "num",
+                "value": "104"
+            },
+            {
+                "name": "RESPONSE_TIMEOUT_MS",
+                "type": "num",
+                "value": "20000"
+            }
+        ],
+        "meta": {},
+        "color": "#DDBB99",
+        "status": {
+            "x": 420,
+            "y": 220,
+            "wires": [
+                {
+                    "id": "irvisreader0000002",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
         "id": "17c1930de88ea78c",
         "type": "modbus-client",
         "name": "statum_boiler",
@@ -750,75 +883,6 @@
         ]
     },
     {
-        "id": "vzljot026reader000",
-        "type": "subflow",
-        "name": "Vzljot026 Client",
-        "info": "Reads every current value of a Vzljot TSRV-026M heat calculator over TCP (a gateway on its RS-485 port; plain Modbus RTU, input registers), via the shared Vzljot026Client class registered on functionGlobalContext in settings.js: serial number, clock, states, the flow (PR1-PR4, LOG1-LOG2), temperature (PT1-PT5) and pressure (PD1-PD4) channels, the pipes TR1-TR4 and the heat system TS, raw in the device's units (m3/h, °C, MPa, Gcal, t, m3) and named after the register list. Choosing the supply/return pipe and converting units is left to the flow's collect-device-state. Send any message in to trigger a read; the same message comes out with `msg.payload` set to the result (deviceTime/timestamp as epoch ms). On failure nothing goes out and node.error() is called. ADDRESS is the Modbus address (1 by default); SERIAL_NUMBER, when set, is checked against the device's serial number.",
-        "category": "subflows",
-        "in": [
-            {
-                "x": 80,
-                "y": 80,
-                "wires": [
-                    {
-                        "id": "vzljot026reader001"
-                    }
-                ]
-            }
-        ],
-        "out": [
-            {
-                "x": 400,
-                "y": 80,
-                "wires": [
-                    {
-                        "id": "vzljot026reader001",
-                        "port": 0
-                    }
-                ]
-            }
-        ],
-        "env": [
-            {
-                "name": "HOST",
-                "type": "str",
-                "value": "94.180.248.157"
-            },
-            {
-                "name": "PORT",
-                "type": "num",
-                "value": "5023"
-            },
-            {
-                "name": "ADDRESS",
-                "type": "num",
-                "value": "1"
-            },
-            {
-                "name": "SERIAL_NUMBER",
-                "type": "num",
-                "value": "1415796"
-            },
-            {
-                "name": "RESPONSE_TIMEOUT_MS",
-                "type": "num",
-                "value": "30000"
-            }
-        ],
-        "meta": {},
-        "color": "#DDBB99",
-        "status": {
-            "x": 420,
-            "y": 220,
-            "wires": [
-                {
-                    "id": "vzljot026reader002",
-                    "port": 0
-                }
-            ]
-        }
-    },
-    {
         "id": "vzljot026reader001",
         "type": "function",
         "z": "vzljot026reader000",
@@ -847,70 +911,6 @@
         "wires": [
             []
         ]
-    },
-    {
-        "id": "irvisreader0000000",
-        "type": "subflow",
-        "name": "Irvis Client",
-        "info": "Reads the current values of an IRVIS gas flow meter (ИРВИС-Ультра, ИРВИС-РС4М...) from its registrar over TCP (a gateway on its RS-485 port; plain Modbus RTU), via the shared IrvisClient class registered on functionGlobalContext in settings.js: registrar id, clock, operating time, Vnc, Qnc, Qwc, P (kPa), T (K) and the flag words Fl_a/Fl_b of flow meter 1, raw and named after the protocol. Converting units and decoding the flags is left to the flow's collect-device-state. Send any message in to trigger a read; the same message comes out with `msg.payload` set to the result (deviceTime/timestamp as epoch ms). On failure nothing goes out and node.error() is called. ADDRESS is the registrar's Modbus address (set at shipping from the serial number, e.g. 29804 -> 104).",
-        "category": "subflows",
-        "in": [
-            {
-                "x": 80,
-                "y": 80,
-                "wires": [
-                    {
-                        "id": "irvisreader0000001"
-                    }
-                ]
-            }
-        ],
-        "out": [
-            {
-                "x": 400,
-                "y": 80,
-                "wires": [
-                    {
-                        "id": "irvisreader0000001",
-                        "port": 0
-                    }
-                ]
-            }
-        ],
-        "env": [
-            {
-                "name": "HOST",
-                "type": "str",
-                "value": "94.180.252.2"
-            },
-            {
-                "name": "PORT",
-                "type": "num",
-                "value": "504"
-            },
-            {
-                "name": "ADDRESS",
-                "type": "num",
-                "value": "104"
-            },
-            {
-                "name": "RESPONSE_TIMEOUT_MS",
-                "type": "num",
-                "value": "20000"
-            }
-        ],
-        "meta": {},
-        "color": "#DDBB99",
-        "status": {
-            "x": 420,
-            "y": 220,
-            "wires": [
-                {
-                    "id": "irvisreader0000002",
-                    "port": 0
-                }
-            ]
-        }
     },
     {
         "id": "irvisreader0000001",
@@ -2380,7 +2380,7 @@
         "id": "f81de69b4cb87590",
         "type": "subflow:d6d7729c719fdc31",
         "z": "a03807f6777b0746",
-        "name": "",
+        "name": "mercury230-26077096",
         "env": [
             {
                 "name": "HOST",
@@ -2398,7 +2398,7 @@
                 "type": "str"
             }
         ],
-        "x": 450,
+        "x": 460,
         "y": 600,
         "wires": [
             [
@@ -2410,7 +2410,7 @@
         "id": "f07968a5896032e4",
         "type": "subflow:d6d7729c719fdc31",
         "z": "a03807f6777b0746",
-        "name": "",
+        "name": "mercury230-26077087",
         "env": [
             {
                 "name": "HOST",
@@ -2428,7 +2428,7 @@
                 "type": "num"
             }
         ],
-        "x": 450,
+        "x": 460,
         "y": 720,
         "wires": [
             [
@@ -2800,7 +2800,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 570,
+        "x": 590,
         "y": 1340,
         "wires": [
             [
@@ -2821,7 +2821,7 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 820,
+        "x": 780,
         "y": 1340,
         "wires": []
     },
@@ -2829,8 +2829,8 @@
         "id": "b1a4adec7ce85209",
         "type": "subflow:ek270iec61107reader00",
         "z": "a03807f6777b0746",
-        "name": "EK270",
-        "x": 350,
+        "name": "ek270-1116061420",
+        "x": 390,
         "y": 1340,
         "wires": [
             [
@@ -4330,8 +4330,8 @@
         "id": "ba4e431e10dc83ca",
         "type": "subflow:vkt7reader00000000",
         "z": "2d15e59c76504bcb",
-        "name": "VKT-7",
-        "x": 330,
+        "name": "vkt-289452",
+        "x": 350,
         "y": 1040,
         "wires": [
             [
