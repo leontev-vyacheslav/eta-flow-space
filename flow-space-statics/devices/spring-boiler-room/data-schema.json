@@ -1266,12 +1266,6 @@
         "order": 150
       },
       {
-        "id": 8,
-        "name": "gasMeter",
-        "caption": "Газовый счетчик",
-        "order": 160
-      },
-      {
         "id": 9,
         "name": "sensors",
         "caption": "Датчики",

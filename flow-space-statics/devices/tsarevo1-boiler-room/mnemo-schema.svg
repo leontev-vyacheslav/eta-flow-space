@@ -473,7 +473,7 @@
 	<circle style="fill:#F7931E;stroke:#F7931E;stroke-miterlimit:10;" cx="298" cy="285" r="1.3" />
 	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="281" y1="285" x2="315" y2="285" />
 	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="281" y1="285" x2="281" y2="268.4" />
-	<g data-section="gasMeters[0]">
+	<g>
 		<g transform="rotate(180 281 255)">
 			<rect x="267.9" y="241.6" width="26.2" height="26.8" rx="2.6" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" />
 			<circle style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="281" cy="255" r="10.6" />
@@ -485,7 +485,7 @@
 	<text transform="matrix(1 0 0 1 264 258.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:end;">FE3</text>
 	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="281" y1="241.6" x2="281" y2="190" />
 	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="315" y1="285" x2="315" y2="268.4" />
-	<g data-section="gasMeters[1]">
+	<g>
 		<g transform="rotate(180 315 255)">
 			<rect x="301.9" y="241.6" width="26.2" height="26.8" rx="2.6" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" />
 			<circle style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="315" cy="255" r="10.6" />
@@ -505,7 +505,7 @@
 	<circle style="fill:#F7931E;stroke:#F7931E;stroke-miterlimit:10;" cx="610" cy="285" r="1.3" />
 	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="593" y1="285" x2="627" y2="285" />
 	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="593" y1="285" x2="593" y2="268.4" />
-	<g data-section="gasMeters[2]">
+	<g>
 		<g transform="rotate(180 593 255)">
 			<rect x="579.9" y="241.6" width="26.2" height="26.8" rx="2.6" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" />
 			<circle style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="593" cy="255" r="10.6" />
@@ -517,7 +517,7 @@
 	<text transform="matrix(1 0 0 1 576 258.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:end;">FE5</text>
 	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="593" y1="241.6" x2="593" y2="190" />
 	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="627" y1="285" x2="627" y2="268.4" />
-	<g data-section="gasMeters[3]">
+	<g>
 		<g transform="rotate(180 627 255)">
 			<rect x="613.9" y="241.6" width="26.2" height="26.8" rx="2.6" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" />
 			<circle style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="627" cy="255" r="10.6" />
