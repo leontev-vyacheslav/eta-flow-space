@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "title": "spring-vzljot26-1415796",
+    "title": "spring1-vzljot026-1415796",
     "type": "object",
     "properties": {
         "isConnected": {

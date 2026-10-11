@@ -107,4 +107,4 @@ Authorization: Bearer {{authToken}}
 
 
 ###
-GET {{baseUrl}}/static/flows/spring-boiler-automation/spring-boiler-automation-mnemo-schema.svg
+GET {{baseUrl}}/static/devices/spring1-boiler-room/mnemo-schema.svg

@@ -1,12 +1,12 @@
 """
 Read-only probe of the two Modicon controllers of the Весна boiler room
 (boilers and pumps). Prints the raw holding registers as JSON, to compare
-with .docs/spring-modicons-modbus-map.xlsx and with the Node-RED flow.
+with .docs/spring1-modicons-modbus-map.xlsx and with the Node-RED flow.
 
 Uses only Modbus function 3 (read holding registers) over Modbus TCP and
 opens one short connection per controller. No dependencies.
 
-Usage: python3 spring_modicons_tester.py
+Usage: python3 spring1_modicons_tester.py
 """
 import json
 import socket

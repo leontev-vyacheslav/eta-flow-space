@@ -206,7 +206,7 @@ export const useMnemoschemaPopover = () => {
         );
     }
     function parseDataStateAttributesWithRegex(dataStateAttr: string): { deviceCode: string, propertiesChain: string }[] {
-        // data-state="states['spring-boiler-room'].boilers[0].temp;states['spring-boiler-room'].boilers[0].pressure;states['mercury230-29930705'].currentL1"
+        // data-state="states['spring1-boiler-room'].boilers[0].temp;states['spring1-boiler-room'].boilers[0].pressure;states['mercury230-29930705'].currentL1"
         const items = dataStateAttr.split(';').filter(s => s.trim() !== '');
         const pattern = /^states\['([^']+)'\]\.(.+)$/;
 
@@ -219,11 +219,11 @@ export const useMnemoschemaPopover = () => {
             const [, deviceCode, propertiesChain] = match;
             return { deviceCode, propertiesChain };
         }).filter(Boolean) as { deviceCode: string, propertiesChain: string }[];
-        // [{deviceCode: "spring-boiler-room", propertiesChain: "boilers[0].temp"}, {deviceCode: "spring-boiler-room", propertiesChain: "boilers[0].pressure"}, {deviceCode: "mercury230-29930705", propertiesChain: "currentL1"}]}
+        // [{deviceCode: "spring1-boiler-room", propertiesChain: "boilers[0].temp"}, {deviceCode: "spring1-boiler-room", propertiesChain: "boilers[0].pressure"}, {deviceCode: "mercury230-29930705", propertiesChain: "currentL1"}]}
     }
 
     return useCallback((event: MouseEvent) => {
-        // data-state="states['spring-boiler-room'].boilers[0].temp;states['spring-boiler-room'].boilers[0].pressure;states['mercury230-29930705'].currentL1"
+        // data-state="states['spring1-boiler-room'].boilers[0].temp;states['spring1-boiler-room'].boilers[0].pressure;states['mercury230-29930705'].currentL1"
         const target = (event.target as Element)?.closest?.("[data-state]");
         if (!target) {
             return;

@@ -4,7 +4,7 @@ import type { Node } from 'acorn';
 // Runs the data-state-eval expressions of the mnemoschema SVGs without eval.
 // They are parsed once and interpreted with a small allowlist, which covers what the SVGs use, e.g.
 //   element.style.display = ([2, 3, 4].includes(value) ? 'initial' : 'none');
-//   if (states['spring-boiler-room'].isConnected === false) { element.style.fill = 'red' }
+//   if (states['spring1-boiler-room'].isConnected === false) { element.style.fill = 'red' }
 //   element.innerHTML = `(ΔP ≤ ${states['amirkhana99-hws-node'].limDeltaPressTOA}) м`;
 // Anything else (function calls other than [...].includes, globals, other assignments) is rejected,
 // so an SVG can colour and label its own elements but cannot run code.
