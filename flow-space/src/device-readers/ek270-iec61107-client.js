@@ -6,6 +6,15 @@
  * mode. Byte sequences and command list taken directly from the working
  * device driver (EnergyTechAudit.PowerAccounting.DeviceReader.Ek270).
  *
+ * read() returns the values of ADDRESSES raw, keyed by their IEC 61107
+ * address (manual ЛГТИ.407229.170 РЭ, .docs/ek270): the volume counters,
+ * flow rates, pressure, temperature, correction factor, identity, the
+ * statuses (lists of active message numbers) and the remaining battery
+ * life. The Node-RED mapping (collect-device-state) gives them their
+ * meaning. Every parameter is a separate request (~0.4 s each), and the
+ * corrector runs on batteries that drain faster with frequent reading, so
+ * the list is kept short on purpose.
+ *
  * Sequence per read():
  *   1. StartSession:        2f 3f 21 0d 0a                    "/?!\r\n"
  *      -> device replies with ID, e.g. "/Els6EK270\r\n"
@@ -53,28 +62,39 @@ const net = require('net');
 
 const SOH = 0x01, STX = 0x02, ETX = 0x03, ACK = 0x06, CR = 0x0d, LF = 0x0a;
 
-// name -> IEC 61107 address, exactly as sent by the working driver (Functions.cs)
-const PARAMETERS = {
-    factoryNumber: '1:180.0',
-    deviceTime: '1:400.0',
-    correctionCoefficient: '5:310.0',
-    standardVolumeFlow: '2:310.0',
-    workVolumeFlow: '4:310.0',
-    pressure: '7:310.0',
-    temperature: '6:310_1.0',
-    standardVolume: '2:300.0',
-    workVolume: '4:300.0',
-    disturbanceStandardVolume: '2:301.0',
-    fullStandardVolume: '2:302.0',
-    disturbanceWorkVolume: '4:301.0',
-    fullWorkVolume: '4:302.0',
-    firmware: '2:190.0',
-    reportingHour: '2:141.0',
-    archiveInterval: '4:150.0',
-};
+// IEC 61107 addresses read by default, exactly as sent by the working driver
+// (Functions.cs) plus the status and battery values; the meaning of each one
+// (manual ЛГТИ.407229.170 РЭ, lists 1.5.x) is given by the Node-RED mapping.
+const ADDRESSES = [
+    '1:180.0', // serial number
+    '1:400.0', // clock
+    '5:310.0', // correction factor
+    '2:310.0', // standard flow rate
+    '4:310.0', // working flow rate
+    '7:310.0', // pressure
+    '6:310_1.0', // temperature
+    '2:300.0', // standard volume
+    '4:300.0', // working volume
+    '2:301.0', // disturbance standard volume
+    '2:302.0', // total standard volume
+    '4:301.0', // disturbance working volume
+    '4:302.0', // total working volume
+    '2:190.0', // firmware
+    '2:141.0', // reporting hour
+    '4:150.0', // archive interval
+    '1:100.0', // current general status
+    '1:101.0', // general status register
+    '2:100.0', // system status
+    '2:404.0', // remaining battery life, months
+];
 
-// Fields that stay strings — identifiers/version labels, not measurements.
-const STRING_FIELDS = new Set(['factoryNumber', 'firmware']);
+// Addresses whose values stay strings — identifiers/version labels, not
+// measurements ("1.60" must not become 1.6).
+const STRING_ADDRESSES = new Set(['1:180', '2:190']);
+const CLOCK_ADDRESS = '1:400';
+// Status addresses answer with every active message number in its own
+// brackets, e.g. "1:100.3(1)(13)(14)(16)"; they are returned as a list.
+const LIST_ADDRESSES = new Set(['1:100', '1:101', '2:100']);
 
 // Device identification line, e.g. "/Els6EK270\r\n" — "/" + 3-letter maker
 // code + baud-rate digit. Does not match another master's "/?1!\r\n" request.
@@ -90,8 +110,9 @@ class Ek270Iec61107Client {
      * @param {number} [options.stepTimeoutMs=5000] - Wait for a valid reply to one parameter request.
      * @param {number} [options.retries=1] - Extra requests for a parameter that got no valid reply.
      * @param {number} [options.responseTimeoutMs=30000] - Overall timeout for a full read() call.
+     * @param {string[]} [options.addresses] - IEC 61107 addresses to read (default: ADDRESSES).
      */
-    constructor({ host, port, evenParity = false, stepDelayMs = 300, stepTimeoutMs = 5000, retries = 1, responseTimeoutMs = 30000 } = {}) {
+    constructor({ host, port, evenParity = false, stepDelayMs = 300, stepTimeoutMs = 5000, retries = 1, responseTimeoutMs = 30000, addresses = ADDRESSES } = {}) {
         if (!host) throw new Error('Ek270Iec61107Client: "host" is required');
         if (!port) throw new Error('Ek270Iec61107Client: "port" is required');
 
@@ -102,10 +123,11 @@ class Ek270Iec61107Client {
         this.stepTimeoutMs = stepTimeoutMs;
         this.retries = retries;
         this.responseTimeoutMs = responseTimeoutMs;
+        this.addresses = addresses;
     }
 
-    static get PARAMETERS() {
-        return PARAMETERS;
+    static get ADDRESSES() {
+        return ADDRESSES;
     }
 
     _xorBcc(bytes) {
@@ -173,13 +195,16 @@ class Ek270Iec61107Client {
     // "value*unit", e.g. "260.63*м3" — units are legacy-encoded and not
     // needed here). Only STX frames are replies: an SOH frame is a request
     // (possibly another master's "R1 2:302.0(0)") and must never be taken
-    // as a value. Always returns the raw string; typing happens in
-    // _finalizeResults().
+    // as a value. Returns the raw string of the first bracket group as
+    // `value` and of every group as `values` (status addresses list one
+    // message number per group); typing happens in _finalizeResults().
     _parseDataFrame(frame) {
         if (frame[0] !== STX) return null;
-        const match = frame.toString('latin1').match(/^\x02([^(]*)\(([^)]*)\)/);
+        const text = frame.toString('latin1');
+        const match = text.match(/^\x02([^(]*)((?:\([^)]*\))+)/);
         if (!match) return null;
-        return { address: match[1], value: match[2].split('*')[0] };
+        const values = [...match[2].matchAll(/\(([^)]*)\)/g)].map((group) => group[1].split('*')[0]);
+        return { address: match[1], value: values[0], values };
     }
 
     // "7-2:302.2" -> "2:302", "6:310_1.0" -> "6:310_1": compares a request
@@ -200,20 +225,23 @@ class Ek270Iec61107Client {
         return new Date(y, mo - 1, d, h, mi, s).getTime();
     }
 
-    // Converts raw string results into properly typed values per the ek270
-    // JSON schema, and adds timestamp to match its "state" fields.
+    // Types the raw string results, keyed by core address ("2:302"): the
+    // clock as epoch ms, identifiers as strings, everything else as a number
+    // (null when it is not one); adds timestamp.
     _finalizeResults(rawResults) {
         const out = {};
-        for (const [name, raw] of Object.entries(rawResults)) {
+        for (const [address, raw] of Object.entries(rawResults)) {
             if (raw === null || raw === undefined) {
-                out[name] = null;
-            } else if (STRING_FIELDS.has(name)) {
-                out[name] = raw;
-            } else if (name === 'deviceTime') {
-                out[name] = this._parseDeviceTime(raw);
+                out[address] = null;
+            } else if (STRING_ADDRESSES.has(address)) {
+                out[address] = raw;
+            } else if (address === CLOCK_ADDRESS) {
+                out[address] = this._parseDeviceTime(raw);
+            } else if (LIST_ADDRESSES.has(address)) {
+                out[address] = raw.filter((v) => v.trim() !== '').map(Number).filter((n) => !Number.isNaN(n));
             } else {
                 const num = parseFloat(raw);
-                out[name] = Number.isNaN(num) ? null : num;
+                out[address] = Number.isNaN(num) ? null : num;
             }
         }
         out.timestamp = Date.now();
@@ -221,10 +249,13 @@ class Ek270Iec61107Client {
     }
 
     /**
-     * Reads all parameters from the EK270 over TCP, in one session.
-     * Resolves with values typed per the ek270 JSON schema: numeric
-     * measurements as `number`, factoryNumber/firmware as `string`,
-     * deviceTime as epoch ms `integer`, plus timestamp.
+     * Reads every address of `addresses` from the EK270 over TCP, in one
+     * session. Resolves with the raw values keyed by core address ("2:302",
+     * "6:310_1"): numbers, the serial number 1:180 and firmware 2:190 as
+     * strings, the clock 1:400 as epoch ms, the status addresses 1:100,
+     * 1:101, 2:100 as lists of active message numbers, plus timestamp. Their meaning
+     * (standard volume, pressure, status...) is given by the Node-RED
+     * mapping (collect-device-state).
      *
      * Every value comes from a reply whose BCC is valid and whose echoed
      * address matches the request; frames from another master on the line
@@ -244,7 +275,7 @@ class Ek270Iec61107Client {
             const socket = new net.Socket();
             let buffer = Buffer.alloc(0);
             let step = 'start';
-            const paramEntries = Object.entries(PARAMETERS);
+            const paramEntries = this.addresses.map((address) => [this._coreAddress(address), address]);
             let paramIndex = 0;
             let attempt = 0;
             let stepTimer = null;
@@ -359,7 +390,7 @@ class Ek270Iec61107Client {
                     while ((got = takeFrame())) {
                         const reply = got.bccOk ? this._parseDataFrame(got.frame) : null;
                         if (reply && this._coreAddress(reply.address) === this._coreAddress(address)) {
-                            results[name] = reply.value;
+                            results[name] = LIST_ADDRESSES.has(name) ? reply.values : reply.value;
                             paramIndex += 1;
                             nextParam();
                             return;
@@ -378,13 +409,14 @@ class Ek270Iec61107Client {
 
 module.exports = { Ek270Iec61107Client };
 
-// Run directly for a quick standalone test:
-//   node Ek270Iec61107Client.js <host> <port>
+// Run directly for a quick standalone test (optionally with other addresses):
+//   node ek270-iec61107-client.js <host> <port> [address,address,...]
 if (require.main === module) {
-    const [, , host, port] = process.argv;
+    const [, , host, port, addresses] = process.argv;
     const client = new Ek270Iec61107Client({
         host: host || '94.180.248.157',
         port: Number(port) || 5021,
+        ...(addresses ? { addresses: addresses.split(',') } : {}),
     });
 
     client.read()
