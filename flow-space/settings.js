@@ -551,6 +551,7 @@ module.exports = {
         km5: require('./src/device-readers/km5-client.js'),
         tv7: require('./src/device-readers/tv7-client.js'),
         vzljot026: require('./src/device-readers/vzljot026-client.js'),
+        irvis: require('./src/device-readers/irvis-client.js'),
     },
 
     /** The maximum number of messages nodes will buffer internally as part of their

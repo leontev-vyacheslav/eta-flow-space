@@ -849,6 +849,100 @@
         ]
     },
     {
+        "id": "irvisreader0000000",
+        "type": "subflow",
+        "name": "Irvis Client",
+        "info": "Reads the current values of an IRVIS gas flow meter (ИРВИС-Ультра, ИРВИС-РС4М...) from its registrar over TCP (a gateway on its RS-485 port; plain Modbus RTU), via the shared IrvisClient class registered on functionGlobalContext in settings.js: registrar id, clock, operating time, Vnc, Qnc, Qwc, P (kPa), T (K) and the flag words Fl_a/Fl_b of flow meter 1, raw and named after the protocol. Converting units and decoding the flags is left to the flow's collect-device-state. Send any message in to trigger a read; the same message comes out with `msg.payload` set to the result (deviceTime/timestamp as epoch ms). On failure nothing goes out and node.error() is called. ADDRESS is the registrar's Modbus address (set at shipping from the serial number, e.g. 29804 -> 104).",
+        "category": "subflows",
+        "in": [
+            {
+                "x": 80,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "irvisreader0000001"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 400,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "irvisreader0000001",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "HOST",
+                "type": "str",
+                "value": "94.180.252.2"
+            },
+            {
+                "name": "PORT",
+                "type": "num",
+                "value": "504"
+            },
+            {
+                "name": "ADDRESS",
+                "type": "num",
+                "value": "104"
+            },
+            {
+                "name": "RESPONSE_TIMEOUT_MS",
+                "type": "num",
+                "value": "20000"
+            }
+        ],
+        "meta": {},
+        "color": "#DDBB99",
+        "status": {
+            "x": 420,
+            "y": 220,
+            "wires": [
+                {
+                    "id": "irvisreader0000002",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "irvisreader0000001",
+        "type": "function",
+        "z": "irvisreader0000000",
+        "name": "get-measurements",
+        "func": "const HOST = env.get('HOST');\nconst PORT = Number(env.get('PORT'));\nconst ADDRESS = Number(env.get('ADDRESS'));\nconst RESPONSE_TIMEOUT_MS = Number(env.get('RESPONSE_TIMEOUT_MS')) || 20000;\n\nconst { IrvisClient } = global.get('irvis');\nconst { withConnectionLock } = global.get('withConnectionLock');\n\n(async () => {\n    try {\n        const deviceState = await withConnectionLock(HOST, PORT, async () => {\n            const client = new IrvisClient({\n                host: HOST,\n                port: PORT,\n                address: ADDRESS,\n                responseTimeoutMs: RESPONSE_TIMEOUT_MS,\n            });\n            // IrvisClient.read() opens the socket, reads the registrar id and\n            // the current values of flow meter 1, and closes the socket itself.\n            return await client.read();\n        });\n\n        msg.payload = deviceState;\n        node.send(msg);\n        node.status({ fill: 'green', shape: 'dot', text: 'ok ' + new Date().toLocaleTimeString() });\n    } catch (err) {\n        // Full read failed — nothing goes out. No partial/incomplete set is sent downstream.\n        node.error('Irvis read failed: ' + err.message, msg);\n        node.status({ fill: 'red', shape: 'ring', text: 'error' });\n    }\n})();\n\nreturn null;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 220,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "irvisreader0000002",
+        "type": "status",
+        "z": "irvisreader0000000",
+        "name": "",
+        "scope": null,
+        "x": 140,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
         "id": "53a2fa2e3e999267",
         "type": "comment",
         "z": "8c7f93e2ebca7614",
@@ -3748,7 +3842,7 @@
         "id": "54b066aec349fe51",
         "type": "comment",
         "z": "2d15e59c76504bcb",
-        "name": "spring2-irvis-29804 [17]",
+        "name": "spring2-irvis-29804 [17] (old Modbus-node polling, disabled; see the Irvis Client below)",
         "info": "",
         "x": 140,
         "y": 480,
@@ -4072,6 +4166,7 @@
         "id": "36fb37f5985253ef",
         "type": "modbus-read",
         "z": "2d15e59c76504bcb",
+        "d": true,
         "name": "",
         "topic": "",
         "showStatusActivities": false,
@@ -4106,7 +4201,7 @@
         "type": "function",
         "z": "2d15e59c76504bcb",
         "name": "dataConvert",
-        "func": "const buffer = Buffer.from(msg.payload.buffer);\nconst payload = msg.payload;\nconst gasMeter = {};\nlet flagAnalyser;\n\n// блок коррекции порядка байт в пакете\nbuffer.swap16();\n\ngasMeter['timeOfWork'] = buffer.readUInt8(0) + buffer.readUInt8(1) * 60 + buffer.readUInt16LE(2) * 3600; // время наработки в секундах\n// gasMeter['secOfWork'] = buffer.readUInt8(0);              // секунды времени наработки\n// gasMeter['minOfWork'] = buffer.readUInt8(1);              // минуты времени наработки\ngasMeter['accumulatedVolume'] = buffer.readUInt32LE(4);      // накопленный объем, м3\ngasMeter['currentFlowRateNc'] = buffer.readFloatLE(8);        // расход в н.у., м3/ч\ngasMeter['currentFlowRateWc'] = buffer.readFloatLE(12);       // расход в раб.у., м3/ч\ngasMeter['currentPressure'] = buffer.readFloatLE(16);              // давление, кПа\ngasMeter['currentTemp'] = buffer.readFloatLE(20) - 273.15;      // температура в гр.С\ngasMeter['CommonFlags'] = buffer.readUInt16LE(24);           // Флаги общих данных\ngasMeter['IndivFlags'] = buffer.readUInt16LE(26);            // Флаги индивидуальных данных ПП\n\ngasMeter['powerOffFl'] = payload['CommonFlags'] & 0x1;          // Отсутствие питания, если 1 - выключение питания\ngasMeter['dataChangeFl'] = (payload['CommonFlags'] >> 1) & 0x1; // Флаг изменения даты/времени\ngasMeter['errRTCFl'] = (payload['CommonFlags'] >> 2) & 0x1;     // Отказ часов\n\nflagAnalyser = payload['IndivFlags'] & 0b11;\ngasMeter['lowQFl'] = (flagAnalyser == 1) ? 1 : 0;   //Q ниже допуска, если = 1\ngasMeter['highQFl'] = (flagAnalyser == 2) ? 1 : 0;  //Q выше допуска, если = 1\ngasMeter['highFQFl'] = (flagAnalyser == 3) ? 1 : 0; //FQ выше допуска, если = 1\n\nflagAnalyser = (payload['IndivFlags'] >> 2) & 0b11;\ngasMeter['waterQFl'] = (flagAnalyser == 1) ? 1 : 0;   //вода в датчике Q, если = 1\ngasMeter['errQFl'] = (flagAnalyser == 2) ? 1 : 0;   //отказ датчика Q, если = 1\ngasMeter['noFlowFl'] = (flagAnalyser == 3) ? 1 : 0;   //нет расхода, если = 1\n\nflagAnalyser = (payload['IndivFlags'] >> 4) & 0b11;\ngasMeter['badQFl'] = (flagAnalyser == 1) ? 1 : 0;   //плохой сигнал Q, если = 1\ngasMeter['analysisQFl'] = (flagAnalyser == 2) ? 1 : 0;   //анализ сигнала Q, если = 1\n\n\ngasMeter['outOfRangeTFl'] = (payload['IndivFlags'] >> 6) & 1;        //Т вне диапазона, если = 1\ngasMeter['outOfRangePFl'] = (payload['IndivFlags'] >> 7) & 1;        //P вне диапазона, если = 1\ngasMeter['noDataFl'] = (payload['IndivFlags'] >> 8) & 1;             //нет данных, если = 1\ngasMeter['writeSettingFl'] = (payload['IndivFlags'] >> 9) & 1;       //запись в архив констант, если = 1\ngasMeter['badQdurningArcFl'] = (payload['IndivFlags'] >> 10) & 1;    //Копия флага «Учет газа при плохом сигнале» на момент записи в архив, если = 1\n\n\nmsg.payload = gasMeter;\nmsg.complete = true;\n\nreturn msg;",
+        "func": "const buffer = Buffer.from(msg.payload.buffer);\nconst payload = msg.payload;\nconst gasMeter = {};\nlet flagAnalyser;\n\n// блок коррекции порядка байт в пакете\nbuffer.swap16();\n\ngasMeter['timeOfWork'] = buffer.readUInt8(0) + buffer.readUInt8(1) * 60 + buffer.readUInt16LE(2) * 3600; // время наработки в секундах\n// gasMeter['secOfWork'] = buffer.readUInt8(0);              // секунды времени наработки\n// gasMeter['minOfWork'] = buffer.readUInt8(1);              // минуты времени наработки\ngasMeter['accumulatedVolume'] = buffer.readUInt32LE(4);      // накопленный объем, м3\ngasMeter['currentFlowRateNc'] = buffer.readFloatLE(8);        // расход в н.у., м3/ч\ngasMeter['currentFlowRateWc'] = buffer.readFloatLE(12);       // расход в раб.у., м3/ч\ngasMeter['currentPressure'] = buffer.readFloatLE(16);              // давление, кПа\ngasMeter['currentTemp'] = buffer.readFloatLE(20) - 273.15;      // температура в гр.С\ngasMeter['CommonFlags'] = buffer.readUInt16LE(24);           // Флаги общих данных\ngasMeter['IndivFlags'] = buffer.readUInt16LE(26);            // Флаги индивидуальных данных ПП\n\ngasMeter['powerOffFl'] = gasMeter['CommonFlags'] & 0x1;          // Отсутствие питания, если 1 - выключение питания\ngasMeter['dataChangeFl'] = (gasMeter['CommonFlags'] >> 1) & 0x1; // Флаг изменения даты/времени\ngasMeter['errRTCFl'] = (gasMeter['CommonFlags'] >> 2) & 0x1;     // Отказ часов\n\nflagAnalyser = gasMeter['IndivFlags'] & 0b11;\ngasMeter['lowQFl'] = (flagAnalyser == 1) ? 1 : 0;   //Q ниже допуска, если = 1\ngasMeter['highQFl'] = (flagAnalyser == 2) ? 1 : 0;  //Q выше допуска, если = 1\ngasMeter['highFQFl'] = (flagAnalyser == 3) ? 1 : 0; //FQ выше допуска, если = 1\n\nflagAnalyser = (gasMeter['IndivFlags'] >> 2) & 0b11;\ngasMeter['waterQFl'] = (flagAnalyser == 1) ? 1 : 0;   //вода в датчике Q, если = 1\ngasMeter['errQFl'] = (flagAnalyser == 2) ? 1 : 0;   //отказ датчика Q, если = 1\ngasMeter['noFlowFl'] = (flagAnalyser == 3) ? 1 : 0;   //нет расхода, если = 1\n\nflagAnalyser = (gasMeter['IndivFlags'] >> 4) & 0b11;\ngasMeter['badQFl'] = (flagAnalyser == 1) ? 1 : 0;   //плохой сигнал Q, если = 1\ngasMeter['analysisQFl'] = (flagAnalyser == 2) ? 1 : 0;   //анализ сигнала Q, если = 1\n\n\ngasMeter['outOfRangeTFl'] = (gasMeter['IndivFlags'] >> 6) & 1;        //Т вне диапазона, если = 1\ngasMeter['outOfRangePFl'] = (gasMeter['IndivFlags'] >> 7) & 1;        //P вне диапазона, если = 1\ngasMeter['noDataFl'] = (gasMeter['IndivFlags'] >> 8) & 1;             //нет данных, если = 1\ngasMeter['writeSettingFl'] = (gasMeter['IndivFlags'] >> 9) & 1;       //запись в архив констант, если = 1\ngasMeter['badQduringArcFl'] = (gasMeter['IndivFlags'] >> 10) & 1;    //Копия флага «Учет газа при плохом сигнале» на момент записи в архив, если = 1\n\n\nmsg.payload = gasMeter;\nmsg.complete = true;\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -4279,6 +4374,96 @@
         "statusType": "auto",
         "x": 780,
         "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "69359b39fbd37f4b",
+        "type": "comment",
+        "z": "2d15e59c76504bcb",
+        "name": "spring2-irvis-29804 [17] (Irvis Client, every 60 s)",
+        "info": "",
+        "x": 260,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "a95e647f52009402",
+        "type": "inject",
+        "z": "2d15e59c76504bcb",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 1180,
+        "wires": [
+            [
+                "86fc98a8625853db"
+            ]
+        ]
+    },
+    {
+        "id": "86fc98a8625853db",
+        "type": "subflow:irvisreader0000000",
+        "z": "2d15e59c76504bcb",
+        "name": "irvis-29804",
+        "env": [],
+        "x": 330,
+        "y": 1180,
+        "wires": [
+            [
+                "c777deec5e1929dc"
+            ]
+        ]
+    },
+    {
+        "id": "c777deec5e1929dc",
+        "type": "function",
+        "z": "2d15e59c76504bcb",
+        "name": "collect-device-state",
+        "func": "const { storeDeviceStateToCacheAsync } = global.get('helpers');\n\nconst payload = msg.payload;\nconst { Fl_a: common, Fl_b: individual } = payload;\n\n// Fl_b bit pairs (protocol table 1.4.1): each pair is one of three states.\nconst pair = (shift) => (individual >> shift) & 0b11;\nconst bit = (word, shift) => (word >> shift) & 1;\n\nconst deviceState = {\n    // Time of work, h\n    timeOfWork: payload.operatingTimeHours + payload.operatingTimeMinutes / 60 + payload.operatingTimeSeconds / 3600,\n\n    // Accumulated volume at standard conditions, m³\n    accumulatedVolume: payload.Vnc,\n\n    // Flow rate at standard and working conditions, m³/h\n    currentFlowRateNc: payload.Qnc,\n    currentFlowRateWc: payload.Qwc,\n\n    // Pressure, kPa\n    currentPressure: payload.P,\n\n    // Temperature, °C (the meter sends K)\n    currentTemp: payload.T === null ? null : Number((payload.T - 273.15).toFixed(4)),\n\n    // Raw flag words\n    CommonFlags: common,\n    IndivFlags: individual,\n\n    // Fl_a: general flags\n    powerOffFl: bit(common, 0),        // power off\n    dataChangeFl: bit(common, 1),      // date/time changed\n    errRTCFl: bit(common, 2),          // clock failure\n\n    // Fl_b: flow meter flags\n    lowQFl: pair(0) === 1 ? 1 : 0,     // Q below the range\n    highQFl: pair(0) === 2 ? 1 : 0,    // Q above the range\n    highFQFl: pair(0) === 3 ? 1 : 0,   // FQ above the range\n    waterQFl: pair(2) === 1 ? 1 : 0,   // water in the Q sensor\n    errQFl: pair(2) === 2 ? 1 : 0,     // Q sensor failure\n    noFlowFl: pair(2) === 3 ? 1 : 0,   // no flow\n    badQFl: pair(4) === 1 ? 1 : 0,     // bad Q signal\n    analysisQFl: pair(4) === 2 ? 1 : 0, // Q signal analysis\n    outOfRangeTFl: bit(individual, 6), // T out of range\n    outOfRangePFl: bit(individual, 7), // P out of range\n    noDataFl: bit(individual, 8),      // no data\n    writeSettingFl: bit(individual, 9), // constants archive record (contract values or medium changed)\n    badQduringArcFl: bit(individual, 10), // copy of \"account gas at a bad signal\" at the archive record\n\n    // Timestamp\n    timestamp: Date.now(),\n};\n\n// Index 1: the Irvis [17] is the second device of this flow by id (after 9).\nconst flowUid = node.path.split('/').find(_ => true);\nawait storeDeviceStateToCacheAsync(global, flowUid, deviceState, 1);\nmsg.deviceState = deviceState;\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 1180,
+        "wires": [
+            [
+                "5c4330a1bc765a86"
+            ]
+        ]
+    },
+    {
+        "id": "5c4330a1bc765a86",
+        "type": "debug",
+        "z": "2d15e59c76504bcb",
+        "name": "debug irvis",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "deviceState",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 760,
+        "y": 1180,
         "wires": []
     },
     {
