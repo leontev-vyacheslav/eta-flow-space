@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "title": "spring2-vkt-289452",
+    "title": "spring2-vkt7-289452",
     "type": "object",
     "properties": {
         "isConnected": {

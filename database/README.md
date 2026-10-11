@@ -39,10 +39,11 @@ the web API's Sequelize models only describe it and no longer create tables (`sy
 | `2026-10-08-link-tsarevo1-users.sql` | yes (verified 2026-10-09) |
 | `2026-10-09-add-device-type.sql` | yes (verified 2026-10-09) |
 | `2026-10-09-emergency-rules-device-code.sql` | yes (verified 2026-10-09) |
-| `2026-10-09-remove-is-connected-from-meter-states.sql` | yes (verified 2026-10-11); one KM-5 row written before the Node-RED restart (id 193331, 09.10 08:57) still has `isConnected` — run it once more |
+| `2026-10-09-remove-is-connected-from-meter-states.sql` | yes (verified 2026-10-11, incl. the second run) |
 | `2026-10-09-add-tsarevo1-tv7.sql` | yes (verified 2026-10-10) |
-| `2026-10-10-fix-mercury230-current-scale.sql` | yes (verified 2026-10-11); one device-14 row written before the Node-RED restart (id 194786, 10.10 09:50) still has the 10x current — run it once more, before `2026-10-11-uniform-device-codes.sql` (it finds the meters by their old codes) |
+| `2026-10-10-fix-mercury230-current-scale.sql` | yes (verified 2026-10-11, incl. the second run) |
 | `2026-10-10-null-vzljot026-zero-pressures.sql` | yes (verified 2026-10-11) |
 | `2026-10-11-irvis-state-names-and-flags.sql` | yes (verified 2026-10-11) |
 | `2026-10-11-device-code-unique.sql` | yes (verified 2026-10-11) |
-| `2026-10-11-uniform-device-codes.sql` | not yet |
+| `2026-10-11-uniform-device-codes.sql` | yes (verified 2026-10-11) |
+| `2026-10-11-rename-spring2-vkt-to-vkt7.sql` | not yet |
