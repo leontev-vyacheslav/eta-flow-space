@@ -826,8 +826,8 @@
 
 		<g transform="translate(-105 45.7)">
 		<use href="#infoIcon"
-			data-state-eval="element.style.fill = (states['spring2-irvis'].isConnected === false ? '#F44336': '#0072C6')"
-			data-state="states['spring2-irvis'].isConnected;states['spring2-irvis'].timestamp;states['spring2-irvis'].volumeStandard;states['spring2-irvis'].operatingTime"
+			data-state-eval="element.style.fill = (states['spring2-irvis-29804'].isConnected === false ? '#F44336': '#0072C6')"
+			data-state="states['spring2-irvis-29804'].isConnected;states['spring2-irvis-29804'].timestamp;states['spring2-irvis-29804'].volumeStandard;states['spring2-irvis-29804'].operatingTime"
 			style="fill:#0072C6" transform="translate(353 380) scale(0.55)" />
 		<rect style="fill:none;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;"
 			rx="10" ry="10"
@@ -845,19 +845,19 @@
 		<g transform="translate(-105 45.7)">
 		<g>
 			<rect x="171.2" y="404.6" width="65" height="12.3" class="st8" />
-			<text data-state="states['spring2-irvis'].volumeFlowRateWorking" transform="matrix(1 0 0 1 174 414.4297)" class="st6">419.8н.м³/ч</text>
+			<text data-state="states['spring2-irvis-29804'].volumeFlowRateWorking" transform="matrix(1 0 0 1 174 414.4297)" class="st6">419.8н.м³/ч</text>
 			<text transform="matrix(1 0 0 1 192.4455 400.9655)" class="st6">FE3.1</text>
 		</g>
 		<g>
 			<rect x="232.5" y="389.4" width="45" height="11.2" class="st8" />
-			<text data-state="states['spring2-irvis'].temperature" transform="matrix(1 0 0 1 235 398.1299)" class="st6">9,4ºC</text>
+			<text data-state="states['spring2-irvis-29804'].temperature" transform="matrix(1 0 0 1 235 398.1299)" class="st6">9,4ºC</text>
 			<line class="st36" x1="251.6" y1="410.8" x2="251.6" y2="400.6"/>
 			<text transform="matrix(1 0 0 1 239.116 387.4139)" class="st6">TE14</text>
 			<circle class="st37" cx="251.6" cy="410.7" r="1.3"/>
 		</g>
 		<g transform="translate(10 0)">
 			<rect x="275.5" y="389.1" width="55" height="11.1" class="st8" />
-			<text data-state="states['spring2-irvis'].pressure" transform="matrix(1 0 0 1 278.6857 397.7684)" class="st6">374.2кПа</text>
+			<text data-state="states['spring2-irvis-29804'].pressure" transform="matrix(1 0 0 1 278.6857 397.7684)" class="st6">374.2кПа</text>
 			<line class="st36" x1="298" y1="410.5" x2="298" y2="400.1"/>
 			<text transform="matrix(1 0 0 1 291.7077 387.0526)" class="st6">PE4</text>
 			<circle class="st37" cx="298" cy="410.5" r="1.3"/>

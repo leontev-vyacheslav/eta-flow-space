@@ -6,7 +6,7 @@ const { getCachedDevicesAsync, getDeviceByFlowIndexAsync } = require('./get-devi
  * The device is found by its code — the same code the diagrams and data schemas use — so the state
  * can never land on another device of the flow:
  *
- *     const DEVICE_CODE = 'spring2-irvis';
+ *     const DEVICE_CODE = 'spring2-irvis-29804';
  *     const flowUid = node.path.split('/').find(_ => true);
  *     await storeDeviceStateToCacheAsync(global, DEVICE_CODE, deviceState, flowUid);
  *
