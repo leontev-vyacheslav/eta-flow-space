@@ -61,6 +61,8 @@ export { TbUser as UserIcon } from 'react-icons/tb';
 export { IoMdTime as TimeIcon } from 'react-icons/io';
 
 export {IoChevronForwardOutline as SubmenuIcon} from 'react-icons/io5';
+export { IoChevronBackOutline as PreviousIcon } from 'react-icons/io5';
+export { IoChevronForwardOutline as NextIcon } from 'react-icons/io5';
 export {MdOutlineFitScreen as WideScreenIcon} from 'react-icons/md';
 export {MdOutlineFullscreenExit as WideScreenExitIcon} from 'react-icons/md';
 // import { HiOutlineRectangleGroup } from "react-icons/hi2";

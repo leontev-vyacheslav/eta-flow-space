@@ -7,10 +7,9 @@ import { AdditionalMenuIcon, MapIcon, RefreshIcon } from "../../constants/app-ic
 import AppConstants from "../../constants/app-constants";
 import type { MenuItemModel } from "../../models/menu-item-model";
 import { useAppData } from "../../contexts/app-data/app-data";
-import { MapPagePopupContent } from "./map-page-popup-content";
 import type { DeviceModel } from "../../models/flows/device-model";
 import type { EmergencyModel } from "../../models/flows/emergency-model";
-import { MapPagePopupSkeleton } from "./map-page-popup-skeleton";
+import { MapPageDevicePopup, type MapPageDeviceData } from "./map-page-device-popup";
 import { useLongPress } from "use-long-press";
 import { isSuppressedForLongPress } from "../../helpers/map-helpers";
 import { createMapMarkerIcon } from "./map-marker-icon";
@@ -24,6 +23,25 @@ import { MapSizeWatcher } from "./map-size-watcher";
 import 'leaflet/dist/leaflet.css';
 import './map-page.scss';
 
+type MarkerGroup = {
+    key: string;
+    devices: DeviceModel[];
+    // the device shown in the popup
+    index: number;
+    container: HTMLElement;
+    emergencyStates: EmergencyModel[] | undefined;
+    // keeps the popup inside the map when its content grows (data loaded, another device shown)
+    resizeObserver?: ResizeObserver;
+};
+
+// Leaflet pans a popup into view only when it opens; this re-measures it and pans the map if it sticks out
+const fitPopupIntoView = (marker: L.Marker) => {
+    const popup = marker.getPopup();
+    if (popup?.isOpen()) {
+        popup.update();
+    }
+};
+
 export const MapPage = () => {
     const navigate = useNavigate();
     const { deviceId } = useParams();
@@ -34,8 +52,11 @@ export const MapPage = () => {
     const [tilesReady, setTilesReady] = useState(false);
     const mapRef = useRef<L.Map>(null);
     const markersGroupRef = useRef<L.FeatureGroup | null>(null);
-    const rootsRef = useRef<Map<number, ReturnType<typeof createRoot>>>(new Map());
+    // devices at the same place in the same flow (a boiler room and its meters) share one marker,
+    // whose popup pages between them; both maps are keyed by device id, all devices of a group point to it
+    const rootsRef = useRef<Map<string, ReturnType<typeof createRoot>>>(new Map());
     const markersRef = useRef<Map<number, L.Marker>>(new Map());
+    const groupsRef = useRef<Map<number, MarkerGroup>>(new Map());
     const latestRequestRef = useRef<number>(0);
     const { treeViewRef } = useSharedArea();
 
@@ -92,14 +113,8 @@ export const MapPage = () => {
         ] as MenuItemModel[];
     }, []);
 
-    const markerPopupOpenHandler = useCallback(async (device: DeviceModel, emergencyState: EmergencyModel | undefined, container: HTMLElement) => {
-        if (!rootsRef.current.has(device.id)) {
-            rootsRef.current.set(device.id, createRoot(container));
-        }
-        const root = rootsRef.current.get(device.id)!;
-        root.render(<MapPagePopupSkeleton device={device} />);
-        const flowCode = device.flow?.code;
-        if (!flowCode) {
+    const loadDeviceData = useCallback(async (device: DeviceModel): Promise<MapPageDeviceData | undefined> => {
+        if (!device.flow?.code) {
             return;
         }
 
@@ -107,36 +122,15 @@ export const MapPage = () => {
             getDeviceStatesAsync(device.id),
             getDeviceStateDataschemaAsync(device.code),
         ]);
-
         if (!deviceStates || !dataschema) {
             return;
         }
 
-        rootsRef.current.get(device.id)?.render(
-            <MapPagePopupContent device={device} deviceState={deviceStates[device.code]} dataschema={dataschema} emergencyState={emergencyState} />
-        );
+        return { deviceState: deviceStates[device.code], dataschema };
     }, [getDeviceStatesAsync, getDeviceStateDataschemaAsync]);
 
-    const markerPopupCloseHandler = useCallback((deviceId: number) => {
-        const root = rootsRef.current.get(deviceId);
-        if (root) {
-            // Defer unmount to avoid race condition with React's render cycle
-            queueMicrotask(() => {
-                root.unmount();
-                rootsRef.current.delete(deviceId);
-            });
-        }
-    }, []);
-
-    const markerClickHandler = useCallback(({ device, latitude, longitude }: { device: DeviceModel, latitude: number, longitude: number }) => {
-        if (mapRef.current) {
-            const map = mapRef.current;
-            map.setView([latitude, longitude], AppConstants.mapDefaultZoom, { animate: false });
-            // Wait for setView animation to finish, then shift down
-            map.once('moveend', () => {
-                map.panBy([0, -50], { animate: true });
-            });
-        }
+    // the route and the side menu follow the device shown in a popup
+    const selectDevice = useCallback((device: DeviceModel) => {
         const path = `/map/${device.flow?.code}/device/${device.id}`;
         navigate(path);
         const navigationItem = document.querySelector(`li[data-item-id="${path}"]`);
@@ -145,6 +139,52 @@ export const MapPage = () => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [treeViewRef]);
+
+    const renderGroupPopup = useCallback((group: MarkerGroup) => {
+        if (!rootsRef.current.has(group.key)) {
+            rootsRef.current.set(group.key, createRoot(group.container));
+        }
+        const root = rootsRef.current.get(group.key)!;
+        const render = () => root.render(
+            <MapPageDevicePopup
+                devices={group.devices}
+                index={group.index}
+                emergencyStates={group.emergencyStates}
+                loadDeviceData={loadDeviceData}
+                onIndexChange={(index) => {
+                    group.index = index;
+                    render();
+                    selectDevice(group.devices[index]);
+                }} />
+        );
+        render();
+    }, [loadDeviceData, selectDevice]);
+
+    const groupPopupCloseHandler = useCallback((group: MarkerGroup) => {
+        // the next click on the marker starts again with the first device
+        group.index = 0;
+        const root = rootsRef.current.get(group.key);
+        if (root) {
+            // Defer unmount to avoid race condition with React's render cycle
+            queueMicrotask(() => {
+                root.unmount();
+                rootsRef.current.delete(group.key);
+            });
+        }
+    }, []);
+
+    const markerClickHandler = useCallback(({ group, marker, latitude, longitude }: { group: MarkerGroup, marker: L.Marker, latitude: number, longitude: number }) => {
+        if (mapRef.current) {
+            const map = mapRef.current;
+            map.setView([latitude, longitude], AppConstants.mapDefaultZoom, { animate: false });
+            // Wait for setView animation to finish, then shift down
+            map.once('moveend', () => {
+                map.panBy([0, -50], { animate: true });
+                map.once('moveend', () => fitPopupIntoView(marker));
+            });
+        }
+        selectDevice(group.devices[group.index]);
+    }, [selectDevice]);
 
     const showPopup = useCallback((deviceId: string | undefined) => {
         if (!deviceId || !mapRef.current) {
@@ -157,9 +197,21 @@ export const MapPage = () => {
         }
 
         const marker = markersRef.current.get(targetDeviceId);
-        if (!marker) {
+        const group = groupsRef.current.get(targetDeviceId);
+        if (!marker || !group) {
             return;
         }
+
+        const index = group.devices.findIndex(d => d.id === targetDeviceId);
+        if (marker.isPopupOpen()) {
+            // already open (paging in the popup, or a click on the marker): show that device, keep the map still
+            if (group.index !== index) {
+                group.index = index;
+                renderGroupPopup(group);
+            }
+            return;
+        }
+        group.index = index;
 
         const latLng = marker.getLatLng();
         mapRef.current.setView([latLng.lat, latLng.lng], AppConstants.mapDefaultZoom, { animate: true });
@@ -167,8 +219,9 @@ export const MapPage = () => {
         mapRef.current.once('moveend', () => {
             marker.openPopup();
             mapRef.current?.panBy([0, -50], { animate: true });
+            mapRef.current?.once('moveend', () => fitPopupIntoView(marker));
         });
-    }, []);
+    }, [renderGroupPopup]);
 
     const buildMarkersAsync = useCallback(async () => {
         const requestId = ++latestRequestRef.current;
@@ -189,61 +242,70 @@ export const MapPage = () => {
         markersGroupRef.current = markersFeatureGroup;
 
         markersRef.current.clear();
+        new Set(groupsRef.current.values()).forEach(group => group.resizeObserver?.disconnect());
+        groupsRef.current.clear();
+
+        // devices of one flow at one place share a marker; the list's order (boiler room first) is kept
+        const groups = new Map<string, MarkerGroup>();
         devices.forEach(device => {
             if (!device.objectLocation) {
                 return;
             }
-            let mapIconEmergencyType = MapMarkerIconEmergencyTypes.Normal;
-
             const { latitude, longitude } = device.objectLocation;
-            const emergencyState = emergencyStates?.find(s => s.deviceId === device.id);
+            const key = `${device.flowId}:${latitude}:${longitude}`;
+            if (!groups.has(key)) {
+                groups.set(key, { key, devices: [], index: 0, container: document.createElement('div'), emergencyStates });
+            }
+            groups.get(key)!.devices.push(device);
+        });
 
-            if (emergencyState) {
+        groups.forEach(group => {
+            const { latitude, longitude } = group.devices[0].objectLocation!;
+            const groupEmergencyStates = emergencyStates?.filter(s => group.devices.some(d => d.id === s.deviceId)) ?? [];
+
+            // red when a device of the group lost the connection, yellow when any of them has an alarm
+            let mapIconEmergencyType = MapMarkerIconEmergencyTypes.Normal;
+            if (groupEmergencyStates.some(s => s.reasons?.some(r => r.id === AppConstants.identifiers.connectionEmergencyReasonId))) {
+                mapIconEmergencyType = MapMarkerIconEmergencyTypes.Critical;
+            } else if (groupEmergencyStates.length > 0) {
                 mapIconEmergencyType = MapMarkerIconEmergencyTypes.Warning;
-
-                if (emergencyState.reasons?.some(r => r.id === AppConstants.identifiers.connectionEmergencyReasonId)) {
-                    mapIconEmergencyType = MapMarkerIconEmergencyTypes.Critical;
-                }
             }
-
-            const linkedDevices = devices.filter(d => d.flowId === device.flowId);
-            const hasSiblings = linkedDevices.length > 1;
-            if (hasSiblings) {
-                const linkedEmergencyStates = emergencyStates?.filter(s => linkedDevices.some(d => d.id === s.deviceId));
-                if (linkedEmergencyStates && linkedEmergencyStates.length > 0) {
-                    if (linkedEmergencyStates.some(s => s.reasons?.some(r => r.id === AppConstants.identifiers.connectionEmergencyReasonId))) {
-                        mapIconEmergencyType = MapMarkerIconEmergencyTypes.Critical;
-                    } else if (linkedEmergencyStates.some(s => s.reasons && s.reasons.length > 0)) {
-                        mapIconEmergencyType = MapMarkerIconEmergencyTypes.Warning;
-                    }
-            }
-        }
 
             const marker = L.marker([latitude, longitude], {
-                icon: createMapMarkerIcon(mapIconEmergencyType, hasSiblings)
+                icon: createMapMarkerIcon(mapIconEmergencyType, group.devices.length > 1)
             }).addTo(markersFeatureGroup);
 
-            // Store marker reference by device ID
-            markersRef.current.set(device.id, marker);
+            group.devices.forEach(device => {
+                markersRef.current.set(device.id, marker);
+                groupsRef.current.set(device.id, group);
+            });
 
-            const container = document.createElement('div');
             const popup = L.popup({
                 minWidth: 220,
                 autoClose: true,
                 closeOnClick: false,
                 closeOnEscapeKey: false
 
-            }).setContent(container);
+            }).setContent(group.container);
 
             marker.bindPopup(popup);
+            let lastHeight = 0;
+            group.resizeObserver = new ResizeObserver(([entry]) => {
+                const height = Math.round(entry.contentRect.height);
+                if (height !== lastHeight) {
+                    lastHeight = height;
+                    fitPopupIntoView(marker);
+                }
+            });
+            group.resizeObserver.observe(group.container);
             marker.on('popupopen', () => {
-                markerPopupOpenHandler(device, emergencyState, container)
+                renderGroupPopup(group);
             });
             marker.on('popupclose', () => {
-                markerPopupCloseHandler(device.id)
+                groupPopupCloseHandler(group);
             });
             marker.on('click', () => {
-                markerClickHandler({ device, latitude, longitude });
+                markerClickHandler({ group, marker, latitude, longitude });
             });
         });
 
@@ -257,7 +319,7 @@ export const MapPage = () => {
         setTilesReady(true);
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [getEmergencyStatesAsync, getDeviceListAsync, markerPopupOpenHandler, markerPopupCloseHandler, markerClickHandler, refreshToken]);
+    }, [getEmergencyStatesAsync, getDeviceListAsync, renderGroupPopup, groupPopupCloseHandler, markerClickHandler, refreshToken]);
 
     useEffect(() => {
         buildMarkersAsync();
@@ -278,8 +340,10 @@ export const MapPage = () => {
         const map = mapRef.current;
         const markersGroup = markersGroupRef.current;
         const roots = rootsRef.current;
+        const groups = groupsRef.current;
 
         return () => {
+            new Set(groups.values()).forEach(group => group.resizeObserver?.disconnect());
             markersGroup?.remove();
             map?.remove();
 

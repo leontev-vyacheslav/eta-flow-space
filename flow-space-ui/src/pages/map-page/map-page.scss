@@ -123,3 +123,14 @@ table.simple-grid thead th {
     background-position: -200% 0;
   }
 }
+
+// paging between the devices that share one marker (a boiler room and its meters)
+.map-popup-device-switcher {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 6px;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.6);
+}
