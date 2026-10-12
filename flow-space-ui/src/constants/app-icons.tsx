@@ -19,6 +19,7 @@ export { MdOutlineLiveHelp as HelpIcon } from 'react-icons/md';
 
 export { MdOutlineDashboard as FlowIcon } from 'react-icons/md';
 export { VscDashboard as DeviceIcon } from 'react-icons/vsc';
+export { MdOutlineFactory as BoilerRoomIcon } from 'react-icons/md';
 export { IoOptionsOutline as ParamsIcon } from 'react-icons/io5';
 export { VscDashboard as DashboardIcon } from 'react-icons/vsc';
 export { IoMapOutline as MapIcon } from 'react-icons/io5';

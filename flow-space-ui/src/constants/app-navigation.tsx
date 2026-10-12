@@ -5,6 +5,7 @@ import {
     HelpIcon,
     FlowIcon,
     DeviceIcon,
+    BoilerRoomIcon,
     WarningLogIcon,
     MapIcon,
     LocationIcon,
@@ -16,6 +17,10 @@ import {
 import type { TreeViewItemModel } from '../models/tree-view-item';
 import type { IconBaseProps } from 'react-icons';
 import { useAppSettingsStore } from '../contexts/app-settings-store';
+
+// boiler rooms (device codes "…-boiler-room", the controllers) get their own icon; meters keep the device icon
+const DeviceMenuIcon = ({ code, ...props }: IconBaseProps & { code: string }) =>
+    code.endsWith('-boiler-room') ? <BoilerRoomIcon size={22} {...props} /> : <DeviceIcon size={22} {...props} />;
 
 export const useSideNavigationMenuItems = () => {
     const flows = useAppSettingsStore((s) => s.flows);
@@ -34,7 +39,7 @@ export const useSideNavigationMenuItems = () => {
                         return [{
                             id: `${f.code}/device/${d.id}`,
                             text: d.name,
-                            iconRender: (props: IconBaseProps) => <DeviceIcon size={22} {...props} />,
+                            iconRender: (props: IconBaseProps) => <DeviceMenuIcon code={d.code} {...props} />,
                             path: `/${f.code}/device/${d.id}`,
                             entity: { typeName: 'DeviceModel', id: d.id },
                         }];
@@ -47,7 +52,7 @@ export const useSideNavigationMenuItems = () => {
                         items: f.devices.map((d: any) => ({
                             id: `${f.code}/device/${d.id}`,
                             text: d.name,
-                            iconRender: (props: IconBaseProps) => <DeviceIcon size={22} {...props} />,
+                            iconRender: (props: IconBaseProps) => <DeviceMenuIcon code={d.code} {...props} />,
                             path: `/${f.code}/device/${d.id}`,
                             entity: { typeName: 'DeviceModel', id: d.id },
                         })),
