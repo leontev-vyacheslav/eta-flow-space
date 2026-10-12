@@ -46,7 +46,7 @@ export const MapPageDevicePopup = ({ devices, index, onIndexChange, emergencySta
                     deviceState={loaded.deviceState}
                     dataschema={loaded.dataschema}
                     emergencyState={emergencyStates?.find(s => s.deviceId === device.id)} />
-                : <MapPagePopupSkeleton device={device} />}
+                : <MapPagePopupSkeleton device={device} hasEmergency={emergencyStates?.some(s => s.deviceId === device.id)} />}
             {devices.length > 1
                 ? <div className={'map-popup-device-switcher'}>
                     <Button stylingMode={'text'} hint={'Предыдущее устройство'} onClick={() => step(-1)} render={() => <PreviousIcon size={18} />} />
