@@ -49,4 +49,4 @@ the web API's Sequelize models only describe it and no longer create tables (`sy
 | `2026-10-11-rename-spring2-vkt-to-vkt7.sql` | yes (verified 2026-10-11) |
 | `2026-10-11-spring1-and-flow-codes.sql` | yes (verified 2026-10-11) |
 | `2026-10-11-spring1-display-names.sql` | yes (verified 2026-10-11) |
-| `2026-10-12-user-settings-map-objects-off.sql` | not yet |
+| `2026-10-12-user-settings-map-objects-off.sql` | yes (verified 2026-10-12) |
