@@ -11,7 +11,7 @@ import { getQuickGuid } from '../../utils/uuid';
 import { NoData } from '../../components/no-data-widget/no-data-widget';
 import { emergencyMuteManager } from '../../services/emergency-mute-manager';
 import { MenuItemWithSubMenu } from '../../components/menu/menu-item/menu-item';
-import { quickHelpReferenceService } from '../../components/dialogs/quick-reference-help-dialog/quick-reference-help-dialog.tsx';
+import { quickHelpReferenceService } from '../../components/dialogs/quick-reference-help-dialog/quick-reference-help-service';
 import { graphService } from '../../components/dialogs/graph-dialog/graph-dialog.tsx';
 import { emergencyLogService } from '../../components/dialogs/emergency-log-dialog/emergency-log-dialog.tsx';
 import { useAuthStore } from '../../contexts/auth-store.tsx';

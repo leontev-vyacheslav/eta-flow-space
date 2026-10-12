@@ -7,7 +7,6 @@ import { Popup as PopupRef } from "devextreme-react/popup";
 import { useGraphDialog } from "./graph-dialog-context";
 import type { DeviceModel } from "../../../models/flows/device-model";
 
-import './graph-dialog-title.scss'
 import { selectIsAdmin } from "../../../contexts/auth-selectors";
 import { useAuthStore } from "../../../contexts/auth-store";
 

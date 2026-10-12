@@ -14,17 +14,6 @@
   width: 225px !important;
 }
 
-table.simple-grid {
-  width: 100%;
-  line-height: initial;
-  border-collapse: collapse !important;
-  empty-cells: show;
-  border-spacing: 0px;
-  border: 1px Solid #c0c0c0;
-  margin: 10px 0 10px 0;
-  font-size: 8pt
-}
-
 .map-pop-content-location-wrapper {
   display: flex;
   flex-direction: row;
@@ -48,21 +37,6 @@ table.simple-grid {
 
 .screen-x-small .map-pop-content-location {
   align-items: start;
-}
-
-table.simple-grid tbody td {
-  border: 1px Solid #c0c0c0;
-  padding: 3px 6px 4px;
-  text-align: left;
-}
-
-table.simple-grid thead th {
-  font-weight: bold;
-  border: 1px Solid #c0c0c0;
-  background-color: #f0f0f0;
-  vertical-align: middle;
-  height: 30px;
-  text-align: center;
 }
 
 .map-pop-content-wrapper {

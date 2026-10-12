@@ -9,7 +9,7 @@ import type { TreeViewItemModel } from '../../models/tree-view-item';
 import type { SideNavigationMenuProps } from '../../models/side-navigation-menu-props';
 
 import './side-navigation-menu.scss';
-import { quickHelpReferenceService } from '../dialogs/quick-reference-help-dialog/quick-reference-help-dialog';
+import { quickHelpReferenceService } from '../dialogs/quick-reference-help-dialog/quick-reference-help-service';
 import { emergencyLogService } from '../dialogs/emergency-log-dialog/emergency-log-dialog';
 import { useEmergency } from '../../contexts/emergency-context';
 

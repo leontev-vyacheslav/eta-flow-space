@@ -276,6 +276,44 @@ body {
   }
 }
 
+/* The compact tables of the popovers and dialogs (diagram, alarms, map); they used to live in the map page's
+   stylesheet, which is now loaded only with the map */
+table.simple-grid {
+  width: 100%;
+  line-height: initial;
+  border-collapse: collapse !important;
+  empty-cells: show;
+  border-spacing: 0px;
+  border: 1px Solid #c0c0c0;
+  margin: 10px 0 10px 0;
+  font-size: 8pt
+}
+
+table.simple-grid tbody td {
+  border: 1px Solid #c0c0c0;
+  padding: 3px 6px 4px;
+  text-align: left;
+}
+
+table.simple-grid thead th {
+  font-weight: bold;
+  border: 1px Solid #c0c0c0;
+  background-color: #f0f0f0;
+  vertical-align: middle;
+  height: 30px;
+  text-align: center;
+}
+
+/* Select boxes and dropdown lists: 12px text (the theme's is 14px). These rules override the DevExtreme theme, so
+   they must come after it: here, not in a component's stylesheet, whose place in the CSS depends on the bundling */
+.dx-selectbox .dx-texteditor-input {
+  font-size: 12px;
+}
+
+.dx-list-item .dx-item-content {
+  font-size: 12px;
+}
+
 /* Badges */
 .badge {
   border-radius: 5px;

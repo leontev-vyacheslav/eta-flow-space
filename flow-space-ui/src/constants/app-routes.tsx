@@ -1,5 +1,11 @@
+import { lazy, Suspense } from 'react';
 import { withNavigationWatcher } from '../contexts/navigation';
-import {  AboutPage, SignOutPage, DashboardPage, HomePage, MapPage, ReportPage} from '../pages';
+import {  AboutPage, SignOutPage, DashboardPage, HomePage, ReportPage} from '../pages';
+
+// the map page and Leaflet are loaded when the map is first opened; one component for both map routes,
+// so the map stays mounted when switching between them
+const MapPageOnDemand = lazy(() => import('../pages/map-page/map-page').then(module => ({ default: module.MapPage })));
+const MapPage = () => <Suspense fallback={null}><MapPageOnDemand /></Suspense>;
 
 const routes = [
     {
