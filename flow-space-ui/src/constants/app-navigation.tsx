@@ -19,6 +19,8 @@ import { useAppSettingsStore } from '../contexts/app-settings-store';
 
 export const useSideNavigationMenuItems = () => {
     const flows = useAppSettingsStore((s) => s.flows);
+    // a user setting; settings saved before it existed show the full list
+    const isShowedAllMapObject = useAppSettingsStore((s) => s.appSettingsData.userSettings?.isShowedAllMapObject ?? true);
 
     return useMemo<TreeViewItemModel[]>(() => {
         return [
@@ -63,7 +65,7 @@ export const useSideNavigationMenuItems = () => {
                     text: 'Все объекты',
                     iconRender: (props: IconBaseProps) => <LocationAllIcon size={22} {...props} />,
                     path: '/map',
-                }, ...(flows?.flatMap<TreeViewItemModel>(f => {
+                }, ...(isShowedAllMapObject ? flows?.flatMap<TreeViewItemModel>(f => {
                     if (f.devices.length === 1) {
                         const d = f.devices[0] as any;
                         return [{
@@ -87,7 +89,7 @@ export const useSideNavigationMenuItems = () => {
                             path: `/map/${f.code}/device/${d.id}`,
                         })),
                     }];
-                }) || []),]
+                }) ?? [] : []),]
             },
             {
                 id: 'emergency-log',
@@ -128,5 +130,5 @@ export const useSideNavigationMenuItems = () => {
                 command: 'exit',
             },
         ] as TreeViewItemModel[];
-    }, [flows]);
+    }, [flows, isShowedAllMapObject]);
 };

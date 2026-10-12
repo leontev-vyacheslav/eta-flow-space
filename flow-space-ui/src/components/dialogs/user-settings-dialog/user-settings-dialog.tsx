@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Popup as PopupRef } from "devextreme-react/popup";
 import { AppDataProvider, useAppData } from "../../../contexts/app-data/app-data";
 import { SharedAreaProvider } from "../../../contexts/shared-area";
@@ -17,6 +17,14 @@ const UserSettingsDialog = (props: any) => {
     const popupRef = useRef<PopupRef>(null);
     const { appSettingsData, setAppSettingsData } = useAppSettingsStore();
     const { postUserSettingsAsync } = useAppData();
+    // the form edits a copy: closing the dialog without "Применить" leaves the settings as they were
+    const [formData] = useState(() => appSettingsData.userSettings
+        ? {
+            ...structuredClone(appSettingsData.userSettings),
+            // settings saved before this option existed show the full list
+            isShowedAllMapObject: appSettingsData.userSettings.isShowedAllMapObject ?? true,
+        }
+        : undefined);
 
     return (
         <AppModalPopup
@@ -34,10 +42,7 @@ const UserSettingsDialog = (props: any) => {
                 }
             }}
         >
-            <Form
-                formData={appSettingsData.userSettings}
-
-            >
+            <Form formData={formData}>
                 <Item
                     dataField="notifications.web.enabled"
                     editorType="dxCheckBox"
@@ -61,15 +66,21 @@ const UserSettingsDialog = (props: any) => {
                 >
                     <Label text="Тип звука" />
                 </Item>
+                <Item
+                    dataField="isShowedAllMapObject"
+                    editorType="dxCheckBox"
+                >
+                    <Label text="Показывать все объекты карты" />
+                </Item>
             </Form>
             <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', padding: '30px' }}>
                 <Button
                     text="Применить"
                     type="default"
                     onClick={async () => {
-                        if (appSettingsData.userSettings) {
-                            await postUserSettingsAsync(appSettingsData.userSettings);
-                            setAppSettingsData({ ...appSettingsData, userSettings: { ...appSettingsData.userSettings } });
+                        if (formData) {
+                            await postUserSettingsAsync(formData);
+                            setAppSettingsData({ userSettings: { ...formData } });
                         }
                         popupRef.current?.instance.hide();
                         props.callback?.();

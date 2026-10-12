@@ -5,4 +5,7 @@ export class UserSettingsModel {
             soundType: string;
         };
     };
+
+    // UI side menu: list every object under "Карта объектов" (missing means true)
+    isShowedAllMapObject?: boolean;
 }
