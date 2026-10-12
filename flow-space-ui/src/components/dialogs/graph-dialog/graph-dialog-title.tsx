@@ -1,4 +1,4 @@
-import { SelectBox } from "devextreme-react";
+import { SelectBox } from "devextreme-react/select-box";
 import { CloseIcon } from "../../../constants/app-icons";
 import type { SchemaTypeInfoPropertiesChainModel } from "../../../helpers/data-helper";
 import type { MenuItemModel } from "../../../models/menu-item-model";

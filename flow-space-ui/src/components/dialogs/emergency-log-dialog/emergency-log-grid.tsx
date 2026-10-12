@@ -1,4 +1,4 @@
-import { DataGrid } from "devextreme-react";
+import { DataGrid } from "devextreme-react/data-grid";
 import { useEmergencyLogDialog } from "./emergency-log-dialog-context";
 import { Column, Grouping, SearchPanel } from "devextreme-react/data-grid";
 import { useCallback } from "react";
