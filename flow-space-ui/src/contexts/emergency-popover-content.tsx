@@ -11,6 +11,57 @@ import type { EmergencyReasonModel } from "../models/flows/emergency-reason-mode
 import { selectIsAdmin } from "./auth-selectors";
 import { useAuthStore } from "./auth-store";
 
+// the mute menu of the alarm popover, for all reasons of a device (header) or for one reason (row). Declared here,
+// outside the popover: a component created during render would be a new component type on every change of its
+// dependencies, and React would replace it, closing an open submenu
+const EmergencyMuteMenu = ({ deviceId, emergencyReasons, onMuteChanged }: {
+    deviceId: number,
+    emergencyReasons: EmergencyReasonModel[],
+    onMuteChanged: () => void,
+}) => {
+    return (
+        <MainMenu disabled={false} items={[
+            {
+                icon: () => <AdditionalMenuIcon size={18} color='black' />,
+                items: [
+                    {
+                        text: "Включить",
+                        icon: () => <EmergencySoundUnmute size={18} />,
+                        onClick: () => {
+                            for (const reason of emergencyReasons) {
+                                emergencyMuteManager.removeMute(deviceId, reason.id);
+                            }
+                            onMuteChanged();
+                        }
+                    },
+                    {
+                        text: 'На 1 час',
+                        textFontWeight: emergencyReasons.every(reason => emergencyMuteManager.getReason(deviceId, reason.id)?.duration === emergencyMuteManager.oneHour) ? 'bold' : undefined,
+                        icon: () => <EmergencySoundMute size={18} />,
+                        onClick: () => {
+                            for (const reason of emergencyReasons) {
+                                emergencyMuteManager.addMute(deviceId, reason.id, emergencyMuteManager.oneHour);
+                            }
+                            onMuteChanged();
+                        }
+                    },
+                    {
+                        text: 'До устранения',
+                        textFontWeight: emergencyReasons.every(reason => emergencyMuteManager.getReason(deviceId, reason.id)?.duration === emergencyMuteManager.oneYear) ? 'bold' : undefined,
+                        icon: () => <EmergencySoundMuteForever size={18} />,
+                        onClick: () => {
+                            for (const reason of emergencyReasons) {
+                                emergencyMuteManager.addMute(deviceId, reason.id, emergencyMuteManager.oneYear);
+                            }
+                            onMuteChanged();
+                        }
+                    },
+                ]
+            }
+        ]} />
+    );
+};
+
 export const EmergencyPopoverContent = ({ emergencyState }: { emergencyState: EmergencyModel, popoverInstance: React.RefObject<dxPopover<any> | null> }) => {
     const isAdmin = useAuthStore(selectIsAdmin);
     const [unmutedEmergencies, setUnmutedEmergencies] = useState<EmergencyModel[]>([]);
@@ -40,51 +91,10 @@ export const EmergencyPopoverContent = ({ emergencyState }: { emergencyState: Em
 
     }, [emergencyState]);
 
-    const MenuRender = useCallback(({ deviceId, emergencyReasons }: { deviceId: number, emergencyReasons: EmergencyReasonModel[] }) => {
-        return (
-            <MainMenu disabled={false} items={[
-                {
-                    icon: () => <AdditionalMenuIcon size={18} color='black' />,
-                    items: [
-                        {
-                            text: "Включить",
-                            icon: () => <EmergencySoundUnmute size={18} />,
-                            onClick: () => {
-                                for (const reason of emergencyReasons) {
-                                    emergencyMuteManager.removeMute(deviceId, reason.id);
-                                    setUnmutedEmergencies(emergencyMuteManager.getUnmutedEmergencies([emergencyState]));
-                                    toggleEmergencyIcon(deviceId);
-                                }
-                            }
-                        },
-                        {
-                            text: 'На 1 час',
-                            textFontWeight: emergencyReasons.every(reason => emergencyMuteManager.getReason(deviceId, reason.id)?.duration === emergencyMuteManager.oneHour) ? 'bold' : undefined,
-                            icon: () => <EmergencySoundMute size={18} />,
-                            onClick: () => {
-                                for (const reason of emergencyReasons) {
-                                    emergencyMuteManager.addMute(deviceId, reason.id, emergencyMuteManager.oneHour);
-                                    setUnmutedEmergencies(emergencyMuteManager.getUnmutedEmergencies([emergencyState]));
-                                    toggleEmergencyIcon(deviceId);
-                                }
-                            }
-                        },
-                        {
-                            text: 'До устранения',
-                            textFontWeight: emergencyReasons.every(reason => emergencyMuteManager.getReason(deviceId, reason.id)?.duration === emergencyMuteManager.oneYear) ? 'bold' : undefined,
-                            icon: () => <EmergencySoundMuteForever size={18} />,
-                            onClick: () => {
-                                for (const reason of emergencyReasons) {
-                                    emergencyMuteManager.addMute(deviceId, reason.id, emergencyMuteManager.oneYear);
-                                    setUnmutedEmergencies(emergencyMuteManager.getUnmutedEmergencies([emergencyState]));
-                                    toggleEmergencyIcon(deviceId);
-                                }
-                            }
-                        },
-                    ]
-                }
-            ]} />
-        );
+    // a mute menu changed the mute state: the popover's sound icons and the alarm icon in the side menu follow
+    const muteChanged = useCallback(() => {
+        setUnmutedEmergencies(emergencyMuteManager.getUnmutedEmergencies([emergencyState]));
+        toggleEmergencyIcon(emergencyState.deviceId);
     }, [emergencyState, toggleEmergencyIcon]);
 
     useEffect(() => {
@@ -102,7 +112,7 @@ export const EmergencyPopoverContent = ({ emergencyState }: { emergencyState: Em
                                 <span style={{ position: 'absolute', top: '-10px', right: '-10px', background: AppConstants.colors.baseDarkgreyTextColor, borderRadius: '50%', width: '15px', height: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '8px' }}>{emergencyState.reasons.length}</span>
                             </span>
                             <span style={{ paddingLeft: 10 }}>
-                                <MenuRender deviceId={emergencyState.deviceId} emergencyReasons={emergencyState.reasons} />
+                                <EmergencyMuteMenu deviceId={emergencyState.deviceId} emergencyReasons={emergencyState.reasons} onMuteChanged={muteChanged} />
                             </span>
                         </div>
 
@@ -144,7 +154,7 @@ export const EmergencyPopoverContent = ({ emergencyState }: { emergencyState: Em
                                                     }
                                                 </div>
                                                 <span className="row-menu">
-                                                    <MenuRender deviceId={emergencyState.deviceId} emergencyReasons={[r]} />
+                                                    <EmergencyMuteMenu deviceId={emergencyState.deviceId} emergencyReasons={[r]} onMuteChanged={muteChanged} />
                                                 </span>
                                             </div>
                                         </td>
