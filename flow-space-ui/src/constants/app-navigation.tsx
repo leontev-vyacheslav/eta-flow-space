@@ -15,6 +15,7 @@ import {
     FlowDevicesGroupIcon,
 } from './app-icons';
 import type { TreeViewItemModel } from '../models/tree-view-item';
+import type { FlowModel } from '../models/flows/flow-model';
 import type { IconBaseProps } from 'react-icons';
 import { useAppSettingsStore } from '../contexts/app-settings-store';
 
@@ -22,20 +23,35 @@ import { useAppSettingsStore } from '../contexts/app-settings-store';
 const DeviceMenuIcon = ({ code, ...props }: IconBaseProps & { code: string }) =>
     code.endsWith('-boiler-room') ? <BoilerRoomIcon size={22} {...props} /> : <DeviceIcon size={22} {...props} />;
 
+// the devices of a flow listed in the side menu: all of them, or only the main one (the device the diagram belongs to,
+// whose code is the flow's code); a flow without such a device keeps all its devices, so nothing disappears by mistake
+const shownDevices = (flow: FlowModel, isShowedAllDevices: boolean) => {
+    if (isShowedAllDevices) {
+        return flow.devices;
+    }
+    const mainDevices = flow.devices.filter(d => d.code === flow.code);
+
+    return mainDevices.length > 0 ? mainDevices : flow.devices;
+};
+
 export const useSideNavigationMenuItems = () => {
     const flows = useAppSettingsStore((s) => s.flows);
     // a user setting, off unless the user turned it on: "Карта объектов" then lists only "Все объекты"
     const isShowedAllMapObject = useAppSettingsStore((s) => s.appSettingsData.userSettings?.isShowedAllMapObject ?? false);
+    // a user setting, on unless the user turned it off: off lists only the boiler room of each flow, not its meters
+    const isShowedAllDevices = useAppSettingsStore((s) => s.appSettingsData.userSettings?.isShowedAllDevices ?? true);
 
     return useMemo<TreeViewItemModel[]>(() => {
+        const devicesOf = (f: FlowModel) => shownDevices(f, isShowedAllDevices);
+
         return [
             {
                 id: 'objects',
                 text: 'Объекты',
                 iconRender: (props: IconBaseProps) => <FlowIcon size={22} {...props} />,
                 items: flows?.flatMap<TreeViewItemModel>(f => {
-                    if (f.devices.length === 1) {
-                        const d = f.devices[0] as any;
+                    if (devicesOf(f).length === 1) {
+                        const d = devicesOf(f)[0] as any;
                         return [{
                             id: `${f.code}/device/${d.id}`,
                             text: d.name,
@@ -49,7 +65,7 @@ export const useSideNavigationMenuItems = () => {
                         text: `${f.name}`,
                         iconRender: (props: IconBaseProps) => <FlowDevicesGroupIcon size={22} {...props} />,
                         expanded: true,
-                        items: f.devices.map((d: any) => ({
+                        items: devicesOf(f).map((d: any) => ({
                             id: `${f.code}/device/${d.id}`,
                             text: d.name,
                             iconRender: (props: IconBaseProps) => <DeviceMenuIcon code={d.code} {...props} />,
@@ -71,8 +87,8 @@ export const useSideNavigationMenuItems = () => {
                     iconRender: (props: IconBaseProps) => <LocationAllIcon size={22} {...props} />,
                     path: '/map',
                 }, ...(isShowedAllMapObject ? flows?.flatMap<TreeViewItemModel>(f => {
-                    if (f.devices.length === 1) {
-                        const d = f.devices[0] as any;
+                    if (devicesOf(f).length === 1) {
+                        const d = devicesOf(f)[0] as any;
                         return [{
                             id: `/map/${f.code}/device/${d.id}`,
                             text: d.name,
@@ -86,7 +102,7 @@ export const useSideNavigationMenuItems = () => {
                         text: f.name,
                         iconRender: (props: IconBaseProps) => <FlowDevicesGroupIcon size={22} {...props} />,
                         expanded: true,
-                        items: f.devices.map((d: any) => ({
+                        items: devicesOf(f).map((d: any) => ({
                             id: `/map/${f.code}/device/${d.id}`,
                             text: d.name,
                             iconRender: (props: IconBaseProps) => <LocationIcon size={22} {...props} />,
@@ -135,5 +151,5 @@ export const useSideNavigationMenuItems = () => {
                 command: 'exit',
             },
         ] as TreeViewItemModel[];
-    }, [flows, isShowedAllMapObject]);
+    }, [flows, isShowedAllMapObject, isShowedAllDevices]);
 };

@@ -1,0 +1,5 @@
+// both tabs as tall as the taller one ("Уведомления", with its select box), so the dialog, centred by its height,
+// does not move when switching tabs
+.user-settings-form .dx-multiview-item-content {
+  min-height: 190px;
+}

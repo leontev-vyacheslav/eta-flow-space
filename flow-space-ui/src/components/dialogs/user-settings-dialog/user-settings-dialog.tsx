@@ -5,11 +5,13 @@ import { SharedAreaProvider } from "../../../contexts/shared-area";
 import AppModalPopup from "../app-modal-popup/app-modal-popup";
 import { RootDialogService } from "../root-dialog-service";
 import { useScreenSize } from "../../../utils/media-query";
-import { Form, Item, Label } from "devextreme-react/form";
+import { Form, Item, Label, Tab, TabbedItem } from "devextreme-react/form";
 import { Button } from "devextreme-react/button";
 import { useAppSettingsStore } from "../../../contexts/app-settings-store";
 import { selectIsAdmin } from "../../../contexts/auth-selectors";
 import { useAuthStore } from "../../../contexts/auth-store";
+
+import './user-settings-dialog.scss';
 
 const UserSettingsDialog = (props: any) => {
     const { isXSmall, isSmall } = useScreenSize();
@@ -23,6 +25,7 @@ const UserSettingsDialog = (props: any) => {
             ...structuredClone(appSettingsData.userSettings),
             // off unless the user turned it on
             isShowedAllMapObject: appSettingsData.userSettings.isShowedAllMapObject ?? false,
+            isShowedAllDevices: appSettingsData.userSettings.isShowedAllDevices ?? true,
         }
         : undefined);
 
@@ -42,36 +45,48 @@ const UserSettingsDialog = (props: any) => {
                 }
             }}
         >
-            <Form formData={formData}>
-                <Item
-                    dataField="notifications.web.enabled"
-                    editorType="dxCheckBox"
-                    editorOptions={{
-                        disabled: !isAdmin
-                    }}
-                >
-                    <Label text="Уведомления в браузере" />
-                </Item>
-                <Item
-                    dataField="notifications.web.soundType"
-                    editorType="dxSelectBox"
-                    editorOptions={{
-                        valueExpr: "value",
-                        displayExpr: "text",
-                        items: [
-                            { value: 'buzzer', text: 'Бипер' },
-                            { value: 'siren', text: 'Cирена' }
-                        ]
-                    }}
-                >
-                    <Label text="Тип звука" />
-                </Item>
-                <Item
-                    dataField="isShowedAllMapObject"
-                    editorType="dxCheckBox"
-                >
-                    <Label text="Показывать все объекты карты" />
-                </Item>
+            <Form formData={formData} elementAttr={{ class: 'user-settings-form' }}>
+                <TabbedItem tabPanelOptions={{ deferRendering: false }}>
+                    <Tab title="Вид">
+                        <Item
+                            dataField="isShowedAllDevices"
+                            editorType="dxCheckBox"
+                        >
+                            <Label text="Показывать все устройства" />
+                        </Item>
+                        <Item
+                            dataField="isShowedAllMapObject"
+                            editorType="dxCheckBox"
+                        >
+                            <Label text="Показывать все объекты карты" />
+                        </Item>
+                    </Tab>
+                    <Tab title="Уведомления">
+                        <Item
+                            dataField="notifications.web.enabled"
+                            editorType="dxCheckBox"
+                            editorOptions={{
+                                disabled: !isAdmin
+                            }}
+                        >
+                            <Label text="Уведомления в браузере" />
+                        </Item>
+                        <Item
+                            dataField="notifications.web.soundType"
+                            editorType="dxSelectBox"
+                            editorOptions={{
+                                valueExpr: "value",
+                                displayExpr: "text",
+                                items: [
+                                    { value: 'buzzer', text: 'Бипер' },
+                                    { value: 'siren', text: 'Cирена' }
+                                ]
+                            }}
+                        >
+                            <Label text="Тип звука" />
+                        </Item>
+                    </Tab>
+                </TabbedItem>
             </Form>
             <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', padding: '30px' }}>
                 <Button
