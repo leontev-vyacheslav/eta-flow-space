@@ -6,6 +6,6 @@ export class UserSettingsModel {
         };
     };
 
-    // UI side menu: list every object under "Карта объектов" (missing means true)
+    // UI side menu: list every object under "Карта объектов" (missing means false)
     isShowedAllMapObject?: boolean;
 }

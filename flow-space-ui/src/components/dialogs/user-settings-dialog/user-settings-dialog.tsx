@@ -21,8 +21,8 @@ const UserSettingsDialog = (props: any) => {
     const [formData] = useState(() => appSettingsData.userSettings
         ? {
             ...structuredClone(appSettingsData.userSettings),
-            // settings saved before this option existed show the full list
-            isShowedAllMapObject: appSettingsData.userSettings.isShowedAllMapObject ?? true,
+            // off unless the user turned it on
+            isShowedAllMapObject: appSettingsData.userSettings.isShowedAllMapObject ?? false,
         }
         : undefined);
 

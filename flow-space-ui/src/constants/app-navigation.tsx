@@ -24,8 +24,8 @@ const DeviceMenuIcon = ({ code, ...props }: IconBaseProps & { code: string }) =>
 
 export const useSideNavigationMenuItems = () => {
     const flows = useAppSettingsStore((s) => s.flows);
-    // a user setting; settings saved before it existed show the full list
-    const isShowedAllMapObject = useAppSettingsStore((s) => s.appSettingsData.userSettings?.isShowedAllMapObject ?? true);
+    // a user setting, off unless the user turned it on: "Карта объектов" then lists only "Все объекты"
+    const isShowedAllMapObject = useAppSettingsStore((s) => s.appSettingsData.userSettings?.isShowedAllMapObject ?? false);
 
     return useMemo<TreeViewItemModel[]>(() => {
         return [
