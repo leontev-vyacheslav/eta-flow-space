@@ -304,6 +304,21 @@ table.simple-grid thead th {
   text-align: center;
 }
 
+/* The round menu buttons (the page menu "⋮" and the user menu in the header). They override the DevExtreme theme,
+   whose toolbar rule (.dx-toolbar-button .dx-menu .dx-menu-item .dx-menu-item-content, 7px top and bottom) is as
+   specific as the padding rule here, so they must come after it: here, not in a component's stylesheet */
+.main-menu {
+  -webkit-app-region: no-drag;
+}
+
+.main-menu .dx-item-content.dx-menu-item-content:first-child {
+  padding: 10px 10px;
+}
+
+.main-menu .dx-item.dx-menu-item:first-child {
+  border-radius: 50%;
+}
+
 /* Select boxes and dropdown lists: 12px text (the theme's is 14px). These rules override the DevExtreme theme, so
    they must come after it: here, not in a component's stylesheet, whose place in the CSS depends on the bundling */
 .dx-selectbox .dx-texteditor-input {

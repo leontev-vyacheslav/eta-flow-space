@@ -1,4 +1,3 @@
-import '../main-menu.css';
 import { Menu } from 'devextreme-react/menu';
 import { MenuItem } from '../menu-item/menu-item';
 import type { MenuItemModel } from '../../../models/menu-item-model';
