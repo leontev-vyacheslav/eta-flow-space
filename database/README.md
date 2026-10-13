@@ -51,4 +51,4 @@ the web API's Sequelize models only describe it and no longer create tables (`sy
 | `2026-10-11-spring1-display-names.sql` | yes (verified 2026-10-11) |
 | `2026-10-12-user-settings-map-objects-off.sql` | yes (verified 2026-10-12) |
 | `2026-10-12-link-tsarevo1-tv7-users.sql` | yes (verified 2026-10-12) |
-| `2026-10-13-user-settings-all-devices.sql` | not yet |
+| `2026-10-13-user-settings-all-devices.sql` | not needed any more: on 2026-10-13 no stored settings had the old key |
