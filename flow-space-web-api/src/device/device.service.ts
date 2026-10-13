@@ -45,35 +45,32 @@ export class DeviceService {
         @InjectModel(MnemoschemaSelectorDataModel) private readonly mnemoschemaSelectorModel: typeof MnemoschemaSelectorDataModel,
     ) {}
 
-    private async getLinkedDevices(deviceId: number) {
+    // The devices that share this device's diagram (selectors with the same source device). A device without a
+    // selector shows its own diagram alone, the same as a selector that points to itself.
+    private async getLinkedDevices(deviceId: number): Promise<DeviceDataModel[]> {
+        const attributes = ['id', 'code', 'description', 'name'];
         const source = await this.mnemoschemaSelectorModel.findOne({
             attributes: ['sourceDeviceId'],
             where: { deviceId: deviceId },
-            include: [
-                {
-                    model: DeviceDataModel,
-                    as: 'device',
-                    attributes: ['id', 'code', 'description', 'name'],
-                    required: true,
-                },
-            ],
         });
 
         if (!source) {
-            return [];
+            return this.deviceModel.findAll({ attributes, where: { id: deviceId } });
         }
 
-        return this.mnemoschemaSelectorModel.findAll({
+        const selectors = await this.mnemoschemaSelectorModel.findAll({
             where: { sourceDeviceId: source.sourceDeviceId },
             include: [
                 {
                     model: DeviceDataModel,
                     as: 'device',
-                    attributes: ['id', 'code', 'description', 'name'],
+                    attributes,
                     required: true,
                 },
             ],
         });
+
+        return selectors.map((s) => s.device);
     }
 
     async getDevices(userId: number): Promise<DeviceDataModel[]> {
@@ -111,8 +108,9 @@ export class DeviceService {
                   flow: device.flow,
                   objectLocation: device.objectLocation,
                   reports: device.reports,
-                  mnemoschemaCode: device.mnemoschemaSelector!.sourceDevice?.code,
-                  linkedDevices: linkedDevices.map((d) => d.device),
+                  // no selector: the device's own diagram
+                  mnemoschemaCode: device.mnemoschemaSelector?.sourceDevice?.code ?? device.code,
+                  linkedDevices,
               } as DeviceDataModel & {
                   mnemoschemaCode?: string;
                   linkedDevices: DeviceDataModel[];

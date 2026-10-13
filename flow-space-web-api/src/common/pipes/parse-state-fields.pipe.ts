@@ -7,8 +7,8 @@ export class ParseFieldsPipe implements PipeTransform {
 
     private readonly VALID_FIELDS = /^[a-zA-Z0-9_;.[\]]+$/;
 
-    transform(value: unknown): string[] | undefined {
-        if (value === undefined || value === null) return undefined;
+    // required: the history query selects exactly these state fields
+    transform(value: unknown): string[] {
         if (typeof value !== 'string' || !this.VALID_FIELDS.test(value)) {
             throw new BadRequestException(this.i18n.t('errors.INVALID_QUERY_PARAMETER'));
         }

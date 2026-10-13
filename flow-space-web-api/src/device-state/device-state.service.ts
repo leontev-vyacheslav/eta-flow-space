@@ -58,34 +58,34 @@ export class DeviceStateService {
                 deviceId: targetDeviceId,
             },
         });
-        const linkedDevices = await this.mnemoschemaSelectorModel.findAll({
-            attributes: ['deviceId'],
-            where: {
-                sourceDeviceId: mnemoschemaSelector?.sourceDeviceId,
-            },
-            include: [
-                {
-                    model: this.deviceModel,
-                    as: 'device',
-                    attributes: ['code'],
-                    required: true,
-                },
-            ],
-        });
 
-        // TODO: need to be refactored
-        if (linkedDevices.length === 0) {
-            const fallbackState = await this.getFallbackState(targetDeviceId);
-
-            return { [targetDeviceId]: fallbackState };
-        }
+        // the states of every device on the diagram, keyed by device code as the diagram reads them;
+        // a device without a selector shows its own diagram, so only its own state
+        const linkedDevices: { id: number; code: string }[] = mnemoschemaSelector
+            ? (
+                  await this.mnemoschemaSelectorModel.findAll({
+                      attributes: ['deviceId'],
+                      where: {
+                          sourceDeviceId: mnemoschemaSelector.sourceDeviceId,
+                      },
+                      include: [
+                          {
+                              model: this.deviceModel,
+                              as: 'device',
+                              attributes: ['code'],
+                              required: true,
+                          },
+                      ],
+                  })
+              ).map((l) => ({ id: l.deviceId, code: l.device.code }))
+            : await this.deviceModel.findAll({ attributes: ['id', 'code'], where: { id: targetDeviceId } });
 
         for (const linkedDevice of linkedDevices) {
-            const linkedDeviceId = linkedDevice.deviceId;
+            const linkedDeviceId = linkedDevice.id;
             const redisState = await this.sharedStoreService.getDeviceState<Record<string, unknown>>(linkedDeviceId);
 
             if (this.isValidState(redisState)) {
-                result[linkedDevice.device.code] = {
+                result[linkedDevice.code] = {
                     id: 0,
                     deviceId: linkedDeviceId,
                     state: { isConnected: true, ...redisState },
@@ -94,7 +94,7 @@ export class DeviceStateService {
                 };
             } else {
                 const fallbackState = await this.getFallbackState(linkedDeviceId);
-                result[linkedDevice.device.code] = fallbackState;
+                result[linkedDevice.code] = fallbackState;
             }
         }
 
