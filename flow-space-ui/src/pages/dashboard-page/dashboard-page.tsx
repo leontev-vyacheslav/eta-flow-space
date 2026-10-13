@@ -93,15 +93,34 @@ const DashboardPageInner = () => {
                             }
                         }
                     ]) : []),
-                    {
-                        icon: () => <WarningLogIcon size={20} />,
-                        text: 'Журнал аварий...',
-                        onClick: () => {
-                            if (device) {
-                                emergencyLogService.show({ device: device });
+                    // the emergency log of each device of the diagram, listed like the graphs
+                    ...(device && schemasTypeInfoPropertiesChain && Object.keys(schemasTypeInfoPropertiesChain).length > 1 ? [
+                        {
+                            render: () => <MenuItemWithSubMenu icon={<WarningLogIcon size={20} />} text={'Журнал аварий...'} />,
+                            items: Object.keys(schemasTypeInfoPropertiesChain).map(deviceCode => {
+                                const targetDevice = device?.linkedDevices.find(d => d.code === deviceCode);
+                                return {
+                                    icon: () => <WarningLogIcon size={20} />,
+                                    text: `${kebabToCamel(targetDevice?.name || deviceCode)}...`,
+                                    onClick: () => {
+                                        if (targetDevice) {
+                                            emergencyLogService.show({ device: targetDevice as DeviceModel });
+                                        }
+                                    }
+                                }
+                            }),
+                        }
+                    ] : [
+                        {
+                            icon: () => <WarningLogIcon size={20} />,
+                            text: 'Журнал аварий...',
+                            onClick: () => {
+                                if (device) {
+                                    emergencyLogService.show({ device: device });
+                                }
                             }
                         }
-                    }, {
+                    ]), {
                         icon: () => <HelpIcon size={20} />,
                         text: 'Справка...',
                         onClick: () => {
