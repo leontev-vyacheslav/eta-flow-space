@@ -6,6 +6,7 @@ import { useMnemoschemaPopover } from "./use-mnemoschema-popover";
 import { useMnemoschemaStateSetup } from "./use-mnemoschema-state-setup";
 import routes from '../../../../constants/app-api-routes';
 import { useMnemoschemaInjectCss } from "./use-mnemoschema-inject-css";
+import { useMnemoschemaSize } from "./use-mnemoschema-size";
 import { useMnemoschemaRestoreTransformState } from "./use-mnemoschema-restore-transform-state";
 import { NoData } from "../../../../components/no-data-widget/no-data-widget";
 import { kebabToCamel } from "../../../../utils/string-utils";
@@ -23,6 +24,7 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
     const mnemoschemaClickHandler = useMnemoschemaPopover();
     const stateSetup = useMnemoschemaStateSetup();
     const injectCss = useMnemoschemaInjectCss();
+    const applySize = useMnemoschemaSize();
 
     const longPressBinder = useLongPress(
         () => {
@@ -46,8 +48,10 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
         const run = async () => {
             let plugInModule = null;
             try {
-                if (device) {
-                    plugInModule = await import(/* @vite-ignore */ `${routes.host}/static/devices/${device.mnemoschemaCode}/mnemo-schema.js?v=${staticFilesManifest?.[device.mnemoschemaCode]?.["js"] ?? Date.now()}`);
+                // a diagram has a plug-in only when the manifest lists its script
+                const plugInVersion = device ? staticFilesManifest?.[device.mnemoschemaCode]?.["js"] : undefined;
+                if (device && plugInVersion) {
+                    plugInModule = await import(/* @vite-ignore */ `${routes.host}/static/devices/${device.mnemoschemaCode}/mnemo-schema.js?v=${plugInVersion}`);
                 }
             } catch (error) {
                 console.error(error);
@@ -63,6 +67,7 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
 
                 containerRef.current!.innerHTML = '';
                 stateSetup(mnemoschemaDoc.documentElement);
+                applySize(mnemoschemaDoc.documentElement);
                 onBeforeMount?.(mnemoschemaDoc.documentElement);
                 onBeforeMountPluggable?.(mnemoschemaDoc.documentElement, deviceStates);
 
@@ -91,7 +96,7 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
             disposed = true;
             abortController.abort();
         };
-    }, [device, deviceStates, mnemoschema, onBeforeMount, onAfterMount, stateSetup, schemasTypeInfoPropertiesChain, dataschemas, mnemoschemaClickHandler, injectCss, staticFilesManifest]);
+    }, [device, deviceStates, mnemoschema, onBeforeMount, onAfterMount, stateSetup, schemasTypeInfoPropertiesChain, dataschemas, mnemoschemaClickHandler, injectCss, applySize, staticFilesManifest]);
 
     useMnemoschemaRestoreTransformState(device?.mnemoschemaCode, transformComponentRef, () => setIsInitComplete(true));
 
