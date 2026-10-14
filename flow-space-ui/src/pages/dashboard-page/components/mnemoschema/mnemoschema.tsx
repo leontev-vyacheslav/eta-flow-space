@@ -18,6 +18,8 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
     const containerRef = useRef<HTMLDivElement>(null);
     const transformComponentRef = useRef<ReactZoomPanPinchRef | null>(null);
     const [isInitComplete, setIsInitComplete] = useState<boolean>(false);
+    // the diagram is re-mounted on every state poll; the selected device is shown to the plug-in only once
+    const selectedDeviceCodeRef = useRef<string | null>(null);
     const mnemoschemaClickHandler = useMnemoschemaPopover();
     const stateSetup = useMnemoschemaStateSetup();
     const injectCss = useMnemoschemaInjectCss();
@@ -56,7 +58,7 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
             const mnemoschemaDoc = parser.parseFromString(mnemoschema, 'image/svg+xml');
 
             try {
-                const { onBeforeMount: onBeforeMountPluggable, onAfterMount: onAfterMountPluggable } =
+                const { onBeforeMount: onBeforeMountPluggable, onAfterMount: onAfterMountPluggable, onDeviceSelected: onDeviceSelectedPluggable } =
                     plugInModule?.create?.({ signal }) ?? {};
 
                 containerRef.current!.innerHTML = '';
@@ -71,6 +73,11 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
 
                 onAfterMount?.(mnemoschemaElement);
                 onAfterMountPluggable?.(mnemoschemaElement, deviceStates);
+
+                if (device && selectedDeviceCodeRef.current !== device.code) {
+                    selectedDeviceCodeRef.current = device.code;
+                    onDeviceSelectedPluggable?.(mnemoschemaElement, device.code);
+                }
 
                 mnemoschemaElement.addEventListener('click', mnemoschemaClickHandler, { signal });
             } catch (error) {
