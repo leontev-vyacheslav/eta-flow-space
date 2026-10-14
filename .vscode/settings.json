@@ -12,7 +12,7 @@
         "**/coverage": true,
 
     },
-    "svg.preview.background": "custom",
+    "svg.preview.background": "editor",
     "[python]": {
         "editor.defaultFormatter": "ms-python.black-formatter",
         "editor.formatOnSave": true,
