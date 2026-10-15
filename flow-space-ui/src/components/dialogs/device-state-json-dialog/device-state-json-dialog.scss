@@ -1,0 +1,35 @@
+.device-state-json-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 8px;
+}
+
+.device-state-json {
+  height: 100%;
+  margin: 0;
+  overflow: auto;
+  font-family: Consolas, 'Roboto Mono', 'Courier New', monospace;
+  font-size: 16px;
+  line-height: 2;
+  white-space: pre;
+  user-select: text;
+
+  .json-key {
+    color: #0451a5;
+  }
+
+  .json-string {
+    color: #a31515;
+  }
+
+  .json-number {
+    color: #098658;
+  }
+
+  .json-boolean,
+  .json-null {
+    color: #0000ff;
+  }
+}

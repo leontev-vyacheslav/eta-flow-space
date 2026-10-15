@@ -14,6 +14,9 @@ export { MdErrorOutline as ErrorIcon } from 'react-icons/md';
 
 export { VscCircuitBoard as CircuitIcon } from 'react-icons/vsc';
 export { VscGraphLine as GraphIcon } from 'react-icons/vsc';
+export { VscJson as JsonIcon } from 'react-icons/vsc';
+export { MdContentCopy as CopyIcon } from 'react-icons/md';
+export { IoFlashOutline as StateTimeIcon } from 'react-icons/io5';
 
 export { MdOutlineLiveHelp as HelpIcon } from 'react-icons/md';
 

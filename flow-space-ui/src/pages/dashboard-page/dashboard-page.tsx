@@ -2,7 +2,7 @@ import { Item as TabPanelItem, TabPanel } from 'devextreme-react/tab-panel';
 import { useEffect, useMemo, useRef, useState, type ComponentType } from "react";
 import PageHeader from "../../components/page-header/page-header";
 import AppConstants from "../../constants/app-constants";
-import { AdditionalMenuIcon, CircuitIcon, DashboardIcon, WideScreenIcon, GraphIcon, HelpIcon, ParamsIcon, RefreshIcon, ReportIcon, WarningLogIcon, WideScreenExitIcon } from "../../constants/app-icons";
+import { AdditionalMenuIcon, CircuitIcon, DashboardIcon, WideScreenIcon, GraphIcon, HelpIcon, JsonIcon, ParamsIcon, RefreshIcon, ReportIcon, WarningLogIcon, WideScreenExitIcon } from "../../constants/app-icons";
 import type { MenuItemModel } from "../../models/menu-item-model";
 import { IconTab } from '../../components/tab-utils/icon-tab';
 import { useNavigate, useParams } from 'react-router';
@@ -14,6 +14,7 @@ import { MenuItemWithSubMenu } from '../../components/menu/menu-item/menu-item';
 import { quickHelpReferenceService } from '../../components/dialogs/quick-reference-help-dialog/quick-reference-help-service';
 import { graphService } from '../../components/dialogs/graph-dialog/graph-dialog.tsx';
 import { emergencyLogService } from '../../components/dialogs/emergency-log-dialog/emergency-log-dialog.tsx';
+import { deviceStateJsonService } from '../../components/dialogs/device-state-json-dialog/device-state-json-service.ts';
 import { useAuthStore } from '../../contexts/auth-store.tsx';
 import { selectIsAdmin } from '../../contexts/auth-selectors.ts';
 import { kebabToCamel } from '../../utils/string-utils.ts';
@@ -29,7 +30,7 @@ const DashboardPageInner = () => {
         return storedValue ? JSON.parse(storedValue) : false;
     });
 
-    const { setRefreshToken, schemasTypeInfoPropertiesChain, device } = useDashboardPage();
+    const { setRefreshToken, schemasTypeInfoPropertiesChain, device, deviceStates } = useDashboardPage();
     const { flowCode } = useParams();
     const [ControlTabContent, setControlTabContent] = useState<ComponentType<any> | null>(null);
     const [MnemoschemaTabContent, setMnemoschemaTabContent] = useState<ComponentType<any> | null>(null);
@@ -120,7 +121,37 @@ const DashboardPageInner = () => {
                                 }
                             }
                         }
-                    ]), {
+                    ]),
+                    // admins only: the latest state of each device of the diagram as JSON text
+                    ...(isAdmin && device && deviceStates ? (Object.keys(deviceStates).length > 1 ? [
+                        {
+                            render: () => <MenuItemWithSubMenu icon={<JsonIcon size={20} />} text={'Состояние...'} />,
+                            items: Object.keys(deviceStates).map(deviceCode => {
+                                const targetDevice = device.linkedDevices.find(d => d.code === deviceCode);
+                                return {
+                                    icon: () => <JsonIcon size={20} />,
+                                    text: `${kebabToCamel(targetDevice?.name || deviceCode)}...`,
+                                    onClick: () => {
+                                        deviceStateJsonService.show({
+                                            statesDeviceId: device.id,
+                                            device: { id: targetDevice?.id ?? deviceStates[deviceCode].deviceId, code: deviceCode, name: targetDevice?.name || deviceCode }
+                                        });
+                                    }
+                                }
+                            }),
+                        }
+                    ] : [
+                        {
+                            icon: () => <JsonIcon size={20} />,
+                            text: 'Состояние...',
+                            onClick: () => {
+                                deviceStateJsonService.show({
+                                    statesDeviceId: device.id,
+                                    device: { id: device.id, code: device.code, name: device.name }
+                                });
+                            }
+                        }
+                    ]) : []), {
                         icon: () => <HelpIcon size={20} />,
                         text: 'Справка...',
                         onClick: () => {
@@ -151,7 +182,7 @@ const DashboardPageInner = () => {
 
         return menuItems;
 
-    }, [device, isWideScreen, navigate, schemasTypeInfoPropertiesChain, setRefreshToken, tabIndex]);
+    }, [device, deviceStates, isAdmin, isWideScreen, navigate, schemasTypeInfoPropertiesChain, setRefreshToken, tabIndex]);
 
     useEffect(() => {
         (async () => {
