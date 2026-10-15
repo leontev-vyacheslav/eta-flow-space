@@ -35,7 +35,7 @@
                 }
             }
         },
-        "gasVolumeFlowRateSystem1Pipe1": {
+        "gasVolumeFlowRateBoiler1": {
             "type": "number",
             "unit": "м³/ч",
             "ui": {
@@ -48,13 +48,13 @@
                     "label": {
                         "location": "top",
                         "showColon": true,
-                        "text": "Объемный расход газа, ТВ1 трубопровод 1"
+                        "text": "Объемный расход газа, котел 1"
                     }
                 },
                 "chart": {}
             }
         },
-        "gasVolumeFlowRateSystem1Pipe2": {
+        "gasVolumeFlowRateBoiler2": {
             "type": "number",
             "unit": "м³/ч",
             "ui": {
@@ -67,13 +67,13 @@
                     "label": {
                         "location": "top",
                         "showColon": true,
-                        "text": "Объемный расход газа, ТВ1 трубопровод 2"
+                        "text": "Объемный расход газа, котел 2"
                     }
                 },
                 "chart": {}
             }
         },
-        "gasVolumeFlowRateSystem2Pipe1": {
+        "gasVolumeFlowRateBoiler3": {
             "type": "number",
             "unit": "м³/ч",
             "ui": {
@@ -86,13 +86,13 @@
                     "label": {
                         "location": "top",
                         "showColon": true,
-                        "text": "Объемный расход газа, ТВ2 трубопровод 1"
+                        "text": "Объемный расход газа, котел 3"
                     }
                 },
                 "chart": {}
             }
         },
-        "gasVolumeFlowRateSystem2Pipe2": {
+        "gasVolumeFlowRateBoiler4": {
             "type": "number",
             "unit": "м³/ч",
             "ui": {
@@ -105,13 +105,13 @@
                     "label": {
                         "location": "top",
                         "showColon": true,
-                        "text": "Объемный расход газа, ТВ2 трубопровод 2"
+                        "text": "Объемный расход газа, котел 4"
                     }
                 },
                 "chart": {}
             }
         },
-        "gasVolumeSystem1Pipe1": {
+        "gasVolumeBoiler1": {
             "type": "number",
             "unit": "м³",
             "ui": {
@@ -124,13 +124,13 @@
                     "label": {
                         "location": "top",
                         "showColon": true,
-                        "text": "Объем газа, ТВ1 трубопровод 1"
+                        "text": "Объем газа, котел 1"
                     }
                 },
                 "chart": {}
             }
         },
-        "gasVolumeSystem1Pipe2": {
+        "gasVolumeBoiler2": {
             "type": "number",
             "unit": "м³",
             "ui": {
@@ -143,13 +143,13 @@
                     "label": {
                         "location": "top",
                         "showColon": true,
-                        "text": "Объем газа, ТВ1 трубопровод 2"
+                        "text": "Объем газа, котел 2"
                     }
                 },
                 "chart": {}
             }
         },
-        "gasVolumeSystem2Pipe1": {
+        "gasVolumeBoiler3": {
             "type": "number",
             "unit": "м³",
             "ui": {
@@ -162,13 +162,13 @@
                     "label": {
                         "location": "top",
                         "showColon": true,
-                        "text": "Объем газа, ТВ2 трубопровод 1"
+                        "text": "Объем газа, котел 3"
                     }
                 },
                 "chart": {}
             }
         },
-        "gasVolumeSystem2Pipe2": {
+        "gasVolumeBoiler4": {
             "type": "number",
             "unit": "м³",
             "ui": {
@@ -181,7 +181,7 @@
                     "label": {
                         "location": "top",
                         "showColon": true,
-                        "text": "Объем газа, ТВ2 трубопровод 2"
+                        "text": "Объем газа, котел 4"
                     }
                 },
                 "chart": {}
