@@ -53,5 +53,6 @@ the web API's Sequelize models only describe it and no longer create tables (`sy
 | `2026-10-12-link-tsarevo1-tv7-users.sql` | yes (verified 2026-10-12) |
 | `2026-10-13-user-settings-all-devices.sql` | not needed any more: on 2026-10-13 no stored settings had the old key |
 | `2026-10-15-replace-tsarevo1-km5-418200-with-413498.sql` | yes (verified 2026-10-15) |
-| `2026-10-15-delete-tsarevo1-km5-418200-history.sql` | no |
-| `2026-10-15-add-tsarevo1-mercury230.sql` | no |
+| `2026-10-15-delete-tsarevo1-km5-418200-history.sql` | yes (verified 2026-10-15) |
+| `2026-10-15-add-tsarevo1-mercury230.sql` | yes (verified 2026-10-15) |
+| `2026-10-15-add-tsarevo1-vkt7.sql` | no |

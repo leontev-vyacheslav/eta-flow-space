@@ -1,0 +1,361 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "tsarevo1-vkt7-22222222",
+    "type": "object",
+    "properties": {
+        "isConnected": {
+            "type": "boolean",
+            "ui": {
+                "group": 10,
+                "editor": {
+                    "editorType": "dxCheckBox",
+                    "editorOptions": {
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "left",
+                        "showColon": true,
+                        "text": "На связи"
+                    }
+                },
+                "colorizer": {
+                    "styleProps": [
+                        {
+                            "fill": {
+                                "red": false,
+                                "white": true
+                            },
+                            "stroke": {
+                                "yellow": false,
+                                "black": true
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        "gasVolumeFlowRateSystem1Pipe1": {
+            "type": "number",
+            "unit": "м³/ч",
+            "ui": {
+                "group": 2,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "editorOptions": {
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Объемный расход газа, ТВ1 трубопровод 1"
+                    }
+                },
+                "chart": {}
+            }
+        },
+        "gasVolumeFlowRateSystem1Pipe2": {
+            "type": "number",
+            "unit": "м³/ч",
+            "ui": {
+                "group": 2,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "editorOptions": {
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Объемный расход газа, ТВ1 трубопровод 2"
+                    }
+                },
+                "chart": {}
+            }
+        },
+        "gasVolumeFlowRateSystem2Pipe1": {
+            "type": "number",
+            "unit": "м³/ч",
+            "ui": {
+                "group": 2,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "editorOptions": {
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Объемный расход газа, ТВ2 трубопровод 1"
+                    }
+                },
+                "chart": {}
+            }
+        },
+        "gasVolumeFlowRateSystem2Pipe2": {
+            "type": "number",
+            "unit": "м³/ч",
+            "ui": {
+                "group": 2,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "editorOptions": {
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Объемный расход газа, ТВ2 трубопровод 2"
+                    }
+                },
+                "chart": {}
+            }
+        },
+        "gasVolumeSystem1Pipe1": {
+            "type": "number",
+            "unit": "м³",
+            "ui": {
+                "group": 5,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "editorOptions": {
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Объем газа, ТВ1 трубопровод 1"
+                    }
+                },
+                "chart": {}
+            }
+        },
+        "gasVolumeSystem1Pipe2": {
+            "type": "number",
+            "unit": "м³",
+            "ui": {
+                "group": 5,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "editorOptions": {
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Объем газа, ТВ1 трубопровод 2"
+                    }
+                },
+                "chart": {}
+            }
+        },
+        "gasVolumeSystem2Pipe1": {
+            "type": "number",
+            "unit": "м³",
+            "ui": {
+                "group": 5,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "editorOptions": {
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Объем газа, ТВ2 трубопровод 1"
+                    }
+                },
+                "chart": {}
+            }
+        },
+        "gasVolumeSystem2Pipe2": {
+            "type": "number",
+            "unit": "м³",
+            "ui": {
+                "group": 5,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "editorOptions": {
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Объем газа, ТВ2 трубопровод 2"
+                    }
+                },
+                "chart": {}
+            }
+        },
+        "normalOperationTimeSystem1": {
+            "type": "number",
+            "unit": "ч",
+            "ui": {
+                "group": 7,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "editorOptions": {
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Время нормальной работы, ТВ1"
+                    }
+                },
+                "chart": {}
+            }
+        },
+        "noCountTimeSystem1": {
+            "type": "number",
+            "unit": "ч",
+            "ui": {
+                "group": 7,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "editorOptions": {
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Время отсутствия счета, ТВ1"
+                    }
+                },
+                "chart": {}
+            }
+        },
+        "normalOperationTimeSystem2": {
+            "type": "number",
+            "unit": "ч",
+            "ui": {
+                "group": 7,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "editorOptions": {
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Время нормальной работы, ТВ2"
+                    }
+                },
+                "chart": {}
+            }
+        },
+        "noCountTimeSystem2": {
+            "type": "number",
+            "unit": "ч",
+            "ui": {
+                "group": 7,
+                "editor": {
+                    "editorType": "dxNumberBox",
+                    "editorOptions": {
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Время отсутствия счета, ТВ2"
+                    }
+                },
+                "chart": {}
+            }
+        },
+        "firmware": {
+            "type": "string",
+            "ui": {
+                "group": 8,
+                "editor": {
+                    "editorType": "dxTextBox",
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Версия ПО"
+                    },
+                    "editorOptions": {
+                        "readOnly": true
+                    }
+                }
+            }
+        },
+        "deviceTime": {
+            "type": "integer",
+            "ui": {
+                "group": 10,
+                "editor": {
+                    "editorType": "dxDateBox",
+                    "editorOptions": {
+                        "type": "datetime",
+                        "displayFormat": "dd.MM.yyyy HH:mm:ss",
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Текущее время прибора"
+                    }
+                }
+            }
+        },
+        "timestamp": {
+            "type": "integer",
+            "ui": {
+                "group": 10,
+                "editor": {
+                    "editorType": "dxDateBox",
+                    "editorOptions": {
+                        "type": "datetime",
+                        "displayFormat": "dd.MM.yyyy HH:mm:ss",
+                        "readOnly": true
+                    },
+                    "label": {
+                        "location": "top",
+                        "showColon": true,
+                        "text": "Время опроса"
+                    }
+                }
+            }
+        }
+    },
+    "required": [
+        "isConnected",
+        "timestamp"
+    ],
+    "ui": {
+        "useTabs": true,
+        "groups": [
+            {
+                "id": 2,
+                "name": "flow",
+                "caption": "Объемный расход газа",
+                "order": 200
+            },
+            {
+                "id": 5,
+                "name": "volume",
+                "caption": "Объем газа",
+                "order": 500
+            },
+            {
+                "id": 7,
+                "name": "time",
+                "caption": "Промежуток времени",
+                "order": 700
+            },
+            {
+                "id": 8,
+                "name": "device",
+                "caption": "Информация о приборе",
+                "order": 800
+            },
+            {
+                "id": 10,
+                "name": "state",
+                "caption": "Состояния",
+                "order": 1
+            }
+        ]
+    }
+}

@@ -4,7 +4,7 @@
         "type": "tab",
         "label": "tsarevo1-boiler-room",
         "disabled": false,
-        "info": "Котельная ЖК Царёво-1. The KM-5 heat meter (413498), the TV7 heat calculator (19072584) and the Mercury230 electricity meters (26916516, 26916504) are polled every 300 s; the boiler controller is not polled yet (its address and Modbus register map are unknown). collect-device-state calls storeDeviceStateToCacheAsync with this tab's id (flow.uid in the database) and the device index.",
+        "info": "Котельная ЖК Царёво-1. The KM-5 heat meter (413498), the TV7 heat calculator (19072584), the Mercury230 electricity meters (26916516, 26916504) and the VKT-7 gas volume counter (22222222) are polled every 300 s; the boiler controller is not polled yet (its address and Modbus register map are unknown). collect-device-state calls storeDeviceStateToCacheAsync with this tab's id (flow.uid in the database) and the device index.",
         "env": []
     },
     {
@@ -1319,6 +1319,112 @@
         "statusType": "auto",
         "x": 810,
         "y": 600,
+        "wires": []
+    },
+    {
+        "id": "71c76118277f5838",
+        "type": "comment",
+        "z": "8c7f93e2ebca7614",
+        "name": "tsarevo1-vkt7-22222222 [29] (WIZ108SR 78.138.147.158:5010, address 1; gas volume counter)",
+        "info": "",
+        "x": 380,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "aa030302ec916516",
+        "type": "inject",
+        "z": "8c7f93e2ebca7614",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "300",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 740,
+        "wires": [
+            [
+                "e930c4849d057212"
+            ]
+        ]
+    },
+    {
+        "id": "e930c4849d057212",
+        "type": "subflow:vkt7reader00000000",
+        "z": "8c7f93e2ebca7614",
+        "name": "vkt7-22222222",
+        "env": [
+            {
+                "name": "HOST",
+                "value": "78.138.147.158",
+                "type": "str"
+            },
+            {
+                "name": "PORT",
+                "value": "5010",
+                "type": "num"
+            },
+            {
+                "name": "ADDRESS",
+                "value": "1",
+                "type": "num"
+            }
+        ],
+        "x": 350,
+        "y": 740,
+        "wires": [
+            [
+                "34a06c25795f66e6"
+            ]
+        ]
+    },
+    {
+        "id": "34a06c25795f66e6",
+        "type": "function",
+        "z": "8c7f93e2ebca7614",
+        "name": "collect-device-state",
+        "func": "const { storeDeviceStateToCacheAsync } = global.get('helpers');\n\n// This VKT-7 counts gas: both systems are in measurement scheme 9 (\"Учет объема\"),\n// pulse inputs only (no temperatures, pressures or heat), in m³ and m³/h as set\n// in the calculator (see msg.payload.units). System 2 counts nothing yet; its\n// zeros are stored too.\nconst { input1, input2, firmware, deviceTime } = msg.payload;\n\nconst deviceState = {\n    // Gas volume flow rate, m³/h (from the pulses of the last update period)\n    gasVolumeFlowRateSystem1Pipe1: input1.G1,  // ТВ1, pipe 1 (V1 input)\n    gasVolumeFlowRateSystem1Pipe2: input1.G2,  // ТВ1, pipe 2 (V2 input)\n    gasVolumeFlowRateSystem2Pipe1: input2.G1,  // ТВ2, pipe 1\n    gasVolumeFlowRateSystem2Pipe2: input2.G2,  // ТВ2, pipe 2\n\n    // Gas volume, m³ (total to the end of the previous hour)\n    gasVolumeSystem1Pipe1: input1.V1,\n    gasVolumeSystem1Pipe2: input1.V2,\n    gasVolumeSystem2Pipe1: input2.V1,\n    gasVolumeSystem2Pipe2: input2.V2,\n\n    // Time intervals, h\n    normalOperationTimeSystem1: input1.VNR,    // normal operation time, ТВ1\n    noCountTimeSystem1: input1.VOS,            // time without counting, ТВ1\n    normalOperationTimeSystem2: input2.VNR,\n    noCountTimeSystem2: input2.VOS,\n\n    // Device info and the meter's own clock\n    firmware,\n    deviceTime,\n\n    // Timestamp\n    timestamp: Date.now(),\n};\n\nconst DEVICE_CODE = 'tsarevo1-vkt7-22222222';\nconst flowUid = node.path.split('/').find(_ => true);\nawait storeDeviceStateToCacheAsync(global, DEVICE_CODE, deviceState, flowUid);\nmsg.deviceState = deviceState;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 740,
+        "wires": [
+            [
+                "dfb625779220e69f"
+            ]
+        ]
+    },
+    {
+        "id": "dfb625779220e69f",
+        "type": "debug",
+        "z": "8c7f93e2ebca7614",
+        "name": "debug vkt7",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "deviceState",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 790,
+        "y": 740,
         "wires": []
     },
     {
