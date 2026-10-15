@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Котельная Царёво-1: redrawn from the old dispatching diagram (.docs/old-tsarevo-1.svg) in the Весна-2 layout and style; only the connection indicator is bound until the controller register map is known -->
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 46 902.5 514.6" style="enable-background:new 0 46 902.5 514.6;" xml:space="preserve">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 46 902.5 594.6" style="enable-background:new 0 46 902.5 594.6;" xml:space="preserve">
 	<defs>
 		<g id="infoIcon">
 			<!-- the "i" is a hole in the triangle: this transparent outline makes it clickable too -->
@@ -77,6 +77,7 @@
 		<use href="#emergencyIcon" style="display:none" transform="translate(234.6, 133)" />
 	</g>
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="221.8" y1="60" x2="221.8" y2="130" />
+	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="221.8" cy="60" r="1.3" />
 	<g data-section="boilers[0].tempSupply">
 		<text transform="matrix(1 0 0 1 254.7 75.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">TE1</text>
 		<rect x="232.2" y="78" width="45" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
@@ -241,7 +242,6 @@
 		<use href="#emergencyIcon" style="display:none" transform="translate(718.6, 133)" />
 	</g>
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="705.8" y1="60" x2="705.8" y2="130" />
-	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="705.8" cy="60" r="1.3" />
 	<g data-section="boilers[3].tempSupply">
 		<text transform="matrix(1 0 0 1 738.7 75.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">TE4</text>
 		<rect x="716.2" y="78" width="45" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
@@ -285,52 +285,39 @@
 		<rect x="692.7" y="248.6" width="26.2" height="26.8" rx="2.6" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" />
 		<use href="#emergencyIcon" style="display:none" transform="translate(719.8, 231)" />
 	</g>
-	<!-- supply header turns down at the right, sensors along the descent, then out to Т1 (as on Весна-2) -->
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="221.8" y1="60" x2="810" y2="60" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="810" y1="60" x2="810" y2="92.6" />
+	<!-- supply: the header runs left from boiler 1, down the left edge and along the bottom under the return, sensors there, out to Т1 (as on Весна-2) -->
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="120" y1="60" x2="705.8" y2="60" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="120" y1="60" x2="120" y2="405" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="120" y1="405" x2="382.6" y2="405" />
 	<g data-section="flowSupply">
-		<g transform="rotate(0 810 106)">
-			<rect x="796.9" y="92.6" width="26.2" height="26.8" rx="2.6" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" />
-			<circle style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="810" cy="106" r="10.6" />
-			<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="810" cy="106" r="9.3" />
-			<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="803.8" y1="99.1" x2="810" y2="115.2" />
-			<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="816.2" y1="99.1" x2="810" y2="115.2" />
+		<text transform="matrix(1 0 0 1 396 430)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">FE1</text>
+		<g transform="rotate(-90 396 405)">
+			<rect x="382.9" y="391.6" width="26.2" height="26.8" rx="2.6" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" />
+			<circle style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="396" cy="405" r="10.6" />
+			<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="396" cy="405" r="9.3" />
+			<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="389.8" y1="398.1" x2="396" y2="414.2" />
+			<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="402.2" y1="398.1" x2="396" y2="414.2" />
 		</g>
 	</g>
-	<text transform="matrix(1 0 0 1 793 109.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:end;">FE1</text>
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="810" y1="119.4" x2="810" y2="300" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="810" y1="300" x2="850" y2="300" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="409.4" y1="405" x2="850" y2="405" />
 	<g data-section="pressSupply">
-		<text transform="matrix(1 0 0 1 842.9 147.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">PE5</text>
-		<rect x="820.4" y="150" width="45" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-		<text transform="matrix(1 0 0 1 842.9 158.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
+		<rect x="428.5" y="415" width="45" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
+		<text transform="matrix(1 0 0 1 451 423.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
+		<text transform="matrix(1 0 0 1 451 437.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">PE5</text>
 	</g>
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="810" y1="155.6" x2="820.4" y2="155.6" />
-	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="810" cy="155.6" r="1.3" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="451" y1="405" x2="451" y2="415" />
+	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="451" cy="405" r="1.3" />
 	<g data-section="tempSupply">
-		<text transform="matrix(1 0 0 1 842.9 192.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">TE9</text>
-		<rect x="820.4" y="195" width="45" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-		<text transform="matrix(1 0 0 1 842.9 203.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
+		<rect x="483.5" y="415" width="45" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
+		<text transform="matrix(1 0 0 1 506 423.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
+		<text transform="matrix(1 0 0 1 506 437.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">TE9</text>
 	</g>
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="810" y1="200.6" x2="820.4" y2="200.6" />
-	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="810" cy="200.6" r="1.3" />
-	<text transform="matrix(1 0 0 1 868.5 203.5)" style="font-family:'Roboto'; font-size:8px;">Siemens</text>
-	<g data-section="heatMeter.tempSupply">
-		<text transform="matrix(1 0 0 1 842.9 237.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">TE11</text>
-		<rect x="820.4" y="240" width="45" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-		<text data-state="states['tsarevo1-km5-413498'].temperatureInputPipe" transform="matrix(1 0 0 1 842.9 248.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
-	</g>
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="810" y1="245.6" x2="820.4" y2="245.6" />
-	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="810" cy="245.6" r="1.3" />
-	<text transform="matrix(1 0 0 1 868.5 248.5)" style="font-family:'Roboto'; font-size:8px;">KM5</text>
-	<g data-section="km5">
-		<use href="#infoIcon"
-			data-state-eval="element.style.fill = (states['tsarevo1-km5-413498'].isConnected === false ? '#F44336': '#0072C6')"
-			data-state="states['tsarevo1-km5-413498'].isConnected;states['tsarevo1-km5-413498'].timestamp;states['tsarevo1-km5-413498'].totalHeatConsumption;states['tsarevo1-km5-413498'].volumeInputPipe;states['tsarevo1-km5-413498'].volumeReturnPipe;states['tsarevo1-km5-413498'].massInputPipe;states['tsarevo1-km5-413498'].massReturnPipe;states['tsarevo1-km5-413498'].normalOperationTime"
-			style="fill:#0072C6" transform="translate(858 226) scale(0.55)" />
-	</g>
-	<polygon style="fill:#FF0000;stroke:#FF0000;stroke-width:0.5;stroke-miterlimit:10;" points="850,294.6 861.1,300 850,305.4" />
-	<text transform="matrix(1 0 0 1 850 318)" style="font-family:'Roboto'; font-size:10px;">Т1</text>
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="506" y1="405" x2="506" y2="415" />
+	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="506" cy="405" r="1.3" />
+	<text transform="matrix(1 0 0 1 506 447)" style="font-family:'Roboto'; font-size:8px; text-anchor:middle;">Siemens</text>
+	<polygon style="fill:#FF0000;stroke:#FF0000;stroke-width:0.5;stroke-miterlimit:10;" points="850,399.6 861.1,405 850,410.4" />
+	<text transform="matrix(1 0 0 1 850 423)" style="font-family:'Roboto'; font-size:10px;">Т1</text>
+	<text transform="matrix(1 0 0 1 850 434)" style="font-family:'Roboto'; font-size:10px;">Выход ЦО</text>
 	<!-- return header; network pumps under boiler 1, between the return header and Т2 -->
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="171.8" y1="300" x2="705.8" y2="300" />
 	<g data-section="networkPumps[0]">
@@ -367,107 +354,147 @@
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="271.8" y1="348.4" x2="271.8" y2="370" />
 	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="271.8" cy="300" r="1.3" />
 	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="271.8" cy="370" r="1.3" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="171.8" y1="370" x2="636.6" y2="370" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="171.8" y1="370" x2="382.6" y2="370" />
 	<g data-section="flowReturn">
-		<text transform="matrix(1 0 0 1 650 353.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">FE2</text>
-		<g transform="rotate(90 650 370)">
-			<rect x="636.9" y="356.6" width="26.2" height="26.8" rx="2.6" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" />
-			<circle style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="650" cy="370" r="10.6" />
-			<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="650" cy="370" r="9.3" />
-			<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="643.8" y1="363.1" x2="650" y2="379.2" />
-			<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="656.2" y1="363.1" x2="650" y2="379.2" />
+		<text transform="matrix(1 0 0 1 396 353.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">FE2</text>
+		<g transform="rotate(90 396 370)">
+			<rect x="382.9" y="356.6" width="26.2" height="26.8" rx="2.6" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" />
+			<circle style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="396" cy="370" r="10.6" />
+			<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="396" cy="370" r="9.3" />
+			<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="389.8" y1="363.1" x2="396" y2="379.2" />
+			<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="402.2" y1="363.1" x2="396" y2="379.2" />
 		</g>
 	</g>
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="663.4" y1="370" x2="850" y2="370" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="409.4" y1="370" x2="850" y2="370" />
 	<g data-section="pressReturn">
-		<text transform="matrix(1 0 0 1 705 343.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">PE6</text>
-		<rect x="682.5" y="346" width="45" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-		<text transform="matrix(1 0 0 1 705 354.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
+		<text transform="matrix(1 0 0 1 451 343.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">PE6</text>
+		<rect x="428.5" y="346" width="45" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
+		<text transform="matrix(1 0 0 1 451 354.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
 	</g>
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="705" y1="357.2" x2="705" y2="370" />
-	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="705" cy="370" r="1.3" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="451" y1="357.2" x2="451" y2="370" />
+	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="451" cy="370" r="1.3" />
 	<g data-section="tempReturn">
-		<text transform="matrix(1 0 0 1 760 343.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">TE10</text>
-		<rect x="737.5" y="346" width="45" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-		<text transform="matrix(1 0 0 1 760 354.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
+		<text transform="matrix(1 0 0 1 506 343.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">TE10</text>
+		<rect x="483.5" y="346" width="45" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
+		<text transform="matrix(1 0 0 1 506 354.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
 	</g>
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="760" y1="357.2" x2="760" y2="370" />
-	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="760" cy="370" r="1.3" />
-	<g data-section="heatMeter.tempReturn">
-		<text transform="matrix(1 0 0 1 815 343.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">TE12</text>
-		<rect x="792.5" y="346" width="45" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-		<text data-state="states['tsarevo1-km5-413498'].temperatureReturnPipe" transform="matrix(1 0 0 1 815 354.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
-	</g>
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="815" y1="357.2" x2="815" y2="370" />
-	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="815" cy="370" r="1.3" />
-	<text transform="matrix(1 0 0 1 760 382)" style="font-family:'Roboto'; font-size:8px; text-anchor:middle;">Siemens</text>
-	<text transform="matrix(1 0 0 1 815 382)" style="font-family:'Roboto'; font-size:8px; text-anchor:middle;">KM5</text>
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="506" y1="357.2" x2="506" y2="370" />
+	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="506" cy="370" r="1.3" />
+	<text transform="matrix(1 0 0 1 506 382)" style="font-family:'Roboto'; font-size:8px; text-anchor:middle;">Siemens</text>
 	<polygon style="fill:#0000FF;stroke:#0000FF;stroke-width:0.5;stroke-miterlimit:10;" points="861.1,364.6 850,370 861.1,375.4" />
 	<text transform="matrix(1 0 0 1 850 388)" style="font-family:'Roboto'; font-size:10px;">Т2</text>
-	<text transform="matrix(1 0 0 1 843 318)" style="font-family:'Roboto'; font-size:10px; text-anchor:end;">Выход ЦО</text>
+	<!-- KM-5 heat meter block, laid out like the Взлет26 block on Весна-1: on each pipe temperature and pressure next to it, mass flow on it -->
+	<g data-section="km5">
+		<rect data-device="tsarevo1-km5-413498" x="650" y="332.4" width="165" height="124" rx="10" ry="10" style="fill:none;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;" />
+		<use data-device="tsarevo1-km5-413498" href="#infoIcon"
+			data-state-eval="element.style.fill = (states['tsarevo1-km5-413498'].isConnected === false ? '#F44336': '#0072C6')"
+			data-state="states['tsarevo1-km5-413498'].isConnected;states['tsarevo1-km5-413498'].timestamp;states['tsarevo1-km5-413498'].totalHeatConsumption;states['tsarevo1-km5-413498'].volumeInputPipe;states['tsarevo1-km5-413498'].volumeReturnPipe;states['tsarevo1-km5-413498'].massInputPipe;states['tsarevo1-km5-413498'].massReturnPipe;states['tsarevo1-km5-413498'].normalOperationTime"
+			style="fill:#0072C6" transform="translate(795 337.4) scale(0.55)" />
+		<text transform="matrix(1 0 0 1 732.5 451)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">Теплосчетчик КМ-5</text>
+		<g data-section="heatMeter.tempReturn">
+			<text transform="matrix(1 0 0 1 695 346.2)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">TE12</text>
+			<rect x="670" y="348.6" width="50" height="11.1" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
+			<text data-state="states['tsarevo1-km5-413498'].temperatureReturnPipe" transform="matrix(1 0 0 1 695 356.9)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
+		</g>
+		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="697.5" y1="370" x2="697.5" y2="359.7" />
+		<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="697.5" cy="370" r="1.3" />
+		<g data-section="heatMeter.pressReturn">
+			<text transform="matrix(1 0 0 1 773 346.2)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">PE9</text>
+			<rect x="745" y="348.6" width="56" height="11.1" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
+			<text data-state="states['tsarevo1-km5-413498'].pressureReturnPipe" transform="matrix(1 0 0 1 773 356.9)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
+		</g>
+		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="766" y1="370" x2="766" y2="359.7" />
+		<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="766" cy="370" r="1.3" />
+		<g data-section="heatMeter.flowReturn">
+			<text transform="matrix(1 0 0 1 732.5 361.1)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">FE8</text>
+			<rect x="705.4" y="363.85" width="55" height="12.3" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
+			<text data-state="states['tsarevo1-km5-413498'].massFlowRateReturnPipe" transform="matrix(1 0 0 1 732.9 373.3)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
+		</g>
+		<g data-section="heatMeter.tempSupply">
+			<text transform="matrix(1 0 0 1 695 437)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">TE11</text>
+			<rect x="670" y="415.3" width="50" height="11.1" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
+			<text data-state="states['tsarevo1-km5-413498'].temperatureInputPipe" transform="matrix(1 0 0 1 695 423.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
+		</g>
+		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="697.5" y1="405" x2="697.5" y2="415.3" />
+		<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="697.5" cy="405" r="1.3" />
+		<g data-section="heatMeter.pressSupply">
+			<text transform="matrix(1 0 0 1 773 437)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">PE8</text>
+			<rect x="745" y="415.3" width="56" height="11.1" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
+			<text data-state="states['tsarevo1-km5-413498'].pressureInputPipe" transform="matrix(1 0 0 1 773 423.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
+		</g>
+		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="766" y1="405" x2="766" y2="415.3" />
+		<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="766" cy="405" r="1.3" />
+		<g data-section="heatMeter.flowSupply">
+			<text transform="matrix(1 0 0 1 732.5 421.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">FE7</text>
+			<rect x="705.4" y="398.85" width="55" height="12.3" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
+			<text data-state="states['tsarevo1-km5-413498'].massFlowRateInputPipe" transform="matrix(1 0 0 1 732.9 408.3)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
+		</g>
+	</g>
 	<!-- make-up: water inlet, accumulator tank, two make-up pumps, water treatment, into Т2 before the network pumps -->
-	<polygon style="fill:#0071BC;stroke:#0071BC;stroke-width:0.5;stroke-miterlimit:10;" points="110,479.6 121.1,485 110,490.4" />
-	<text transform="matrix(1 0 0 1 110 502)" style="font-family:'Roboto'; font-size:10px;">В1</text>
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="121" y1="485" x2="190" y2="485" />
+	<polygon style="fill:#0071BC;stroke:#0071BC;stroke-width:0.5;stroke-miterlimit:10;" points="110,559.6 121.1,565 110,570.4" />
+	<text transform="matrix(1 0 0 1 110 582)" style="font-family:'Roboto'; font-size:10px;">В1</text>
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="121" y1="565" x2="190" y2="565" />
 	<g data-section="accumulatorTank">
-		<rect x="190" y="445" width="35.4" height="80" rx="10" style="fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;" />
-	<text transform="matrix(1 0 0 1 207.7 538)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">Бак аккумулятор</text>
-	<text transform="matrix(1 0 0 1 207.7 488.2)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle;">3 м³</text>
+		<rect x="190" y="525" width="35.4" height="80" rx="10" style="fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;" />
+	<text transform="matrix(1 0 0 1 207.7 618)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">Бак аккумулятор</text>
+	<text transform="matrix(1 0 0 1 207.7 568.2)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle;">3 м³</text>
 	</g>
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="225.4" y1="485" x2="300" y2="485" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="225.4" y1="565" x2="300" y2="565" />
 	<g data-section="pressMakeup">
-		<text transform="matrix(1 0 0 1 262 458.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">PE7</text>
-		<rect x="239.5" y="461" width="45" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-		<text transform="matrix(1 0 0 1 262 469.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
+		<text transform="matrix(1 0 0 1 262 538.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">PE7</text>
+		<rect x="239.5" y="541" width="45" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
+		<text transform="matrix(1 0 0 1 262 549.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
 	</g>
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="262" y1="472.2" x2="262" y2="485" />
-	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="262" cy="485" r="1.3" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="300" y1="485" x2="300" y2="523.7" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="395" y1="485" x2="395" y2="523.7" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="262" y1="552.2" x2="262" y2="565" />
+	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="262" cy="565" r="1.3" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="300" y1="565" x2="300" y2="603.7" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="395" y1="565" x2="395" y2="603.7" />
 	<g data-section="makeupPumps[0]">
-		<text transform="matrix(1 0 0 1 316.7 480.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">ПН1</text>
-		<circle style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="347.5" cy="485" r="10.6" />
-		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="347.5" cy="485" r="9.3" />
-		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="356.2,485 349.6,488.95 349.6,481.05" />
-		<rect x="334.1" y="471.9" width="26.8" height="26.2" rx="2.6" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" />
-		<use href="#emergencyIcon" style="display:none" transform="translate(361.5, 454)" />
+		<text transform="matrix(1 0 0 1 316.7 560.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">ПН1</text>
+		<circle style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="347.5" cy="565" r="10.6" />
+		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="347.5" cy="565" r="9.3" />
+		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="356.2,565 349.6,568.95 349.6,561.05" />
+		<rect x="334.1" y="551.9" width="26.8" height="26.2" rx="2.6" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" />
+		<use href="#emergencyIcon" style="display:none" transform="translate(361.5, 534)" />
 	</g>
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="300" y1="485" x2="334.1" y2="485" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="360.9" y1="485" x2="395" y2="485" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="300" y1="565" x2="334.1" y2="565" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="360.9" y1="565" x2="395" y2="565" />
 	<g data-section="makeupPumps[1]">
-		<text transform="matrix(1 0 0 1 316.7 519.2)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">ПН2</text>
-		<circle style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="347.5" cy="523.7" r="10.6" />
-		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="347.5" cy="523.7" r="9.3" />
-		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="356.2,523.7 349.6,527.65 349.6,519.75" />
-		<rect x="334.1" y="510.6" width="26.8" height="26.2" rx="2.6" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" />
-		<use href="#emergencyIcon" style="display:none" transform="translate(361.5, 492.7)" />
+		<text transform="matrix(1 0 0 1 316.7 599.2)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">ПН2</text>
+		<circle style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="347.5" cy="603.7" r="10.6" />
+		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="347.5" cy="603.7" r="9.3" />
+		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="356.2,603.7 349.6,607.65 349.6,599.75" />
+		<rect x="334.1" y="590.6" width="26.8" height="26.2" rx="2.6" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" />
+		<use href="#emergencyIcon" style="display:none" transform="translate(361.5, 572.7)" />
 	</g>
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="300" y1="523.7" x2="334.1" y2="523.7" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="360.9" y1="523.7" x2="395" y2="523.7" />
-	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="300" cy="485" r="1.3" />
-	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="395" cy="485" r="1.3" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="395" y1="485" x2="431.9" y2="485" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="300" y1="603.7" x2="334.1" y2="603.7" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="360.9" y1="603.7" x2="395" y2="603.7" />
+	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="300" cy="565" r="1.3" />
+	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="395" cy="565" r="1.3" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="395" y1="565" x2="431.9" y2="565" />
 	<g data-section="waterTreatment">
-		<rect x="431.9" y="475.8" width="52.6" height="18.4" style="fill:#FFFFFF;stroke:#000000;stroke-dasharray:3,2;stroke-miterlimit:10;" />
-	<text transform="matrix(1 0 0 1 458.2 488.4)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle;">ХВО</text>
+		<rect x="431.9" y="555.8" width="52.6" height="18.4" style="fill:#FFFFFF;stroke:#000000;stroke-dasharray:3,2;stroke-miterlimit:10;" />
+	<text transform="matrix(1 0 0 1 458.2 568.4)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle;">ХВО</text>
 	</g>
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="484.5" y1="485" x2="625" y2="485" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="625" y1="485" x2="625" y2="370" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="484.5" y1="565" x2="625" y2="565" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="625" y1="565" x2="625" y2="408.5" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="625" y1="401.5" x2="625" y2="370" />
 	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="625" cy="370" r="1.3" />
 	<!-- gas: header below, one riser per pair of boilers (as on Весна-2), a meter on each boiler feed -->
-	<polygon style="fill:#F7931E;stroke:#F7931E;stroke-width:0.5;stroke-miterlimit:10;" points="108,414.6 119.1,420 108,425.4" />
-	<text transform="matrix(1 0 0 1 108 437)" style="font-family:'Roboto'; font-size:10px;">Г1</text>
-	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="119.1" y1="420" x2="146.6" y2="420" />
+	<polygon style="fill:#F7931E;stroke:#F7931E;stroke-width:0.5;stroke-miterlimit:10;" points="108,494.6 119.1,500 108,505.4" />
+	<text transform="matrix(1 0 0 1 108 517)" style="font-family:'Roboto'; font-size:10px;">Г1</text>
+	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="119.1" y1="500" x2="146.6" y2="500" />
 	<g data-section="gasValve">
-		<text transform="matrix(1 0 0 1 160 404.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">КГ</text>
-		<polygon style="fill:#808080;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="160,420 168,414.75 168,425.25" />
-		<polygon style="fill:#808080;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="160,420 152,425.25 152,414.75" />
-		<rect x="146.6" y="406.9" width="26.8" height="26.2" rx="2.6" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" />
-		<use href="#emergencyIcon" style="display:none" transform="translate(174, 389)" />
+		<text transform="matrix(1 0 0 1 160 484.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">КГ</text>
+		<polygon style="fill:#808080;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="160,500 168,494.75 168,505.25" />
+		<polygon style="fill:#808080;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="160,500 152,505.25 152,494.75" />
+		<rect x="146.6" y="486.9" width="26.8" height="26.2" rx="2.6" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" />
+		<use href="#emergencyIcon" style="display:none" transform="translate(174, 449)" />
 	</g>
-	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="173.4" y1="420" x2="610" y2="420" />
-	<circle style="fill:#F7931E;stroke:#F7931E;stroke-miterlimit:10;" cx="298" cy="420" r="1.3" />
-	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="298" y1="420" x2="298" y2="373.5" />
+	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="173.4" y1="500" x2="610" y2="500" />
+	<circle style="fill:#F7931E;stroke:#F7931E;stroke-miterlimit:10;" cx="298" cy="500" r="1.3" />
+	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="298" y1="500" x2="298" y2="408.5" />
+	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="298" y1="401.5" x2="298" y2="373.5" />
 	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="298" y1="366.5" x2="298" y2="303.5" />
 	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="298" y1="296.5" x2="298" y2="285" />
 	<circle style="fill:#F7931E;stroke:#F7931E;stroke-miterlimit:10;" cx="298" cy="285" r="1.3" />
@@ -499,7 +526,8 @@
 	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="281" y1="190" x2="253.6" y2="190" />
 	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="315" y1="190" x2="337.2" y2="190" />
 	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="344.2" y1="190" x2="362" y2="190" />
-	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="610" y1="420" x2="610" y2="373.5" />
+	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="610" y1="500" x2="610" y2="408.5" />
+	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="610" y1="401.5" x2="610" y2="373.5" />
 	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="610" y1="366.5" x2="610" y2="303.5" />
 	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="610" y1="296.5" x2="610" y2="285" />
 	<circle style="fill:#F7931E;stroke:#F7931E;stroke-miterlimit:10;" cx="610" cy="285" r="1.3" />
@@ -533,57 +561,57 @@
 	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="656.2" y1="190" x2="674" y2="190" />
 	<!-- diesel fuel: three tanks, drain pump, transfer pump, valve, to the burners -->
 	<g data-section="dieselTanks[0]">
-		<rect x="645" y="420" width="55" height="70" style="fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;" />
-	<text transform="matrix(1 0 0 1 672.5 404)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">Резервуар</text>
-	<text transform="matrix(1 0 0 1 672.5 415)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">ДТ №1</text>
+		<rect x="645" y="500" width="55" height="70" style="fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;" />
+	<text transform="matrix(1 0 0 1 672.5 484)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">Резервуар</text>
+	<text transform="matrix(1 0 0 1 672.5 495)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">ДТ №1</text>
 	</g>
-	<line style="fill:none;stroke:#7A4A1E;stroke-miterlimit:10;" x1="672.5" y1="490" x2="672.5" y2="520" />
-	<circle style="fill:#7A4A1E;stroke:#7A4A1E;stroke-miterlimit:10;" cx="672.5" cy="520" r="1.3" />
+	<line style="fill:none;stroke:#7A4A1E;stroke-miterlimit:10;" x1="672.5" y1="570" x2="672.5" y2="600" />
+	<circle style="fill:#7A4A1E;stroke:#7A4A1E;stroke-miterlimit:10;" cx="672.5" cy="600" r="1.3" />
 	<g data-section="dieselTanks[1]">
-		<rect x="720" y="420" width="55" height="70" style="fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;" />
-	<text transform="matrix(1 0 0 1 747.5 404)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">Резервуар</text>
-	<text transform="matrix(1 0 0 1 747.5 415)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">ДТ №2</text>
+		<rect x="720" y="500" width="55" height="70" style="fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;" />
+	<text transform="matrix(1 0 0 1 747.5 484)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">Резервуар</text>
+	<text transform="matrix(1 0 0 1 747.5 495)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">ДТ №2</text>
 	</g>
-	<line style="fill:none;stroke:#7A4A1E;stroke-miterlimit:10;" x1="747.5" y1="490" x2="747.5" y2="520" />
-	<circle style="fill:#7A4A1E;stroke:#7A4A1E;stroke-miterlimit:10;" cx="747.5" cy="520" r="1.3" />
+	<line style="fill:none;stroke:#7A4A1E;stroke-miterlimit:10;" x1="747.5" y1="570" x2="747.5" y2="600" />
+	<circle style="fill:#7A4A1E;stroke:#7A4A1E;stroke-miterlimit:10;" cx="747.5" cy="600" r="1.3" />
 	<g data-section="dieselTanks[2]">
-		<rect x="795" y="420" width="55" height="70" style="fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;" />
-	<text transform="matrix(1 0 0 1 822.5 404)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">Резервуар</text>
-	<text transform="matrix(1 0 0 1 822.5 415)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">ДТ №3</text>
+		<rect x="795" y="500" width="55" height="70" style="fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;" />
+	<text transform="matrix(1 0 0 1 822.5 484)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">Резервуар</text>
+	<text transform="matrix(1 0 0 1 822.5 495)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle;">ДТ №3</text>
 	</g>
-	<line style="fill:none;stroke:#7A4A1E;stroke-miterlimit:10;" x1="822.5" y1="490" x2="822.5" y2="520" />
-	<line style="fill:none;stroke:#7A4A1E;stroke-miterlimit:10;" x1="822.5" y1="520" x2="655.4" y2="520" />
+	<line style="fill:none;stroke:#7A4A1E;stroke-miterlimit:10;" x1="822.5" y1="570" x2="822.5" y2="600" />
+	<line style="fill:none;stroke:#7A4A1E;stroke-miterlimit:10;" x1="822.5" y1="600" x2="655.4" y2="600" />
 	<g data-section="dieselDrainPump">
-		<circle style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="642" cy="520" r="10.6" />
-		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="642" cy="520" r="9.3" />
-		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="633.3,520 639.9,516.05 639.9,523.95" />
-		<rect x="628.6" y="506.9" width="26.8" height="26.2" rx="2.6" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" />
-		<use href="#emergencyIcon" style="display:none" transform="translate(656, 489)" />
+		<circle style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="642" cy="600" r="10.6" />
+		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="642" cy="600" r="9.3" />
+		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="633.3,600 639.9,596.05 639.9,603.95" />
+		<rect x="628.6" y="586.9" width="26.8" height="26.2" rx="2.6" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" />
+		<use href="#emergencyIcon" style="display:none" transform="translate(656, 569)" />
 	</g>
-	<text transform="matrix(1 0 0 1 642 544)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle;">выкачивающий</text>
-	<text transform="matrix(1 0 0 1 642 554)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle;">насос ДТ</text>
-	<line style="fill:none;stroke:#7A4A1E;stroke-miterlimit:10;" x1="628.6" y1="520" x2="573.4" y2="520" />
+	<text transform="matrix(1 0 0 1 642 624)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle;">выкачивающий</text>
+	<text transform="matrix(1 0 0 1 642 634)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle;">насос ДТ</text>
+	<line style="fill:none;stroke:#7A4A1E;stroke-miterlimit:10;" x1="628.6" y1="600" x2="573.4" y2="600" />
 	<g data-section="dieselTransferPump">
-		<circle style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="560" cy="520" r="10.6" />
-		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="560" cy="520" r="9.3" />
-		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="551.3,520 557.9,516.05 557.9,523.95" />
-		<rect x="546.6" y="506.9" width="26.8" height="26.2" rx="2.6" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" />
-		<use href="#emergencyIcon" style="display:none" transform="translate(574, 489)" />
+		<circle style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="560" cy="600" r="10.6" />
+		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="560" cy="600" r="9.3" />
+		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="551.3,600 557.9,596.05 557.9,603.95" />
+		<rect x="546.6" y="586.9" width="26.8" height="26.2" rx="2.6" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" />
+		<use href="#emergencyIcon" style="display:none" transform="translate(574, 569)" />
 	</g>
-	<text transform="matrix(1 0 0 1 560 544)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle;">перекачивающий</text>
-	<text transform="matrix(1 0 0 1 560 554)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle;">насос ДТ</text>
-	<line style="fill:none;stroke:#7A4A1E;stroke-miterlimit:10;" x1="546.6" y1="520" x2="515.4" y2="520" />
+	<text transform="matrix(1 0 0 1 560 624)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle;">перекачивающий</text>
+	<text transform="matrix(1 0 0 1 560 634)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle;">насос ДТ</text>
+	<line style="fill:none;stroke:#7A4A1E;stroke-miterlimit:10;" x1="546.6" y1="600" x2="515.4" y2="600" />
 	<g data-section="dieselValve">
-		<text transform="matrix(1 0 0 1 502 504.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">КДТ</text>
-		<polygon style="fill:#808080;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="502,520 510,514.75 510,525.25" />
-		<polygon style="fill:#808080;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="502,520 494,525.25 494,514.75" />
-		<rect x="488.6" y="506.9" width="26.8" height="26.2" rx="2.6" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" />
-		<use href="#emergencyIcon" style="display:none" transform="translate(516, 489)" />
+		<text transform="matrix(1 0 0 1 502 584.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">КДТ</text>
+		<polygon style="fill:#808080;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="502,600 510,594.75 510,605.25" />
+		<polygon style="fill:#808080;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="502,600 494,605.25 494,594.75" />
+		<rect x="488.6" y="586.9" width="26.8" height="26.2" rx="2.6" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" />
+		<use href="#emergencyIcon" style="display:none" transform="translate(516, 569)" />
 	</g>
-	<line style="fill:none;stroke:#7A4A1E;stroke-miterlimit:10;" x1="488.6" y1="520" x2="468.1" y2="520" />
-	<polygon style="fill:#7A4A1E;stroke:#7A4A1E;stroke-width:0.5;stroke-miterlimit:10;" points="468.1,514.6 457,520 468.1,525.4" />
-	<text transform="matrix(1 0 0 1 457 534)" style="font-family:'Roboto'; font-size:9px; text-anchor:end;">ДТ на горелки</text>
-	<text transform="matrix(1 0 0 1 457 544)" style="font-family:'Roboto'; font-size:9px; text-anchor:end;">котлов</text>
+	<line style="fill:none;stroke:#7A4A1E;stroke-miterlimit:10;" x1="488.6" y1="600" x2="468.1" y2="600" />
+	<polygon style="fill:#7A4A1E;stroke:#7A4A1E;stroke-width:0.5;stroke-miterlimit:10;" points="468.1,594.6 457,600 468.1,605.4" />
+	<text transform="matrix(1 0 0 1 457 614)" style="font-family:'Roboto'; font-size:9px; text-anchor:end;">ДТ на горелки</text>
+	<text transform="matrix(1 0 0 1 457 624)" style="font-family:'Roboto'; font-size:9px; text-anchor:end;">котлов</text>
 	<!-- alarms panel on the left, as on Весна-2 -->
 	<g data-section="emergency">
 		<rect x="4" y="50" width="100" height="215" rx="9.4" style="fill:none;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;" />
@@ -654,8 +682,8 @@
 		</g>
 	</g>
 
-	<!-- Electricity meters, laid out like the Весна-1 section (coordinates of that section, moved under the emergency panel) -->
-	<g data-section="electroPowerMeters" transform="translate(-646, 135)">
+	<!-- Electricity meters, laid out like the Весна-1 section (coordinates of that section, moved to the top right corner) -->
+	<g data-section="electroPowerMeters" transform="translate(140, -30)">
 		<rect data-device="tsarevo1-mercury230-26916516;tsarevo1-mercury230-26916504" x="650" y="140" width="100" height="112" rx="7" ry="7" style="fill:none;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;" />
 		<text transform="matrix(0 -1 1 0 662 229)" style="font-family:'Roboto'; font-size:9px;">Электросчетчики</text>
 
