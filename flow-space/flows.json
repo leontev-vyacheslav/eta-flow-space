@@ -4,7 +4,7 @@
         "type": "tab",
         "label": "tsarevo1-boiler-room",
         "disabled": false,
-        "info": "Котельная ЖК Царёво-1. The KM-5 heat meter (413498) and the TV7 heat calculator (19072584) are polled every 300 s; the boiler controller is not polled yet (its address and Modbus register map are unknown). collect-device-state calls storeDeviceStateToCacheAsync with this tab's id (flow.uid in the database) and the device index.",
+        "info": "Котельная ЖК Царёво-1. The KM-5 heat meter (413498), the TV7 heat calculator (19072584) and the Mercury230 electricity meters (26916516, 26916504) are polled every 300 s; the boiler controller is not polled yet (its address and Modbus register map are unknown). collect-device-state calls storeDeviceStateToCacheAsync with this tab's id (flow.uid in the database) and the device index.",
         "env": []
     },
     {
@@ -1107,6 +1107,218 @@
         "statusType": "auto",
         "x": 790,
         "y": 320,
+        "wires": []
+    },
+    {
+        "id": "ac08199a4fbf168a",
+        "type": "comment",
+        "z": "8c7f93e2ebca7614",
+        "name": "tsarevo1-mercury230-26916516 [27] (WIZ108SR 78.138.147.158:5010, address 16)",
+        "info": "",
+        "x": 330,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "4a4640dffa5a48e3",
+        "type": "inject",
+        "z": "8c7f93e2ebca7614",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "300",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 460,
+        "wires": [
+            [
+                "b60a5ee865a75711"
+            ]
+        ]
+    },
+    {
+        "id": "b60a5ee865a75711",
+        "type": "subflow:d6d7729c719fdc31",
+        "z": "8c7f93e2ebca7614",
+        "name": "mercury230-26916516",
+        "env": [
+            {
+                "name": "HOST",
+                "value": "78.138.147.158",
+                "type": "str"
+            },
+            {
+                "name": "PORT",
+                "value": "5010",
+                "type": "num"
+            },
+            {
+                "name": "ADDRESS",
+                "value": "16",
+                "type": "num"
+            }
+        ],
+        "x": 360,
+        "y": 460,
+        "wires": [
+            [
+                "395a7cc83b6c97a5"
+            ]
+        ]
+    },
+    {
+        "id": "395a7cc83b6c97a5",
+        "type": "function",
+        "z": "8c7f93e2ebca7614",
+        "name": "collect-device-state",
+        "func": "const { storeDeviceStateToCacheAsync } = global.get('helpers');\n\nconst payload = msg.payload;\nconst { energy } = payload;\n\nconst deviceState = {\n    activePowerTotal: payload.Psum,  // суммарная активная мощность, Вт\n    activePowerL1: payload.P1,        // активная мощность, фаза A\n    activePowerL2: payload.P2,        // активная мощность, фаза B\n    activePowerL3: payload.P3,        // активная мощность, фаза C\n\n    reactivePowerTotal: payload.Qsum, // суммарная реактивная мощность, вар\n    reactivePowerL1: payload.Q1,      // реактивная мощность, фаза A\n    reactivePowerL2: payload.Q2,      // реактивная мощность, фаза B\n    reactivePowerL3: payload.Q3,      // реактивная мощность, фаза C\n\n    apparentPowerTotal: payload.Ssum, // суммарная полная мощность, ВА\n    apparentPowerL1: payload.S1,      // полная мощность, фаза A\n    apparentPowerL2: payload.S2,      // полная мощность, фаза B\n    apparentPowerL3: payload.S3,      // полная мощность, фаза C\n\n    voltageL1: payload.U1,            // напряжение, фаза A, В\n    voltageL2: payload.U2,            // напряжение, фаза B\n    voltageL3: payload.U3,            // напряжение, фаза C\n\n    phaseAngleAB: payload.Fab,        // угол между фазами A и B, град\n    phaseAngleAC: payload.Fac,        // угол между фазами A и C\n    phaseAngleBC: payload.Fbc,        // угол между фазами B и C\n\n    currentL1: payload.I1,            // ток, фаза A, А\n    currentL2: payload.I2,            // ток, фаза B\n    currentL3: payload.I3,            // ток, фаза C\n\n    powerFactorTotal: payload.cosFsum, // суммарный коэффициент мощности (cos φ)\n    powerFactorL1: payload.cosF1,      // коэффициент мощности, фаза A\n    powerFactorL2: payload.cosF2,      // коэффициент мощности, фаза B\n    powerFactorL3: payload.cosF3,      // коэффициент мощности, фаза C\n\n    frequency: payload.Hz,             // частота сети, Гц\n\n    // Energy since reset: A+ active and R+ reactive, forward direction\n    energyActiveTotal: energy.sum.Aplus,      // суммарная активная энергия (кВт·ч)\n    energyReactiveTotal: energy.sum.Rplus,    // суммарная реактивная энергия (кВАр·ч)\n\n    energyActiveTariff1: energy.T1.Aplus,\n    energyActiveTariff2: energy.T2.Aplus,\n    energyActiveTariff3: energy.T3.Aplus,\n    energyActiveTariff4: energy.T4.Aplus,\n\n    energyReactiveTariff1: energy.T1.Rplus,\n    energyReactiveTariff2: energy.T2.Rplus,\n    energyReactiveTariff3: energy.T3.Rplus,\n    energyReactiveTariff4: energy.T4.Rplus,\n\n    // Timestamp\n    timestamp: Date.now(),\n};\n\nconst DEVICE_CODE = 'tsarevo1-mercury230-26916516';\nconst flowUid = node.path.split('/').find(_ => true);\nawait storeDeviceStateToCacheAsync(global, DEVICE_CODE, deviceState, flowUid);\nmsg.deviceState = deviceState;\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 460,
+        "wires": [
+            [
+                "4f5b3b2706b2ed2d"
+            ]
+        ]
+    },
+    {
+        "id": "4f5b3b2706b2ed2d",
+        "type": "debug",
+        "z": "8c7f93e2ebca7614",
+        "name": "debug mercury230 16",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "deviceState",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 810,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "5fe41259193cd9b9",
+        "type": "comment",
+        "z": "8c7f93e2ebca7614",
+        "name": "tsarevo1-mercury230-26916504 [28] (WIZ108SR 78.138.147.158:5010, address 4)",
+        "info": "",
+        "x": 330,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "b2e19b141db3a5bb",
+        "type": "inject",
+        "z": "8c7f93e2ebca7614",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "300",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 600,
+        "wires": [
+            [
+                "0c6fede33aeb294c"
+            ]
+        ]
+    },
+    {
+        "id": "0c6fede33aeb294c",
+        "type": "subflow:d6d7729c719fdc31",
+        "z": "8c7f93e2ebca7614",
+        "name": "mercury230-26916504",
+        "env": [
+            {
+                "name": "HOST",
+                "value": "78.138.147.158",
+                "type": "str"
+            },
+            {
+                "name": "PORT",
+                "value": "5010",
+                "type": "num"
+            },
+            {
+                "name": "ADDRESS",
+                "value": "4",
+                "type": "num"
+            }
+        ],
+        "x": 360,
+        "y": 600,
+        "wires": [
+            [
+                "b718ec5ae81e60eb"
+            ]
+        ]
+    },
+    {
+        "id": "b718ec5ae81e60eb",
+        "type": "function",
+        "z": "8c7f93e2ebca7614",
+        "name": "collect-device-state",
+        "func": "const { storeDeviceStateToCacheAsync } = global.get('helpers');\n\nconst payload = msg.payload;\nconst { energy } = payload;\n\nconst deviceState = {\n    activePowerTotal: payload.Psum,  // суммарная активная мощность, Вт\n    activePowerL1: payload.P1,        // активная мощность, фаза A\n    activePowerL2: payload.P2,        // активная мощность, фаза B\n    activePowerL3: payload.P3,        // активная мощность, фаза C\n\n    reactivePowerTotal: payload.Qsum, // суммарная реактивная мощность, вар\n    reactivePowerL1: payload.Q1,      // реактивная мощность, фаза A\n    reactivePowerL2: payload.Q2,      // реактивная мощность, фаза B\n    reactivePowerL3: payload.Q3,      // реактивная мощность, фаза C\n\n    apparentPowerTotal: payload.Ssum, // суммарная полная мощность, ВА\n    apparentPowerL1: payload.S1,      // полная мощность, фаза A\n    apparentPowerL2: payload.S2,      // полная мощность, фаза B\n    apparentPowerL3: payload.S3,      // полная мощность, фаза C\n\n    voltageL1: payload.U1,            // напряжение, фаза A, В\n    voltageL2: payload.U2,            // напряжение, фаза B\n    voltageL3: payload.U3,            // напряжение, фаза C\n\n    phaseAngleAB: payload.Fab,        // угол между фазами A и B, град\n    phaseAngleAC: payload.Fac,        // угол между фазами A и C\n    phaseAngleBC: payload.Fbc,        // угол между фазами B и C\n\n    currentL1: payload.I1,            // ток, фаза A, А\n    currentL2: payload.I2,            // ток, фаза B\n    currentL3: payload.I3,            // ток, фаза C\n\n    powerFactorTotal: payload.cosFsum, // суммарный коэффициент мощности (cos φ)\n    powerFactorL1: payload.cosF1,      // коэффициент мощности, фаза A\n    powerFactorL2: payload.cosF2,      // коэффициент мощности, фаза B\n    powerFactorL3: payload.cosF3,      // коэффициент мощности, фаза C\n\n    frequency: payload.Hz,             // частота сети, Гц\n\n    // Energy since reset: A+ active and R+ reactive, forward direction\n    energyActiveTotal: energy.sum.Aplus,      // суммарная активная энергия (кВт·ч)\n    energyReactiveTotal: energy.sum.Rplus,    // суммарная реактивная энергия (кВАр·ч)\n\n    energyActiveTariff1: energy.T1.Aplus,\n    energyActiveTariff2: energy.T2.Aplus,\n    energyActiveTariff3: energy.T3.Aplus,\n    energyActiveTariff4: energy.T4.Aplus,\n\n    energyReactiveTariff1: energy.T1.Rplus,\n    energyReactiveTariff2: energy.T2.Rplus,\n    energyReactiveTariff3: energy.T3.Rplus,\n    energyReactiveTariff4: energy.T4.Rplus,\n\n    // Timestamp\n    timestamp: Date.now(),\n};\n\nconst DEVICE_CODE = 'tsarevo1-mercury230-26916504';\nconst flowUid = node.path.split('/').find(_ => true);\nawait storeDeviceStateToCacheAsync(global, DEVICE_CODE, deviceState, flowUid);\nmsg.deviceState = deviceState;\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 600,
+        "wires": [
+            [
+                "1de67b3155dfef61"
+            ]
+        ]
+    },
+    {
+        "id": "1de67b3155dfef61",
+        "type": "debug",
+        "z": "8c7f93e2ebca7614",
+        "name": "debug mercury230 4",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "deviceState",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 810,
+        "y": 600,
         "wires": []
     },
     {
