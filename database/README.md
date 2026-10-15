@@ -56,4 +56,4 @@ the web API's Sequelize models only describe it and no longer create tables (`sy
 | `2026-10-15-delete-tsarevo1-km5-418200-history.sql` | yes (verified 2026-10-15) |
 | `2026-10-15-add-tsarevo1-mercury230.sql` | yes (verified 2026-10-15) |
 | `2026-10-15-add-tsarevo1-vkt7.sql` | yes (verified 2026-10-15) |
-| `2026-10-15-tsarevo1-vkt7-gas-per-boiler.sql` | no |
+| `2026-10-15-tsarevo1-vkt7-gas-per-boiler.sql` | yes (verified 2026-10-15) |
