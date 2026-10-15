@@ -2,13 +2,14 @@ import { useCallback, useEffect, useRef } from "react";
 import { createRoot } from "react-dom/client";
 import { useDashboardPage } from "../../dashboard-page-context"
 import dxPopover from "devextreme/ui/popover";
-import { DashboardIcon, GraphIcon, HelpIcon, TypeIcon, VariableIcon } from "../../../../constants/app-icons";
+import { DashboardIcon, GraphIcon, HelpIcon, JsonIcon, TypeIcon, VariableIcon } from "../../../../constants/app-icons";
 import type { SchemaTypeInfoPropertiesChainModel } from "../../../../helpers/data-helper";
 import { showAlertDialog } from "../../../../utils/dialogs";
 import { formatDateTime, formatNumber, getEnumDescription, isDateTime } from "../../../../helpers/state-value-format";
 
 import './mnemoschema-popover.scss';
 import { graphService } from "../../../../components/dialogs/graph-dialog/graph-dialog";
+import { jsonViewService } from "../../../../components/dialogs/json-view-dialog/json-view-service";
 import { selectIsAdmin } from "../../../../contexts/auth-selectors";
 import { useAuthStore } from "../../../../contexts/auth-store";
 import { useAppData } from "../../../../contexts/app-data/app-data";
@@ -57,19 +58,44 @@ export const useMnemoschemaPopover = () => {
         });
     }, [dataschemas]);
 
+    // admins only: opens the latest state of a device of the popover as JSON text
+    const StateJsonLink = useCallback(({ deviceCode }: { deviceCode: string }) => {
+        if (!isAdmin || !device) {
+            return null;
+        }
+        const targetDevice = deviceCode === device.code ? device : device.linkedDevices.find(d => d.code === deviceCode);
+
+        return (
+            <JsonIcon size={16} style={{ cursor: 'pointer', flexShrink: 0 }} title='Состояние' data-state-json={deviceCode} onClick={() => {
+                popoverInstance.current?.hide();
+                jsonViewService.show({
+                    kind: 'state',
+                    statesDeviceId: device.id,
+                    device: { id: targetDevice?.id ?? device.id, code: deviceCode, name: targetDevice?.name || deviceCode }
+                });
+            }} />
+        );
+    }, [device, isAdmin]);
+
     const PropertyInfoTable = useCallback(({ propertyInfosDict, formattedValues }: {
         propertyInfosDict: Record<string, SchemaTypeInfoPropertiesChainModel[]>,
         formattedValues: Map<SchemaTypeInfoPropertiesChainModel, React.ReactNode>
     }) => {
         const linkedDevicesCount = dataschemas ? Object.keys(dataschemas).length : 1;
+        const deviceCodes = Object.keys(propertyInfosDict);
 
         return (
             <>
                 <table className='simple-grid'>
                     <thead>
                         <tr><th colSpan={2}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: 5, justifyContent: 'center' }}>
-                                <VariableIcon size={16} />Свойства</div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 5, justifyContent: 'center', position: 'relative' }}>
+                                <VariableIcon size={16} />Свойства
+                                {/* one device: its state link in the header; several: in each device's row */}
+                                {deviceCodes.length === 1
+                                    ? <span style={{ position: 'absolute', right: 0, display: 'flex' }}><StateJsonLink deviceCode={deviceCodes[0]} /></span>
+                                    : null}
+                            </div>
                         </th></tr>
                     </thead>
                 </table>
@@ -86,7 +112,8 @@ export const useMnemoschemaPopover = () => {
                                             <td colSpan={2}>
                                                 <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
                                                     <DashboardIcon size={16} />
-                                                    <strong>{device?.linkedDevices.find(d => d.code === deviceCode)?.description}</strong>
+                                                    <strong style={{ flex: 1 }}>{device?.linkedDevices.find(d => d.code === deviceCode)?.description}</strong>
+                                                    {deviceCodes.length > 1 ? <StateJsonLink deviceCode={deviceCode} /> : null}
                                                 </div>
                                             </td>
                                         </tr> : null}
@@ -129,7 +156,7 @@ export const useMnemoschemaPopover = () => {
                 </div>
             </>
         );
-    }, [dataschemas, device, isAdmin]);
+    }, [StateJsonLink, dataschemas, device, isAdmin]);
 
 
     const popoverContentRender = useCallback((propertyInfosDict: Record<string, SchemaTypeInfoPropertiesChainModel[]>, target: Element) => {
