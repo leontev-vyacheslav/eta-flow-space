@@ -2,7 +2,7 @@ import { Item as TabPanelItem, TabPanel } from 'devextreme-react/tab-panel';
 import { useEffect, useMemo, useRef, useState, type ComponentType } from "react";
 import PageHeader from "../../components/page-header/page-header";
 import AppConstants from "../../constants/app-constants";
-import { AdditionalMenuIcon, CircuitIcon, DashboardIcon, WideScreenIcon, GraphIcon, HelpIcon, JsonIcon, ParamsIcon, RefreshIcon, ReportIcon, WarningLogIcon, WideScreenExitIcon } from "../../constants/app-icons";
+import { AdditionalMenuIcon, CircuitIcon, DashboardIcon, WideScreenIcon, GraphIcon, DataschemaIcon, HelpIcon, JsonIcon, ParamsIcon, RefreshIcon, ReportIcon, WarningLogIcon, WideScreenExitIcon } from "../../constants/app-icons";
 import type { MenuItemModel } from "../../models/menu-item-model";
 import { IconTab } from '../../components/tab-utils/icon-tab';
 import { useNavigate, useParams } from 'react-router';
@@ -14,11 +14,38 @@ import { MenuItemWithSubMenu } from '../../components/menu/menu-item/menu-item';
 import { quickHelpReferenceService } from '../../components/dialogs/quick-reference-help-dialog/quick-reference-help-service';
 import { graphService } from '../../components/dialogs/graph-dialog/graph-dialog.tsx';
 import { emergencyLogService } from '../../components/dialogs/emergency-log-dialog/emergency-log-dialog.tsx';
-import { deviceStateJsonService } from '../../components/dialogs/device-state-json-dialog/device-state-json-service.ts';
+import { jsonViewService } from '../../components/dialogs/json-view-dialog/json-view-service.ts';
+import type { JsonViewKind } from '../../components/dialogs/json-view-dialog/json-view-dialog.tsx';
 import { useAuthStore } from '../../contexts/auth-store.tsx';
 import { selectIsAdmin } from '../../contexts/auth-selectors.ts';
 import { kebabToCamel } from '../../utils/string-utils.ts';
 import type { DeviceModel } from '../../models/flows/device-model.ts';
+import type { IconType } from 'react-icons';
+
+// a menu item opening the JSON view of a device: one item for a diagram with one device, a submenu of its devices otherwise
+function jsonViewMenuItem(kind: JsonViewKind, text: string, Icon: IconType, device: DeviceModel, deviceCodes: string[]): MenuItemModel {
+    const show = (deviceCode: string) => {
+        const targetDevice = deviceCode === device.code ? device : device.linkedDevices.find(d => d.code === deviceCode);
+        jsonViewService.show({
+            kind,
+            statesDeviceId: device.id,
+            device: { id: targetDevice?.id ?? device.id, code: deviceCode, name: targetDevice?.name || deviceCode }
+        });
+    };
+
+    if (deviceCodes.length <= 1) {
+        return { icon: () => <Icon size={20} />, text, onClick: () => show(deviceCodes[0] ?? device.code) };
+    }
+
+    return {
+        render: () => <MenuItemWithSubMenu icon={<Icon size={20} />} text={text} />,
+        items: deviceCodes.map(deviceCode => ({
+            icon: () => <Icon size={20} />,
+            text: `${kebabToCamel(device.linkedDevices.find(d => d.code === deviceCode)?.name || deviceCode)}...`,
+            onClick: () => show(deviceCode)
+        })),
+    };
+}
 
 const DashboardPageInner = () => {
     const tabPanelRef = useRef<TabPanel>(null);
@@ -122,36 +149,11 @@ const DashboardPageInner = () => {
                             }
                         }
                     ]),
-                    // admins only: the latest state of each device of the diagram as JSON text
-                    ...(isAdmin && device && deviceStates ? (Object.keys(deviceStates).length > 1 ? [
-                        {
-                            render: () => <MenuItemWithSubMenu icon={<JsonIcon size={20} />} text={'Состояние...'} />,
-                            items: Object.keys(deviceStates).map(deviceCode => {
-                                const targetDevice = device.linkedDevices.find(d => d.code === deviceCode);
-                                return {
-                                    icon: () => <JsonIcon size={20} />,
-                                    text: `${kebabToCamel(targetDevice?.name || deviceCode)}...`,
-                                    onClick: () => {
-                                        deviceStateJsonService.show({
-                                            statesDeviceId: device.id,
-                                            device: { id: targetDevice?.id ?? deviceStates[deviceCode].deviceId, code: deviceCode, name: targetDevice?.name || deviceCode }
-                                        });
-                                    }
-                                }
-                            }),
-                        }
-                    ] : [
-                        {
-                            icon: () => <JsonIcon size={20} />,
-                            text: 'Состояние...',
-                            onClick: () => {
-                                deviceStateJsonService.show({
-                                    statesDeviceId: device.id,
-                                    device: { id: device.id, code: device.code, name: device.name }
-                                });
-                            }
-                        }
-                    ]) : []), {
+                    // admins only: the latest state and the data schema of each device of the diagram as JSON text
+                    ...(isAdmin && device && deviceStates ? [
+                        jsonViewMenuItem('state', 'Состояние...', JsonIcon, device, Object.keys(deviceStates)),
+                        jsonViewMenuItem('dataschema', 'Схема...', DataschemaIcon, device, Object.keys(deviceStates)),
+                    ] : []), {
                         icon: () => <HelpIcon size={20} />,
                         text: 'Справка...',
                         onClick: () => {
