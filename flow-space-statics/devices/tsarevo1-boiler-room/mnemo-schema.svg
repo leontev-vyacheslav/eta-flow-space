@@ -79,19 +79,19 @@
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="221.8" y1="60" x2="221.8" y2="130" />
 	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="221.8" cy="60" r="1.3" />
 	<g data-section="boilers[0].tempSupply">
-		<text transform="matrix(1 0 0 1 254.7 75.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">TE1</text>
-		<rect x="232.2" y="78" width="45" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-		<text transform="matrix(1 0 0 1 254.7 86.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
+		<text transform="matrix(1 0 0 1 188.9 71.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">TE1</text>
+		<rect x="166.4" y="74" width="45" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
+		<text transform="matrix(1 0 0 1 188.9 82.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
 	</g>
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="221.8" y1="83.6" x2="232.2" y2="83.6" />
-	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="221.8" cy="83.6" r="1.3" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="221.8" y1="79.6" x2="211.4" y2="79.6" />
+	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="221.8" cy="79.6" r="1.3" />
 	<g data-section="boilers[0].pressSupply">
-		<text transform="matrix(1 0 0 1 254.7 98.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">PE1</text>
-		<rect x="232.2" y="101" width="45" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-		<text transform="matrix(1 0 0 1 254.7 109.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
+		<text transform="matrix(1 0 0 1 188.9 94.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">PE1</text>
+		<rect x="166.4" y="97" width="45" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
+		<text transform="matrix(1 0 0 1 188.9 105.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
 	</g>
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="221.8" y1="106.6" x2="232.2" y2="106.6" />
-	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="221.8" cy="106.6" r="1.3" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="221.8" y1="102.6" x2="211.4" y2="102.6" />
+	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="221.8" cy="102.6" r="1.3" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="221.8" y1="114.5" x2="168.7" y2="114.5" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="168.7" y1="114.5" x2="168.7" y2="151.25" />
 	<g data-section="boilerPumps[0]">
@@ -108,12 +108,12 @@
 	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="221.8" cy="211.6" r="1.3" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="221.8" y1="199.3" x2="221.8" y2="300" />
 	<g data-section="boilers[0].tempReturn">
-		<text transform="matrix(1 0 0 1 254.7 221.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">TE5</text>
-		<rect x="232.2" y="224" width="45" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-		<text transform="matrix(1 0 0 1 254.7 232.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
+		<text transform="matrix(1 0 0 1 188.9 225.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">TE5</text>
+		<rect x="166.4" y="228" width="45" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
+		<text transform="matrix(1 0 0 1 188.9 236.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
 	</g>
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="221.8" y1="229.6" x2="232.2" y2="229.6" />
-	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="221.8" cy="229.6" r="1.3" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="221.8" y1="233.6" x2="211.4" y2="233.6" />
+	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="221.8" cy="233.6" r="1.3" />
 	<g data-section="returnValves[0]">
 		<text transform="matrix(1 0 0 1 205.8 266)" style="font-family:'Roboto'; font-size:10px; text-anchor:end">ЗК1</text>
 		<polygon style="fill:#808080;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="221.8,262 216.55,254 227.05,254" />
@@ -134,19 +134,19 @@
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="393.8" y1="60" x2="393.8" y2="130" />
 	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="393.8" cy="60" r="1.3" />
 	<g data-section="boilers[1].tempSupply">
-		<text transform="matrix(1 0 0 1 426.7 75.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">TE2</text>
-		<rect x="404.2" y="78" width="45" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-		<text transform="matrix(1 0 0 1 426.7 86.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
+		<text transform="matrix(1 0 0 1 360.9 71.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">TE2</text>
+		<rect x="338.4" y="74" width="45" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
+		<text transform="matrix(1 0 0 1 360.9 82.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
 	</g>
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="393.8" y1="83.6" x2="404.2" y2="83.6" />
-	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="393.8" cy="83.6" r="1.3" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="393.8" y1="79.6" x2="383.4" y2="79.6" />
+	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="393.8" cy="79.6" r="1.3" />
 	<g data-section="boilers[1].pressSupply">
-		<text transform="matrix(1 0 0 1 426.7 98.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">PE2</text>
-		<rect x="404.2" y="101" width="45" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-		<text transform="matrix(1 0 0 1 426.7 109.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
+		<text transform="matrix(1 0 0 1 360.9 94.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">PE2</text>
+		<rect x="338.4" y="97" width="45" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
+		<text transform="matrix(1 0 0 1 360.9 105.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
 	</g>
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="393.8" y1="106.6" x2="404.2" y2="106.6" />
-	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="393.8" cy="106.6" r="1.3" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="393.8" y1="102.6" x2="383.4" y2="102.6" />
+	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="393.8" cy="102.6" r="1.3" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="393.8" y1="114.5" x2="340.7" y2="114.5" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="340.7" y1="114.5" x2="340.7" y2="151.25" />
 	<g data-section="boilerPumps[1]">
@@ -163,12 +163,12 @@
 	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="393.8" cy="211.6" r="1.3" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="393.8" y1="199.3" x2="393.8" y2="300" />
 	<g data-section="boilers[1].tempReturn">
-		<text transform="matrix(1 0 0 1 426.7 221.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">TE6</text>
-		<rect x="404.2" y="224" width="45" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-		<text transform="matrix(1 0 0 1 426.7 232.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
+		<text transform="matrix(1 0 0 1 360.9 225.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">TE6</text>
+		<rect x="338.4" y="228" width="45" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
+		<text transform="matrix(1 0 0 1 360.9 236.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
 	</g>
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="393.8" y1="229.6" x2="404.2" y2="229.6" />
-	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="393.8" cy="229.6" r="1.3" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="393.8" y1="233.6" x2="383.4" y2="233.6" />
+	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="393.8" cy="233.6" r="1.3" />
 	<g data-section="returnValves[1]">
 		<text transform="matrix(1 0 0 1 377.8 266)" style="font-family:'Roboto'; font-size:10px; text-anchor:end">ЗК2</text>
 		<polygon style="fill:#808080;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="393.8,262 388.55,254 399.05,254" />
@@ -189,19 +189,19 @@
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="533.8" y1="60" x2="533.8" y2="130" />
 	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="533.8" cy="60" r="1.3" />
 	<g data-section="boilers[2].tempSupply">
-		<text transform="matrix(1 0 0 1 566.7 75.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">TE3</text>
-		<rect x="544.2" y="78" width="45" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-		<text transform="matrix(1 0 0 1 566.7 86.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
+		<text transform="matrix(1 0 0 1 500.9 71.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">TE3</text>
+		<rect x="478.4" y="74" width="45" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
+		<text transform="matrix(1 0 0 1 500.9 82.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
 	</g>
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="533.8" y1="83.6" x2="544.2" y2="83.6" />
-	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="533.8" cy="83.6" r="1.3" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="533.8" y1="79.6" x2="523.4" y2="79.6" />
+	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="533.8" cy="79.6" r="1.3" />
 	<g data-section="boilers[2].pressSupply">
-		<text transform="matrix(1 0 0 1 566.7 98.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">PE3</text>
-		<rect x="544.2" y="101" width="45" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-		<text transform="matrix(1 0 0 1 566.7 109.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
+		<text transform="matrix(1 0 0 1 500.9 94.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">PE3</text>
+		<rect x="478.4" y="97" width="45" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
+		<text transform="matrix(1 0 0 1 500.9 105.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
 	</g>
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="533.8" y1="106.6" x2="544.2" y2="106.6" />
-	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="533.8" cy="106.6" r="1.3" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="533.8" y1="102.6" x2="523.4" y2="102.6" />
+	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="533.8" cy="102.6" r="1.3" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="533.8" y1="114.5" x2="480.7" y2="114.5" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="480.7" y1="114.5" x2="480.7" y2="151.25" />
 	<g data-section="boilerPumps[2]">
@@ -218,12 +218,12 @@
 	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="533.8" cy="211.6" r="1.3" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="533.8" y1="199.3" x2="533.8" y2="300" />
 	<g data-section="boilers[2].tempReturn">
-		<text transform="matrix(1 0 0 1 566.7 221.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">TE7</text>
-		<rect x="544.2" y="224" width="45" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-		<text transform="matrix(1 0 0 1 566.7 232.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
+		<text transform="matrix(1 0 0 1 500.9 225.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">TE7</text>
+		<rect x="478.4" y="228" width="45" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
+		<text transform="matrix(1 0 0 1 500.9 236.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
 	</g>
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="533.8" y1="229.6" x2="544.2" y2="229.6" />
-	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="533.8" cy="229.6" r="1.3" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="533.8" y1="233.6" x2="523.4" y2="233.6" />
+	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="533.8" cy="233.6" r="1.3" />
 	<g data-section="returnValves[2]">
 		<text transform="matrix(1 0 0 1 517.8 266)" style="font-family:'Roboto'; font-size:10px; text-anchor:end">ЗК3</text>
 		<polygon style="fill:#808080;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="533.8,262 528.55,254 539.05,254" />
@@ -243,19 +243,19 @@
 	</g>
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="705.8" y1="60" x2="705.8" y2="130" />
 	<g data-section="boilers[3].tempSupply">
-		<text transform="matrix(1 0 0 1 738.7 75.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">TE4</text>
-		<rect x="716.2" y="78" width="45" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-		<text transform="matrix(1 0 0 1 738.7 86.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
+		<text transform="matrix(1 0 0 1 672.9 71.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">TE4</text>
+		<rect x="650.4" y="74" width="45" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
+		<text transform="matrix(1 0 0 1 672.9 82.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
 	</g>
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="705.8" y1="83.6" x2="716.2" y2="83.6" />
-	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="705.8" cy="83.6" r="1.3" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="705.8" y1="79.6" x2="695.4" y2="79.6" />
+	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="705.8" cy="79.6" r="1.3" />
 	<g data-section="boilers[3].pressSupply">
-		<text transform="matrix(1 0 0 1 738.7 98.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">PE4</text>
-		<rect x="716.2" y="101" width="45" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-		<text transform="matrix(1 0 0 1 738.7 109.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
+		<text transform="matrix(1 0 0 1 672.9 94.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">PE4</text>
+		<rect x="650.4" y="97" width="45" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
+		<text transform="matrix(1 0 0 1 672.9 105.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
 	</g>
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="705.8" y1="106.6" x2="716.2" y2="106.6" />
-	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="705.8" cy="106.6" r="1.3" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="705.8" y1="102.6" x2="695.4" y2="102.6" />
+	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="705.8" cy="102.6" r="1.3" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="705.8" y1="114.5" x2="652.7" y2="114.5" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="652.7" y1="114.5" x2="652.7" y2="151.25" />
 	<g data-section="boilerPumps[3]">
@@ -272,12 +272,12 @@
 	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="705.8" cy="211.6" r="1.3" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="705.8" y1="199.3" x2="705.8" y2="300" />
 	<g data-section="boilers[3].tempReturn">
-		<text transform="matrix(1 0 0 1 738.7 221.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">TE8</text>
-		<rect x="716.2" y="224" width="45" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-		<text transform="matrix(1 0 0 1 738.7 232.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
+		<text transform="matrix(1 0 0 1 672.9 225.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">TE8</text>
+		<rect x="650.4" y="228" width="45" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
+		<text transform="matrix(1 0 0 1 672.9 236.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
 	</g>
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="705.8" y1="229.6" x2="716.2" y2="229.6" />
-	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="705.8" cy="229.6" r="1.3" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="705.8" y1="233.6" x2="695.4" y2="233.6" />
+	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="705.8" cy="233.6" r="1.3" />
 	<g data-section="returnValves[3]">
 		<text transform="matrix(1 0 0 1 689.8 266)" style="font-family:'Roboto'; font-size:10px; text-anchor:end">ЗК4</text>
 		<polygon style="fill:#808080;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="705.8,262 700.55,254 711.05,254" />
@@ -481,19 +481,19 @@
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="625" y1="401.5" x2="625" y2="370" />
 	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="625" cy="370" r="1.3" />
 	<!-- gas: header below, one riser per pair of boilers (as on Весна-2), a meter on each boiler feed -->
-	<polygon style="fill:#F7931E;stroke:#F7931E;stroke-width:0.5;stroke-miterlimit:10;" points="108,494.6 119.1,500 108,505.4" />
-	<text transform="matrix(1 0 0 1 108 517)" style="font-family:'Roboto'; font-size:10px;">Г1</text>
-	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="119.1" y1="500" x2="146.6" y2="500" />
+	<polygon style="fill:#F7931E;stroke:#F7931E;stroke-width:0.5;stroke-miterlimit:10;" points="108,479.6 119.1,485 108,490.4" />
+	<text transform="matrix(1 0 0 1 108 502)" style="font-family:'Roboto'; font-size:10px;">Г1</text>
+	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="119.1" y1="485" x2="146.6" y2="485" />
 	<g data-section="gasValve">
-		<text transform="matrix(1 0 0 1 160 484.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">КГ</text>
-		<polygon style="fill:#808080;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="160,500 168,494.75 168,505.25" />
-		<polygon style="fill:#808080;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="160,500 152,505.25 152,494.75" />
-		<rect x="146.6" y="486.9" width="26.8" height="26.2" rx="2.6" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" />
+		<text transform="matrix(1 0 0 1 160 469.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">КГ</text>
+		<polygon style="fill:#808080;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="160,485 168,479.75 168,490.25" />
+		<polygon style="fill:#808080;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="160,485 152,490.25 152,479.75" />
+		<rect x="146.6" y="471.9" width="26.8" height="26.2" rx="2.6" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" />
 		<use href="#emergencyIcon" style="display:none" transform="translate(174, 449)" />
 	</g>
-	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="173.4" y1="500" x2="610" y2="500" />
-	<circle style="fill:#F7931E;stroke:#F7931E;stroke-miterlimit:10;" cx="298" cy="500" r="1.3" />
-	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="298" y1="500" x2="298" y2="408.5" />
+	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="173.4" y1="485" x2="610" y2="485" />
+	<circle style="fill:#F7931E;stroke:#F7931E;stroke-miterlimit:10;" cx="298" cy="485" r="1.3" />
+	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="298" y1="485" x2="298" y2="408.5" />
 	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="298" y1="401.5" x2="298" y2="373.5" />
 	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="298" y1="366.5" x2="298" y2="303.5" />
 	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="298" y1="296.5" x2="298" y2="285" />
@@ -526,7 +526,7 @@
 	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="281" y1="190" x2="253.6" y2="190" />
 	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="315" y1="190" x2="337.2" y2="190" />
 	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="344.2" y1="190" x2="362" y2="190" />
-	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="610" y1="500" x2="610" y2="408.5" />
+	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="610" y1="485" x2="610" y2="408.5" />
 	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="610" y1="401.5" x2="610" y2="373.5" />
 	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="610" y1="366.5" x2="610" y2="303.5" />
 	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="610" y1="296.5" x2="610" y2="285" />
@@ -559,6 +559,18 @@
 	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="593" y1="190" x2="565.6" y2="190" />
 	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="627" y1="190" x2="649.2" y2="190" />
 	<line style="fill:none;stroke:#F7931E;stroke-miterlimit:10;" x1="656.2" y1="190" x2="674" y2="190" />
+	<!-- VKT-7 gas counter block on the gas inlet, laid out like the EK270 block on Весна-1: the total gas flow of the four boilers on the pipe -->
+	<g data-section="gasMeter">
+		<rect data-device="tsarevo1-vkt7-22222222" x="182.6" y="447" width="111" height="74" rx="10" ry="10" style="fill:none;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;" />
+		<use data-device="tsarevo1-vkt7-22222222" href="#infoIcon"
+			data-state-eval="element.style.fill = (states['tsarevo1-vkt7-22222222'].isConnected === false ? '#F44336': '#0072C6')"
+			data-state="states['tsarevo1-vkt7-22222222'].isConnected;states['tsarevo1-vkt7-22222222'].timestamp;states['tsarevo1-vkt7-22222222'].gasVolumeTotal;states['tsarevo1-vkt7-22222222'].gasVolumeFlowRateBoiler1;states['tsarevo1-vkt7-22222222'].gasVolumeFlowRateBoiler2;states['tsarevo1-vkt7-22222222'].gasVolumeFlowRateBoiler3;states['tsarevo1-vkt7-22222222'].gasVolumeFlowRateBoiler4;states['tsarevo1-vkt7-22222222'].gasVolumeBoiler1;states['tsarevo1-vkt7-22222222'].gasVolumeBoiler2;states['tsarevo1-vkt7-22222222'].gasVolumeBoiler3;states['tsarevo1-vkt7-22222222'].gasVolumeBoiler4"
+			style="fill:#0072C6" transform="translate(279 450) scale(0.55)" />
+		<text transform="matrix(1 0 0 1 237 474)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">FE9</text>
+		<rect x="202" y="478.85" width="70" height="12.3" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
+		<text data-state="states['tsarevo1-vkt7-22222222'].gasVolumeFlowRateTotal" transform="matrix(1 0 0 1 237 488.3)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
+		<text transform="matrix(1 0 0 1 238.1 513)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">Учет газа ВКТ-7</text>
+	</g>
 	<!-- diesel fuel: three tanks, drain pump, transfer pump, valve, to the burners -->
 	<g data-section="dieselTanks[0]">
 		<rect x="645" y="500" width="55" height="70" style="fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;" />
@@ -683,7 +695,7 @@
 	</g>
 
 	<!-- Electricity meters, laid out like the Весна-1 section (coordinates of that section, moved to the top right corner) -->
-	<g data-section="electroPowerMeters" transform="translate(140, -30)">
+	<g data-section="electroPowerMeters" transform="translate(104, -82)">
 		<rect data-device="tsarevo1-mercury230-26916516;tsarevo1-mercury230-26916504" x="650" y="140" width="100" height="112" rx="7" ry="7" style="fill:none;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;" />
 		<text transform="matrix(0 -1 1 0 662 229)" style="font-family:'Roboto'; font-size:9px;">Электросчетчики</text>
 
