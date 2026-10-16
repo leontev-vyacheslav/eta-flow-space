@@ -385,49 +385,49 @@
 	<text transform="matrix(1 0 0 1 850 388)" style="font-family:'Roboto'; font-size:10px;">Т2</text>
 	<!-- KM-5 heat meter block, laid out like the Взлет26 block on Весна-1: on each pipe temperature and pressure next to it, mass flow on it -->
 	<g data-section="km5">
-		<rect data-device="tsarevo1-km5-413498" x="650" y="332.4" width="165" height="124" rx="10" ry="10" style="fill:none;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;" />
+		<rect data-device="tsarevo1-km5-413498" x="640" y="332.4" width="175" height="124" rx="10" ry="10" style="fill:none;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;" />
 		<use data-device="tsarevo1-km5-413498" href="#infoIcon"
 			data-state-eval="element.style.fill = (states['tsarevo1-km5-413498'].isConnected === false ? '#F44336': '#0072C6')"
 			data-state="states['tsarevo1-km5-413498'].isConnected;states['tsarevo1-km5-413498'].timestamp;states['tsarevo1-km5-413498'].totalHeatConsumption;states['tsarevo1-km5-413498'].volumeInputPipe;states['tsarevo1-km5-413498'].volumeReturnPipe;states['tsarevo1-km5-413498'].massInputPipe;states['tsarevo1-km5-413498'].massReturnPipe;states['tsarevo1-km5-413498'].normalOperationTime"
 			style="fill:#0072C6" transform="translate(795 337.4) scale(0.55)" />
-		<text transform="matrix(1 0 0 1 732.5 451)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">Теплосчетчик КМ-5</text>
+		<text transform="matrix(1 0 0 1 727.5 451)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">Теплосчетчик КМ-5</text>
 		<g data-section="heatMeter.tempReturn">
-			<text transform="matrix(1 0 0 1 695 346.2)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">TE12</text>
-			<rect x="670" y="348.6" width="50" height="11.1" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-			<text data-state="states['tsarevo1-km5-413498'].temperatureReturnPipe" transform="matrix(1 0 0 1 695 356.9)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
+			<text transform="matrix(1 0 0 1 687 346.2)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">TE12</text>
+			<rect x="662" y="348.6" width="50" height="11.1" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
+			<text data-state="states['tsarevo1-km5-413498'].temperatureReturnPipe" transform="matrix(1 0 0 1 687 356.9)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
 		</g>
-		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="697.5" y1="370" x2="697.5" y2="359.7" />
-		<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="697.5" cy="370" r="1.3" />
+		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="689.5" y1="370" x2="689.5" y2="359.7" />
+		<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="689.5" cy="370" r="1.3" />
 		<g data-section="heatMeter.pressReturn">
-			<text transform="matrix(1 0 0 1 773 346.2)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">PE9</text>
-			<rect x="745" y="348.6" width="56" height="11.1" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-			<text data-state="states['tsarevo1-km5-413498'].pressureReturnPipe" transform="matrix(1 0 0 1 773 356.9)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
+			<text transform="matrix(1 0 0 1 765 346.2)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">PE9</text>
+			<rect x="737" y="348.6" width="56" height="11.1" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
+			<text data-state="states['tsarevo1-km5-413498'].pressureReturnPipe" transform="matrix(1 0 0 1 765 356.9)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
 		</g>
-		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="766" y1="370" x2="766" y2="359.7" />
-		<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="766" cy="370" r="1.3" />
+		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="758" y1="370" x2="758" y2="359.7" />
+		<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="758" cy="370" r="1.3" />
 		<g data-section="heatMeter.flowReturn">
-			<text transform="matrix(1 0 0 1 732.5 361.1)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">FE8</text>
-			<rect x="705.4" y="363.85" width="55" height="12.3" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-			<text data-state="states['tsarevo1-km5-413498'].massFlowRateReturnPipe" transform="matrix(1 0 0 1 732.9 373.3)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
+			<text transform="matrix(1 0 0 1 724.5 361.1)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">FE8</text>
+			<rect x="697.4" y="363.85" width="55" height="12.3" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
+			<text data-state="states['tsarevo1-km5-413498'].massFlowRateReturnPipe" transform="matrix(1 0 0 1 724.9 373.3)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
 		</g>
 		<g data-section="heatMeter.tempSupply">
-			<text transform="matrix(1 0 0 1 695 437)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">TE11</text>
-			<rect x="670" y="415.3" width="50" height="11.1" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-			<text data-state="states['tsarevo1-km5-413498'].temperatureInputPipe" transform="matrix(1 0 0 1 695 423.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
+			<text transform="matrix(1 0 0 1 687 437)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">TE11</text>
+			<rect x="662" y="415.3" width="50" height="11.1" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
+			<text data-state="states['tsarevo1-km5-413498'].temperatureInputPipe" transform="matrix(1 0 0 1 687 423.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
 		</g>
-		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="697.5" y1="405" x2="697.5" y2="415.3" />
-		<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="697.5" cy="405" r="1.3" />
+		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="689.5" y1="405" x2="689.5" y2="415.3" />
+		<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="689.5" cy="405" r="1.3" />
 		<g data-section="heatMeter.pressSupply">
-			<text transform="matrix(1 0 0 1 773 437)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">PE8</text>
-			<rect x="745" y="415.3" width="56" height="11.1" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-			<text data-state="states['tsarevo1-km5-413498'].pressureInputPipe" transform="matrix(1 0 0 1 773 423.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
+			<text transform="matrix(1 0 0 1 765 437)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">PE8</text>
+			<rect x="737" y="415.3" width="56" height="11.1" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
+			<text data-state="states['tsarevo1-km5-413498'].pressureInputPipe" transform="matrix(1 0 0 1 765 423.6)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
 		</g>
-		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="766" y1="405" x2="766" y2="415.3" />
-		<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="766" cy="405" r="1.3" />
+		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="758" y1="405" x2="758" y2="415.3" />
+		<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="758" cy="405" r="1.3" />
 		<g data-section="heatMeter.flowSupply">
-			<text transform="matrix(1 0 0 1 732.5 421.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">FE7</text>
-			<rect x="705.4" y="398.85" width="55" height="12.3" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-			<text data-state="states['tsarevo1-km5-413498'].massFlowRateInputPipe" transform="matrix(1 0 0 1 732.9 408.3)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
+			<text transform="matrix(1 0 0 1 724.5 421.5)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">FE7</text>
+			<rect x="697.4" y="398.85" width="55" height="12.3" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
+			<text data-state="states['tsarevo1-km5-413498'].massFlowRateInputPipe" transform="matrix(1 0 0 1 724.9 408.3)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
 		</g>
 	</g>
 	<!-- make-up: water inlet, accumulator tank, two make-up pumps, water treatment, into Т2 before the network pumps -->
@@ -565,7 +565,7 @@
 		<use data-device="tsarevo1-vkt7-22222222" href="#infoIcon"
 			data-state-eval="element.style.fill = (states['tsarevo1-vkt7-22222222'].isConnected === false ? '#F44336': '#0072C6')"
 			data-state="states['tsarevo1-vkt7-22222222'].isConnected;states['tsarevo1-vkt7-22222222'].timestamp;states['tsarevo1-vkt7-22222222'].gasVolumeTotal;states['tsarevo1-vkt7-22222222'].gasVolumeFlowRateBoiler1;states['tsarevo1-vkt7-22222222'].gasVolumeFlowRateBoiler2;states['tsarevo1-vkt7-22222222'].gasVolumeFlowRateBoiler3;states['tsarevo1-vkt7-22222222'].gasVolumeFlowRateBoiler4;states['tsarevo1-vkt7-22222222'].gasVolumeBoiler1;states['tsarevo1-vkt7-22222222'].gasVolumeBoiler2;states['tsarevo1-vkt7-22222222'].gasVolumeBoiler3;states['tsarevo1-vkt7-22222222'].gasVolumeBoiler4"
-			style="fill:#0072C6" transform="translate(279 425) scale(0.55)" />
+			style="fill:#0072C6" transform="translate(273.6 427) scale(0.55)" />
 		<text transform="matrix(1 0 0 1 237 449)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">FE9</text>
 		<rect x="202" y="453.85" width="70" height="12.3" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
 		<text data-state="states['tsarevo1-vkt7-22222222'].gasVolumeFlowRateTotal" transform="matrix(1 0 0 1 237 463.3)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle"></text>
@@ -625,7 +625,7 @@
 	<text transform="matrix(1 0 0 1 457 614)" style="font-family:'Roboto'; font-size:9px; text-anchor:end;">ДТ на горелки</text>
 	<text transform="matrix(1 0 0 1 457 624)" style="font-family:'Roboto'; font-size:9px; text-anchor:end;">котлов</text>
 	<!-- alarms panel on the left, as on Весна-2 -->
-	<g data-section="emergency">
+	<g data-section="emergency" transform="translate(0, 10)">
 		<rect x="4" y="50" width="100" height="215" rx="9.4" style="fill:none;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;" />
 		<text transform="matrix(1 0 0 1 54 255)" style="font-family:'Roboto'; font-size:9px; text-anchor:middle">Аварийные события</text>
 		<g data-section="isConnected">
@@ -695,9 +695,9 @@
 	</g>
 
 	<!-- Electricity meters, laid out like the Весна-1 section (coordinates of that section, moved to the top right corner) -->
-	<g data-section="electroPowerMeters" transform="translate(104, -82)">
-		<rect data-device="tsarevo1-mercury230-26916516;tsarevo1-mercury230-26916504" x="650" y="140" width="100" height="112" rx="7" ry="7" style="fill:none;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;" />
-		<text transform="matrix(0 -1 1 0 662 229)" style="font-family:'Roboto'; font-size:9px;">Электросчетчики</text>
+	<g data-section="electroPowerMeters" transform="translate(104, -80)">
+		<rect data-device="tsarevo1-mercury230-26916516;tsarevo1-mercury230-26916504" x="650" y="140" width="101" height="165" rx="7" ry="7" style="fill:none;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;" />
+		<text transform="matrix(0 -1 1 0 662 260)" style="font-family:'Roboto'; font-size:9px;">Электросчетчики</text>
 
 		<g data-section="tsarevo1-mercury230-26916516" transform="translate(6, 5)">
 			<use data-device="tsarevo1-mercury230-26916516" href="#infoIcon"
