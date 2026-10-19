@@ -3,7 +3,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { MapContainer, TileLayer } from "react-leaflet";
 import PageHeader from "../../components/page-header/page-header";
-import { AdditionalMenuIcon, MapIcon, RefreshIcon } from "../../constants/app-icons";
+import { AdditionalMenuIcon, HelpIcon, MapIcon, RefreshIcon } from "../../constants/app-icons";
+import { quickHelpReferenceService } from "../../components/dialogs/quick-reference-help-dialog/quick-reference-help-service";
 import AppConstants from "../../constants/app-constants";
 import type { MenuItemModel } from "../../models/menu-item-model";
 import { useAppData } from "../../contexts/app-data/app-data";
@@ -106,6 +107,13 @@ export const MapPage = () => {
                         text: 'Обновить...',
                         onClick: () => {
                             setRefreshToken(getQuickGuid());
+                        }
+                    },
+                    {
+                        icon: () => <HelpIcon size={20} />,
+                        text: 'Справка...',
+                        onClick: () => {
+                            quickHelpReferenceService.show({ referenceKey: 'common/map' });
                         }
                     },
                 ]

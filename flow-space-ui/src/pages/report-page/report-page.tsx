@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { useAppData } from "../../contexts/app-data/app-data";
 import PageHeader from "../../components/page-header/page-header";
-import { AdditionalMenuIcon, RefreshIcon, ReportIcon, SettingsIcon } from "../../constants/app-icons";
+import { AdditionalMenuIcon, HelpIcon, RefreshIcon, ReportIcon, SettingsIcon } from "../../constants/app-icons";
+import { quickHelpReferenceService } from "../../components/dialogs/quick-reference-help-dialog/quick-reference-help-service";
 import AppConstants from "../../constants/app-constants";
 import { useParams } from "react-router";
 import type { MenuItemModel } from "../../models/menu-item-model";
@@ -48,6 +49,13 @@ export const ReportPage = () => {
                         text: 'Обновить...',
                         onClick: () => {
                             setRefreshToken(getQuickGuid());
+                        }
+                    },
+                    {
+                        icon: () => <HelpIcon size={20} />,
+                        text: 'Справка...',
+                        onClick: () => {
+                            quickHelpReferenceService.show({ referenceKey: 'common/reports' });
                         }
                     },
                 ]
