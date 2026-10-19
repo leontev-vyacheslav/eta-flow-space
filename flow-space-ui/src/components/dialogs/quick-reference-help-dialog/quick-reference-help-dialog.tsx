@@ -1,4 +1,4 @@
-import Markdown from 'react-markdown';
+import Markdown, { defaultUrlTransform } from 'react-markdown';
 import remarkGfm from 'remark-gfm'
 import rehypeRaw from 'rehype-raw'
 import { useEffect, useState } from 'react';
@@ -19,14 +19,24 @@ export type QuickReferenceHelpDialogProps = React.PropsWithChildren<IPopupOption
     referenceKey: string
 };
 
+const quickHelpContentUrl = `${routes.host}/static/quick-help/content/`;
+
+// /static is cached as immutable, so every help file is requested by its manifest version; a file the manifest
+// does not list yet (statics copied without regenerating it) is requested fresh
+const versionedUrl = (path: string, manifest: any) =>
+    `${quickHelpContentUrl}${path}?v=${manifest?.['quick-help']?.[path] ?? Date.now()}`;
+
 const QuickReferenceHelpDialog = (props: QuickReferenceHelpDialogProps) => {
-    const { getQuickHelpReferenceAsync } = useAppData();
+    const { getQuickHelpReferenceAsync, staticFilesManifest } = useAppData();
     const [quickHelpReference, setQuickHelpReference] = useState<QuickHelpReferenceModel | null>(null);
     const { isXSmall, isSmall } = useScreenSize();
 
     useEffect(() => {
+        if (!staticFilesManifest) {
+            return;
+        }
         (async () => {
-            const quickHelpContent = await fetch(`${routes.host}/static/quick-help/content/${props.referenceKey}.md`).then(res => res.ok ? res.text() : null);
+            const quickHelpContent = await fetch(versionedUrl(`${props.referenceKey}.md`, staticFilesManifest)).then(res => res.ok ? res.text() : null);
             if (quickHelpContent) {
                 setQuickHelpReference({
                     content: quickHelpContent,
@@ -34,7 +44,7 @@ const QuickReferenceHelpDialog = (props: QuickReferenceHelpDialogProps) => {
                 });
             }
         })();
-    }, [getQuickHelpReferenceAsync, props.referenceKey]);
+    }, [getQuickHelpReferenceAsync, props.referenceKey, staticFilesManifest]);
 
     useEffect(() => {
         const popup = document.querySelector('.dx-loadpanel-wrapper') as HTMLDivElement;
@@ -57,7 +67,15 @@ const QuickReferenceHelpDialog = (props: QuickReferenceHelpDialogProps) => {
             contentRender={() => {
                 return quickHelpReference && quickHelpReference.content
                     ? <div className='quick-help-reference-container'>
-                        <Markdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]} skipHtml={false} >
+                        <Markdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]} skipHtml={false} urlTransform={(url) => {
+                            const safeUrl = defaultUrlTransform(url);
+                            // a picture next to the article, e.g. images/map.png, is resolved against the article's folder
+                            if (!safeUrl || /^([a-z]+:|\/|#)/i.test(safeUrl)) {
+                                return safeUrl;
+                            }
+                            const folder = props.referenceKey.includes('/') ? props.referenceKey.slice(0, props.referenceKey.lastIndexOf('/') + 1) : '';
+                            return versionedUrl(new URL(safeUrl, `http://help/${folder}`).pathname.slice(1), staticFilesManifest);
+                        }}>
                             {quickHelpReference?.content}
                         </Markdown>
                     </div>

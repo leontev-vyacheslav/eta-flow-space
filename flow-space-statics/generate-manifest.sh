@@ -27,5 +27,11 @@ for device_dir in "$STATICS_DIR"/devices/*/; do
     ')
 done
 
+# help articles and their pictures, keyed by the path under quick-help/content (e.g. common/map.md)
+while IFS= read -r help_file; do
+    help_hash=$(md5sum "$STATICS_DIR/quick-help/content/$help_file" | cut -c1-6)
+    MANIFEST=$(echo "$MANIFEST" | jq --arg file "$help_file" --arg hash "$help_hash" '.["quick-help"][$file] = $hash')
+done < <(cd "$STATICS_DIR"/quick-help/content && find . -type f | sed 's|^\./||' | sort)
+
 echo $MANIFEST > "$STATICS_DIR"/manifest.json
 echo "Manifest updated."

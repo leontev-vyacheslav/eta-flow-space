@@ -27,4 +27,13 @@
     strong {
         color: rgba(0, 0, 0, 0.7);
     }
+
+    img {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: 8px 0 12px;
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        border-radius: 4px;
+    }
 }
