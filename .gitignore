@@ -27,3 +27,6 @@ sync-cert.log
 .reports/
 
 .temp/
+
+# Original source archives (vendor projects, exports): too big for git, kept locally
+.docs/.sources/

@@ -1,0 +1,8 @@
+# Installed packages, extracted archives and fetched or generated data stay local; only the scripts are versioned.
+node_modules/
+venv/
+__pycache__/
+*.pkl
+*-states.json
+tia-project/Царево_last/
+tia-project/allpages.txt
