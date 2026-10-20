@@ -1,17 +1,19 @@
 """
-Read-only scan of Modbus holding registers on any controller. Prints the
-non-zero registers of the given ranges, so a value can be found by running
-it while the equipment is in a known state (e.g. a boiler is burning) and
-comparing with a run while it is stopped.
+Read-only scan of a Modbus TCP controller. For registers it prints the
+non-zero ones of the given ranges, so a value can be found by running it
+while the equipment is in a known state (e.g. a boiler is burning) and
+comparing with a run while it is stopped. For bits (coils, discrete inputs)
+it prints every bit, zeros included.
 
-Uses only Modbus function 3 (read holding registers) over Modbus TCP and
-opens one short connection. No dependencies.
+Uses only read functions — 3 holding registers (default), 4 input registers,
+2 discrete inputs, 1 coils — and opens one short connection. No dependencies.
 
 Usage:
-    python3 modbus_register_scan.py HOST PORT [START-END ...] [--unit 1]
+    python3 modbus_register_scan.py HOST PORT [START-END ...] [--unit 1] [--function 3]
 
-Example (Statum, burner power hunt):
-    python3 modbus_register_scan.py 10.10.3.15 502 0-999
+Examples:
+    python3 modbus_register_scan.py 10.10.3.15 502 0-999            # Statum, burner power hunt
+    python3 modbus_register_scan.py 94.180.252.2 503 640-727 --function 2   # Весна-2 PLC inputs
 """
 import argparse
 import socket
@@ -44,6 +46,33 @@ def read_holding_registers(sock, transaction_id, unit_id, address, quantity):
     return list(struct.unpack(f'>{quantity}H', body[2:2 + 2 * quantity]))
 
 
+def read_bits(sock, transaction_id, unit_id, function, address, quantity):
+    sock.sendall(struct.pack('>HHHBBHH', transaction_id, 0, 6, unit_id, function, address, quantity))
+    while True:
+        header = receive(sock, 7)
+        body = receive(sock, struct.unpack('>H', header[4:6])[0] - 1)
+        if struct.unpack('>H', header[0:2])[0] == transaction_id:
+            break
+    if body[0] & 0x80:
+        raise IOError(f'Modbus exception code {body[1]}')
+    data = body[2:2 + body[1]]
+    return [(data[i // 8] >> (i % 8)) & 1 for i in range(quantity)]
+
+
+def read_registers(sock, transaction_id, unit_id, function, address, quantity):
+    if function == 3:
+        return read_holding_registers(sock, transaction_id, unit_id, address, quantity)
+    sock.sendall(struct.pack('>HHHBBHH', transaction_id, 0, 6, unit_id, function, address, quantity))
+    while True:
+        header = receive(sock, 7)
+        body = receive(sock, struct.unpack('>H', header[4:6])[0] - 1)
+        if struct.unpack('>H', header[0:2])[0] == transaction_id:
+            break
+    if body[0] & 0x80:
+        raise IOError(f'Modbus exception code {body[1]}')
+    return list(struct.unpack(f'>{quantity}H', body[2:2 + 2 * quantity]))
+
+
 def parse_range(text):
     start, end = (int(part) for part in text.split('-'))
     return start, end
@@ -55,9 +84,10 @@ arguments.add_argument('port', type=int)
 arguments.add_argument('ranges', nargs='*', type=parse_range, default=[(0, 999)])
 arguments.add_argument('--unit', type=int, default=1)
 arguments.add_argument('--timeout', type=float, default=5)
+arguments.add_argument('--function', type=int, choices=(1, 2, 3, 4), default=3, help='1 coils, 2 discrete inputs, 3 holding registers, 4 input registers')
 options = arguments.parse_args()
 
-print(time.strftime('%Y-%m-%d %H:%M:%S'), f'{options.host}:{options.port} unit {options.unit}')
+print(time.strftime('%Y-%m-%d %H:%M:%S'), f'{options.host}:{options.port} unit {options.unit} function {options.function}')
 try:
     sock = socket.create_connection((options.host, options.port), timeout=options.timeout)
 except OSError as error:
@@ -72,7 +102,13 @@ try:
             quantity = min(BLOCK_SIZE, end + 1 - address)
             transaction_id += 1
             try:
-                registers = read_holding_registers(sock, transaction_id, options.unit, address, quantity)
+                if options.function in (1, 2):
+                    bits = read_bits(sock, transaction_id, options.unit, options.function, address, quantity)
+                    for offset, value in enumerate(bits):
+                        print(f'{address + offset}: {value}')
+                    time.sleep(0.2)
+                    continue
+                registers = read_registers(sock, transaction_id, options.unit, options.function, address, quantity)
             except Exception as error:
                 # Unmapped areas often answer with "illegal data address"; narrow the range to read around them.
                 print(f'{address}-{address + quantity - 1}: ERROR {error}')

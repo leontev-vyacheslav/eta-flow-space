@@ -10,7 +10,7 @@ the other scripts use only the standard library.
 
 | Script | Device | What it does |
 |---|---|---|
-| `modbus_register_scan.py HOST PORT [START-END ...] [--unit N]` | any Modbus TCP controller | Prints the non-zero holding registers of the ranges; skips late answers, logs refused connections. Run it with the equipment in two states and compare. |
+| `modbus_register_scan.py HOST PORT [START-END ...] [--unit N] [--function 3]` | any Modbus TCP controller | Prints the non-zero registers of the ranges (function 3 holding, 4 input), or every bit (1 coils, 2 discrete inputs); skips late answers, logs refused connections. Run it with the equipment in two states and compare. |
 | `spring1_modicons_tester.py` | Весна-1 Modicon controllers (boilers, pumps) | Reads registers 0–49 of both controllers as JSON, to compare with `.docs/spring-modicons-modbus-map.xlsx`. |
 | `ek270_tester.py [host] [port] [step_timeout_s]` | EK270 (IEC 61107) | Polls like the reader but checks every frame (BCC, echoed address); logs other masters' frames as FOREIGN. |
 | `mercury230_address_scan.py` | Меркурий 230 | Tries "open channel" on every address byte to find the meter's network address. |
