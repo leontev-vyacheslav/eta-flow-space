@@ -61,6 +61,9 @@ const deviceState = {
             isMaxWaterPressure: false, // Макс. давление воды
             isMaxWaterTemperature: false, // Макс. температура воды
             isFlowRelay: false, // Реле потока
+            isNoFlow: false, // Нет протока
+            isOutputValveFailure: false, // Авария выходной задвижки
+            isCirculationPumpFailure: false, // Авария цирк. насосов
 
             // enums (SensorStatus)
             statusTempOutSensor: 2, // Статус датчика температуры воды на подаче котла
@@ -79,6 +82,9 @@ const deviceState = {
             isMaxWaterPressure: false,
             isMaxWaterTemperature: true,
             isFlowRelay: false,
+            isNoFlow: false,
+            isOutputValveFailure: false,
+            isCirculationPumpFailure: false,
 
             // enums (SensorStatus)
             statusTempOutSensor: 2,
@@ -96,6 +102,9 @@ const deviceState = {
             isMaxWaterPressure: false,
             isMaxWaterTemperature: false,
             isFlowRelay: false,
+            isNoFlow: false,
+            isOutputValveFailure: false,
+            isCirculationPumpFailure: false,
 
             statusTempOutSensor: 2,
             statusTempFlueGasesSensor: 2,
@@ -111,6 +120,9 @@ const deviceState = {
             isMaxWaterPressure: false,
             isMaxWaterTemperature: false,
             isFlowRelay: false,
+            isNoFlow: false,
+            isOutputValveFailure: false,
+            isCirculationPumpFailure: false,
 
             statusTempOutSensor: 2,
             statusTempFlueGasesSensor: 2,

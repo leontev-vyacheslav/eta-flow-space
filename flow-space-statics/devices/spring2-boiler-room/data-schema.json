@@ -1564,6 +1564,87 @@
             }
           }
         },
+        "isNoFlow": {
+          "type": "boolean",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Нет протока"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isOutputValveFailure": {
+          "type": "boolean",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Авария выходной задвижки"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isCirculationPumpFailure": {
+          "type": "boolean",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Авария цирк. насосов"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
         "statusTempOutSensor": {
           "$ref": "#/$defs/SensorStatus",
           "ui": {
@@ -1682,6 +1763,9 @@
         "isMaxWaterPressure",
         "isMaxWaterTemperature",
         "isFlowRelay",
+        "isNoFlow",
+        "isOutputValveFailure",
+        "isCirculationPumpFailure",
         "statusTempOutSensor",
         "statusTempFlueGasesSensor"
       ]
