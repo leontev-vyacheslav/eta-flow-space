@@ -58,7 +58,7 @@ export const useMnemoschemaPopover = () => {
         });
     }, [dataschemas]);
 
-    // admins only: opens the latest state of a device of the popover as JSON text
+    // admins only, in the popover of a device's info icon: opens the latest state of the device as JSON text
     const StateJsonLink = useCallback(({ deviceCode }: { deviceCode: string }) => {
         if (!isAdmin || !device) {
             return null;
@@ -77,9 +77,10 @@ export const useMnemoschemaPopover = () => {
         );
     }, [device, isAdmin]);
 
-    const PropertyInfoTable = useCallback(({ propertyInfosDict, formattedValues }: {
+    const PropertyInfoTable = useCallback(({ propertyInfosDict, formattedValues, withStateJson }: {
         propertyInfosDict: Record<string, SchemaTypeInfoPropertiesChainModel[]>,
-        formattedValues: Map<SchemaTypeInfoPropertiesChainModel, React.ReactNode>
+        formattedValues: Map<SchemaTypeInfoPropertiesChainModel, React.ReactNode>,
+        withStateJson: boolean
     }) => {
         const linkedDevicesCount = dataschemas ? Object.keys(dataschemas).length : 1;
         const deviceCodes = Object.keys(propertyInfosDict);
@@ -92,7 +93,7 @@ export const useMnemoschemaPopover = () => {
                             <div style={{ display: 'flex', alignItems: 'center', gap: 5, justifyContent: 'center', position: 'relative' }}>
                                 <VariableIcon size={16} />Свойства
                                 {/* one device: its state link in the header; several: in each device's row */}
-                                {deviceCodes.length === 1
+                                {withStateJson && deviceCodes.length === 1
                                     ? <span style={{ position: 'absolute', right: 0, display: 'flex' }}><StateJsonLink deviceCode={deviceCodes[0]} /></span>
                                     : null}
                             </div>
@@ -113,7 +114,7 @@ export const useMnemoschemaPopover = () => {
                                                 <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
                                                     <DashboardIcon size={16} />
                                                     <strong style={{ flex: 1 }}>{device?.linkedDevices.find(d => d.code === deviceCode)?.description}</strong>
-                                                    {deviceCodes.length > 1 ? <StateJsonLink deviceCode={deviceCode} /> : null}
+                                                    {withStateJson && deviceCodes.length > 1 ? <StateJsonLink deviceCode={deviceCode} /> : null}
                                                 </div>
                                             </td>
                                         </tr> : null}
@@ -202,7 +203,8 @@ export const useMnemoschemaPopover = () => {
         }
 
         return (
-            <PropertyInfoTable propertyInfosDict={propertyInfosDict} formattedValues={formattedValues} />
+            <PropertyInfoTable propertyInfosDict={propertyInfosDict} formattedValues={formattedValues}
+                withStateJson={(target.getAttribute('href') ?? target.getAttribute('xlink:href')) === '#infoIcon'} />
         );
     }, [PropertyInfoTable, dataschemas, isAdmin, showEnumReference]);
 
