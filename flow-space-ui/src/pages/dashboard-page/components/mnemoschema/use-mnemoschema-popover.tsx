@@ -15,6 +15,23 @@ import { useAuthStore } from "../../../../contexts/auth-store";
 import { useAppData } from "../../../../contexts/app-data/app-data";
 import React from "react";
 
+function parseDataStateAttributesWithRegex(dataStateAttr: string): { deviceCode: string, propertiesChain: string }[] {
+    // data-state="states['spring1-boiler-room'].boilers[0].temp;states['spring1-boiler-room'].boilers[0].pressure;states['mercury230-29930705'].currentL1"
+    const items = dataStateAttr.split(';').filter(s => s.trim() !== '');
+    const pattern = /^states\['([^']+)'\]\.(.+)$/;
+
+    return items.map(item => {
+        const trimmed = item.trim();
+        const match = trimmed.match(pattern);
+        if (!match) {
+            return null;
+        }
+        const [, deviceCode, propertiesChain] = match;
+        return { deviceCode, propertiesChain };
+    }).filter(Boolean) as { deviceCode: string, propertiesChain: string }[];
+    // [{deviceCode: "spring1-boiler-room", propertiesChain: "boilers[0].temp"}, {deviceCode: "spring1-boiler-room", propertiesChain: "boilers[0].pressure"}, {deviceCode: "mercury230-29930705", propertiesChain: "currentL1"}]}
+}
+
 export const useMnemoschemaPopover = () => {
     const isAdmin = useAuthStore(selectIsAdmin);
     const { getDeviceByCodeAsync } = useAppData();
@@ -25,6 +42,16 @@ export const useMnemoschemaPopover = () => {
     const popoverContainerRef = useRef<HTMLDivElement | null>(null); // Store the container
     const popoverTitleContainerRef = useRef<HTMLDivElement>(null);
     const popoverTitleReactRootRef = useRef<ReturnType<typeof createRoot> | null>(null);
+    // the diagram element the open popover belongs to: its values are shown again after every state poll
+    const openPopoverRef = useRef<{ dataStateAttr: string, target: Element } | null>(null);
+
+    const showGraph = useCallback(async (deviceCode: string, propertyInfo: SchemaTypeInfoPropertiesChainModel) => {
+        const graphDevice = await getDeviceByCodeAsync(deviceCode);
+        popoverInstance.current?.hide();
+        if (graphDevice) {
+            graphService.show({ device: graphDevice, schemaTypeInfos: [propertyInfo] });
+        }
+    }, [getDeviceByCodeAsync]);
 
     const showEnumReference = useCallback((deviceCode: string, propertyInfo: SchemaTypeInfoPropertiesChainModel) => {
         const enumDescriptions: Record<string, string> = dataschemas?.[deviceCode]?.$defs?.[propertyInfo.typeInfo!.typeName]?.enumDescriptions ?? {};
@@ -143,7 +170,8 @@ export const useMnemoschemaPopover = () => {
                                                     <td >
                                                         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                                                             <b style={{ width: '100%' }}>{value}</b>
-                                                            {propertyInfo.typeInfo?.ui.chart ? <GraphIcon data-state-graph={propertyInfo.propertiesChainValuePair.propertiesChain} alignmentBaseline="middle" size={16} style={{ cursor: 'pointer' }} /> : null}
+                                                            {propertyInfo.typeInfo?.ui.chart ? <GraphIcon data-state-graph={propertyInfo.propertiesChainValuePair.propertiesChain} alignmentBaseline="middle" size={16} style={{ cursor: 'pointer' }}
+                                                                onClick={() => showGraph(deviceCode, propertyInfo)} /> : null}
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -157,7 +185,7 @@ export const useMnemoschemaPopover = () => {
                 </div>
             </>
         );
-    }, [StateJsonLink, dataschemas, device, isAdmin]);
+    }, [StateJsonLink, dataschemas, device, isAdmin, showGraph]);
 
 
     const popoverContentRender = useCallback((propertyInfosDict: Record<string, SchemaTypeInfoPropertiesChainModel[]>, target: Element) => {
@@ -234,22 +262,35 @@ export const useMnemoschemaPopover = () => {
             </a>
         );
     }
-    function parseDataStateAttributesWithRegex(dataStateAttr: string): { deviceCode: string, propertiesChain: string }[] {
-        // data-state="states['spring1-boiler-room'].boilers[0].temp;states['spring1-boiler-room'].boilers[0].pressure;states['mercury230-29930705'].currentL1"
-        const items = dataStateAttr.split(';').filter(s => s.trim() !== '');
-        const pattern = /^states\['([^']+)'\]\.(.+)$/;
 
-        return items.map(item => {
-            const trimmed = item.trim();
-            const match = trimmed.match(pattern);
-            if (!match) {
-                return null;
+    // the property infos of a diagram element from the current states, grouped by device
+    const resolvePropertyInfos = useCallback((dataStateAttr: string) => {
+        const propertyInfosDict: Record<string, SchemaTypeInfoPropertiesChainModel[]> = {};
+        for (const { deviceCode, propertiesChain } of parseDataStateAttributesWithRegex(dataStateAttr)) {
+            const propertyInfo = schemasTypeInfoPropertiesChain?.[deviceCode]
+                ?.find(({ propertiesChainValuePair }) => propertiesChainValuePair.propertiesChain === propertiesChain);
+            if (propertyInfo) {
+                (propertyInfosDict[deviceCode] ??= []).push(propertyInfo);
             }
-            const [, deviceCode, propertiesChain] = match;
-            return { deviceCode, propertiesChain };
-        }).filter(Boolean) as { deviceCode: string, propertiesChain: string }[];
-        // [{deviceCode: "spring1-boiler-room", propertiesChain: "boilers[0].temp"}, {deviceCode: "spring1-boiler-room", propertiesChain: "boilers[0].pressure"}, {deviceCode: "mercury230-29930705", propertiesChain: "currentL1"}]}
-    }
+        }
+
+        return propertyInfosDict;
+    }, [schemasTypeInfoPropertiesChain]);
+
+    // new states (a poll) while a popover is open: it shows the new values of its element;
+    // a popover whose element has no values any more (another device opened) is closed
+    useEffect(() => {
+        const openPopover = openPopoverRef.current;
+        if (!openPopover || !popoverContentReactRootRef.current) {
+            return;
+        }
+        const propertyInfosDict = resolvePropertyInfos(openPopover.dataStateAttr);
+        if (Object.keys(propertyInfosDict).length === 0) {
+            popoverInstance.current?.hide();
+            return;
+        }
+        popoverContentReactRootRef.current.render(popoverContentRender(propertyInfosDict, openPopover.target));
+    }, [popoverContentRender, resolvePropertyInfos]);
 
     return useCallback((event: MouseEvent) => {
         // data-state="states['spring1-boiler-room'].boilers[0].temp;states['spring1-boiler-room'].boilers[0].pressure;states['mercury230-29930705'].currentL1"
@@ -266,22 +307,9 @@ export const useMnemoschemaPopover = () => {
         if (popoverInstance.current) {
             popoverInstance.current.dispose();
         }
-        const parsedAttributes = parseDataStateAttributesWithRegex(dataStateAttr);
+        const propertyInfosDict = resolvePropertyInfos(dataStateAttr);
 
-        const propertyInfosDict: Record<string, SchemaTypeInfoPropertiesChainModel[]> = {};
-        for (const parsedAttribute of parsedAttributes) {
-            const { deviceCode, propertiesChain } = parsedAttribute;
-            const schemaTypeInfoPropertiesChain = schemasTypeInfoPropertiesChain?.[deviceCode];
-            const propertyInfo = schemaTypeInfoPropertiesChain?.find(({ propertiesChainValuePair }) => propertiesChainValuePair.propertiesChain === propertiesChain);
-            if (propertyInfo) {
-                if (!propertyInfosDict[deviceCode]) {
-                    propertyInfosDict[deviceCode] = [];
-                }
-                propertyInfosDict[deviceCode].push(propertyInfo);
-            }
-        }
-
-        if (!propertyInfosDict || Object.keys(propertyInfosDict).length === 0) {
+        if (Object.keys(propertyInfosDict).length === 0) {
             return;
         }
 
@@ -307,6 +335,7 @@ export const useMnemoschemaPopover = () => {
 
         const popoverTitleReactRoot = createRoot(popoverTitleContainer);
         popoverTitleReactRootRef.current = popoverTitleReactRoot;
+        openPopoverRef.current = { dataStateAttr, target };
 
         // Create escape key handler
         escapeHandlerRef.current = (e: KeyboardEvent) => {
@@ -330,6 +359,9 @@ export const useMnemoschemaPopover = () => {
                 if (escapeHandlerRef.current) {
                     document.removeEventListener('keydown', escapeHandlerRef.current);
                     escapeHandlerRef.current = null;
+                }
+                if (openPopoverRef.current?.target === target) {
+                    openPopoverRef.current = null;
                 }
 
                 queueMicrotask(() => {
@@ -367,43 +399,8 @@ export const useMnemoschemaPopover = () => {
                 },
                 collision: 'flipfit'
             },
-            onContentReady: () => {
-                // debugger;
-                for (const deviceCode of Object.keys(propertyInfosDict)) {
-
-                    const propertyInfos = propertyInfosDict[deviceCode];
-                    for (const propertyInfo of propertyInfos) {
-                        if (!propertyInfo.typeInfo?.ui.chart) {
-                            continue;
-                        }
-                        queueMicrotask(() => {
-                            document.querySelector(`[data-state-graph="${propertyInfo.propertiesChainValuePair.propertiesChain}"]`)
-                                ?.addEventListener('click', async () => {
-                                    const device = await getDeviceByCodeAsync(deviceCode);
-
-                                    popoverInstance.current?.hide();
-                                    popoverInstance.current?.dispose();
-                                    popoverInstance.current = null;
-                                    queueMicrotask(() => {
-                                        popoverContainer.remove();
-                                    });
-                                    if (!device) {
-                                        return;
-                                    }
-
-                                    graphService.show({
-                                        device: device,
-                                        schemaTypeInfos: [propertyInfo]
-                                    });
-                                });
-                        });
-                    }
-                }
-            }
         });
 
         popoverInstance.current.show();
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [device, getDeviceByCodeAsync, popoverContentRender, schemasTypeInfoPropertiesChain]);
+    }, [popoverContentRender, resolvePropertyInfos]);
 }

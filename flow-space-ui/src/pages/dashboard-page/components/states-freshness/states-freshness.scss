@@ -1,0 +1,10 @@
+.states-freshness {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  white-space: nowrap;
+}
+
+.states-freshness-stale {
+  color: #d32f2f;
+}

@@ -8,6 +8,7 @@ import { proclaim } from '../../utils/proclaim';
 import { getQuickGuid } from '../../utils/uuid';
 import { getKeyValuePairs, getSchemaTypeInfo, type SchemaTypeInfoPropertiesChainModel } from '../../helpers/data-helper';
 import type { DictionaryBaseModel } from '../../models/abstractions/dictionary-base-model';
+import AppConstants from '../../constants/app-constants';
 // import { jsonInfoViewService } from '../../components/dialogs/json-info-view-dialog/json-info-view-dialog';
 // import { selectIsAdmin } from '../../contexts/auth-selectors';
 // import { useAuthStore } from '../../contexts/auth-store';
@@ -17,6 +18,9 @@ import './dashboard-page-content.scss';
 export type DashboardPageContextModel = {
     device?: DeviceModel;
     deviceStates?: Record<string, DeviceStateModel>;
+    // when the page last received the device states, and whether the polls since then have failed
+    statesReceivedAt?: Date;
+    isStatesStale: boolean;
     mnemoschema?: string;
     dataschemas?: Record<string, any>;
     isValidDeviceState: boolean;
@@ -29,6 +33,13 @@ export type DashboardPageContextModel = {
 
 const DashboardPageContext = createContext({} as DashboardPageContextModel);
 
+// the API stamps live states with the time of the request, so only the states themselves are compared:
+// a poll without new values leaves the diagram as it is instead of re-mounting it
+const isSameStates = (previous: Record<string, DeviceStateModel> | undefined, polled: Record<string, DeviceStateModel>) =>
+    !!previous
+    && Object.keys(previous).length === Object.keys(polled).length
+    && Object.keys(polled).every(deviceCode => JSON.stringify(previous[deviceCode]?.state) === JSON.stringify(polled[deviceCode].state));
+
 function DashboardPageContextProvider(props: any) {
     const { getDeviceAsync, getDeviceStatesAsync, getMnemoschemaAsync, getDeviceStateDataschemaAsync, staticFilesManifest } = useAppData();
     const { deviceId, flowCode } = useParams();
@@ -36,6 +47,8 @@ function DashboardPageContextProvider(props: any) {
 
     const [device, setDevice] = useState<DeviceModel | undefined>();
     const [deviceStates, setDeviceStates] = useState<Record<string, DeviceStateModel> | undefined>();
+    const [statesReceivedAt, setStatesReceivedAt] = useState<Date | undefined>();
+    const [isStatesStale, setIsStatesStale] = useState<boolean>(false);
     const [mnemoschema, setMnemoschema] = useState<string | undefined>();
     const [dataschemas, setDataschemas] = useState<Record<string, any> | undefined>();
     // const [isValidDeviceState, setIsValidDeviceState] = useState<boolean>(false);
@@ -113,6 +126,8 @@ function DashboardPageContextProvider(props: any) {
 
             setDevice(targetDevice);
             setDeviceStates(deviceStates);
+            setStatesReceivedAt(deviceStates ? new Date() : undefined);
+            setIsStatesStale(false);
             setMnemoschema(mnemoschema);
             setDataschemas(targetDataschemas);
         })();
@@ -194,22 +209,53 @@ function DashboardPageContextProvider(props: any) {
     //     });
     // }, [dataschemas, device, deviceStates, isAdmin]);
 
+    // the states of the loaded device are polled at the pace of the alarms. A failed poll keeps the last values
+    // (the page header shows them as stale) instead of clearing the diagram, without an error message every poll.
+    // Polls pause while the tab is hidden and resume at once when it is shown again
     useEffect(() => {
-        const timer = setInterval(async () => {
-            if (!deviceId) {
+        if (!device) {
+            return;
+        }
+        let cancelled = false;
+        let isPolling = false;
+        let timer: ReturnType<typeof setTimeout> | undefined;
+
+        const poll = async () => {
+            timer = undefined;
+            if (document.visibilityState === 'hidden') {
                 return;
             }
+            isPolling = true;
+            const polledStates = await getDeviceStatesAsync(device.id, true);
+            isPolling = false;
+            if (cancelled) {
+                return;
+            }
+            if (polledStates) {
+                setDeviceStates(previous => isSameStates(previous, polledStates) ? previous : polledStates);
+                setStatesReceivedAt(new Date());
+                setIsStatesStale(false);
+            } else {
+                setIsStatesStale(true);
+            }
+            timer = setTimeout(poll, AppConstants.pollInterval);
+        };
 
-            const deviceStates = await getDeviceStatesAsync(parseInt(deviceId));
-            setDeviceStates(deviceStates);
-        }, 60000);
+        const pollWhenShown = () => {
+            if (document.visibilityState === 'visible' && !timer && !isPolling) {
+                poll();
+            }
+        };
+
+        timer = setTimeout(poll, AppConstants.pollInterval);
+        document.addEventListener('visibilitychange', pollWhenShown);
 
         return () => {
-            if (timer) {
-                clearInterval(timer);
-            }
-        }
-    }, [deviceId, getDeviceStatesAsync]);
+            cancelled = true;
+            clearTimeout(timer);
+            document.removeEventListener('visibilitychange', pollWhenShown);
+        };
+    }, [device, getDeviceStatesAsync]);
 
     useEffect(() => {
         const registriesEnums = {} as Record<string, Record<string, DictionaryBaseModel[]>>;
@@ -248,6 +294,8 @@ function DashboardPageContextProvider(props: any) {
         <DashboardPageContext.Provider value={{
             device,
             deviceStates,
+            statesReceivedAt,
+            isStatesStale,
             mnemoschema,
             dataschemas,
             isValidDeviceState,

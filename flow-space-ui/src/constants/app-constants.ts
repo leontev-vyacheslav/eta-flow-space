@@ -10,6 +10,8 @@ const AppConstants = {
 
     noDataLongText: 'Нет данных для отображения',
     loadingDelay: 500,
+    // alarms and the dashboard's device states are polled at the same pace, so a diagram never lags behind its alarms
+    pollInterval: 30_000,
     headerIconSize: 24,
     connectedEmergencyReasonId: 100,
     colors: {

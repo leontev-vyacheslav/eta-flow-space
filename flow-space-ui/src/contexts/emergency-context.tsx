@@ -221,7 +221,7 @@ function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
 
         const timer = setInterval(async () => {
             await refreshEmergencyStates();
-        }, 10000);
+        }, AppConstants.pollInterval);
 
         return () => {
             clearInterval(timer);

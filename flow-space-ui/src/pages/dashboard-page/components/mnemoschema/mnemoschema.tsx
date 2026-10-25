@@ -65,16 +65,26 @@ export const Mnemoschema = ({ onBeforeMount: onBeforeMount, onAfterMount: onAfte
                 const { onBeforeMount: onBeforeMountPluggable, onAfterMount: onAfterMountPluggable, onDeviceSelected: onDeviceSelectedPluggable } =
                     plugInModule?.create?.({ signal }) ?? {};
 
-                containerRef.current!.innerHTML = '';
                 stateSetup(mnemoschemaDoc.documentElement);
                 applySize(mnemoschemaDoc.documentElement);
                 onBeforeMount?.(mnemoschemaDoc.documentElement);
                 onBeforeMountPluggable?.(mnemoschemaDoc.documentElement, deviceStates);
 
-                mnemoschemaElement = containerRef.current!.appendChild(mnemoschemaDoc.documentElement);
+                // the stylesheet goes in before the diagram is shown: a diagram shown without it for a frame
+                // flickers on every state poll (the flame glow vanishes and restarts)
+                await injectCss(mnemoschemaDoc.documentElement);
+                if (disposed || !containerRef.current) return; // ← guard after async
 
-                await injectCss(mnemoschemaElement);
-                if (disposed) return; // ← guard after async
+                // the previous diagram is replaced in one step, so the page never shows an empty container
+                // (the element leaves the parsed document: keep it before moving it)
+                mnemoschemaElement = mnemoschemaDoc.documentElement;
+                containerRef.current.replaceChildren(mnemoschemaElement);
+
+                // CSS animations (the flame glow) run on the document's clock: a re-mounted diagram continues them
+                // where the previous one was instead of restarting them
+                mnemoschemaElement.getAnimations({ subtree: true })
+                    .filter(animation => animation instanceof CSSAnimation)
+                    .forEach(animation => { animation.startTime = 0; });
 
                 onAfterMount?.(mnemoschemaElement);
                 onAfterMountPluggable?.(mnemoschemaElement, deviceStates);

@@ -21,6 +21,7 @@ import { selectIsAdmin } from '../../contexts/auth-selectors.ts';
 import { kebabToCamel } from '../../utils/string-utils.ts';
 import type { DeviceModel } from '../../models/flows/device-model.ts';
 import type { IconType } from 'react-icons';
+import { StatesFreshness } from './components/states-freshness/states-freshness';
 
 // a menu item opening the JSON view of a device: one item for a diagram with one device, a submenu of its devices otherwise
 function jsonViewMenuItem(kind: JsonViewKind, text: string, Icon: IconType, device: DeviceModel, deviceCodes: string[]): MenuItemModel {
@@ -57,7 +58,7 @@ const DashboardPageInner = () => {
         return storedValue ? JSON.parse(storedValue) : false;
     });
 
-    const { setRefreshToken, schemasTypeInfoPropertiesChain, device, deviceStates } = useDashboardPage();
+    const { setRefreshToken, schemasTypeInfoPropertiesChain, device, deviceStates, statesReceivedAt, isStatesStale } = useDashboardPage();
     const { flowCode } = useParams();
     const [ControlTabContent, setControlTabContent] = useState<ComponentType<any> | null>(null);
     const [MnemoschemaTabContent, setMnemoschemaTabContent] = useState<ComponentType<any> | null>(null);
@@ -221,7 +222,11 @@ const DashboardPageInner = () => {
             <PageHeader caption={() => {
                 return <div style={{ display: 'flex', flexDirection: 'column' }}>
                     <span>Приборная панель</span>
-                    <span style={{ fontSize: 12, fontWeight: 'normal', minHeight: 16, color: 'rgb(118, 118, 118)' }}>{device && device.flow ? device.flow.name + (isAdmin ? ` [${device.flow.id}]` : '') : ''}</span>
+                    <span style={{ fontSize: 12, fontWeight: 'normal', minHeight: 16, color: 'rgb(118, 118, 118)', display: 'flex', flexWrap: 'wrap', columnGap: 6 }}>
+                        {device && device.flow ? <span>{device.flow.name + (isAdmin ? ` [${device.flow.id}]` : '')}</span> : null}
+                        {device && device.flow && statesReceivedAt ? <span>·</span> : null}
+                        <StatesFreshness receivedAt={statesReceivedAt} isStale={isStatesStale} />
+                    </span>
                 </div>
             }} menuItems={menuItems}>
                 <DashboardIcon size={AppConstants.headerIconSize} />

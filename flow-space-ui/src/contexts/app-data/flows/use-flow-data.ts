@@ -17,6 +17,7 @@ export type GetFlowListAsyncFunc = () => Promise<FlowModel[] | undefined>;
 export type GetDeviceListAsyncFunc = () => Promise<DeviceModel[] | undefined>;
 export type GetDeviceStatesAsyncFunc = (
   deviceId: number,
+  suppressShowError?: boolean,
 ) => Promise<Record<string, DeviceStateModel> | undefined>;
 export type GetEmergencyStateAsyncFunc = () => Promise<
   EmergencyModel[] | undefined
@@ -106,13 +107,15 @@ export const useFlowData = () => {
   }, [authHttpRequest]);
 
   const getDeviceStatesAsync = useCallback<GetDeviceStatesAsyncFunc>(
-    async (deviceId: number) => {
+    async (deviceId: number, suppressShowError: boolean = false) => {
       const response = await authHttpRequest(
         {
           url: `${routes.host}${routes.deviceStates}/${deviceId}`,
           method: HttpConstants.Methods.Get as Method,
         },
         true,
+        false,
+        suppressShowError,
       );
 
       if (response && response.status === HttpConstants.StatusCodes.Ok) {
