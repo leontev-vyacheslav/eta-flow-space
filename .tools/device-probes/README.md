@@ -18,6 +18,7 @@ the other scripts use only the standard library.
 | `mercury230_energy_probe.py` | Меркурий 230 | Diagnoses command 0x05 (accumulated energy) replies. |
 | `mercury230_passive_listen.py <host> <port> [seconds]` | any RS-485 gateway | Listens without sending, to see whether another system polls the same line. |
 | `vzljot026m_tester.py` | Взлёт ТСРВ-026М | Reads the measured values block with pymodbus (RTU over TCP). |
+| `modbus_rtu_dump.js HOST PORT [--address N] [--blocks READER.js] [--range START-END] [--trace]` | any Modbus RTU meter behind a TCP-serial gateway | First contact with a meter: listens for another master, reads function 0x11 (identity), then every block of a reader's `BLOCKS` (or the given ranges) with function 4 (or `--function 3`); a failed block is scanned register by register (pairs from 0x8000, long+float groups of four), so the JSON output names every hole and keeps the register words for decoding offline. `--find-address 1-247` looks for the address. No dependencies: runs from stdin in the Node-RED container — `docker exec -i eta-flow-space node - HOST PORT --blocks /data/src/device-readers/<type>-client.js < .tools/device-probes/modbus_rtu_dump.js` — for gateways only the production server reaches (10.10.3.x). |
 
 `statum-scan.log` is the 2026-10-05 scan of the Statum PLC (boiler 3 burner power investigation).
 
