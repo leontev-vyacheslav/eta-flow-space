@@ -135,10 +135,15 @@ const readRegisters = (address, start, count) => request(address,
     [fn, start >> 8, start & 0xff, count >> 8, count & 0xff], count * 2);
 const describe = (result) => (result.timeout ? 'no reply' : `exception ${result.exception}`);
 
+// A slow device may still answer the first attempt after the repeat was
+// sent (Взлёт ТСРВ-034: replies after 1-4 s): wait out that late reply, so it
+// is dropped instead of being taken for the next request's reply.
 async function readWithRetry(address, start, count) {
     const first = await readRegisters(address, start, count);
     if (first.data || first.exception === 2) return first;
-    return readRegisters(address, start, count);
+    const second = await readRegisters(address, start, count);
+    await sleep(timeoutMs);
+    return second;
 }
 
 async function main() {
@@ -166,7 +171,12 @@ async function main() {
     }
     output.address = address;
 
-    const id = await request(address, [0x11], null);
+    // The first request after a connect is often lost (Maestro modems).
+    let id = await request(address, [0x11], null);
+    if (id.timeout) {
+        id = await request(address, [0x11], null);
+        await sleep(timeoutMs);
+    }
     output.reportId = id.data
         ? { hex: hex(id.data), text: id.data.toString('latin1').replace(/[^\x20-\x7e]+/g, ' ').trim() }
         : { error: describe(id) };

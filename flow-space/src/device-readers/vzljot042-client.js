@@ -78,7 +78,7 @@
  * ("40 10 13" for "01 04 34 00", one byte short: the start of the reply
  * clipped on the line), three times in a row 0.1 s apart; hence the longer
  * pauses before a repeat. The "ч:мин" time counters count minutes (the
- * work time matches ELDIS in hours). The pressures used
+ * work time matches the old dispatch system in hours). The pressures used
  * in the calculation (P) are the real ones (PReal, gauge) plus 0.101 MPa.
  * The battery voltage (0xC150) is in 0.01 V, as the list says.
  *
