@@ -10,7 +10,7 @@
 // Options:
 //   --address N         Modbus address (default 1)
 //   --find-address A-B  try function 0x11 on every address of the range first, use the first that answers
-//   --function N        3 (holding) or 4 (input, default)
+//   --function N        3 (holding), 4 (input, default), or 1/2 (coils/discrete inputs: bits; no scan)
 //   --blocks FILE       read the BLOCKS exported by a reader module (e.g. /data/src/device-readers/vzljot024-client.js)
 //   --range START-END   extra range, hex or decimal, END inclusive; repeatable
 //   --max N             split ranges into requests of at most N registers (default 100)
@@ -131,8 +131,11 @@ function request(address, body, dataLength, waitMs = timeoutMs) {
     });
 }
 
+// Bit replies are taken at any length: the Взлёт ТСРВ-023 sends count / 8 + 1
+// bytes, one too many when the count is a multiple of 8.
+const readsBits = fn === 1 || fn === 2;
 const readRegisters = (address, start, count) => request(address,
-    [fn, start >> 8, start & 0xff, count >> 8, count & 0xff], count * 2);
+    [fn, start >> 8, start & 0xff, count >> 8, count & 0xff], readsBits ? null : count * 2);
 const describe = (result) => (result.timeout ? 'no reply' : `exception ${result.exception}`);
 
 // A slow device may still answer the first attempt after the repeat was
@@ -191,7 +194,13 @@ async function main() {
     output.blocks = [];
     output.holes = [];
     output.words = {};
-    const keep = (start, data) => {
+    // Bits (functions 1, 2) go out as the numbers of the set bits.
+    if (readsBits) output.setBits = [];
+    const keep = (start, data, count) => {
+        if (readsBits) {
+            for (let i = 0; i < count; i++) if (data[i >> 3] & (1 << (i & 7))) output.setBits.push(start + i);
+            return;
+        }
         for (let i = 0; i < data.length / 2; i++) output.words[hex4(start + i)] = data.readUInt16BE(i * 2).toString(16).padStart(4, '0');
     };
     const started = Date.now();
@@ -200,9 +209,10 @@ async function main() {
         const result = await readWithRetry(address, start, count);
         output.blocks.push({ start: hex4(start), count, ms: Date.now() - t0, result: result.data ? 'ok' : describe(result) });
         if (result.data) {
-            keep(start, result.data);
+            keep(start, result.data, count);
             continue;
         }
+        if (readsBits) continue;
         // Scan the failed block: single registers below 0x8000, pairs above.
         const unit = start >= 0x8000 ? 2 : 1;
         for (let at = start; at < start + count; at += unit) {

@@ -669,6 +669,75 @@
         }
     },
     {
+        "id": "vzljot023reader000",
+        "type": "subflow",
+        "name": "Vzljot023 Client",
+        "info": "Reads every current value of a Vzljot TSRV-023 heat calculator (ВЗЛЕТ ТСР, firmware 76.10) over TCP (a gateway on its RS-485 port; plain Modbus RTU: input registers, the totals, time counters, serial number, clock and unit settings from holding registers, function 0x11), via the shared Vzljot023Client class registered on functionGlobalContext in settings.js: version, serial number, clock, the measuring points P1-P6, the calculation channels CH0-CH6 (density, enthalpy, temperature, pressure, mass flow, mass), the heat systems TS1-TS3 (heats W1-W3, powers E1-E3, work, failure and alarm times) and the unit settings, raw in the device's units (°C, MPa, kg/s, m3/s, J/kg, GJ, t, W; point volumes in litres; times in s) and named after the register list. Choosing the supply/return channel and converting units is left to the flow's collect-device-state. Send any message in to trigger a read (about 4 s); the same message comes out with `msg.payload` set to the result (deviceTime/timestamp as epoch ms). On failure nothing goes out and node.error() is called. ADDRESS is the Modbus address (1 by default); SERIAL_NUMBER, when set, is checked against the device's serial number.",
+        "category": "subflows",
+        "in": [
+            {
+                "x": 80,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "vzljot023reader001"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 400,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "vzljot023reader001",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "HOST",
+                "type": "str",
+                "value": "185.81.220.58"
+            },
+            {
+                "name": "PORT",
+                "type": "num",
+                "value": "5010"
+            },
+            {
+                "name": "ADDRESS",
+                "type": "num",
+                "value": "1"
+            },
+            {
+                "name": "SERIAL_NUMBER",
+                "type": "num",
+                "value": "711291"
+            },
+            {
+                "name": "RESPONSE_TIMEOUT_MS",
+                "type": "num",
+                "value": "30000"
+            }
+        ],
+        "meta": {},
+        "color": "#DDBB99",
+        "status": {
+            "x": 420,
+            "y": 220,
+            "wires": [
+                {
+                    "id": "vzljot023reader002",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
         "id": "irvisreader0000000",
         "type": "subflow",
         "name": "Irvis Client",
@@ -1149,6 +1218,36 @@
         "id": "vzljot034reader002",
         "type": "status",
         "z": "vzljot034reader000",
+        "name": "",
+        "scope": null,
+        "x": 140,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "vzljot023reader001",
+        "type": "function",
+        "z": "vzljot023reader000",
+        "name": "get-measurements",
+        "func": "const HOST = env.get('HOST');\nconst PORT = Number(env.get('PORT'));\nconst ADDRESS = Number(env.get('ADDRESS'));\nconst SERIAL_NUMBER = Number(env.get('SERIAL_NUMBER')) || null;\nconst RESPONSE_TIMEOUT_MS = Number(env.get('RESPONSE_TIMEOUT_MS')) || 30000;\n\nconst { Vzljot023Client } = global.get('vzljot023');\nconst { withConnectionLock } = global.get('withConnectionLock');\n\n(async () => {\n    try {\n        const deviceState = await withConnectionLock(HOST, PORT, async () => {\n            const client = new Vzljot023Client({\n                host: HOST,\n                port: PORT,\n                address: ADDRESS,\n                serialNumber: SERIAL_NUMBER,\n                responseTimeoutMs: RESPONSE_TIMEOUT_MS,\n            });\n            // Vzljot023Client.read() opens the socket, reads the version and\n            // every block of input registers and closes the socket itself.\n            return await client.read();\n        });\n\n        msg.payload = deviceState;\n        node.send(msg);\n        node.status({ fill: 'green', shape: 'dot', text: 'ok ' + new Date().toLocaleTimeString() });\n    } catch (err) {\n        // Full read failed — nothing goes out. No partial/incomplete set is sent downstream.\n        node.error('Vzljot023 read failed: ' + err.message, msg);\n        node.status({ fill: 'red', shape: 'ring', text: 'error' });\n    }\n})();\n\nreturn null;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 220,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "vzljot023reader002",
+        "type": "status",
+        "z": "vzljot023reader000",
         "name": "",
         "scope": null,
         "x": 140,
@@ -4930,6 +5029,76 @@
         "statusType": "auto",
         "x": 590,
         "y": 520,
+        "wires": []
+    },
+    {
+        "id": "1c7e3a9f5b2d4860",
+        "type": "comment",
+        "z": "b5e1c7d93a4f6e20",
+        "name": "vzljot023-711291 (ТСРВ-023, ул. Баумана, 44/8, Казань) — testing, not stored",
+        "info": "Moxa NPort 5110 185.81.220.58:5010 (polled from the production server), Modbus address 1, serial 711291, version \"VZLJOT 76.10.09.04\".\n\nЦО = TS1: CH1/P1 supply, CH2/P2 return; TS1.W3 (GJ) is the heat the meter and the old dispatch system show (38 660 Gcal), TS1.E3 the power in W (the old system shows it as MW: \"565803.90 МВт\"). Pressures are the contract 0.7/0.4 MPa (points measure no pressure). Work and failure times = the old system's \"Время нормальной работы\" and \"Время отсутствия счета\". The meter clock is about 78 min fast.\n\nThe old dispatch system polls the same gateway, so the inject here polls every 5 minutes only.",
+        "x": 290,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "2d8f4b0a6c3e5971",
+        "type": "inject",
+        "z": "b5e1c7d93a4f6e20",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "300",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 5,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 660,
+        "wires": [
+            [
+                "3e9a5c1b7d4f6a82"
+            ]
+        ]
+    },
+    {
+        "id": "3e9a5c1b7d4f6a82",
+        "type": "subflow:vzljot023reader000",
+        "z": "b5e1c7d93a4f6e20",
+        "name": "vzljot023-711291",
+        "env": [],
+        "x": 350,
+        "y": 660,
+        "wires": [
+            [
+                "4fab6d2c8e5a7b93"
+            ]
+        ]
+    },
+    {
+        "id": "4fab6d2c8e5a7b93",
+        "type": "debug",
+        "z": "b5e1c7d93a4f6e20",
+        "name": "debug vzljot023",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 570,
+        "y": 660,
         "wires": []
     }
 ]
