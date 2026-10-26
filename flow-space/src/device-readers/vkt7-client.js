@@ -71,6 +71,12 @@
  *   const client = new Vkt7Client({ host: '10.0.0.10', port: 5000 });
  *   const results = await client.read();
  *
+ * Through a БАРС-02 GPRS unit (it connects to us, see ./bars02-gateway.js):
+ *   const client = new Vkt7Client({
+ *       address: 1,
+ *       createSocket: () => gateway.createSocket({ identifier: '011276', port: 'rs232-powered', baudRate: 9600 }),
+ *   });
+ *
  * Channel sharing: this class is transport-only and does NOT serialize
  * access to a shared host:port itself — the caller wraps read() in
  * withConnectionLock() from ./with-connection-lock.js, as the Node-RED
@@ -225,10 +231,13 @@ class Vkt7Client {
      * @param {number} [options.maxReplyDataBytes=200] - Element list is split so a data reply stays within this.
      * @param {number} [options.responseTimeoutMs=60000] - Overall timeout for a full read() call.
      * @param {(direction: string, bytes: Buffer) => void} [options.trace] - Called with every frame sent ('>') and received ('<').
+     * @param {() => net.Socket} [options.createSocket] - Socket factory (default: a new net.Socket); a БАРС-02 channel from
+     *     Bars02Gateway#createSocket makes host and port unnecessary.
      */
     constructor({
         host,
         port,
+        createSocket = null,
         address = 0,
         wakeUpBytes = 2,
         stepDelayMs = 150,
@@ -239,11 +248,12 @@ class Vkt7Client {
         responseTimeoutMs = 60000,
         trace = null,
     } = {}) {
-        if (!host) throw new Error('Vkt7Client: "host" is required');
-        if (!port) throw new Error('Vkt7Client: "port" is required');
+        if (!host && !createSocket) throw new Error('Vkt7Client: "host" is required');
+        if (!port && !createSocket) throw new Error('Vkt7Client: "port" is required');
 
         this.host = host;
         this.port = port;
+        this.createSocket = createSocket || (() => new net.Socket());
         this.address = address;
         this.wakeUpBytes = wakeUpBytes;
         this.stepDelayMs = stepDelayMs;
@@ -316,7 +326,7 @@ class Vkt7Client {
     // or with an Error when no valid reply came within stepTimeoutMs.
     _connect() {
         return new Promise((resolve, reject) => {
-            const socket = new net.Socket();
+            const socket = this.createSocket();
             let buffer = Buffer.alloc(0);
             let pending = null;
             let closedError = null;

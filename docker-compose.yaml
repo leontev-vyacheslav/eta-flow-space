@@ -5,6 +5,8 @@ services:
     ports:
       # Node-RED editor: open to the office network on purpose (used from other machines); protected by adminAuth in settings.js
       - "1895:1880"
+      # БАРС-02 GPRS units connect here (the "VKT7 Client" subflow's BARS02_LISTEN_PORT); the office router forwards a public port to it
+      - "2910:2910"
     env_file:
       - ./flow-space/.env-flows
     volumes:

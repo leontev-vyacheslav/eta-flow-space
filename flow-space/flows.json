@@ -194,7 +194,7 @@
         "id": "vkt7reader00000000",
         "type": "subflow",
         "name": "VKT7 Client",
-        "info": "Reads every current value of a Teplokom VKT-7 heat calculator over TCP (e.g. a Wiznet modem on its serial port), via the shared Vkt7Client class registered on functionGlobalContext in settings.js: service info, the units the device reports, current values and current totals of heat inputs input1/input2 and the device-wide elements, raw, named after the protocol's element table (t1, t2, P1, G1, V1, M1, Qo, VNR, VOS, NS...). Choosing the supply/return elements is left to the flow's collect-device-state. Send any message in to trigger a read; the same message comes out with `msg.payload` set to the result (null for elements outside the measurement scheme or with bad quality, deviceTime/timestamp as epoch ms). On failure nothing goes out and node.error() is called. ADDRESS is the calculator's network number (the built-in RS-485 adapter does not answer 0); WAKE_UP_BYTES is the count of 0xFF bytes before each request (2 for RS-232, 0 is fine for RS-485).",
+        "info": "Reads every current value of a Teplokom VKT-7 heat calculator over TCP (e.g. a Wiznet modem on its serial port), via the shared Vkt7Client class registered on functionGlobalContext in settings.js: service info, the units the device reports, current values and current totals of heat inputs input1/input2 and the device-wide elements, raw, named after the protocol's element table (t1, t2, P1, G1, V1, M1, Qo, VNR, VOS, NS...). Choosing the supply/return elements is left to the flow's collect-device-state. Send any message in to trigger a read; the same message comes out with `msg.payload` set to the result (null for elements outside the measurement scheme or with bad quality, deviceTime/timestamp as epoch ms). On failure nothing goes out and node.error() is called. ADDRESS is the calculator's network number (the built-in RS-485 adapter does not answer 0); WAKE_UP_BYTES is the count of 0xFF bytes before each request (2 for RS-232, 0 is fine for RS-485).\n\nThrough a БАРС-02 GPRS unit, which connects to us instead of waiting for a connection: set BARS02_ID to the identifier the unit sends (its CBN, e.g. Строителей_53); HOST and PORT are then unused. The unit connects to the gateway listening on BARS02_LISTEN_PORT (published by docker-compose; the office router forwards a public port to it; started at deploy), which reads one meter per unit at a time. BARS02_LINE is the meter line the unit sets before each read: rs232 | rs232-powered | rs485, baud rate, 8N1 / 8E1 / 8O1 / 8N2 (the old dispatch system's port settings). Over GPRS a request takes 4-5 s and a whole read 30-90 s, so the read allows 15 s per request and at least 240 s in all. See .docs/bars02/bars02-notes.md.",
         "category": "subflows",
         "in": [
             {
@@ -244,6 +244,21 @@
                 "name": "RESPONSE_TIMEOUT_MS",
                 "type": "num",
                 "value": "60000"
+            },
+            {
+                "name": "BARS02_ID",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "BARS02_LISTEN_PORT",
+                "type": "num",
+                "value": "2910"
+            },
+            {
+                "name": "BARS02_LINE",
+                "type": "str",
+                "value": "rs232-powered 9600 8N1"
             }
         ],
         "meta": {},
@@ -1021,11 +1036,11 @@
         "type": "function",
         "z": "vkt7reader00000000",
         "name": "get-measurements",
-        "func": "const HOST = env.get('HOST');\nconst PORT = Number(env.get('PORT'));\nconst ADDRESS = Number(env.get('ADDRESS'));\nconst WAKE_UP_BYTES = Number(env.get('WAKE_UP_BYTES'));\nconst RESPONSE_TIMEOUT_MS = Number(env.get('RESPONSE_TIMEOUT_MS')) || 60000;\n\nconst { Vkt7Client } = global.get('vkt7');\nconst { withConnectionLock } = global.get('withConnectionLock');\n\n(async () => {\n    try {\n        const deviceState = await withConnectionLock(HOST, PORT, async () => {\n            const client = new Vkt7Client({\n                host: HOST,\n                port: PORT,\n                address: ADDRESS,\n                wakeUpBytes: Number.isNaN(WAKE_UP_BYTES) ? 2 : WAKE_UP_BYTES,\n                responseTimeoutMs: RESPONSE_TIMEOUT_MS,\n            });\n            // Vkt7Client.read() opens the socket, runs the whole session\n            // (service info, properties, current values, current totals,\n            // clock) and closes the socket itself.\n            return await client.read();\n        });\n\n        msg.payload = deviceState;\n        node.send(msg);\n        node.status({ fill: 'green', shape: 'dot', text: 'ok ' + new Date().toLocaleTimeString() });\n    } catch (err) {\n        // Full read failed — nothing goes out. No partial/incomplete set is sent downstream.\n        node.error('VKT-7 read failed: ' + err.message, msg);\n        node.status({ fill: 'red', shape: 'ring', text: 'error' });\n    }\n})();\n\nreturn null;\n",
+        "func": "const HOST = env.get('HOST');\nconst PORT = Number(env.get('PORT'));\nconst ADDRESS = Number(env.get('ADDRESS'));\nconst WAKE_UP_BYTES = Number(env.get('WAKE_UP_BYTES'));\nconst RESPONSE_TIMEOUT_MS = Number(env.get('RESPONSE_TIMEOUT_MS')) || 60000;\nconst BARS02_ID = env.get('BARS02_ID');\nconst BARS02_LISTEN_PORT = Number(env.get('BARS02_LISTEN_PORT')) || 2910;\nconst BARS02_LINE = env.get('BARS02_LINE') || 'rs232-powered 9600 8N1';\n\nconst { Vkt7Client } = global.get('vkt7');\nconst { withConnectionLock } = global.get('withConnectionLock');\nconst bars02 = global.get('bars02');\n\n// Through a БАРС-02 GPRS unit: it connects to the gateway listening on\n// BARS02_LISTEN_PORT, which serves one meter per unit at a time. Over GPRS a\n// request takes 4-5 s and a whole read 30-90 s.\nasync function readThroughBars02() {\n    const gateway = bars02.getGateway(BARS02_LISTEN_PORT);\n    await gateway.ready;\n    const line = bars02.parseLineSettings(BARS02_LINE);\n    const client = new Vkt7Client({\n        address: ADDRESS,\n        wakeUpBytes: Number.isNaN(WAKE_UP_BYTES) ? 2 : WAKE_UP_BYTES,\n        stepTimeoutMs: 15000,\n        responseTimeoutMs: Math.max(RESPONSE_TIMEOUT_MS, 240000),\n        createSocket: () => gateway.createSocket({ identifier: BARS02_ID, ...line }),\n    });\n    return await client.read();\n}\n\n(async () => {\n    try {\n        const deviceState = BARS02_ID ? await readThroughBars02() : await withConnectionLock(HOST, PORT, async () => {\n            const client = new Vkt7Client({\n                host: HOST,\n                port: PORT,\n                address: ADDRESS,\n                wakeUpBytes: Number.isNaN(WAKE_UP_BYTES) ? 2 : WAKE_UP_BYTES,\n                responseTimeoutMs: RESPONSE_TIMEOUT_MS,\n            });\n            // Vkt7Client.read() opens the socket, runs the whole session\n            // (service info, properties, current values, current totals,\n            // clock) and closes the socket itself.\n            return await client.read();\n        });\n\n        msg.payload = deviceState;\n        node.send(msg);\n        node.status({ fill: 'green', shape: 'dot', text: 'ok ' + new Date().toLocaleTimeString() });\n    } catch (err) {\n        // Full read failed — nothing goes out. No partial/incomplete set is sent downstream.\n        node.error('VKT-7 read failed: ' + err.message, msg);\n        node.status({ fill: 'red', shape: 'ring', text: 'error' });\n    }\n})();\n\nreturn null;\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
-        "initialize": "",
+        "initialize": "// Through a БАРС-02: start its listener at deploy, so the unit can connect\n// before the first read.\nif (env.get('BARS02_ID')) {\n    global.get('bars02').getGateway(Number(env.get('BARS02_LISTEN_PORT')) || 2910).ready\n        .catch((err) => node.error(err.message));\n}\n",
         "finalize": "",
         "libs": [],
         "x": 220,
@@ -5099,6 +5114,87 @@
         "statusType": "auto",
         "x": 570,
         "y": 660,
+        "wires": []
+    },
+    {
+        "id": "fe090a6ec7bddba7",
+        "type": "comment",
+        "z": "b5e1c7d93a4f6e20",
+        "name": "vkt7-141425 (ВКТ-7 через БАРС-02 «Строителей_53», пр. Строителей, 53, Альметьевск) — testing, not stored",
+        "info": "ВКТ-7 141425 (firmware 2.7, network number 0) behind the БАРС-02 «Строителей_53» (firmware 4.0.1) on RS-232 with power, 9600 8N1, as the old dispatch system sets it (its access point GPRS-Bars02-Строителей_53, channel VKT7-141425 / ЦО, ХВС, ГВС).\n\nThe unit connects to the old system (channel 1: 91.144.143.40:2907); it reaches this flow only after its channel 2 points at the port forwarded to BARS02_LISTEN_PORT (2910). Until then every read fails with \"БАРС-02 Строителей_53 is not connected\".\n\nRead through the unit on the old server on 2026-10-26 (.tools/device-probes/bars02-session-2026-10-26.jsonl): 4 reads of 4, 82–85 s each, the same totals as the old system's panel. Pressures are bad quality (ERR there too); the meter clock is about 26 min slow.\n\nThe old dispatch system polls the same meter, so the inject here polls every 5 minutes only.",
+        "x": 350,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "9ae89537e6f7524e",
+        "type": "inject",
+        "z": "b5e1c7d93a4f6e20",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "300",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 5,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 800,
+        "wires": [
+            [
+                "68a48c0f7202b1c6"
+            ]
+        ]
+    },
+    {
+        "id": "68a48c0f7202b1c6",
+        "type": "subflow:vkt7reader00000000",
+        "z": "b5e1c7d93a4f6e20",
+        "name": "vkt7-141425",
+        "env": [
+            {
+                "name": "ADDRESS",
+                "value": "0",
+                "type": "num"
+            },
+            {
+                "name": "BARS02_ID",
+                "value": "Строителей_53",
+                "type": "str"
+            }
+        ],
+        "x": 350,
+        "y": 800,
+        "wires": [
+            [
+                "ebfb623c0e9198f6"
+            ]
+        ]
+    },
+    {
+        "id": "ebfb623c0e9198f6",
+        "type": "debug",
+        "z": "b5e1c7d93a4f6e20",
+        "name": "debug vkt7-141425",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 570,
+        "y": 800,
         "wires": []
     }
 ]
