@@ -38,7 +38,10 @@
  *   const results = await client.read();
  *
  * Work on one modem is serialized (keep-alive, queries, meter sessions), so
- * several meters behind one modem are read one after another.
+ * several meters behind one modem are read one after another, each on its
+ * own line (e.g. a ВКТ-7 on RS-232 and an РМ-5 on RS-485). Old-firmware units
+ * (3.0.1, the old system's «Bars02_Old») get no port selection — pass
+ * selectPort: false — and stay on the line their configuration sets.
  *
  * GPRS is slow: a command takes 1-2 s, and a meter reply 1-8 s (a ВКТ-7
  * data reply came 7.5 s after its request on 2026-10-26). Give the readers
@@ -210,8 +213,12 @@ class Bars02Modem {
                 this.waiter = null;
                 fn(value);
             };
-            const timer = setTimeout(() => done(reject, new Error(
-                `БАРС-02 ${this.identifier}: no reply to ${request ? printable(request) : 'the wait'} (got "${printable(decodeText(this.buffer))}")`)), timeoutMs);
+            const timer = setTimeout(() => {
+                // A complete reply that came within the last quietMs still counts.
+                const result = match(this.buffer.toString('latin1'));
+                if (result !== undefined) done(resolve, { result, text: decodeText(this.buffer) });
+                else done(reject, new Error(`БАРС-02 ${this.identifier}: no reply to ${request ? printable(request) : 'the wait'} (got "${printable(decodeText(this.buffer))}")`));
+            }, timeoutMs);
             this.waiter = {
                 check: () => {
                     clearTimeout(quietTimer);
@@ -251,7 +258,8 @@ class Bars02Modem {
     }
 
     // A command in command mode; resolves with the reply text (#Y...$ or #N$).
-    command(request, { timeoutMs = 5500 } = {}) {
+    // Over GPRS a reply takes 1-5 s (the old engine waited 5.5 s).
+    command(request, { timeoutMs = 10000 } = {}) {
         return this.exchange(request, (text) => {
             const start = text.search(/#[YN]/);
             if (start < 0) return undefined;
@@ -353,7 +361,7 @@ class Bars02Gateway extends EventEmitter {
      * A read-only query in command mode (escape first), e.g. '#R;T;$',
      * '#R;CA0$', '#R;E$'. Resolves with { signalQuality, reply }.
      */
-    query(identifier, request, { timeoutMs = 5500 } = {}) {
+    query(identifier, request, { timeoutMs = 10000 } = {}) {
         const modem = this.pool.get(identifier);
         if (!modem) return Promise.reject(new Error(`БАРС-02 ${identifier} is not connected`));
         return modem.enqueue(async () => {
@@ -474,10 +482,13 @@ class Bars02Gateway extends EventEmitter {
 }
 
 // "rs232-powered 9600 8N1" -> { port, baudRate, parity, stopBits }: the meter
-// line as the БАРС-02 should set it (data bits are always 8).
+// line as the БАРС-02 should set it (data bits are always 8). "none" -> no
+// port selection, for old-firmware units (3.0.1), which keep the line their
+// configuration sets.
 function parseLineSettings(text) {
+    if (/^\s*none\s*$/i.test(text || '')) return { selectPort: false };
     const m = /^\s*(rs232-powered|rs232|rs485)\s+(\d+)\s+8([NEO])([12])\s*$/i.exec(text || '');
-    if (!m) throw new Error(`Bars02Gateway: line settings "${text}" are not like "rs232-powered 9600 8N1"`);
+    if (!m) throw new Error(`Bars02Gateway: line settings "${text}" are not like "rs232-powered 9600 8N1" or "none"`);
     return {
         port: m[1].toLowerCase(),
         baudRate: Number(m[2]),

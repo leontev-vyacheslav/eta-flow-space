@@ -144,6 +144,27 @@ With the old reader 23 (`ETA$Bars2DeviceReader`) stopped, `.tools/device-probes/
 - `Stop-Service` can return before the old process frees the port (our second start got `EADDRINUSE`): wait until
   nothing listens on the port before taking it.
 
+Second and third runs the same day (reader 23 stopped and disabled by the user; logs
+`.tools/device-probes/bars02-session-2026-10-26-km5.jsonl`, `…-tv7.jsonl`):
+
+- **РМ-5 / КМ-5** with `km5-client.js` (the old engine reads РМ-5 with its КМ-5 reader; address = factory number,
+  RS-485 9600 8N1): the 8 РМ-5 the old system reads read every time (20 of 20, 24–34 s, firmware `02.30`, type `RM`).
+  A ВКТ-7 (RS-232) and an РМ-5 (RS-485) behind one unit read one after the other (Строителей_15, Гафиатуллина_24).
+  On Строителей_47 every reply lost its first 4 bytes, the network number, with the rest valid: `acceptLostAddress`
+  accepts such a reply when the checksums are valid with our network number put back (then 61 s). The 4 meters
+  that failed are not read by the old system either (Алм_ЖЭУ7_01 КМ-5 60818, К._Цеткин_49 319267, Строителей_53а,
+  Строителей_53б); Фахретдина_24 never answers the escape.
+- **ТВ7** with `tv7-client.js`: the three ТВ7 the old system reads are firmware 1.00 / hardware 3.00 / model 01 and
+  refuse the totals in one request (exception 16, «другая ошибка»). The client then reads them in the old engine's
+  parts (each pipe, each heat input, the additional input, the totals clock) and leaves the device-wide block
+  3513–3532 (operating times, input configuration, events, КСН, Qсум), which firmware 1.00 refuses, null: 20–59 s.
+- **Old firmware 3.0.1** units («8_марта_15/17/25», model `Bars02_Old`): the escape always answers a bare `#Y$`
+  and the old engine sends no port selection — `selectPort: false` in `createSocket()` — so the line stays where
+  the unit's configuration sets it: 8_марта_25 serves its ВКТ-7 on RS-485, and its ТВ7 on RS-232 never answers
+  (in the old system either).
+- Readers over GPRS give an attempt up 2 s after bytes that are no valid reply (`frameGapMs`), instead of waiting the
+  15 s step timeout, so a garbled reply is repeated at once.
+
 ## Our fleet (old system, dumps of 2026-09-23/24)
 
 | Database | BARS access points | Last connected in 2026-09 | Active meters behind | Identifiers |
@@ -169,9 +190,11 @@ those meters. The КМ-5 reader isn't checked against РМ-5, and there are no r
 2. **Gateway** (`flow-space/src/device-readers/bars02-gateway.js`, 2026-10-26): accepts a connection, reads the
    identifier, answers `#Y$`, sends the keep-alive every 45 s, keeps a pool by identifier and serializes the work
    per modem (command mode → port → `#S$` → reader → escape). In Node-RED it is `global.get('bars02')`
-   (settings.js); `getGateway(port)` keeps one listener per port across deploys. The "VKT7 Client" subflow reads
-   through it when `BARS02_ID` is set (`BARS02_LISTEN_PORT` 2910, published by docker-compose; `BARS02_LINE`
-   `rs232-powered 9600 8N1`); the testing-of-device-readers tab has `vkt7-141425` behind «Строителей_53».
+   (settings.js); `getGateway(port)` keeps one listener per port across deploys. The "VKT7 Client", "KM5 Client"
+   (КМ-5 and РМ-5) and "TV7 Client" subflows read through it when `BARS02_ID` is set (`BARS02_LISTEN_PORT` 2910,
+   published by docker-compose; `BARS02_LINE` `rs232-powered 9600 8N1` for ВКТ-7 and ТВ7, `rs485 9600 8N1` for
+   КМ-5/РМ-5, or `none` for old-firmware units); the testing-of-device-readers tab has `vkt7-141425` behind
+   «Строителей_53».
 3. **Readers over an existing socket:** a client gets `createSocket: () => gateway.createSocket({ identifier, port,
    baudRate, parity, stopBits })` and runs unchanged (the channel has the `net.Socket` methods the clients use).
    Done for `vkt7-client.js`; tested end to end with `.tools/device-probes/bars02_emulator.js` relaying to the

@@ -51,6 +51,13 @@
  *   const client = new Tv7Client({ host: '178.207.154.38', port: 5011, address: 1, serialNumber: 19072584 });
  *   const results = await client.read();
  *
+ * Through a БАРС-02 GPRS unit (it connects to us, see ./bars02-gateway.js):
+ *   const client = new Tv7Client({
+ *       address: 1,
+ *       stepTimeoutMs: 15000,
+ *       createSocket: () => gateway.createSocket({ identifier: 'Алм_ЖЭУ7_01', port: 'rs232-powered', baudRate: 9600 }),
+ *   });
+ *
  * Channel sharing: this class is transport-only and does NOT serialize
  * access to a shared host:port itself — the caller wraps read() in
  * withConnectionLock() from ./with-connection-lock.js, as the Node-RED
@@ -70,6 +77,18 @@ const EXCEPTION_BUSY = 6;
 const INFO = { start: 0, count: 7 };
 const TOTALS = { start: 3412, count: 121 };
 const INSTANT = { start: 3540, count: 110 };
+// Firmware 1.00 (hardware 3.00) refuses TOTALS in one request (exception 16,
+// "other error"); these are the requests the old dispatch system reads it
+// with (each pipe, each heat input, the additional input), then the totals
+// clock and the device-wide values, which may stay unread.
+const TOTALS_PARTS = [
+    ...Array.from({ length: 6 }, (_, i) => ({ start: 3415 + i * 8, count: 8 })),
+    { start: 3463, count: 23 },
+    { start: 3486, count: 23 },
+    { start: 3509, count: 4 },
+    { start: 3412, count: 3 },
+    { start: 3513, count: 20 },
+];
 
 const HEAT_INPUTS = 2;
 const PIPES_PER_INPUT = 3;
@@ -142,43 +161,64 @@ class RegisterBlock {
     }
 
     u16(address) {
-        return this.bytes(address, 1).readUInt16BE(0);
+        const bytes = this.bytes(address, 1);
+        return bytes ? bytes.readUInt16BE(0) : null;
     }
 
     // Bits 0-7 of a bit-field register.
     low(address) {
-        return this.u16(address) & 0xff;
+        const value = this.u16(address);
+        return value === null ? null : value & 0xff;
     }
 
     // Bits 8-15 of a bit-field register.
     high(address) {
-        return this.u16(address) >> 8;
+        const value = this.u16(address);
+        return value === null ? null : value >> 8;
     }
 
     u32(address) {
-        return this.bytes(address, 2).readUInt32BE(0);
+        const bytes = this.bytes(address, 2);
+        return bytes ? bytes.readUInt32BE(0) : null;
     }
 
     // A float32 carries ~7 significant digits; more would be noise.
     float(address) {
-        const value = this.bytes(address, 2).readFloatBE(0);
+        const bytes = this.bytes(address, 2);
+        const value = bytes ? bytes.readFloatBE(0) : NaN;
         return Number.isFinite(value) ? Number(value.toPrecision(7)) : null;
     }
 
     double(address) {
-        const value = this.bytes(address, 4).readDoubleBE(0);
+        const bytes = this.bytes(address, 4);
+        const value = bytes ? bytes.readDoubleBE(0) : NaN;
         return Number.isFinite(value) ? value : null;
     }
 
     // Local wall-clock time (no TZ in the protocol); null when not a valid date.
     dateTime(address) {
         const dayMonth = this.u16(address), yearHour = this.u16(address + 1), minuteSecond = this.u16(address + 2);
+        if (dayMonth === null || yearHour === null || minuteSecond === null) return null;
         const day = dayMonth & 0xff, month = dayMonth >> 8;
         const year = 2000 + (yearHour & 0xff), hour = yearHour >> 8;
         const minute = minuteSecond & 0xff, second = minuteSecond >> 8;
         if (hour > 23 || minute > 59 || second > 59) return null;
         const date = new Date(year, month - 1, day, hour, minute, second);
         return date.getDate() === day && date.getMonth() === month - 1 ? date.getTime() : null;
+    }
+}
+
+// Several blocks read separately, seen as one; registers of a part the
+// device refused read as null.
+class PartsBlock extends RegisterBlock {
+    constructor(blocks) {
+        super(0, Buffer.alloc(0));
+        this.blocks = blocks;
+    }
+
+    bytes(address, words) {
+        const block = this.blocks.find((b) => address >= b.start && (address - b.start + words) * 2 <= b.data.length);
+        return block ? block.bytes(address, words) : null;
     }
 }
 
@@ -193,33 +233,41 @@ class Tv7Client {
      * @param {number} [options.serialNumber] - Factory number; read() fails when the device reports another one.
      * @param {number} [options.stepDelayMs=100] - Pause after a reply before the next request.
      * @param {number} [options.stepTimeoutMs=2000] - Wait for a valid reply to one request (the device answers within 500 ms).
+     * @param {number} [options.frameGapMs=2000] - Silence after bytes that are no valid reply (a garbled or truncated
+     *     reply) that ends the attempt before stepTimeoutMs, so the request is repeated at once.
      * @param {number} [options.retries=2] - Extra requests after no valid reply or a "busy" exception.
      * @param {number} [options.responseTimeoutMs=30000] - Overall timeout for a full read() call.
      * @param {(direction: string, bytes: Buffer) => void} [options.trace] - Called with every frame sent ('>') and received ('<').
+     * @param {() => net.Socket} [options.createSocket] - Socket factory (default: a new net.Socket); a БАРС-02 channel from
+     *     Bars02Gateway#createSocket makes host and port unnecessary.
      */
     constructor({
         host,
         port,
+        createSocket = null,
         address = 1,
         serialNumber = null,
         stepDelayMs = 100,
         stepTimeoutMs = 2000,
+        frameGapMs = 2000,
         retries = 2,
         responseTimeoutMs = 30000,
         trace = null,
     } = {}) {
-        if (!host) throw new Error('Tv7Client: "host" is required');
-        if (!port) throw new Error('Tv7Client: "port" is required');
+        if (!host && !createSocket) throw new Error('Tv7Client: "host" is required');
+        if (!port && !createSocket) throw new Error('Tv7Client: "port" is required');
         if (!Number.isInteger(address) || address < 1 || address > 255) {
             throw new Error('Tv7Client: "address" must be 1-255');
         }
 
         this.host = host;
         this.port = port;
+        this.createSocket = createSocket || (() => new net.Socket());
         this.address = address;
         this.serialNumber = serialNumber;
         this.stepDelayMs = stepDelayMs;
         this.stepTimeoutMs = stepTimeoutMs;
+        this.frameGapMs = frameGapMs;
         this.retries = retries;
         this.responseTimeoutMs = responseTimeoutMs;
         this.trace = trace;
@@ -237,7 +285,7 @@ class Tv7Client {
     // valid reply came within stepTimeoutMs.
     _connect() {
         return new Promise((resolve, reject) => {
-            const socket = new net.Socket();
+            const socket = this.createSocket();
             let buffer = Buffer.alloc(0);
             let pending = null;
             let closedError = null;
@@ -247,6 +295,7 @@ class Tv7Client {
                 if (!current) return;
                 pending = null;
                 clearTimeout(current.timer);
+                clearTimeout(current.gapTimer);
                 fn === 'resolve' ? current.resolve(value) : current.reject(value);
             };
 
@@ -301,6 +350,15 @@ class Tv7Client {
                 if (this.trace) this.trace('<', chunk);
                 buffer = Buffer.concat([buffer, chunk]);
                 check();
+                // Bytes but no valid reply (garbled or truncated on a GPRS
+                // line): give the attempt up after frameGapMs of silence
+                // instead of waiting stepTimeoutMs.
+                if (pending && buffer.length) {
+                    const { start } = pending;
+                    clearTimeout(pending.gapTimer);
+                    pending.gapTimer = setTimeout(() => settle('reject', new Error(
+                        `Tv7Client: invalid reply to reading register ${start}`)), this.frameGapMs);
+                }
             });
 
             const onClosed = (err) => {
@@ -444,7 +502,27 @@ class Tv7Client {
             for (let k = 1; k <= PIPES_PER_INPUT; k++) results[`input${n}`][`pipe${k}`] = {};
         }
         this._readInstant(await connection.readRegisters(INSTANT), results);
-        this._readTotals(await connection.readRegisters(TOTALS), results);
+        this._readTotals(await this._readTotalsBlock(connection), results);
+    }
+
+    // TOTALS in one request, or in TOTALS_PARTS when the device refuses it
+    // (firmware 1.00); a refused part leaves its values null.
+    async _readTotalsBlock(connection) {
+        try {
+            return await connection.readRegisters(TOTALS);
+        } catch (err) {
+            if (!(err instanceof Tv7ExceptionError)) throw err;
+        }
+        const blocks = [];
+        for (const part of TOTALS_PARTS) {
+            try {
+                blocks.push(await connection.readRegisters(part));
+            } catch (err) {
+                if (!(err instanceof Tv7ExceptionError)) throw err;
+            }
+        }
+        if (!blocks.length) throw new Error('Tv7Client: the device refused every part of the current totals');
+        return new PartsBlock(blocks);
     }
 
     /**

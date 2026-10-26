@@ -14,14 +14,19 @@
 //   --query LIST       read-only questions to every modem, comma-separated:
 //                      clock (#R;T;$), config (#R;CA0$), events (#R;E$, not
 //                      acknowledged, so the modem keeps its list); default clock,config
-//   --targets FILE     JSON list of meters to read:
+//   --targets FILE     JSON list of meters to read, several per modem allowed:
 //                      [{ "identifier": "011276", "meter": "vkt7", "address": 1,
 //                         "port": "rs232-powered", "baudRate": 9600, "parity": "none",
 //                         "stopBits": 1, "wakeUpBytes": 2, "stepTimeoutMs": 15000,
-//                         "responseTimeoutMs": 240000 }]
-//                      (defaults as shown: GPRS replies take up to ~8 s; Cyrillic
-//                      identifiers belong here)
-//   --vkt7 ID@ADDRESS  a ВКТ-7 target with the default port settings; repeatable
+//                         "responseTimeoutMs": 240000 },
+//                       { "identifier": "Строителей_15", "meter": "km5", "address": 319147 }]
+//                      meter "vkt7" (default line rs232-powered 9600 8N1), "km5"
+//                      (КМ-5 and РМ-5, address = factory number, default line rs485
+//                      9600 8N1) or "tv7" (rs232-powered 9600 8N1); timeouts as shown
+//                      (GPRS replies take up to ~8 s); "retries" overrides the
+//                      reader's; "selectPort": false for old-firmware units (the old
+//                      engine never sends them #W;P...); Cyrillic identifiers belong here
+//   --vkt7 ID@ADDRESS, --km5 ID@ADDRESS, --tv7 ID@ADDRESS  a target with the default line; repeatable
 //   --every MIN        read the targets again every MIN minutes (default: once per connection)
 //   --trace            print every byte exchanged to stderr
 //
@@ -36,6 +41,8 @@ const repo = path.resolve(__dirname, '../..');
 const readers = path.join(repo, 'flow-space/src/device-readers');
 const { Bars02Gateway } = require(path.join(readers, 'bars02-gateway.js'));
 const { Vkt7Client } = require(path.join(readers, 'vkt7-client.js'));
+const { Km5Client } = require(path.join(readers, 'km5-client.js'));
+const { Tv7Client } = require(path.join(readers, 'tv7-client.js'));
 
 const args = process.argv.slice(2);
 const option = (name, fallback) => {
@@ -44,7 +51,7 @@ const option = (name, fallback) => {
 };
 const listenPort = Number(option('--listen'));
 if (!listenPort) {
-    console.error('usage: node bars02_session.js --listen PORT [--host ADDR] [--minutes N] [--query clock,config,events] [--targets FILE] [--vkt7 ID@ADDRESS] [--every MIN] [--trace]');
+    console.error('usage: node bars02_session.js --listen PORT [--host ADDR] [--minutes N] [--query clock,config,events] [--targets FILE] [--vkt7|--km5|--tv7 ID@ADDRESS] [--every MIN] [--trace]');
     process.exit(2);
 }
 const minutes = Number(option('--minutes', 15));
@@ -52,19 +59,26 @@ const queries = option('--query', 'clock,config').split(',').filter(Boolean);
 const everyMinutes = Number(option('--every', 0));
 const tracing = args.includes('--trace');
 
-const TARGET_DEFAULTS = {
-    meter: 'vkt7', port: 'rs232-powered', baudRate: 9600, parity: 'none', stopBits: 1, wakeUpBytes: 2,
-    stepTimeoutMs: 15000, responseTimeoutMs: 240000,
+// The readers the session can run, with the line the old dispatch system
+// sets for them.
+const METERS = {
+    vkt7: { Client: Vkt7Client, line: { port: 'rs232-powered' }, options: (t) => ({ address: t.address, wakeUpBytes: t.wakeUpBytes ?? 2 }) },
+    km5: { Client: Km5Client, line: { port: 'rs485' }, options: (t) => ({ address: t.address, acceptLostAddress: t.acceptLostAddress ?? true }) },
+    tv7: { Client: Tv7Client, line: { port: 'rs232-powered' }, options: (t) => ({ address: t.address || 1 }) },
 };
-const targets = new Map();
+const TARGET_DEFAULTS = { baudRate: 9600, parity: 'none', stopBits: 1, stepTimeoutMs: 15000, responseTimeoutMs: 240000 };
+const targets = new Map(); // identifier -> [target]
+const addTarget = (t) => {
+    const meter = t.meter || 'vkt7';
+    if (!METERS[meter]) throw new Error(`unknown meter "${meter}"`);
+    targets.set(t.identifier, [...(targets.get(t.identifier) || []), { ...TARGET_DEFAULTS, ...METERS[meter].line, ...t, meter }]);
+};
 const targetsFile = option('--targets');
-if (targetsFile) {
-    for (const t of JSON.parse(fs.readFileSync(targetsFile, 'utf8'))) targets.set(t.identifier, { ...TARGET_DEFAULTS, ...t });
-}
+if (targetsFile) JSON.parse(fs.readFileSync(targetsFile, 'utf8')).forEach(addTarget);
 args.forEach((arg, i) => {
-    if (arg !== '--vkt7') return;
+    if (!['--vkt7', '--km5', '--tv7'].includes(arg)) return;
     const [identifier, address] = args[i + 1].split('@');
-    targets.set(identifier, { ...TARGET_DEFAULTS, identifier, address: Number(address) || 0 });
+    addTarget({ identifier, meter: arg.slice(2), address: Number(address) || 0 });
 });
 
 const QUERIES = { clock: '#R;T;$', config: '#R;CA0$', events: '#R;E$' };
@@ -82,24 +96,31 @@ const seen = new Map(); // identifier -> { remote, connections, signalQuality, r
 
 async function readMeter(target) {
     const started = Date.now();
+    const { identifier, meter, address } = target;
     try {
-        if (target.meter !== 'vkt7') throw new Error(`unknown meter "${target.meter}"`);
-        const client = new Vkt7Client({
-            address: target.address,
-            wakeUpBytes: target.wakeUpBytes,
+        const { Client, options } = METERS[meter];
+        const client = new Client({
+            ...options(target),
             stepTimeoutMs: target.stepTimeoutMs,
             responseTimeoutMs: target.responseTimeoutMs,
+            ...(target.retries !== undefined ? { retries: target.retries } : {}),
             createSocket: () => gateway.createSocket(target),
-            trace: tracing ? (direction, bytes) => console.error(`${new Date().toISOString().slice(11, 23)} ${target.identifier} vkt7 ${direction} ${hex(bytes)}`) : null,
+            trace: tracing ? (direction, bytes) => console.error(`${new Date().toISOString().slice(11, 23)} ${identifier} ${meter} ${direction} ${hex(bytes)}`) : null,
         });
         const results = await client.read();
-        seen.get(target.identifier).reads++;
-        out('meter', { identifier: target.identifier, meter: target.meter, seconds: (Date.now() - started) / 1000, results });
+        seen.get(identifier).reads++;
+        out('meter', { identifier, meter, address, seconds: (Date.now() - started) / 1000, results });
     } catch (err) {
-        seen.get(target.identifier).failures++;
-        out('meter-failed', { identifier: target.identifier, meter: target.meter, seconds: (Date.now() - started) / 1000, error: err.message, partialResults: err.partialResults });
+        seen.get(identifier).failures++;
+        out('meter-failed', { identifier, meter, address, seconds: (Date.now() - started) / 1000, error: err.message, partialResults: err.partialResults });
     }
 }
+
+// The meters of one modem, one after another (the gateway would queue them anyway).
+async function readMeters(identifier) {
+    for (const target of targets.get(identifier) || []) await readMeter(target);
+}
+const repeats = new Map(); // identifier -> interval timer
 
 async function onModem({ identifier, remote }) {
     const entry = seen.get(identifier) || { remote, connections: 0, signalQuality: null, reads: 0, failures: 0, replies: {} };
@@ -119,15 +140,12 @@ async function onModem({ identifier, remote }) {
     } catch (err) {
         out('query-failed', { identifier, error: err.message });
     }
-    const target = targets.get(identifier);
-    if (target) {
-        await readMeter(target);
-        if (everyMinutes > 0) {
-            const timer = setInterval(() => {
-                if (!gateway.pool.has(identifier)) clearInterval(timer);
-                else readMeter(target);
-            }, everyMinutes * 60000);
-        }
+    if (!targets.has(identifier)) return;
+    await readMeters(identifier);
+    if (everyMinutes > 0 && !repeats.has(identifier)) {
+        repeats.set(identifier, setInterval(() => {
+            if (gateway.pool.has(identifier)) readMeters(identifier);
+        }, everyMinutes * 60000));
     }
 }
 

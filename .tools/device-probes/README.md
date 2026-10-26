@@ -25,11 +25,12 @@ tools listen:
 
 | Script | Device | What it does |
 |---|---|---|
-| `bars02_session.js --listen PORT [--host ADDR] [--minutes N] [--query clock,config,events] [--targets FILE] [--vkt7 ID@ADDRESS] [--every MIN] [--trace]` | БАРС-02 and the meters behind it | Stands in for the dispatch server for a few minutes with `flow-space/src/device-readers/bars02-gateway.js`: confirms every modem, logs its identifier and signal quality, asks the read-only questions and reads the target meters through the modem with the project's readers (ВКТ-7 so far). JSON lines on stdout, bytes on stderr with `--trace`. Run it on the old system's server (10.10.0.249, Node 22) on the port of a БАРС device reader that is stopped meanwhile; it needs the repository layout (`.tools/device-probes/` + `flow-space/src/device-readers/`). Never writes the configuration, the clock or the event acknowledgement. |
+| `bars02_session.js --listen PORT [--host ADDR] [--minutes N] [--query clock,config,events] [--targets FILE] [--vkt7\|--km5\|--tv7 ID@ADDRESS] [--every MIN] [--trace]` | БАРС-02 and the meters behind it | Stands in for the dispatch server for a few minutes with `flow-space/src/device-readers/bars02-gateway.js`: confirms every modem, logs its identifier and signal quality, asks the read-only questions and reads the target meters through the modem with the project's readers (ВКТ-7, КМ-5/РМ-5, ТВ7; several per modem; `selectPort: false` for old-firmware units). JSON lines on stdout, bytes on stderr with `--trace`. Run it on the old system's server (10.10.0.249, Node 22) on the port of a БАРС device reader that is stopped meanwhile; it needs the repository layout (`.tools/device-probes/` + `flow-space/src/device-readers/`). Never writes the configuration, the clock or the event acknowledgement. |
 | `bars02_emulator.js SERVER_HOST SERVER_PORT --id IDENT [--meter HOST:PORT] [--csq N] [--trace]` | — | A pretend БАРС-02 for testing the gateway: answers the command protocol and in transparent mode relays to a real meter behind a TCP-serial gateway (e.g. the Весна-2 ВКТ-7, `94.180.252.2:505`, address 1). |
 
 `bars02-session-2026-10-26.jsonl` and `bars02-trace-2026-10-26.log` are the first field run of `bars02_session.js` on
 the old server's port 2907 (22 modems, their configurations, 12 ВКТ-7 reads; every byte): real replies to compare with.
+`bars02-session-2026-10-26-km5.jsonl` and `…-tv7.jsonl` are the РМ-5/КМ-5 and ТВ7 runs of the same day (JSON lines only).
 
 `statum-scan.log` is the 2026-10-05 scan of the Statum PLC (boiler 3 burner power investigation).
 

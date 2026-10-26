@@ -60,6 +60,14 @@
  *   const client = new Km5Client({ host: '178.205.241.58', port: 5011, address: 418200 });
  *   const results = await client.read();
  *
+ * Through a БАРС-02 GPRS unit (it connects to us, see ./bars02-gateway.js);
+ * also for the РМ-5, which speaks the same protocol on RS-485:
+ *   const client = new Km5Client({
+ *       address: 319147,
+ *       stepTimeoutMs: 15000,
+ *       createSocket: () => gateway.createSocket({ identifier: 'Строителей_15', port: 'rs485', baudRate: 9600 }),
+ *   });
+ *
  * Channel sharing: this class is transport-only and does NOT serialize
  * access to a shared host:port itself — the caller wraps read() in
  * withConnectionLock() from ./with-connection-lock.js, as the Node-RED
@@ -194,32 +202,44 @@ class Km5Client {
      * @param {number} options.address - Network number of the meter (its factory number, e.g. 418200).
      * @param {number} [options.stepDelayMs=100] - Pause after a reply before the next request.
      * @param {number} [options.stepTimeoutMs=1500] - Wait for a valid reply to one request (the meter answers within 800 ms).
+     * @param {number} [options.frameGapMs=2000] - Silence after bytes that are no valid reply (a reply that lost its
+     *     first bytes on the line) that ends the attempt before stepTimeoutMs, so the request is repeated at once.
      * @param {number} [options.retries=3] - Extra requests after no valid reply or a "busy" reply.
+     * @param {boolean} [options.acceptLostAddress=false] - Accept a reply that lost its first 4 bytes (the network
+     *     number) when it is valid with ours put back; for БАРС-02 lines that drop the start of every reply.
      * @param {number} [options.responseTimeoutMs=30000] - Overall timeout for a full read() call.
      * @param {(direction: string, bytes: Buffer) => void} [options.trace] - Called with every frame sent ('>') and received ('<').
+     * @param {() => net.Socket} [options.createSocket] - Socket factory (default: a new net.Socket); a БАРС-02 channel from
+     *     Bars02Gateway#createSocket makes host and port unnecessary.
      */
     constructor({
         host,
         port,
+        createSocket = null,
         address,
         stepDelayMs = 100,
         stepTimeoutMs = 1500,
+        frameGapMs = 2000,
         retries = 3,
+        acceptLostAddress = false,
         responseTimeoutMs = 30000,
         trace = null,
     } = {}) {
-        if (!host) throw new Error('Km5Client: "host" is required');
-        if (!port) throw new Error('Km5Client: "port" is required');
+        if (!host && !createSocket) throw new Error('Km5Client: "host" is required');
+        if (!port && !createSocket) throw new Error('Km5Client: "port" is required');
         if (!Number.isInteger(address) || address < 0 || address > 99999999) {
             throw new Error('Km5Client: "address" must be the factory number (up to 8 digits)');
         }
 
         this.host = host;
         this.port = port;
+        this.createSocket = createSocket || (() => new net.Socket());
         this.address = address;
         this.stepDelayMs = stepDelayMs;
         this.stepTimeoutMs = stepTimeoutMs;
+        this.frameGapMs = frameGapMs;
         this.retries = retries;
+        this.acceptLostAddress = acceptLostAddress;
         this.responseTimeoutMs = responseTimeoutMs;
         this.trace = trace;
     }
@@ -259,7 +279,7 @@ class Km5Client {
     // stepTimeoutMs.
     _connect() {
         return new Promise((resolve, reject) => {
-            const socket = new net.Socket();
+            const socket = this.createSocket();
             let buffer = Buffer.alloc(0);
             let pending = null;
             let closedError = null;
@@ -269,6 +289,7 @@ class Km5Client {
                 if (!current) return;
                 pending = null;
                 clearTimeout(current.timer);
+                clearTimeout(current.gapTimer);
                 fn === 'resolve' ? current.resolve(value) : current.reject(value);
             };
 
@@ -286,6 +307,23 @@ class Km5Client {
                 for (let start = 0; start + length <= buffer.length; start++) {
                     const reply = buffer.subarray(start, start + length);
                     if (!reply.subarray(0, 4).equals(address) || !Km5Client._checksumsOk(reply)) continue;
+                    if (reply[4] === command) {
+                        settle('resolve', reply);
+                    } else if (ERROR_CODES[reply[4]]) {
+                        settle('reject', new Km5ErrorReplyError(command, reply[4]));
+                    } else {
+                        continue;
+                    }
+                    return;
+                }
+                // Some lines behind a БАРС-02 lose the first 4 bytes of every
+                // reply, which are the network number (РМ-5 322008, 2026-10-26):
+                // a reply that lacks exactly them counts when its checksums,
+                // which cover the network number, are valid with ours put back.
+                if (!this.acceptLostAddress) return;
+                for (let start = 0; start + length - 4 <= buffer.length; start++) {
+                    const reply = Buffer.concat([address, buffer.subarray(start, start + length - 4)]);
+                    if (!Km5Client._checksumsOk(reply)) continue;
                     if (reply[4] === command) {
                         settle('resolve', reply);
                     } else if (ERROR_CODES[reply[4]]) {
@@ -320,6 +358,15 @@ class Km5Client {
                 if (this.trace) this.trace('<', chunk);
                 buffer = Buffer.concat([buffer, chunk]);
                 check();
+                // Bytes but no valid reply (through a БАРС-02 a reply now
+                // and then loses its first bytes): give the attempt up after
+                // frameGapMs of silence instead of waiting stepTimeoutMs.
+                if (pending && buffer.length) {
+                    const command = pending.frame[4];
+                    clearTimeout(pending.gapTimer);
+                    pending.gapTimer = setTimeout(() => settle('reject', new Error(
+                        `Km5Client: invalid reply to command ${command}`)), this.frameGapMs);
+                }
             });
 
             const onClosed = (err) => {
