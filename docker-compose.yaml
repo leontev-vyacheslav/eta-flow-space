@@ -15,9 +15,11 @@ services:
     environment:
       - TZ=Europe/Moscow
       - NODE_RED_ENABLE_PROJECTS=false
+    # --no-audit --no-fund: on 2026-10-26 npm hung for 9+ minutes after installing, waiting on a registry
+    # request (0% CPU, node_modules already written), and Node-RED never started
     entrypoint: >
       sh -c "
-        cd /data && npm install
+        cd /data && npm install --no-audit --no-fund --no-update-notifier
         exec node-red --userDir /data
       "
     networks:
