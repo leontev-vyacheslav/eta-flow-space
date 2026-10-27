@@ -1,0 +1,1086 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "StateModel",
+  "type": "object",
+  "properties": {
+    "isConnected": {
+      "type": "boolean",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "editorOptions": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "На связи"
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": false,
+                "white": true
+              },
+              "stroke": {
+                "yellow": false,
+                "black": true
+              }
+            }
+          ]
+        }
+      }
+    },
+    "tempOutAir": {
+      "type": "number",
+      "unit": "°C",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Температура наружного воздуха (TE1)"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "tempOutNet": {
+      "type": "number",
+      "unit": "°C",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Температура на подаче сетевого контура (TE2)"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "tempInNet": {
+      "type": "number",
+      "unit": "°C",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Температура на обратке сетевого контура (TE3)"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "pressOutNet": {
+      "type": "number",
+      "unit": "бар",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Давление на подаче сетевого контура (PE1)"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "pressInNet": {
+      "type": "number",
+      "unit": "бар",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Давление на обратке сетевого контура (PE2)"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "boilerRoomState": {
+      "$ref": "#/$defs/BoilerRoomState",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxSelectBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Состояние котельной"
+          },
+          "editorOptions": {
+            "readOnly": true,
+            "valueExpr": "id",
+            "displayExpr": "description"
+          }
+        }
+      }
+    },
+    "tempOutNetSetpoint": {
+      "type": "number",
+      "unit": "°C",
+      "ui": {
+        "group": 10,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Задание температуры подачи по наружному воздуху (Тек. зад. ТЕ_С)"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "tempBoilersSetpoint": {
+      "type": "number",
+      "unit": "°C",
+      "ui": {
+        "group": 10,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Текущее задание температуры воды после котлов (Тек. зад. ТЕ_К)"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "cascadeStageOnIntegral": {
+      "type": "number",
+      "ui": {
+        "group": 10,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Текущее значение интеграла включения ступени"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "cascadeStageOffIntegral": {
+      "type": "number",
+      "ui": {
+        "group": 10,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Текущее значение интеграла отключения ступени"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "isCO": {
+      "type": "boolean",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Загазованность CO"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isCH": {
+      "type": "boolean",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Загазованность CH4"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isFireAlarm": {
+      "type": "boolean",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Пожар"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isDoorAlarm": {
+      "type": "boolean",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Охрана (дверь)"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isSecurityAlarm": {
+      "type": "boolean",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Охрана (БСУ)"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isBatteryLow": {
+      "type": "boolean",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Батарея разряжена"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isBatteryFault": {
+      "type": "boolean",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Батарея неисправна"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "sensors": {
+      "$ref": "#/$defs/SensorsModel"
+    },
+    "boilers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/BoilerModel"
+      },
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "networkPumps": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/NetworkPumpModel"
+      },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "timestamp": {
+      "type": "integer",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxDateBox",
+          "editorOptions": {
+            "type": "datetime",
+            "displayFormat": "dd.MM.yyyy HH:mm:ss",
+            "readOnly": true
+          },
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Время опроса"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "isConnected",
+    "tempOutAir",
+    "tempOutNet",
+    "tempInNet",
+    "pressOutNet",
+    "pressInNet",
+    "boilerRoomState",
+    "tempOutNetSetpoint",
+    "tempBoilersSetpoint",
+    "cascadeStageOnIntegral",
+    "cascadeStageOffIntegral",
+    "isCO",
+    "isCH",
+    "isFireAlarm",
+    "isDoorAlarm",
+    "isSecurityAlarm",
+    "isBatteryLow",
+    "isBatteryFault",
+    "sensors",
+    "boilers",
+    "networkPumps"
+  ],
+  "$defs": {
+    "BoilerRoomState": {
+      "type": "integer",
+      "enum": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "enumDescriptions": {
+        "0": "INITIAL - Исходное",
+        "1": "BOILER_STARTING - Запуск котла",
+        "2": "BOILER_STOPPING - Останов котла",
+        "3": "OPERATION - Работа"
+      }
+    },
+    "SensorsModel": {
+      "type": "object",
+      "properties": {
+        "isTempOutAirSensorError": {
+          "type": "boolean",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Температура наружного воздуха. Ошибка датчика"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isTempOutNetSensorError": {
+          "type": "boolean",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Температура подачи. Ошибка датчика"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isTempOutNetHighLevel": {
+          "type": "boolean",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Температура подачи. Верхний аварийный уровень (HH)"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isTempOutNetPreHighLevel": {
+          "type": "boolean",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Температура подачи. Верхний предупредительный уровень (H)"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isTempOutNetPreLowLevel": {
+          "type": "boolean",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Температура подачи. Нижний предупредительный уровень (L)"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isTempOutNetLowLevel": {
+          "type": "boolean",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Температура подачи. Нижний аварийный уровень (LL)"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isTempInNetSensorError": {
+          "type": "boolean",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Температура обратки. Ошибка датчика"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isTempInNetPreLowLevel": {
+          "type": "boolean",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Температура обратки. Нижний предупредительный уровень (L)"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isTempInNetLowLevel": {
+          "type": "boolean",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Температура обратки. Нижний аварийный уровень (LL)"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressOutNetSensorError": {
+          "type": "boolean",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Давление подачи. Ошибка датчика"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isPressOutNetHighLevel": {
+          "type": "boolean",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Давление подачи. Верхний аварийный уровень (HH)"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressOutNetPreHighLevel": {
+          "type": "boolean",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Давление подачи. Верхний предупредительный уровень (H)"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressOutNetPreLowLevel": {
+          "type": "boolean",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Давление подачи. Нижний предупредительный уровень (L)"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressOutNetLowLevel": {
+          "type": "boolean",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Давление подачи. Нижний аварийный уровень (LL)"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressInNetSensorError": {
+          "type": "boolean",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Давление обратки. Ошибка датчика"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isPressInNetPreLowLevel": {
+          "type": "boolean",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Давление обратки. Нижний предупредительный уровень (L)"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressInNetLowLevel": {
+          "type": "boolean",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Давление обратки. Нижний аварийный уровень (LL)"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "isTempOutAirSensorError",
+        "isTempOutNetSensorError",
+        "isTempOutNetHighLevel",
+        "isTempOutNetPreHighLevel",
+        "isTempOutNetPreLowLevel",
+        "isTempOutNetLowLevel",
+        "isTempInNetSensorError",
+        "isTempInNetPreLowLevel",
+        "isTempInNetLowLevel",
+        "isPressOutNetSensorError",
+        "isPressOutNetHighLevel",
+        "isPressOutNetPreHighLevel",
+        "isPressOutNetPreLowLevel",
+        "isPressOutNetLowLevel",
+        "isPressInNetSensorError",
+        "isPressInNetPreLowLevel",
+        "isPressInNetLowLevel"
+      ]
+    },
+    "BoilerModel": {
+      "type": "object",
+      "properties": {
+        "isWorking": {
+          "type": "boolean",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Работа котла"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "#00FF00": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isNormal": {
+          "type": "boolean",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Котел в норме"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isLocked": {
+          "type": "boolean",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Блокировка котла"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isAlarm": {
+          "type": "boolean",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Авария котла"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isStartError": {
+          "type": "boolean",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Ошибка включения котла"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "required": [
+        "isWorking",
+        "isNormal",
+        "isLocked",
+        "isAlarm",
+        "isStartError"
+      ]
+    },
+    "NetworkPumpModel": {
+      "type": "object",
+      "properties": {
+        "isWorking": {
+          "type": "boolean",
+          "ui": {
+            "group": 3,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Работа сетевого насоса"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "#00FF00": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isStartError": {
+          "type": "boolean",
+          "ui": {
+            "group": 3,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Ошибка запуска или самопроизвольный останов сетевого насоса"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "required": [
+        "isWorking",
+        "isStartError"
+      ]
+    }
+  },
+  "ui": {
+    "useTabs": true,
+    "groups": [
+      {
+        "id": 1,
+        "name": "state",
+        "caption": "Состояния",
+        "order": 100
+      },
+      {
+        "id": 7,
+        "name": "emergency",
+        "caption": "Аварии",
+        "order": 150
+      },
+      {
+        "id": 9,
+        "name": "sensors",
+        "caption": "Датчики",
+        "order": 170
+      },
+      {
+        "id": 2,
+        "name": "boilers",
+        "caption": "Котлы",
+        "order": 200
+      },
+      {
+        "id": 10,
+        "name": "cascade",
+        "caption": "Каскад котлов",
+        "order": 250
+      },
+      {
+        "id": 3,
+        "name": "networkPumps",
+        "caption": "Сетевые насосы",
+        "order": 300
+      }
+    ]
+  }
+}
