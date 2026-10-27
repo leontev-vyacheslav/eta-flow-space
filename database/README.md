@@ -60,3 +60,4 @@ the web API's Sequelize models only describe it and no longer create tables (`sy
 | `2026-10-16-remove-tsarevo1-tv7.sql` | yes (verified 2026-10-16) |
 | `2026-10-22-spring2-boiler-alarm-emergency.sql` | yes (verified 2026-10-22) |
 | `2026-10-22-spring2-pump-sensor-relay-emergencies.sql` | not yet |
+| `2026-10-27-add-gagarin-boiler-room.sql` | not yet |
