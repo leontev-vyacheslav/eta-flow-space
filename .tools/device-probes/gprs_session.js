@@ -27,8 +27,11 @@
 //                       { "identifier": "Строителей_15", "meter": "km5", "address": 319147 }]
 //                      meter "vkt7" (default line rs232-powered 9600 8N1), "km5"
 //                      (КМ-5 and РМ-5, address = factory number, default line rs485
-//                      9600 8N1), "tv7" (rs232-powered 9600 8N1) or "vzljot024",
-//                      "vzljot026", "vzljot034", "vzljot042" (rs485); timeouts as shown
+//                      9600 8N1), "tv7" (rs232-powered 9600 8N1), "vzljot024",
+//                      "vzljot026", "vzljot034", "vzljot042" (rs485) or "spt941",
+//                      "spt943" (Логика; address = NT, default 1, may be 0;
+//                      "serialNumber" checks ИД / the serial number;
+//                      rs232-powered 9600 8N1); timeouts as shown
 //                      (GPRS replies take up to ~8 s); "retries" overrides the
 //                      reader's; "selectPort": false for old-firmware units (the old
 //                      engine never sends them #W;P...); Cyrillic identifiers belong here
@@ -52,7 +55,7 @@ const PROTOCOLS = { 'bars02': require(path.join(readers, 'bars02-protocol.js')),
 const { Vkt7Client } = require(path.join(readers, 'vkt7-client.js'));
 const { Km5Client } = require(path.join(readers, 'km5-client.js'));
 const { Tv7Client } = require(path.join(readers, 'tv7-client.js'));
-const vzljot = (file, name) => require(path.join(readers, file))[name];
+const readerClass = (file, name) => require(path.join(readers, file))[name];
 
 const args = process.argv.slice(2);
 const option = (name, fallback) => {
@@ -78,10 +81,12 @@ const METERS = {
     vkt7: { Client: Vkt7Client, line: { port: 'rs232-powered' }, options: (t) => ({ address: t.address, wakeUpBytes: t.wakeUpBytes ?? 2 }) },
     km5: { Client: Km5Client, line: { port: 'rs485' }, options: (t) => ({ address: t.address, acceptLostAddress: t.acceptLostAddress ?? true }) },
     tv7: { Client: Tv7Client, line: { port: 'rs232-powered' }, options: (t) => ({ address: t.address || 1 }) },
-    vzljot024: { Client: vzljot('vzljot024-client.js', 'Vzljot024Client'), line: { port: 'rs485' }, options: (t) => ({ address: t.address || 1 }) },
-    vzljot026: { Client: vzljot('vzljot026-client.js', 'Vzljot026Client'), line: { port: 'rs485' }, options: (t) => ({ address: t.address || 1 }) },
-    vzljot034: { Client: vzljot('vzljot034-client.js', 'Vzljot034Client'), line: { port: 'rs485' }, options: (t) => ({ address: t.address || 1 }) },
-    vzljot042: { Client: vzljot('vzljot042-client.js', 'Vzljot042Client'), line: { port: 'rs485' }, options: (t) => ({ address: t.address || 1 }) },
+    vzljot024: { Client: readerClass('vzljot024-client.js', 'Vzljot024Client'), line: { port: 'rs485' }, options: (t) => ({ address: t.address || 1 }) },
+    vzljot026: { Client: readerClass('vzljot026-client.js', 'Vzljot026Client'), line: { port: 'rs485' }, options: (t) => ({ address: t.address || 1 }) },
+    vzljot034: { Client: readerClass('vzljot034-client.js', 'Vzljot034Client'), line: { port: 'rs485' }, options: (t) => ({ address: t.address || 1 }) },
+    vzljot042: { Client: readerClass('vzljot042-client.js', 'Vzljot042Client'), line: { port: 'rs485' }, options: (t) => ({ address: t.address || 1 }) },
+    spt941: { Client: readerClass('spt941-client.js', 'Spt941Client'), line: { port: 'rs232-powered' }, options: (t) => ({ address: t.address ?? 1, serialNumber: t.serialNumber ?? null }) },
+    spt943: { Client: readerClass('spt943-client.js', 'Spt943Client'), line: { port: 'rs232-powered' }, options: (t) => ({ address: t.address ?? 1, serialNumber: t.serialNumber ?? null }) },
 };
 const TARGET_DEFAULTS = { baudRate: 9600, parity: 'none', stopBits: 1, stepTimeoutMs: 15000, responseTimeoutMs: 240000 };
 const targets = new Map(); // identifier -> [target]

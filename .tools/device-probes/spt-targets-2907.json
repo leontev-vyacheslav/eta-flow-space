@@ -1,0 +1,8 @@
+[
+  { "identifier": "Зарипова_21", "meter": "spt943", "address": 1, "serialNumber": 43464 },
+  { "identifier": "Ленина_193", "meter": "spt943", "address": 1, "serialNumber": 24916 },
+  { "identifier": "Ленина_203", "meter": "spt943", "address": 1, "serialNumber": 47645 },
+  { "identifier": "Радищева_24", "meter": "spt943", "address": 1, "serialNumber": 26269 },
+  { "identifier": "Шевченко_180", "meter": "spt943", "address": 1, "serialNumber": 49941 },
+  { "identifier": "Ленина_171", "meter": "spt941", "address": 1, "serialNumber": 36809, "selectPort": false }
+]

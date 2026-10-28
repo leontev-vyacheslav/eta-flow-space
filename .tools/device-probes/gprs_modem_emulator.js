@@ -46,6 +46,15 @@ const log = (...items) => console.error(new Date().toISOString().slice(11, 23), 
 const show = (bytes) => JSON.stringify(Buffer.from(bytes).toString('latin1'));
 const hex = (bytes) => Buffer.from(bytes).toString('hex').replace(/(..)/g, '$1 ').trim();
 const pad = (n, size = 2) => String(n).padStart(size, '0');
+// The modems send their identifier in Windows-1251 (Зарипова_21).
+const cp1251 = (text) => Buffer.from([...text].map((c) => {
+    const code = c.charCodeAt(0);
+    if (code >= 0x410 && code <= 0x44f) return code - 0x410 + 0xc0;
+    if (c === 'Ё') return 0xa8;
+    if (c === 'ё') return 0xb8;
+    if (c === '№') return 0xb9;
+    return code & 0xff;
+}));
 
 // The meter behind the modem: one TCP connection to its gateway, opened on
 // demand; bytes written while it connects are queued.
@@ -85,8 +94,8 @@ function closeMeter() {
 
 const server = net.connect(Number(serverPort), serverHost, () => {
     log(`connected to ${serverHost}:${serverPort} as ${modemType} ${identifier}`);
-    if (modemType === 'eta-gsm') server.write(Buffer.from(`${identifier}\r\nCSQ: ${csq},0\r\n254\r\n`, 'latin1'));
-    else server.write(Buffer.from(identifier, 'latin1'));
+    if (modemType === 'eta-gsm') server.write(cp1251(`${identifier}\r\nCSQ: ${csq},0\r\n254\r\n`));
+    else server.write(cp1251(identifier));
 });
 const reply = (bytes) => {
     if (tracing) log('>>', typeof bytes === 'string' ? show(bytes) : hex(bytes));

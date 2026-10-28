@@ -64,8 +64,10 @@ mapping, and nothing the meter can tell us is thrown away.
 
 Use `tv7-client.js`, `vzljot026-client.js` (Modbus RTU, register blocks), `irvis-client.js` (Modbus RTU +
 function 17 identity), `km5-client.js` (own binary protocol), `vkt7-client.js` (element lists),
-`mercury230-client.js` (channel open/close, password) or `ek270-iec61107-client.js` (IEC 61107, values keyed
-by address — touch its handshake only with great care) as the template:
+`mercury230-client.js` (channel open/close, password), `ek270-iec61107-client.js` (IEC 61107, values keyed
+by address — touch its handshake only with great care) or `spt943-client.js` / `spt941-client.js` (Логика: two
+protocol generations told apart by the session reply, RAM/FLASH dumps or М4 tagged values; the framing lives in
+`logika-protocol.js`, shared by both — one shared layer per manufacturer protocol, not per reader) as the template:
 
 1. Header comment: device, connection, the protocol document (title as in `.docs/README.md`), every
    request/register block and what it returns, encoding/byte order, the strict-matching paragraph, usage,
