@@ -920,6 +920,164 @@
         }
     },
     {
+        "id": "spt943reader000000",
+        "type": "subflow",
+        "name": "SPT943 Client",
+        "info": "Reads every current value of a НПФ «Логика» СПТ943 heat calculator (channel ОБЩ and heat inputs ТВ1, ТВ2) over TCP (a gateway on its RS-232 port, or a GPRS modem), via the shared Spt943Client class registered on functionGlobalContext in settings.js (flow-space/src/device-readers/spt943-client.js; the framing is in logika-protocol.js). Both protocol generations, told apart by the session reply: the original СПТ943 (RAM and FLASH dumps) and the СПТ943.1 with firmware 2.0.0.3.00 and later (М4). The result has the same shape for both: model, protocol (old | M4), VX, version, serialNumber, ID (ИД), EI (ЕИ, the units: 0 = Gcal, kgf/cm2; 1 = GJ, MPa; 2 = MWh, bar), deviceTime, DST (old: status register), protectionKey, DI, DO1, externalPower (М4: 0/1), common { tx, tv, NS, DS, Q }, TV1 and TV2 { SP, G1, G2, G3, P1, P2, t1, t2, dt, t3, tx, tv, NS, DS, V1, V2, V3, M1, M2, M3, Q, Qg, Ti, Tmin, Tmax, Tdt, Tep, Tf, Tn, Tsh } and inputs { X5-X20 } (input tests: Hz, mA, Ω), raw in the device's units and named after Логика's documents (НС → NS, ДС → DS: lists of the active numbers; Ти → Ti in hours); what a generation does not offer is null. An input without a sensor gives the device's own value for it (t about -242 °C, P negative). Choosing the supply/return pipe and converting units is left to the flow's collect-device-state. Send any message in to trigger a read (old protocol: 15 requests, about 70 s through a БАРС-02); the same message comes out with `msg.payload` set to the result (deviceTime/timestamp as epoch ms). On failure nothing goes out and node.error() is called. ADDRESS is the network number NT (0-99, 1 by default); SERIAL_NUMBER, when set, is checked against the serial number (old protocol: ИД, which is set to it).\n\nThrough a GPRS modem that connects to us instead of waiting for a connection (БАРС-02 or ETA GSM; the gateway tells them apart by their hello): set GPRS_MODEM_ID to the identifier the modem sends on connect (БАРС-02: its CBN, e.g. Зарипова_21; ETA GSM: its number, e.g. 0458); HOST and PORT are then unused. GPRS_LINE is the meter's line as the old dispatch system lists it: rs232 | rs232-powered | rs485, baud rate, 8N1 / 8E1 / 8O1 / 8N2 (default rs232-powered 9600 8N1; the meter's own speed is set by its КИ parameter: 0 or 10 = 2400, 1 or 11 = 9600, 2 or 12 = 19200), or none to leave the modem's line as configured (old-firmware БАРС-02 3.0.1). The modems connect to one listener (global gprsModems, flow-space/src/device-readers/gprs-modems.js, port 2910; started at deploy), which reads one meter per modem at a time (several СПТ on one RS-232 line, with different NT, are read one after another); over GPRS the read allows 15 s per request and at least 240 s in all. An ETA GSM keeps its wired RS-232/RS-485 port and gets the speed and format in band. See .docs/bars02/bars02-notes.md and .docs/eta-gsm/eta-gsm-notes.md.",
+        "category": "subflows",
+        "in": [
+            {
+                "x": 80,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "spt943reader000001"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 400,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "spt943reader000001",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "HOST",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "PORT",
+                "type": "num",
+                "value": "5010"
+            },
+            {
+                "name": "ADDRESS",
+                "type": "num",
+                "value": "1"
+            },
+            {
+                "name": "SERIAL_NUMBER",
+                "type": "num",
+                "value": ""
+            },
+            {
+                "name": "RESPONSE_TIMEOUT_MS",
+                "type": "num",
+                "value": "60000"
+            },
+            {
+                "name": "GPRS_MODEM_ID",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "GPRS_LINE",
+                "type": "str",
+                "value": "rs232-powered 9600 8N1"
+            }
+        ],
+        "meta": {},
+        "color": "#DDBB99",
+        "status": {
+            "x": 420,
+            "y": 220,
+            "wires": [
+                {
+                    "id": "spt943reader000002",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "spt941reader000000",
+        "type": "subflow",
+        "name": "SPT941 Client",
+        "info": "Reads every current value of a НПФ «Логика» СПТ941 heat calculator, models 941.10, 941.11 and 941.20, over TCP (a gateway on its RS-232 port, or a GPRS modem), via the shared Spt941Client class registered on functionGlobalContext in settings.js (flow-space/src/device-readers/spt941-client.js; the framing is in logika-protocol.js). The 941.10/11 speaks the old protocol (RAM and FLASH dumps), the 941.20 М4; the session reply tells them apart. The original СПТ941 (device code 54 29) is not read: the read fails with a message saying so. The result has the same shape for both: model (941.10/11 | 941.20), protocol (old | M4), VX, version, serialNumber, ID (ИД), EI (941.10/11: ЕИ, the units), EIP, EIQ (941.20: ЕИ/P, ЕИ/Q), deviceTime, DST (941.10/11: status register), protectionKey, DI1, DI2, DO1, externalPower (941.20: 0/1), SP, NS, DS, G1, G2, G3, Gm1, Gm2, Gm3, t1, t2, dt, t3, tx, t4, P1, P2, P3, Px, P4, V1, V2, V3, M1, M2, M3, Q, Qg, Ti, Tn, Tsh, ST1-ST16 and inputs { X4-X14 } (input tests: Hz, mA, Ω), raw in the device's units and named after Логика's documents (НС → NS, ДС → DS: lists of the active numbers; Ти → Ti in hours); what a model does not offer is null. Choosing the supply/return pipe and converting units is left to the flow's collect-device-state. Send any message in to trigger a read (941.10/11: 9 requests, about 40 s through a БАРС-02); the same message comes out with `msg.payload` set to the result (deviceTime/timestamp as epoch ms). On failure nothing goes out and node.error() is called. ADDRESS is the network number NT (0-99, 1 by default); SERIAL_NUMBER, when set, is checked against the serial number (941.10/11: ИД, which is set to it).\n\nThrough a GPRS modem that connects to us instead of waiting for a connection (БАРС-02 or ETA GSM; the gateway tells them apart by their hello): set GPRS_MODEM_ID to the identifier the modem sends on connect (БАРС-02: its CBN, e.g. Зарипова_21; ETA GSM: its number, e.g. 0458); HOST and PORT are then unused. GPRS_LINE is the meter's line as the old dispatch system lists it: rs232 | rs232-powered | rs485, baud rate, 8N1 / 8E1 / 8O1 / 8N2 (default rs232-powered 9600 8N1; the meter's own speed is set by its КИ parameter: 0 or 10 = 2400, 1 or 11 = 9600, 2 or 12 = 19200), or none to leave the modem's line as configured (old-firmware БАРС-02 3.0.1). The modems connect to one listener (global gprsModems, flow-space/src/device-readers/gprs-modems.js, port 2910; started at deploy), which reads one meter per modem at a time (several СПТ on one RS-232 line, with different NT, are read one after another); over GPRS the read allows 15 s per request and at least 240 s in all. An ETA GSM keeps its wired RS-232/RS-485 port and gets the speed and format in band. See .docs/bars02/bars02-notes.md and .docs/eta-gsm/eta-gsm-notes.md.",
+        "category": "subflows",
+        "in": [
+            {
+                "x": 80,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "spt941reader000001"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 400,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "spt941reader000001",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "HOST",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "PORT",
+                "type": "num",
+                "value": "5010"
+            },
+            {
+                "name": "ADDRESS",
+                "type": "num",
+                "value": "1"
+            },
+            {
+                "name": "SERIAL_NUMBER",
+                "type": "num",
+                "value": ""
+            },
+            {
+                "name": "RESPONSE_TIMEOUT_MS",
+                "type": "num",
+                "value": "60000"
+            },
+            {
+                "name": "GPRS_MODEM_ID",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "GPRS_LINE",
+                "type": "str",
+                "value": "rs232-powered 9600 8N1"
+            }
+        ],
+        "meta": {},
+        "color": "#DDBB99",
+        "status": {
+            "x": 420,
+            "y": 220,
+            "wires": [
+                {
+                    "id": "spt941reader000002",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
         "id": "17c1930de88ea78c",
         "type": "modbus-client",
         "name": "statum-boiler-room-modbus",
@@ -1396,6 +1554,66 @@
         "id": "vzljot023reader002",
         "type": "status",
         "z": "vzljot023reader000",
+        "name": "",
+        "scope": null,
+        "x": 140,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "spt943reader000001",
+        "type": "function",
+        "z": "spt943reader000000",
+        "name": "get-measurements",
+        "func": "const HOST = env.get('HOST');\nconst PORT = Number(env.get('PORT'));\nconst ADDRESS = Number(env.get('ADDRESS'));\nconst SERIAL_NUMBER = Number(env.get('SERIAL_NUMBER')) || null;\nconst RESPONSE_TIMEOUT_MS = Number(env.get('RESPONSE_TIMEOUT_MS')) || 60000;\nconst GPRS_MODEM_ID = env.get('GPRS_MODEM_ID');\nconst GPRS_LINE = env.get('GPRS_LINE');\n\nconst { Spt943Client } = global.get('spt943');\nconst { withConnectionLock } = global.get('withConnectionLock');\nconst gprsModems = global.get('gprsModems');\n\n(async () => {\n    try {\n        // Through a GPRS modem (GPRS_MODEM_ID) the reader gets the modem's\n        // channel instead of host and port; the gateway reads one meter per\n        // modem at a time.\n        const transport = GPRS_MODEM_ID\n            ? await gprsModems.readerOptions({ identifier: GPRS_MODEM_ID, line: GPRS_LINE, responseTimeoutMs: RESPONSE_TIMEOUT_MS })\n            : { host: HOST, port: PORT };\n        const deviceState = await withConnectionLock(GPRS_MODEM_ID ? 'gprs' : HOST, GPRS_MODEM_ID || PORT, async () => {\n            const client = new Spt943Client({\n                address: ADDRESS,\n                serialNumber: SERIAL_NUMBER,\n                responseTimeoutMs: RESPONSE_TIMEOUT_MS,\n                ...transport,\n            });\n            // Spt943Client.read() opens the socket, starts the session, reads\n            // the settings, clock, flags, current values and totals of both heat inputs and closes the socket itself.\n            return await client.read();\n        });\n\n        msg.payload = deviceState;\n        node.send(msg);\n        node.status({ fill: 'green', shape: 'dot', text: 'ok ' + new Date().toLocaleTimeString() });\n    } catch (err) {\n        // Full read failed — nothing goes out. No partial/incomplete set is sent downstream.\n        node.error('SPT943 read failed: ' + err.message, msg);\n        node.status({ fill: 'red', shape: 'ring', text: 'error' });\n    }\n})();\n\nreturn null;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "// Through a GPRS modem: start the modem gateway at deploy, so the modem can\n// connect before the first read.\nif (env.get('GPRS_MODEM_ID')) {\n    global.get('gprsModems').start().catch((err) => node.error(err.message));\n}\n",
+        "finalize": "",
+        "libs": [],
+        "x": 220,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "spt943reader000002",
+        "type": "status",
+        "z": "spt943reader000000",
+        "name": "",
+        "scope": null,
+        "x": 140,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "spt941reader000001",
+        "type": "function",
+        "z": "spt941reader000000",
+        "name": "get-measurements",
+        "func": "const HOST = env.get('HOST');\nconst PORT = Number(env.get('PORT'));\nconst ADDRESS = Number(env.get('ADDRESS'));\nconst SERIAL_NUMBER = Number(env.get('SERIAL_NUMBER')) || null;\nconst RESPONSE_TIMEOUT_MS = Number(env.get('RESPONSE_TIMEOUT_MS')) || 60000;\nconst GPRS_MODEM_ID = env.get('GPRS_MODEM_ID');\nconst GPRS_LINE = env.get('GPRS_LINE');\n\nconst { Spt941Client } = global.get('spt941');\nconst { withConnectionLock } = global.get('withConnectionLock');\nconst gprsModems = global.get('gprsModems');\n\n(async () => {\n    try {\n        // Through a GPRS modem (GPRS_MODEM_ID) the reader gets the modem's\n        // channel instead of host and port; the gateway reads one meter per\n        // modem at a time.\n        const transport = GPRS_MODEM_ID\n            ? await gprsModems.readerOptions({ identifier: GPRS_MODEM_ID, line: GPRS_LINE, responseTimeoutMs: RESPONSE_TIMEOUT_MS })\n            : { host: HOST, port: PORT };\n        const deviceState = await withConnectionLock(GPRS_MODEM_ID ? 'gprs' : HOST, GPRS_MODEM_ID || PORT, async () => {\n            const client = new Spt941Client({\n                address: ADDRESS,\n                serialNumber: SERIAL_NUMBER,\n                responseTimeoutMs: RESPONSE_TIMEOUT_MS,\n                ...transport,\n            });\n            // Spt941Client.read() opens the socket, starts the session, reads\n            // the settings, clock, flags, current values and totals and closes the socket itself.\n            return await client.read();\n        });\n\n        msg.payload = deviceState;\n        node.send(msg);\n        node.status({ fill: 'green', shape: 'dot', text: 'ok ' + new Date().toLocaleTimeString() });\n    } catch (err) {\n        // Full read failed — nothing goes out. No partial/incomplete set is sent downstream.\n        node.error('SPT941 read failed: ' + err.message, msg);\n        node.status({ fill: 'red', shape: 'ring', text: 'error' });\n    }\n})();\n\nreturn null;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "// Through a GPRS modem: start the modem gateway at deploy, so the modem can\n// connect before the first read.\nif (env.get('GPRS_MODEM_ID')) {\n    global.get('gprsModems').start().catch((err) => node.error(err.message));\n}\n",
+        "finalize": "",
+        "libs": [],
+        "x": 220,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "spt941reader000002",
+        "type": "status",
+        "z": "spt941reader000000",
         "name": "",
         "scope": null,
         "x": 140,
