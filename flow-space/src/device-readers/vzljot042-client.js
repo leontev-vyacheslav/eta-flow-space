@@ -94,6 +94,13 @@
  *   const client = new Vzljot042Client({ host: '10.10.3.10', port: 5010, address: 1, serialNumber: 1800180 });
  *   const results = await client.read();
  *
+ * Through a GPRS modem that connects to us (БАРС-02, see ./bars02-gateway.js),
+ * createSocket replaces host and port:
+ *   const client = new Vzljot042Client({
+ *       address: 1,
+ *       createSocket: () => gateway.createSocket({ identifier: '0458', port: 'rs485', baudRate: 9600 }),
+ *   });
+ *
  * Channel sharing: this class is transport-only and does NOT serialize
  * access to a shared host:port itself — the caller wraps read() in
  * withConnectionLock() from ./with-connection-lock.js, as the Node-RED
@@ -337,10 +344,13 @@ class Vzljot042Client {
      * @param {number} [options.retryDelayMs=1000] - Pause before the first extra request; doubles for the next.
      * @param {number} [options.responseTimeoutMs=30000] - Overall timeout for a full read() call.
      * @param {(direction: string, bytes: Buffer) => void} [options.trace] - Called with every frame sent ('>') and received ('<').
+     * @param {() => net.Socket} [options.createSocket] - Socket factory (default: a new net.Socket); a GPRS modem channel
+     *     from the gateway (БАРС-02: Bars02Gateway#createSocket) makes host and port unnecessary.
      */
     constructor({
         host,
         port,
+        createSocket = null,
         address = 1,
         serialNumber = null,
         stepDelayMs = 100,
@@ -350,14 +360,15 @@ class Vzljot042Client {
         responseTimeoutMs = 30000,
         trace = null,
     } = {}) {
-        if (!host) throw new Error('Vzljot042Client: "host" is required');
-        if (!port) throw new Error('Vzljot042Client: "port" is required');
+        if (!host && !createSocket) throw new Error('Vzljot042Client: "host" is required');
+        if (!port && !createSocket) throw new Error('Vzljot042Client: "port" is required');
         if (!Number.isInteger(address) || address < 1 || address > 247) {
             throw new Error('Vzljot042Client: "address" must be 1-247');
         }
 
         this.host = host;
         this.port = port;
+        this.createSocket = createSocket || (() => new net.Socket());
         this.address = address;
         this.serialNumber = serialNumber;
         this.stepDelayMs = stepDelayMs;
@@ -381,7 +392,7 @@ class Vzljot042Client {
     // when no valid reply came within stepTimeoutMs.
     _connect() {
         return new Promise((resolve, reject) => {
-            const socket = new net.Socket();
+            const socket = this.createSocket();
             let buffer = Buffer.alloc(0);
             let pending = null;
             let closedError = null;

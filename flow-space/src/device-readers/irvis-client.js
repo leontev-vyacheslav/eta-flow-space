@@ -45,6 +45,13 @@
  *   const client = new IrvisClient({ host: '94.180.252.2', port: 504, address: 104 });
  *   const results = await client.read();
  *
+ * Through a GPRS modem that connects to us (БАРС-02, see ./bars02-gateway.js),
+ * createSocket replaces host and port:
+ *   const client = new IrvisClient({
+ *       address: 104,
+ *       createSocket: () => gateway.createSocket({ identifier: '0458', port: 'rs485', baudRate: 9600 }),
+ *   });
+ *
  * Channel sharing: this class is transport-only and does NOT serialize
  * access to a shared host:port itself — the caller wraps read() in
  * withConnectionLock() from ./with-connection-lock.js, as the Node-RED
@@ -97,10 +104,13 @@ class IrvisClient {
      * @param {number} [options.retries=2] - Extra requests after no valid reply or a "busy" exception.
      * @param {number} [options.responseTimeoutMs=20000] - Overall timeout for a full read() call.
      * @param {(direction: string, bytes: Buffer) => void} [options.trace] - Called with every frame sent ('>') and received ('<').
+     * @param {() => net.Socket} [options.createSocket] - Socket factory (default: a new net.Socket); a GPRS modem channel
+     *     from the gateway (БАРС-02: Bars02Gateway#createSocket) makes host and port unnecessary.
      */
     constructor({
         host,
         port,
+        createSocket = null,
         address,
         stepDelayMs = 100,
         stepTimeoutMs = 2000,
@@ -108,14 +118,15 @@ class IrvisClient {
         responseTimeoutMs = 20000,
         trace = null,
     } = {}) {
-        if (!host) throw new Error('IrvisClient: "host" is required');
-        if (!port) throw new Error('IrvisClient: "port" is required');
+        if (!host && !createSocket) throw new Error('IrvisClient: "host" is required');
+        if (!port && !createSocket) throw new Error('IrvisClient: "port" is required');
         if (!Number.isInteger(address) || address < 1 || address > 247) {
             throw new Error('IrvisClient: "address" must be 1-247');
         }
 
         this.host = host;
         this.port = port;
+        this.createSocket = createSocket || (() => new net.Socket());
         this.address = address;
         this.stepDelayMs = stepDelayMs;
         this.stepTimeoutMs = stepTimeoutMs;
@@ -137,7 +148,7 @@ class IrvisClient {
     // Error when no valid reply came within stepTimeoutMs.
     _connect() {
         return new Promise((resolve, reject) => {
-            const socket = new net.Socket();
+            const socket = this.createSocket();
             let buffer = Buffer.alloc(0);
             let pending = null;
             let closedError = null;

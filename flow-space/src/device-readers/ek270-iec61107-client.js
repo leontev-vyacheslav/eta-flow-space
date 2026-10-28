@@ -50,6 +50,12 @@
  *   const client = new Ek270Iec61107Client({ host: '94.180.248.157', port: 5021 });
  *   const results = await client.read();
  *
+ * Through a GPRS modem that connects to us (БАРС-02, see ./bars02-gateway.js),
+ * createSocket replaces host and port:
+ *   const client = new Ek270Iec61107Client({
+ *       createSocket: () => gateway.createSocket({ identifier: '0458', port: 'rs485', baudRate: 9600 }),
+ *   });
+ *
  * Channel sharing: this class is transport-only and does NOT serialize
  * access to a shared host:port itself. When several devices (Mercury230,
  * EK270, Взлет026, Modicon, ...) sit behind the same TCP-serial gateway
@@ -111,13 +117,16 @@ class Ek270Iec61107Client {
      * @param {number} [options.retries=1] - Extra requests for a parameter that got no valid reply.
      * @param {number} [options.responseTimeoutMs=30000] - Overall timeout for a full read() call.
      * @param {string[]} [options.addresses] - IEC 61107 addresses to read (default: ADDRESSES).
+     * @param {() => net.Socket} [options.createSocket] - Socket factory (default: a new net.Socket); a GPRS modem channel
+     *     from the gateway (БАРС-02: Bars02Gateway#createSocket) makes host and port unnecessary.
      */
-    constructor({ host, port, evenParity = false, stepDelayMs = 300, stepTimeoutMs = 5000, retries = 1, responseTimeoutMs = 30000, addresses = ADDRESSES } = {}) {
-        if (!host) throw new Error('Ek270Iec61107Client: "host" is required');
-        if (!port) throw new Error('Ek270Iec61107Client: "port" is required');
+    constructor({ host, port, createSocket = null, evenParity = false, stepDelayMs = 300, stepTimeoutMs = 5000, retries = 1, responseTimeoutMs = 30000, addresses = ADDRESSES } = {}) {
+        if (!host && !createSocket) throw new Error('Ek270Iec61107Client: "host" is required');
+        if (!port && !createSocket) throw new Error('Ek270Iec61107Client: "port" is required');
 
         this.host = host;
         this.port = port;
+        this.createSocket = createSocket || (() => new net.Socket());
         this.evenParity = evenParity;
         this.stepDelayMs = stepDelayMs;
         this.stepTimeoutMs = stepTimeoutMs;
@@ -272,7 +281,7 @@ class Ek270Iec61107Client {
      */
     read() {
         return new Promise((resolve, reject) => {
-            const socket = new net.Socket();
+            const socket = this.createSocket();
             let buffer = Buffer.alloc(0);
             let step = 'start';
             const paramEntries = this.addresses.map((address) => [this._coreAddress(address), address]);

@@ -54,6 +54,13 @@
  *   const client = new Mercury230Client({ host: '94.180.248.157', port: 5012, address: 96 });
  *   const results = await client.read();
  *
+ * Through a GPRS modem that connects to us (БАРС-02, see ./bars02-gateway.js),
+ * createSocket replaces host and port:
+ *   const client = new Mercury230Client({
+ *       address: 96,
+ *       createSocket: () => gateway.createSocket({ identifier: '0458', port: 'rs485', baudRate: 9600 }),
+ *   });
+ *
  * Channel sharing: this class is transport-only and does NOT serialize
  * access to a shared host:port itself — the caller wraps read() in
  * withConnectionLock() from ./with-connection-lock.js, as the Node-RED
@@ -160,10 +167,13 @@ class Mercury230Client {
      * @param {number} [options.retries=2] - Extra requests after a request got no valid reply.
      * @param {number} [options.responseTimeoutMs=30000] - Overall timeout for a full read() call.
      * @param {(direction: string, bytes: Buffer) => void} [options.trace] - Called with every frame sent ('>') and received ('<').
+     * @param {() => net.Socket} [options.createSocket] - Socket factory (default: a new net.Socket); a GPRS modem channel
+     *     from the gateway (БАРС-02: Bars02Gateway#createSocket) makes host and port unnecessary.
      */
     constructor({
         host,
         port,
+        createSocket = null,
         address,
         password = '111111',
         asciiPassword = false,
@@ -174,8 +184,8 @@ class Mercury230Client {
         responseTimeoutMs = 30000,
         trace = null,
     } = {}) {
-        if (!host) throw new Error('Mercury230Client: "host" is required');
-        if (!port) throw new Error('Mercury230Client: "port" is required');
+        if (!host && !createSocket) throw new Error('Mercury230Client: "host" is required');
+        if (!port && !createSocket) throw new Error('Mercury230Client: "port" is required');
         if (!Number.isInteger(address) || address < 1 || address > 247) {
             throw new Error('Mercury230Client: "address" must be 1-247');
         }
@@ -186,6 +196,7 @@ class Mercury230Client {
 
         this.host = host;
         this.port = port;
+        this.createSocket = createSocket || (() => new net.Socket());
         this.address = address;
         this.password = password;
         this.asciiPassword = asciiPassword;
@@ -210,7 +221,7 @@ class Mercury230Client {
     // with Mercury230StatusError.
     _connect() {
         return new Promise((resolve, reject) => {
-            const socket = new net.Socket();
+            const socket = this.createSocket();
             let buffer = Buffer.alloc(0);
             let pending = null;
             let closedError = null;

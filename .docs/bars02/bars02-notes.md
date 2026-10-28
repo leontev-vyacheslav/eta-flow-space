@@ -243,8 +243,11 @@ those meters. The КМ-5 reader isn't checked against РМ-5, and there are no r
    «Строителей_53».
 3. **Readers over an existing socket:** a client gets `createSocket: () => gateway.createSocket({ identifier, port,
    baudRate, parity, stopBits })` and runs unchanged (the channel has the `net.Socket` methods the clients use).
-   Done for `vkt7-client.js`; tested end to end with `.tools/device-probes/bars02_emulator.js` relaying to the
-   Весна-2 ВКТ-7 (8 s read).
+   Every reader has it since 2026-10-28 (ВКТ-7, КМ-5/РМ-5 and ТВ7 first, then EK270, Irvis, Меркурий 230,
+   Взлёт023/024/026/034/042). `.tools/device-probes/reader_via_emulator.js` reads a meter directly and through the
+   gateway + `bars02_emulator.js` and compares the fields: the same fields on both paths for Irvis, Меркурий 230,
+   Взлёт023 and Взлёт026; EK270 read through the gateway (its direct reads lost to the line's other masters);
+   Взлёт024/042 and ТСРВ-034 checked with an explicit `createSocket` from the production container.
 4. **Re-pointing modems:** channel 2 → flow-space while channel 1 stays with the old system, or move channel 1 modem by
    modem. Do it remotely via the old system's link (`#R;CA0$` → edit `CSI*`/`CSP*` → `#W;CA0;…$` → `#W;CR;$`),
    by SMS `CSINM`, or on site.

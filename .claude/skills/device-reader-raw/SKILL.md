@@ -49,6 +49,12 @@ mapping, and nothing the meter can tell us is thrown away.
   last reply (Взлёт026).
 - **One session per read()**, overall timeout, `socket.destroy()` at the end (gateways never close their
   side). Transport-only: the Node-RED subflow wraps `read()` in `withConnectionLock(host, port, ...)`.
+- **The transport is replaceable**: the socket comes from `this.createSocket()` (option `createSocket`,
+  default `() => new net.Socket()`; host and port are then optional). A GPRS modem that connects to us
+  (БАРС-02, ETA GSM) hands the reader a channel from the gateway instead, so use only `connect`, `write`,
+  `on('data' | 'error' | 'close')` and `destroy` on the socket, keep the step and overall timeouts options
+  (`stepTimeoutMs`, `responseTimeoutMs`; GPRS needs ~15 s per request), and don't rely on the connection
+  being new for the first request. Every reader has it since 2026-10-28.
 - **Identity check** when possible: serial number option (`serialNumber`) — read() fails if another device
   answers.
 - **Unreadable registers**: if a block read gets "illegal address" or no reply, scan register by register
@@ -65,7 +71,7 @@ by address — touch its handshake only with great care) as the template:
    request/register block and what it returns, encoding/byte order, the strict-matching paragraph, usage,
    the channel-sharing paragraph. Note device quirks found on the live meter.
 2. Constants and register/element tables named after the protocol.
-3. `class <Type>Client` with an options object (`host`, `port`, `address`, timeouts, `retries`, `trace`),
+3. `class <Type>Client` with an options object (`host`, `port`, `createSocket`, `address`, timeouts, `retries`, `trace`),
    `_connect()` returning `{ request|readRegisters, close }`, `_readSession(connection, results)`,
    `read()` that rejects with `err.partialResults`.
 4. `module.exports = { <Type>Client, ... }` and a CLI block: `node <type>-client.js <host> <port> ...`
@@ -87,4 +93,6 @@ by address — touch its handshake only with great care) as the template:
   history.
 - Run 6–10 sessions: count requests and seconds per session; failures must be explained (collisions with
   production / another master), not ignored.
+- Check the GPRS path: `node .tools/device-probes/reader_via_emulator.js <type>-client.js <host> <port>
+  '<options json>'` reads the meter directly and through the БАРС-02 gateway + emulator and compares the fields.
 - Then follow `device-state-mapping` to keep the stored state identical.
