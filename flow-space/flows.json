@@ -67,7 +67,7 @@
         "id": "d6d7729c719fdc31",
         "type": "subflow",
         "name": "Mercury230 Client",
-        "info": "Reads every current value of an Incotex Меркурий 230 electricity meter over TCP (a gateway on its RS-485 port), via the shared Mercury230Client class registered on functionGlobalContext in settings.js: serial number, firmware, status word, clock, instant values (P, Q, S, U, I, cos φ, angles, frequency) and the energy registers A+, A-, R+, R- for the tariff sum and tariffs 1-4 plus A+ per phase, raw and named after the protocol (Psum, U1, I1, energy.sum.Aplus...). Giving them their meaning is left to the flow's collect-device-state. Send any message in to trigger a read; a new message comes out with `msg.payload` set to the result. On failure nothing goes out and node.error() is called. ADDRESS is the meter's network address; PASSWORD the level-1 channel password (6 digits).",
+        "info": "Reads every current value of an Incotex Меркурий 230 electricity meter over TCP (a gateway on its RS-485 port), via the shared Mercury230Client class registered on functionGlobalContext in settings.js: serial number, firmware, status word, clock, instant values (P, Q, S, U, I, cos φ, angles, frequency) and the energy registers A+, A-, R+, R- for the tariff sum and tariffs 1-4 plus A+ per phase, raw and named after the protocol (Psum, U1, I1, energy.sum.Aplus...). Giving them their meaning is left to the flow's collect-device-state. Send any message in to trigger a read; a new message comes out with `msg.payload` set to the result. On failure nothing goes out and node.error() is called. ADDRESS is the meter's network address; PASSWORD the level-1 channel password (6 digits).\n\nThrough a GPRS modem that connects to us instead of waiting for a connection (БАРС-02; ETA GSM once the gateway speaks its protocol): set GPRS_MODEM_ID to the identifier the modem sends on connect (БАРС-02: its CBN, e.g. Строителей_53; ETA GSM: its number, e.g. 0458); HOST and PORT are then unused. GPRS_LINE is the meter's line as the old dispatch system lists it: rs232 | rs232-powered | rs485, baud rate, 8N1 / 8E1 / 8O1 / 8N2 (default rs485 9600 8N1), or none to leave the modem's line as configured (old-firmware БАРС-02 3.0.1). The modems connect to one listener (global gprsModems, flow-space/src/device-readers/gprs-modems.js, port 2910; started at deploy), which reads one meter per modem at a time; over GPRS the read allows 15 s per request and at least 240 s in all. See .docs/bars02/bars02-notes.md.",
         "category": "",
         "in": [
             {
@@ -112,6 +112,16 @@
                 "name": "PASSWORD",
                 "type": "str",
                 "value": "111111"
+            },
+            {
+                "name": "GPRS_MODEM_ID",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "GPRS_LINE",
+                "type": "str",
+                "value": "rs485 9600 8N1"
             }
         ],
         "meta": {
@@ -133,7 +143,7 @@
         "id": "ek270iec61107reader00",
         "type": "subflow",
         "name": "EK270 IEC61107 Client",
-        "info": "Reads an EK270 gas volume corrector over TCP (e.g. via a МТЭК-2/3 GPRS gateway), using the IEC 61107-2001 programming-mode handshake, via the shared Ek270Iec61107Client class registered on functionGlobalContext in settings.js: the volume counters, flow rates, pressure, temperature, correction factor, identity, statuses (lists of active message numbers) and remaining battery life, raw and keyed by their IEC 61107 address (2:302, 7:310, 1:100...). Giving them their meaning is left to the flow's collect-device-state. Every value comes from a reply whose BCC is valid and whose echoed address matches the request, so another master's frames on the shared line are skipped; a poll that cannot get every value fails instead of storing shifted values. Send any message in to trigger a read; the result comes out in `msg.payload`. On failure nothing goes out and node.error() is called.",
+        "info": "Reads an EK270 gas volume corrector over TCP (e.g. via a МТЭК-2/3 GPRS gateway), using the IEC 61107-2001 programming-mode handshake, via the shared Ek270Iec61107Client class registered on functionGlobalContext in settings.js: the volume counters, flow rates, pressure, temperature, correction factor, identity, statuses (lists of active message numbers) and remaining battery life, raw and keyed by their IEC 61107 address (2:302, 7:310, 1:100...). Giving them their meaning is left to the flow's collect-device-state. Every value comes from a reply whose BCC is valid and whose echoed address matches the request, so another master's frames on the shared line are skipped; a poll that cannot get every value fails instead of storing shifted values. Send any message in to trigger a read; the result comes out in `msg.payload`. On failure nothing goes out and node.error() is called.\n\nThrough a GPRS modem that connects to us instead of waiting for a connection (БАРС-02; ETA GSM once the gateway speaks its protocol): set GPRS_MODEM_ID to the identifier the modem sends on connect (БАРС-02: its CBN, e.g. Строителей_53; ETA GSM: its number, e.g. 0458); HOST and PORT are then unused. GPRS_LINE is the meter's line as the old dispatch system lists it: rs232 | rs232-powered | rs485, baud rate, 8N1 / 8E1 / 8O1 / 8N2 (default rs485 9600 8N1), or none to leave the modem's line as configured (old-firmware БАРС-02 3.0.1). The modems connect to one listener (global gprsModems, flow-space/src/device-readers/gprs-modems.js, port 2910; started at deploy), which reads one meter per modem at a time; over GPRS the read allows 15 s per request and at least 240 s in all. See .docs/bars02/bars02-notes.md.",
         "category": "subflows",
         "in": [
             {
@@ -183,6 +193,16 @@
                 "name": "RESPONSE_TIMEOUT_MS",
                 "type": "num",
                 "value": "30000"
+            },
+            {
+                "name": "GPRS_MODEM_ID",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "GPRS_LINE",
+                "type": "str",
+                "value": "rs485 9600 8N1"
             }
         ],
         "meta": {},
@@ -202,7 +222,7 @@
         "id": "vkt7reader00000000",
         "type": "subflow",
         "name": "VKT7 Client",
-        "info": "Reads every current value of a Teplokom VKT-7 heat calculator over TCP (e.g. a Wiznet modem on its serial port), via the shared Vkt7Client class registered on functionGlobalContext in settings.js: service info, the units the device reports, current values and current totals of heat inputs input1/input2 and the device-wide elements, raw, named after the protocol's element table (t1, t2, P1, G1, V1, M1, Qo, VNR, VOS, NS...). Choosing the supply/return elements is left to the flow's collect-device-state. Send any message in to trigger a read; the same message comes out with `msg.payload` set to the result (null for elements outside the measurement scheme or with bad quality, deviceTime/timestamp as epoch ms). On failure nothing goes out and node.error() is called. ADDRESS is the calculator's network number (the built-in RS-485 adapter does not answer 0); WAKE_UP_BYTES is the count of 0xFF bytes before each request (2 for RS-232, 0 is fine for RS-485).\n\nThrough a БАРС-02 GPRS unit, which connects to us instead of waiting for a connection: set BARS02_ID to the identifier the unit sends (its CBN, e.g. Строителей_53); HOST and PORT are then unused. The unit connects to the gateway listening on BARS02_LISTEN_PORT (published by docker-compose; the office router forwards a public port to it; started at deploy), which reads one meter per unit at a time. BARS02_LINE is the meter line the unit sets before each read: rs232 | rs232-powered | rs485, baud rate, 8N1 / 8E1 / 8O1 / 8N2 (the old dispatch system's port settings), or none for old-firmware units (3.0.1), which keep the line their configuration sets. Over GPRS a request takes 4-5 s and a whole read 30-90 s, so the read allows 15 s per request and at least 240 s in all. See .docs/bars02/bars02-notes.md.",
+        "info": "Reads every current value of a Teplokom VKT-7 heat calculator over TCP (e.g. a Wiznet modem on its serial port), via the shared Vkt7Client class registered on functionGlobalContext in settings.js: service info, the units the device reports, current values and current totals of heat inputs input1/input2 and the device-wide elements, raw, named after the protocol's element table (t1, t2, P1, G1, V1, M1, Qo, VNR, VOS, NS...). Choosing the supply/return elements is left to the flow's collect-device-state. Send any message in to trigger a read; the same message comes out with `msg.payload` set to the result (null for elements outside the measurement scheme or with bad quality, deviceTime/timestamp as epoch ms). On failure nothing goes out and node.error() is called. ADDRESS is the calculator's network number (the built-in RS-485 adapter does not answer 0); WAKE_UP_BYTES is the count of 0xFF bytes before each request (2 for RS-232, 0 is fine for RS-485).\n\nThrough a GPRS modem that connects to us instead of waiting for a connection (БАРС-02; ETA GSM once the gateway speaks its protocol): set GPRS_MODEM_ID to the identifier the modem sends on connect (БАРС-02: its CBN, e.g. Строителей_53; ETA GSM: its number, e.g. 0458); HOST and PORT are then unused. GPRS_LINE is the meter's line as the old dispatch system lists it: rs232 | rs232-powered | rs485, baud rate, 8N1 / 8E1 / 8O1 / 8N2 (default rs232 9600 8N1), or none to leave the modem's line as configured (old-firmware БАРС-02 3.0.1). The modems connect to one listener (global gprsModems, flow-space/src/device-readers/gprs-modems.js, port 2910; started at deploy), which reads one meter per modem at a time; over GPRS the read allows 15 s per request and at least 240 s in all. See .docs/bars02/bars02-notes.md.",
         "category": "subflows",
         "in": [
             {
@@ -254,19 +274,14 @@
                 "value": "60000"
             },
             {
-                "name": "BARS02_ID",
+                "name": "GPRS_MODEM_ID",
                 "type": "str",
                 "value": ""
             },
             {
-                "name": "BARS02_LISTEN_PORT",
-                "type": "num",
-                "value": "2910"
-            },
-            {
-                "name": "BARS02_LINE",
+                "name": "GPRS_LINE",
                 "type": "str",
-                "value": "rs232-powered 9600 8N1"
+                "value": "rs232 9600 8N1"
             }
         ],
         "meta": {},
@@ -286,7 +301,7 @@
         "id": "km5reader000000000",
         "type": "subflow",
         "name": "KM5 Client",
-        "info": "Reads every current value of a TBN KM-5 heat meter over TCP (e.g. a Maestro modem on its RS-485 port), via the shared Km5Client class registered on functionGlobalContext in settings.js: firmware and type, status bytes, current values (commands 123 and 94) and totals with the clock (command 95), raw in the device's units and named after the protocol (GM1, GV1, t1, P1, W, M1, V1, Q, Tr...). Choosing the supply/return values is left to the flow's collect-device-state. Send any message in to trigger a read; the same message comes out with `msg.payload` set to the result (deviceTime/timestamp as epoch ms). On failure nothing goes out and node.error() is called. ADDRESS is the meter's network number, which is its factory number (e.g. 418200).\n\nThrough a БАРС-02 GPRS unit, which connects to us instead of waiting for a connection: set BARS02_ID to the identifier the unit sends (its CBN, e.g. Строителей_15); HOST and PORT are then unused. The unit connects to the gateway listening on BARS02_LISTEN_PORT (published by docker-compose; the office router forwards a public port to it; started at deploy), which reads one meter per unit at a time. BARS02_LINE is the meter line the unit sets before each read: rs232 | rs232-powered | rs485, baud rate, 8N1 / 8E1 / 8O1 / 8N2 (default rs485 9600 8N1, the old dispatch system's port settings), or none for old-firmware units (3.0.1), which keep the line their configuration sets. Over GPRS a request takes 4-5 s, so the read allows 15 s per request and at least 240 s in all; a garbled reply is repeated after 2 s of silence. The РМ-5 speaks the same protocol (ADDRESS = its factory number, RS-485 9600 8N1); replies that lost their first 4 bytes (the network number) are accepted when they are valid with it put back. See .docs/bars02/bars02-notes.md.",
+        "info": "Reads every current value of a TBN KM-5 heat meter over TCP (e.g. a Maestro modem on its RS-485 port), via the shared Km5Client class registered on functionGlobalContext in settings.js: firmware and type, status bytes, current values (commands 123 and 94) and totals with the clock (command 95), raw in the device's units and named after the protocol (GM1, GV1, t1, P1, W, M1, V1, Q, Tr...). Choosing the supply/return values is left to the flow's collect-device-state. Send any message in to trigger a read; the same message comes out with `msg.payload` set to the result (deviceTime/timestamp as epoch ms). On failure nothing goes out and node.error() is called. ADDRESS is the meter's network number, which is its factory number (e.g. 418200).\n\nThrough a GPRS modem that connects to us instead of waiting for a connection (БАРС-02; ETA GSM once the gateway speaks its protocol): set GPRS_MODEM_ID to the identifier the modem sends on connect (БАРС-02: its CBN, e.g. Строителей_53; ETA GSM: its number, e.g. 0458); HOST and PORT are then unused. GPRS_LINE is the meter's line as the old dispatch system lists it: rs232 | rs232-powered | rs485, baud rate, 8N1 / 8E1 / 8O1 / 8N2 (default rs485 9600 8N1), or none to leave the modem's line as configured (old-firmware БАРС-02 3.0.1). The modems connect to one listener (global gprsModems, flow-space/src/device-readers/gprs-modems.js, port 2910; started at deploy), which reads one meter per modem at a time; over GPRS the read allows 15 s per request and at least 240 s in all. The РМ-5 speaks the same protocol (ADDRESS = its factory number, RS-485 9600 8N1). Through a modem, replies that lost their first 4 bytes (the network number) are accepted when they are valid with it put back. See .docs/bars02/bars02-notes.md.",
         "category": "subflows",
         "in": [
             {
@@ -333,17 +348,12 @@
                 "value": "30000"
             },
             {
-                "name": "BARS02_ID",
+                "name": "GPRS_MODEM_ID",
                 "type": "str",
                 "value": ""
             },
             {
-                "name": "BARS02_LISTEN_PORT",
-                "type": "num",
-                "value": "2910"
-            },
-            {
-                "name": "BARS02_LINE",
+                "name": "GPRS_LINE",
                 "type": "str",
                 "value": "rs485 9600 8N1"
             }
@@ -365,7 +375,7 @@
         "id": "tv7reader000000000",
         "type": "subflow",
         "name": "TV7 Client",
-        "info": "Reads every current value of a Termotronic TV7 heat calculator over TCP (e.g. a Wiznet modem on its RS-232/RS-485 port), via the shared Tv7Client class registered on functionGlobalContext in settings.js: device info, instant values and totals for heat inputs input1/input2 and their pipes pipe1-pipe3, raw in SI units (GJ, MPa, m3, t) and named after the protocol tables (t, P, Go, Gm, F, V, M, Ftv, Qtv, VNR, VOS, NS...). Choosing the supply/return pipe and converting units is left to the flow's collect-device-state. Send any message in to trigger a read; the same message comes out with `msg.payload` set to the result (deviceTime/timestamp as epoch ms). On failure nothing goes out and node.error() is called. ADDRESS is the Modbus network address (1 by default); SERIAL_NUMBER, when set, is checked against the device's factory number.\n\nThrough a БАРС-02 GPRS unit, which connects to us instead of waiting for a connection: set BARS02_ID to the identifier the unit sends (its CBN, e.g. Строителей_15); HOST and PORT are then unused. The unit connects to the gateway listening on BARS02_LISTEN_PORT (published by docker-compose; the office router forwards a public port to it; started at deploy), which reads one meter per unit at a time. BARS02_LINE is the meter line the unit sets before each read: rs232 | rs232-powered | rs485, baud rate, 8N1 / 8E1 / 8O1 / 8N2 (default rs232-powered 9600 8N1, the old dispatch system's port settings), or none for old-firmware units (3.0.1), which keep the line their configuration sets. Over GPRS a request takes 4-5 s, so the read allows 15 s per request and at least 240 s in all; a garbled reply is repeated after 2 s of silence. Set SERIAL_NUMBER to the meter's factory number or empty (the default belongs to the example meter 19072584). Firmware 1.00 (the ТВ7 behind the БАРС-02 units, 2026-10-26) refuses the totals in one request; the client reads them in parts and leaves the device-wide block 3513-3532 (operating times, events, Qсум) null. See .docs/bars02/bars02-notes.md.",
+        "info": "Reads every current value of a Termotronic TV7 heat calculator over TCP (e.g. a Wiznet modem on its RS-232/RS-485 port), via the shared Tv7Client class registered on functionGlobalContext in settings.js: device info, instant values and totals for heat inputs input1/input2 and their pipes pipe1-pipe3, raw in SI units (GJ, MPa, m3, t) and named after the protocol tables (t, P, Go, Gm, F, V, M, Ftv, Qtv, VNR, VOS, NS...). Choosing the supply/return pipe and converting units is left to the flow's collect-device-state. Send any message in to trigger a read; the same message comes out with `msg.payload` set to the result (deviceTime/timestamp as epoch ms). On failure nothing goes out and node.error() is called. ADDRESS is the Modbus network address (1 by default); SERIAL_NUMBER, when set, is checked against the device's factory number.\n\nThrough a GPRS modem that connects to us instead of waiting for a connection (БАРС-02; ETA GSM once the gateway speaks its protocol): set GPRS_MODEM_ID to the identifier the modem sends on connect (БАРС-02: its CBN, e.g. Строителей_53; ETA GSM: its number, e.g. 0458); HOST and PORT are then unused. GPRS_LINE is the meter's line as the old dispatch system lists it: rs232 | rs232-powered | rs485, baud rate, 8N1 / 8E1 / 8O1 / 8N2 (default rs232 9600 8N1), or none to leave the modem's line as configured (old-firmware БАРС-02 3.0.1). The modems connect to one listener (global gprsModems, flow-space/src/device-readers/gprs-modems.js, port 2910; started at deploy), which reads one meter per modem at a time; over GPRS the read allows 15 s per request and at least 240 s in all. Set SERIAL_NUMBER to the meter's factory number or empty (the default belongs to the example meter 19072584). Firmware 1.00 (the ТВ7 behind the БАРС-02 units, 2026-10-26) refuses the totals in one request; the client reads them in parts and leaves the device-wide block 3513-3532 (operating times, events, Qсум) null. See .docs/bars02/bars02-notes.md.",
         "category": "subflows",
         "in": [
             {
@@ -417,19 +427,14 @@
                 "value": "30000"
             },
             {
-                "name": "BARS02_ID",
+                "name": "GPRS_MODEM_ID",
                 "type": "str",
                 "value": ""
             },
             {
-                "name": "BARS02_LISTEN_PORT",
-                "type": "num",
-                "value": "2910"
-            },
-            {
-                "name": "BARS02_LINE",
+                "name": "GPRS_LINE",
                 "type": "str",
-                "value": "rs232-powered 9600 8N1"
+                "value": "rs232 9600 8N1"
             }
         ],
         "meta": {},
@@ -449,7 +454,7 @@
         "id": "vzljot026reader000",
         "type": "subflow",
         "name": "Vzljot026 Client",
-        "info": "Reads every current value of a Vzljot TSRV-026M heat calculator over TCP (a gateway on its RS-485 port; plain Modbus RTU, input registers), via the shared Vzljot026Client class registered on functionGlobalContext in settings.js: serial number, clock, states, the flow (PR1-PR4, LOG1-LOG2), temperature (PT1-PT5) and pressure (PD1-PD4) channels, the pipes TR1-TR4 and the heat system TS, raw in the device's units (m3/h, °C, MPa, Gcal, t, m3) and named after the register list. Choosing the supply/return pipe and converting units is left to the flow's collect-device-state. Send any message in to trigger a read; the same message comes out with `msg.payload` set to the result (deviceTime/timestamp as epoch ms). On failure nothing goes out and node.error() is called. ADDRESS is the Modbus address (1 by default); SERIAL_NUMBER, when set, is checked against the device's serial number.",
+        "info": "Reads every current value of a Vzljot TSRV-026M heat calculator over TCP (a gateway on its RS-485 port; plain Modbus RTU, input registers), via the shared Vzljot026Client class registered on functionGlobalContext in settings.js: serial number, clock, states, the flow (PR1-PR4, LOG1-LOG2), temperature (PT1-PT5) and pressure (PD1-PD4) channels, the pipes TR1-TR4 and the heat system TS, raw in the device's units (m3/h, °C, MPa, Gcal, t, m3) and named after the register list. Choosing the supply/return pipe and converting units is left to the flow's collect-device-state. Send any message in to trigger a read; the same message comes out with `msg.payload` set to the result (deviceTime/timestamp as epoch ms). On failure nothing goes out and node.error() is called. ADDRESS is the Modbus address (1 by default); SERIAL_NUMBER, when set, is checked against the device's serial number.\n\nThrough a GPRS modem that connects to us instead of waiting for a connection (БАРС-02; ETA GSM once the gateway speaks its protocol): set GPRS_MODEM_ID to the identifier the modem sends on connect (БАРС-02: its CBN, e.g. Строителей_53; ETA GSM: its number, e.g. 0458); HOST and PORT are then unused. GPRS_LINE is the meter's line as the old dispatch system lists it: rs232 | rs232-powered | rs485, baud rate, 8N1 / 8E1 / 8O1 / 8N2 (default rs485 4800 8N2), or none to leave the modem's line as configured (old-firmware БАРС-02 3.0.1). The modems connect to one listener (global gprsModems, flow-space/src/device-readers/gprs-modems.js, port 2910; started at deploy), which reads one meter per modem at a time; over GPRS the read allows 15 s per request and at least 240 s in all. See .docs/bars02/bars02-notes.md.",
         "category": "subflows",
         "in": [
             {
@@ -499,6 +504,16 @@
                 "name": "RESPONSE_TIMEOUT_MS",
                 "type": "num",
                 "value": "30000"
+            },
+            {
+                "name": "GPRS_MODEM_ID",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "GPRS_LINE",
+                "type": "str",
+                "value": "rs485 4800 8N2"
             }
         ],
         "meta": {},
@@ -518,7 +533,7 @@
         "id": "vzljot024reader000",
         "type": "subflow",
         "name": "Vzljot024 Client",
-        "info": "Reads every current value of a Vzljot TSRV-024M heat calculator (ВЗЛЕТ ТСР-М) over TCP (a gateway on its RS-485 port; plain Modbus RTU, input registers and function 0x11), via the shared Vzljot024Client class registered on functionGlobalContext in settings.js: version, serial number, clock, outputs, the R, I and pulse inputs, the pressure (PD1-PD6), temperature (PT1-PT9) and flow (PR1-PR9) channels and the heat systems TS1-TS3 with their pipes TR1-TR4, raw in the device's units (m3/h, °C, MPa, Gcal, t, m3; time counters in seconds) and named after the register list. Choosing the supply/return pipe and converting units is left to the flow's collect-device-state. Send any message in to trigger a read (about 12 s, 31 requests); the same message comes out with `msg.payload` set to the result (deviceTime/timestamp as epoch ms). On failure nothing goes out and node.error() is called. ADDRESS is the Modbus address (1 by default); SERIAL_NUMBER, when set, is checked against the device's serial number.",
+        "info": "Reads every current value of a Vzljot TSRV-024M heat calculator (ВЗЛЕТ ТСР-М) over TCP (a gateway on its RS-485 port; plain Modbus RTU, input registers and function 0x11), via the shared Vzljot024Client class registered on functionGlobalContext in settings.js: version, serial number, clock, outputs, the R, I and pulse inputs, the pressure (PD1-PD6), temperature (PT1-PT9) and flow (PR1-PR9) channels and the heat systems TS1-TS3 with their pipes TR1-TR4, raw in the device's units (m3/h, °C, MPa, Gcal, t, m3; time counters in seconds) and named after the register list. Choosing the supply/return pipe and converting units is left to the flow's collect-device-state. Send any message in to trigger a read (about 12 s, 31 requests); the same message comes out with `msg.payload` set to the result (deviceTime/timestamp as epoch ms). On failure nothing goes out and node.error() is called. ADDRESS is the Modbus address (1 by default); SERIAL_NUMBER, when set, is checked against the device's serial number.\n\nThrough a GPRS modem that connects to us instead of waiting for a connection (БАРС-02; ETA GSM once the gateway speaks its protocol): set GPRS_MODEM_ID to the identifier the modem sends on connect (БАРС-02: its CBN, e.g. Строителей_53; ETA GSM: its number, e.g. 0458); HOST and PORT are then unused. GPRS_LINE is the meter's line as the old dispatch system lists it: rs232 | rs232-powered | rs485, baud rate, 8N1 / 8E1 / 8O1 / 8N2 (default rs485 4800 8N2), or none to leave the modem's line as configured (old-firmware БАРС-02 3.0.1). The modems connect to one listener (global gprsModems, flow-space/src/device-readers/gprs-modems.js, port 2910; started at deploy), which reads one meter per modem at a time; over GPRS the read allows 15 s per request and at least 240 s in all. See .docs/bars02/bars02-notes.md.",
         "category": "subflows",
         "in": [
             {
@@ -568,6 +583,16 @@
                 "name": "RESPONSE_TIMEOUT_MS",
                 "type": "num",
                 "value": "45000"
+            },
+            {
+                "name": "GPRS_MODEM_ID",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "GPRS_LINE",
+                "type": "str",
+                "value": "rs485 4800 8N2"
             }
         ],
         "meta": {},
@@ -587,7 +612,7 @@
         "id": "vzljot042reader000",
         "type": "subflow",
         "name": "Vzljot042 Client",
-        "info": "Reads every current value of a Vzljot TSRV-042 heat calculator (ВЗЛЕТ ТСР-М) over TCP (a gateway on its RS-485 port; plain Modbus RTU, input registers and function 0x11), via the shared Vzljot042Client class registered on functionGlobalContext in settings.js: version, serial number, clock, the pressure (PD1-PD4), temperature (PT1-PT4, PTxv, PTnv) and flow (PR1-PR7) channels, the relay inputs, the cold-water (XV), make-up (KP) and electricity (EL) channels and the heat systems TS1-TS2 with their heating (co) and hot-water (gvs) totals, raw in the device's units (MPa, °C, m3/h, t/h, Gcal, Gcal/h, t, m3; time counters in minutes) and named after the register list. Values used in the calculation (t, P) and the real sensor values (tReal, PReal...) both come out. Choosing the supply/return channel and converting units is left to the flow's collect-device-state. Send any message in to trigger a read (about 6 s, 20 requests); the same message comes out with `msg.payload` set to the result (deviceTime/timestamp as epoch ms). On failure nothing goes out and node.error() is called. ADDRESS is the Modbus address (1 by default); SERIAL_NUMBER, when set, is checked against the device's serial number.",
+        "info": "Reads every current value of a Vzljot TSRV-042 heat calculator (ВЗЛЕТ ТСР-М) over TCP (a gateway on its RS-485 port; plain Modbus RTU, input registers and function 0x11), via the shared Vzljot042Client class registered on functionGlobalContext in settings.js: version, serial number, clock, the pressure (PD1-PD4), temperature (PT1-PT4, PTxv, PTnv) and flow (PR1-PR7) channels, the relay inputs, the cold-water (XV), make-up (KP) and electricity (EL) channels and the heat systems TS1-TS2 with their heating (co) and hot-water (gvs) totals, raw in the device's units (MPa, °C, m3/h, t/h, Gcal, Gcal/h, t, m3; time counters in minutes) and named after the register list. Values used in the calculation (t, P) and the real sensor values (tReal, PReal...) both come out. Choosing the supply/return channel and converting units is left to the flow's collect-device-state. Send any message in to trigger a read (about 6 s, 20 requests); the same message comes out with `msg.payload` set to the result (deviceTime/timestamp as epoch ms). On failure nothing goes out and node.error() is called. ADDRESS is the Modbus address (1 by default); SERIAL_NUMBER, when set, is checked against the device's serial number.\n\nThrough a GPRS modem that connects to us instead of waiting for a connection (БАРС-02; ETA GSM once the gateway speaks its protocol): set GPRS_MODEM_ID to the identifier the modem sends on connect (БАРС-02: its CBN, e.g. Строителей_53; ETA GSM: its number, e.g. 0458); HOST and PORT are then unused. GPRS_LINE is the meter's line as the old dispatch system lists it: rs232 | rs232-powered | rs485, baud rate, 8N1 / 8E1 / 8O1 / 8N2 (default rs485 9600 8N1), or none to leave the modem's line as configured (old-firmware БАРС-02 3.0.1). The modems connect to one listener (global gprsModems, flow-space/src/device-readers/gprs-modems.js, port 2910; started at deploy), which reads one meter per modem at a time; over GPRS the read allows 15 s per request and at least 240 s in all. See .docs/bars02/bars02-notes.md.",
         "category": "subflows",
         "in": [
             {
@@ -637,6 +662,16 @@
                 "name": "RESPONSE_TIMEOUT_MS",
                 "type": "num",
                 "value": "30000"
+            },
+            {
+                "name": "GPRS_MODEM_ID",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "GPRS_LINE",
+                "type": "str",
+                "value": "rs485 9600 8N1"
             }
         ],
         "meta": {},
@@ -656,7 +691,7 @@
         "id": "vzljot034reader000",
         "type": "subflow",
         "name": "Vzljot034 Client",
-        "info": "Reads every current value of a Vzljot TSRV-033/034 heat calculator (ВЗЛЕТ ТСР-М, firmware 63.01.03) over TCP (a gateway on its RS-485 port; plain Modbus RTU, input registers, the serial numbers and clock from holding registers, function 0x11), via the shared Vzljot034Client class registered on functionGlobalContext in settings.js: version, serial number, clock, the measuring channels CH1-CH3 (temperature, flow, density, enthalpy, mass and volume totals), the cold-water channel XV, the heat formulas W1-W6 with their powers E1-E6, the status word and the alarm НС1-НС5 times, raw in the device's units (°C, t/h, m3/h, kJ/kg, MJ, GJ/h, kg, m3; times in s) and named after the register list. Choosing the supply/return channel and converting units is left to the flow's collect-device-state. Send any message in to trigger a read (15-35 s: the meter is slow and the first requests after a connect are lost); the same message comes out with `msg.payload` set to the result (deviceTime/timestamp as epoch ms). On failure nothing goes out and node.error() is called. ADDRESS is the Modbus address (1 by default); SERIAL_NUMBER, when set, is checked against the device's serial number.",
+        "info": "Reads every current value of a Vzljot TSRV-033/034 heat calculator (ВЗЛЕТ ТСР-М, firmware 63.01.03) over TCP (a gateway on its RS-485 port; plain Modbus RTU, input registers, the serial numbers and clock from holding registers, function 0x11), via the shared Vzljot034Client class registered on functionGlobalContext in settings.js: version, serial number, clock, the measuring channels CH1-CH3 (temperature, flow, density, enthalpy, mass and volume totals), the cold-water channel XV, the heat formulas W1-W6 with their powers E1-E6, the status word and the alarm НС1-НС5 times, raw in the device's units (°C, t/h, m3/h, kJ/kg, MJ, GJ/h, kg, m3; times in s) and named after the register list. Choosing the supply/return channel and converting units is left to the flow's collect-device-state. Send any message in to trigger a read (15-35 s: the meter is slow and the first requests after a connect are lost); the same message comes out with `msg.payload` set to the result (deviceTime/timestamp as epoch ms). On failure nothing goes out and node.error() is called. ADDRESS is the Modbus address (1 by default); SERIAL_NUMBER, when set, is checked against the device's serial number.\n\nThrough a GPRS modem that connects to us instead of waiting for a connection (БАРС-02; ETA GSM once the gateway speaks its protocol): set GPRS_MODEM_ID to the identifier the modem sends on connect (БАРС-02: its CBN, e.g. Строителей_53; ETA GSM: its number, e.g. 0458); HOST and PORT are then unused. GPRS_LINE is the meter's line as the old dispatch system lists it: rs232 | rs232-powered | rs485, baud rate, 8N1 / 8E1 / 8O1 / 8N2 (default rs485 4800 8N1), or none to leave the modem's line as configured (old-firmware БАРС-02 3.0.1). The modems connect to one listener (global gprsModems, flow-space/src/device-readers/gprs-modems.js, port 2910; started at deploy), which reads one meter per modem at a time; over GPRS the read allows 15 s per request and at least 240 s in all. See .docs/bars02/bars02-notes.md.",
         "category": "subflows",
         "in": [
             {
@@ -706,6 +741,16 @@
                 "name": "RESPONSE_TIMEOUT_MS",
                 "type": "num",
                 "value": "60000"
+            },
+            {
+                "name": "GPRS_MODEM_ID",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "GPRS_LINE",
+                "type": "str",
+                "value": "rs485 4800 8N1"
             }
         ],
         "meta": {},
@@ -725,7 +770,7 @@
         "id": "vzljot023reader000",
         "type": "subflow",
         "name": "Vzljot023 Client",
-        "info": "Reads every current value of a Vzljot TSRV-023 heat calculator (ВЗЛЕТ ТСР, firmware 76.10) over TCP (a gateway on its RS-485 port; plain Modbus RTU: input registers, the totals, time counters, serial number, clock and unit settings from holding registers, function 0x11), via the shared Vzljot023Client class registered on functionGlobalContext in settings.js: version, serial number, clock, the measuring points P1-P6, the calculation channels CH0-CH6 (density, enthalpy, temperature, pressure, mass flow, mass), the heat systems TS1-TS3 (heats W1-W3, powers E1-E3, work, failure and alarm times) and the unit settings, raw in the device's units (°C, MPa, kg/s, m3/s, J/kg, GJ, t, W; point volumes in litres; times in s) and named after the register list. Choosing the supply/return channel and converting units is left to the flow's collect-device-state. Send any message in to trigger a read (about 4 s); the same message comes out with `msg.payload` set to the result (deviceTime/timestamp as epoch ms). On failure nothing goes out and node.error() is called. ADDRESS is the Modbus address (1 by default); SERIAL_NUMBER, when set, is checked against the device's serial number.",
+        "info": "Reads every current value of a Vzljot TSRV-023 heat calculator (ВЗЛЕТ ТСР, firmware 76.10) over TCP (a gateway on its RS-485 port; plain Modbus RTU: input registers, the totals, time counters, serial number, clock and unit settings from holding registers, function 0x11), via the shared Vzljot023Client class registered on functionGlobalContext in settings.js: version, serial number, clock, the measuring points P1-P6, the calculation channels CH0-CH6 (density, enthalpy, temperature, pressure, mass flow, mass), the heat systems TS1-TS3 (heats W1-W3, powers E1-E3, work, failure and alarm times) and the unit settings, raw in the device's units (°C, MPa, kg/s, m3/s, J/kg, GJ, t, W; point volumes in litres; times in s) and named after the register list. Choosing the supply/return channel and converting units is left to the flow's collect-device-state. Send any message in to trigger a read (about 4 s); the same message comes out with `msg.payload` set to the result (deviceTime/timestamp as epoch ms). On failure nothing goes out and node.error() is called. ADDRESS is the Modbus address (1 by default); SERIAL_NUMBER, when set, is checked against the device's serial number.\n\nThrough a GPRS modem that connects to us instead of waiting for a connection (БАРС-02; ETA GSM once the gateway speaks its protocol): set GPRS_MODEM_ID to the identifier the modem sends on connect (БАРС-02: its CBN, e.g. Строителей_53; ETA GSM: its number, e.g. 0458); HOST and PORT are then unused. GPRS_LINE is the meter's line as the old dispatch system lists it: rs232 | rs232-powered | rs485, baud rate, 8N1 / 8E1 / 8O1 / 8N2 (default rs485 9600 8N1), or none to leave the modem's line as configured (old-firmware БАРС-02 3.0.1). The modems connect to one listener (global gprsModems, flow-space/src/device-readers/gprs-modems.js, port 2910; started at deploy), which reads one meter per modem at a time; over GPRS the read allows 15 s per request and at least 240 s in all. See .docs/bars02/bars02-notes.md.",
         "category": "subflows",
         "in": [
             {
@@ -775,6 +820,16 @@
                 "name": "RESPONSE_TIMEOUT_MS",
                 "type": "num",
                 "value": "30000"
+            },
+            {
+                "name": "GPRS_MODEM_ID",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "GPRS_LINE",
+                "type": "str",
+                "value": "rs485 9600 8N1"
             }
         ],
         "meta": {},
@@ -794,7 +849,7 @@
         "id": "irvisreader0000000",
         "type": "subflow",
         "name": "Irvis Client",
-        "info": "Reads the current values of an IRVIS gas flow meter (ИРВИС-Ультра, ИРВИС-РС4М...) from its registrar over TCP (a gateway on its RS-485 port; plain Modbus RTU), via the shared IrvisClient class registered on functionGlobalContext in settings.js: registrar id, clock, operating time, Vnc, Qnc, Qwc, P (kPa), T (K) and the flag words Fl_a/Fl_b of flow meter 1, raw and named after the protocol. Converting units and decoding the flags is left to the flow's collect-device-state. Send any message in to trigger a read; the same message comes out with `msg.payload` set to the result (deviceTime/timestamp as epoch ms). On failure nothing goes out and node.error() is called. ADDRESS is the registrar's Modbus address (set at shipping from the serial number, e.g. 29804 -> 104).",
+        "info": "Reads the current values of an IRVIS gas flow meter (ИРВИС-Ультра, ИРВИС-РС4М...) from its registrar over TCP (a gateway on its RS-485 port; plain Modbus RTU), via the shared IrvisClient class registered on functionGlobalContext in settings.js: registrar id, clock, operating time, Vnc, Qnc, Qwc, P (kPa), T (K) and the flag words Fl_a/Fl_b of flow meter 1, raw and named after the protocol. Converting units and decoding the flags is left to the flow's collect-device-state. Send any message in to trigger a read; the same message comes out with `msg.payload` set to the result (deviceTime/timestamp as epoch ms). On failure nothing goes out and node.error() is called. ADDRESS is the registrar's Modbus address (set at shipping from the serial number, e.g. 29804 -> 104).\n\nThrough a GPRS modem that connects to us instead of waiting for a connection (БАРС-02; ETA GSM once the gateway speaks its protocol): set GPRS_MODEM_ID to the identifier the modem sends on connect (БАРС-02: its CBN, e.g. Строителей_53; ETA GSM: its number, e.g. 0458); HOST and PORT are then unused. GPRS_LINE is the meter's line as the old dispatch system lists it: rs232 | rs232-powered | rs485, baud rate, 8N1 / 8E1 / 8O1 / 8N2 (default rs485 9600 8N1), or none to leave the modem's line as configured (old-firmware БАРС-02 3.0.1). The modems connect to one listener (global gprsModems, flow-space/src/device-readers/gprs-modems.js, port 2910; started at deploy), which reads one meter per modem at a time; over GPRS the read allows 15 s per request and at least 240 s in all. See .docs/bars02/bars02-notes.md.",
         "category": "subflows",
         "in": [
             {
@@ -839,6 +894,16 @@
                 "name": "RESPONSE_TIMEOUT_MS",
                 "type": "num",
                 "value": "20000"
+            },
+            {
+                "name": "GPRS_MODEM_ID",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "GPRS_LINE",
+                "type": "str",
+                "value": "rs485 9600 8N1"
             }
         ],
         "meta": {},
@@ -1039,11 +1104,11 @@
         "type": "function",
         "z": "d6d7729c719fdc31",
         "name": "get-measurements",
-        "func": "const HOST = env.get('HOST');\nconst PORT = Number(env.get('PORT'));\nconst ADDRESS = Number(env.get('ADDRESS'));\nconst PASSWORD = env.get('PASSWORD') || '111111';\n\nconst { Mercury230Client } = global.get('mercury230');\nconst { withConnectionLock } = global.get('withConnectionLock');\n\n(async () => {\n    try {\n        const deviceState = await withConnectionLock(HOST, PORT, async () => {\n            const client = new Mercury230Client({ host: HOST, port: PORT, address: ADDRESS, password: PASSWORD });\n            // Mercury230Client.read() opens the socket and the channel, reads\n            // the identity, clock, instant values and energy registers, then\n            // closes the channel and the socket itself.\n            return await client.read();\n        });\n\n        node.send({ payload: deviceState });\n        node.status({ fill: 'green', shape: 'dot', text: 'ok ' + new Date().toLocaleTimeString() });\n    } catch (err) {\n        // Full read failed — nothing goes out. No partial/incomplete set is sent downstream.\n        node.error('Mercury230 read failed: ' + err.message);\n        node.status({ fill: 'red', shape: 'ring', text: 'error' });\n    }\n})();\n\nreturn null;\n",
+        "func": "const HOST = env.get('HOST');\nconst PORT = Number(env.get('PORT'));\nconst ADDRESS = Number(env.get('ADDRESS'));\nconst PASSWORD = env.get('PASSWORD') || '111111';\nconst GPRS_MODEM_ID = env.get('GPRS_MODEM_ID');\nconst GPRS_LINE = env.get('GPRS_LINE');\n\nconst { Mercury230Client } = global.get('mercury230');\nconst { withConnectionLock } = global.get('withConnectionLock');\nconst gprsModems = global.get('gprsModems');\n\n(async () => {\n    try {\n        // Through a GPRS modem (GPRS_MODEM_ID) the reader gets the modem's\n        // channel instead of host and port; the gateway reads one meter per\n        // modem at a time.\n        const transport = GPRS_MODEM_ID\n            ? await gprsModems.readerOptions({ identifier: GPRS_MODEM_ID, line: GPRS_LINE })\n            : { host: HOST, port: PORT };\n        const deviceState = await withConnectionLock(GPRS_MODEM_ID ? 'gprs' : HOST, GPRS_MODEM_ID || PORT, async () => {\n            const client = new Mercury230Client({ address: ADDRESS, password: PASSWORD, ...transport });\n            // Mercury230Client.read() opens the socket and the channel, reads\n            // the identity, clock, instant values and energy registers, then\n            // closes the channel and the socket itself.\n            return await client.read();\n        });\n\n        node.send({ payload: deviceState });\n        node.status({ fill: 'green', shape: 'dot', text: 'ok ' + new Date().toLocaleTimeString() });\n    } catch (err) {\n        // Full read failed — nothing goes out. No partial/incomplete set is sent downstream.\n        node.error('Mercury230 read failed: ' + err.message);\n        node.status({ fill: 'red', shape: 'ring', text: 'error' });\n    }\n})();\n\nreturn null;\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
-        "initialize": "",
+        "initialize": "// Through a GPRS modem: start the modem gateway at deploy, so the modem can\n// connect before the first read.\nif (env.get('GPRS_MODEM_ID')) {\n    global.get('gprsModems').start().catch((err) => node.error(err.message));\n}\n",
         "finalize": "",
         "libs": [
             {
@@ -1074,11 +1139,11 @@
         "type": "function",
         "z": "ek270iec61107reader00",
         "name": "get-measurements",
-        "func": "const HOST = env.get('HOST');\nconst PORT = Number(env.get('PORT'));\nconst EVEN_PARITY_RAW = env.get('EVEN_PARITY');\nconst EVEN_PARITY = EVEN_PARITY_RAW === true || EVEN_PARITY_RAW === 'true';\nconst STEP_DELAY_MS = Number(env.get('STEP_DELAY_MS')) || 300;\nconst RESPONSE_TIMEOUT_MS = Number(env.get('RESPONSE_TIMEOUT_MS')) || 30000;\n\nconst { Ek270Iec61107Client } = global.get('ek270Iec61107');\nconst { withConnectionLock } = global.get('withConnectionLock');\n\n(async () => {\n    try {\n        const deviceState = await withConnectionLock(HOST, PORT, async () => {\n            const client = new Ek270Iec61107Client({\n                host: HOST,\n                port: PORT,\n                evenParity: EVEN_PARITY,\n                stepDelayMs: STEP_DELAY_MS,\n                responseTimeoutMs: RESPONSE_TIMEOUT_MS,\n            });\n            // Ek270Iec61107Client.read() opens the socket, runs the full\n            // IEC 61107 handshake, reads every parameter and closes the\n            // socket itself — unlike Mercury230Client there is no separate\n            // connect()/disconnect() step to call here.\n            return await client.read();\n        });\n\n        msg.payload = deviceState;\n        node.send(msg);\n        node.status({ fill: 'green', shape: 'dot', text: 'ok ' + new Date().toLocaleTimeString() });\n    } catch (err) {\n        // Full read failed — nothing goes out. No partial/incomplete set is sent downstream.\n        node.error('EK270 read failed: ' + err.message, msg);\n        node.status({ fill: 'red', shape: 'ring', text: 'error' });\n    }\n})();\n\nreturn null;",
+        "func": "const HOST = env.get('HOST');\nconst PORT = Number(env.get('PORT'));\nconst EVEN_PARITY_RAW = env.get('EVEN_PARITY');\nconst EVEN_PARITY = EVEN_PARITY_RAW === true || EVEN_PARITY_RAW === 'true';\nconst STEP_DELAY_MS = Number(env.get('STEP_DELAY_MS')) || 300;\nconst RESPONSE_TIMEOUT_MS = Number(env.get('RESPONSE_TIMEOUT_MS')) || 30000;\nconst GPRS_MODEM_ID = env.get('GPRS_MODEM_ID');\nconst GPRS_LINE = env.get('GPRS_LINE');\n\nconst { Ek270Iec61107Client } = global.get('ek270Iec61107');\nconst { withConnectionLock } = global.get('withConnectionLock');\nconst gprsModems = global.get('gprsModems');\n\n(async () => {\n    try {\n        // Through a GPRS modem (GPRS_MODEM_ID) the reader gets the modem's\n        // channel instead of host and port; the gateway reads one meter per\n        // modem at a time.\n        const transport = GPRS_MODEM_ID\n            ? await gprsModems.readerOptions({ identifier: GPRS_MODEM_ID, line: GPRS_LINE, responseTimeoutMs: RESPONSE_TIMEOUT_MS })\n            : { host: HOST, port: PORT };\n        const deviceState = await withConnectionLock(GPRS_MODEM_ID ? 'gprs' : HOST, GPRS_MODEM_ID || PORT, async () => {\n            const client = new Ek270Iec61107Client({\n                evenParity: EVEN_PARITY,\n                stepDelayMs: STEP_DELAY_MS,\n                responseTimeoutMs: RESPONSE_TIMEOUT_MS,\n                ...transport,\n            });\n            // Ek270Iec61107Client.read() opens the socket, runs the full\n            // IEC 61107 handshake, reads every parameter and closes the\n            // socket itself — unlike Mercury230Client there is no separate\n            // connect()/disconnect() step to call here.\n            return await client.read();\n        });\n\n        msg.payload = deviceState;\n        node.send(msg);\n        node.status({ fill: 'green', shape: 'dot', text: 'ok ' + new Date().toLocaleTimeString() });\n    } catch (err) {\n        // Full read failed — nothing goes out. No partial/incomplete set is sent downstream.\n        node.error('EK270 read failed: ' + err.message, msg);\n        node.status({ fill: 'red', shape: 'ring', text: 'error' });\n    }\n})();\n\nreturn null;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
-        "initialize": "",
+        "initialize": "// Through a GPRS modem: start the modem gateway at deploy, so the modem can\n// connect before the first read.\nif (env.get('GPRS_MODEM_ID')) {\n    global.get('gprsModems').start().catch((err) => node.error(err.message));\n}\n",
         "finalize": "",
         "libs": [],
         "x": 220,
@@ -1104,11 +1169,11 @@
         "type": "function",
         "z": "vkt7reader00000000",
         "name": "get-measurements",
-        "func": "const HOST = env.get('HOST');\nconst PORT = Number(env.get('PORT'));\nconst ADDRESS = Number(env.get('ADDRESS'));\nconst WAKE_UP_BYTES = Number(env.get('WAKE_UP_BYTES'));\nconst RESPONSE_TIMEOUT_MS = Number(env.get('RESPONSE_TIMEOUT_MS')) || 60000;\nconst BARS02_ID = env.get('BARS02_ID');\nconst BARS02_LISTEN_PORT = Number(env.get('BARS02_LISTEN_PORT')) || 2910;\nconst BARS02_LINE = env.get('BARS02_LINE') || 'rs232-powered 9600 8N1';\n\nconst { Vkt7Client } = global.get('vkt7');\nconst { withConnectionLock } = global.get('withConnectionLock');\nconst bars02 = global.get('bars02');\n\n// Through a БАРС-02 GPRS unit: it connects to the gateway listening on\n// BARS02_LISTEN_PORT, which serves one meter per unit at a time. Over GPRS a\n// request takes 4-5 s and a whole read 30-90 s.\nasync function readThroughBars02() {\n    const gateway = bars02.getGateway(BARS02_LISTEN_PORT);\n    await gateway.ready;\n    const line = bars02.parseLineSettings(BARS02_LINE);\n    const client = new Vkt7Client({\n        address: ADDRESS,\n        wakeUpBytes: Number.isNaN(WAKE_UP_BYTES) ? 2 : WAKE_UP_BYTES,\n        stepTimeoutMs: 15000,\n        responseTimeoutMs: Math.max(RESPONSE_TIMEOUT_MS, 240000),\n        createSocket: () => gateway.createSocket({ identifier: BARS02_ID, ...line }),\n    });\n    return await client.read();\n}\n\n(async () => {\n    try {\n        const deviceState = BARS02_ID ? await readThroughBars02() : await withConnectionLock(HOST, PORT, async () => {\n            const client = new Vkt7Client({\n                host: HOST,\n                port: PORT,\n                address: ADDRESS,\n                wakeUpBytes: Number.isNaN(WAKE_UP_BYTES) ? 2 : WAKE_UP_BYTES,\n                responseTimeoutMs: RESPONSE_TIMEOUT_MS,\n            });\n            // Vkt7Client.read() opens the socket, runs the whole session\n            // (service info, properties, current values, current totals,\n            // clock) and closes the socket itself.\n            return await client.read();\n        });\n\n        msg.payload = deviceState;\n        node.send(msg);\n        node.status({ fill: 'green', shape: 'dot', text: 'ok ' + new Date().toLocaleTimeString() });\n    } catch (err) {\n        // Full read failed — nothing goes out. No partial/incomplete set is sent downstream.\n        node.error('VKT-7 read failed: ' + err.message, msg);\n        node.status({ fill: 'red', shape: 'ring', text: 'error' });\n    }\n})();\n\nreturn null;\n",
+        "func": "const HOST = env.get('HOST');\nconst PORT = Number(env.get('PORT'));\nconst ADDRESS = Number(env.get('ADDRESS'));\nconst WAKE_UP_BYTES = Number(env.get('WAKE_UP_BYTES'));\nconst RESPONSE_TIMEOUT_MS = Number(env.get('RESPONSE_TIMEOUT_MS')) || 60000;\nconst GPRS_MODEM_ID = env.get('GPRS_MODEM_ID');\nconst GPRS_LINE = env.get('GPRS_LINE');\n\nconst { Vkt7Client } = global.get('vkt7');\nconst { withConnectionLock } = global.get('withConnectionLock');\nconst gprsModems = global.get('gprsModems');\n\n(async () => {\n    try {\n        // Through a GPRS modem (GPRS_MODEM_ID) the reader gets the modem's\n        // channel instead of host and port; the gateway reads one meter per\n        // modem at a time.\n        const transport = GPRS_MODEM_ID\n            ? await gprsModems.readerOptions({ identifier: GPRS_MODEM_ID, line: GPRS_LINE, responseTimeoutMs: RESPONSE_TIMEOUT_MS })\n            : { host: HOST, port: PORT };\n        const deviceState = await withConnectionLock(GPRS_MODEM_ID ? 'gprs' : HOST, GPRS_MODEM_ID || PORT, async () => {\n            const client = new Vkt7Client({\n                address: ADDRESS,\n                wakeUpBytes: Number.isNaN(WAKE_UP_BYTES) ? 2 : WAKE_UP_BYTES,\n                responseTimeoutMs: RESPONSE_TIMEOUT_MS,\n                ...transport,\n            });\n            // Vkt7Client.read() opens the socket, runs the whole session\n            // (service info, properties, current values, current totals,\n            // clock) and closes the socket itself.\n            return await client.read();\n        });\n\n        msg.payload = deviceState;\n        node.send(msg);\n        node.status({ fill: 'green', shape: 'dot', text: 'ok ' + new Date().toLocaleTimeString() });\n    } catch (err) {\n        // Full read failed — nothing goes out. No partial/incomplete set is sent downstream.\n        node.error('VKT-7 read failed: ' + err.message, msg);\n        node.status({ fill: 'red', shape: 'ring', text: 'error' });\n    }\n})();\n\nreturn null;\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
-        "initialize": "// Through a БАРС-02: start its listener at deploy, so the unit can connect\n// before the first read.\nif (env.get('BARS02_ID')) {\n    global.get('bars02').getGateway(Number(env.get('BARS02_LISTEN_PORT')) || 2910).ready\n        .catch((err) => node.error(err.message));\n}\n",
+        "initialize": "// Through a GPRS modem: start the modem gateway at deploy, so the modem can\n// connect before the first read.\nif (env.get('GPRS_MODEM_ID')) {\n    global.get('gprsModems').start().catch((err) => node.error(err.message));\n}\n",
         "finalize": "",
         "libs": [],
         "x": 220,
@@ -1134,11 +1199,11 @@
         "type": "function",
         "z": "km5reader000000000",
         "name": "get-measurements",
-        "func": "const HOST = env.get('HOST');\nconst PORT = Number(env.get('PORT'));\nconst ADDRESS = Number(env.get('ADDRESS'));\nconst RESPONSE_TIMEOUT_MS = Number(env.get('RESPONSE_TIMEOUT_MS')) || 30000;\nconst BARS02_ID = env.get('BARS02_ID');\nconst BARS02_LISTEN_PORT = Number(env.get('BARS02_LISTEN_PORT')) || 2910;\nconst BARS02_LINE = env.get('BARS02_LINE') || 'rs485 9600 8N1';\n\nconst { Km5Client } = global.get('km5');\nconst { withConnectionLock } = global.get('withConnectionLock');\nconst bars02 = global.get('bars02');\n\n// Through a БАРС-02 GPRS unit: it connects to the gateway listening on\n// BARS02_LISTEN_PORT, which serves one meter per unit at a time. Over GPRS a\n// request takes 4-5 s; some lines lose the first 4 bytes of every reply (the\n// network number), which acceptLostAddress puts back when the checksums agree.\nasync function readThroughBars02() {\n    const gateway = bars02.getGateway(BARS02_LISTEN_PORT);\n    await gateway.ready;\n    const line = bars02.parseLineSettings(BARS02_LINE);\n    const client = new Km5Client({\n        address: ADDRESS,\n        stepTimeoutMs: 15000,\n        acceptLostAddress: true,\n        responseTimeoutMs: Math.max(RESPONSE_TIMEOUT_MS, 240000),\n        createSocket: () => gateway.createSocket({ identifier: BARS02_ID, ...line }),\n    });\n    return await client.read();\n}\n\n(async () => {\n    try {\n        const deviceState = BARS02_ID ? await readThroughBars02() : await withConnectionLock(HOST, PORT, async () => {\n            const client = new Km5Client({\n                host: HOST,\n                port: PORT,\n                address: ADDRESS,\n                responseTimeoutMs: RESPONSE_TIMEOUT_MS,\n            });\n            // Km5Client.read() opens the socket, reads the firmware, status\n            // bytes, current values, totals and clock, and closes the socket\n            // itself.\n            return await client.read();\n        });\n\n        msg.payload = deviceState;\n        node.send(msg);\n        node.status({ fill: 'green', shape: 'dot', text: 'ok ' + new Date().toLocaleTimeString() });\n    } catch (err) {\n        // Full read failed — nothing goes out. No partial/incomplete set is sent downstream.\n        node.error('KM-5 read failed: ' + err.message, msg);\n        node.status({ fill: 'red', shape: 'ring', text: 'error' });\n    }\n})();\n\nreturn null;\n",
+        "func": "const HOST = env.get('HOST');\nconst PORT = Number(env.get('PORT'));\nconst ADDRESS = Number(env.get('ADDRESS'));\nconst RESPONSE_TIMEOUT_MS = Number(env.get('RESPONSE_TIMEOUT_MS')) || 30000;\nconst GPRS_MODEM_ID = env.get('GPRS_MODEM_ID');\nconst GPRS_LINE = env.get('GPRS_LINE');\n\nconst { Km5Client } = global.get('km5');\nconst { withConnectionLock } = global.get('withConnectionLock');\nconst gprsModems = global.get('gprsModems');\n\n(async () => {\n    try {\n        // Through a GPRS modem (GPRS_MODEM_ID) the reader gets the modem's\n        // channel instead of host and port; the gateway reads one meter per\n        // modem at a time.\n        const transport = GPRS_MODEM_ID\n            ? { ...(await gprsModems.readerOptions({ identifier: GPRS_MODEM_ID, line: GPRS_LINE, responseTimeoutMs: RESPONSE_TIMEOUT_MS })), acceptLostAddress: true }\n            : { host: HOST, port: PORT };\n        const deviceState = await withConnectionLock(GPRS_MODEM_ID ? 'gprs' : HOST, GPRS_MODEM_ID || PORT, async () => {\n            const client = new Km5Client({\n                address: ADDRESS,\n                responseTimeoutMs: RESPONSE_TIMEOUT_MS,\n                ...transport,\n            });\n            // Km5Client.read() opens the socket, reads the firmware, status\n            // bytes, current values, totals and clock, and closes the socket\n            // itself.\n            return await client.read();\n        });\n\n        msg.payload = deviceState;\n        node.send(msg);\n        node.status({ fill: 'green', shape: 'dot', text: 'ok ' + new Date().toLocaleTimeString() });\n    } catch (err) {\n        // Full read failed — nothing goes out. No partial/incomplete set is sent downstream.\n        node.error('KM-5 read failed: ' + err.message, msg);\n        node.status({ fill: 'red', shape: 'ring', text: 'error' });\n    }\n})();\n\nreturn null;\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
-        "initialize": "// Through a БАРС-02: start its listener at deploy, so the unit can connect\n// before the first read.\nif (env.get('BARS02_ID')) {\n    global.get('bars02').getGateway(Number(env.get('BARS02_LISTEN_PORT')) || 2910).ready\n        .catch((err) => node.error(err.message));\n}\n",
+        "initialize": "// Through a GPRS modem: start the modem gateway at deploy, so the modem can\n// connect before the first read.\nif (env.get('GPRS_MODEM_ID')) {\n    global.get('gprsModems').start().catch((err) => node.error(err.message));\n}\n",
         "finalize": "",
         "libs": [],
         "x": 220,
@@ -1164,11 +1229,11 @@
         "type": "function",
         "z": "tv7reader000000000",
         "name": "get-measurements",
-        "func": "const HOST = env.get('HOST');\nconst PORT = Number(env.get('PORT'));\nconst ADDRESS = Number(env.get('ADDRESS'));\nconst SERIAL_NUMBER = Number(env.get('SERIAL_NUMBER')) || null;\nconst RESPONSE_TIMEOUT_MS = Number(env.get('RESPONSE_TIMEOUT_MS')) || 30000;\nconst BARS02_ID = env.get('BARS02_ID');\nconst BARS02_LISTEN_PORT = Number(env.get('BARS02_LISTEN_PORT')) || 2910;\nconst BARS02_LINE = env.get('BARS02_LINE') || 'rs232-powered 9600 8N1';\n\nconst { Tv7Client } = global.get('tv7');\nconst { withConnectionLock } = global.get('withConnectionLock');\nconst bars02 = global.get('bars02');\n\n// Through a БАРС-02 GPRS unit: it connects to the gateway listening on\n// BARS02_LISTEN_PORT, which serves one meter per unit at a time. Over GPRS a\n// request takes 4-5 s and a whole read 20-60 s.\nasync function readThroughBars02() {\n    const gateway = bars02.getGateway(BARS02_LISTEN_PORT);\n    await gateway.ready;\n    const line = bars02.parseLineSettings(BARS02_LINE);\n    const client = new Tv7Client({\n        address: ADDRESS,\n        serialNumber: SERIAL_NUMBER,\n        stepTimeoutMs: 15000,\n        responseTimeoutMs: Math.max(RESPONSE_TIMEOUT_MS, 240000),\n        createSocket: () => gateway.createSocket({ identifier: BARS02_ID, ...line }),\n    });\n    return await client.read();\n}\n\n(async () => {\n    try {\n        const deviceState = BARS02_ID ? await readThroughBars02() : await withConnectionLock(HOST, PORT, async () => {\n            const client = new Tv7Client({\n                host: HOST,\n                port: PORT,\n                address: ADDRESS,\n                serialNumber: SERIAL_NUMBER,\n                responseTimeoutMs: RESPONSE_TIMEOUT_MS,\n            });\n            // Tv7Client.read() opens the socket, reads the device info,\n            // current instant values and current totals, and closes the\n            // socket itself.\n            return await client.read();\n        });\n\n        msg.payload = deviceState;\n        node.send(msg);\n        node.status({ fill: 'green', shape: 'dot', text: 'ok ' + new Date().toLocaleTimeString() });\n    } catch (err) {\n        // Full read failed — nothing goes out. No partial/incomplete set is sent downstream.\n        node.error('TV7 read failed: ' + err.message, msg);\n        node.status({ fill: 'red', shape: 'ring', text: 'error' });\n    }\n})();\n\nreturn null;\n",
+        "func": "const HOST = env.get('HOST');\nconst PORT = Number(env.get('PORT'));\nconst ADDRESS = Number(env.get('ADDRESS'));\nconst SERIAL_NUMBER = Number(env.get('SERIAL_NUMBER')) || null;\nconst RESPONSE_TIMEOUT_MS = Number(env.get('RESPONSE_TIMEOUT_MS')) || 30000;\nconst GPRS_MODEM_ID = env.get('GPRS_MODEM_ID');\nconst GPRS_LINE = env.get('GPRS_LINE');\n\nconst { Tv7Client } = global.get('tv7');\nconst { withConnectionLock } = global.get('withConnectionLock');\nconst gprsModems = global.get('gprsModems');\n\n(async () => {\n    try {\n        // Through a GPRS modem (GPRS_MODEM_ID) the reader gets the modem's\n        // channel instead of host and port; the gateway reads one meter per\n        // modem at a time.\n        const transport = GPRS_MODEM_ID\n            ? await gprsModems.readerOptions({ identifier: GPRS_MODEM_ID, line: GPRS_LINE, responseTimeoutMs: RESPONSE_TIMEOUT_MS })\n            : { host: HOST, port: PORT };\n        const deviceState = await withConnectionLock(GPRS_MODEM_ID ? 'gprs' : HOST, GPRS_MODEM_ID || PORT, async () => {\n            const client = new Tv7Client({\n                address: ADDRESS,\n                serialNumber: SERIAL_NUMBER,\n                responseTimeoutMs: RESPONSE_TIMEOUT_MS,\n                ...transport,\n            });\n            // Tv7Client.read() opens the socket, reads the device info,\n            // current instant values and current totals, and closes the\n            // socket itself.\n            return await client.read();\n        });\n\n        msg.payload = deviceState;\n        node.send(msg);\n        node.status({ fill: 'green', shape: 'dot', text: 'ok ' + new Date().toLocaleTimeString() });\n    } catch (err) {\n        // Full read failed — nothing goes out. No partial/incomplete set is sent downstream.\n        node.error('TV7 read failed: ' + err.message, msg);\n        node.status({ fill: 'red', shape: 'ring', text: 'error' });\n    }\n})();\n\nreturn null;\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
-        "initialize": "// Through a БАРС-02: start its listener at deploy, so the unit can connect\n// before the first read.\nif (env.get('BARS02_ID')) {\n    global.get('bars02').getGateway(Number(env.get('BARS02_LISTEN_PORT')) || 2910).ready\n        .catch((err) => node.error(err.message));\n}\n",
+        "initialize": "// Through a GPRS modem: start the modem gateway at deploy, so the modem can\n// connect before the first read.\nif (env.get('GPRS_MODEM_ID')) {\n    global.get('gprsModems').start().catch((err) => node.error(err.message));\n}\n",
         "finalize": "",
         "libs": [],
         "x": 220,
@@ -1194,11 +1259,11 @@
         "type": "function",
         "z": "vzljot026reader000",
         "name": "get-measurements",
-        "func": "const HOST = env.get('HOST');\nconst PORT = Number(env.get('PORT'));\nconst ADDRESS = Number(env.get('ADDRESS'));\nconst SERIAL_NUMBER = Number(env.get('SERIAL_NUMBER')) || null;\nconst RESPONSE_TIMEOUT_MS = Number(env.get('RESPONSE_TIMEOUT_MS')) || 30000;\n\nconst { Vzljot026Client } = global.get('vzljot026');\nconst { withConnectionLock } = global.get('withConnectionLock');\n\n(async () => {\n    try {\n        const deviceState = await withConnectionLock(HOST, PORT, async () => {\n            const client = new Vzljot026Client({\n                host: HOST,\n                port: PORT,\n                address: ADDRESS,\n                serialNumber: SERIAL_NUMBER,\n                responseTimeoutMs: RESPONSE_TIMEOUT_MS,\n            });\n            // Vzljot026Client.read() opens the socket, reads every block of\n            // input registers and closes the socket itself.\n            return await client.read();\n        });\n\n        msg.payload = deviceState;\n        node.send(msg);\n        node.status({ fill: 'green', shape: 'dot', text: 'ok ' + new Date().toLocaleTimeString() });\n    } catch (err) {\n        // Full read failed — nothing goes out. No partial/incomplete set is sent downstream.\n        node.error('Vzljot026 read failed: ' + err.message, msg);\n        node.status({ fill: 'red', shape: 'ring', text: 'error' });\n    }\n})();\n\nreturn null;\n",
+        "func": "const HOST = env.get('HOST');\nconst PORT = Number(env.get('PORT'));\nconst ADDRESS = Number(env.get('ADDRESS'));\nconst SERIAL_NUMBER = Number(env.get('SERIAL_NUMBER')) || null;\nconst RESPONSE_TIMEOUT_MS = Number(env.get('RESPONSE_TIMEOUT_MS')) || 30000;\nconst GPRS_MODEM_ID = env.get('GPRS_MODEM_ID');\nconst GPRS_LINE = env.get('GPRS_LINE');\n\nconst { Vzljot026Client } = global.get('vzljot026');\nconst { withConnectionLock } = global.get('withConnectionLock');\nconst gprsModems = global.get('gprsModems');\n\n(async () => {\n    try {\n        // Through a GPRS modem (GPRS_MODEM_ID) the reader gets the modem's\n        // channel instead of host and port; the gateway reads one meter per\n        // modem at a time.\n        const transport = GPRS_MODEM_ID\n            ? await gprsModems.readerOptions({ identifier: GPRS_MODEM_ID, line: GPRS_LINE, responseTimeoutMs: RESPONSE_TIMEOUT_MS })\n            : { host: HOST, port: PORT };\n        const deviceState = await withConnectionLock(GPRS_MODEM_ID ? 'gprs' : HOST, GPRS_MODEM_ID || PORT, async () => {\n            const client = new Vzljot026Client({\n                address: ADDRESS,\n                serialNumber: SERIAL_NUMBER,\n                responseTimeoutMs: RESPONSE_TIMEOUT_MS,\n                ...transport,\n            });\n            // Vzljot026Client.read() opens the socket, reads every block of\n            // input registers and closes the socket itself.\n            return await client.read();\n        });\n\n        msg.payload = deviceState;\n        node.send(msg);\n        node.status({ fill: 'green', shape: 'dot', text: 'ok ' + new Date().toLocaleTimeString() });\n    } catch (err) {\n        // Full read failed — nothing goes out. No partial/incomplete set is sent downstream.\n        node.error('Vzljot026 read failed: ' + err.message, msg);\n        node.status({ fill: 'red', shape: 'ring', text: 'error' });\n    }\n})();\n\nreturn null;\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
-        "initialize": "",
+        "initialize": "// Through a GPRS modem: start the modem gateway at deploy, so the modem can\n// connect before the first read.\nif (env.get('GPRS_MODEM_ID')) {\n    global.get('gprsModems').start().catch((err) => node.error(err.message));\n}\n",
         "finalize": "",
         "libs": [],
         "x": 220,
@@ -1224,11 +1289,11 @@
         "type": "function",
         "z": "vzljot024reader000",
         "name": "get-measurements",
-        "func": "const HOST = env.get('HOST');\nconst PORT = Number(env.get('PORT'));\nconst ADDRESS = Number(env.get('ADDRESS'));\nconst SERIAL_NUMBER = Number(env.get('SERIAL_NUMBER')) || null;\nconst RESPONSE_TIMEOUT_MS = Number(env.get('RESPONSE_TIMEOUT_MS')) || 45000;\n\nconst { Vzljot024Client } = global.get('vzljot024');\nconst { withConnectionLock } = global.get('withConnectionLock');\n\n(async () => {\n    try {\n        const deviceState = await withConnectionLock(HOST, PORT, async () => {\n            const client = new Vzljot024Client({\n                host: HOST,\n                port: PORT,\n                address: ADDRESS,\n                serialNumber: SERIAL_NUMBER,\n                responseTimeoutMs: RESPONSE_TIMEOUT_MS,\n            });\n            // Vzljot024Client.read() opens the socket, reads the version and\n            // every block of input registers and closes the socket itself.\n            return await client.read();\n        });\n\n        msg.payload = deviceState;\n        node.send(msg);\n        node.status({ fill: 'green', shape: 'dot', text: 'ok ' + new Date().toLocaleTimeString() });\n    } catch (err) {\n        // Full read failed — nothing goes out. No partial/incomplete set is sent downstream.\n        node.error('Vzljot024 read failed: ' + err.message, msg);\n        node.status({ fill: 'red', shape: 'ring', text: 'error' });\n    }\n})();\n\nreturn null;\n",
+        "func": "const HOST = env.get('HOST');\nconst PORT = Number(env.get('PORT'));\nconst ADDRESS = Number(env.get('ADDRESS'));\nconst SERIAL_NUMBER = Number(env.get('SERIAL_NUMBER')) || null;\nconst RESPONSE_TIMEOUT_MS = Number(env.get('RESPONSE_TIMEOUT_MS')) || 45000;\nconst GPRS_MODEM_ID = env.get('GPRS_MODEM_ID');\nconst GPRS_LINE = env.get('GPRS_LINE');\n\nconst { Vzljot024Client } = global.get('vzljot024');\nconst { withConnectionLock } = global.get('withConnectionLock');\nconst gprsModems = global.get('gprsModems');\n\n(async () => {\n    try {\n        // Through a GPRS modem (GPRS_MODEM_ID) the reader gets the modem's\n        // channel instead of host and port; the gateway reads one meter per\n        // modem at a time.\n        const transport = GPRS_MODEM_ID\n            ? await gprsModems.readerOptions({ identifier: GPRS_MODEM_ID, line: GPRS_LINE, responseTimeoutMs: RESPONSE_TIMEOUT_MS })\n            : { host: HOST, port: PORT };\n        const deviceState = await withConnectionLock(GPRS_MODEM_ID ? 'gprs' : HOST, GPRS_MODEM_ID || PORT, async () => {\n            const client = new Vzljot024Client({\n                address: ADDRESS,\n                serialNumber: SERIAL_NUMBER,\n                responseTimeoutMs: RESPONSE_TIMEOUT_MS,\n                ...transport,\n            });\n            // Vzljot024Client.read() opens the socket, reads the version and\n            // every block of input registers and closes the socket itself.\n            return await client.read();\n        });\n\n        msg.payload = deviceState;\n        node.send(msg);\n        node.status({ fill: 'green', shape: 'dot', text: 'ok ' + new Date().toLocaleTimeString() });\n    } catch (err) {\n        // Full read failed — nothing goes out. No partial/incomplete set is sent downstream.\n        node.error('Vzljot024 read failed: ' + err.message, msg);\n        node.status({ fill: 'red', shape: 'ring', text: 'error' });\n    }\n})();\n\nreturn null;\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
-        "initialize": "",
+        "initialize": "// Through a GPRS modem: start the modem gateway at deploy, so the modem can\n// connect before the first read.\nif (env.get('GPRS_MODEM_ID')) {\n    global.get('gprsModems').start().catch((err) => node.error(err.message));\n}\n",
         "finalize": "",
         "libs": [],
         "x": 220,
@@ -1254,11 +1319,11 @@
         "type": "function",
         "z": "vzljot042reader000",
         "name": "get-measurements",
-        "func": "const HOST = env.get('HOST');\nconst PORT = Number(env.get('PORT'));\nconst ADDRESS = Number(env.get('ADDRESS'));\nconst SERIAL_NUMBER = Number(env.get('SERIAL_NUMBER')) || null;\nconst RESPONSE_TIMEOUT_MS = Number(env.get('RESPONSE_TIMEOUT_MS')) || 30000;\n\nconst { Vzljot042Client } = global.get('vzljot042');\nconst { withConnectionLock } = global.get('withConnectionLock');\n\n(async () => {\n    try {\n        const deviceState = await withConnectionLock(HOST, PORT, async () => {\n            const client = new Vzljot042Client({\n                host: HOST,\n                port: PORT,\n                address: ADDRESS,\n                serialNumber: SERIAL_NUMBER,\n                responseTimeoutMs: RESPONSE_TIMEOUT_MS,\n            });\n            // Vzljot042Client.read() opens the socket, reads the version and\n            // every block of input registers and closes the socket itself.\n            return await client.read();\n        });\n\n        msg.payload = deviceState;\n        node.send(msg);\n        node.status({ fill: 'green', shape: 'dot', text: 'ok ' + new Date().toLocaleTimeString() });\n    } catch (err) {\n        // Full read failed — nothing goes out. No partial/incomplete set is sent downstream.\n        node.error('Vzljot042 read failed: ' + err.message, msg);\n        node.status({ fill: 'red', shape: 'ring', text: 'error' });\n    }\n})();\n\nreturn null;\n",
+        "func": "const HOST = env.get('HOST');\nconst PORT = Number(env.get('PORT'));\nconst ADDRESS = Number(env.get('ADDRESS'));\nconst SERIAL_NUMBER = Number(env.get('SERIAL_NUMBER')) || null;\nconst RESPONSE_TIMEOUT_MS = Number(env.get('RESPONSE_TIMEOUT_MS')) || 30000;\nconst GPRS_MODEM_ID = env.get('GPRS_MODEM_ID');\nconst GPRS_LINE = env.get('GPRS_LINE');\n\nconst { Vzljot042Client } = global.get('vzljot042');\nconst { withConnectionLock } = global.get('withConnectionLock');\nconst gprsModems = global.get('gprsModems');\n\n(async () => {\n    try {\n        // Through a GPRS modem (GPRS_MODEM_ID) the reader gets the modem's\n        // channel instead of host and port; the gateway reads one meter per\n        // modem at a time.\n        const transport = GPRS_MODEM_ID\n            ? await gprsModems.readerOptions({ identifier: GPRS_MODEM_ID, line: GPRS_LINE, responseTimeoutMs: RESPONSE_TIMEOUT_MS })\n            : { host: HOST, port: PORT };\n        const deviceState = await withConnectionLock(GPRS_MODEM_ID ? 'gprs' : HOST, GPRS_MODEM_ID || PORT, async () => {\n            const client = new Vzljot042Client({\n                address: ADDRESS,\n                serialNumber: SERIAL_NUMBER,\n                responseTimeoutMs: RESPONSE_TIMEOUT_MS,\n                ...transport,\n            });\n            // Vzljot042Client.read() opens the socket, reads the version and\n            // every block of input registers and closes the socket itself.\n            return await client.read();\n        });\n\n        msg.payload = deviceState;\n        node.send(msg);\n        node.status({ fill: 'green', shape: 'dot', text: 'ok ' + new Date().toLocaleTimeString() });\n    } catch (err) {\n        // Full read failed — nothing goes out. No partial/incomplete set is sent downstream.\n        node.error('Vzljot042 read failed: ' + err.message, msg);\n        node.status({ fill: 'red', shape: 'ring', text: 'error' });\n    }\n})();\n\nreturn null;\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
-        "initialize": "",
+        "initialize": "// Through a GPRS modem: start the modem gateway at deploy, so the modem can\n// connect before the first read.\nif (env.get('GPRS_MODEM_ID')) {\n    global.get('gprsModems').start().catch((err) => node.error(err.message));\n}\n",
         "finalize": "",
         "libs": [],
         "x": 220,
@@ -1284,11 +1349,11 @@
         "type": "function",
         "z": "vzljot034reader000",
         "name": "get-measurements",
-        "func": "const HOST = env.get('HOST');\nconst PORT = Number(env.get('PORT'));\nconst ADDRESS = Number(env.get('ADDRESS'));\nconst SERIAL_NUMBER = Number(env.get('SERIAL_NUMBER')) || null;\nconst RESPONSE_TIMEOUT_MS = Number(env.get('RESPONSE_TIMEOUT_MS')) || 60000;\n\nconst { Vzljot034Client } = global.get('vzljot034');\nconst { withConnectionLock } = global.get('withConnectionLock');\n\n(async () => {\n    try {\n        const deviceState = await withConnectionLock(HOST, PORT, async () => {\n            const client = new Vzljot034Client({\n                host: HOST,\n                port: PORT,\n                address: ADDRESS,\n                serialNumber: SERIAL_NUMBER,\n                responseTimeoutMs: RESPONSE_TIMEOUT_MS,\n            });\n            // Vzljot034Client.read() opens the socket, reads the version and\n            // every block of input registers and closes the socket itself.\n            return await client.read();\n        });\n\n        msg.payload = deviceState;\n        node.send(msg);\n        node.status({ fill: 'green', shape: 'dot', text: 'ok ' + new Date().toLocaleTimeString() });\n    } catch (err) {\n        // Full read failed — nothing goes out. No partial/incomplete set is sent downstream.\n        node.error('Vzljot034 read failed: ' + err.message, msg);\n        node.status({ fill: 'red', shape: 'ring', text: 'error' });\n    }\n})();\n\nreturn null;\n",
+        "func": "const HOST = env.get('HOST');\nconst PORT = Number(env.get('PORT'));\nconst ADDRESS = Number(env.get('ADDRESS'));\nconst SERIAL_NUMBER = Number(env.get('SERIAL_NUMBER')) || null;\nconst RESPONSE_TIMEOUT_MS = Number(env.get('RESPONSE_TIMEOUT_MS')) || 60000;\nconst GPRS_MODEM_ID = env.get('GPRS_MODEM_ID');\nconst GPRS_LINE = env.get('GPRS_LINE');\n\nconst { Vzljot034Client } = global.get('vzljot034');\nconst { withConnectionLock } = global.get('withConnectionLock');\nconst gprsModems = global.get('gprsModems');\n\n(async () => {\n    try {\n        // Through a GPRS modem (GPRS_MODEM_ID) the reader gets the modem's\n        // channel instead of host and port; the gateway reads one meter per\n        // modem at a time.\n        const transport = GPRS_MODEM_ID\n            ? await gprsModems.readerOptions({ identifier: GPRS_MODEM_ID, line: GPRS_LINE, responseTimeoutMs: RESPONSE_TIMEOUT_MS })\n            : { host: HOST, port: PORT };\n        const deviceState = await withConnectionLock(GPRS_MODEM_ID ? 'gprs' : HOST, GPRS_MODEM_ID || PORT, async () => {\n            const client = new Vzljot034Client({\n                address: ADDRESS,\n                serialNumber: SERIAL_NUMBER,\n                responseTimeoutMs: RESPONSE_TIMEOUT_MS,\n                ...transport,\n            });\n            // Vzljot034Client.read() opens the socket, reads the version and\n            // every block of input registers and closes the socket itself.\n            return await client.read();\n        });\n\n        msg.payload = deviceState;\n        node.send(msg);\n        node.status({ fill: 'green', shape: 'dot', text: 'ok ' + new Date().toLocaleTimeString() });\n    } catch (err) {\n        // Full read failed — nothing goes out. No partial/incomplete set is sent downstream.\n        node.error('Vzljot034 read failed: ' + err.message, msg);\n        node.status({ fill: 'red', shape: 'ring', text: 'error' });\n    }\n})();\n\nreturn null;\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
-        "initialize": "",
+        "initialize": "// Through a GPRS modem: start the modem gateway at deploy, so the modem can\n// connect before the first read.\nif (env.get('GPRS_MODEM_ID')) {\n    global.get('gprsModems').start().catch((err) => node.error(err.message));\n}\n",
         "finalize": "",
         "libs": [],
         "x": 220,
@@ -1314,11 +1379,11 @@
         "type": "function",
         "z": "vzljot023reader000",
         "name": "get-measurements",
-        "func": "const HOST = env.get('HOST');\nconst PORT = Number(env.get('PORT'));\nconst ADDRESS = Number(env.get('ADDRESS'));\nconst SERIAL_NUMBER = Number(env.get('SERIAL_NUMBER')) || null;\nconst RESPONSE_TIMEOUT_MS = Number(env.get('RESPONSE_TIMEOUT_MS')) || 30000;\n\nconst { Vzljot023Client } = global.get('vzljot023');\nconst { withConnectionLock } = global.get('withConnectionLock');\n\n(async () => {\n    try {\n        const deviceState = await withConnectionLock(HOST, PORT, async () => {\n            const client = new Vzljot023Client({\n                host: HOST,\n                port: PORT,\n                address: ADDRESS,\n                serialNumber: SERIAL_NUMBER,\n                responseTimeoutMs: RESPONSE_TIMEOUT_MS,\n            });\n            // Vzljot023Client.read() opens the socket, reads the version and\n            // every block of input registers and closes the socket itself.\n            return await client.read();\n        });\n\n        msg.payload = deviceState;\n        node.send(msg);\n        node.status({ fill: 'green', shape: 'dot', text: 'ok ' + new Date().toLocaleTimeString() });\n    } catch (err) {\n        // Full read failed — nothing goes out. No partial/incomplete set is sent downstream.\n        node.error('Vzljot023 read failed: ' + err.message, msg);\n        node.status({ fill: 'red', shape: 'ring', text: 'error' });\n    }\n})();\n\nreturn null;\n",
+        "func": "const HOST = env.get('HOST');\nconst PORT = Number(env.get('PORT'));\nconst ADDRESS = Number(env.get('ADDRESS'));\nconst SERIAL_NUMBER = Number(env.get('SERIAL_NUMBER')) || null;\nconst RESPONSE_TIMEOUT_MS = Number(env.get('RESPONSE_TIMEOUT_MS')) || 30000;\nconst GPRS_MODEM_ID = env.get('GPRS_MODEM_ID');\nconst GPRS_LINE = env.get('GPRS_LINE');\n\nconst { Vzljot023Client } = global.get('vzljot023');\nconst { withConnectionLock } = global.get('withConnectionLock');\nconst gprsModems = global.get('gprsModems');\n\n(async () => {\n    try {\n        // Through a GPRS modem (GPRS_MODEM_ID) the reader gets the modem's\n        // channel instead of host and port; the gateway reads one meter per\n        // modem at a time.\n        const transport = GPRS_MODEM_ID\n            ? await gprsModems.readerOptions({ identifier: GPRS_MODEM_ID, line: GPRS_LINE, responseTimeoutMs: RESPONSE_TIMEOUT_MS })\n            : { host: HOST, port: PORT };\n        const deviceState = await withConnectionLock(GPRS_MODEM_ID ? 'gprs' : HOST, GPRS_MODEM_ID || PORT, async () => {\n            const client = new Vzljot023Client({\n                address: ADDRESS,\n                serialNumber: SERIAL_NUMBER,\n                responseTimeoutMs: RESPONSE_TIMEOUT_MS,\n                ...transport,\n            });\n            // Vzljot023Client.read() opens the socket, reads the version and\n            // every block of input registers and closes the socket itself.\n            return await client.read();\n        });\n\n        msg.payload = deviceState;\n        node.send(msg);\n        node.status({ fill: 'green', shape: 'dot', text: 'ok ' + new Date().toLocaleTimeString() });\n    } catch (err) {\n        // Full read failed — nothing goes out. No partial/incomplete set is sent downstream.\n        node.error('Vzljot023 read failed: ' + err.message, msg);\n        node.status({ fill: 'red', shape: 'ring', text: 'error' });\n    }\n})();\n\nreturn null;\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
-        "initialize": "",
+        "initialize": "// Through a GPRS modem: start the modem gateway at deploy, so the modem can\n// connect before the first read.\nif (env.get('GPRS_MODEM_ID')) {\n    global.get('gprsModems').start().catch((err) => node.error(err.message));\n}\n",
         "finalize": "",
         "libs": [],
         "x": 220,
@@ -1344,11 +1409,11 @@
         "type": "function",
         "z": "irvisreader0000000",
         "name": "get-measurements",
-        "func": "const HOST = env.get('HOST');\nconst PORT = Number(env.get('PORT'));\nconst ADDRESS = Number(env.get('ADDRESS'));\nconst RESPONSE_TIMEOUT_MS = Number(env.get('RESPONSE_TIMEOUT_MS')) || 20000;\n\nconst { IrvisClient } = global.get('irvis');\nconst { withConnectionLock } = global.get('withConnectionLock');\n\n(async () => {\n    try {\n        const deviceState = await withConnectionLock(HOST, PORT, async () => {\n            const client = new IrvisClient({\n                host: HOST,\n                port: PORT,\n                address: ADDRESS,\n                responseTimeoutMs: RESPONSE_TIMEOUT_MS,\n            });\n            // IrvisClient.read() opens the socket, reads the registrar id and\n            // the current values of flow meter 1, and closes the socket itself.\n            return await client.read();\n        });\n\n        msg.payload = deviceState;\n        node.send(msg);\n        node.status({ fill: 'green', shape: 'dot', text: 'ok ' + new Date().toLocaleTimeString() });\n    } catch (err) {\n        // Full read failed — nothing goes out. No partial/incomplete set is sent downstream.\n        node.error('Irvis read failed: ' + err.message, msg);\n        node.status({ fill: 'red', shape: 'ring', text: 'error' });\n    }\n})();\n\nreturn null;\n",
+        "func": "const HOST = env.get('HOST');\nconst PORT = Number(env.get('PORT'));\nconst ADDRESS = Number(env.get('ADDRESS'));\nconst RESPONSE_TIMEOUT_MS = Number(env.get('RESPONSE_TIMEOUT_MS')) || 20000;\nconst GPRS_MODEM_ID = env.get('GPRS_MODEM_ID');\nconst GPRS_LINE = env.get('GPRS_LINE');\n\nconst { IrvisClient } = global.get('irvis');\nconst { withConnectionLock } = global.get('withConnectionLock');\nconst gprsModems = global.get('gprsModems');\n\n(async () => {\n    try {\n        // Through a GPRS modem (GPRS_MODEM_ID) the reader gets the modem's\n        // channel instead of host and port; the gateway reads one meter per\n        // modem at a time.\n        const transport = GPRS_MODEM_ID\n            ? await gprsModems.readerOptions({ identifier: GPRS_MODEM_ID, line: GPRS_LINE, responseTimeoutMs: RESPONSE_TIMEOUT_MS })\n            : { host: HOST, port: PORT };\n        const deviceState = await withConnectionLock(GPRS_MODEM_ID ? 'gprs' : HOST, GPRS_MODEM_ID || PORT, async () => {\n            const client = new IrvisClient({\n                address: ADDRESS,\n                responseTimeoutMs: RESPONSE_TIMEOUT_MS,\n                ...transport,\n            });\n            // IrvisClient.read() opens the socket, reads the registrar id and\n            // the current values of flow meter 1, and closes the socket itself.\n            return await client.read();\n        });\n\n        msg.payload = deviceState;\n        node.send(msg);\n        node.status({ fill: 'green', shape: 'dot', text: 'ok ' + new Date().toLocaleTimeString() });\n    } catch (err) {\n        // Full read failed — nothing goes out. No partial/incomplete set is sent downstream.\n        node.error('Irvis read failed: ' + err.message, msg);\n        node.status({ fill: 'red', shape: 'ring', text: 'error' });\n    }\n})();\n\nreturn null;\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
-        "initialize": "",
+        "initialize": "// Through a GPRS modem: start the modem gateway at deploy, so the modem can\n// connect before the first read.\nif (env.get('GPRS_MODEM_ID')) {\n    global.get('gprsModems').start().catch((err) => node.error(err.message));\n}\n",
         "finalize": "",
         "libs": [],
         "x": 220,
@@ -5755,7 +5820,7 @@
         "type": "comment",
         "z": "b5e1c7d93a4f6e20",
         "name": "vkt7-141425 (ВКТ-7 через БАРС-02 «Строителей_53», пр. Строителей, 53, Альметьевск) — testing, not stored",
-        "info": "ВКТ-7 141425 (firmware 2.7, network number 0) behind the БАРС-02 «Строителей_53» (firmware 4.0.1) on RS-232 with power, 9600 8N1, as the old dispatch system sets it (its access point GPRS-Bars02-Строителей_53, channel VKT7-141425 / ЦО, ХВС, ГВС).\n\nThe unit connects to the old system (channel 1: 91.144.143.40:2907); it reaches this flow only after its channel 2 points at the port forwarded to BARS02_LISTEN_PORT (2910). Until then every read fails with \"БАРС-02 Строителей_53 is not connected\".\n\nRead through the unit on the old server on 2026-10-26 (.tools/device-probes/bars02-session-2026-10-26.jsonl): 4 reads of 4, 82–85 s each, the same totals as the old system's panel. Pressures are bad quality (ERR there too); the meter clock is about 26 min slow.\n\nThe old dispatch system polls the same meter, so the inject here polls every 5 minutes only.",
+        "info": "ВКТ-7 141425 (firmware 2.7, network number 0) behind the БАРС-02 «Строителей_53» (firmware 4.0.1) on RS-232 with power, 9600 8N1, as the old dispatch system sets it (its access point GPRS-Bars02-Строителей_53, channel VKT7-141425 / ЦО, ХВС, ГВС).\n\nThe unit connects to the old system (channel 1: 91.144.143.40:2907); it reaches this flow only after its channel 2 points at the public port forwarded to the GPRS modem listener (2910). Until then every read fails with \"БАРС-02 Строителей_53 is not connected\".\n\nRead through the unit on the old server on 2026-10-26 (.tools/device-probes/bars02-session-2026-10-26.jsonl): 4 reads of 4, 82–85 s each, the same totals as the old system's panel. Pressures are bad quality (ERR there too); the meter clock is about 26 min slow.\n\nThe old dispatch system polls the same meter, so the inject here polls every 5 minutes only.",
         "x": 350,
         "y": 740,
         "wires": []
@@ -5801,8 +5866,13 @@
                 "type": "num"
             },
             {
-                "name": "BARS02_ID",
+                "name": "GPRS_MODEM_ID",
                 "value": "Строителей_53",
+                "type": "str"
+            },
+            {
+                "name": "GPRS_LINE",
+                "value": "rs232-powered 9600 8N1",
                 "type": "str"
             }
         ],
