@@ -102,6 +102,28 @@ ETA24, meters read in September: ВКТ-7 552, ТВ7 303, КМ-5 212, ТСРВ-0
 Альметьевск and Нижнекамск. Lines: RS-485 9600 8N1 (1352), RS-232 with power 9600 8N1 (126), RS-485 4800 8N1
 (120), RS-485 19200 8E1 (53), RS-485 4800 8N2 (47). Most modems carry one meter (1386); 138 carry two.
 
+## Field test (2026-10-28, port 2784)
+
+With `ETA$GSMDeviceReader` (reader 9) stopped and disabled by the user, `.tools/device-probes/eta_gsm_session.js`
+listened on 10.10.0.249:2784 for 20 minutes, read-only (log: `.tools/device-probes/eta-gsm-session-2026-10-28.jsonl`):
+
+- **271 modems** connected (360 connections). **188 meters read** with the project's readers over the transparent
+  link, 252 reads in all: ВКТ-7 102, КМ-5/РМ-5 88, ТВ7 36, ТСРВ-034 20, ТСРВ-026М 5, ТСРВ-042 1 (3–112 s per read).
+  172 of the 188 are meters the old system read in September; 16 it did not. 31 meters failed only (17 of them the
+  old system did not read either). 32 were skipped because the modem's line differs from the meter's (run 2).
+- **Hello** as in the manual: `<id>\r\nCSQ: r,b\r\n254\r\n` (339 of 360; 4 with bus bytes after it). 11 connections
+  sent nothing in 15 s; one device streamed binary frames (`QRST…`, no hello) — not an ETA GSM hello, unknown.
+- **In-band reads work** at address 254 (functions 03 and 04, 20-register chunks at any offset), but a reply can
+  take **15–17 s** over GPRS: wait ~25 s and tolerate a late reply to the previous request.
+- **Text in the registers is byte-swapped within each 16-bit word** (`91.144.143.40` reads as `19.141.434.04`);
+  numbers are big-endian, the baud rate low word first. `myId` equals the hello identifier on all 274 modems read.
+- All modems are **revision 100**. Settings found: server 1 = 91.144.143.40:2784 (servers 2–3 = 91.144.143.40:2781,
+  94.180.162.90:2782, unused: `servCount` 1), client mode, APN `m2m.gt.msk` with login `vpn@etech` (a corporate M2M
+  APN), `checkPeriod` 600 s, `rebootTime` 180 (135), 1440 (105) or 0 (29) min. Lines: 9600 8N1 (212), 4800 8N1 (25),
+  4800 8N2 (10), 19200 8E1 (9)…; `selectSerial` 2 (RS-232 + RS-485) on nearly all.
+- About 130 connections closed during the run; a modem that misses a keep-alive may drop the link and come back in
+  ~10 min. Don't drop a modem for a missed keep-alive (the old engine never does).
+
 ## Bringing EtaModems to flow-space
 
 The БАРС-02 gateway's frame fits (listener, pool by identifier, one poll per modem at a time, `createSocket()` for the
