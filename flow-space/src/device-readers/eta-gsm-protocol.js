@@ -172,6 +172,7 @@ async function ensureLine(modem, { port, baudRate, parity = 'none', stopBits = 1
     }
     const slow = (await revision(modem)) !== NEW_FIRMWARE;
     modem.state.line = null; // unknown until read back
+    modem.state.lineWritten = true;
     if (line.baudRate !== baudRate) {
         if (slow) await sleep(PAUSE_BEFORE_WRITE_MS);
         await writeRegisters(modem, HOLDING_BAUD_RATE, [baudRate & 0xffff, baudRate >>> 16]);
@@ -189,8 +190,21 @@ async function ensureLine(modem, { port, baudRate, parity = 'none', stopBits = 1
     modem.gateway.emit('log', `${modem.label}: line set to ${describeLine(line)}`);
 }
 
+// Some modems never answer in band (2002-2009 on port 2784, 2026-10-28) while
+// their meters read fine on the line the modem already has: when the line
+// cannot be read, the meter is read on that line anyway, and the modem is not
+// asked again on this connection. A write that gets no reply is not trusted
+// either way: the read goes ahead and the next session reads the line again.
 async function open(modem, options) {
-    if (options.selectPort !== false && options.baudRate) await ensureLine(modem, options);
+    if (options.selectPort !== false && options.baudRate && !modem.state.noInBand) {
+        try {
+            await ensureLine(modem, options);
+        } catch (err) {
+            if (err.code !== 'ENOREPLY') throw err;
+            if (!modem.state.line) modem.state.noInBand = !modem.state.lineWritten;
+            modem.gateway.emit('log', `${err.message.replace(/ \(got .*$/, '')}; the meter is read on the modem's line as it is`);
+        }
+    }
     modem.buffer = Buffer.alloc(0);
 }
 

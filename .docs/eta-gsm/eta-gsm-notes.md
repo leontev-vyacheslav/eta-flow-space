@@ -124,6 +124,23 @@ listened on 10.10.0.249:2784 for 20 minutes, read-only (log: `.tools/device-prob
 - About 130 connections closed during the run; a modem that misses a keep-alive may drop the link and come back in
   ~10 min. Don't drop a modem for a missed keep-alive (the old engine never does).
 
+### Run 2 (2026-10-28, port 2784, the gateway itself, line changes approved by the user)
+
+`.tools/device-probes/gprs_session.js --protocols eta-gsm` with the project's gateway on 10.10.0.249:2784 for 20
+minutes, line changes on (speed/format, not saved; log `.tools/device-probes/gprs-session-2026-10-28-eta-gsm-run2.jsonl`):
+
+- **27 in-band line changes** (4800 8N1 ×14, 9600 8N1 ×10, 4800 8N2 ×2, 9600 8N2), each read back before the meter
+  session. **16 of the 32 meters run 1 skipped now read.** 187 meters read in this run; 206 different meters over the
+  two runs. Modems with meters on different lines are switched for each meter (0259: ТСРВ-034 at 4800 8N2, then ТВ7 at
+  9600 8N1, read); the meters that failed there are dead in the old system too (last read 2017–2021, or placeholder
+  numbers on `new ip-modem`).
+- **Some modems never answer in band** (2002–2009, and 0150, 0235, 0246…) while their meters read fine on the line
+  the modem already has (run 1: 2004's КМ-5 11 times). In run 2 the gateway gave up on them (24 failures); since then it
+  reads the meter on the modem's line when the line read gets no reply, and does not ask that modem again on the
+  connection. Tested against the emulator (`--no-in-band`), not yet in the field.
+- 10 meters are listed on RS-485 while their modem serves RS-232 only (`selectSerial` 0): logged, not changed.
+- Keep-alive misses: 221 logged, no modem dropped for them.
+
 ## Bringing EtaModems to flow-space
 
 Done in the gateway (2026-10-28): `flow-space/src/device-readers/eta-gsm-protocol.js` beside `bars02-protocol.js`

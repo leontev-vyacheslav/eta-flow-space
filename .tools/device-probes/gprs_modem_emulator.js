@@ -6,7 +6,7 @@
 //
 //   node .tools/device-probes/gprs_modem_emulator.js SERVER_HOST SERVER_PORT --id IDENT [--modem bars02|eta-gsm]
 //       [--meter HOST:PORT] [--csq N] [--trace]
-//       ETA GSM only: [--line "9600 8N1"] [--revision 100|101] [--serial 0|1|2] [--reply-delay MS]
+//       ETA GSM only: [--line "9600 8N1"] [--revision 100|101] [--serial 0|1|2] [--reply-delay MS] [--no-in-band]
 //
 // БАРС-02 (default): sends its identifier, answers the command protocol the
 // old ETA engine uses (escape, port selection, clock, configuration, event
@@ -20,6 +20,8 @@
 // status registers (.docs/eta-gsm/eta-gsm-notes.md; text byte-swapped
 // within each word, as on the real modems) and writes change the settings.
 // Such a frame without the silence goes to the meter, as on a real modem.
+// --no-in-band: a modem that never answers in band (like 2002-2009 on port
+// 2784): every frame goes to the meter.
 // The speed and format only change the registers, not the relay.
 
 const net = require('net');
@@ -230,8 +232,9 @@ function runEtaGsm() {
     let meterIdle = null;
 
     // A whole in-band frame for us, or null.
+    const answersInBand = !args.includes('--no-in-band');
     function inBand(chunk) {
-        if (chunk[0] !== ADDRESS || chunk.length < 8) return null;
+        if (!answersInBand || chunk[0] !== ADDRESS || chunk.length < 8) return null;
         const fn = chunk[1];
         const length = fn === 0x10 ? 9 + chunk[6] : 8;
         if (![3, 4, 6, 0x10].includes(fn) || chunk.length !== length) return null;

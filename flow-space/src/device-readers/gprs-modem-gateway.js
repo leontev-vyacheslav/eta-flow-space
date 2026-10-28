@@ -206,7 +206,9 @@ class GprsModem {
             const timer = setTimeout(() => {
                 // A complete reply that came within the last quietMs still counts.
                 if (!settle()) {
-                    done(reject, new Error(`${this.label}: no reply to ${request ? describe(request) : 'the wait'} (got "${printable(decodeText(this.buffer)).slice(0, 120)}")`));
+                    const err = new Error(`${this.label}: no reply to ${request ? describe(request) : 'the wait'} (got "${printable(decodeText(this.buffer)).slice(0, 120)}")`);
+                    err.code = 'ENOREPLY';
+                    done(reject, err);
                 }
             }, timeoutMs);
             this.waiter = {
