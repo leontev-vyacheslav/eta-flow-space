@@ -233,12 +233,15 @@ those meters. The КМ-5 reader isn't checked against РМ-5, and there are no r
 
 1. **Listener:** a TCP server in the Node-RED container, published by docker-compose, plus one more port forward
    on the office router (public port → 10.10.0.246), like the existing 3000.
-2. **Gateway** (`flow-space/src/device-readers/bars02-gateway.js`, 2026-10-26): accepts a connection, reads the
-   identifier, answers `#Y$`, sends the keep-alive every 45 s, keeps a pool by identifier and serializes the work
-   per modem (command mode → port → `#S$` → reader → escape); `getGateway(port)` keeps one listener per port
-   across deploys. The subflows reach it only through `flow-space/src/device-readers/gprs-modems.js`
-   (`global.get('gprsModems')`, settings.js; 2026-10-28), which will host the one gateway for БАРС-02 and ETA GSM:
-   one listener on 2910 (published by docker-compose) and `readerOptions({ identifier, line, responseTimeoutMs })`
+2. **Gateway** (since 2026-10-28 one gateway for БАРС-02 and ETA GSM: the core
+   `flow-space/src/device-readers/gprs-modem-gateway.js` with `bars02-protocol.js` and `eta-gsm-protocol.js`; the
+   first БАРС-02-only `bars02-gateway.js` of 2026-10-26 is gone): accepts a connection, tells the modem type from the
+   hello (an ETA GSM sends a `CSQ:` line; a БАРС-02 just its identifier, no line break; anything else, or an
+   identifier that is not plain text, is closed with nothing written), answers `#Y$` to a БАРС-02, acknowledges
+   its pushed events (`#W;E;…$` → `#Y$`), sends the keep-alive every 45 s, keeps a pool by identifier and
+   serializes the work per modem (БАРС-02: command mode → port → `#S$` → reader → escape). The subflows reach it
+   only through `flow-space/src/device-readers/gprs-modems.js` (`global.get('gprsModems')`, settings.js), which keeps
+   one listener per port across deploys: 2910 (published by docker-compose) and `readerOptions({ identifier, line, responseTimeoutMs })`
    → `{ createSocket, stepTimeoutMs: 15000, responseTimeoutMs ≥ 240000 }`. Every reader subflow (all 11) reads
    through it when `GPRS_MODEM_ID` is set; `GPRS_LINE` is the meter's line, `rs232 | rs232-powered | rs485 <baud>
    8N1…`, or `none` for old-firmware units (defaults per subflow: the most common line of that meter type behind
@@ -249,7 +252,7 @@ those meters. The КМ-5 reader isn't checked against РМ-5, and there are no r
    baudRate, parity, stopBits })` and runs unchanged (the channel has the `net.Socket` methods the clients use).
    Every reader has it since 2026-10-28 (ВКТ-7, КМ-5/РМ-5 and ТВ7 first, then EK270, Irvis, Меркурий 230,
    Взлёт023/024/026/034/042). `.tools/device-probes/reader_via_emulator.js` reads a meter directly and through the
-   gateway + `bars02_emulator.js` and compares the fields: the same fields on both paths for Irvis, Меркурий 230,
+   gateway + the pretend modem (`gprs_modem_emulator.js`, then `bars02_emulator.js`) and compares the fields: the same fields on both paths for Irvis, Меркурий 230,
    Взлёт023 and Взлёт026; EK270 read through the gateway (its direct reads lost to the line's other masters);
    Взлёт024/042 and ТСРВ-034 checked with an explicit `createSocket` from the production container.
 4. **Re-pointing modems:** channel 2 → flow-space while channel 1 stays with the old system, or move channel 1 modem by

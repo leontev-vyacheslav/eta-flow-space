@@ -39,7 +39,8 @@ const path = require('path');
 
 const repo = path.resolve(__dirname, '../..');
 const readers = path.join(repo, 'flow-space/src/device-readers');
-const { Bars02Gateway } = require(path.join(readers, 'bars02-gateway.js'));
+const { GprsModemGateway } = require(path.join(readers, 'gprs-modem-gateway.js'));
+const bars02 = require(path.join(readers, 'bars02-protocol.js'));
 const { Vkt7Client } = require(path.join(readers, 'vkt7-client.js'));
 const { Km5Client } = require(path.join(readers, 'km5-client.js'));
 const { Tv7Client } = require(path.join(readers, 'tv7-client.js'));
@@ -86,7 +87,8 @@ const out = (event, data = {}) => console.log(JSON.stringify({ time: new Date().
 const hex = (bytes) => [...bytes].map((b) => b.toString(16).padStart(2, '0')).join(' ');
 const ascii = (bytes) => [...bytes].map((b) => (b >= 0x20 && b < 0x7f ? String.fromCharCode(b) : '.')).join('');
 
-const gateway = new Bars02Gateway({
+const gateway = new GprsModemGateway({
+    protocols: [bars02],
     port: listenPort,
     host: option('--host'),
     trace: tracing ? (who, direction, bytes) => console.error(`${new Date().toISOString().slice(11, 23)} ${who} ${direction} ${hex(bytes)} | ${ascii(bytes)}`) : null,

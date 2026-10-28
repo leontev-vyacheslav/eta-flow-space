@@ -1,14 +1,18 @@
 'use strict';
 // Reads a meter twice with one of the project's readers: directly (host:port,
-// as through a Moxa or Wiznet) and through the БАРС-02 gateway, with
-// bars02_emulator.js relaying the transparent channel to the same meter.
+// as through a Moxa or Wiznet) and through the GPRS modem gateway, with
+// gprs_modem_emulator.js relaying the transparent channel to the same meter.
 // Prints both durations and the fields that differ, so a reader's GPRS path
 // (createSocket) can be checked without a real modem.
 //
-//   node .tools/device-probes/reader_via_emulator.js READER HOST PORT [OPTIONS_JSON] [--trace]
+//   node .tools/device-probes/reader_via_emulator.js READER HOST PORT [OPTIONS_JSON]
+//       [--modem bars02|eta-gsm] [--line "4800 8N2"] [--trace]
 //
 //   READER        file name in flow-space/src/device-readers, e.g. irvis-client.js
 //   OPTIONS_JSON  reader options besides the transport, e.g. '{"address":104}'
+//   --modem       the pretend modem (default bars02)
+//   --line        ETA GSM: the modem's line before the read; the gateway sets it to
+//                 the meter's 9600 8N1 in band (the relay itself does not change)
 //
 // Fields that change between two reads (clocks, flow rates, temperatures)
 // differ; identities (serial number, firmware, model) and the set of fields
@@ -19,10 +23,18 @@ const { spawn } = require('child_process');
 
 const repo = path.resolve(__dirname, '../..');
 const readers = path.join(repo, 'flow-space/src/device-readers');
-const { Bars02Gateway } = require(path.join(readers, 'bars02-gateway.js'));
+const { GprsModemGateway } = require(path.join(readers, 'gprs-modem-gateway.js'));
+const protocols = [require(path.join(readers, 'eta-gsm-protocol.js')), require(path.join(readers, 'bars02-protocol.js'))];
 
-const [readerFile, host, port, optionsJson] = process.argv.slice(2).filter((a) => a !== '--trace');
-const tracing = process.argv.includes('--trace');
+const argv = process.argv.slice(2);
+const takeOption = (name, fallback) => {
+    const i = argv.indexOf(name);
+    return i < 0 ? fallback : argv.splice(i, 2)[1];
+};
+const modemType = takeOption('--modem', 'bars02');
+const modemLine = takeOption('--line', null);
+const tracing = argv.includes('--trace');
+const [readerFile, host, port, optionsJson] = argv.filter((a) => a !== '--trace');
 if (!readerFile || !host || !port) {
     console.error('usage: node reader_via_emulator.js READER HOST PORT [OPTIONS_JSON] [--trace]');
     process.exit(2);
@@ -57,13 +69,15 @@ const timed = async (label, client) => {
 (async () => {
     const direct = await timed('direct', new Client({ host, port: Number(port), ...options }));
 
-    const gateway = new Bars02Gateway({ port: listenPort, host: '127.0.0.1' });
+    const gateway = new GprsModemGateway({ port: listenPort, host: '127.0.0.1', protocols });
+    gateway.on('log', (text) => console.log(`gateway: ${text}`));
     await gateway.start();
     const connected = new Promise((resolve) => gateway.once('modem', resolve));
-    const emulator = spawn(process.execPath, [path.join(__dirname, 'bars02_emulator.js'), '127.0.0.1', String(listenPort),
-        '--id', 'TEST', '--meter', `${host}:${port}`, ...(tracing ? ['--trace'] : [])], { stdio: ['ignore', 'ignore', tracing ? 'inherit' : 'ignore'] });
-    await connected;
-    const viaGateway = await timed('via БАРС-02 gateway', new Client({
+    const emulator = spawn(process.execPath, [path.join(__dirname, 'gprs_modem_emulator.js'), '127.0.0.1', String(listenPort),
+        '--id', 'TEST', '--modem', modemType, '--meter', `${host}:${port}`, ...(modemLine ? ['--line', modemLine] : []),
+        ...(tracing ? ['--trace'] : [])], { stdio: ['ignore', 'ignore', tracing ? 'inherit' : 'ignore'] });
+    const { type } = await connected;
+    const viaGateway = await timed(`via the gateway (${type})`, new Client({
         ...options,
         stepTimeoutMs: Math.max(options.stepTimeoutMs || 0, 5000),
         createSocket: () => gateway.createSocket({ identifier: 'TEST', port: 'rs485', baudRate: 9600 }),

@@ -51,7 +51,7 @@
  *   const client = new Tv7Client({ host: '178.207.154.38', port: 5011, address: 1, serialNumber: 19072584 });
  *   const results = await client.read();
  *
- * Through a БАРС-02 GPRS unit (it connects to us, see ./bars02-gateway.js):
+ * Through a GPRS modem that connects to us (БАРС-02, ETA GSM; see ./gprs-modem-gateway.js):
  *   const client = new Tv7Client({
  *       address: 1,
  *       stepTimeoutMs: 15000,
@@ -238,8 +238,8 @@ class Tv7Client {
      * @param {number} [options.retries=2] - Extra requests after no valid reply or a "busy" exception.
      * @param {number} [options.responseTimeoutMs=30000] - Overall timeout for a full read() call.
      * @param {(direction: string, bytes: Buffer) => void} [options.trace] - Called with every frame sent ('>') and received ('<').
-     * @param {() => net.Socket} [options.createSocket] - Socket factory (default: a new net.Socket); a БАРС-02 channel from
-     *     Bars02Gateway#createSocket makes host and port unnecessary.
+     * @param {() => net.Socket} [options.createSocket] - Socket factory (default: a new net.Socket); a GPRS modem channel from
+     *     GprsModemGateway#createSocket makes host and port unnecessary.
      */
     constructor({
         host,

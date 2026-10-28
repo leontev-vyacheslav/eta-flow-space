@@ -126,18 +126,27 @@ listened on 10.10.0.249:2784 for 20 minutes, read-only (log: `.tools/device-prob
 
 ## Bringing EtaModems to flow-space
 
-The БАРС-02 gateway's frame fits (listener, pool by identifier, one poll per modem at a time, `createSocket()` for the
-readers, which already accept it: ВКТ-7, КМ-5/РМ-5, ТВ7), with an EtaModem handshake instead:
+Done in the gateway (2026-10-28): `flow-space/src/device-readers/eta-gsm-protocol.js` beside `bars02-protocol.js`
+behind the one listener `gprs-modem-gateway.js` (2910), which tells the two apart by the hello. Every reader subflow
+reads through an ETA GSM when `GPRS_MODEM_ID` is its number (e.g. `0458`):
 
-- read the three lines, take the first as the identifier, send nothing back;
-- open a channel: optionally set baud rate / format in band (1 s silence first), then hand the socket to the reader;
-  close: nothing (no escape);
-- keep-alive: the Modbus read of 0x0006 at 254.
+- the three hello lines give the identifier, the signal and the Modbus address; nothing is sent back;
+- before a meter session the speed and format are set in band to the meter's `GPRS_LINE` when they differ (read
+  `0x00CC` ×4 once per connection; write `0x00CE` low word first and `0x00D2`, then read back), never saved and never
+  touching `selectSerial`; firmware other than 101 waits 2.5 s before and 20 s / 5 s after a write, as the old engine;
+  the gateway option `lineChanges: false` turns writing off; a session ends with nothing sent (no escape);
+- in-band frames go after 1.1 s of silence and wait 25 s for the reply; text registers are decoded word-swapped;
+- keep-alive: the Modbus read of `0x0006` every 45 s when idle; a missed one is logged and the modem stays connected.
+
+Tested against `.tools/device-probes/gprs_modem_emulator.js --modem eta-gsm` relaying to real meters (ВКТ-7, КМ-5, ТВ7,
+Irvis; also through the subflows): the same fields as direct reads, a line change from 4800 8N2 to 9600 8N1, a
+firmware-100 modem replying after 12 s (line set after 92 s, then the read), keep-alives without drops. Not yet
+in the field: run 2 (line changes on the real modems) needs the user's OK for the writes.
 
 Open questions:
 - Moving a modem to flow-space takes it from the old system (one connection at a time). Point `addr_1` at
   flow-space and keep the old server as `addr_2`, or the other way round for a test?
 - Does a write over the link (0x10 to 0x0096…, then `isSetting` 0 and reboot) work on the modems in the field?
   The old engine never wrote the server addresses.
-- Weigh the readers' frames against in-band capture: a meter frame to address 254 with function 03/04 would reach
-  the modem instead of the meter.
+- In-band capture: a meter frame to address 254 with function 03/04 would reach the modem instead of the meter. None
+  of our readers sends to 254 (КМ-5 frames start with BCD bytes ≤ 0x99, EK270 with `/`, SOH or ACK).

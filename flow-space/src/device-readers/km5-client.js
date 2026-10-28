@@ -60,7 +60,7 @@
  *   const client = new Km5Client({ host: '178.205.241.58', port: 5011, address: 418200 });
  *   const results = await client.read();
  *
- * Through a БАРС-02 GPRS unit (it connects to us, see ./bars02-gateway.js);
+ * Through a GPRS modem that connects to us (БАРС-02, ETA GSM; see ./gprs-modem-gateway.js);
  * also for the РМ-5, which speaks the same protocol on RS-485:
  *   const client = new Km5Client({
  *       address: 319147,
@@ -209,8 +209,8 @@ class Km5Client {
      *     number) when it is valid with ours put back; for БАРС-02 lines that drop the start of every reply.
      * @param {number} [options.responseTimeoutMs=30000] - Overall timeout for a full read() call.
      * @param {(direction: string, bytes: Buffer) => void} [options.trace] - Called with every frame sent ('>') and received ('<').
-     * @param {() => net.Socket} [options.createSocket] - Socket factory (default: a new net.Socket); a БАРС-02 channel from
-     *     Bars02Gateway#createSocket makes host and port unnecessary.
+     * @param {() => net.Socket} [options.createSocket] - Socket factory (default: a new net.Socket); a GPRS modem channel from
+     *     GprsModemGateway#createSocket makes host and port unnecessary.
      */
     constructor({
         host,

@@ -5,10 +5,12 @@
 // readers of flow-space/settings.js. Prints what the node sends or reports.
 //
 //   node .tools/device-probes/subflow_run.js "<subflow name>" ['<env json>'] [--emulator METER_HOST:METER_PORT]
+//       [--modem bars02|eta-gsm] [--line "4800 8N2"]
 //
 // --emulator reads through the GPRS modem gateway: it sets GPRS_MODEM_ID,
-// listens on a free local port and lets bars02_emulator.js relay the
-// transparent channel to the meter at METER_HOST:METER_PORT.
+// listens on a free local port and lets gprs_modem_emulator.js (a БАРС-02 by
+// default, --modem eta-gsm for an ETA GSM; --line: the ETA GSM's line before
+// the read) relay the transparent channel to the meter at METER_HOST:METER_PORT.
 //
 // Examples:
 //   node .tools/device-probes/subflow_run.js "VKT7 Client"
@@ -23,6 +25,12 @@ const flowSpace = path.join(repo, 'flow-space');
 const args = process.argv.slice(2);
 const emulatorAt = args.indexOf('--emulator');
 const meter = emulatorAt >= 0 ? args.splice(emulatorAt, 2)[1] : null;
+const takeOption = (name) => {
+    const i = args.indexOf(name);
+    return i < 0 ? null : args.splice(i, 2)[1];
+};
+const modemType = takeOption('--modem') || 'bars02';
+const modemLine = takeOption('--line');
 const [subflowName, envJson] = args;
 if (!subflowName) {
     console.error('usage: node subflow_run.js "<subflow name>" [\'<env json>\'] [--emulator METER_HOST:METER_PORT]');
@@ -79,8 +87,8 @@ function finish(code) {
     new Function('env', 'global', 'node', fn.initialize || '')(env, global, node);
     if (meter) {
         await globals.gprsModems.start();
-        emulator = spawn(process.execPath, [path.join(__dirname, 'bars02_emulator.js'), '127.0.0.1', process.env.GPRS_LISTEN_PORT,
-            '--id', values.GPRS_MODEM_ID, '--meter', meter], { stdio: 'ignore' });
+        emulator = spawn(process.execPath, [path.join(__dirname, 'gprs_modem_emulator.js'), '127.0.0.1', process.env.GPRS_LISTEN_PORT,
+            '--id', values.GPRS_MODEM_ID, '--modem', modemType, '--meter', meter, ...(modemLine ? ['--line', modemLine] : [])], { stdio: 'ignore' });
         while (!globals.gprsModems.modems().some((m) => m.identifier === values.GPRS_MODEM_ID)) {
             await new Promise((r) => setTimeout(r, 200));
         }

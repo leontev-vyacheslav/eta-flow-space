@@ -94,5 +94,6 @@ by address — touch its handshake only with great care) as the template:
 - Run 6–10 sessions: count requests and seconds per session; failures must be explained (collisions with
   production / another master), not ignored.
 - Check the GPRS path: `node .tools/device-probes/reader_via_emulator.js <type>-client.js <host> <port>
-  '<options json>'` reads the meter directly and through the БАРС-02 gateway + emulator and compares the fields.
+  '<options json>' [--modem bars02|eta-gsm]` reads the meter directly and through the GPRS modem gateway + a
+  pretend modem and compares the fields.
 - Then follow `device-state-mapping` to keep the stored state identical.

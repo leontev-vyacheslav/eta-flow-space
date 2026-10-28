@@ -70,7 +70,7 @@
  *   const client = new Vzljot034Client({ host: '10.4.200.25', port: 5010, address: 1, serialNumber: 1114237 });
  *   const results = await client.read();
  *
- * Through a GPRS modem that connects to us (БАРС-02, see ./bars02-gateway.js),
+ * Through a GPRS modem that connects to us (БАРС-02, ETA GSM; see ./gprs-modem-gateway.js),
  * createSocket replaces host and port:
  *   const client = new Vzljot034Client({
  *       address: 1,
@@ -208,7 +208,7 @@ class Vzljot034Client {
      * @param {number} [options.responseTimeoutMs=60000] - Overall timeout for a full read() call.
      * @param {(direction: string, bytes: Buffer) => void} [options.trace] - Called with every frame sent ('>') and received ('<').
      * @param {() => net.Socket} [options.createSocket] - Socket factory (default: a new net.Socket); a GPRS modem channel
-     *     from the gateway (БАРС-02: Bars02Gateway#createSocket) makes host and port unnecessary.
+     *     from the gateway (GprsModemGateway#createSocket) makes host and port unnecessary.
      */
     constructor({
         host,

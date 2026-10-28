@@ -50,7 +50,7 @@
  *   const client = new Ek270Iec61107Client({ host: '94.180.248.157', port: 5021 });
  *   const results = await client.read();
  *
- * Through a GPRS modem that connects to us (БАРС-02, see ./bars02-gateway.js),
+ * Through a GPRS modem that connects to us (БАРС-02, ETA GSM; see ./gprs-modem-gateway.js),
  * createSocket replaces host and port:
  *   const client = new Ek270Iec61107Client({
  *       createSocket: () => gateway.createSocket({ identifier: '0458', port: 'rs485', baudRate: 9600 }),
@@ -118,7 +118,7 @@ class Ek270Iec61107Client {
      * @param {number} [options.responseTimeoutMs=30000] - Overall timeout for a full read() call.
      * @param {string[]} [options.addresses] - IEC 61107 addresses to read (default: ADDRESSES).
      * @param {() => net.Socket} [options.createSocket] - Socket factory (default: a new net.Socket); a GPRS modem channel
-     *     from the gateway (БАРС-02: Bars02Gateway#createSocket) makes host and port unnecessary.
+     *     from the gateway (GprsModemGateway#createSocket) makes host and port unnecessary.
      */
     constructor({ host, port, createSocket = null, evenParity = false, stepDelayMs = 300, stepTimeoutMs = 5000, retries = 1, responseTimeoutMs = 30000, addresses = ADDRESSES } = {}) {
         if (!host && !createSocket) throw new Error('Ek270Iec61107Client: "host" is required');
