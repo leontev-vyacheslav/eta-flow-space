@@ -5,8 +5,9 @@
  * TCP server for БАРС-02 GPRS/Ethernet units (АО «ПромСервис», САДКО). A
  * БАРС-02 is a TCP *client*: it connects to its dispatch server on power-up
  * and keeps the connection open; the server sends requests over it. The
- * protocol is not published by the vendor; it is the one the old ETA engine
- * speaks (see .docs/bars02/bars02-notes.md):
+ * protocol is the vendor's "Протокол обмена с контроллером БАРС"
+ * (.docs/bars02/bars02-protocol-2015-05-20.pdf), as the old ETA engine speaks
+ * it (see .docs/bars02/bars02-notes.md):
  *
  *   modem → server   identifier, cp1251 text ("Зарипова_5", "033626")
  *   server → modem   #Y$                       connection confirmed

@@ -1,6 +1,7 @@
 # БАРС-02
 
-Collected 2026-10-26. Sources: the vendor passports in this folder; the old ETA engine
+Collected 2026-10-26. Sources: the vendor's protocol description `bars02-protocol-2015-05-20.pdf` (found 2026-10-28,
+see «What the vendor's description adds» below); the vendor passports in this folder; the old ETA engine
 (`d:\Projects\Eta\EnergyTechAudit.PowerAccounting.Engine\`: `…DeviceReader.BarsModem`, `…DeviceReader.BarsDiscrete`,
 `…DeviceReader.Engine\Dispatchers\BarsDispatcher.cs` + `ServerDispatcher.cs`, `…Engine\Types\GsmModemConnection.cs`,
 `DeviceReaderTests\BarsModem\BarsModemTests.cs`); the vendor configurator «Конфигуратор БАРС» 4.2.5.2
@@ -101,19 +102,64 @@ As the modems on port 2907 return them (`#R;CA0$`, 2026-10-26; one `KEY=value` p
 5.0.1: … CSI0=91.144.143.40 CSI1..CSI3=0.0.0.0 CSP0=2907 CSP1=2780 … CTC0=2100 CTC1=2100
 ```
 
-`CSV` firmware, `CHV` hardware, `CBN` the identifier it sends, `CSI0` + `CSP`/`CSP0` the server of channel 1
-(our public address 91.144.143.40, forwarded to 10.10.0.249), `CSI1`… other servers (all 0.0.0.0: **channel 2 is
-free** on every modem read), `CGA`/`CGP` APN and user. `CBI`/`CBG`/`CBM`/`CBA` (Ethernet IP, gateway, mask, MAC) hold
-garbage on GPRS units. `CD0`/`CD1`, `CTS`, `CTT`, `CTW`, `CTU`/`CTD` (a schedule), `CTC` are unmapped.
+The vendor's description names every key (block 0, `#R;CA0$`):
+
+| Key | Meaning |
+|---|---|
+| `CSV`, `CHV`, `CCRC` | firmware, hardware, firmware CRC16 |
+| `CBN` | the identifier the unit sends on connect |
+| `CBI`, `CBG`, `CBM`, `CBA` | own IP, gateway, mask, MAC (Ethernet units; garbage on GPRS units) |
+| `CSI0`, `CSI1` | server 0 (channel 1): main and reserve IP |
+| `CSI2`, `CSI3` | server 1 (channel 2): main and reserve IP |
+| `CSP0`, `CSP1` | port of server 0 and server 1 (firmware 4.0.1 has a single `CSP`) |
+| `CGA`, `CGP` | APN («оператор связи») and its password |
+| `CD0`, `CD1` | dispatcher phones (SMS) |
+| `CGG`, `CBR` | GPRS2 on/off, SMS control on/off |
+| `CTS` | contact debounce time (discrete inputs) |
+| `CTT` | transparent channel timeout (s, default 120; our units 200) |
+| `CTW` | reconnect pause |
+| `CTU`, `CTD` | schedule: hour `\t` minute on, off |
+| `CTC0`, `CTC1` (`CTC`) | wait between packets, per server |
+
+Block 1 (`#R;CA1$`): `CI0`, `CI1` = discrete input event code `\t` on/off `\t` SMS text.
+
+On the modems read: `CSI0` = 91.144.143.40 (forwarded to 10.10.0.249), `CSI1`–`CSI3` = 0.0.0.0, so **channel 2 is
+free** everywhere. Firmware 4.0.1 units have only `CSI0`–`CSI2` and one `CSP`: whether their channel 2 can use another
+port is open.
 
 From the configurator: `CSV CHV CBN CGA CGP CSI0 CSP CTW CTT CD0 CD1 CTC CTU CTD CA1 CI CBI CBA CBM CBG CCRC CSI2
 CSI1 CSI3 CSP0 CSP1 CTC0 CTC1 CA2 CRS CBS CGG CBR CTM BSN BCH0 BCH1 BTO BPP BPT BIE`. Fairly sure: `CSV`
 firmware, `CSI0`–`CSI3` server IPs (two channels × main/reserve), `CSP`/`CSP0`/`CSP1` server ports (default 2780),
-`CGA` APN (default `internet.beeline.ru`), `CGP` APN user/password (`beeline`). The rest are unmapped. The
+`CGA` APN (default `internet.beeline.ru`), `CGP` APN user/password (`beeline`); see the table above for the rest. The
 configurator's fields: Идентификатор контроллера, Заводской номер, Точка доступа, Имя (пароль), Канал1/Канал2
 IP адрес, Режим GPRS, Пауза переподключения (мин), Тайм-аут «прозрачного» канала (с), Время удержания канала
 модемом (5–3599 с), Период сборки пакета (мс, multiple of 35), Приоритет для RS232, График работы, SMS «NO
 CONNECT» / «CONNECT OK», Di event codes.
+
+### What the vendor's description adds
+
+`bars02-protocol-2015-05-20.pdf` (ПромСервис, 2015) confirms the frames above and adds:
+
+- **Events (НС) after connect:** after the server's `#Y$` the unit sends its pending events itself as
+  `#W;E;<records>$` (also when no `#Y$` came within 30 s) and waits for `#Y$`; without it, it sends them again
+  every 30 s. A new event is pushed the same way at once. What a server acknowledges is remembered **per channel**,
+  so flow-space acknowledging on channel 2 does not take events from the old system on channel 1. `#R;E$` reads
+  the list on demand; the `#Y$` after its reply clears it. Reserved codes: 253 parameters changed, 254 flash
+  error, 255 battery discharged (also the first start after a firmware update), 100 power on, 228 power off.
+- **Two servers and one meter line:** port selection answers `#N$` while the transparent channel belongs to
+  the other server (wait and repeat). When both select at once, the later one gets the channel and the first
+  server's `#S$` is answered `#N$`. So a second server cannot break into the other's meter session.
+- **The transparent channel** ends with the escape (answered `#Y;<csq>$`) or after `CTT` seconds without data
+  (default 120). Signal: 0–8 unstable, 8–15 stable, 15–31 excellent.
+- **Writing the configuration:** `#W;CA0;<KEY=value lines>$` and `#W;CA1;…$`, answered `#Y$` or `#N$`; then
+  `#W;CR;$` reboots (no reply).
+- Clock: `#W;Т; dd-mm-yyyy-hh-mm-ss$`; the real units answer `#R;T;$` with `#Y;dd-mm-yyyy-hh-mm-ss$`, without the
+  `Т;` the description shows.
+- Password (protects firmware update and SMS control): `#W;CBS;<old><NEW>$`; reset `#W;CRS;$` (configurator only).
+- Baud rates: 1200, 2400, 4800, 9600, 19200, 38400, 76800, 115200, 230400, 500000.
+- Firmware update (`#W;S;<password><length>-<crc>$`, then 256-byte blocks): never use it from flow-space.
+- The description says identifiers are in code page 866 (up to 127 characters); the real units send cp1251
+  (`CBN=` of Строителей_53 is `d1 f2 f0 ee …`), as the old engine decodes them.
 
 ### Quirks in the old code
 
@@ -204,7 +250,10 @@ those meters. The КМ-5 reader isn't checked against РМ-5, and there are no r
    by SMS `CSINM`, or on site.
 
 Open questions:
-- Channel 2 is free (checked on 16 modems). If both channels are connected, does the unit arbitrate the meter port
-  between two servers polling at once? (Compare the EK270 line shared with another master.) Test on one modem.
-- The exact frame for writing the configuration (`#W;CA0;…$` with or without the `#Y;` and `$` of the read reply).
-- What do the unmapped configuration keys mean? Ask ПромСервис, or decompile the configurator (a .NET assembly).
+- Channel 2 is free (checked on 16 modems), and the vendor's description says the unit arbitrates the meter line
+  between two servers (`#N$`). Still to see on one modem with both servers polling.
+- Firmware 4.0.1 units have a single server port `CSP`: can their channel 2 use another port than channel 1?
+- Whether `#W;CA0;…$` accepts only the keys to change or needs the whole block (the old engine wrote the whole
+  block back).
+- The gateway logs pushed events (`#W;E;…$`) but does not acknowledge them yet, so a unit with events repeats them
+  every 30 s.
