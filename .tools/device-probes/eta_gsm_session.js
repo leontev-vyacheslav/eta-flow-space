@@ -23,7 +23,7 @@ const path = require('path');
 const { EventEmitter } = require('events');
 
 const repo = path.resolve(__dirname, '../..');
-const readers = path.join(repo, 'flow-space/src/device-readers');
+const readers = path.join(repo, 'flow-space-nodered-a/src/device-readers');
 const CLIENTS = {
     vkt7: () => require(path.join(readers, 'vkt7-client.js')).Vkt7Client,
     km5: () => require(path.join(readers, 'km5-client.js')).Km5Client,

@@ -1,12 +1,12 @@
 ---
 name: device-state-mapping
-description: Write or change a Node-RED collect-device-state mapping (flow-space/flows.json) the project way — "the mapping gives the meaning". Use after adding or reworking a device reader, when renaming state fields, or when a site needs other pipes/channels or units.
+description: Write or change a Node-RED collect-device-state mapping (flow-space-nodered-a/flows.json) the project way — "the mapping gives the meaning". Use after adding or reworking a device reader, when renaming state fields, or when a site needs other pipes/channels or units.
 ---
 
 # The mapping gives the meaning
 
 Each polled device has a `collect-device-state` function node on its site's tab in
-`flow-space/flows.json`, right after the reader subflow. It receives the reader's **raw** payload (see the
+`flow-space-nodered-a/flows.json`, right after the reader subflow. It receives the reader's **raw** payload (see the
 `device-reader-raw` skill) and:
 
 - **picks the pipes or channels that matter for this site** — e.g. ВКТ-7 heat input 1 `t1`/`t2`, ТВ7
@@ -99,5 +99,5 @@ A rename touches more than the mapping — find every use first:
 
 ## Show the change
 
-Show flows.json changes as per-node function line diffs (`python3 flow-space/flows-diff.py`), not raw JSON.
+Show flows.json changes as per-node function line diffs (`python3 flow-space-nodered-a/flows-diff.py`), not raw JSON.
 Propose a commit message in the repo style; the user commits.

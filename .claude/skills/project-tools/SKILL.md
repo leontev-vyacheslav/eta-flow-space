@@ -38,7 +38,7 @@ Look here first; extend a tool rather than writing a second one.
 | `.tools/xlsx-dump` | Read an `.xlsx` (register maps, customer tables) as text without openpyxl — standard library only | `python3 xlsx_dump.py BOOK.xlsx [--sheet NAME] [--require-col N ...]` |
 | `.tools/bundle-size` | Where the UI's start JavaScript comes from: source-map byte totals per package and DevExtreme folder (`grids`, `viz`, `ui`), start chunks or all | `node bundle-size.mjs [--all] [--depth N] [--dist <build>]` (Node 24 in PATH) |
 
-The device readers themselves (`flow-space/src/device-readers/*-client.js`) also run from the command line
+The device readers themselves (`flow-space-nodered-a/src/device-readers/*-client.js`) also run from the command line
 with a frame trace (`node <client>.js <host> <port> <address>`) — the first tool for probing a meter.
 
 ## Setup notes

@@ -143,7 +143,7 @@ minutes, line changes on (speed/format, not saved; log `.tools/device-probes/gpr
 
 ## Bringing EtaModems to flow-space
 
-Done in the gateway (2026-10-28): `flow-space/src/device-readers/eta-gsm-protocol.js` beside `bars02-protocol.js`
+Done in the gateway (2026-10-28): `flow-space-nodered-a/src/device-readers/eta-gsm-protocol.js` beside `bars02-protocol.js`
 behind the one listener `gprs-modem-gateway.js` (2910), which tells the two apart by the hello. Every reader subflow
 reads through an ETA GSM when `GPRS_MODEM_ID` is its number (e.g. `0458`):
 

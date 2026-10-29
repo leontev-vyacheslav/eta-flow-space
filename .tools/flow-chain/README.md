@@ -9,7 +9,7 @@ Written 2026-10-27 for the Гагарина boiler room; the Весна-2, Statu
 ```bash
 # 1. read the controller (production server only for most sites; see device-probes/README.md)
 ssh -p 8022 -o BatchMode=yes admin-leo@91.144.143.40 \
-  'docker exec -i eta-flow-space timeout 60 node - 192.168.0.190 5010 --function 3 --range 1-12 --range 19-36 --range 50-81 --range 92-115' \
+  'docker exec -i eta-flow-space-nodered-a timeout 60 node - 192.168.0.190 5010 --function 3 --range 1-12 --range 19-36 --range 50-81 --range 92-115' \
   < .tools/device-probes/modbus_rtu_dump.js > words.json
 
 # 2. run the tab's chain (its own collect-device-state, or a new mapping under test) and validate

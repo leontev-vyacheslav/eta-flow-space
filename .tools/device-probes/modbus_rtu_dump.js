@@ -4,7 +4,7 @@
 // before (and while) its reader is written. No dependencies, so it also runs
 // from stdin inside the Node-RED container:
 //
-//   docker exec -i eta-flow-space node - HOST PORT [options] < .tools/device-probes/modbus_rtu_dump.js
+//   docker exec -i eta-flow-space-nodered-a node - HOST PORT [options] < .tools/device-probes/modbus_rtu_dump.js
 //   node .tools/device-probes/modbus_rtu_dump.js HOST PORT [options]
 //
 // Options:

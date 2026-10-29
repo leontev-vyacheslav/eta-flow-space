@@ -8,7 +8,7 @@
 //   node .tools/device-probes/reader_via_emulator.js READER HOST PORT [OPTIONS_JSON]
 //       [--modem bars02|eta-gsm] [--line "4800 8N2"] [--trace]
 //
-//   READER        file name in flow-space/src/device-readers, e.g. irvis-client.js
+//   READER        file name in flow-space-nodered-a/src/device-readers, e.g. irvis-client.js
 //   OPTIONS_JSON  reader options besides the transport, e.g. '{"address":104}'
 //   --modem       the pretend modem (default bars02)
 //   --line        ETA GSM: the modem's line before the read; the gateway sets it to
@@ -22,7 +22,7 @@ const path = require('path');
 const { spawn } = require('child_process');
 
 const repo = path.resolve(__dirname, '../..');
-const readers = path.join(repo, 'flow-space/src/device-readers');
+const readers = path.join(repo, 'flow-space-nodered-a/src/device-readers');
 const { GprsModemGateway } = require(path.join(readers, 'gprs-modem-gateway.js'));
 const protocols = [require(path.join(readers, 'eta-gsm-protocol.js')), require(path.join(readers, 'bars02-protocol.js'))];
 

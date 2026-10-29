@@ -42,8 +42,8 @@ device to the user as you go.
 
 ## 3. Reader + subflow
 
-- Client per `device-reader-raw`; register it in `flow-space/settings.js`.
-- Subflow "<Type> Client" in `flow-space/flows.json`, modelled on an existing one (`TV7 Client`,
+- Client per `device-reader-raw`; register it in `flow-space-nodered-a/settings.js`.
+- Subflow "<Type> Client" in `flow-space-nodered-a/flows.json`, modelled on an existing one (`TV7 Client`,
   `Vzljot026 Client`): env HOST, PORT, ADDRESS, SERIAL_NUMBER (if any), RESPONSE_TIMEOUT_MS; the function
   wraps `client.read()` in `withConnectionLock`, sends `msg.payload`, sets a green/red status, calls
   `node.error` and sends nothing on failure; a status node. Subflow `info` describes the raw output.
@@ -97,9 +97,9 @@ stop working; renamed flows reset the saved diagram zoom once.
 
 ## 7. Deploy notes for the user
 
-- `git pull`, then `docker restart eta-flow-space` (settings.js / clients load only at startup); reload
+- `git pull`, then `docker restart eta-flow-space-nodered-a` (settings.js / clients load only at startup); reload
   open Node-RED editor tabs before any Deploy (a stale editor writes old flows back — check drift with
-  `python3 flow-space/flows-diff.py`).
+  `python3 flow-space-nodered-a/flows-diff.py`).
 - Migrations: the command is in `database/README.md`; say whether to run before or after the restart
   (data fixes that old polling would undo: after) and whether another migration must run first (one that
   finds devices by a code that a rename changes must run before the rename).

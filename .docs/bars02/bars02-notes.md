@@ -234,13 +234,13 @@ those meters. The КМ-5 reader isn't checked against РМ-5, and there are no r
 1. **Listener:** a TCP server in the Node-RED container, published by docker-compose, plus one more port forward
    on the office router (public port → 10.10.0.246), like the existing 3000.
 2. **Gateway** (since 2026-10-28 one gateway for БАРС-02 and ETA GSM: the core
-   `flow-space/src/device-readers/gprs-modem-gateway.js` with `bars02-protocol.js` and `eta-gsm-protocol.js`; the
+   `flow-space-nodered-a/src/device-readers/gprs-modem-gateway.js` with `bars02-protocol.js` and `eta-gsm-protocol.js`; the
    first БАРС-02-only `bars02-gateway.js` of 2026-10-26 is gone): accepts a connection, tells the modem type from the
    hello (an ETA GSM sends a `CSQ:` line; a БАРС-02 just its identifier, no line break; anything else, or an
    identifier that is not plain text, is closed with nothing written), answers `#Y$` to a БАРС-02, acknowledges
    its pushed events (`#W;E;…$` → `#Y$`), sends the keep-alive every 45 s, keeps a pool by identifier and
    serializes the work per modem (БАРС-02: command mode → port → `#S$` → reader → escape). The subflows reach it
-   only through `flow-space/src/device-readers/gprs-modems.js` (`global.get('gprsModems')`, settings.js), which keeps
+   only through `flow-space-nodered-a/src/device-readers/gprs-modems.js` (`global.get('gprsModems')`, settings.js), which keeps
    one listener per port across deploys: 2910 (published by docker-compose) and `readerOptions({ identifier, line, responseTimeoutMs })`
    → `{ createSocket, stepTimeoutMs: 15000, responseTimeoutMs ≥ 240000 }`. Every reader subflow (all 11) reads
    through it when `GPRS_MODEM_ID` is set; `GPRS_LINE` is the meter's line, `rs232 | rs232-powered | rs485 <baud>

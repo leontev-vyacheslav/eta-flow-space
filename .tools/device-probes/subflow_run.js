@@ -1,8 +1,8 @@
 'use strict';
-// Runs a reader subflow's code from flow-space/flows.json the way Node-RED
+// Runs a reader subflow's code from flow-space-nodered-a/flows.json the way Node-RED
 // would: its On Start, then its function with one input message, with env
 // (the subflow's defaults, then the given values) and the functionGlobalContext
-// readers of flow-space/settings.js. Prints what the node sends or reports.
+// readers of flow-space-nodered-a/settings.js. Prints what the node sends or reports.
 //
 //   node .tools/device-probes/subflow_run.js "<subflow name>" ['<env json>'] [--emulator METER_HOST:METER_PORT]
 //       [--modem bars02|eta-gsm] [--line "4800 8N2"]
@@ -29,7 +29,7 @@ const path = require('path');
 const { spawn } = require('child_process');
 
 const repo = path.resolve(__dirname, '../..');
-const flowSpace = path.join(repo, 'flow-space');
+const flowSpace = path.join(repo, 'flow-space-nodered-a');
 const args = process.argv.slice(2);
 const emulatorAt = args.indexOf('--emulator');
 const meter = emulatorAt >= 0 ? args.splice(emulatorAt, 2)[1] : null;

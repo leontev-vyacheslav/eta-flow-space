@@ -7,9 +7,9 @@ the two apart: it lists added, removed and changed nodes, and shows function cod
 changes as line diffs.
 
 Usage (inside the repository):
-    python3 flow-space/flows-diff.py                    # flows.json next to the script vs HEAD
-    python3 flow-space/flows-diff.py origin/master
-    python3 /tmp/flows-diff.py HEAD flow-space/flows.json   # a copy of the script, explicit file
+    python3 flow-space-nodered-a/flows-diff.py                    # flows.json next to the script vs HEAD
+    python3 flow-space-nodered-a/flows-diff.py origin/master
+    python3 /tmp/flows-diff.py HEAD flow-space-nodered-a/flows.json   # a copy of the script, explicit file
 """
 import difflib
 import json

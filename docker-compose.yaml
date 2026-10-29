@@ -1,16 +1,16 @@
 services:
-  eta-flow-space:
+  eta-flow-space-nodered-a:
     image: nodered/node-red:4.1.3
-    container_name: eta-flow-space
+    container_name: eta-flow-space-nodered-a
     ports:
       # Node-RED editor: open to the office network on purpose (used from other machines); protected by adminAuth in settings.js
       - "1895:1880"
-      # GPRS modems (БАРС-02, later ETA GSM) connect here (flow-space/src/device-readers/gprs-modems.js); the office router forwards a public port to it
+      # GPRS modems (БАРС-02, later ETA GSM) connect here (flow-space-nodered-a/src/device-readers/gprs-modems.js); the office router forwards a public port to it
       - "2910:2910"
     env_file:
-      - ./flow-space/.env-flows
+      - ./flow-space-nodered-a/.env-flows
     volumes:
-      - ./flow-space:/data
+      - ./flow-space-nodered-a:/data
     restart: unless-stopped
     environment:
       - TZ=Europe/Moscow
@@ -121,7 +121,7 @@ services:
       - ./flow-space-statics:/var/www/static:ro
       - ./certs:/etc/nginx/certs:ro
     depends_on:
-      - eta-flow-space
+      - eta-flow-space-nodered-a
       - eta-flow-space-ui
       - eta-flow-space-reporting
       - eta-flow-space-web-api

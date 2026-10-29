@@ -1,11 +1,11 @@
 ---
 name: device-reader-raw
-description: Write or rework a meter device reader (flow-space/src/device-readers/*-client.js) the project way — "the reader reads everything raw". Use when adding a new meter, porting a meter from Node-RED Modbus nodes to its own client, or changing what an existing client reads.
+description: Write or rework a meter device reader (flow-space-nodered-a/src/device-readers/*-client.js) the project way — "the reader reads everything raw". Use when adding a new meter, porting a meter from Node-RED Modbus nodes to its own client, or changing what an existing client reads.
 ---
 
 # The reader reads everything raw
 
-A device reader (`flow-space/src/device-readers/<type>-client.js`) polls **every current value the
+A device reader (`flow-space-nodered-a/src/device-readers/<type>-client.js`) polls **every current value the
 protocol offers**, in the **device's own units**, with **no supply/return or other site interpretation**.
 Names follow the **manufacturer's protocol document**, written in Latin letters and **grouped the way the
 document groups them**. Giving the values their meaning is the job of the Node-RED mapping — see the
@@ -84,7 +84,7 @@ protocol generations told apart by the session reply, RAM/FLASH dumps or М4 tag
    `read()` that rejects with `err.partialResults`.
 4. `module.exports = { <Type>Client, ... }` and a CLI block: `node <type>-client.js <host> <port> ...`
    printing every frame to stderr — used to probe the live meter.
-5. Register in `flow-space/settings.js` → `functionGlobalContext`: `<type>: require('./src/device-readers/<type>-client.js')`.
+5. Register in `flow-space-nodered-a/settings.js` → `functionGlobalContext`: `<type>: require('./src/device-readers/<type>-client.js')`.
 
 ## Before writing
 

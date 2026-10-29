@@ -1,7 +1,7 @@
 'use strict';
 // Stands in for a dispatch server for GPRS modems (БАРС-02, ETA GSM; was
 // bars02_session.js) for a few minutes, with the project's gateway
-// (flow-space/src/device-readers/gprs-modem-gateway.js): takes every modem
+// (flow-space-nodered-a/src/device-readers/gprs-modem-gateway.js): takes every modem
 // that connects, asks each one read-only questions (БАРС-02: --query; ETA
 // GSM: its status) and reads the meters given as targets through the modem,
 // with the project's own readers. Used on the old system's server while its
@@ -49,7 +49,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repo = path.resolve(__dirname, '../..');
-const readers = path.join(repo, 'flow-space/src/device-readers');
+const readers = path.join(repo, 'flow-space-nodered-a/src/device-readers');
 const { GprsModemGateway } = require(path.join(readers, 'gprs-modem-gateway.js'));
 const PROTOCOLS = { 'bars02': require(path.join(readers, 'bars02-protocol.js')), 'eta-gsm': require(path.join(readers, 'eta-gsm-protocol.js')) };
 const { Vkt7Client } = require(path.join(readers, 'vkt7-client.js'));
