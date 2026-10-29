@@ -6290,8 +6290,8 @@
         "id": "8f9e4aaf517ca984",
         "type": "comment",
         "z": "b5e1c7d93a4f6e20",
-        "name": "spt941-36809 (СПТ941.10/11 через БАРС-02 «Ленина_171», ул. Ленина, 171, Альметьевск) — testing, not stored",
-        "info": "СПТ941.10/11 36809 (firmware byte VX 2, network number NT 1, ЕИ 0) behind the БАРС-02 «Ленина_171», an old-firmware unit without port selection (GPRS_LINE none: its line stays as configured), as the old dispatch system lists it (its access point Ethernet-Bars02_Old-10.135.64.1:5010, channel Spt941_10_11-36809 / ЦО).\n\nThe unit connects to the old system (91.144.143.40:2907); it reaches this flow only while 10.10.0.249:2907 is forwarded to the GPRS modem listener (10.10.0.246:2910) with ETA$Bars2DeviceReader stopped (netsh portproxy, as tested on 2026-10-28). Otherwise every read fails with \"GPRS modem Ленина_171 is not connected\".\n\nRead through the unit on the old server on 2026-10-28 (.tools/device-probes/spt-session-2026-10-28.jsonl): 5 reads of 5, 38–41 s each (9 requests); ИД is the serial number; no active НС.\n\nThe old dispatch system polls the same meter, so the inject here polls every 5 minutes only.",
+        "name": "spt941-72031 (СПТ941.10/11 через БАРС-02 «Сулеймановой_3», ул. Сулеймановой, 3, Альметьевск) — testing, not stored",
+        "info": "СПТ941.10/11 72031 (firmware byte VX 3 in the old system, network number NT 1) behind the БАРС-02 «Сулеймановой_3» on RS-232 with power, 9600 8N1, as the old dispatch system sets it (its access point GPRS-Bars02-Сулеймановой_3, channel Spt941_10_11-72031; the same unit has a Danfoss ECL on RS-485). It replaces Ленина_171 (36809), whose old-firmware unit stayed silent to the gateway on 2026-10-29.\n\nThe unit connects to the old system's БАРС port 2901 (ETA$BarsLachynDeviceReader, about 105 units); it reaches this flow only while 10.10.0.249:2901 is forwarded to the GPRS modem listener (10.10.0.246:2910) with that service stopped. Otherwise every read fails with \"GPRS modem Сулеймановой_3 is not connected\".\n\nNot read by flow-space before; the old system read it 93 % of the time in September.\n\nThe old dispatch system polls the same meter, so the inject here polls every 5 minutes only.",
         "x": 370,
         "y": 1140,
         "wires": []
@@ -6329,7 +6329,7 @@
         "id": "059f884c3c6c3b22",
         "type": "subflow:spt941reader000000",
         "z": "b5e1c7d93a4f6e20",
-        "name": "spt941-36809",
+        "name": "spt941-72031",
         "env": [
             {
                 "name": "ADDRESS",
@@ -6338,17 +6338,17 @@
             },
             {
                 "name": "SERIAL_NUMBER",
-                "value": "36809",
+                "value": "72031",
                 "type": "num"
             },
             {
                 "name": "GPRS_MODEM_ID",
-                "value": "Ленина_171",
+                "value": "Сулеймановой_3",
                 "type": "str"
             },
             {
                 "name": "GPRS_LINE",
-                "value": "none",
+                "value": "rs232-powered 9600 8N1",
                 "type": "str"
             }
         ],
@@ -6365,7 +6365,7 @@
         "id": "24188e30397216c2",
         "type": "debug",
         "z": "b5e1c7d93a4f6e20",
-        "name": "debug spt941-36809",
+        "name": "debug spt941-72031",
         "active": true,
         "tosidebar": true,
         "console": false,
@@ -6383,7 +6383,7 @@
         "type": "function",
         "z": "b5e1c7d93a4f6e20",
         "name": "collect-device-state",
-        "func": "const { storeDeviceStateToCacheAsync } = global.get('helpers');\n\n// The СПТ941.10/11 sends values in the units set by its ЕИ (msg.payload.EI):\n// this one has ЕИ = 0, Гкал, as the state keeps.\n// Fields as the old dispatch system shows channel \"Spt941_10_11-36809 / ЦО\".\nconst { t1, t2, G1, G2, V1, V2, M1, M2, Q, Ti, VX, version, deviceTime } = msg.payload;\n\nconst deviceState = {\n    // The one heat system (ЦО): pipe 1 is the supply, pipe 2 the return.\n\n    // Temperature, °C\n    temperatureInputPipe: t1,           // supply water temperature\n    temperatureReturnPipe: t2,          // return water temperature\n\n    // Volume flow rate, m³/h\n    volumeFlowRateInputPipe: G1,        // supply volume flow rate\n    volumeFlowRateReturnPipe: G2,       // return volume flow rate\n\n    // Volume, m³\n    volumeInputPipe: V1,                // supply volume\n    volumeReturnPipe: V2,               // return volume\n\n    // Mass, t\n    massInputPipe: M1,                  // supply mass\n    massReturnPipe: M2,                 // return mass\n\n    // Heat, Gcal\n    totalHeatConsumption: Q,            // heat consumed, total\n\n    // Time intervals, h\n    normalOperationTime: Ti,            // counting time (Ти)\n\n    // Device info (the old protocol has only the version byte VX) and the\n    // meter's own clock\n    firmware: version ?? String(VX),\n    deviceTime,\n\n    // Timestamp\n    timestamp: Date.now(),\n};\n\n// Not stored yet: the testing tab has no flow in the database and the meter\n// no device row. Set its code here once it has one (e.g.\n// lenina171-spt941-36809) and the state is stored under it.\nconst DEVICE_CODE = null;\nif (DEVICE_CODE) {\n    const flowUid = node.path.split('/').find(_ => true);\n    await storeDeviceStateToCacheAsync(global, DEVICE_CODE, deviceState, flowUid);\n}\nmsg.deviceState = deviceState;\n\nreturn msg;\n",
+        "func": "const { storeDeviceStateToCacheAsync } = global.get('helpers');\n\n// The СПТ941.10/11 sends values in the units set by its ЕИ (msg.payload.EI):\n// ЕИ = 0 means Гкал, as the state keeps (check msg.payload.EI on the first read).\n// Fields as the old dispatch system shows channel \"Spt941_10_11-36809 / ЦО\" (Ленина_171, the first meter mapped here).\nconst { t1, t2, G1, G2, V1, V2, M1, M2, Q, Ti, VX, version, deviceTime } = msg.payload;\n\nconst deviceState = {\n    // The one heat system (ЦО): pipe 1 is the supply, pipe 2 the return.\n\n    // Temperature, °C\n    temperatureInputPipe: t1,           // supply water temperature\n    temperatureReturnPipe: t2,          // return water temperature\n\n    // Volume flow rate, m³/h\n    volumeFlowRateInputPipe: G1,        // supply volume flow rate\n    volumeFlowRateReturnPipe: G2,       // return volume flow rate\n\n    // Volume, m³\n    volumeInputPipe: V1,                // supply volume\n    volumeReturnPipe: V2,               // return volume\n\n    // Mass, t\n    massInputPipe: M1,                  // supply mass\n    massReturnPipe: M2,                 // return mass\n\n    // Heat, Gcal\n    totalHeatConsumption: Q,            // heat consumed, total\n\n    // Time intervals, h\n    normalOperationTime: Ti,            // counting time (Ти)\n\n    // Device info (the old protocol has only the version byte VX) and the\n    // meter's own clock\n    firmware: version ?? String(VX),\n    deviceTime,\n\n    // Timestamp\n    timestamp: Date.now(),\n};\n\n// Not stored yet: the testing tab has no flow in the database and the meter\n// no device row. Set its code here once it has one (e.g.\n// suleymanovoy3-spt941-72031) and the state is stored under it.\nconst DEVICE_CODE = null;\nif (DEVICE_CODE) {\n    const flowUid = node.path.split('/').find(_ => true);\n    await storeDeviceStateToCacheAsync(global, DEVICE_CODE, deviceState, flowUid);\n}\nmsg.deviceState = deviceState;\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -6402,7 +6402,7 @@
         "id": "2f91105fb82aa593",
         "type": "debug",
         "z": "b5e1c7d93a4f6e20",
-        "name": "debug spt941-36809 state",
+        "name": "debug spt941-72031 state",
         "active": true,
         "tosidebar": true,
         "console": false,
