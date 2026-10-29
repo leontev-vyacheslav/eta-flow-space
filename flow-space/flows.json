@@ -6791,7 +6791,8 @@
         "y": 1880,
         "wires": [
             [
-                "547f70dbd391160e"
+                "547f70dbd391160e",
+                "fbc4d35f57401f13"
             ]
         ]
     },
@@ -6813,13 +6814,50 @@
         "wires": []
     },
     {
+        "id": "fbc4d35f57401f13",
+        "type": "function",
+        "z": "b5e1c7d93a4f6e20",
+        "name": "collect-device-state",
+        "func": "const { storeDeviceStateToCacheAsync } = global.get('helpers');\n\n// The TV7 sends SI units (see tv7-client.js); the state keeps Gcal and\n// kgf/cm², as the other heat meters do.\n// Fields as the old dispatch system shows channel \"TV7-19087313 / ЦО\".\nconst GJ_PER_GCAL = 4.1868;\nconst KGF_CM2_PER_MPA = 10.1972;\n\n// null stays null (a value outside the measurement scheme).\nconst convert = (value, factor, digits = 7) =>\n    value === null || value === undefined ? null : Number((value * factor).toPrecision(digits));\n\nconst { input1, firmware, deviceTime } = msg.payload;\n// Heat input 1 (ЦО): pipe 1 is the supply, pipe 2 the return.\nconst input = input1.pipe1;\nconst ret = input1.pipe2;\n\nconst deviceState = {\n    // Temperature, °C\n    temperatureInputPipe: input.t,                                // supply water temperature\n    temperatureReturnPipe: ret.t,                                 // return water temperature\n\n    // Pressure, kgf/cm²\n    pressureInputPipe: convert(input.P, KGF_CM2_PER_MPA),         // supply pressure\n    pressureReturnPipe: convert(ret.P, KGF_CM2_PER_MPA),          // return pressure\n\n    // Volume flow rate, m³/h\n    volumeFlowRateInputPipe: input.Go,                            // supply volume flow rate\n    volumeFlowRateReturnPipe: ret.Go,                             // return volume flow rate\n\n    // Mass flow rate, t/h\n    massFlowRateInputPipe: input.Gm,                              // supply mass flow rate\n    massFlowRateReturnPipe: ret.Gm,                               // return mass flow rate\n\n    // Heat power, Gcal/h\n    heatPowerInputPipe: convert(input.F, 1 / GJ_PER_GCAL),        // heat power carried in the supply pipe\n    heatPowerReturnPipe: convert(ret.F, 1 / GJ_PER_GCAL),         // heat power carried back in the return pipe\n\n    // Heat, Gcal\n    totalHeatConsumption: convert(input1.Qtv, 1 / GJ_PER_GCAL, 12), // heat consumed, total\n\n    // Mass, t\n    massInputPipe: input.M,                                       // supply mass\n    massReturnPipe: ret.M,                                        // return mass\n\n    // Volume, m³\n    volumeInputPipe: input.V,                                     // supply volume\n    volumeReturnPipe: ret.V,                                      // return volume\n\n    // Time intervals, h\n    normalOperationTime: input1.VNR,                              // normal operation time (ВНР)\n    noCountTime: input1.VOS,                                      // time without counting (ВОС)\n\n    // Device info and the meter's own clock (about 55 min fast on 2026-10-29)\n    firmware,\n    deviceTime,\n\n    // Timestamp\n    timestamp: Date.now(),\n};\n\n// Not stored yet: the testing tab has no flow in the database and the meter\n// no device row. Set its code here once it has one (e.g.\n// lebedeva20b-tv7-19087313) and the state is stored under it.\nconst DEVICE_CODE = null;\nif (DEVICE_CODE) {\n    const flowUid = node.path.split('/').find(_ => true);\n    await storeDeviceStateToCacheAsync(global, DEVICE_CODE, deviceState, flowUid);\n}\nmsg.deviceState = deviceState;\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 1940,
+        "wires": [
+            [
+                "7738f927a920a359"
+            ]
+        ]
+    },
+    {
+        "id": "7738f927a920a359",
+        "type": "debug",
+        "z": "b5e1c7d93a4f6e20",
+        "name": "debug tv7-19087313 state",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "deviceState",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 800,
+        "y": 1940,
+        "wires": []
+    },
+    {
         "id": "c016bb4c3bc18db1",
         "type": "comment",
         "z": "b5e1c7d93a4f6e20",
         "name": "vzljot034-1308858 (ТСРВ-034 через ETA GSM «0228a», Безоблачная ул., 6А, Казань) — testing, not stored",
         "info": "Взлёт ТСРВ-034 1308858 (Modbus address 1) behind the ETA GSM 0228a on RS-485 4800 8N2, the modem's own line. Read through the modem on the old server on 2026-10-28 (.tools/device-probes/eta-gsm-session-2026-10-28.jsonl, run 1, and gprs-session-2026-10-28-eta-gsm-run2.jsonl, run 2): 3 reads of 3, ~14 s each. The old system read it 100 % of the time in September (as VZLJOT_033-034).\n\nThe modem connects to the old system (91.144.143.40:2784, ETA$GSMDeviceReader, about 270 modems); it reaches this flow only while 10.10.0.249:2784 is forwarded to the GPRS modem listener (10.10.0.246:2910) with that service stopped (netsh portproxy, as on 2026-10-28/29 for the БАРС ports). Otherwise every read fails with \"GPRS modem 0228a is not connected\".\n\nThe old dispatch system polls the same meter, so the inject here polls every 5 minutes only.",
         "x": 370,
-        "y": 1960,
+        "y": 2020,
         "wires": []
     },
     {
@@ -6844,7 +6882,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 150,
-        "y": 2020,
+        "y": 2080,
         "wires": [
             [
                 "86286aebad0af0bc"
@@ -6879,7 +6917,7 @@
             }
         ],
         "x": 350,
-        "y": 2020,
+        "y": 2080,
         "wires": [
             [
                 "7413a97585984130"
@@ -6900,7 +6938,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 590,
-        "y": 2020,
+        "y": 2080,
         "wires": []
     },
     {
@@ -6910,7 +6948,7 @@
         "name": "vzljot026-1412792 (ТСРВ-026М через ETA GSM «0039», Зеленая ул., 1 корпус 4, Казань) — testing, not stored",
         "info": "Взлёт ТСРВ-026М 1412792 (Modbus address 1) behind the ETA GSM 0039 on RS-485 4800 8N1, the modem's own line. Read through the modem on the old server on 2026-10-28 (.tools/device-probes/eta-gsm-session-2026-10-28.jsonl, run 1, and gprs-session-2026-10-28-eta-gsm-run2.jsonl, run 2): 3 reads of 3, ~14 s each. The old system read it 100 % of the time in September (as VZLJOT_026M).\n\nThe modem connects to the old system (91.144.143.40:2784, ETA$GSMDeviceReader, about 270 modems); it reaches this flow only while 10.10.0.249:2784 is forwarded to the GPRS modem listener (10.10.0.246:2910) with that service stopped (netsh portproxy, as on 2026-10-28/29 for the БАРС ports). Otherwise every read fails with \"GPRS modem 0039 is not connected\".\n\nThe old dispatch system polls the same meter, so the inject here polls every 5 minutes only.",
         "x": 370,
-        "y": 2100,
+        "y": 2160,
         "wires": []
     },
     {
@@ -6935,7 +6973,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 150,
-        "y": 2160,
+        "y": 2220,
         "wires": [
             [
                 "0a7f415047f03329"
@@ -6970,7 +7008,7 @@
             }
         ],
         "x": 350,
-        "y": 2160,
+        "y": 2220,
         "wires": [
             [
                 "948b207d2cb971c4"
@@ -6991,7 +7029,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 590,
-        "y": 2160,
+        "y": 2220,
         "wires": []
     },
     {
@@ -7001,7 +7039,7 @@
         "name": "km5-96521 (КМ-5 через ETA GSM «2006», ул. Сибгата Хакима, 35 (жилая часть), Казань) — testing, not stored",
         "info": "КМ-5 96521 behind the ETA GSM 2006, one of the modems that never answer in band (2002-2009): the gateway cannot read or set its line, so after the unanswered line read it reads the meter on the line the modem already has (9600 8N1) and does not ask that modem again on the connection — the fallback added after run 2, not yet tried in the field. Read through the modem on the old server on 2026-10-28 (.tools/device-probes/eta-gsm-session-2026-10-28.jsonl, run 1, and gprs-session-2026-10-28-eta-gsm-run2.jsonl, run 2): run 1 (same line, no in-band question) 7 reads of 7, ~14 s; run 2 failed before the fallback existed. The old system read it 96.7 % of the time in September.\n\nThe modem connects to the old system (91.144.143.40:2784, ETA$GSMDeviceReader, about 270 modems); it reaches this flow only while 10.10.0.249:2784 is forwarded to the GPRS modem listener (10.10.0.246:2910) with that service stopped (netsh portproxy, as on 2026-10-28/29 for the БАРС ports). Otherwise every read fails with \"GPRS modem 2006 is not connected\".\n\nThe old dispatch system polls the same meter, so the inject here polls every 5 minutes only.",
         "x": 370,
-        "y": 2240,
+        "y": 2300,
         "wires": []
     },
     {
@@ -7026,7 +7064,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 150,
-        "y": 2300,
+        "y": 2360,
         "wires": [
             [
                 "fa2ab83419519219"
@@ -7056,7 +7094,7 @@
             }
         ],
         "x": 350,
-        "y": 2300,
+        "y": 2360,
         "wires": [
             [
                 "cf3fc89b537b5e55"
@@ -7077,7 +7115,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 590,
-        "y": 2300,
+        "y": 2360,
         "wires": []
     },
     {
@@ -7087,7 +7125,7 @@
         "name": "km5-399088 (КМ-5 через ETA GSM «0155», ул. Четаева, 4, Казань) — testing, not stored",
         "info": "КМ-5 399088 behind the ETA GSM 0155, whose line was 19200 8N1 in run 2: the gateway sets the speed and format to 9600 8N1 in band before the meter session (not saved; the modem's daily reboot restores its own line), as run 2 did, then reads. Read through the modem on the old server on 2026-10-28 (.tools/device-probes/eta-gsm-session-2026-10-28.jsonl, run 1, and gprs-session-2026-10-28-eta-gsm-run2.jsonl, run 2): 2 reads of 2, ~28 s with the line change. The old system read it 100 % of the time in September (the modem also lists a DanfossMCX, dead since 2021).\n\nThe modem connects to the old system (91.144.143.40:2784, ETA$GSMDeviceReader, about 270 modems); it reaches this flow only while 10.10.0.249:2784 is forwarded to the GPRS modem listener (10.10.0.246:2910) with that service stopped (netsh portproxy, as on 2026-10-28/29 for the БАРС ports). Otherwise every read fails with \"GPRS modem 0155 is not connected\".\n\nThe old dispatch system polls the same meter, so the inject here polls every 5 minutes only.",
         "x": 370,
-        "y": 2380,
+        "y": 2440,
         "wires": []
     },
     {
@@ -7112,7 +7150,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 150,
-        "y": 2440,
+        "y": 2500,
         "wires": [
             [
                 "e68a858951197790"
@@ -7142,7 +7180,7 @@
             }
         ],
         "x": 350,
-        "y": 2440,
+        "y": 2500,
         "wires": [
             [
                 "14b57d0d7a2f8291"
@@ -7163,7 +7201,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 590,
-        "y": 2440,
+        "y": 2500,
         "wires": []
     }
 ]
