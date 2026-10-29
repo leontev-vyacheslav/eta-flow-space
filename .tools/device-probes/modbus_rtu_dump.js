@@ -13,7 +13,7 @@
 //   --function N        3 (holding), 4 (input, default), or 1/2 (coils/discrete inputs: bits; no scan)
 //   --blocks FILE       read the BLOCKS exported by a reader module (e.g. /data/src/device-readers/vzljot024-client.js)
 //   --range START-END   extra range, hex or decimal, END inclusive; repeatable
-//   --max N             split ranges into requests of at most N registers (default 100)
+//   --max N             split ranges into requests of at most N registers (default 100; even from 0x8000 up)
 //   --listen MS         listen without sending first, to see another master on the line (default 3000)
 //   --delay MS          pause after every reply (default 150)
 //   --timeout MS        wait for one reply (default 2000)
@@ -184,10 +184,13 @@ async function main() {
         ? { hex: hex(id.data), text: id.data.toString('latin1').replace(/[^\x20-\x7e]+/g, ' ').trim() }
         : { error: describe(id) };
 
+    // From 0x8000 up the values take two registers, and some meters (ТСРВ-043)
+    // refuse a request that splits one: split there on an even count.
     const requests = [];
     for (const range of ranges) {
-        for (let start = range.start; start < range.start + range.count; start += maxCount) {
-            requests.push({ start, count: Math.min(maxCount, range.start + range.count - start) });
+        const step = !readsBits && range.start >= 0x8000 ? maxCount - (maxCount % 2) : maxCount;
+        for (let start = range.start; start < range.start + range.count; start += step) {
+            requests.push({ start, count: Math.min(step, range.start + range.count - start) });
         }
     }
 

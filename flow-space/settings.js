@@ -556,6 +556,7 @@ module.exports = {
         vzljot042: require('./src/device-readers/vzljot042-client.js'),
         vzljot034: require('./src/device-readers/vzljot034-client.js'),
         vzljot023: require('./src/device-readers/vzljot023-client.js'),
+        vzljot043: require('./src/device-readers/vzljot043-client.js'),
         spt941: require('./src/device-readers/spt941-client.js'),
         spt943: require('./src/device-readers/spt943-client.js'),
         irvis: require('./src/device-readers/irvis-client.js'),

@@ -11,7 +11,7 @@
 //       [--targets FILE] [--concurrency N] [--trace]
 //
 // --targets: JSON list [{ "identifier": "0013", "meter": "vkt7" | "km5" | "tv7" |
-//   "vzljot024" | "vzljot026" | "vzljot034" | "vzljot042", "address": 1,
+//   "vzljot024" | "vzljot026" | "vzljot034" | "vzljot042" | "vzljot043", "address": 1,
 //   "baudRate": 9600, "parity": "none", "stopBits": 1, "wakeUpBytes": 2 }]
 //
 // JSON lines on stdout (hello, status, settings, keep-alive, meter, summary);
@@ -32,6 +32,7 @@ const CLIENTS = {
     vzljot026: () => require(path.join(readers, 'vzljot026-client.js')).Vzljot026Client,
     vzljot034: () => require(path.join(readers, 'vzljot034-client.js')).Vzljot034Client,
     vzljot042: () => require(path.join(readers, 'vzljot042-client.js')).Vzljot042Client,
+    vzljot043: () => require(path.join(readers, 'vzljot043-client.js')).Vzljot043Client,
 };
 
 const args = process.argv.slice(2);

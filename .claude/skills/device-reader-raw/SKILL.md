@@ -59,6 +59,12 @@ mapping, and nothing the meter can tell us is thrown away.
   answers.
 - **Unreadable registers**: if a block read gets "illegal address" or no reply, scan register by register
   (with pauses!) and split the block around the hole; document it in the header (Взлёт026 0x4006, 0xC13E).
+- **Don't split a value**: some meters refuse a request that starts or ends in the middle of a 4-byte value
+  (ТСРВ-043: exception 2), so a 125-register block that ends on the first half of a pair looks like a hole.
+  Start and end blocks on value boundaries (even counts from 0x8000 up) before calling a range unreadable.
+- **Firmware-dependent registers**: when the document says a register exists "с вер. X" only, read its block
+  only for that firmware (from the function 0x11 version string) and return `null` for older ones
+  (`vzljot043-client.js`, `from` in `BLOCKS`).
 
 ## File shape (copy an existing client)
 

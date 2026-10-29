@@ -846,6 +846,85 @@
         }
     },
     {
+        "id": "vzljot043reader000",
+        "type": "subflow",
+        "name": "Vzljot043 Client",
+        "info": "Reads every current value of a Vzljot TSRV-043 heat calculator (ВЗЛЕТ ТСР-М, firmware 76.30.04.05 / 76.30.05.xx) over TCP (a gateway on its RS-485 port; plain Modbus RTU: input registers, the serial numbers and clock from holding registers, the НС and situation flags from discrete inputs, function 0x11), via the shared Vzljot043Client class registered on functionGlobalContext in settings.js: version, serial number, clock, statuses and fault flags, temperatures PT1-PT5, pressures PD1-PD4, flows PR1-PR6 (volume and mass totals), the heat systems TS1-TS4 (mass and heat totals, mass flow, power, normal and НС times, НС1-НС4 flags), cold water XV and the situations С1-С10, raw in the device's units (°C, MPa, m3/h, t/h, t/m3, kJ/kg, GJ/h, l, kg, MJ; times in s) and named after the register list (\"ТСРВ-043. Использование протокола Modbus\", .docs/vzljot043). Choosing the supply/return channel and converting units is left to the flow's collect-device-state. Send any message in to trigger a read (about 6 s, 10 requests); the same message comes out with `msg.payload` set to the result (deviceTime/timestamp as epoch ms). On failure nothing goes out and node.error() is called. ADDRESS is the Modbus address (1 by default); SERIAL_NUMBER, when set, is checked against the device's serial number.\n\nThrough a GPRS modem that connects to us instead of waiting for a connection (БАРС-02 or ETA GSM; the gateway tells them apart by their hello): set GPRS_MODEM_ID to the identifier the modem sends on connect (БАРС-02: its CBN, e.g. Строителей_53; ETA GSM: its number, e.g. 0458); HOST and PORT are then unused. GPRS_LINE is the meter's line as the old dispatch system lists it: rs232 | rs232-powered | rs485, baud rate, 8N1 / 8E1 / 8O1 / 8N2 (default rs485 4800 8N1), or none to leave the modem's line as configured (old-firmware БАРС-02 3.0.1). The modems connect to one listener (global gprsModems, flow-space/src/device-readers/gprs-modems.js, port 2910; started at deploy), which reads one meter per modem at a time; over GPRS the read allows 15 s per request and at least 240 s in all. An ETA GSM keeps its wired RS-232/RS-485 port and gets the speed and format in band. See .docs/bars02/bars02-notes.md and .docs/eta-gsm/eta-gsm-notes.md.",
+        "category": "subflows",
+        "in": [
+            {
+                "x": 80,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "vzljot043reader001"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 400,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "vzljot043reader001",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "HOST",
+                "type": "str",
+                "value": "78.138.175.182"
+            },
+            {
+                "name": "PORT",
+                "type": "num",
+                "value": "5011"
+            },
+            {
+                "name": "ADDRESS",
+                "type": "num",
+                "value": "1"
+            },
+            {
+                "name": "SERIAL_NUMBER",
+                "type": "num",
+                "value": "1500406"
+            },
+            {
+                "name": "RESPONSE_TIMEOUT_MS",
+                "type": "num",
+                "value": "60000"
+            },
+            {
+                "name": "GPRS_MODEM_ID",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "GPRS_LINE",
+                "type": "str",
+                "value": "rs485 4800 8N1"
+            }
+        ],
+        "meta": {},
+        "color": "#DDBB99",
+        "status": {
+            "x": 420,
+            "y": 220,
+            "wires": [
+                {
+                    "id": "vzljot043reader002",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
         "id": "irvisreader0000000",
         "type": "subflow",
         "name": "Irvis Client",
@@ -1554,6 +1633,36 @@
         "id": "vzljot023reader002",
         "type": "status",
         "z": "vzljot023reader000",
+        "name": "",
+        "scope": null,
+        "x": 140,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "vzljot043reader001",
+        "type": "function",
+        "z": "vzljot043reader000",
+        "name": "get-measurements",
+        "func": "const HOST = env.get('HOST');\nconst PORT = Number(env.get('PORT'));\nconst ADDRESS = Number(env.get('ADDRESS'));\nconst SERIAL_NUMBER = Number(env.get('SERIAL_NUMBER')) || null;\nconst RESPONSE_TIMEOUT_MS = Number(env.get('RESPONSE_TIMEOUT_MS')) || 60000;\nconst GPRS_MODEM_ID = env.get('GPRS_MODEM_ID');\nconst GPRS_LINE = env.get('GPRS_LINE');\n\nconst { Vzljot043Client } = global.get('vzljot043');\nconst { withConnectionLock } = global.get('withConnectionLock');\nconst gprsModems = global.get('gprsModems');\n\n(async () => {\n    try {\n        // Through a GPRS modem (GPRS_MODEM_ID) the reader gets the modem's\n        // channel instead of host and port; the gateway reads one meter per\n        // modem at a time.\n        const transport = GPRS_MODEM_ID\n            ? await gprsModems.readerOptions({ identifier: GPRS_MODEM_ID, line: GPRS_LINE, responseTimeoutMs: RESPONSE_TIMEOUT_MS })\n            : { host: HOST, port: PORT };\n        const deviceState = await withConnectionLock(GPRS_MODEM_ID ? 'gprs' : HOST, GPRS_MODEM_ID || PORT, async () => {\n            const client = new Vzljot043Client({\n                address: ADDRESS,\n                serialNumber: SERIAL_NUMBER,\n                responseTimeoutMs: RESPONSE_TIMEOUT_MS,\n                ...transport,\n            });\n            // Vzljot043Client.read() opens the socket, reads the version and\n            // every block of registers and closes the socket itself.\n            return await client.read();\n        });\n\n        msg.payload = deviceState;\n        node.send(msg);\n        node.status({ fill: 'green', shape: 'dot', text: 'ok ' + new Date().toLocaleTimeString() });\n    } catch (err) {\n        // Full read failed — nothing goes out. No partial/incomplete set is sent downstream.\n        node.error('Vzljot043 read failed: ' + err.message, msg);\n        node.status({ fill: 'red', shape: 'ring', text: 'error' });\n    }\n})();\n\nreturn null;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "// Through a GPRS modem: start the modem gateway at deploy, so the modem can\n// connect before the first read.\nif (env.get('GPRS_MODEM_ID')) {\n    global.get('gprsModems').start().catch((err) => node.error(err.message));\n}\n",
+        "finalize": "",
+        "libs": [],
+        "x": 220,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "vzljot043reader002",
+        "type": "status",
+        "z": "vzljot043reader000",
         "name": "",
         "scope": null,
         "x": 140,
@@ -7202,6 +7311,76 @@
         "statusType": "auto",
         "x": 590,
         "y": 2500,
+        "wires": []
+    },
+    {
+        "id": "00c4dee1b2a6d423",
+        "type": "comment",
+        "z": "b5e1c7d93a4f6e20",
+        "name": "vzljot043-1500406 (ТСРВ-043, ул. Габдуллы Тукая, 10, с. Новое Шигалеево) — testing, not stored",
+        "info": "Wiznet WIZ108SR 78.138.175.182:5011, Modbus address 1, serial 1500406, version \"VZLJOT TSRV-043 76.30.04.05\" (no season or heat-system calculation-state registers before 76.30.05.00/.19: those fields are null).\n\nTS1 = heating: PT1/PR1 supply (≈ 74 °C), PT2/PR2 return (≈ 68 °C); TS1.E = M1(h1 − hхв) − M2(h2 − hхв) in GJ/h, TS1.W in MJ. PR3 is fitted but stands below its cut-off; TS2-TS4 are not used. No pressure sensors (PD state 0): P1-P3 are the contract 0.6/0.4/0.4 MPa. Totals are in litres, kg and MJ, as the register list says. The meter clock is about 23.6 h slow (2026-10-29).\n\nThe old dispatch system polls the same gateway, so the inject here runs every 5 minutes only.",
+        "x": 310,
+        "y": 2580,
+        "wires": []
+    },
+    {
+        "id": "5c56d229aa5321ab",
+        "type": "inject",
+        "z": "b5e1c7d93a4f6e20",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "300",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 5,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 2640,
+        "wires": [
+            [
+                "f57b20b3edba576c"
+            ]
+        ]
+    },
+    {
+        "id": "f57b20b3edba576c",
+        "type": "subflow:vzljot043reader000",
+        "z": "b5e1c7d93a4f6e20",
+        "name": "vzljot043-1500406",
+        "env": [],
+        "x": 350,
+        "y": 2640,
+        "wires": [
+            [
+                "bd9668e3803396d4"
+            ]
+        ]
+    },
+    {
+        "id": "bd9668e3803396d4",
+        "type": "debug",
+        "z": "b5e1c7d93a4f6e20",
+        "name": "debug vzljot043-1500406",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 2640,
         "wires": []
     }
 ]
