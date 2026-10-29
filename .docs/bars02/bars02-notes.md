@@ -241,13 +241,14 @@ those meters. The КМ-5 reader isn't checked against РМ-5, and there are no r
    its pushed events (`#W;E;…$` → `#Y$`), sends the keep-alive every 45 s, keeps a pool by identifier and
    serializes the work per modem (БАРС-02: command mode → port → `#S$` → reader → escape). The subflows reach it
    only through `flow-space-nodered-a/src/device-readers/gprs-modems.js` (`global.get('gprsModems')`, settings.js), which keeps
-   one listener per port across deploys: 2910 (published by docker-compose) and `readerOptions({ identifier, line, responseTimeoutMs })`
+   one listener per port across deploys: 2910 (published by docker-compose for the testing Node-RED,
+   `eta-flow-space-nodered-b`, since 2026-10-29) and `readerOptions({ identifier, line, responseTimeoutMs })`
    → `{ createSocket, stepTimeoutMs: 15000, responseTimeoutMs ≥ 240000 }`. Every reader subflow (all 11) reads
    through it when `GPRS_MODEM_ID` is set; `GPRS_LINE` is the meter's line, `rs232 | rs232-powered | rs485 <baud>
    8N1…`, or `none` for old-firmware units (defaults per subflow: the most common line of that meter type behind
    GSM modems in the old system). The testing-of-device-readers tab has `vkt7-141425` behind «Строителей_53»
-   (`GPRS_LINE` `rs232-powered 9600 8N1`). `.tools/device-probes/subflow_run.js` runs a subflow's code from
-   flows.json, directly or through the gateway + emulator.
+   (`GPRS_LINE` `rs232-powered 9600 8N1`; the tab is in `flow-space-nodered-b/flows.json`). `.tools/device-probes/subflow_run.js`
+   runs a subflow's code from the flows files, directly or through the gateway + emulator.
 3. **Readers over an existing socket:** a client gets `createSocket: () => gateway.createSocket({ identifier, port,
    baudRate, parity, stopBits })` and runs unchanged (the channel has the `net.Socket` methods the clients use).
    Every reader has it since 2026-10-28 (ВКТ-7, КМ-5/РМ-5 and ТВ7 first, then EK270, Irvis, Меркурий 230,

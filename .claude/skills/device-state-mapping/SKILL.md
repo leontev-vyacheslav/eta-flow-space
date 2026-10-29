@@ -6,7 +6,8 @@ description: Write or change a Node-RED collect-device-state mapping (flow-space
 # The mapping gives the meaning
 
 Each polled device has a `collect-device-state` function node on its site's tab in
-`flow-space-nodered-a/flows.json`, right after the reader subflow. It receives the reader's **raw** payload (see the
+`flow-space-nodered-a/flows.json` (production; a test instance's lives on the testing tab in `flow-space-nodered-b/flows.json`,
+with `DEVICE_CODE = null` until the meter has a device row), right after the reader subflow. It receives the reader's **raw** payload (see the
 `device-reader-raw` skill) and:
 
 - **picks the pipes or channels that matter for this site** — e.g. ВКТ-7 heat input 1 `t1`/`t2`, ТВ7

@@ -422,6 +422,13 @@ module.exports = {
          */
         theme: "one-dark-pro",
 
+        /** The testing instance (eta-flow-space-nodered-b) sets EDITOR_TITLE, so its
+         * editor is easy to tell from the production one.
+         */
+        ...(process.env.EDITOR_TITLE
+            ? { page: { title: process.env.EDITOR_TITLE }, header: { title: process.env.EDITOR_TITLE } }
+            : {}),
+
         /** To disable the 'Welcome to Node-RED' tour that is displayed the first
          * time you access the editor for each release of Node-RED, set this to false
          */

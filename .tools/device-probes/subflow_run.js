@@ -1,6 +1,6 @@
 'use strict';
-// Runs a reader subflow's code from flow-space-nodered-a/flows.json the way Node-RED
-// would: its On Start, then its function with one input message, with env
+// Runs a reader subflow's code from flow-space-nodered-b/flows.json (the testing
+// Node-RED) or flow-space-nodered-a/flows.json (production) the way Node-RED would: its On Start, then its function with one input message, with env
 // (the subflow's defaults, then the given values) and the functionGlobalContext
 // readers of flow-space-nodered-a/settings.js. Prints what the node sends or reports.
 //
@@ -46,10 +46,17 @@ if (!subflowName && !instanceName) {
     process.exit(2);
 }
 
-const flows = JSON.parse(fs.readFileSync(path.join(flowSpace, 'flows.json'), 'utf8'));
-const instance = instanceName ? flows.find((n) => n.type.startsWith('subflow:') && n.name === instanceName) : null;
+// Both Node-RED instances' flows: the testing one first, where the reader
+// subflows and their test instances live; then production's boiler rooms.
+const isInstance = (n) => n.type.startsWith('subflow:') && n.name === instanceName;
+const isSubflow = (n) => n.type === 'subflow' && n.name === subflowName;
+const flowFiles = [path.join(repo, 'flow-space-nodered-b', 'flows.json'), path.join(flowSpace, 'flows.json')]
+    .filter((file) => fs.existsSync(file));
+const flowSets = flowFiles.map((file) => JSON.parse(fs.readFileSync(file, 'utf8')));
+const flows = flowSets.find((set) => set.some(instanceName ? isInstance : isSubflow)) || flowSets[0];
+const instance = instanceName ? flows.find(isInstance) : null;
 if (instanceName && !instance) {
-    console.error(`no subflow instance "${instanceName}"`);
+    console.error(`no subflow instance "${instanceName}" in ${flowFiles.join(' or ')}`);
     process.exit(2);
 }
 const instanceEnv = instance ? Object.fromEntries((instance.env || []).map((e) => [e.name, e.value])) : {};

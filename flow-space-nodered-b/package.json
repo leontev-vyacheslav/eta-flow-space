@@ -1,0 +1,14 @@
+{
+    "name": "flow-space-nodered-b",
+    "description": "The testing Node-RED instance (eta-flow-space-nodered-b): device readers under test",
+    "version": "0.0.1",
+    "private": true,
+    "dependencies": {
+        "@node-red-contrib-themes/theme-collection": "~4.1.0",
+        "crc": "^4.3.2",
+        "modbus-serial": "^8.0.25",
+        "node-red-contrib-binary": "^0.1.3",
+        "node-red-contrib-modbus": "~5.44.1",
+        "redis": "^5.12.1"
+    }
+}

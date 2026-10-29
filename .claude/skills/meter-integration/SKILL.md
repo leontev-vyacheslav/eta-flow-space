@@ -42,11 +42,17 @@ device to the user as you go.
 
 ## 3. Reader + subflow
 
-- Client per `device-reader-raw`; register it in `flow-space-nodered-a/settings.js`.
-- Subflow "<Type> Client" in `flow-space-nodered-a/flows.json`, modelled on an existing one (`TV7 Client`,
+- Client per `device-reader-raw`; register it in `flow-space-nodered-a/settings.js` (shared by both Node-RED instances).
+- Subflow "<Type> Client" in `flow-space-nodered-b/flows.json` (the testing Node-RED, `eta-flow-space-nodered-b`,
+  editor :1896; see `flow-space-nodered-b/README.md`), modelled on an existing one (`TV7 Client`,
   `Vzljot026 Client`): env HOST, PORT, ADDRESS, SERIAL_NUMBER (if any), RESPONSE_TIMEOUT_MS; the function
   wraps `client.read()` in `withConnectionLock`, sends `msg.payload`, sets a green/red status, calls
   `node.error` and sends nothing on failure; a status node. Subflow `info` describes the raw output.
+- Its test instance goes on the `testing-of-device-readers` tab there (comment with info, inject 300 s,
+  instance, raw debug, `collect-device-state` with `DEVICE_CODE = null`, state debug); run it without Node-RED
+  with `node .tools/device-probes/subflow_run.js --instance <type>-<serial>`.
+- When the meter goes live at a boiler room, copy the subflow to `flow-space-nodered-a/flows.json` (production) with the
+  same id; a subflow both files have must stay identical in both.
 - When replacing stock Modbus-node polling: keep the old chain, **disable its main read node** (`"d": true`
   after `"z"`), rename its comment ("old Modbus-node polling, disabled"), fix obvious bugs in it too.
 - Keep a backup of a client before reworking a delicate device: `.temp/<file>.<last-commit-date>.js`.
@@ -97,9 +103,10 @@ stop working; renamed flows reset the saved diagram zoom once.
 
 ## 7. Deploy notes for the user
 
-- `git pull`, then `docker restart eta-flow-space-nodered-a` (settings.js / clients load only at startup); reload
-  open Node-RED editor tabs before any Deploy (a stale editor writes old flows back — check drift with
-  `python3 flow-space-nodered-a/flows-diff.py`).
+- `git pull`, then restart the instance that runs the change (settings.js / clients load only at startup):
+  `docker restart eta-flow-space-nodered-b` for a reader under test, `docker restart eta-flow-space-nodered-a` once a
+  boiler-room tab uses it; reload open Node-RED editor tabs before any Deploy (a stale editor writes old flows
+  back — check drift with `python3 flow-space-nodered-a/flows-diff.py`, or `… HEAD flow-space-nodered-b/flows.json`).
 - Migrations: the command is in `database/README.md`; say whether to run before or after the restart
   (data fixes that old polling would undo: after) and whether another migration must run first (one that
   finds devices by a code that a rename changes must run before the rename).
@@ -117,7 +124,9 @@ stop working; renamed flows reset the saved diagram zoom once.
 - Passwords may be sent as digit values, not ASCII (Меркурий 230).
 - Preserve file formatting: CRLF SVGs, 2-space JSON without a final newline — check `git diff --stat`.
 - Rename files and folders with `git mv` so history follows; regex renames need word boundaries.
-- Node-RED `flows.json` on production drifts (editor Deploys): build on the user's `sync: flows` commits,
-  never overwrite them; check them node by node with `flows-diff.py`.
+- Node-RED `flows.json` on production drifts (editor Deploys, in both instances): build on the user's
+  `sync: flows` commits, never overwrite them; check them node by node with `flows-diff.py`.
+- Two Node-RED instances share Redis but not `withConnectionLock`: a gateway is polled from one instance only;
+  a tab moved between them keeps its ids (the device cache ties each device to its tab's id).
 - Every meter follows the raw/mapping pattern now; boiler controllers (Modicon, Siemens, Statum,
   Царёво-2) stay on the stock Modbus nodes on purpose.

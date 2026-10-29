@@ -5,3 +5,10 @@ node_modules
 /lib/generated/prisma
 
 .sessions.json
+
+# Written by Node-RED and npm in the container: library folder, npm cache, backups
+/lib/
+/.npm/
+.config.*.json.backup
+.flows.json.backup
+.flows_cred.json.backup

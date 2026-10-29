@@ -5,8 +5,6 @@ services:
     ports:
       # Node-RED editor: open to the office network on purpose (used from other machines); protected by adminAuth in settings.js
       - "1895:1880"
-      # GPRS modems (БАРС-02, later ETA GSM) connect here (flow-space-nodered-a/src/device-readers/gprs-modems.js); the office router forwards a public port to it
-      - "2910:2910"
     env_file:
       - ./flow-space-nodered-a/.env-flows
     volumes:
@@ -17,6 +15,35 @@ services:
       - NODE_RED_ENABLE_PROJECTS=false
     # --no-audit --no-fund: on 2026-10-26 npm hung for 9+ minutes after installing, waiting on a registry
     # request (0% CPU, node_modules already written), and Node-RED never started
+    entrypoint: >
+      sh -c "
+        cd /data && npm install --no-audit --no-fund --no-update-notifier
+        exec node-red --userDir /data
+      "
+    networks:
+      - eta-flow-space-network
+
+  # Node-RED instance B: the testing-of-device-readers tab (flow-space-nodered-b/README.md). Its own user directory;
+  # settings.js and the device readers are instance A's, mounted read-only; device states go to the same Redis.
+  eta-flow-space-nodered-b:
+    image: nodered/node-red:4.1.3
+    container_name: eta-flow-space-nodered-b
+    ports:
+      # Its editor, open to the office network like A's; protected by the same adminAuth
+      - "1896:1880"
+      # GPRS modems (БАРС-02, ETA GSM) connect here (flow-space-nodered-a/src/device-readers/gprs-modems.js); the office router forwards a public port to it
+      - "2910:2910"
+    env_file:
+      - ./flow-space-nodered-a/.env-flows
+    volumes:
+      - ./flow-space-nodered-b:/data
+      - ./flow-space-nodered-a/settings.js:/data/settings.js:ro
+      - ./flow-space-nodered-a/src:/data/src:ro
+    restart: unless-stopped
+    environment:
+      - TZ=Europe/Moscow
+      - NODE_RED_ENABLE_PROJECTS=false
+      - EDITOR_TITLE=Flow Space — testing
     entrypoint: >
       sh -c "
         cd /data && npm install --no-audit --no-fund --no-update-notifier
