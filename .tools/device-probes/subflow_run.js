@@ -6,15 +6,23 @@
 //
 //   node .tools/device-probes/subflow_run.js "<subflow name>" ['<env json>'] [--emulator METER_HOST:METER_PORT]
 //       [--modem bars02|eta-gsm] [--line "4800 8N2"]
+//   node .tools/device-probes/subflow_run.js --instance "<instance name>" ['<env json>'] [...]
 //
 // --emulator reads through the GPRS modem gateway: it sets GPRS_MODEM_ID,
 // listens on a free local port and lets gprs_modem_emulator.js (a БАРС-02 by
 // default, --modem eta-gsm for an ETA GSM; --line: the ETA GSM's line before
 // the read) relay the transparent channel to the meter at METER_HOST:METER_PORT.
 //
+// --instance runs a subflow instance of a tab instead: its env (then the
+// given values) over the subflow's defaults, and what it sends goes on
+// through the function nodes wired from it (collect-device-state), which
+// print the state they make. Nothing is stored: storeDeviceStateToCacheAsync
+// only reports the device code it was given.
+//
 // Examples:
 //   node .tools/device-probes/subflow_run.js "VKT7 Client"
 //   node .tools/device-probes/subflow_run.js "KM5 Client" '{"HOST":"78.138.147.158","PORT":"5010","ADDRESS":"413498"}' --emulator 78.138.147.158:5010
+//   node .tools/device-probes/subflow_run.js --instance vzljot043-1500406
 
 const fs = require('fs');
 const path = require('path');
@@ -31,13 +39,21 @@ const takeOption = (name) => {
 };
 const modemType = takeOption('--modem') || 'bars02';
 const modemLine = takeOption('--line');
-const [subflowName, envJson] = args;
-if (!subflowName) {
-    console.error('usage: node subflow_run.js "<subflow name>" [\'<env json>\'] [--emulator METER_HOST:METER_PORT]');
+const instanceName = takeOption('--instance');
+const [subflowName, envJson] = instanceName ? [null, args[0]] : args;
+if (!subflowName && !instanceName) {
+    console.error('usage: node subflow_run.js "<subflow name>" | --instance "<instance name>" [\'<env json>\'] [--emulator METER_HOST:METER_PORT]');
     process.exit(2);
 }
 
-const values = envJson ? JSON.parse(envJson) : {};
+const flows = JSON.parse(fs.readFileSync(path.join(flowSpace, 'flows.json'), 'utf8'));
+const instance = instanceName ? flows.find((n) => n.type.startsWith('subflow:') && n.name === instanceName) : null;
+if (instanceName && !instance) {
+    console.error(`no subflow instance "${instanceName}"`);
+    process.exit(2);
+}
+const instanceEnv = instance ? Object.fromEntries((instance.env || []).map((e) => [e.name, e.value])) : {};
+const values = { ...instanceEnv, ...(envJson ? JSON.parse(envJson) : {}) };
 if (meter) {
     process.env.GPRS_LISTEN_PORT = String(29000 + Math.floor(Math.random() * 900));
     values.GPRS_MODEM_ID = values.GPRS_MODEM_ID || 'TEST';
@@ -50,22 +66,33 @@ for (const [, name, file] of settings.matchAll(/^\s*(\w+): require\('(\.\/src\/d
     globals[name] = require(path.join(flowSpace, file));
 }
 
-const flows = JSON.parse(fs.readFileSync(path.join(flowSpace, 'flows.json'), 'utf8'));
-const subflow = flows.find((n) => n.type === 'subflow' && n.name === subflowName);
+const subflow = flows.find((n) => n.type === 'subflow' && (instance ? instance.type === `subflow:${n.id}` : n.name === subflowName));
 if (!subflow) {
-    console.error(`no subflow "${subflowName}"`);
+    console.error(`no subflow "${subflowName || instance.type}"`);
     process.exit(2);
 }
 const fn = flows.find((n) => n.z === subflow.id && n.type === 'function');
+// The function nodes the instance sends to (collect-device-state).
+const downstream = instance ? flows.filter((n) => n.type === 'function' && instance.wires.flat().includes(n.id)) : [];
+const AsyncFunction = Object.getPrototypeOf(async () => {}).constructor;
 const defaults = Object.fromEntries(subflow.env.map((e) => [e.name, e.value]));
 const env = { get: (key) => (key in values ? values[key] : defaults[key]) };
 const global = { get: (key) => globals[key] };
 const started = Date.now();
 const seconds = () => (Date.now() - started) / 1000;
 const node = {
-    send: (msg) => {
+    send: async (msg) => {
         const flat = JSON.stringify(msg.payload);
         console.log(`SENT after ${seconds()} s: ${Object.keys(msg.payload).length} top-level fields, ${flat.length} bytes: ${flat.slice(0, 200)}…`);
+        for (const next of downstream) {
+            const stored = [];
+            const helpers = { storeDeviceStateToCacheAsync: async (_global, code) => { stored.push(code); } };
+            const nextGlobal = { get: (key) => (key === 'helpers' ? helpers : globals[key]) };
+            const out = await new AsyncFunction('msg', 'global', 'node', 'env', next.func)(
+                JSON.parse(JSON.stringify(msg)), nextGlobal, { ...node, path: `${next.z}/${next.id}` }, env);
+            console.log(`${next.name} (${next.id}): ${stored.length ? `would store under ${stored.join(', ')}` : 'stores nothing'}`);
+            console.log(JSON.stringify(out ? out.deviceState ?? out.payload : null, null, 2));
+        }
         finish(0);
     },
     status: (status) => console.log(`status ${JSON.stringify(status)}`),
