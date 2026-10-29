@@ -43,7 +43,9 @@
  *                    (integer part + float fraction): flow volumes l and
  *                    masses kg, heat-system masses kg and heat MJ; EEPROM
  *                    write errors
- *   input    0x80A6  heat-system normal operation and НС times s
+ *   input    0x80A6  heat-system normal operation and НС times s; missing
+ *                    (illegal data address from 0x808A on) on some meters
+ *                    with the same version string: null then
  *   input    0xC000  R Ω, t measured and converted °C, I mA, P measured and
  *                    converted MPa, density t/m3, enthalpy kJ/kg, flow F
  *                    Hz, volume flow measured and converted m3/h, mass flow
@@ -70,6 +72,13 @@
  * 80 discrete inputs come in 10 bytes, as Modbus says; the sensors' serial
  * numbers read 0 (never entered). The old dispatch system polls the same
  * gateway (hourly): while it holds the line nothing is answered.
+ * 1413893 and 1500305 (WIZ750SR 178.205.138.47:5011, 178.205.137.233:5011)
+ * and 1500310 (Moxa NPort 5110 178.205.137.150:5011), also
+ * "VZLJOT TSRV-043 76.30.04.05", answer "illegal data address" from 0x808A
+ * on, so the heat-system times are missing there; their module identifier
+ * (input 0x8066, a debug register) is b5ea7878, that of 1500406 b5ea80e8.
+ * On the 1500310 line about half the replies get lost: a read takes 17
+ * requests and 55 s, but completes.
  *
  * A reply is accepted only when its CRC is valid, it comes from the
  * requested address and function, and it carries exactly the requested
@@ -103,7 +112,8 @@ const FUNCTION_READ_HOLDING = 0x03;
 const FUNCTION_READ_INPUT = 0x04;
 const FUNCTION_REPORT_ID = 0x11;
 const EXCEPTION_BIT = 0x80;
-// Exception code 6: slave device busy.
+// Exception code 2: illegal data address; 6: slave device busy.
+const EXCEPTION_ILLEGAL_ADDRESS = 2;
 const EXCEPTION_BUSY = 6;
 
 const TEMPERATURES = ['PT1', 'PT2', 'PT3', 'PT4', 'PT5'];
@@ -117,14 +127,16 @@ const SITUATION_COUNT = 10;
 const SEASONS_FROM = [76, 30, 5, 0];
 const CALCULATION_STATES_FROM = [76, 30, 5, 19];
 
-// `from`: the first firmware version that has the block.
+// `from`: the first firmware version that has the block. `optional`: some
+// meters lack it although their version is the same; "illegal data address"
+// then makes its values null instead of failing the read.
 const BLOCKS = [
     { fn: FUNCTION_READ_INPUT, start: 0x0000, count: 0x48 },
     { fn: FUNCTION_READ_INPUT, start: 0x0059, count: 0x05, from: SEASONS_FROM },
     { fn: FUNCTION_READ_INPUT, start: 0x005e, count: 0x04, from: CALCULATION_STATES_FROM },
     { fn: FUNCTION_READ_INPUT, start: 0x4000, count: 0x28 },
     { fn: FUNCTION_READ_INPUT, start: 0x8000, count: 0x64 },
-    { fn: FUNCTION_READ_INPUT, start: 0x80a6, count: 0x10 },
+    { fn: FUNCTION_READ_INPUT, start: 0x80a6, count: 0x10, optional: true },
     { fn: FUNCTION_READ_INPUT, start: 0xc000, count: 0x7c },
     { fn: FUNCTION_READ_INPUT, start: 0xc07c, count: 0x22 },
     { fn: FUNCTION_READ_HOLDING, start: 0x8000, count: 0x26 },
@@ -465,27 +477,36 @@ class Vzljot043Client {
 
     // Reads every block the firmware has and returns '<fn>:<address>' ->
     // Buffer of that register's bytes, or the bit as 0/1 for a discrete
-    // input (input and holding registers share addresses).
+    // input (input and holding registers share addresses); null for the
+    // registers of a block the meter does not have.
     async _readBlocks(connection, firmware) {
         const registers = new Map();
         for (const block of BLOCKS) {
-            if (block.from && !firmwareAtLeast(firmware, block.from)) continue;
-            const data = await connection.readBlock(block);
+            let data = null;
+            if (!block.from || firmwareAtLeast(firmware, block.from)) {
+                try {
+                    data = await connection.readBlock(block);
+                } catch (err) {
+                    const absent = block.optional && err instanceof Vzljot043ExceptionError
+                        && err.code === EXCEPTION_ILLEGAL_ADDRESS;
+                    if (!absent) throw err;
+                }
+            }
             for (let i = 0; i < block.count; i++) {
-                const value = block.fn === FUNCTION_READ_DISCRETE ? (data[i >> 3] >> (i & 7)) & 1 : data.subarray(i * 2);
+                let value = null;
+                if (data) value = block.fn === FUNCTION_READ_DISCRETE ? (data[i >> 3] >> (i & 7)) & 1 : data.subarray(i * 2);
                 registers.set(`${block.fn}:${block.start + i}`, value);
             }
         }
         return registers;
     }
 
-    // A register of a block the firmware lacks decodes as null.
-    static _decode(registers, address, type, firmware) {
+    // A register of a block the meter lacks decodes as null.
+    static _decode(registers, address, type) {
         const fn = FUNCTION_OF_TYPE[type] || FUNCTION_READ_INPUT;
-        const block = BLOCKS.find((b) => b.fn === fn && address >= b.start && address < b.start + b.count);
-        if (block && block.from && !firmwareAtLeast(firmware, block.from)) return null;
         const value = registers.get(`${fn}:${address}`);
         if (value === undefined) throw new Error(`Vzljot043Client: register 0x${address.toString(16)} was not read`);
+        if (value === null) return null;
         switch (type) {
             case 'bit': return value === 1;
             case 'u16': return value.readUInt16BE(0);
@@ -504,9 +525,9 @@ class Vzljot043Client {
     }
 
     // Decodes the registers of every block into the results object.
-    static decodeRegisters(registers, firmware, results = {}) {
+    static decodeRegisters(registers, results = {}) {
         for (const [path, address, type] of REGISTERS) {
-            setPath(results, path, Vzljot043Client._decode(registers, address, type, firmware));
+            setPath(results, path, Vzljot043Client._decode(registers, address, type));
         }
         // Local wall-clock seconds from 1970 -> epoch ms of that local time.
         const clock = new Date(results.deviceClock * 1000);
@@ -523,7 +544,7 @@ class Vzljot043Client {
         results.version = id.subarray(0, end < 0 ? id.length : end).toString('latin1').trim();
         const firmware = parseFirmware(results.version);
 
-        Vzljot043Client.decodeRegisters(await this._readBlocks(connection, firmware), firmware, results);
+        Vzljot043Client.decodeRegisters(await this._readBlocks(connection, firmware), results);
         if (this.serialNumber !== null && results.serialNumber !== this.serialNumber) {
             throw new Error(`Vzljot043Client: serial number ${results.serialNumber} is not ${this.serialNumber}`);
         }
@@ -550,8 +571,9 @@ class Vzljot043Client {
      *               (PR5, PR6 also activeLevel)
      *   TS1..TS4: { GValid, EValid, season (null before 76.30.05.00),
      *               calculationState (null before 76.30.05.19),
-     *               errorTimeInterval, M, W, workTime, alarmTime, G, E,
-     *               error } (TS1..TS3 also alarmTimeInterval[4], alarms[4])
+     *               errorTimeInterval, M, W, workTime, alarmTime (null when
+     *               the meter lacks them), G, E, error } (TS1..TS3 also
+     *               alarmTimeInterval[4], alarms[4])
      *   XV: { tValid, PValid, hValid, t, P, rho, h }
      *   timestamp
      *

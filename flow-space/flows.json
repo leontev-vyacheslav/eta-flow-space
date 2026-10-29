@@ -7362,7 +7362,8 @@
         "y": 2640,
         "wires": [
             [
-                "bd9668e3803396d4"
+                "bd9668e3803396d4",
+                "924350196e5fe6cf"
             ]
         ]
     },
@@ -7381,6 +7382,43 @@
         "statusType": "auto",
         "x": 590,
         "y": 2640,
+        "wires": []
+    },
+    {
+        "id": "924350196e5fe6cf",
+        "type": "function",
+        "z": "b5e1c7d93a4f6e20",
+        "name": "collect-device-state",
+        "func": "const { storeDeviceStateToCacheAsync } = global.get('helpers');\n\n// The ТСРВ-043 sends MJ, GJ/h, l, kg, MPa and seconds (see vzljot043-client.js);\n// the state keeps Gcal, Gcal/h, m³, t, kgf/cm² and hours, as the other heat\n// meters do. Fields as the old dispatch system shows channel\n// \"VZLJOT_043-1500406 / ЦО\".\nconst MJ_PER_GCAL = 4186.8;\nconst KGF_CM2_PER_MPA = 10.1972;\nconst SECONDS_PER_HOUR = 3600;\n\n// null stays null (a value the meter does not have).\nconst convert = (value, factor, digits = 7) =>\n    value === null || value === undefined ? null : Number((value * factor).toPrecision(digits));\n\nconst { PT1, PT2, PD1, PD2, PR1, PR2, TS1, XV, accumulationTime, version, deviceTime } = msg.payload;\n\nconst deviceState = {\n    // Heat system ТС1 (ЦО): PT1, PD1, PR1 are the supply, PT2, PD2, PR2 the return.\n\n    // Temperature, °C\n    temperatureInputPipe: PT1.t,                                  // supply water temperature\n    temperatureReturnPipe: PT2.t,                                 // return water temperature\n    temperatureColdWater: XV.t,                                   // cold water temperature (a contract value here)\n\n    // Pressure, kgf/cm² (measured; no sensors here: 0, as in the old system,\n    // while the meter computes with the contract 0.6 / 0.4 MPa)\n    pressureInputPipe: convert(PD1.PMeasured, KGF_CM2_PER_MPA),   // supply pressure\n    pressureReturnPipe: convert(PD2.PMeasured, KGF_CM2_PER_MPA),  // return pressure\n    pressureColdWater: convert(XV.P, KGF_CM2_PER_MPA),            // cold water pressure (a contract value here)\n\n    // Volume flow rate, m³/h\n    volumeFlowRateInputPipe: PR1.Gv,                              // supply volume flow rate\n    volumeFlowRateReturnPipe: PR2.Gv,                             // return volume flow rate\n\n    // Mass flow rate, t/h\n    massFlowRateInputPipe: PR1.G,                                 // supply mass flow rate\n    massFlowRateReturnPipe: PR2.G,                                // return mass flow rate\n    massFlowRateHeatSystem: TS1.G,                                // heat system mass flow rate (supply − return)\n\n    // Heat power, Gcal/h\n    heatPower: convert(TS1.E, 1000 / MJ_PER_GCAL),                // heat power of the heat system\n\n    // Heat, Gcal\n    totalHeatConsumption: convert(TS1.W, 1 / MJ_PER_GCAL, 12),    // heat consumed, total\n\n    // Mass, t\n    massInputPipe: convert(PR1.M, 1 / 1000, 12),                  // supply mass\n    massReturnPipe: convert(PR2.M, 1 / 1000, 12),                 // return mass\n\n    // Volume, m³\n    volumeInputPipe: convert(PR1.V, 1 / 1000, 12),                // supply volume\n    volumeReturnPipe: convert(PR2.V, 1 / 1000, 12),               // return volume\n\n    // Time intervals, h\n    normalOperationTime: convert(TS1.workTime, 1 / SECONDS_PER_HOUR),       // normal operation time of ТС1 (Траб(штат))\n    abnormalOperationTime: convert(TS1.alarmTime, 1 / SECONDS_PER_HOUR),    // failure and НС time of ТС1 (Тнш)\n    operatingTime: convert(accumulationTime, 1 / SECONDS_PER_HOUR),         // operating time (Тнараб; the old system shows it as \"Время нормальной работы\")\n\n    // Device info and the meter's own clock (about 23.6 h slow on 2026-10-29)\n    firmware: version,\n    deviceTime,\n\n    // Timestamp\n    timestamp: Date.now(),\n};\n\n// Not stored yet: the testing tab has no flow in the database and the meter\n// no device row. Set its code here once it has one (e.g.\n// tukaya10-vzljot043-1500406) and the state is stored under it.\nconst DEVICE_CODE = null;\nif (DEVICE_CODE) {\n    const flowUid = node.path.split('/').find(_ => true);\n    await storeDeviceStateToCacheAsync(global, DEVICE_CODE, deviceState, flowUid);\n}\nmsg.deviceState = deviceState;\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 2700,
+        "wires": [
+            [
+                "a5055dbb0fd4b8b4"
+            ]
+        ]
+    },
+    {
+        "id": "a5055dbb0fd4b8b4",
+        "type": "debug",
+        "z": "b5e1c7d93a4f6e20",
+        "name": "debug vzljot043-1500406 state",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "deviceState",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 800,
+        "y": 2700,
         "wires": []
     }
 ]
