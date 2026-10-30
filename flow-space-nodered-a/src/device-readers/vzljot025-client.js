@@ -82,12 +82,22 @@
  * clock is the local wall-clock time counted in seconds from 1970-01-01 (no
  * time zone).
  *
- * Built from the document before any live read: the blocks outside the
- * core (version, clock, serial number, totals, pipe and heat-system values)
- * are `optional`, so a meter that answers "illegal data address" to one of
- * them gives nulls there instead of failing the read; to be narrowed down
- * on the live meter. The unit of the ТС times (the list says h; the old
- * dispatch system shows 46959.43 h) is also to be confirmed there.
+ * Found on the live meters (2026-10-30, "VZLJOT 76.90.01.55": 1401768,
+ * 1400791, 1400399 behind ETA GSM modems on RS-485 4800 8N1, address 1;
+ * .tools/device-probes/vzljot025-session-2026-10-30.jsonl): every block
+ * below reads on all three; a block over 0x80B8-0x80C3 gets "illegal data
+ * address". The pipe registers hold the volume flow in m3/min, the mass
+ * flow in t/min and the power in Гкал/min (the first unit of their names;
+ * G / Gv is the density), while the heat system's E1-E3, G1-G3 are per
+ * hour; the ТС times (Тнар, Тпр, Тпит, Тот, Тнс, Треж, the НС times) count
+ * seconds (Тнар 169064040 s = 46962 h on 1401768, the list says h); W1 is
+ * the heat the old dispatch system shows. The serial number of the
+ * measuring unit (ПИ) is its own (1167198 on 1400791) or the calculator's
+ * (1401768); the device identifier and production date read 0, the
+ * verification date is a clock value (2015-06-08 on all three). The
+ * clock of 1401768 is about 3 h 17 min fast. A read through an ETA GSM
+ * modem takes 90-210 s, the in-band line change included; 1701605 (modem
+ * 0408, 9600) did not answer at all.
  *
  * A reply is accepted only when its CRC is valid, it comes from the
  * requested address and function, and it carries exactly the requested
@@ -120,9 +130,8 @@ const FUNCTION_READ_HOLDING = 0x03;
 const FUNCTION_READ_INPUT = 0x04;
 const FUNCTION_REPORT_ID = 0x11;
 const EXCEPTION_BIT = 0x80;
-// Exception code 1: illegal function; 2: illegal data address; 6: slave device busy.
+// Exception code 1: illegal function; 6: slave device busy.
 const EXCEPTION_ILLEGAL_FUNCTION = 1;
-const EXCEPTION_ILLEGAL_ADDRESS = 2;
 const EXCEPTION_BUSY = 6;
 
 const FLOWS = ['PR1', 'PR2', 'PR3', 'PR4', 'PR5', 'PR6'];
@@ -135,41 +144,32 @@ const PIPES = ['TR1', 'TR2', 'TR3', 'TR4', 'TR5', 'TR6'];
 const UNIVERSAL_OUTPUTS = 8;
 const CURRENT_OUTPUTS = 2;
 
-// `optional`: "illegal data address" makes its values null instead of
-// failing the read (see the header).
+// Every block read on three meters (see the header). The registers between
+// 0x80B8 and 0x80C3 (placeholders, the last processing and archiving times)
+// are skipped: a block over them gets "illegal data address".
 const BLOCKS = [
-    { fn: FUNCTION_READ_INPUT, start: 0x0000, count: 0x14, optional: true },
-    { fn: FUNCTION_READ_INPUT, start: 0x0020, count: 0x33, optional: true },
-    { fn: FUNCTION_READ_INPUT, start: 0x4008, count: 0x01, optional: true },
-    { fn: FUNCTION_READ_INPUT, start: 0x4010, count: 0x15, optional: true },
+    { fn: FUNCTION_READ_INPUT, start: 0x0000, count: 0x14 },
+    { fn: FUNCTION_READ_INPUT, start: 0x0020, count: 0x33 },
+    { fn: FUNCTION_READ_INPUT, start: 0x4008, count: 0x01 },
+    { fn: FUNCTION_READ_INPUT, start: 0x4010, count: 0x15 },
     { fn: FUNCTION_READ_INPUT, start: 0x8000, count: 0x06 },
-    { fn: FUNCTION_READ_INPUT, start: 0x8020, count: 0x2a, optional: true },
-    { fn: FUNCTION_READ_INPUT, start: 0x8056, count: 0x18, optional: true },
-    { fn: FUNCTION_READ_INPUT, start: 0x807a, count: 0x04, optional: true },
-    // The times and W1-W3, M1-M3 (the old engine reads them so); the rest of
-    // the old 0x8080-0x80CF block got "illegal data address" on 1401768.
-    { fn: FUNCTION_READ_INPUT, start: 0x8080, count: 0x24 },
-    { fn: FUNCTION_READ_INPUT, start: 0x80a4, count: 0x0c, optional: true },
-    { fn: FUNCTION_READ_INPUT, start: 0x80b0, count: 0x08, optional: true },
-    { fn: FUNCTION_READ_INPUT, start: 0x80ba, count: 0x04, optional: true },
-    { fn: FUNCTION_READ_INPUT, start: 0x80c4, count: 0x0c, optional: true },
+    { fn: FUNCTION_READ_INPUT, start: 0x8020, count: 0x2a },
+    { fn: FUNCTION_READ_INPUT, start: 0x8056, count: 0x18 },
+    { fn: FUNCTION_READ_INPUT, start: 0x807a, count: 0x04 },
+    { fn: FUNCTION_READ_INPUT, start: 0x8080, count: 0x38 },
+    { fn: FUNCTION_READ_INPUT, start: 0x80ba, count: 0x04 },
+    { fn: FUNCTION_READ_INPUT, start: 0x80c4, count: 0x0c },
     { fn: FUNCTION_READ_INPUT, start: 0x80dc, count: 0x30 },
-    { fn: FUNCTION_READ_INPUT, start: 0x8120, count: 0x02, optional: true },
-    { fn: FUNCTION_READ_INPUT, start: 0x8122, count: 0x0c, optional: true },
-    { fn: FUNCTION_READ_INPUT, start: 0xc000, count: 0x30, optional: true },
-    { fn: FUNCTION_READ_INPUT, start: 0xc080, count: 0x10, optional: true },
-    // Volume flow, mass flow and power of the pipes (as the old engine reads them).
-    { fn: FUNCTION_READ_INPUT, start: 0xc090, count: 0x24 },
-    { fn: FUNCTION_READ_INPUT, start: 0xc0b4, count: 0x48, optional: true },
-    { fn: FUNCTION_READ_INPUT, start: 0xc108, count: 0x02, optional: true },
-    { fn: FUNCTION_READ_INPUT, start: 0xc10a, count: 0x0c, optional: true },
-    { fn: FUNCTION_READ_HOLDING, start: 0x00ff, count: 0x08, optional: true },
-    { fn: FUNCTION_READ_HOLDING, start: 0x8006, count: 0x02 },
-    { fn: FUNCTION_READ_HOLDING, start: 0x8008, count: 0x02, optional: true },
-    { fn: FUNCTION_READ_HOLDING, start: 0x8012, count: 0x06, optional: true },
-    { fn: FUNCTION_READ_HOLDING, start: 0xc1a4, count: 0x18, optional: true },
-    { fn: FUNCTION_READ_HOLDING, start: 0xc1ec, count: 0x18, optional: true },
-    { fn: FUNCTION_READ_HOLDING, start: 0xc24c, count: 0x30, optional: true },
+    { fn: FUNCTION_READ_INPUT, start: 0x8120, count: 0x0e },
+    { fn: FUNCTION_READ_INPUT, start: 0xc000, count: 0x30 },
+    { fn: FUNCTION_READ_INPUT, start: 0xc080, count: 0x7c },
+    { fn: FUNCTION_READ_INPUT, start: 0xc108, count: 0x0e },
+    { fn: FUNCTION_READ_HOLDING, start: 0x00ff, count: 0x08 },
+    { fn: FUNCTION_READ_HOLDING, start: 0x8006, count: 0x04 },
+    { fn: FUNCTION_READ_HOLDING, start: 0x8012, count: 0x06 },
+    { fn: FUNCTION_READ_HOLDING, start: 0xc1a4, count: 0x18 },
+    { fn: FUNCTION_READ_HOLDING, start: 0xc1ec, count: 0x18 },
+    { fn: FUNCTION_READ_HOLDING, start: 0xc24c, count: 0x30 },
 ];
 
 // Register layout: [path, address, type]. Types: 'u16', 'u32', 'f32'
@@ -244,8 +244,8 @@ const REGISTERS = [
         [`${name}.status`, 0x004c + i, 'u16'],
         [`${name}.M`, 0x80dc + i * 4, 'lf'],
         [`${name}.V`, 0x80f4 + i * 4, 'lf'],
-        // Volume flow "(м³/мин), м³/ч", mass flow "(т/мин), т/ч", power
-        // "(Гкал/мин), Гкал/ч" as the list names them.
+        // Volume flow m3/min, mass flow t/min, power Гкал/min (the list's
+        // "(м³/мин), м³/ч" etc.: the register unit first, see the header).
         [`${name}.Gv`, 0xc090 + i * 2, 'f32'],
         [`${name}.G`, 0xc09c + i * 2, 'f32'],
         [`${name}.E`, 0xc0a8 + i * 2, 'f32'],
@@ -528,32 +528,22 @@ class Vzljot025Client {
     }
 
     // Reads every block and returns '<fn>:<address>' -> Buffer of that
-    // register's bytes (input and holding registers share addresses); null
-    // for the registers of an optional block the meter does not have.
+    // register's bytes (input and holding registers share addresses).
     async _readBlocks(connection) {
         const registers = new Map();
         for (const block of BLOCKS) {
-            let data = null;
-            try {
-                data = await connection.readBlock(block);
-            } catch (err) {
-                const absent = block.optional && err instanceof Vzljot025ExceptionError
-                    && err.code === EXCEPTION_ILLEGAL_ADDRESS;
-                if (!absent) throw err;
-            }
+            const data = await connection.readBlock(block);
             for (let i = 0; i < block.count; i++) {
-                registers.set(`${block.fn}:${block.start + i}`, data ? data.subarray(i * 2) : null);
+                registers.set(`${block.fn}:${block.start + i}`, data.subarray(i * 2));
             }
         }
         return registers;
     }
 
-    // A register of a block the meter lacks decodes as null.
     static _decode(registers, address, type) {
         const fn = FUNCTION_OF_TYPE[type] || FUNCTION_READ_INPUT;
         const value = registers.get(`${fn}:${address}`);
         if (value === undefined) throw new Error(`Vzljot025Client: register 0x${address.toString(16)} was not read`);
-        if (value === null) return null;
         switch (type) {
             case 'u16':
             case 'h16': return value.readUInt16BE(0);
@@ -579,6 +569,8 @@ class Vzljot025Client {
         }
         results.deviceTime = localTime(results.deviceClock);
         results.powerOffTime = localTime(results.powerOffClock);
+        results.productionDate = localTime(results.productionDate);
+        results.verificationDate = localTime(results.verificationDate);
         delete results.deviceClock;
         delete results.powerOffClock;
         return results;
@@ -607,7 +599,8 @@ class Vzljot025Client {
      * (the register's own units, see `units` and the header):
      *
      *   version, serialNumber, serialNumberPI, deviceId, productionDate,
-     *   verificationDate, deviceTime, powerOffTime (epoch ms), noPowerTime,
+     *   verificationDate, deviceTime, powerOffTime (epoch ms or null),
+     *   noPowerTime (s),
      *   summerTime, weekday, mode, piErrors, schemeChanging,
      *   softwareChecksum, tnv (outdoor air °C), units { heat, mass, volume,
      *   pressure, massFlow, volumeFlow, power, pulseConstant },
@@ -618,18 +611,18 @@ class Vzljot025Client {
      *   LOG1, LOG2, IN8: { inputState, event, pulses }; SIG1..SIG3: { event }
      *   PT1..PT6: { inputState, channelState, t (°C), R (Ω) }
      *   PD1..PD6: { inputState, channelState, P, dP (MPa), I (mA) }
-     *   TR1..TR6: { status, M (t), V (m3), Gv, G, E, rho (kg/m3), h (Мкал/т),
+     *   TR1..TR6: { status, M (t), V (m3), Gv (m3/min), G (t/min),
+     *               E (Гкал/min), rho (kg/m3), h (Мкал/т),
      *               tRho, tH (°C), PRho, PH (MPa) }
      *   TS: { W1..W3 (Гкал), M1..M3 (t), V1..V3 (m3), E1..E3 (Гкал/ч),
-     *         G1..G3 (t/h), Tnar, Tpr, Tpit, Tot, Tns, Trezh, faultFlags[3],
+     *         G1..G3 (t/h), Tnar, Tpr, Tpit, Tot, Tns, Trezh (s), faultFlags[3],
      *         alarmFlags[3], state, hourStatus, hourFaultFlags[2],
      *         hourAlarmFlags[2], alarmTimes { NS1, NS4, G1np, G1vp, G3np,
-     *         G3vp }, analysisStatus }
+     *         G3vp (s) }, analysisStatus }
      *   XV: { t, tContract, tRemote (°C), h (Мкал/т), P, PContract, PRemote
      *         (MPa), Q (m3/h), V (m3) }
      *   timestamp
      *
-     * null for the values of an optional block the meter does not have.
      * Rejects on connection/protocol failure; the Error carries a
      * `.partialResults` property with whatever was read before it.
      *
