@@ -58,7 +58,7 @@ services:
     ports:
       # Its editor, open to the office network like A's; protected by the same adminAuth
       - "1897:1880"
-      - "2910:2910"
+      - "2911:2911"
     env_file:
       - ./flow-space-nodered-a/.env-flows
     volumes:
