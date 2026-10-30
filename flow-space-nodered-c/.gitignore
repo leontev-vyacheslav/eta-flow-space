@@ -1,0 +1,16 @@
+node_modules
+.env
+
+# Runtime files Node-RED and npm write into the user directory
+.config.*.json
+.config.*.json.backup
+.sessions.json
+.flows.json.backup
+.flows_cred.json.backup
+flows_cred.json
+/lib/
+/.npm/
+
+# Mount points of the files shared with ../flow-space-nodered-a (see docker-compose.yaml)
+/settings.js
+/src/
