@@ -1,0 +1,28 @@
+Every meter on the platform already has its own reader. The only Node-RED Modbus nodes left read boiler-room controllers (Гагарина, Царёво-2, Весна-1/2, Statum), not meters.
+
+The gaps are in the old dispatch system. I counted its meters per model in the four latest dumps (2026-09) and compared them with our readers. "Working" means the old system read the meter in the last 31 days of its dump.
+
+**Meter models we have no reader for:**
+
+| Model | Working meters | Where | Old engine code to start from |
+|---|---|---|---|
+| ВЗЛЕТ ТСРВ-043 | 71 | mostly ETA24, 42 behind ETA GSM | `DeviceReader.Vzljot43` |
+| Пульсар-2М (pulse counter) | 68 | all in Челны, behind I-7188 | `DeviceReader.Pulsar` |
+| ТЭМ-104 (+1 ТЭСМАРТ) | 13 | ETA24, mostly ETA GSM | `DeviceReader.Tem104` / `TemCommon` |
+| Пульсар-3 / Пульсар-4М / Пульсар-2 | 7 / 6 / 3 | Челны, ETA24 | `DeviceReader.Pulsar` |
+| ЦЭ2726А (electricity) | 6 | ETA24 | `Tse2726A` |
+| ВЗЛЕТ ТСРВ-025 | 6 | ETA24, ETA GSM | `DeviceReader.Vzljot25` |
+| Original СПТ941 | 5 | ETA24 | `spt941-client.js` refuses it on purpose (fixed 2400 baud, different memory map) |
+| ВКТ-9 | 2 | ETA24, ETA GSM | `DeviceReader.VKT9` |
+| ЭЛЬФ | 1 | ETA24, БАРС-02 | `DeviceReader.Elf` |
+
+Models such as Меркурий 200/206/234, СЭТ-4ТМ, ТЭМ-106/116, ТЭСМА-106 and Марс are still listed, but none of them has a working meter.
+
+**Covered, with caveats:**
+- **"Взлет 22/23" (47):** every one runs firmware 76.10.x, the ТСРВ-023 line, so `vzljot023-client.js` covers them. No real ТСРВ-022 is in use, so the gap list in my notes was wrong there.
+- **ТСРВ-024 (7):** these share the 76.30 firmware line with the 024М. Three of them run exactly the 024М firmware (76.30.3.29), so `vzljot024-client.js` should read them. The four on 76.30.2.x have not been checked.
+- **СПТ943.1 (М4) and СПТ941.20 (9):** readers exist but have only been tested against the emulator, not a live meter.
+
+**Not meters, also without readers:** ECL 210/310 regulators (148), I-7000 I/O modules (125, Челны), ECL 200/300 (101, Челны), ECL 110 (16), Кситал GSM-12T (13), CCU (10), ZET 7012-I pressure sensors (3), and single Siemens, Modicon 221, Danfoss PCM, ПР-200, ОВЕН 160 and Дискрет Барс devices.
+
+The counting script is at `/tmp/claude-1000/-home-leo-projects-eta-flow-space/b9e6398a-91dc-4a19-ad8f-c7615498d577/scratchpad/count_models.py`. Nothing in the repo changed. If you want, I'll correct the stale gap list in my scope memory (it still lists the СПТ and ТСРВ-022 as missing).
