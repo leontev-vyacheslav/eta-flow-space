@@ -13,6 +13,7 @@ services:
     environment:
       - TZ=Europe/Moscow
       - NODE_RED_ENABLE_PROJECTS=false
+      - EDITOR_TITLE=Flow Space (A)
     # --no-audit --no-fund: on 2026-10-26 npm hung for 9+ minutes after installing, waiting on a registry
     # request (0% CPU, node_modules already written), and Node-RED never started
     entrypoint: >
@@ -43,7 +44,7 @@ services:
     environment:
       - TZ=Europe/Moscow
       - NODE_RED_ENABLE_PROJECTS=false
-      - EDITOR_TITLE=Flow Space — testing
+      - EDITOR_TITLE=Flow Space (B)
     entrypoint: >
       sh -c "
         cd /data && npm install --no-audit --no-fund --no-update-notifier
@@ -69,7 +70,7 @@ services:
     environment:
       - TZ=Europe/Moscow
       - NODE_RED_ENABLE_PROJECTS=false
-      - EDITOR_TITLE=Flow Space — testing
+      - EDITOR_TITLE=Flow Space (C)
     entrypoint: >
       sh -c "
         cd /data && npm install --no-audit --no-fund --no-update-notifier
