@@ -19,7 +19,7 @@ export type StateExpressionScope = {
 // style properties an expression may set; extend when a mnemoschema needs another one
 const ALLOWED_STYLE_PROPERTIES = new Set([
     'fill', 'stroke', 'strokeWidth', 'strokeDasharray', 'display', 'visibility',
-    'opacity', 'fillOpacity', 'strokeOpacity', 'color',
+    'opacity', 'fillOpacity', 'strokeOpacity', 'color', 'filter',
 ]);
 const FORBIDDEN_MEMBERS = new Set(['__proto__', 'prototype', 'constructor']);
 

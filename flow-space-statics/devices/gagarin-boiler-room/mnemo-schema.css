@@ -57,3 +57,8 @@ g#boilerFlame>path:hover {
   animation:
     intenseGlow 3s ease-in-out infinite;
 }
+
+.boiler-flame-animation.is-off {
+  filter: grayscale(1) brightness(0.7);
+  opacity: 0.6;
+}
