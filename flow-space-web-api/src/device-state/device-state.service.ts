@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { Op, ProjectionAlias, literal } from 'sequelize';
+import { Op, ProjectionAlias, literal, where } from 'sequelize';
 import { SharedStoreService } from '../common/services/shared-store/shared-store.service';
 import { DeviceStateDataModel, MnemoschemaSelectorDataModel, DeviceDataModel } from '../database/models';
 import { I18nService } from 'nestjs-i18n';
@@ -37,6 +37,13 @@ export class DeviceStateService {
     async getDeviceStatesByDates(deviceId: number, beginDate: Date, endDate: Date, fields: string[]): Promise<DeviceStateDataModel[]> {
         const deviceStateFields: ProjectionAlias[] = fields.map((f): ProjectionAlias => [literal(`"DeviceStateDataModel"."state" ${fieldToJsonbPath(f)}`), f]);
 
+        const notNullConditions = fields.map((f) =>
+            where(
+                literal(`"DeviceStateDataModel"."state" ${fieldToJsonbPath(f)}`),
+                { [Op.ne]: null },
+            ),
+        );
+
         const deviceStates = await this.deviceStateModel.findAll({
             attributes: ['id', 'deviceId', ...deviceStateFields, 'createdAt'],
             where: {
@@ -44,6 +51,7 @@ export class DeviceStateService {
                 createdAt: {
                     [Op.between]: [beginDate, endDate],
                 },
+                [Op.and]: notNullConditions,
             },
         });
 
