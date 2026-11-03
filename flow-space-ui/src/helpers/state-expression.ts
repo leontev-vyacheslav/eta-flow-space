@@ -91,7 +91,9 @@ function validate(node: AnyNode): void {
             if (node.regex || typeof node.value === 'bigint') throw new StateExpressionError('regular expression and bigint literals are not allowed');
             return;
         case 'Identifier':
-            if (!['value', 'states', 'undefined'].includes(node.name)) throw new StateExpressionError(`identifier ${node.name} is not allowed`);
+
+            if (!['element', 'value', 'states', 'undefined'].includes(node.name)) throw new StateExpressionError(`identifier ${node.name} is not allowed`);
+
             return;
         case 'ArrayExpression':
             node.elements.forEach((e: AnyNode | null) => {
@@ -107,14 +109,47 @@ function validate(node: AnyNode): void {
             if (node.computed) validate(node.property);
             else if (FORBIDDEN_MEMBERS.has(node.property.name)) throw new StateExpressionError(`member ${node.property.name} is not allowed`);
             return;
-        case 'CallExpression':
-            // only <array>.includes(<one argument>)
-            if (node.callee.type !== 'MemberExpression' || node.callee.computed || node.callee.property.name !== 'includes' || node.arguments.length !== 1) {
-                throw new StateExpressionError('only [...].includes(x) calls are allowed');
+
+        case 'CallExpression': {
+            if (node.callee.type !== 'MemberExpression' || node.callee.computed) {
+                throw new StateExpressionError('only [...].includes(x) and element.classList methods are allowed');
             }
-            validate(node.callee.object);
+
+            const method = node.callee.property.name;
+            const receiver = node.callee.object;
+            const isClassList =
+                receiver.type === 'MemberExpression' &&
+                !receiver.computed &&
+                receiver.object.type === 'Identifier' &&
+                receiver.object.name === 'element' &&
+                receiver.property.name === 'classList';
+
+            if (isClassList) {
+                const validArgumentCount =
+                    (method === 'add' || method === 'remove') ? node.arguments.length >= 1 :
+                    method === 'toggle' ? (node.arguments.length === 1 || node.arguments.length === 2) :
+                    method === 'contains' ? node.arguments.length === 1 :
+                    false;
+
+                if (!validArgumentCount || node.arguments.some((arg: AnyNode) => arg.type === 'SpreadElement')) {
+                    throw new StateExpressionError(
+                        'classList only supports add(token...), remove(token...), toggle(token[, force]) and contains(token)'
+                    );
+                }
+
+                node.arguments.forEach(validate);
+                return;
+            }
+
+            // Preserve the existing [...].includes(x) support.
+            if (method !== 'includes' || node.arguments.length !== 1 || node.arguments[0].type === 'SpreadElement') {
+                throw new StateExpressionError('only [...].includes(x) and element.classList methods are allowed');
+            }
+
+            validate(receiver);
             validate(node.arguments[0]);
             return;
+        }
         default:
             throw new StateExpressionError(`${node.type} is not allowed`);
     }
@@ -202,11 +237,14 @@ function evaluate(node: AnyNode, scope: StateExpressionScope): any {
         case 'UnaryExpression': {
             const argument = evaluate(node.argument, scope);
             return node.operator === '!' ? !argument : node.operator === '-' ? -argument : +argument;
+
         }
         case 'Literal':
+
             return node.value;
         case 'Identifier':
             if (node.name === 'undefined') return undefined;
+            if (node.name === 'element') return scope.element;
             if (!(node.name in scope)) throw new ReferenceError(`${node.name} is not defined`);
             return scope[node.name as 'value' | 'states'];
         case 'ArrayExpression':
@@ -224,7 +262,38 @@ function evaluate(node: AnyNode, scope: StateExpressionScope): any {
             return readMember(object, node.computed ? evaluate(node.property, scope) : node.property.name);
         }
         case 'CallExpression': {
-            const array = evaluate(node.callee.object, scope);
+            const receiver = node.callee.object;
+            const method = node.callee.property.name;
+
+            if (
+                receiver.type === 'MemberExpression' &&
+                !receiver.computed &&
+                receiver.object.type === 'Identifier' &&
+                receiver.object.name === 'element' &&
+                receiver.property.name === 'classList'
+            ) {
+                const classList = scope.element.classList;
+                const args = node.arguments.map((argument: AnyNode) => evaluate(argument, scope));
+
+                switch (method) {
+                    case 'add':
+                        classList.add(...args);
+                        return undefined;
+                    case 'remove':
+                        classList.remove(...args);
+                        return undefined;
+                    case 'toggle':
+                        return args.length === 2
+                            ? classList.toggle(args[0], args[1])
+                            : classList.toggle(args[0]);
+                    case 'contains':
+                        return classList.contains(args[0]);
+                    default:
+                        throw new StateExpressionError(`classList method ${method} is not allowed`);
+                }
+            }
+
+            const array = evaluate(receiver, scope);
             if (!Array.isArray(array)) throw new StateExpressionError('includes() is only allowed on arrays');
             return array.includes(evaluate(node.arguments[0], scope));
         }
