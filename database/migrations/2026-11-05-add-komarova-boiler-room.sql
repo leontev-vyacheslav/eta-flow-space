@@ -7,7 +7,7 @@ WITH location AS (
 ), flow AS (
     INSERT INTO public.flow (code, name, description, uid, "createdAt", "updatedAt")
     VALUES ('komarova-boiler-room', 'Котельная Комарова', 'Система мониторинга котельной ул. Комарова',
-            '75715e53e3de61dd', now(), now())
+            '5ca4365890b5a5ed', now(), now())
     RETURNING id
 ), device AS (
     INSERT INTO public.device (code, name, description, "flowId", "objectLocationId", settings, "updateStateInterval",
