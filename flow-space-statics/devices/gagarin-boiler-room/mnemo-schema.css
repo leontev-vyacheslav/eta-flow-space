@@ -59,6 +59,7 @@ g#boilerFlame>path:hover {
 }
 
 .boiler-flame-animation.is-off {
+  animation: none;
   filter: grayscale(1) brightness(0.7);
   opacity: 0.6;
 }
