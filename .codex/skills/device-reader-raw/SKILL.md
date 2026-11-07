@@ -1,0 +1,115 @@
+---
+name: device-reader-raw
+description: Implement or rework Eta Flow Space meter readers while preserving protocol-native values, strict frame matching, replaceable transport, and bounded polling. Use for meter clients, not ordinary PLC diagram edits.
+---
+
+# The reader reads everything raw
+
+Adapted from `.claude/skills/device-reader-raw/SKILL.md`. Paths in this skill are relative to the repository root.
+
+A device reader (`flow-space-nodered-a/src/device-readers/<type>-client.js`) polls **every current value the
+protocol offers**, in the **device's own units**, with **no supply/return or other site interpretation**.
+Names follow the **manufacturer's protocol document**, written in Latin letters and **grouped the way the
+document groups them**. Giving the values their meaning is the job of the Node-RED mapping — see [device-state-mapping](../device-state-mapping/SKILL.md).
+
+Why: one generic client per device type works for any site; moving or rewiring a meter only changes the
+mapping, and nothing the meter can tell us is thrown away.
+
+## What "raw" means
+
+- **Every current value**: read all current/instant values, current totals, statuses/flag words, identity
+  (serial number, firmware, model) and the device clock. Not read: archives, settings/calibration,
+  verification-mode copies — unless asked.
+  - Exception — cost per value: if every value is a separate slow request or the device is battery powered
+    (EK270, IEC 61107, ~0.4 s per address, batteries drain with reading), agree a short list with the user
+    first: count the candidates, measure the session time, explain the cost.
+- **Device units**: GJ, MPa, K, kPa, atm... stay as sent. Unit conversion is the mapping's job.
+- **Decoding is allowed, interpretation is not**: byte order, BCD clocks, scaled integers (value /
+  10^decimals from the device's own properties), long+float totals, status bracket lists → numbers, epoch
+  ms, arrays. Choosing pipe 1 as "supply" or computing flags with human names is not.
+- **Protocol names, transliterated**: `input1.pipe1.t` (ТВ7 Тв1 Тр1), `Qo`, `VNR`, `GM1`/`GV1` (КМ-5,
+  where the protocol uses G1 for both mass and volume flow), `TR1.W`, `PR1.Q`, `Fl_a`/`Fl_b` (Ирвис),
+  `"2:302"` (EK270 IEC 61107 address as the key). Group like the document: heat inputs → pipes, flow /
+  temperature / pressure channels, the heat system (`TS`), `energy.T1.Aplus`...
+- **Null, not invented values**: an element outside the measurement scheme, bad quality, NaN, a
+  "not counted" marker (FFFFFFFF), counters a firmware does not support (zeros where `Tw` would be > 0)
+  → `null`. An empty status list → `[]`, not `[0]`.
+- Round float32 to 7 significant digits (`Number(v.toPrecision(7))`); the rest is noise.
+
+## Transport rules (learned the hard way — keep them)
+
+- **Strict reply matching**: accept a reply only when its CRC/BCC is valid, it comes from the requested
+  address and function, and it has exactly the expected length. Skip anything else. Gateways forward every
+  frame on the line to every TCP client, so another master's requests and replies arrive in our session
+  (EK270 `:5021`, Взлёт026 `:5023`). A poll that cannot get every value **fails** — it never stores a value
+  under the wrong field.
+- **Retries** for "no valid reply" and the device's "busy" answers (КМ-5 0xF1, Modbus exception 6); never
+  for a real error reply. The first request after a new TCP connection is often lost (Maestro, the Меркурий
+  gateway) — the retry covers it.
+- **Pause between requests** (stepDelayMs ~100 ms): some meters ignore a request sent right after their
+  last reply (Взлёт026).
+- **One session per read()**, overall timeout, `socket.destroy()` at the end (gateways never close their
+  side). Transport-only: the Node-RED subflow wraps `read()` in `withConnectionLock(host, port, ...)`.
+- **The transport is replaceable**: the socket comes from `this.createSocket()` (option `createSocket`,
+  default `() => new net.Socket()`; host and port are then optional). A GPRS modem that connects to us
+  (БАРС-02, ETA GSM) hands the reader a channel from the gateway instead, so use only `connect`, `write`,
+  `on('data' | 'error' | 'close')` and `destroy` on the socket, keep the step and overall timeouts options
+  (`stepTimeoutMs`, `responseTimeoutMs`; GPRS needs ~15 s per request), and don't rely on the connection
+  being new for the first request. Every reader has it since 2026-10-28.
+- **Identity check** when possible: serial number option (`serialNumber`) — read() fails if another device
+  answers.
+- **Unreadable registers**: if a block read gets "illegal address" or no reply, scan register by register
+  (with pauses!) and split the block around the hole; document it in the header (Взлёт026 0x4006, 0xC13E).
+- **Don't split a value**: some meters refuse a request that starts or ends in the middle of a 4-byte value
+  (ТСРВ-043: exception 2), so a 125-register block that ends on the first half of a pair looks like a hole.
+  Start and end blocks on value boundaries (even counts from 0x8000 up) before calling a range unreadable.
+- **Firmware-dependent registers**: when the document says a register exists "с вер. X" only, read its block
+  only for that firmware (from the function 0x11 version string) and return `null` for older ones
+  (`vzljot043-client.js`, `from` in `BLOCKS`).
+
+## File shape (copy an existing client)
+
+Use `tv7-client.js`, `vzljot026-client.js` (Modbus RTU, register blocks), `irvis-client.js` (Modbus RTU +
+function 17 identity), `km5-client.js` (own binary protocol), `vkt7-client.js` (element lists),
+`mercury230-client.js` (channel open/close, password), `ek270-iec61107-client.js` (IEC 61107, values keyed
+by address — touch its handshake only with great care) or `spt943-client.js` / `spt941-client.js` (Логика: two
+protocol generations told apart by the session reply, RAM/FLASH dumps or М4 tagged values; the framing lives in
+`logika-protocol.js`, shared by both — one shared layer per manufacturer protocol, not per reader) as the template:
+
+1. Header comment: device, connection, the protocol document (title and edition from the local protocol document), every
+   request/register block and what it returns, encoding/byte order, the strict-matching paragraph, usage,
+   the channel-sharing paragraph. Note device quirks found on the live meter.
+2. Constants and register/element tables named after the protocol.
+3. `class <Type>Client` with an options object (`host`, `port`, `createSocket`, `address`, timeouts, `retries`, `trace`),
+   `_connect()` returning `{ request|readRegisters, close }`, `_readSession(connection, results)`,
+   `read()` that rejects with `err.partialResults`.
+4. `module.exports = { <Type>Client, ... }` and a CLI block: `node <type>-client.js <host> <port> ...`
+   printing every frame to stderr — used to probe the live meter.
+5. Register in `flow-space-nodered-a/settings.js` → `functionGlobalContext`: `<type>: require('./src/device-readers/<type>-client.js')`.
+
+## Before writing
+
+- Get the protocol document and manual into `.docs/<device_type code>/` with ASCII names
+  `<type>-protocol-*.pdf` / `<type>-manual-*.pdf`. Record the original title, edition and source URL
+  in the existing document index or accompanying notes; do not assume `.docs/README.md` exists.
+  Read the local protocol; extract text with pypdf when available.
+- **When live access is authorized, probe the meter before finalizing the implementation** (existing probe or one-off script in `/tmp`): identity, every block,
+  byte order, what is unsupported. Production polls the same lines — expect occasional collisions; space
+  probes out.
+
+## Verify
+
+Use local emulators and captured frames when live access is unavailable. Report that live behavior is
+unverified; do not infer hardware correctness from an offline pass. Live reads do not authorize changing
+modem settings, taking over a listener, pausing production polling or sending equipment control commands.
+Consult [project-tools](../project-tools/SKILL.md) before selecting a probe; some GPRS tools change line settings.
+
+
+- Run the CLI against the live meter: every value decoded, identity correct, totals continue the stored
+  history.
+- For reliability work, run several bounded sessions (the earlier project baseline was 6–10): count requests and seconds per session; failures must be explained (collisions with
+  production / another master), not ignored.
+- Check the GPRS path: `node .tools/device-probes/reader_via_emulator.js <type>-client.js <host> <port>
+  '<options json>' [--modem bars02|eta-gsm]` reads the meter directly and through the GPRS modem gateway + a
+  pretend modem and compares the fields.
+- Then follow [device-state-mapping](../device-state-mapping/SKILL.md) to keep the stored state identical.
