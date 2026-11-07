@@ -283,6 +283,18 @@ export const MapPage = () => {
                 icon: createMapMarkerIcon(mapIconEmergencyType, group.devices.length > 1)
             }).addTo(markersFeatureGroup);
 
+            const flowName = group.devices[0].flow?.name;
+            if (flowName) {
+                const label = document.createElement('span');
+                label.textContent = flowName;
+                marker.bindTooltip(label, {
+                    permanent: true,
+                    direction: 'right',
+                    offset: [10, 0],
+                    opacity: 1,
+                });
+            }
+
             group.devices.forEach(device => {
                 markersRef.current.set(device.id, marker);
                 groupsRef.current.set(device.id, group);
