@@ -24,6 +24,9 @@ The dev server talks to the API on `http://localhost:3002`. That port is the dev
 (`../tunnel.sh` starts and stops it) to the production gateway, so **the dev UI works with production
 data**: sign-in, device states, settings and reports are real.
 
+To use a locally running API, set `VITE_API_HOST=http://localhost:3001` in
+`.env.development.local` (or the environment) and restart Vite.
+
 - Open the UI as `http://localhost:3000`, not `127.0.0.1`: the API only allows the `localhost` origin.
 - Diagrams and their plugins (`/static/devices/<device code>/`) come from production too, so a local
   change in `../flow-space-statics` is not visible in the dev UI until it is deployed.

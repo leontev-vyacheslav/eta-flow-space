@@ -31,6 +31,9 @@ instructions refer to the repository root unless the link or instruction says ot
 
 ## Change conventions
 
+- Use braced statement blocks for JavaScript/TypeScript control flow, including single-statement
+  `if`, `else`, and loop bodies.
+
 - Keep protocol values raw in readers; site mappings choose channels, units and semantic names.
 - Preserve Node-RED ids and shared subflow definitions. One gateway has one polling instance;
   connection locks do not coordinate across instances. Review function changes with

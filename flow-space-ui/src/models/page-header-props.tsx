@@ -6,5 +6,7 @@ export type PageHeaderProps = {
 
   children: ReactNode;
 
+  actions?: ReactNode;
+
   menuItems?: MenuItemModel[];
 }

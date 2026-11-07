@@ -19,6 +19,12 @@ export class ObjectLocationDataModel extends Model {
     declare address: string;
 
     @Column({
+        type: DataType.STRING(128),
+        allowNull: true,
+    })
+    declare locality: string | null;
+
+    @Column({
         type: DataType.DECIMAL(10, 8),
         allowNull: true,
     })

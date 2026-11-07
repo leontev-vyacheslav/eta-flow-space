@@ -1,4 +1,5 @@
 import L from "leaflet";
+import { SelectBox } from "devextreme-react/select-box";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { MapContainer, TileLayer } from "react-leaflet";
@@ -51,6 +52,25 @@ export const MapPage = () => {
     // tiles are requested only once the map is positioned (fit to the markers or zoomed to a device);
     // before that it sits at the default centre, whose tiles would be downloaded and thrown away
     const [tilesReady, setTilesReady] = useState(false);
+    const [mapData, setMapData] = useState<{ devices: DeviceModel[]; emergencyStates: EmergencyModel[] | undefined }>();
+    // null selects all; an empty string selects locations whose locality is unspecified.
+    const [selectedLocality, setSelectedLocality] = useState<string | null>(null);
+    const localityOptions = useMemo(() => {
+        const names = new Set(mapData?.devices.filter(d => d.objectLocation)
+            .map(d => d.objectLocation!.locality ?? '') ?? []);
+        return [
+            { value: null, text: 'Все населённые пункты' },
+            ...Array.from(names).sort((a, b) => a.localeCompare(b, 'ru'))
+                .map(value => ({ value, text: value || 'Населённый пункт не указан' })),
+        ];
+    }, [mapData]);
+    // A device selected through the side menu must remain visible even outside the current filter.
+    const routedDevice = mapData?.devices.find(d => d.id === Number(deviceId));
+    const activeLocality = routedDevice?.objectLocation && selectedLocality !== null
+        && (routedDevice.objectLocation.locality ?? '') !== selectedLocality ? null : selectedLocality;
+    if (activeLocality !== selectedLocality) {
+        setSelectedLocality(activeLocality);
+    }
     const mapRef = useRef<L.Map>(null);
     const markersGroupRef = useRef<L.FeatureGroup | null>(null);
     // devices at the same place in the same flow (a boiler room and its meters) share one marker,
@@ -58,7 +78,6 @@ export const MapPage = () => {
     const rootsRef = useRef<Map<string, ReturnType<typeof createRoot>>>(new Map());
     const markersRef = useRef<Map<number, L.Marker>>(new Map());
     const groupsRef = useRef<Map<number, MarkerGroup>>(new Map());
-    const latestRequestRef = useRef<number>(0);
     const { treeViewRef } = useSharedArea();
 
     // close popups and fit the view to all markers
@@ -231,18 +250,26 @@ export const MapPage = () => {
         });
     }, [renderGroupPopup]);
 
-    const buildMarkersAsync = useCallback(async () => {
-        const requestId = ++latestRequestRef.current;
-        const [emergencyStates, devices] = await Promise.all([getEmergencyStatesAsync(), getDeviceListAsync()]);
-        if (requestId !== latestRequestRef.current) {
-            return;
-        }
+    useEffect(() => {
+        let cancelled = false;
+        void Promise.all([getEmergencyStatesAsync(), getDeviceListAsync()]).then(([emergencyStates, devices]) => {
+            if (cancelled) {
+                return;
+            }
+            if (devices) {
+                setMapData({ devices, emergencyStates });
+            } else {
+                setTilesReady(true);
+            }
+        });
+        return () => { cancelled = true; };
+    }, [getEmergencyStatesAsync, getDeviceListAsync, refreshToken]);
 
-        if (!devices || !mapRef.current) {
-            // no device list: show the map at the default centre rather than leaving it empty
-            setTilesReady(true);
+    const buildMarkers = useCallback(() => {
+        if (!mapData || !mapRef.current) {
             return;
         }
+        const { devices, emergencyStates } = mapData;
 
         markersGroupRef.current?.remove();
 
@@ -256,7 +283,8 @@ export const MapPage = () => {
         // devices of one flow at one place share a marker; the list's order (boiler room first) is kept
         const groups = new Map<string, MarkerGroup>();
         devices.forEach(device => {
-            if (!device.objectLocation) {
+            if (!device.objectLocation || (activeLocality !== null
+                && (device.objectLocation.locality ?? '') !== activeLocality)) {
                 return;
             }
             const { latitude, longitude } = device.objectLocation;
@@ -330,20 +358,18 @@ export const MapPage = () => {
         });
 
         if (!deviceId) {
-            if (markersFeatureGroup.getLayers().length > 0) {
-                mapRef.current?.fitBounds(markersFeatureGroup.getBounds(), AppConstants.mapDefaultBoundsSetting as L.FitBoundsOptions);
-            }
+            showAllMarkers();
         } else {
             showPopup(deviceId);
         }
         setTilesReady(true);
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [getEmergencyStatesAsync, getDeviceListAsync, renderGroupPopup, groupPopupCloseHandler, markerClickHandler, refreshToken]);
+    }, [mapData, activeLocality, renderGroupPopup, groupPopupCloseHandler, markerClickHandler, showAllMarkers]);
 
     useEffect(() => {
-        buildMarkersAsync();
-    }, [buildMarkersAsync]);
+        buildMarkers();
+    }, [buildMarkers]);
 
     // Open popup for specific deviceId after markers are built; back on /map show all markers
     // (the page stays mounted when switching between the map routes)
@@ -384,15 +410,38 @@ export const MapPage = () => {
 
     return (
         <>
-            <PageHeader caption={'Карта объектов'} menuItems={menuItems}>
+            <PageHeader caption={'Карта объектов'} menuItems={menuItems} actions={
+                <div className="map-locality-filter">
+                    <SelectBox
+                        label="Населённый пункт"
+                        labelMode="static"
+                        placeholder="Все населённые пункты"
+                        dataSource={localityOptions}
+                        valueExpr="value"
+                        displayExpr="text"
+                        value={activeLocality}
+                        searchEnabled
+                        inputAttr={{ 'aria-label': 'Населённый пункт' }}
+                        onValueChanged={e => {
+                            setSelectedLocality(e.value ?? null);
+                            navigate('/map');
+                            const item = document.querySelector('li[data-item-id="/map"]');
+                            if (item) {
+                                treeViewRef.current?.instance.selectItem(item);
+                            }
+                        }}
+                    />
+                </div>
+            }>
                 <MapIcon size={AppConstants.headerIconSize} />
             </PageHeader>
-            <div {...longPressBinder()} style={{ height: '100%', width: '100%', padding: 5 }}>
+            <div className="map-page-content">
+                <div {...longPressBinder()} className="map-page-map">
                 <MapContainer
                     ref={mapRef}
                     center={AppConstants.mapDefaultCenter}
                     zoom={AppConstants.mapDefaultZoom}
-                    style={{ height: 'calc(100% - 50px)', width: '100%', }}>
+                    style={{ height: '100%', width: '100%' }}>
                     {tilesReady
                         ? <TileLayer
                             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -401,6 +450,7 @@ export const MapPage = () => {
                         : null}
                     <MapSizeWatcher />
                 </MapContainer>
+                </div>
             </div>
         </>
     );

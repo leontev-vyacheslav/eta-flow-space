@@ -4,7 +4,7 @@
 
 
 -- Dumped from database version 17.7 (Debian 17.7-3.pgdg13+1)
--- Dumped by pg_dump version 17.7 (Debian 17.7-3.pgdg13+1)
+-- Dumped by pg_dump version 17.11 (Debian 17.11-1.pgdg13+2)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -341,7 +341,8 @@ CREATE TABLE public.object_location (
     longitude numeric(11,8) NOT NULL,
     address character varying(128),
     "createdAt" timestamp with time zone NOT NULL,
-    "updatedAt" timestamp with time zone NOT NULL
+    "updatedAt" timestamp with time zone NOT NULL,
+    locality character varying(128)
 );
 
 
@@ -547,19 +548,19 @@ ALTER TABLE ONLY public.user_device_link ALTER COLUMN id SET DEFAULT nextval('pu
 
 
 --
--- Name: device device_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.device
-    ADD CONSTRAINT device_pkey PRIMARY KEY (id);
-
-
---
 -- Name: device device_code_unique; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.device
     ADD CONSTRAINT device_code_unique UNIQUE (code);
+
+
+--
+-- Name: device device_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.device
+    ADD CONSTRAINT device_pkey PRIMARY KEY (id);
 
 
 --

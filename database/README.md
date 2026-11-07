@@ -61,3 +61,9 @@ the web API's Sequelize models only describe it and no longer create tables (`sy
 | `2026-10-22-spring2-boiler-alarm-emergency.sql` | yes (verified 2026-10-22) |
 | `2026-10-22-spring2-pump-sensor-relay-emergencies.sql` | not yet |
 | `2026-10-27-add-gagarin-boiler-room.sql` | not yet |
+| `2026-11-07-add-object-location-locality.sql` | yes (applied and verified 2026-11-07) |
+| `2026-11-07-normalize-locality-abbreviations.sql` | yes (applied and verified 2026-11-07, including a second run) |
+
+`object_location.locality` stores the canonical populated locality name, including its type
+(for example, `пгт. Камское Устье`). Use the same spelling for locations in the same locality.
+NULL means unspecified. Apply the locality migration before deploying the updated API.
