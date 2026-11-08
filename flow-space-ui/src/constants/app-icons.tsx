@@ -1,3 +1,6 @@
+import FactoryIcon from '../assets/factory-icon-3.svg?react';
+import type { IconBaseProps } from 'react-icons';
+
 export { IoMenuSharp as MenuIcon } from 'react-icons/io5';
 export { MdDateRange as DateRangeIcon } from 'react-icons/md';
 export { MdMoreVert as AdditionalMenuIcon } from 'react-icons/md';
@@ -23,7 +26,9 @@ export { MdOutlineLiveHelp as HelpIcon } from 'react-icons/md';
 
 export { MdOutlineDashboard as FlowIcon } from 'react-icons/md';
 export { VscDashboard as DeviceIcon } from 'react-icons/vsc';
-export { MdOutlineFactory as BoilerRoomIcon } from 'react-icons/md';
+export const BoilerRoomIcon = ({ size = '1em', color = 'white', ...props }: IconBaseProps) => (
+    <FactoryIcon {...props} aria-hidden={true} focusable={false} width={size} height={size} color={color} />
+);
 export { IoOptionsOutline as ParamsIcon } from 'react-icons/io5';
 export { VscDashboard as DashboardIcon } from 'react-icons/vsc';
 export { IoMapOutline as MapIcon } from 'react-icons/io5';
@@ -71,4 +76,3 @@ export {MdOutlineFitScreen as WideScreenIcon} from 'react-icons/md';
 export {MdOutlineFullscreenExit as WideScreenExitIcon} from 'react-icons/md';
 // import { HiOutlineRectangleGroup } from "react-icons/hi2";
 export { HiRectangleGroup as FlowDevicesGroupIcon } from "react-icons/hi2";
-
