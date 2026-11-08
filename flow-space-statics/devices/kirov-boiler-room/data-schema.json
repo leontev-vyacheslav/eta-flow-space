@@ -854,33 +854,6 @@
     "BoilerModel": {
       "type": "object",
       "properties": {
-        "isWorking": {
-          "type": "boolean",
-          "ui": {
-            "group": 2,
-            "editor": {
-              "editorType": "dxCheckBox",
-              "label": {
-                "location": "left",
-                "showColon": true,
-                "text": "Работа котла"
-              },
-              "editorOptions": {
-                "readOnly": true
-              }
-            },
-            "colorizer": {
-              "styleProps": [
-                {
-                  "fill": {
-                    "#00FF00": true,
-                    "white": false
-                  }
-                }
-              ]
-            }
-          }
-        },
         "isNormal": {
           "type": "boolean",
           "ui": {
@@ -971,7 +944,6 @@
         }
       },
       "required": [
-        "isWorking",
         "isNormal",
         "isLocked",
         "isAlarm",
