@@ -63,6 +63,8 @@ the web API's Sequelize models only describe it and no longer create tables (`sy
 | `2026-10-27-add-gagarin-boiler-room.sql` | not yet |
 | `2026-11-07-add-object-location-locality.sql` | yes (applied and verified 2026-11-07) |
 | `2026-11-07-normalize-locality-abbreviations.sql` | yes (applied and verified 2026-11-07, including a second run) |
+| `2026-11-08-add-kama-river-mouth-watcher.sql` | not yet |
+| `2026-11-08-remove-boiler-is-working.sql` | not yet |
 
 `object_location.locality` stores the canonical populated locality name, including its type
 (for example, `пгт. Камское Устье`). Use the same spelling for locations in the same locality.
