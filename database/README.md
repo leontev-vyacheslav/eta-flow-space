@@ -8,6 +8,15 @@ the web API's Sequelize models only describe it and no longer create tables (`sy
 `/docker-entrypoint-initdb.d/`, so Postgres applies it when it starts with an empty data folder
 (`./flow-space-data`). An existing database is never touched by it.
 
+## Local development
+
+For an isolated local PostgreSQL deployment, run
+`bash .tools/local-development/local-development.sh up`. It uses port **55432**, a separate Docker
+volume, and this reference schema with synthetic demo users and measurements.
+The same helper starts a separate local Redis on port **56379**. See
+[the local development helper](../.tools/local-development/README.md) for connection values,
+stop/start commands, and limitations.
+
 ## Changing the schema
 
 1. Write the change as a new file `migrations/YYYY-MM-DD-what-it-does.sql`. Files are applied once, by hand, in

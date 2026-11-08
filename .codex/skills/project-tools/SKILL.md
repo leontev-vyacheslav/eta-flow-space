@@ -17,6 +17,7 @@ an individual tool README specifies otherwise. Inspect an existing tool before i
 | Siemens TIA archive extraction and SCL recovery | `.tools/tia-project/README.md`; `pages.py`, `rhs.py` |
 | XLSX register maps without openpyxl | `.tools/xlsx-dump/README.md`; `xlsx_dump.py` |
 | UI source-map size by package/chunk | `.tools/bundle-size/README.md`; `bundle-size.mjs` |
+| Isolated local PostgreSQL with reference schema, demo fixtures and Redis | `.tools/local-development/README.md`; `local-development.sh` |
 
 ## Operational details
 

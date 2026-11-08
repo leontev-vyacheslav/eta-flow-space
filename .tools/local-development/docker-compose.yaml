@@ -1,0 +1,64 @@
+# Started through local-development.sh with a stable Docker project name.
+services:
+  database:
+    image: postgres:17
+    command: ["postgres", "-c", "shared_preload_libraries=pg_stat_statements", "-c", "jit=off"]
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: local-development-only
+      POSTGRES_DB: eta_flow_space_local
+    ports:
+      - "127.0.0.1:55432:5432"
+    volumes:
+      - local-db-data:/var/lib/postgresql/data
+      - type: bind
+        source: ../../database/schema.sql
+        target: /docker-entrypoint-initdb.d/01-schema.sql
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ./seed.sql
+        target: /docker-entrypoint-initdb.d/02-demo.sql
+        read_only: true
+        bind:
+          create_host_path: false
+    healthcheck:
+      test: ["CMD-SHELL", "PGPASSWORD=$$POSTGRES_PASSWORD psql -h 127.0.0.1 -U postgres -d eta_flow_space_local -Atc 'SELECT 1' | grep -qx 1"]
+      interval: 2s
+      timeout: 5s
+      retries: 30
+      start_period: 5s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "2"
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "127.0.0.1:56379:6379"
+    volumes:
+      - local-redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 2s
+      timeout: 5s
+      retries: 30
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "2"
+
+volumes:
+  local-db-data:
+  local-redis-data:
+
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: ${LOCAL_DB_SUBNET:-172.30.250.0/28}
