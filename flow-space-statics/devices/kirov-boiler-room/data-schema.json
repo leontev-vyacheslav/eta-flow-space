@@ -869,7 +869,19 @@
                 "readOnly": true
               }
             },
-            "chart": {}
+            "chart": {
+              "series": {
+                "type": "stepline"
+              },
+              "valueAxis": {
+                "type": "discrete",
+                "valueType": "string",
+                "categories": [
+                  "false",
+                  "true"
+                ]
+              }
+            }
           }
         },
         "isLocked": {
