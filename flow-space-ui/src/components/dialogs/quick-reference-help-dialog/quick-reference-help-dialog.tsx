@@ -57,6 +57,7 @@ const QuickReferenceHelpDialog = (props: QuickReferenceHelpDialogProps) => {
             width={isXSmall || isSmall ? '95%' : '60%'}
             height={isXSmall || isSmall ? '80%' : '450'}
             dragEnabled={!(isXSmall || isSmall)}
+            resizeEnabled={!(isXSmall || isSmall)}
             {...props}
             callback={(modalResult) => {
                 if (props.callback) {
