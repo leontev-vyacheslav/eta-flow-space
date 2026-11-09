@@ -25,6 +25,8 @@ import { MapSizeWatcher } from "./map-size-watcher";
 import 'leaflet/dist/leaflet.css';
 import './map-page.scss';
 
+const localityStorageKey = 'mapLocality';
+
 type MarkerGroup = {
     key: string;
     devices: DeviceModel[];
@@ -54,7 +56,21 @@ export const MapPage = () => {
     const [tilesReady, setTilesReady] = useState(false);
     const [mapData, setMapData] = useState<{ devices: DeviceModel[]; emergencyStates: EmergencyModel[] | undefined }>();
     // null selects all; an empty string selects locations whose locality is unspecified.
-    const [selectedLocality, setSelectedLocality] = useState<string | null>(null);
+    const [selectedLocality, setSelectedLocality] = useState<string | null>(() => {
+        try {
+            const stored: unknown = JSON.parse(localStorage.getItem(localityStorageKey) ?? 'null');
+            return typeof stored === 'string' ? stored : null;
+        } catch {
+            return null;
+        }
+    });
+    useEffect(() => {
+        try {
+            localStorage.setItem(localityStorageKey, JSON.stringify(selectedLocality));
+        } catch {
+            // Keep the filter usable when browser storage is unavailable.
+        }
+    }, [selectedLocality]);
     const localityOptions = useMemo(() => {
         const names = new Set(mapData?.devices.filter(d => d.objectLocation)
             .map(d => d.objectLocation!.locality ?? '') ?? []);
@@ -66,8 +82,10 @@ export const MapPage = () => {
     }, [mapData]);
     // A device selected through the side menu must remain visible even outside the current filter.
     const routedDevice = mapData?.devices.find(d => d.id === Number(deviceId));
-    const activeLocality = routedDevice?.objectLocation && selectedLocality !== null
-        && (routedDevice.objectLocation.locality ?? '') !== selectedLocality ? null : selectedLocality;
+    const localityUnavailable = mapData && !localityOptions.some(option => option.value === selectedLocality);
+    const routeOutsideLocality = routedDevice?.objectLocation && selectedLocality !== null
+        && (routedDevice.objectLocation.locality ?? '') !== selectedLocality;
+    const activeLocality = localityUnavailable || routeOutsideLocality ? null : selectedLocality;
     if (activeLocality !== selectedLocality) {
         setSelectedLocality(activeLocality);
     }
