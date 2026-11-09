@@ -11,6 +11,13 @@ Read the relevant component README and existing implementation before changing i
 `docker-compose.yaml` for actual service ownership; C's README currently duplicates B's.
 The local UI normally uses production data through an SSH tunnel. Keep production reads bounded;
 local development is not an isolated hardware or database environment.
+For UI screenshots and graph previews, use the production Web API through the developer SSH tunnel
+at `http://localhost:3002` (`ssh-tunnel` user service). Preview undeployed schema changes with browser
+request overrides for the edited local static files while keeping API/history requests on the tunnel.
+Before working with production data, check `flow-space-ui/.env.development.local` and set
+`VITE_API_HOST=http://localhost:3002`; a local API override on port `3001` takes precedence over the
+default in `app-api-routes.ts`. Ensure Vite reloads the environment after changing it.
+Save screenshots in `.previews/` and use the configured E2E credentials without printing them.
 
 ## Project skills
 
