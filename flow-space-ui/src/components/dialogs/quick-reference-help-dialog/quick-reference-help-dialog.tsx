@@ -29,6 +29,7 @@ const versionedUrl = (path: string, manifest: any) =>
 const QuickReferenceHelpDialog = (props: QuickReferenceHelpDialogProps) => {
     const { getQuickHelpReferenceAsync, staticFilesManifest } = useAppData();
     const [quickHelpReference, setQuickHelpReference] = useState<QuickHelpReferenceModel | null>(null);
+    const [dialogSize, setDialogSize] = useState<Pick<IPopupOptions, 'width' | 'height'>>({});
     const { isXSmall, isSmall } = useScreenSize();
 
     useEffect(() => {
@@ -54,10 +55,16 @@ const QuickReferenceHelpDialog = (props: QuickReferenceHelpDialogProps) => {
     return (quickHelpReference ?
         <AppModalPopup
             title='Краткая справка'
-            width={isXSmall || isSmall ? '95%' : '60%'}
-            height={isXSmall || isSmall ? '80%' : '450'}
+            width={isXSmall || isSmall ? '95%' : dialogSize.width ?? '75%'}
+            height={isXSmall || isSmall ? '80%' : dialogSize.height ?? '75%'}
             dragEnabled={!(isXSmall || isSmall)}
             resizeEnabled={!(isXSmall || isSmall)}
+            onWidthChange={(width) => {
+                setDialogSize(size => ({ ...size, width }));
+            }}
+            onHeightChange={(height) => {
+                setDialogSize(size => ({ ...size, height }));
+            }}
             {...props}
             callback={(modalResult) => {
                 if (props.callback) {
