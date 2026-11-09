@@ -21,8 +21,8 @@ Save screenshots in `.previews/` and use the configured E2E credentials without 
 
 ## Project skills
 
-The skills below were adapted from the surviving `.claude/skills/` and English command. Their source
-files remain unchanged. Codex-specific guidance and skills live together in `.codex/`.
+The index includes project-specific skills and adaptations of the surviving `.claude/skills/` and
+English command. Legacy source files remain unchanged. Codex guidance and skills live in `.codex/`.
 Treat this index as project-local skill discovery: read the matching
 `SKILL.md` when its trigger applies; do not load every skill for every task. Relative paths in skill
 instructions refer to the repository root unless the link or instruction says otherwise.
@@ -33,6 +33,7 @@ instructions refer to the repository root unless the link or instruction says ot
 | device-reader-raw | Implement or rework a protocol reader | [SKILL.md](skills/device-reader-raw/SKILL.md) |
 | device-state-mapping | Change collected state, units, channels or history compatibility | [SKILL.md](skills/device-state-mapping/SKILL.md) |
 | project-tools | Render diagrams, regenerate manifests, probe devices or reuse helper scripts | [SKILL.md](skills/project-tools/SKILL.md) |
+| testing-with-playwright | Implement or verify web UI interactions and responsive layout; capture browser evidence | [SKILL.md](skills/testing-with-playwright/SKILL.md) |
 | commit-message | Finish project changes or propose a commit subject | [SKILL.md](skills/commit-message/SKILL.md) |
 | english-review | User requests English feedback or the former /english workflow | [SKILL.md](skills/english-review/SKILL.md) |
 
@@ -58,6 +59,7 @@ instructions refer to the repository root unless the link or instruction says ot
 Use checks appropriate to the affected component:
 
 - UI: `npm run build`, `npm run lint` in `flow-space-ui`; Playwright smoke tests when needed.
+  Use `testing-with-playwright` to verify interaction and responsive-layout changes in the browser.
   Smoke tests require configured credentials and a running target; do not print credentials.
 - API: `npm run build`, focused `npm test -- --runInBand` in `flow-space-web-api`.
   Its `npm run lint` includes `--fix` and modifies files; use ESLint without `--fix` for inspection.
