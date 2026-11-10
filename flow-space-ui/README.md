@@ -81,6 +81,10 @@ npm run e2e:report                               # report of the last run: scree
 The tests are in `e2e/`, the settings in `playwright.config.ts`; each run writes its report to
 `e2e/playwright-report/` and the failure screenshots and traces to `e2e/test-results/` (both git-ignored).
 
+The submenu regression checks in `e2e/menu.spec.ts` use the Весна-2 dashboard, whose diagram includes
+linked meters. Set `E2E_MENU_PATH` to another dashboard with linked meters if the test account does
+not have access to that object. Run them with `npx playwright test --project=smoke menu.spec.ts`.
+
 ## Build and deployment
 
 The production image (`Dockerfile.ui`) builds the app and serves `dist/` with nginx (`nginx.conf`).

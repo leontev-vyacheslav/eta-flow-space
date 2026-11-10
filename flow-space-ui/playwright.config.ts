@@ -29,7 +29,7 @@ export default defineConfig({
     },
     projects: [
         { name: 'sign-in', testMatch: /auth\.setup\.ts/ },
-        { name: 'smoke', testMatch: /smoke\.spec\.ts/, dependencies: ['sign-in'], use: { storageState: authFile } },
+        { name: 'smoke', testMatch: /(?:smoke|menu)\.spec\.ts/, dependencies: ['sign-in'], use: { storageState: authFile } },
         // last: signing out ends the session on the server
         { name: 'sign-out', testMatch: /sign-out\.spec\.ts/, dependencies: ['smoke'] },
     ],
