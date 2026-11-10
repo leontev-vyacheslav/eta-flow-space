@@ -8,6 +8,7 @@ Docker Engine and Docker Compose with `up --wait` support. Run from any director
 bash .tools/local-development/local-development.sh up
 bash .tools/local-development/local-development.sh status
 bash .tools/local-development/local-development.sh psql -c '\dt'
+bash .tools/local-development/local-development.sh restore flow-space-backups/eta_flow_space_database_TIMESTAMP_latest_device_and_emergency_states.sql
 bash .tools/local-development/local-development.sh logs
 bash .tools/local-development/local-development.sh down
 ```
@@ -16,6 +17,28 @@ bash .tools/local-development/local-development.sh down
 initialization runs only on the first start of an empty volume. `down` stops and
 removes this helper's containers and network but retains both data volumes. No reset
 or automatic data-deletion command is provided.
+
+## Restore a plain SQL backup
+
+The `restore` action replaces only this helper's isolated `eta_flow_space_local`
+database. It accepts a human-readable SQL file produced by `pg_dump --format=plain`:
+
+```bash
+bash .tools/local-development/local-development.sh restore \
+  flow-space-backups/eta_flow_space_database_20261109_120302_latest_device_and_emergency_states.sql
+```
+
+The command starts the local PostgreSQL container if necessary and asks for an
+explicit `RESTORE` confirmation. For deliberate non-interactive use, append
+`--yes`. It restores into a temporary database and checks for the core Flow Space
+tables before replacing the current development database. A failed import leaves
+the current local database unchanged. After a successful swap, the previous local
+database is removed. Redis data and the source backup are not changed.
+
+Only plain SQL dumps are accepted; PostgreSQL custom-format `.dump` files require
+`pg_restore` and are rejected. Restored production-derived data remains sensitive
+even on a development machine. Keep it in the Git-ignored `flow-space-backups/`
+directory and do not use production credentials in the local API configuration.
 
 The helper uses its own `docker-compose.yaml`, project `eta-flow-space-local-db`, network,
 and volumes `eta-flow-space-local-db_local-db-data` and
