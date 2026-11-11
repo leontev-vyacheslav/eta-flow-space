@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Муслюмово-7: source topology in the Весна-2 drawing style.
+     Artwork only. Readings and equipment states are placeholders until the data schema and bindings are added. -->
+<svg version="1.1" id="muslum7-mnemoschema" xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1070 700"
+    role="img" aria-labelledby="muslum7-title muslum7-description"
+    style="font-family:'Roboto',Arial,sans-serif;font-size:14px;fill:#000000;">
+    <title id="muslum7-title">Котельная Муслюмово-7</title>
+    <desc id="muslum7-description">Два котла с насосами Н4 и Н5, гидравлический разделитель,
+        три параллельных сетевых насоса Н1, Н2 и Н3, подача Т1, обратка Т2,
+        химическая подготовка подпиточной воды, дренаж и аварийные сигналы.
+        Показания и состояния оборудования пока не подключены.</desc>
+
+    <defs>
+        <!-- Alarm symbols are reused from the existing Гагарина diagram. -->
+        <symbol xmlns="http://www.w3.org/2000/svg" id="muslum7-security-alarm" viewBox="0 6 203 191">
+    <path d="M154,157.558h-7v-36.75c0-24.124-19.638-43.75-43.777-43.75h-3.445C75.638,77.058,56,96.684,56,120.808v36.75h-7&#10;&#09;&#09;&#09;&#09;c-1.933,0-3.5,1.566-3.5,3.5v31.5c0,1.934,1.567,3.5,3.5,3.5h105c1.933,0,3.5-1.566,3.5-3.5v-31.5&#10;&#09;&#09;&#09;&#09;C157.5,159.124,155.933,157.558,154,157.558z M63,120.808c0-20.265,16.499-36.75,36.777-36.75h3.445&#10;&#09;&#09;&#09;&#09;c20.279,0,36.777,16.485,36.777,36.75v36.75H63V120.808z M150.5,189.058h-98v-24.5h7h84h7V189.058z" />
+    <path d="M101.5,94.558c-15.439,0-28,12.561-28,28c0,1.934,1.567,3.5,3.5,3.5s3.5-1.566,3.5-3.5c0-11.58,9.42-21,21-21&#10;&#09;&#09;&#09;&#09;c1.933,0,3.5-1.566,3.5-3.5C105,96.124,103.433,94.558,101.5,94.558z" />
+    <path d="M101.5,66.558c1.933,0,3.5-1.566,3.5-3.5V10.442c0-1.934-1.567-3.5-3.5-3.5s-3.5,1.566-3.5,3.5v52.616&#10;&#09;&#09;&#09;&#09;C98,64.993,99.567,66.558,101.5,66.558z" />
+    <path d="M149.227,84.058c0.896,0,1.791-0.342,2.475-1.025l22.273-22.275c1.367-1.367,1.367-3.582,0-4.949&#10;&#09;&#09;&#09;&#09;c-1.367-1.367-3.582-1.367-4.949,0l-22.273,22.275c-1.367,1.367-1.367,3.582,0,4.949&#10;&#09;&#09;&#09;&#09;C147.436,83.716,148.331,84.058,149.227,84.058z" />
+    <path d="M50.026,83.033c0.684,0.684,1.579,1.025,2.474,1.025s1.791-0.342,2.474-1.025c1.367-1.367,1.367-3.582,0-4.949&#10;&#09;&#09;&#09;&#09;L32.701,55.808c-1.367-1.367-3.582-1.367-4.949,0s-1.367,3.582,0,4.949L50.026,83.033z" />
+    <path d="M199.5,112.058H161c-1.933,0-3.5,1.566-3.5,3.5c0,1.934,1.567,3.5,3.5,3.5h38.5c1.933,0,3.5-1.566,3.5-3.5&#10;&#09;&#09;&#09;&#09;C203,113.624,201.433,112.058,199.5,112.058z" />
+    <path d="M42,112.058H3.5c-1.933,0-3.5,1.566-3.5,3.5c0,1.934,1.567,3.5,3.5,3.5H42c1.933,0,3.5-1.566,3.5-3.5&#10;&#09;&#09;&#09;&#09;C45.5,113.624,43.933,112.058,42,112.058z" />
+</symbol>
+        <symbol xmlns="http://www.w3.org/2000/svg" id="muslum7-fire-alarm" viewBox="0 0 40 40">
+    <rect fill="none" width="40px" height="40px" />
+    <path style="fill:none;" d="M20,0.64C9.31,0.64,0.64,9.31,0.64,20S9.31,39.36,20,39.36  s19.36-8.67,19.36-19.36S30.69,0.64,20,0.64z">
+			</path>
+    <path style="fill:none;" d="M24.27,35.07c8.45-2.83,8.97-10.24,5.9-16.31  c-1.62-2.83-0.52-4.57-0.52-4.57s-3.24,0.58-4.57,3.18c-1.85-3.99,2.78-5.61-0.35-12.44  c0,0-1.39,2.49-5.32,4.57s-3.64,6.71-3.64,6.71s-0.75-3.12-4.34-3.64c0,0,0.69,3.12-1.04,5.79  S4.25,32.99,19.64,35.07c0,0-7.12-4.98-3.88-13.48c0,0,0.87,2.02,2.31,2.6c0,0,0.69-3.53,4.28-4.86  c0,0-0.35,4.05,1.45,5.55c0,0,1.85-1.1,2.08-2.78C25.89,22.11,28.73,29.69,24.27,35.07z">
+			</path>
+    <path d="M8.86,4.81c0.13,0,0.26-0.04,0.37-0.12c0.6-0.42,1.22-0.81,1.86-1.16  c0.31-0.17,0.43-0.56,0.26-0.87c-0.17-0.31-0.56-0.43-0.87-0.26c-0.68,0.37-1.35,0.79-1.99,1.23  c-0.29,0.2-0.36,0.6-0.15,0.89C8.46,4.71,8.66,4.81,8.86,4.81z">
+			</path>
+    <path d="M34.14,5.86C30.36,2.08,25.34,0,20,0c-2.4,0-4.75,0.42-6.99,1.26  c-0.33,0.12-0.5,0.49-0.38,0.82c0.12,0.33,0.49,0.5,0.82,0.38c2.09-0.78,4.29-1.17,6.54-1.17  c5,0,9.7,1.95,13.24,5.48c3.54,3.54,5.48,8.24,5.48,13.24s-1.95,9.7-5.48,13.24  c-3.54,3.54-8.24,5.48-13.24,5.48s-9.7-1.95-13.24-5.48c-3.54-3.54-5.48-8.24-5.48-13.24  c0-2.66,0.54-5.22,1.62-7.63c1.04-2.32,2.52-4.38,4.39-6.12c0.26-0.24,0.28-0.64,0.04-0.9  c-0.24-0.26-0.64-0.28-0.9-0.04c-2,1.85-3.58,4.05-4.69,6.54C0.58,14.42,0,17.16,0,20  c0,5.34,2.08,10.36,5.86,14.14S14.66,40,20,40c5.34,0,10.36-2.08,14.14-5.86S40,25.34,40,20  S37.92,9.64,34.14,5.86z">
+			</path>
+    <path d="M19.39,35.7c0.29,0.04,0.57-0.13,0.68-0.4c0.11-0.27,0.01-0.59-0.23-0.76  c-0.02-0.01-1.68-1.19-2.97-3.35c-1.49-2.5-1.86-5.2-1.1-8.04c0.45,0.63,1.09,1.31,1.91,1.64  c0.18,0.07,0.38,0.06,0.54-0.03c0.17-0.09,0.29-0.25,0.32-0.44c0.01-0.03,0.54-2.59,2.99-3.97  c0.02,1.41,0.28,3.84,1.7,5.03c0.21,0.17,0.5,0.2,0.74,0.06c0.06-0.03,0.93-0.56,1.61-1.46  c0.53,2.44,0.99,7.11-1.97,10.68c-0.18,0.22-0.2,0.53-0.03,0.77c0.12,0.18,0.32,0.28,0.53,0.28  c0.07,0,0.14-0.01,0.2-0.03c3.37-1.13,5.73-3.02,7.01-5.61c1.12-2.26,1.34-4.97,0.65-7.86  c-0.08-0.34-0.43-0.55-0.77-0.47c-0.34,0.08-0.55,0.43-0.47,0.77c0.62,2.59,0.43,5.01-0.55,6.99  c-0.87,1.76-2.34,3.16-4.37,4.18c1.09-2.03,1.58-4.47,1.42-7.15c-0.16-2.63-0.87-4.57-0.9-4.65  c-0.1-0.27-0.38-0.44-0.67-0.41c-0.29,0.03-0.52,0.26-0.56,0.55c-0.13,0.91-0.88,1.64-1.37,2.02  c-0.94-1.25-0.97-3.72-0.89-4.66c0.02-0.22-0.08-0.43-0.25-0.56c-0.17-0.13-0.4-0.17-0.61-0.09  c-2.79,1.03-3.97,3.26-4.43,4.49c-0.68-0.57-1.19-1.49-1.35-1.88c-0.1-0.24-0.34-0.39-0.6-0.39  c-0.26,0.01-0.49,0.17-0.58,0.41c-1.76,4.63-0.55,8.26,0.77,10.48c0.53,0.89,1.12,1.63,1.65,2.21  c-3.97-0.9-6.58-2.66-7.76-5.26c-1.71-3.74,0-8.42,1.1-10.1c1.27-1.95,1.35-4.1,1.26-5.31  c2.38,0.75,2.94,2.87,2.97,2.97c0.08,0.32,0.39,0.53,0.72,0.48c0.33-0.05,0.56-0.34,0.54-0.67  c-0-0.04-0.22-4.24,3.31-6.11c2.55-1.35,4.08-2.87,4.87-3.83c1.11,2.99,0.53,4.75-0.02,6.46  c-0.48,1.47-0.97,2.98-0.06,4.95c0.1,0.22,0.32,0.37,0.57,0.37c0.25,0,0.47-0.13,0.58-0.35  c0.71-1.39,2.08-2.14,3.04-2.52c-0.13,0.91-0.03,2.26,0.91,3.92c0.14,0.27,0.27,0.55,0.39,0.83  c0.14,0.32,0.52,0.47,0.84,0.33c0.32-0.14,0.47-0.52,0.33-0.84c-0.13-0.3-0.28-0.61-0.43-0.91  c-0-0.01-0.01-0.02-0.02-0.03c-1.36-2.38-0.59-3.81-0.53-3.91c0.14-0.21,0.14-0.48-0-0.7  c-0.14-0.21-0.4-0.32-0.65-0.27c-0.12,0.02-2.6,0.48-4.24,2.36c-0.13-0.96,0.15-1.82,0.48-2.83  c0.63-1.93,1.41-4.33-0.46-8.42c-0.1-0.22-0.31-0.36-0.55-0.37c-0.24-0.01-0.47,0.12-0.58,0.32  c-0.01,0.02-1.37,2.36-5.06,4.32c-2.45,1.3-3.41,3.47-3.77,5.11c-0.73-0.91-1.92-1.84-3.82-2.11  c-0.21-0.03-0.42,0.04-0.56,0.2c-0.14,0.15-0.2,0.37-0.16,0.57c0.01,0.03,0.61,2.91-0.95,5.3  c-0.97,1.49-3.28,6.77-1.19,11.33C10.08,32.8,13.74,34.94,19.39,35.7z">
+			</path>
+</symbol>
+        <symbol xmlns="http://www.w3.org/2000/svg" id="muslum7-gas-alarm" viewBox="438 505 38 35">
+    <path d="M475,532.3C475,532.3,475,532.3,475,532.3l-3.4-3c-0.4-0.3-1.1-0.6-2.4-0.1l-2.6-2.3&#10;&#09;&#09;&#09;&#09;&#09;&#09;c0.8-1,0.9-1.1,1.2-1.5l0.6,0.6c0.9,0.8,2.4,0.8,3.4,0c0.9-0.8,0.9-2.2,0-3l-1.9-1.7c0.4-1.1,0.5-2.3,0.5-3.5c0-1-0.1-2-0.4-3&#10;&#09;&#09;&#09;&#09;&#09;&#09;l1.8-1.6c0.9-0.8,0.9-2.2,0-3c-0.9-0.8-2.4-0.8-3.4,0l-0.6,0.5c-2.5-3.1-6.5-4.9-10.9-4.9c-4.4,0-8.4,1.9-10.9,4.9l-0.6-0.5&#10;&#09;&#09;&#09;&#09;&#09;&#09;c-0.9-0.8-2.4-0.8-3.4,0c-0.9,0.8-0.9,2.2,0,3l1.8,1.6c-0.3,1-0.4,2-0.4,3c0,1.2,0.2,2.4,0.6,3.5l-1.9,1.7c-0.9,0.8-0.9,2.2,0,3&#10;&#09;&#09;&#09;&#09;&#09;&#09;c0.9,0.8,2.4,0.8,3.4,0l0.7-0.7c0.1,0.2,0.3,0.3,0.4,0.5l0.9,1l-2.7,2.4c-1.3-0.5-2-0.2-2.3,0.1l-3.4,3c0,0,0,0-0.1,0.1&#10;&#09;&#09;&#09;&#09;&#09;&#09;c-1.1,1.1,0.4,3.2,2.3,4.9c1.3,1.2,4.2,3.1,5.5,2c0,0,0,0,0.1-0.1l3.4-3c0.4-0.3,0.7-1,0.1-2.1l1.1-1c1.3,1.4,3.3,2.2,5.4,2.2&#10;&#09;&#09;&#09;&#09;&#09;&#09;c2.1,0,4.1-0.8,5.4-2.2l1.1,1c-0.5,1.1-0.3,1.8,0.1,2.1l3.4,3l0,0c1.4,1.2,4.2-0.8,5.6-2C474.6,535.5,476.1,533.4,475,532.3&#10;&#09;&#09;&#09;&#09;&#09;&#09;L475,532.3z M470.8,524c0.3,0.3,0.3,0.7,0,1c-0.3,0.3-0.8,0.3-1.1,0l-0.9-0.8c0.3-0.4,0.5-0.9,0.7-1.4L470.8,524z M469.7,511.3&#10;&#09;&#09;&#09;&#09;&#09;&#09;c0.3-0.3,0.8-0.3,1.1,0c0.3,0.3,0.3,0.7,0,1l-1.2,1.1c-0.2-0.5-0.5-0.9-0.7-1.3L469.7,511.3z M443.4,512.3c-0.3-0.3-0.3-0.7,0-1&#10;&#09;&#09;&#09;&#09;&#09;&#09;c0.3-0.3,0.8-0.3,1.1,0l0.8,0.7c-0.3,0.4-0.5,0.9-0.7,1.3L443.4,512.3z M444.5,525c-0.3,0.3-0.8,0.3-1.1,0c-0.3-0.3-0.3-0.7,0-1&#10;&#09;&#09;&#09;&#09;&#09;&#09;l1.4-1.2c0.2,0.5,0.5,0.9,0.7,1.3L444.5,525z M445.8,521.3c-0.4-1.1-0.6-2.3-0.6-3.5c0-5.8,5.3-10.5,11.9-10.5s11.9,4.7,11.9,10.5&#10;&#09;&#09;&#09;&#09;&#09;&#09;c0,2.7-1,5.1-2.7,7.2l-2.2,2.7c-0.7-2.8-3.6-4.9-7-4.9c-3.3,0-6,1.9-6.9,4.6C448.1,525,446.7,523.8,445.8,521.3L445.8,521.3z&#10;&#09;&#09;&#09;&#09;&#09;&#09;M461.2,525.8l-1.3,0.8c-0.7-0.6-1.7-1-2.8-1c-1.1,0-2.1,0.4-2.8,1l-1.3-0.8c1-1,2.5-1.6,4.1-1.6S460.2,524.8,461.2,525.8z&#10;&#09;&#09;&#09;&#09;&#09;&#09;M442.6,536.2c-1.5-1.4-2.1-2.5-2.2-2.9c0.5,0.1,1.8,0.6,3.3,1.9c1.5,1.4,2.1,2.5,2.2,2.9C445.5,538.1,444.2,537.6,442.6,536.2&#10;&#09;&#09;&#09;&#09;&#09;&#09;L442.6,536.2z M447.2,537.1c-0.5-1-1.5-2.1-2.3-2.9c-1-0.9-2.2-1.7-3.3-2.1l2.1-1.8c0.3,0,0.8,0.2,1.1,0.3c0.7,0.4,1.6,0.9,2.3,1.6&#10;&#09;&#09;&#09;&#09;&#09;&#09;c1.3,1.2,1.8,2.1,1.8,2.1c0.1,0.2,0.4,0.7,0.4,1L447.2,537.1z M449.8,532.9c-0.4-0.5-1-1.1-1.5-1.6c-0.6-0.5-1.2-1-1.8-1.4l2.3-2&#10;&#09;&#09;&#09;&#09;&#09;&#09;l1.3,1.4c0,0.9,0.3,1.9,0.8,2.7L449.8,532.9z M456.3,533.9c-2.7-0.3-4.8-2.4-4.8-4.9c0-0.7,0.2-1.5,0.5-2.1l1.3,0.8&#10;&#09;&#09;&#09;&#09;&#09;&#09;c-0.2,0.4-0.3,0.9-0.3,1.3c0,1.7,1.4,3.1,3.2,3.4V533.9z M454.7,529.1c0-1.2,1.1-2.1,2.4-2.1c1.3,0,2.4,0.9,2.4,2.1&#10;&#09;&#09;&#09;&#09;&#09;&#09;c0,1.2-1.1,2.1-2.4,2.1C455.8,531.2,454.7,530.2,454.7,529.1z M457.9,533.9v-1.4c1.8-0.3,3.2-1.7,3.2-3.4c0-0.5-0.1-0.9-0.3-1.3&#10;&#09;&#09;&#09;&#09;&#09;&#09;l1.3-0.8c0.4,0.7,0.5,1.4,0.5,2.1C462.6,531.5,460.6,533.6,457.9,533.9z M463.4,532c0.4-0.6,0.6-1.3,0.7-2.1l1.6-1.9l2.1,1.9&#10;&#09;&#09;&#09;&#09;&#09;&#09;c-0.6,0.4-1.2,0.8-1.8,1.4c-0.6,0.5-1.1,1.1-1.5,1.6L463.4,532z M467,537.1l-2.1-1.8c0-0.3,0.2-0.7,0.4-1c0.4-0.6,1-1.4,1.8-2.1&#10;&#09;&#09;&#09;&#09;&#09;&#09;c1.3-1.2,2.3-1.6,2.3-1.6c0.3-0.1,0.8-0.3,1.1-0.3l2.1,1.8c-1.1,0.4-2.2,1.2-3.3,2.1C468.5,535.1,467.5,536.1,467,537.1L467,537.1z&#10;&#09;&#09;&#09;&#09;&#09;&#09;M471.6,536.2c-1.5,1.4-2.8,1.9-3.3,1.9c0.1-0.4,0.6-1.6,2.2-2.9c1.5-1.4,2.8-1.9,3.3-1.9C473.7,533.7,473.1,534.9,471.6,536.2z" />
+    <path d="M450.7,511.5c-2.2,0-4,2.5-4,5.6c0,3.2,1.7,5.6,4,5.6c2.2,0,4-2.5,4-5.6&#10;&#09;&#09;&#09;&#09;&#09;&#09;C454.7,514,453,511.5,450.7,511.5z M450.7,521.3c-1.1,0-2.4-1.7-2.4-4.2c0-2.5,1.3-4.2,2.4-4.2c1.1,0,2.4,1.7,2.4,4.2&#10;&#09;&#09;&#09;&#09;&#09;&#09;C453.1,519.6,451.9,521.3,450.7,521.3z" />
+    <path d="M463.4,511.5c-2.2,0-4,2.5-4,5.6c0,3.2,1.7,5.6,4,5.6c2.2,0,4-2.5,4-5.6&#10;&#09;&#09;&#09;&#09;&#09;&#09;C467.4,514,465.6,511.5,463.4,511.5z M463.4,521.3c-1.1,0-2.4-1.7-2.4-4.2c0-2.5,1.3-4.2,2.4-4.2c1.1,0,2.4,1.7,2.4,4.2&#10;&#09;&#09;&#09;&#09;&#09;&#09;C465.8,519.6,464.5,521.3,463.4,521.3z" />
+    <path d="M458,508.7c-0.3,0-0.6,0-1,0c-1.4,0-2.7,0.2-4,0.7c-0.4,0.2-0.6,0.6-0.4,0.9c0.2,0.4,0.6,0.5,1,0.4&#10;&#09;&#09;&#09;&#09;&#09;&#09;c1.1-0.4,2.2-0.6,3.4-0.6c0.3,0,0.5,0,0.8,0c0.4,0,0.8-0.2,0.9-0.6C458.8,509.1,458.5,508.8,458,508.7L458,508.7z" />
+    <path d="M461,509.4c-0.4,0-0.8,0.3-0.8,0.7c0,0.4,0.4,0.7,0.8,0.7s0.8-0.3,0.8-0.7&#10;&#09;&#09;&#09;&#09;&#09;&#09;C461.8,509.7,461.5,509.4,461,509.4z" />
+</symbol>
+        <symbol id="muslum7-motor-alarm" viewBox="0 0 44 38">
+            <g fill="none" stroke="#000000" stroke-width="1.3" stroke-linejoin="round">
+                <rect x="2" y="12" width="23" height="19" rx="2"/>
+                <path d="M5 16H21 M5 21H21 M5 26H21 M7 31V35H21V31 M25 17H30 M25 26H30"/>
+                <rect x="30" y="5" width="10" height="30" rx="2"/>
+                <path d="M33 5V2H38V5 M28 5H42 M28 35H42 M28 12H30 M28 28H30"/>
+            </g>
+        </symbol>
+        <symbol id="muslum7-boiler-alarm" viewBox="0 0 35 40">
+            <rect x="4" y="2" width="27" height="36" fill="#FFFFFF" stroke="#000000" stroke-width="1.3"/>
+            <path d="M4 8H31 M8 5H11 M14 5H17 M20 5H23" fill="none" stroke="#000000" stroke-width="1.1"/>
+            <rect x="9" y="21" width="17" height="12" rx="2" fill="#808080"/>
+        </symbol>
+        <symbol xmlns="http://www.w3.org/2000/svg" id="infoIcon" viewBox="0 0 24 24">
+    <path d="M12 1.67c.955 0 1.845 .467 2.39 1.247l.105 .16l8.114 13.548a2.914 2.914 0 0 1 -2.307 4.363l-.195 .008h-16.225a2.914 2.914 0 0 1 -2.582 -4.2l.099 -.185l8.11 -13.538a2.914 2.914 0 0 1 2.491 -1.403z" style="fill:transparent;" />
+    <path d="M12 1.67c.955 0 1.845 .467 2.39 1.247l.105 .16l8.114 13.548a2.914 2.914 0 0 1 -2.307 4.363l-.195 .008h-16.225a2.914 2.914 0 0 1 -2.582 -4.2l.099 -.185l8.11 -13.538a2.914 2.914 0 0 1 2.491 -1.403zm0 9.33h-1l-.117 .007a1 1 0 0 0 0 1.986l.117 .007v3l.007 .117a1 1 0 0 0 .876 .876l.117 .007h1l.117 -.007a1 1 0 0 0 .876 -.876l.007 -.117l-.007 -.117a1 1 0 0 0 -.764 -.857l-.112 -.02l-.117 -.006v-3l-.007 -.117a1 1 0 0 0 -.876 -.876l-.117 -.007zm.01 -3l-.127 .007a1 1 0 0 0 0 1.986l.117 .007l.127 -.007a1 1 0 0 0 0 -1.986l-.117 -.007z">
+			</path>
+</symbol>
+        <!-- Shared flame artwork from Комарова, with a soft vector glow. -->
+        <filter id="boilerFlameGlow" x="-50%" y="-25%" width="200%" height="150%" color-interpolation-filters="sRGB">
+            <feDropShadow dx="0" dy="0" stdDeviation="20" flood-color="#FF7800" flood-opacity="0.8"/>
+        </filter>
+        <symbol xmlns="http://www.w3.org/2000/svg" id="boilerFlame" viewBox="115 40 260 400" overflow="visible">
+    <g filter="url(#boilerFlameGlow)">
+        <path style="fill:#E17A2D;" d="M186.141,168.802c18.63-48.445,15.042-121.667,15.042-121.667s49.541,20.759,83.744,77.761&#10;&#09;&#09;&#09;&#09;&#09;c32.149,53.578,1.777,133.398,1.777,133.398c23.685-23.693,32.464-47.382,33.268-75.827c26.608,42.473,47.165,91.146,47.165,140.398&#10;&#09;&#09;&#09;&#09;&#09;c0,60.938-55.412,110.285-123.837,110.318c-68.396-0.037-123.837-49.38-123.837-110.318&#10;&#09;&#09;&#09;&#09;&#09;C119.463,263.555,164.173,225.931,186.141,168.802z" />
+        <g style="opacity:0.8;">
+            <path style="fill:#F4E028;" d="M210.455,272.583c10.222-29.384,8.258-73.791,8.258-73.791s98.12,74.674,91.131,167.227&#10;&#09;&#09;&#09;&#09;&#09;&#09;c-2.791,36.856-30.424,66.888-68.01,66.91c-37.556-0.022-68.003-29.949-68.003-66.91&#10;&#09;&#09;&#09;&#09;&#09;&#09;C173.835,330.049,198.388,307.232,210.455,272.583z" />
+        </g>
+        <g style="opacity:0.8;">
+            <path style="fill:#FFFFFF;" d="M222.017,330.072c6.481-18.619,5.231-46.753,5.231-46.753s62.169,47.318,57.743,105.963&#10;&#09;&#09;&#09;&#09;&#09;&#09;c-1.77,23.349-19.278,42.372-43.09,42.39c-23.794-0.019-43.09-18.978-43.09-42.39C198.815,366.483,214.38,352.025,222.017,330.072z&#10;&#09;&#09;&#09;&#09;&#09;&#09;" />
+        </g>
+    </g>
+</symbol>
+    </defs>
+
+    <!-- The top parameters panel follows the Гагарина layout. -->
+    <g id="other-parameters">
+        <rect id="other-parameters-frame" x="20" y="12" width="1030" height="90" rx="13" fill="#FFFFFF" stroke="#808080" stroke-width="0.6"/>
+        <text x="535" y="36" text-anchor="middle">Прочие параметры работы котельной</text>
+        <g id="timestamp" font-size="11" letter-spacing="1">
+            <text id="timestamp-date" x="34" y="34">—.—.——</text>
+            <text id="timestamp-time" x="38" y="51">—:—:—</text>
+        </g>
+        <g id="outdoor-temperature">
+            <rect x="235" y="50" width="140" height="42" rx="8" fill="#FFFFFF" stroke="#808080" stroke-width="0.5"/>
+            <text x="305" y="66" font-size="13" text-anchor="middle">Тн.в.</text>
+            <text id="outdoor-temperature-value" x="305" y="85" font-size="13" text-anchor="middle">— °C</text>
+        </g>
+        <g id="supply-setpoint">
+            <rect x="385" y="50" width="140" height="42" rx="8" fill="#FFFFFF" stroke="#808080" stroke-width="0.5"/>
+            <text x="455" y="66" font-size="13" text-anchor="middle">Задание подачи</text>
+            <text id="supply-setpoint-value" x="455" y="85" font-size="13" text-anchor="middle">— °C</text>
+        </g>
+        <g id="boilers-setpoint">
+            <rect x="535" y="50" width="140" height="42" rx="8" fill="#FFFFFF" stroke="#808080" stroke-width="0.5"/>
+            <text x="605" y="66" font-size="13" text-anchor="middle">Задание котлов</text>
+            <text id="boilers-setpoint-value" x="605" y="85" font-size="13" text-anchor="middle">— °C</text>
+        </g>
+        <g id="boiler-room-state">
+            <rect x="685" y="50" width="156" height="42" rx="8" fill="#FFFFFF" stroke="#808080" stroke-width="0.5"/>
+            <text x="763" y="66" font-size="13" text-anchor="middle">Состояние</text>
+            <text id="boiler-room-state-value" x="763" y="85" font-size="13" text-anchor="middle">—</text>
+        </g>
+        <use id="other-parameters-info" href="#infoIcon" x="1020" y="22" width="18" height="18" fill="#0072C6"/>
+    </g>
+
+    <g id="hydraulic-circuit" transform="translate(90 100)">
+        <!-- Pipework follows the source: the three network pumps are parallel,
+             and treated make-up water enters the network return before that bank. -->
+        <g id="pipework" fill="none" stroke="#000000" stroke-width="1.4" stroke-linecap="square" stroke-linejoin="round">
+            <path id="boiler-supply-header" d="M110 120H496.25"/>
+            <path id="network-supply-header" d="M578.75 120H950"/>
+            <path id="boiler-1-supply" d="M110 120V170"/>
+            <path id="boiler-2-supply" d="M290 120V170"/>
+
+            <path id="boiler-1-return" d="M110 280V315 M110 355V400"/>
+            <path id="boiler-2-return" d="M290 280V315 M290 355V400"/>
+            <path id="boiler-return-header" d="M110 400H496.25"/>
+            <path id="network-return-header" d="M578.75 400H620 M740 400H950"/>
+            <path id="network-pump-left-manifold" d="M620 330V470"/>
+            <path id="network-pump-right-manifold" d="M740 330V470"/>
+            <path id="network-pump-1-pipe" d="M620 330H660 M700 330H740"/>
+            <path id="network-pump-2-pipe" d="M620 400H660 M700 400H740"/>
+            <path id="network-pump-3-pipe" d="M620 470H660 M700 470H740"/>
+
+            <path id="makeup-inlet" d="M85 535H212"/>
+            <path id="makeup-outlet" d="M248 535H764 M796 535H811 M831 535H850V400"/>
+            <path id="drain-pipe" d="M930 400V450 M930 484V500"/>
+        </g>
+
+        <g id="pipe-junctions" fill="#000000">
+            <circle cx="290" cy="120" r="2.3"/>
+            <circle cx="290" cy="400" r="2.3"/>
+            <circle cx="620" cy="400" r="2.3"/>
+            <circle cx="740" cy="400" r="2.3"/>
+            <circle cx="850" cy="400" r="2.3"/>
+            <circle cx="930" cy="400" r="2.3"/>
+        </g>
+
+        <!-- Boiler artwork: static flames and placeholder state labels; live bindings are added later. -->
+        <g id="boiler-1">
+            <text x="60" y="164" font-size="16">К1</text>
+            <rect id="boiler-1-frame" x="60" y="170" width="100" height="110" fill="#FFFFFF" stroke="#000000" stroke-width="1.4"/>
+            <text id="boiler-1-status" x="110" y="211" text-anchor="middle">—</text>
+            <rect id="boiler-1-burner" x="80" y="232" width="60" height="42" rx="6" fill="#808080"/>
+            <use id="boiler-1-flame" href="#boilerFlame" x="98" y="235" width="24" height="36"/>
+        </g>
+        <g id="boiler-2">
+            <text x="240" y="164" font-size="16">К2</text>
+            <rect id="boiler-2-frame" x="240" y="170" width="100" height="110" fill="#FFFFFF" stroke="#000000" stroke-width="1.4"/>
+            <text id="boiler-2-status" x="290" y="211" text-anchor="middle">—</text>
+            <rect id="boiler-2-burner" x="260" y="232" width="60" height="42" rx="6" fill="#808080"/>
+            <use id="boiler-2-flame" href="#boilerFlame" x="278" y="235" width="24" height="36"/>
+        </g>
+
+        <!-- Boiler circulation pumps: return water flows upward into each boiler. -->
+        <g id="boiler-pump-4">
+            <text x="86" y="307" text-anchor="end">Н4</text>
+            <rect id="boiler-pump-4-frame" x="90" y="315" width="40" height="40" rx="4" fill="#FFFFFF" stroke="#000000" stroke-width="1.4"/>
+            <circle id="boiler-pump-4-state" cx="110" cy="335" r="16" fill="#808080" stroke="#000000" stroke-width="1.2"/>
+            <circle cx="110" cy="335" r="14" fill="none" stroke="#000000" stroke-width="0.4"/>
+            <path d="M110 323L103 336H117Z" fill="#000000"/>
+        </g>
+        <g id="boiler-pump-5">
+            <text x="266" y="307" text-anchor="end">Н5</text>
+            <rect id="boiler-pump-5-frame" x="270" y="315" width="40" height="40" rx="4" fill="#FFFFFF" stroke="#000000" stroke-width="1.4"/>
+            <circle id="boiler-pump-5-state" cx="290" cy="335" r="16" fill="#808080" stroke="#000000" stroke-width="1.2"/>
+            <circle cx="290" cy="335" r="14" fill="none" stroke="#000000" stroke-width="0.4"/>
+            <path d="M290 323L283 336H297Z" fill="#000000"/>
+        </g>
+
+        <g id="hydraulic-separator">
+            <rect x="496.25" y="75" width="82.5" height="355" rx="10" fill="#FFFFFF" stroke="#000000" stroke-width="1.4"/>
+            <path d="M508.25 78L566.75 427" fill="none" stroke="#000000" stroke-width="1.3"/>
+            <text x="537.5" y="450" font-size="12" text-anchor="middle">Гидрострелка</text>
+        </g>
+
+        <!-- Network circulation pumps: Т2 enters on the right and returns to the separator on the left. -->
+        <g id="network-pump-1">
+            <text x="680" y="303" text-anchor="middle">Н1</text>
+            <rect id="network-pump-1-frame" x="660" y="310" width="40" height="40" rx="4" fill="#FFFFFF" stroke="#000000" stroke-width="1.4"/>
+            <circle id="network-pump-1-state" cx="680" cy="330" r="16" fill="#808080" stroke="#000000" stroke-width="1.2"/>
+            <circle cx="680" cy="330" r="14" fill="none" stroke="#000000" stroke-width="0.4"/>
+            <path d="M668 330L681 323V337Z" fill="#000000"/>
+        </g>
+        <g id="network-pump-2">
+            <text x="680" y="373" text-anchor="middle">Н2</text>
+            <rect id="network-pump-2-frame" x="660" y="380" width="40" height="40" rx="4" fill="#FFFFFF" stroke="#000000" stroke-width="1.4"/>
+            <circle id="network-pump-2-state" cx="680" cy="400" r="16" fill="#808080" stroke="#000000" stroke-width="1.2"/>
+            <circle cx="680" cy="400" r="14" fill="none" stroke="#000000" stroke-width="0.4"/>
+            <path d="M668 400L681 393V407Z" fill="#000000"/>
+        </g>
+        <g id="network-pump-3">
+            <text x="680" y="443" text-anchor="middle">Н3</text>
+            <rect id="network-pump-3-frame" x="660" y="450" width="40" height="40" rx="4" fill="#FFFFFF" stroke="#000000" stroke-width="1.4"/>
+            <circle id="network-pump-3-state" cx="680" cy="470" r="16" fill="#808080" stroke="#000000" stroke-width="1.2"/>
+            <circle cx="680" cy="470" r="14" fill="none" stroke="#000000" stroke-width="0.4"/>
+            <path d="M668 470L681 463V477Z" fill="#000000"/>
+        </g>
+
+        <!-- Instrument tags are kept exactly as on the supplied diagram. -->
+        <g id="TE11">
+            <path d="M110 151H145" fill="none" stroke="#000000" stroke-width="1.2"/>
+            <circle cx="110" cy="151" r="2.3"/>
+            <text x="185" y="137" text-anchor="middle">TE11</text>
+            <rect x="145" y="142" width="80" height="18" fill="#FFFFFF" stroke="#000000" stroke-width="0.4"/>
+            <text id="TE11-value" x="185" y="156" font-size="13" text-anchor="middle">— °C</text>
+        </g>
+        <g id="TE12">
+            <path d="M290 151H325" fill="none" stroke="#000000" stroke-width="1.2"/>
+            <circle cx="290" cy="151" r="2.3"/>
+            <text x="365" y="137" text-anchor="middle">TE12</text>
+            <rect x="325" y="142" width="80" height="18" fill="#FFFFFF" stroke="#000000" stroke-width="0.4"/>
+            <text id="TE12-value" x="365" y="156" font-size="13" text-anchor="middle">— °C</text>
+        </g>
+        <g id="PE11">
+            <path d="M415 120V179H405" fill="none" stroke="#000000" stroke-width="1.2"/>
+            <circle cx="415" cy="120" r="2.3"/>
+            <text x="445" y="165" text-anchor="middle">PE11</text>
+            <rect x="405" y="170" width="80" height="18" fill="#FFFFFF" stroke="#000000" stroke-width="0.4"/>
+            <text id="PE11-value" x="445" y="184" font-size="13" text-anchor="middle">— бар</text>
+        </g>
+        <g id="PE21">
+            <path d="M390 400V455H405" fill="none" stroke="#000000" stroke-width="1.2"/>
+            <circle cx="390" cy="400" r="2.3"/>
+            <text x="445" y="441" text-anchor="middle">PE21</text>
+            <rect x="405" y="446" width="80" height="18" fill="#FFFFFF" stroke="#000000" stroke-width="0.4"/>
+            <text id="PE21-value" x="445" y="460" font-size="13" text-anchor="middle">— бар</text>
+        </g>
+        <g id="TE1">
+            <path d="M790 83V120" fill="none" stroke="#000000" stroke-width="1.2"/>
+            <circle cx="790" cy="120" r="2.3"/>
+            <text x="790" y="60" text-anchor="middle">TE1</text>
+            <rect x="750" y="65" width="80" height="18" fill="#FFFFFF" stroke="#000000" stroke-width="0.4"/>
+            <text id="TE1-value" x="790" y="79" font-size="13" text-anchor="middle">— °C</text>
+        </g>
+        <g id="PE1">
+            <path d="M905 83V120" fill="none" stroke="#000000" stroke-width="1.2"/>
+            <circle cx="905" cy="120" r="2.3"/>
+            <text x="905" y="60" text-anchor="middle">PE1</text>
+            <rect x="865" y="65" width="80" height="18" fill="#FFFFFF" stroke="#000000" stroke-width="0.4"/>
+            <text id="PE1-value" x="905" y="79" font-size="13" text-anchor="middle">— бар</text>
+        </g>
+        <g id="TE2">
+            <path d="M790 361V400" fill="none" stroke="#000000" stroke-width="1.2"/>
+            <circle cx="790" cy="400" r="2.3"/>
+            <text x="790" y="338" text-anchor="middle">TE2</text>
+            <rect x="750" y="343" width="80" height="18" fill="#FFFFFF" stroke="#000000" stroke-width="0.4"/>
+            <text id="TE2-value" x="790" y="357" font-size="13" text-anchor="middle">— °C</text>
+        </g>
+        <g id="PE2">
+            <path d="M905 361V400" fill="none" stroke="#000000" stroke-width="1.2"/>
+            <circle cx="905" cy="400" r="2.3"/>
+            <text x="905" y="338" text-anchor="middle">PE2</text>
+            <rect x="865" y="343" width="80" height="18" fill="#FFFFFF" stroke="#000000" stroke-width="0.4"/>
+            <text id="PE2-value" x="905" y="357" font-size="13" text-anchor="middle">— бар</text>
+        </g>
+        <g id="pipe-terminals" font-size="15">
+            <path id="supply-arrow" d="M942 112L958 120L942 128Z" fill="#FF0000"/>
+            <text x="950" y="148" text-anchor="middle">Т1</text>
+            <path id="return-arrow" d="M958 392L942 400L958 408Z" fill="#0000FF"/>
+            <text x="950" y="428" text-anchor="middle">Т2</text>
+            <path id="cold-water-arrow" d="M75 527L91 535L75 543Z" fill="#0081C9"/>
+            <text x="83" y="514" text-anchor="middle">ХВС</text>
+            <path id="drain-arrow" d="M922 492L930 508L938 492Z" fill="#0081C9"/>
+            <text x="930" y="528" font-size="13" text-anchor="middle">дренаж</text>
+        </g>
+
+        <g id="water-treatment">
+            <!-- Same outline and proportions as the Гагарина water-treatment symbol. -->
+            <rect x="212" y="491.8" width="36" height="86.4" rx="11.52" fill="#FFFFFF" stroke="#000000" stroke-width="1.4"/>
+            <text x="230" y="483.2" text-anchor="middle">ХПВ</text>
+        </g>
+        <g id="makeup-valve" stroke="#000000" stroke-width="0.8">
+            <path d="M764 525L780 535L764 545Z M796 525L780 535L796 545Z" fill="#808080"/>
+            <path d="M780 535V522" fill="none"/>
+            <rect x="774" y="508" width="12" height="14" fill="#808080"/>
+        </g>
+        <g id="makeup-check-valve" stroke="#000000" stroke-width="0.8">
+            <path d="M811 535L827 527V543Z" fill="#000000"/>
+            <path d="M831 525V545" fill="none"/>
+        </g>
+        <g id="drain-valve" stroke="#000000" stroke-width="0.8">
+            <path d="M920 450L930 467L940 450Z M920 484L930 467L940 484Z" fill="#808080"/>
+            <path d="M930 467H918" fill="none"/>
+            <rect x="906" y="461" width="12" height="12" fill="#808080"/>
+        </g>
+    </g>
+
+    <!-- The seven source alarm groups are stacked vertically on the left.
+         Гагарина uses 50 × 50 squares scaled by 0.75. At the common dashboard
+         height, 0.75 × 700 / 412 = 1.274271845 gives the same displayed item size. -->
+    <g id="alarm-panel">
+        <rect id="alarm-panel-frame" x="20" y="128" width="104" height="555" rx="13" fill="#FFFFFF" stroke="#808080" stroke-width="0.6"/>
+        <text x="72" y="148" font-size="12" text-anchor="middle">Аварийные</text>
+        <text x="72" y="163" font-size="12" text-anchor="middle">события</text>
+        <g id="security-alarm" transform="translate(40 174) scale(1.274271845)">
+            <rect id="security-alarm-frame" width="50" height="50" rx="12" fill="#FFFFFF" stroke="#000000" stroke-width="1"/>
+            <use href="#muslum7-security-alarm" x="9.5" y="2" width="30.45" height="28.65"/>
+            <text x="25" y="42.1" text-anchor="middle" font-size="9">Охрана</text>
+        </g>
+        <g id="fire-alarm" transform="translate(40 246) scale(1.274271845)">
+            <rect id="fire-alarm-frame" width="50" height="50" rx="12" fill="#FFFFFF" stroke="#000000" stroke-width="1"/>
+            <use href="#muslum7-fire-alarm" x="11" y="6.4" width="28" height="28"/>
+            <text x="25" y="42.1" text-anchor="middle" font-size="9">Пожар</text>
+        </g>
+        <g id="gas-alarm" transform="translate(40 318) scale(1.274271845)">
+            <rect id="gas-alarm-frame" width="50" height="50" rx="12" fill="#FFFFFF" stroke="#000000" stroke-width="1"/>
+            <use href="#muslum7-gas-alarm" x="10" y="4" width="30" height="28"/>
+            <text x="25" y="42.1" text-anchor="middle" font-size="9">Газ</text>
+        </g>
+        <g id="network-pumps-alarm" transform="translate(40 390) scale(1.274271845)">
+            <rect id="network-pumps-alarm-frame" width="50" height="50" rx="12" fill="#FFFFFF" stroke="#000000" stroke-width="1"/>
+            <use href="#muslum7-motor-alarm" x="10" y="3" width="30" height="23"/>
+            <text x="25" y="36" text-anchor="middle" font-size="8.5">Сетевые</text>
+            <text x="25" y="45" text-anchor="middle" font-size="8.5">насосы</text>
+        </g>
+        <g id="boiler-pumps-alarm" transform="translate(40 462) scale(1.274271845)">
+            <rect id="boiler-pumps-alarm-frame" width="50" height="50" rx="12" fill="#FFFFFF" stroke="#000000" stroke-width="1"/>
+            <use href="#muslum7-motor-alarm" x="10" y="3" width="30" height="23"/>
+            <text x="25" y="36" text-anchor="middle" font-size="8.5">Котловые</text>
+            <text x="25" y="45" text-anchor="middle" font-size="8.5">насосы</text>
+        </g>
+        <g id="boiler-1-alarm" transform="translate(40 534) scale(1.274271845)">
+            <rect id="boiler-1-alarm-frame" width="50" height="50" rx="12" fill="#FFFFFF" stroke="#000000" stroke-width="1"/>
+            <use href="#muslum7-boiler-alarm" x="14" y="3" width="22" height="25"/>
+            <text x="25" y="42.1" text-anchor="middle" font-size="9">Котёл 1</text>
+        </g>
+        <g id="boiler-2-alarm" transform="translate(40 606) scale(1.274271845)">
+            <rect id="boiler-2-alarm-frame" width="50" height="50" rx="12" fill="#FFFFFF" stroke="#000000" stroke-width="1"/>
+            <use href="#muslum7-boiler-alarm" x="14" y="3" width="22" height="25"/>
+            <text x="25" y="42.1" text-anchor="middle" font-size="9">Котёл 2</text>
+        </g>
+    </g>
+</svg>
