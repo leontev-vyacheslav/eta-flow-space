@@ -24,6 +24,22 @@
         "env": []
     },
     {
+        "id": "cf7c93d5a38dd948",
+        "type": "tab",
+        "label": "muslum-7-boiler-room",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "364ac3dfdbd50871",
+        "type": "tab",
+        "label": "muslum-9-boiler-room",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "vkt7reader00000000",
         "type": "subflow",
         "name": "VKT7 Client",
@@ -1036,6 +1052,68 @@
         "queueLogEnabled": false,
         "failureLogEnabled": true,
         "tcpHost": "192.168.0.54",
+        "tcpPort": "5010",
+        "tcpType": "TELNET",
+        "serialPort": "/dev/ttyUSB",
+        "serialType": "RTU-BUFFERD",
+        "serialBaudrate": 9600,
+        "serialDatabits": 8,
+        "serialStopbits": 1,
+        "serialParity": "none",
+        "serialConnectionDelay": 100,
+        "serialAsciiResponseStartDelimiter": "0x3A",
+        "unit_id": 1,
+        "commandDelay": 1,
+        "clientTimeout": 5000,
+        "reconnectOnTimeout": true,
+        "reconnectTimeout": 10000,
+        "parallelUnitIdsAllowed": true,
+        "showErrors": false,
+        "showWarnings": true,
+        "showLogs": true
+    },
+    {
+        "id": "f8db66b95f4d24ed",
+        "type": "modbus-client",
+        "d": true,
+        "name": "muslum-9-boiler-room-modbus",
+        "clienttype": "tcp",
+        "bufferCommands": true,
+        "stateLogEnabled": false,
+        "queueLogEnabled": false,
+        "failureLogEnabled": true,
+        "tcpHost": "10.4.200.27",
+        "tcpPort": "5010",
+        "tcpType": "TELNET",
+        "serialPort": "/dev/ttyUSB",
+        "serialType": "RTU-BUFFERD",
+        "serialBaudrate": "9600",
+        "serialDatabits": "8",
+        "serialStopbits": "1",
+        "serialParity": "none",
+        "serialConnectionDelay": "100",
+        "serialAsciiResponseStartDelimiter": "0x3A",
+        "unit_id": 1,
+        "commandDelay": 500,
+        "clientTimeout": 5000,
+        "reconnectOnTimeout": true,
+        "reconnectTimeout": 10000,
+        "parallelUnitIdsAllowed": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "showLogs": true
+    },
+    {
+        "id": "9efe29e6f77d85c2",
+        "type": "modbus-client",
+        "d": true,
+        "name": "muslum-7-boiler-room-modbus",
+        "clienttype": "tcp",
+        "bufferCommands": true,
+        "stateLogEnabled": false,
+        "queueLogEnabled": false,
+        "failureLogEnabled": true,
+        "tcpHost": "192.168.0.178",
         "tcpPort": "5010",
         "tcpType": "TELNET",
         "serialPort": "/dev/ttyUSB",
@@ -3211,6 +3289,1104 @@
         "statusType": "auto",
         "x": 1070,
         "y": 100,
+        "wires": []
+    },
+    {
+        "id": "2fc3c88993178afa",
+        "type": "modbus-read",
+        "z": "cf7c93d5a38dd948",
+        "d": true,
+        "name": "Block_RealVal_1",
+        "topic": "",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "1",
+        "dataType": "HoldingRegister",
+        "adr": "50",
+        "quantity": "32",
+        "rate": "10",
+        "rateUnit": "s",
+        "delayOnStart": false,
+        "enableDeformedMessages": false,
+        "startDelayTime": "",
+        "server": "9efe29e6f77d85c2",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "x": 200,
+        "y": 100,
+        "wires": [
+            [],
+            [
+                "99905aea15538f98",
+                "9a3ad70b52b1dac0"
+            ]
+        ]
+    },
+    {
+        "id": "99905aea15538f98",
+        "type": "function",
+        "z": "cf7c93d5a38dd948",
+        "name": "data_convert",
+        "func": "var buffer_array = msg.payload.buffer;\nvar changer;\n//var pay = {};\nvar pay = flow.get(\"buf_data\");\nvar size;\nvar i = 0\n\nwhile (i < buffer_array.length) {\n    changer = buffer_array[i];\n    buffer_array[i] = buffer_array[i + 2];\n    buffer_array[i + 2] = changer;\n    changer = buffer_array[i + 1];\n    buffer_array[i + 1] = buffer_array[i + 3];\n    buffer_array[i + 3] = changer;    \n    i += 4;\n}\npay['tset']  = Buffer.from(buffer_array).readFloatBE(0);     //уставка температуры в сеть\npay['tcor']  = Buffer.from(buffer_array).readFloatBE(8);     //коррекция значения температуры в сеть\npay['t1_n']  = Buffer.from(buffer_array).readFloatBE(12);    //задание температуры в сеть по нар.возд.\npay['tnet']  = Buffer.from(buffer_array).readFloatBE(16);    //задание температуры в сеть\npay['tmin']  = Buffer.from(buffer_array).readFloatBE(20);    //ограничение подачи минимальное\npay['tmax']  = Buffer.from(buffer_array).readFloatBE(24);    //ограничение подачи максимальное\npay['Imax']  = Buffer.from(buffer_array).readFloatBE(28);    //Настройка. Граница интеграла отключения ступени\npay['Imin']  = Buffer.from(buffer_array).readFloatBE(32);    //Настройка. Граница интеграла включения ступени\npay['Tzmax'] = Buffer.from(buffer_array).readFloatBE(36);    //Настройка. Верхняя граница диапазона регулирования температуры\npay['Tzmin'] = Buffer.from(buffer_array).readFloatBE(40);    //Настройка. Нижняя граница диапазона регулирования температуры\npay['D_on']  = Buffer.from(buffer_array).readFloatBE(44);    //Задержка вкл. ступени\npay['D_off'] = Buffer.from(buffer_array).readFloatBE(48);    //Настройка. Задержка отключения ступени\npay['Theat'] = Buffer.from(buffer_array).readFloatBE(52);    //Настройка. Время прогрева на первой ступени\npay['Toff']  = Buffer.from(buffer_array).readFloatBE(56);    //Текущее значение интеграла отключения ступени\npay['T_on']  = Buffer.from(buffer_array).readFloatBE(60);    //Текущее значение интеграла включения ступени\n\n//buf_data = pay;\nflow.set(\"buf_data\", pay);\n\nmsg.payload = pay;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nflow.set(\"buf_data\", {});",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 100,
+        "wires": [
+            [
+                "4fc9a324ac78f29c"
+            ]
+        ]
+    },
+    {
+        "id": "e54f3b38cfbaf03d",
+        "type": "function",
+        "z": "cf7c93d5a38dd948",
+        "name": "data_convert",
+        "func": "var buffer_array = msg.payload.buffer;\nvar changer;\n//var pay = {};\nvar pay = flow.get(\"buf_data\");\nvar size;\nvar i = 0\nwhile (i < buffer_array.length) {\n    changer = buffer_array[i];\n    buffer_array[i] = buffer_array[i + 2];\n    buffer_array[i + 2] = changer;\n    changer = buffer_array[i + 1];\n    buffer_array[i + 1] = buffer_array[i + 3];\n    buffer_array[i + 3] = changer;    \n    i += 4;\n}\npay['t_air'] = Buffer.from(buffer_array).readFloatBE(0);        //Температура нар.возд.\npay['t_inl'] = Buffer.from(buffer_array).readFloatBE(4);        //Температура подачи в сеть\npay['t_out'] = Buffer.from(buffer_array).readFloatBE(8);        //Температура обратки в сеть\npay['t_inb'] = Buffer.from(buffer_array).readFloatBE(12);       //Температура подачи в котловом контуре\npay['t_oub'] = Buffer.from(buffer_array).readFloatBE(16);       //Температура обратки в котловом контуре\npay['P_inl'] = Buffer.from(buffer_array).readFloatBE(40) * 10;  //давление подачи сети\npay['P_out'] = Buffer.from(buffer_array).readFloatBE(44) * 10;  //давление обратки сети\npay['P_inb'] = Buffer.from(buffer_array).readFloatBE(48) * 10;  //давление подачи котлового контура\npay['P_oub'] = Buffer.from(buffer_array).readFloatBE(52) * 10;  //давление обратки котлового контура\n\nflow.set(\"buf_data\", pay);\nmsg.payload = pay;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 200,
+        "wires": [
+            [
+                "4fc9a324ac78f29c"
+            ]
+        ]
+    },
+    {
+        "id": "1ecd93751ce7e4d2",
+        "type": "modbus-getter",
+        "z": "cf7c93d5a38dd948",
+        "name": "Block_Analog_RealVal_2",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "logIOActivities": false,
+        "unitid": "1",
+        "dataType": "HoldingRegister",
+        "adr": "92",
+        "quantity": "28",
+        "server": "9efe29e6f77d85c2",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "enableDeformedMessages": false,
+        "startDelayTime": "",
+        "x": 230,
+        "y": 200,
+        "wires": [
+            [],
+            [
+                "e54f3b38cfbaf03d",
+                "f3198a75a02a42d4"
+            ]
+        ]
+    },
+    {
+        "id": "9a3ad70b52b1dac0",
+        "type": "function",
+        "z": "cf7c93d5a38dd948",
+        "name": "trigger",
+        "func": "var buffer_array = msg.payload.buffer;\nif (buffer_array.length > 0) {\n    msg.payload = 1;\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 140,
+        "wires": [
+            [
+                "1ecd93751ce7e4d2"
+            ]
+        ]
+    },
+    {
+        "id": "f3198a75a02a42d4",
+        "type": "function",
+        "z": "cf7c93d5a38dd948",
+        "name": "trigger",
+        "func": "var buffer_array = msg.payload.buffer;\nif (buffer_array.length > 0) {\n    msg.payload = 1;\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 240,
+        "wires": [
+            [
+                "3e223e367d207c39"
+            ]
+        ]
+    },
+    {
+        "id": "3e223e367d207c39",
+        "type": "modbus-getter",
+        "z": "cf7c93d5a38dd948",
+        "name": "Block_LimitPress_RealVal_3",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "logIOActivities": false,
+        "unitid": "1",
+        "dataType": "HoldingRegister",
+        "adr": "134",
+        "quantity": "30",
+        "server": "9efe29e6f77d85c2",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "enableDeformedMessages": false,
+        "startDelayTime": "",
+        "x": 240,
+        "y": 300,
+        "wires": [
+            [],
+            [
+                "a8bda16d442f005b",
+                "3f66729507884451"
+            ]
+        ]
+    },
+    {
+        "id": "a8bda16d442f005b",
+        "type": "function",
+        "z": "cf7c93d5a38dd948",
+        "name": "data_convert",
+        "func": "var buffer_array = msg.payload.buffer;\nvar changer;\n//var pay = {};\nvar pay = flow.get(\"buf_data\");\nvar size;\nvar i = 0\n\nwhile (i < buffer_array.length) {\n    changer = buffer_array[i];\n    buffer_array[i] = buffer_array[i + 2];\n    buffer_array[i + 2] = changer;\n    changer = buffer_array[i + 1];\n    buffer_array[i + 1] = buffer_array[i + 3];\n    buffer_array[i + 3] = changer;    \n    i += 4;\n}\npay['P1_max_lim'] = Buffer.from(buffer_array).readFloatBE(0)  * 10;       //верхний лимит Pe1\npay['P2_max_lim'] = Buffer.from(buffer_array).readFloatBE(4) * 10;        //верхний лимит Pe2\npay['P11_max_lim'] = Buffer.from(buffer_array).readFloatBE(8) * 10;       //верхний лимит Pe11\npay['P12_max_lim'] = Buffer.from(buffer_array).readFloatBE(12) * 10;      //верхний лимит Pe12\npay['P1_min_lim'] = Buffer.from(buffer_array).readFloatBE(44) * 10;       //нижний лимит Pe1\npay['P2_min_lim'] = Buffer.from(buffer_array).readFloatBE(48) * 10;       //нижний лимит Pe2\npay['P11_min_lim'] = Buffer.from(buffer_array).readFloatBE(52) * 10;      //нижний лимит Pe11\npay['P12_min_lim'] = Buffer.from(buffer_array).readFloatBE(56) * 10;      //нижний лимит Pe12\n\nflow.set(\"buf_data\", pay);\nmsg.payload = pay;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 300,
+        "wires": [
+            [
+                "4fc9a324ac78f29c"
+            ]
+        ]
+    },
+    {
+        "id": "3f66729507884451",
+        "type": "function",
+        "z": "cf7c93d5a38dd948",
+        "name": "trigger",
+        "func": "var buffer_array = msg.payload.buffer;\nif (buffer_array.length > 0) {\n    msg.payload = 1;\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 340,
+        "wires": [
+            [
+                "cfc7bd450f5933af"
+            ]
+        ]
+    },
+    {
+        "id": "cfc7bd450f5933af",
+        "type": "modbus-getter",
+        "z": "cf7c93d5a38dd948",
+        "name": "Block_AlarmLimitPress_RealVal_4",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "logIOActivities": false,
+        "unitid": "1",
+        "dataType": "HoldingRegister",
+        "adr": "178",
+        "quantity": "26",
+        "server": "9efe29e6f77d85c2",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "enableDeformedMessages": false,
+        "startDelayTime": "",
+        "x": 260,
+        "y": 400,
+        "wires": [
+            [],
+            [
+                "97a7e9a73f532067",
+                "71efcc94a912ba65"
+            ]
+        ]
+    },
+    {
+        "id": "97a7e9a73f532067",
+        "type": "function",
+        "z": "cf7c93d5a38dd948",
+        "name": "data_convert",
+        "func": "var buffer_array = msg.payload.buffer;\nvar changer;\n//var pay = {};\nvar pay = flow.get(\"buf_data\");\nvar size;\nvar i = 0\n\nwhile (i < buffer_array.length) {\n    changer = buffer_array[i];\n    buffer_array[i] = buffer_array[i + 2];\n    buffer_array[i + 2] = changer;\n    changer = buffer_array[i + 1];\n    buffer_array[i + 1] = buffer_array[i + 3];\n    buffer_array[i + 3] = changer;    \n    i += 4;\n}\npay['P1_HH'] = Buffer.from(buffer_array).readFloatBE(0)  * 10;       //аварийная верхняя граница Pe1\npay['P1_H'] =  Buffer.from(buffer_array).readFloatBE(4)  * 10;       //верхнее предупреждение Pe1\npay['P1_L'] =  Buffer.from(buffer_array).readFloatBE(8)  * 10;       //нижнее предупреждение Pe1\npay['P1_LL'] = Buffer.from(buffer_array).readFloatBE(12) * 10;       //аварийная нижняя граница Pe1\n\npay['P2_L'] = Buffer.from(buffer_array).readFloatBE(16) * 10;        //нижнее предупреждение Pe2\npay['P2_LL'] = Buffer.from(buffer_array).readFloatBE(20) * 10;       //аварийная нижняя граница Pe2\n\npay['P3_HH'] = Buffer.from(buffer_array).readFloatBE(24) * 10;       //аварийная верхняя граница Pe3\npay['P3_H'] = Buffer.from(buffer_array).readFloatBE(28) * 10;        //верхнее предупреждение Pe3\npay['P3_L'] = Buffer.from(buffer_array).readFloatBE(32) * 10;        //нижнее предупреждение Pe3\npay['P3_LL'] = Buffer.from(buffer_array).readFloatBE(36) * 10;       //аварийная нижняя граница Pe3\n\npay['P4_L'] = Buffer.from(buffer_array).readFloatBE(40) * 10;        //нижнее предупреждение Pe4\npay['P4_LL'] = Buffer.from(buffer_array).readFloatBE(44) * 10;       //аварийная нижняя граница Pe4\n\nflow.set(\"buf_data\", pay);\nmsg.payload = pay;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 400,
+        "wires": [
+            [
+                "4fc9a324ac78f29c"
+            ]
+        ]
+    },
+    {
+        "id": "71efcc94a912ba65",
+        "type": "function",
+        "z": "cf7c93d5a38dd948",
+        "name": "trigger",
+        "func": "var buffer_array = msg.payload.buffer;\nif (buffer_array.length > 0) {\n    msg.payload = 1;\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 440,
+        "wires": [
+            [
+                "4339df3d6e722b50"
+            ]
+        ]
+    },
+    {
+        "id": "4339df3d6e722b50",
+        "type": "modbus-getter",
+        "z": "cf7c93d5a38dd948",
+        "name": "Block_AlarmLimitTemp_RealVal_5",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "logIOActivities": false,
+        "unitid": "1",
+        "dataType": "HoldingRegister",
+        "adr": "242",
+        "quantity": "20",
+        "server": "9efe29e6f77d85c2",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "enableDeformedMessages": false,
+        "startDelayTime": "",
+        "x": 260,
+        "y": 500,
+        "wires": [
+            [],
+            [
+                "8e173d4d61353a8a",
+                "c4a15f47654d2294"
+            ]
+        ]
+    },
+    {
+        "id": "8e173d4d61353a8a",
+        "type": "function",
+        "z": "cf7c93d5a38dd948",
+        "name": "data_convert",
+        "func": "var buffer_array = msg.payload.buffer;\nvar changer;\n//var pay = {};\nvar pay = flow.get(\"buf_data\");\nvar size;\nvar i = 0;\n\nwhile (i < buffer_array.length) {\n    changer = buffer_array[i];\n    buffer_array[i] = buffer_array[i + 2];\n    buffer_array[i + 2] = changer;\n    changer = buffer_array[i + 1];\n    buffer_array[i + 1] = buffer_array[i + 3];\n    buffer_array[i + 3] = changer;    \n    i += 4;\n}\npay['T1_HH'] = Buffer.from(buffer_array).readFloatBE(0);        //аварийная верхняя граница Te1\npay['T1_H'] =  Buffer.from(buffer_array).readFloatBE(4);        //верхнее предупреждение Te1\npay['T1_L'] =  Buffer.from(buffer_array).readFloatBE(8);        //нижнее предупреждение Te1\npay['T1_LL'] = Buffer.from(buffer_array).readFloatBE(12);       //аварийная нижняя граница Te1\n\npay['T2_L'] = Buffer.from(buffer_array).readFloatBE(16);        //нижнее предупреждение Te2\npay['T2_LL'] = Buffer.from(buffer_array).readFloatBE(20);        //аварийная нижняя граница Te2\n\npay['T11_HH'] = Buffer.from(buffer_array).readFloatBE(24);       //аварийная верхняя граница Te11\npay['T11_H'] =  Buffer.from(buffer_array).readFloatBE(28);       //верхнее предупреждение Te11\n\npay['T12_L'] = Buffer.from(buffer_array).readFloatBE(32);        //нижнее предупреждение Te12\npay['T12_LL'] = Buffer.from(buffer_array).readFloatBE(36);       //аварийная нижняя граница Te12\n\nflow.set(\"buf_data\", pay);\nmsg.payload = pay;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 500,
+        "wires": [
+            [
+                "4fc9a324ac78f29c"
+            ]
+        ]
+    },
+    {
+        "id": "c4a15f47654d2294",
+        "type": "function",
+        "z": "cf7c93d5a38dd948",
+        "name": "trigger",
+        "func": "var buffer_array = msg.payload.buffer;\nif (buffer_array.length > 0) {\n    msg.payload = 1;\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 540,
+        "wires": [
+            [
+                "662cfa9c87538a19"
+            ]
+        ]
+    },
+    {
+        "id": "662cfa9c87538a19",
+        "type": "modbus-getter",
+        "z": "cf7c93d5a38dd948",
+        "name": "Block_StatusBit_Integer_6",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "logIOActivities": false,
+        "unitid": "1",
+        "dataType": "HoldingRegister",
+        "adr": "1",
+        "quantity": "12",
+        "server": "9efe29e6f77d85c2",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "enableDeformedMessages": false,
+        "startDelayTime": "",
+        "x": 240,
+        "y": 600,
+        "wires": [
+            [],
+            [
+                "0bc336fa17cac8c6",
+                "3a6dd6df789ed106"
+            ]
+        ]
+    },
+    {
+        "id": "0bc336fa17cac8c6",
+        "type": "function",
+        "z": "cf7c93d5a38dd948",
+        "name": "data_convert",
+        "func": "var data_array = msg.payload.data;\nvar changer;\n//var pay = {};\nvar pay = flow.get(\"buf_data\");\n\n\n// формирование аварийного звука и отображения на экране\nvar gen_alarm = global.get(\"general_alarm_muslum_K7\");\n\n\npay['Pump4_stat'] = data_array[0] & 0x0001;                 //состояние насос №4 - котловой\npay['Pump4_run'] = (data_array[0] >> 1) & 0x0001;           //команда пуск насос №4 - котловой\npay['Pump4_stp'] = (data_array[0] >> 2) & 0x0001;           //команда стоп насос №4 - котловой\n\npay['Pump5_stat'] = (data_array[0] >> 8) & 0x0001;          //состояние насос №5 - котловой\npay['Pump5_run'] = (data_array[0] >> 9) & 0x0001;           //команда пуск насос №5 - котловой\npay['Pump5_stp'] = (data_array[0] >> 10) & 0x0001;          //команда стоп насос №5 - котловой\n\npay['Pump1_stat'] = data_array[2] & 0x0001;                 //состояние насос №1 - сетевой\npay['Pump1_run'] = (data_array[2] >> 1) & 0x0001;           //команда пуск насос №1 - сетевой\npay['Pump1_stp'] = (data_array[2] >> 2) & 0x0001;           //команда стоп насос №1 - сетевой\n\npay['Pump2_stat'] = (data_array[2] >> 4) & 0x0001;          //состояние насос №2 - сетевой\npay['Pump2_run'] = (data_array[2] >> 5) & 0x0001;           //команда пуск насос №2 - сетевой\npay['Pump2_stp'] = (data_array[2] >> 6) & 0x0001;           //команда стоп насос №2 - сетевой\n\npay['Pump3_stat'] = (data_array[2] >> 8) & 0x0001;          //состояние насос №3 - сетевой\npay['Pump3_run'] = (data_array[2] >> 9) & 0x0001;           //команда пуск насос №3 - сетевой\npay['Pump3_stp'] = (data_array[2] >> 10) & 0x0001;          //команда стоп насос №3 - сетевой\n\npay['Boil1_block']      = data_array[3] & 0x0001;                 //котел №1 - блокировка\npay['Boil1_pow']        = (data_array[3] >> 1) & 0x0001;          //котел №1 - питание\npay['Boil1_run']        = (data_array[3] >> 3) & 0x0001;          //котел №1 - работа\npay['Boil1_cmd_Run_B1'] = (data_array[3] >> 4) & 0x0001;          //котел №1 - вкл. мин. горение\npay['Boil1_cmd_Stp_B1'] = (data_array[3] >> 5) & 0x0001;          //котел №1 - выкл. мин. горение\npay['Boil1_cmd_Run_B2'] = (data_array[3] >> 6) & 0x0001;          //котел №1 - вкл. макс. горение\npay['Boil1_cmd_Stp_B2'] = (data_array[3] >> 7) & 0x0001;          //котел №1 - выкл. макс. горение\n\npay['Boil2_block']      = (data_array[3] >> 8) & 0x0001;          //котел №2 - блокировка\npay['Boil2_pow']        = (data_array[3] >> 9) & 0x0001;          //котел №2 - питание\npay['Boil2_run']        = (data_array[3] >> 11) & 0x0001;         //котел №2 - работа\npay['Boil2_cmd_Run_B1'] = (data_array[3] >> 12) & 0x0001;         //котел №2 - вкл. мин. горение\npay['Boil2_cmd_Stp_B1'] = (data_array[3] >> 13) & 0x0001;         //котел №2 - выкл. мин. горение\npay['Boil2_cmd_Run_B2'] = (data_array[3] >> 14) & 0x0001;         //котел №2 - вкл. макс. горение\npay['Boil2_cmd_Stp_B2'] = (data_array[3] >> 15) & 0x0001;         //котел №2 - выкл. макс. горение\n\npay['Boil1_min_B'] = data_array[5] & 0x0001;                      //котел №1 - минимальное горение\npay['Boil1_max_B'] = (data_array[5] >> 1) & 0x0001;               //котел №1 - максимальное горение\npay['Boil2_min_B'] = (data_array[5] >> 2) & 0x0001;               //котел №2 - минимальное горение\npay['Boil2_max_B'] = (data_array[5] >> 3) & 0x0001;               //котел №2 - максимальное горение\n\npay['TE1_H_act'] = data_array[6] & 0x0001;                        //Tподачи  - порог H активен - сеть\npay['TE3_H_act'] = (data_array[6] >> 1) & 0x0001;                 //Tподачи  - порог H активен - котел\npay['PE1_H_act'] = (data_array[6] >> 2) & 0x0001;                 //Pподачи  - порог H активен\npay['PE3_H_act'] = (data_array[6] >> 3) & 0x0001;                 //Pподачи  - порог H активен\npay['TE1_L_act'] = (data_array[6] >> 4) & 0x0001;                 //Tподачи  - порог L активен - сеть\npay['TE2_L_act'] = (data_array[6] >> 5) & 0x0001;                 //Tобратки - порог L активен - сеть\npay['TE4_L_act'] = (data_array[6] >> 6) & 0x0001;                 //Tобратки - порог L активен - котел\npay['PE1_L_act'] = (data_array[6] >> 7) & 0x0001;                 //Pподачи  - порог L активен\npay['PE2_L_act'] = (data_array[6] >> 8) & 0x0001;                 //Pобратки - порог L активен\npay['PE3_L_act'] = (data_array[6] >> 9) & 0x0001;                 //Pподачи  - порог L активен\npay['PE4_L_act'] = (data_array[6] >>10) & 0x0001;                 //Pобратки - порог L активен\n\npay['T_air_err'] = data_array[8] & 0x0001;                        //Tн.в.     - ошибка датчика\npay['T_inl_err'] = (data_array[8] >> 1) & 0x0001;                 //Tподачи   - ошибка датчика - сеть\npay['T_out_err'] = (data_array[8] >> 2) & 0x0001;                 //Tобратки  - ошибка датчика - сеть\npay['T_inb_err'] = (data_array[8] >> 3) & 0x0001;                 //Tподачи   - ошибка датчика - котел\npay['T_oub_err'] = (data_array[8] >> 4) & 0x0001;                 //Tобратки  - ошибка датчика - котел\npay['P_inl_err'] = (data_array[8] >> 10) & 0x0001;                //Pподачи   - ошибка датчика\npay['P_out_err'] = (data_array[8] >> 11) & 0x0001;                //Робратки  - ошибка датчика\npay['P_inb_err'] = (data_array[8] >> 12) & 0x0001;                //Pподачи   - ошибка датчика\npay['P_oub_err'] = (data_array[8] >> 13) & 0x0001;                //Робратки  - ошибка датчика\n\n//pay['Pump1_err'] = (data_array[9] >> 5) & 0x0001;                //Насос №1 - остановлен, ошибка\n//pay['Pump2_err'] = (data_array[9] >> 6) & 0x0001;                //Насос №2 - остановлен, ошибка\n\npay['gas_alarm']     = (data_array[10] >> 1) & 0x0001;                 //ГАЗ\n\npay['BSU_alarm']    = (data_array[10] >> 3) & 0x0001;                 //Охрана от БСУ\npay['Fire_alarm']   = (data_array[10] >> 4) & 0x0001;                 //Пожар\npay['Batt_alarm']   = (data_array[10] >> 5) & 0x0001;                 //Разряд батареи\npay['P1_max_alarm'] = (data_array[10] >> 6) & 0x0001;                 //Давление в подачи высокое\npay['P3_max_alarm'] = (data_array[10] >> 7) & 0x0001;                 //Давление в подачи высокое\npay['P1_min_alarm'] = (data_array[10] >> 8) & 0x0001;                 //Давление в подачи низкое\npay['P2_min_alarm'] = (data_array[10] >> 9) & 0x0001;                 //Давление в обратки низкое\npay['P3_min_alarm'] = (data_array[10] >> 10) & 0x0001;                //Давление в подачи низкое\npay['P4_min_alarm'] = (data_array[10] >> 11) & 0x0001;                //Давление в обратки низкое\n\npay['T1_max_alarm'] = (data_array[10] >> 12) & 0x0001;                //Т подачи высокое\npay['T3_max_alarm'] = (data_array[10] >> 13) & 0x0001;                //Т подачи котла высокая\npay['T3_min_alarm'] = (data_array[10] >> 14) & 0x0001;                //Т подачи котла низкая\n\npay['Boil1_alarm'] = (data_array[10] >> 15) & 0x0001;                 //Ошибка котел №1\npay['Boil2_alarm'] = data_array[11] & 0x0001;                         //Ошибка котел №2\n\n//pay['T1_min_alarm'] = 1; \npay['T1_min_alarm'] = (data_array[11] >> 1) & 0x0001;                 //Т подачи низкая\npay['Boil1_On_err'] = (data_array[11] >> 2) & 0x0001;                 //Ошибка включения котла №1\npay['Boil2_On_err'] = (data_array[11] >> 3) & 0x0001;                 //Ошибка включения котла №2\npay['T2_min_alarm'] = (data_array[11] >> 4) & 0x0001;                 //Т обратки низкая\npay['T4_min_alarm'] = (data_array[11] >> 5) & 0x0001;                 //Т обратки котла низкая\n\nflow.set(\"buf_data\", pay);\nmsg.payload = pay;\n\nif ((msg.payload.BSU_alarm == 1) || (msg.payload.Fire_alarm == 1) || (msg.payload.gas_alarm == 1)\n    || (msg.payload.P1_max_alarm == 1) || (msg.payload.P1_min_alarm == 1)\n    || (msg.payload.P3_max_alarm == 1) || (msg.payload.P3_min_alarm == 1)\n    || (msg.payload.P2_min_alarm == 1) || (msg.payload.P4_min_alarm == 1)\n    || (msg.payload.T1_max_alarm == 1) || (msg.payload.T1_min_alarm == 1)\n    || (msg.payload.T3_max_alarm == 1) || (msg.payload.T3_min_alarm == 1)\n    || (msg.payload.T2_min_alarm == 1) || (msg.payload.T4_min_alarm == 1)\n    || (msg.payload.Boil1_alarm == 1) || (msg.payload.Boil2_alarm == 1)) {\n        msg.payload.gen_alarm = 1;\n        global.set(\"general_alarm_muslum_K7\", 1);\n        global.set('muslum_K7_global_state', 'НЕИСПРАВНОСТЬ');\n}\nelse {\n    msg.payload.gen_alarm = 0;\n    global.set(\"general_alarm_muslum_K7\", 0);\n    global.set('muslum_K7_global_state', 'НОРМА');\n}\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 600,
+        "wires": [
+            [
+                "4fc9a324ac78f29c"
+            ]
+        ]
+    },
+    {
+        "id": "3a6dd6df789ed106",
+        "type": "function",
+        "z": "cf7c93d5a38dd948",
+        "name": "trigger",
+        "func": "var buffer_array = msg.payload.buffer;\nif (buffer_array.length > 0) {\n    msg.payload = 1;\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 640,
+        "wires": [
+            [
+                "9d1b9bcebabbdcec"
+            ]
+        ]
+    },
+    {
+        "id": "9d1b9bcebabbdcec",
+        "type": "modbus-getter",
+        "z": "cf7c93d5a38dd948",
+        "name": "Block_Control_Integer_7",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "logIOActivities": false,
+        "unitid": "1",
+        "dataType": "HoldingRegister",
+        "adr": "19",
+        "quantity": "18",
+        "server": "9efe29e6f77d85c2",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "enableDeformedMessages": false,
+        "startDelayTime": "",
+        "x": 230,
+        "y": 700,
+        "wires": [
+            [],
+            [
+                "a059f8542c297951"
+            ]
+        ]
+    },
+    {
+        "id": "a059f8542c297951",
+        "type": "function",
+        "z": "cf7c93d5a38dd948",
+        "name": "data_convert",
+        "func": "var data_array = msg.payload.data;\nvar changer;\n//var pay = {};\nvar pay = flow.get(\"buf_data\");\n\n\npay['Battery_good'] = data_array[0];                 //батарея исправна = 0, авария = 1\npay['Battery_low']  = data_array[1];                 //батарея разряжена = 1, норма = 0\n\npay['gas_status']   = data_array[3];                 //газ норма = 0, тревога = 1\n\npay['Secure_stat']  = data_array[5];                 //охрана БСУ = 0, тревога = 1\npay['Fire_stat']    = data_array[6];                 //пожар = 0, тревога = 1\npay['Queue_boil1']  = data_array[7];                 //очередность включения котла №1: 1,2,3\npay['Queue_boil2']  = data_array[8];                 //очередность включения котла №2: 1,2,3\n\npay['Main_pump']    = data_array[12];                //основной насос в сети: 1 или 2\n\npay['Mode_ctrl']    = data_array[15];                //режим управления котлами: 1- дист., 0 - местное\npay['Mode_boil']    = data_array[16];                //режим работы котельной: 0 - ручной, 1 - авто\npay['Status_str']   = data_array[17];                //Строка состояния: 0 - исх., 1 - запуск котла, 2 - останов котла, 3 - работа\npay['Time_Rqst']    = Date.now();                    //Время последнего опроса\nglobal.set('date_rqst_muslum_K7', Date.now());\n\nflow.set(\"startMnemoFl\", 1);\nflow.set(\"buf_data\", pay);\nmsg.payload = pay;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 700,
+        "wires": [
+            [
+                "4fc9a324ac78f29c"
+            ]
+        ]
+    },
+    {
+        "id": "4a905f95cad46a90",
+        "type": "comment",
+        "z": "cf7c93d5a38dd948",
+        "name": "Глобальная переменная!",
+        "info": "",
+        "x": 610,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "aef1623f341ae774",
+        "type": "comment",
+        "z": "cf7c93d5a38dd948",
+        "name": "Глобальная переменная!",
+        "info": "",
+        "x": 610,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "4fc9a324ac78f29c",
+        "type": "join",
+        "z": "cf7c93d5a38dd948",
+        "name": "joinData",
+        "mode": "custom",
+        "build": "merged",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "useparts": false,
+        "accumulate": false,
+        "timeout": "",
+        "count": "",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 820,
+        "y": 300,
+        "wires": [
+            [
+                "8c33f49f8b6d7ba5"
+            ]
+        ]
+    },
+    {
+        "id": "8c33f49f8b6d7ba5",
+        "type": "function",
+        "z": "cf7c93d5a38dd948",
+        "name": "collect-device-state",
+        "func": "const { storeDeviceStateToCacheAsync } = global.get('helpers');\n\nconst payload = msg.payload;\n\nconst real = (value) => (value === null || value === undefined ? null : Number(value.toPrecision(7)));\nconst flag = (value) => (value === null || value === undefined ? null : Boolean(value));\n\nconst deviceState = {\n    \n\n    // Timestamp\n    timestamp: Date.now(),\n};\n\n// const DEVICE_CODE = 'muslumovo-7-boiler-room';\n// const flowUid = node.path.split('/').find(_ => true);\n// await storeDeviceStateToCacheAsync(global, DEVICE_CODE, deviceState, flowUid);\nmsg.deviceState = deviceState;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1050,
+        "y": 300,
+        "wires": [
+            [
+                "fbf9d6fa116494d8"
+            ]
+        ]
+    },
+    {
+        "id": "fbf9d6fa116494d8",
+        "type": "debug",
+        "z": "cf7c93d5a38dd948",
+        "name": "debug 15",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1230,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "c328868632272e4b",
+        "type": "modbus-read",
+        "z": "364ac3dfdbd50871",
+        "d": true,
+        "name": "Block_RealVal_1",
+        "topic": "",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "1",
+        "dataType": "HoldingRegister",
+        "adr": "50",
+        "quantity": "42",
+        "rate": "10",
+        "rateUnit": "s",
+        "delayOnStart": false,
+        "enableDeformedMessages": false,
+        "startDelayTime": "",
+        "server": "f8db66b95f4d24ed",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "x": 140,
+        "y": 80,
+        "wires": [
+            [],
+            [
+                "6ac4cd15e6240611",
+                "204358f07136ca59"
+            ]
+        ]
+    },
+    {
+        "id": "6ac4cd15e6240611",
+        "type": "function",
+        "z": "364ac3dfdbd50871",
+        "name": "data_convert",
+        "func": "var buffer_array = msg.payload.buffer;\nvar changer;\n//var pay = {};\nvar pay = flow.get(\"buf_data\");\nvar size;\nvar i = 0\nwhile (i < buffer_array.length) {\n    changer = buffer_array[i];\n    buffer_array[i] = buffer_array[i + 2];\n    buffer_array[i + 2] = changer;\n    changer = buffer_array[i + 1];\n    buffer_array[i + 1] = buffer_array[i + 3];\n    buffer_array[i + 3] = changer;    \n    i += 4;\n}\npay['tset']     = Buffer.from(buffer_array).readFloatBE(0);         //уставка температуры в сеть\npay['DdZC']     = Buffer.from(buffer_array).readFloatBE(4);         //Настройка. Зона нечувствительности регулятора каскада (± от значения «Тек. Зад. ТЕ_К »).\npay['tcor']     = Buffer.from(buffer_array).readFloatBE(8);         //коррекция значения температуры в сеть\npay['t1_n']     = Buffer.from(buffer_array).readFloatBE(12);        //задание температуры в сеть по нар.возд.\npay['tnet']     = Buffer.from(buffer_array).readFloatBE(16);        //задание температуры в сеть\npay['tmin']     = Buffer.from(buffer_array).readFloatBE(20);        //Ограничение задания минимальный предел\npay['tmax']     = Buffer.from(buffer_array).readFloatBE(24);        //Ограничение задания максимальный предел\npay['ITmin']    = Buffer.from(buffer_array).readFloatBE(28);        //Настройка. Минимальный прирост температуры прямой воды в котловом контуре в течение 1 мин. В случае прироста температуры в течение 1 мин ниже значения уставки «Мин. прирост Т в мин.» инициируется процесс запуска следующего котла в каскаде.\npay['IncT']     = Buffer.from(buffer_array).readFloatBE(32);        //Настройка. Текущий прирост температуры прямой воды в котловом контуре в течение 1 мин.\npay['KpB1']     = Buffer.from(buffer_array).readFloatBE(36);        //Настройка. ПИД-регулятор котла К1.1. Коэффициент пропорциональности \npay['TiB1']     = Buffer.from(buffer_array).readFloatBE(40);        //Настройка. ПИД-регулятор котла К1.1. Время интегрирования\npay['DdZ1']     = Buffer.from(buffer_array).readFloatBE(44);        //Настройка. ПИД-регулятор котла К1.1. Зона нечувствительности\npay['MinImp1']  = Buffer.from(buffer_array).readFloatBE(48);        //Настройка. ПИД-регулятор котла К1.1. Минимальное время импульса\npay['MinPse1']  = Buffer.from(buffer_array).readFloatBE(52);        //Настройка. ПИД-регулятор котла К1.1. Минимальное время паузы\npay['TGoAct1']  = Buffer.from(buffer_array).readFloatBE(56);        //Настройка. ПИД-регулятор котла К1.1. Время хода привода\npay['KpB2']     = Buffer.from(buffer_array).readFloatBE(60);        //Настройка. ПИД-регулятор котла К1.2. Коэффициент пропорциональности \npay['TiB2']     = Buffer.from(buffer_array).readFloatBE(64);        //Настройка. ПИД-регулятор котла К1.2. Время интегрирования\npay['DdZ2']     = Buffer.from(buffer_array).readFloatBE(68);        //Настройка. ПИД-регулятор котла К1.2. Зона нечувствительности\npay['MinImp2']  = Buffer.from(buffer_array).readFloatBE(72);        //Настройка. ПИД-регулятор котла К1.2. Минимальное время импульса\npay['MinPse2']  = Buffer.from(buffer_array).readFloatBE(76);        //Настройка. ПИД-регулятор котла К1.2. Минимальное время паузы\npay['TGoAct2']  = Buffer.from(buffer_array).readFloatBE(80);        //Настройка. ПИД-регулятор котла К1.2. Время хода привода\n\nflow.set(\"buf_data\", pay);\n\nmsg.payload = pay;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "// Добавленный здесь код будет исполняться\n// однократно при развертывании узла.\nflow.set(\"buf_data\", {});",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 80,
+        "wires": [
+            [
+                "fdbaa2be08366c74"
+            ]
+        ]
+    },
+    {
+        "id": "160aa99f4e5ddbbf",
+        "type": "function",
+        "z": "364ac3dfdbd50871",
+        "name": "data_convert",
+        "func": "var buffer_array = msg.payload.buffer;\nvar changer;\n//var pay = {};\nvar pay = flow.get(\"buf_data\");\nvar size;\nvar i = 0\nwhile (i < buffer_array.length) {\n    changer = buffer_array[i];\n    buffer_array[i] = buffer_array[i + 2];\n    buffer_array[i + 2] = changer;\n    changer = buffer_array[i + 1];\n    buffer_array[i + 1] = buffer_array[i + 3];\n    buffer_array[i + 3] = changer;    \n    i += 4;\n}\npay['t_inb1'] = Buffer.from(buffer_array).readFloatBE(0);        //Температура подачи котла 1\npay['t_inb2'] = Buffer.from(buffer_array).readFloatBE(4);        //Температура обратки котла 2\npay['t_net']  = Buffer.from(buffer_array).readFloatBE(8);        //Температура подачи в сеть\npay['t_out1'] = Buffer.from(buffer_array).readFloatBE(12);       //Температура обратки контура 1\npay['t_out2'] = Buffer.from(buffer_array).readFloatBE(16);       //Температура обратки контура 2\npay['t_out']  = Buffer.from(buffer_array).readFloatBE(20);       //Температура обратки после сетевых насосов на вход котлов\npay['t_air']  = Buffer.from(buffer_array).readFloatBE(24);       //Температура нар.возд.\n\npay['P_inl']  = Buffer.from(buffer_array).readFloatBE(40) * 10;  //давление подачи в сеть\npay['P_out1'] = Buffer.from(buffer_array).readFloatBE(44) * 10;  //давление обратки после сетевых насосов перед котлами\npay['P_out2'] = Buffer.from(buffer_array).readFloatBE(48) * 10;  //давление обратки перед сетевыми насосами\n\nflow.set(\"buf_data\", pay);\nmsg.payload = pay;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 180,
+        "wires": [
+            [
+                "fdbaa2be08366c74"
+            ]
+        ]
+    },
+    {
+        "id": "c407d7edeb8807d8",
+        "type": "modbus-getter",
+        "z": "364ac3dfdbd50871",
+        "name": "Block_Analog_RealVal_2",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "logIOActivities": false,
+        "unitid": "1",
+        "dataType": "HoldingRegister",
+        "adr": "92",
+        "quantity": "26",
+        "server": "f8db66b95f4d24ed",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 170,
+        "y": 180,
+        "wires": [
+            [],
+            [
+                "160aa99f4e5ddbbf",
+                "930b007760b8a95a"
+            ]
+        ]
+    },
+    {
+        "id": "204358f07136ca59",
+        "type": "function",
+        "z": "364ac3dfdbd50871",
+        "name": "trigger",
+        "func": "var buffer_array = msg.payload.buffer;\nif (buffer_array.length > 0) {\n    msg.payload = 1;\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 120,
+        "wires": [
+            [
+                "c407d7edeb8807d8"
+            ]
+        ]
+    },
+    {
+        "id": "930b007760b8a95a",
+        "type": "function",
+        "z": "364ac3dfdbd50871",
+        "name": "trigger",
+        "func": "var buffer_array = msg.payload.buffer;\nif (buffer_array.length > 0) {\n    msg.payload = 1;\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 220,
+        "wires": [
+            [
+                "27c24a37bd01ba5d"
+            ]
+        ]
+    },
+    {
+        "id": "27c24a37bd01ba5d",
+        "type": "modbus-getter",
+        "z": "364ac3dfdbd50871",
+        "name": "Block_LimitPress_RealVal_3",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "logIOActivities": false,
+        "unitid": "1",
+        "dataType": "HoldingRegister",
+        "adr": "134",
+        "quantity": "28",
+        "server": "f8db66b95f4d24ed",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 180,
+        "y": 280,
+        "wires": [
+            [],
+            [
+                "0e539f93bd63bdd5",
+                "90b33518faf9629b"
+            ]
+        ]
+    },
+    {
+        "id": "0e539f93bd63bdd5",
+        "type": "function",
+        "z": "364ac3dfdbd50871",
+        "name": "data_convert",
+        "func": "var buffer_array = msg.payload.buffer;\nvar changer;\n//var pay = {};\nvar pay = flow.get(\"buf_data\");\nvar size;\nvar i = 0\nwhile (i < buffer_array.length) {\n    changer = buffer_array[i];\n    buffer_array[i] = buffer_array[i + 2];\n    buffer_array[i + 2] = changer;\n    changer = buffer_array[i + 1];\n    buffer_array[i + 1] = buffer_array[i + 3];\n    buffer_array[i + 3] = changer;    \n    i += 4;\n}\npay['P1_max_lim'] = Buffer.from(buffer_array).readFloatBE(0)  * 10;       //верхний лимит Pe1\npay['P2_max_lim'] = Buffer.from(buffer_array).readFloatBE(4) * 10;        //верхний лимит Pe2\npay['P3_max_lim'] = Buffer.from(buffer_array).readFloatBE(8) * 10;        //верхний лимит Pe3\n\npay['P1_min_lim'] = Buffer.from(buffer_array).readFloatBE(44) * 10;       //нижний лимит Pe1\npay['P2_min_lim'] = Buffer.from(buffer_array).readFloatBE(48) * 10;       //нижний лимит Pe2\npay['P3_min_lim'] = Buffer.from(buffer_array).readFloatBE(52) * 10;       //нижний лимит Pe3\n\nflow.set(\"buf_data\", pay);\nmsg.payload = pay;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 280,
+        "wires": [
+            [
+                "fdbaa2be08366c74"
+            ]
+        ]
+    },
+    {
+        "id": "90b33518faf9629b",
+        "type": "function",
+        "z": "364ac3dfdbd50871",
+        "name": "trigger",
+        "func": "var buffer_array = msg.payload.buffer;\nif (buffer_array.length > 0) {\n    msg.payload = 1;\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 320,
+        "wires": [
+            [
+                "cf9b23db7fcbde67"
+            ]
+        ]
+    },
+    {
+        "id": "cf9b23db7fcbde67",
+        "type": "modbus-getter",
+        "z": "364ac3dfdbd50871",
+        "name": "Block_AlarmLimitPress_RealVal_4",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "logIOActivities": false,
+        "unitid": "1",
+        "dataType": "HoldingRegister",
+        "adr": "178",
+        "quantity": "16",
+        "server": "f8db66b95f4d24ed",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 200,
+        "y": 380,
+        "wires": [
+            [],
+            [
+                "43839572d9bffe80",
+                "a88c5d0ade62b954"
+            ]
+        ]
+    },
+    {
+        "id": "43839572d9bffe80",
+        "type": "function",
+        "z": "364ac3dfdbd50871",
+        "name": "data_convert",
+        "func": "var buffer_array = msg.payload.buffer;\nvar changer;\n//var pay = {};\nvar pay = flow.get(\"buf_data\");\nvar size;\nvar i = 0\nwhile (i < buffer_array.length) {\n    changer = buffer_array[i];\n    buffer_array[i] = buffer_array[i + 2];\n    buffer_array[i + 2] = changer;\n    changer = buffer_array[i + 1];\n    buffer_array[i + 1] = buffer_array[i + 3];\n    buffer_array[i + 3] = changer;    \n    i += 4;\n}\npay['P1_HH'] = Buffer.from(buffer_array).readFloatBE(0)  * 10;       //аварийная верхняя граница Pe1\npay['P1_H'] =  Buffer.from(buffer_array).readFloatBE(4)  * 10;       //верхнее предупреждение Pe1\npay['P1_L'] =  Buffer.from(buffer_array).readFloatBE(8)  * 10;       //нижнее предупреждение Pe1\npay['P1_LL'] = Buffer.from(buffer_array).readFloatBE(12) * 10;       //аварийная нижняя граница Pe1\n\npay['P2_L'] =  Buffer.from(buffer_array).readFloatBE(16) * 10;       //нижнее предупреждение Pe2\npay['P2_LL'] = Buffer.from(buffer_array).readFloatBE(20) * 10;       //аварийная нижняя граница Pe2\npay['P3_L'] =  Buffer.from(buffer_array).readFloatBE(24) * 10;       //нижнее предупреждение Pe3\npay['P3_LL'] = Buffer.from(buffer_array).readFloatBE(28) * 10;       //аварийная нижняя граница Pe3\n\nflow.set(\"buf_data\", pay);\nmsg.payload = pay;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 380,
+        "wires": [
+            [
+                "fdbaa2be08366c74"
+            ]
+        ]
+    },
+    {
+        "id": "a88c5d0ade62b954",
+        "type": "function",
+        "z": "364ac3dfdbd50871",
+        "name": "trigger",
+        "func": "var buffer_array = msg.payload.buffer;\nif (buffer_array.length > 0) {\n    msg.payload = 1;\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 420,
+        "wires": [
+            [
+                "1a9128b6d342cc62"
+            ]
+        ]
+    },
+    {
+        "id": "1a9128b6d342cc62",
+        "type": "modbus-getter",
+        "z": "364ac3dfdbd50871",
+        "name": "Block_AlarmLimitTemp_RealVal_5",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "logIOActivities": false,
+        "unitid": "1",
+        "dataType": "HoldingRegister",
+        "adr": "242",
+        "quantity": "26",
+        "server": "f8db66b95f4d24ed",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 200,
+        "y": 480,
+        "wires": [
+            [],
+            [
+                "b0b164de83b312d1",
+                "b4d31a1dc2132419"
+            ]
+        ]
+    },
+    {
+        "id": "b0b164de83b312d1",
+        "type": "function",
+        "z": "364ac3dfdbd50871",
+        "name": "data_convert",
+        "func": "var buffer_array = msg.payload.buffer;\nvar changer;\n//var pay = {};\nvar pay = flow.get(\"buf_data\");\nvar size;\nvar i = 0\nwhile (i < buffer_array.length) {\n    changer = buffer_array[i];\n    buffer_array[i] = buffer_array[i + 2];\n    buffer_array[i + 2] = changer;\n    changer = buffer_array[i + 1];\n    buffer_array[i + 1] = buffer_array[i + 3];\n    buffer_array[i + 3] = changer;    \n    i += 4;\n}\npay['T1_HH'] = Buffer.from(buffer_array).readFloatBE(0);        //аварийная верхняя граница Te1\npay['T1_H']  = Buffer.from(buffer_array).readFloatBE(4);        //верхнее предупреждение Te1\npay['T2_HH'] = Buffer.from(buffer_array).readFloatBE(8);        //аварийная верхняя граница Te2\npay['T2_H']  = Buffer.from(buffer_array).readFloatBE(12);       //верхнее предупреждение Te2\npay['T3_HH'] = Buffer.from(buffer_array).readFloatBE(16);       //аварийная верхняя граница Te3\npay['T3_H']  = Buffer.from(buffer_array).readFloatBE(20);       //верхнее предупреждение Te3\npay['T3_L']  = Buffer.from(buffer_array).readFloatBE(24);       //нижнее предупреждение Te3\npay['T3_LL'] = Buffer.from(buffer_array).readFloatBE(28);       //аварийная нижняя граница Te3\npay['T4_L'] =  Buffer.from(buffer_array).readFloatBE(32);       //нижнее предупреждение Te4\npay['T4_LL'] = Buffer.from(buffer_array).readFloatBE(36);       //аварийная нижняя граница Te4\npay['T5_L']  = Buffer.from(buffer_array).readFloatBE(40);       //нижнее предупреждение Te5\npay['T5_LL'] = Buffer.from(buffer_array).readFloatBE(44);       //аварийная нижняя граница Te5\n\nflow.set(\"buf_data\", pay);\nmsg.payload = pay;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 480,
+        "wires": [
+            [
+                "fdbaa2be08366c74"
+            ]
+        ]
+    },
+    {
+        "id": "b4d31a1dc2132419",
+        "type": "function",
+        "z": "364ac3dfdbd50871",
+        "name": "trigger",
+        "func": "var buffer_array = msg.payload.buffer;\nif (buffer_array.length > 0) {\n    msg.payload = 1;\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 520,
+        "wires": [
+            [
+                "e2f0df1c77324a06"
+            ]
+        ]
+    },
+    {
+        "id": "e2f0df1c77324a06",
+        "type": "modbus-getter",
+        "z": "364ac3dfdbd50871",
+        "name": "Block_StatusBit_Integer_6",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "logIOActivities": false,
+        "unitid": "1",
+        "dataType": "HoldingRegister",
+        "adr": "0",
+        "quantity": "8",
+        "server": "f8db66b95f4d24ed",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 180,
+        "y": 580,
+        "wires": [
+            [],
+            [
+                "24d782ca3bee2806",
+                "b29d6f0a3fe232ed"
+            ]
+        ]
+    },
+    {
+        "id": "24d782ca3bee2806",
+        "type": "function",
+        "z": "364ac3dfdbd50871",
+        "name": "data_convert",
+        "func": "var data_array = msg.payload.data;\nvar changer;\n//var pay = {};\nvar pay = flow.get(\"buf_data\");\n\n// формирование аварийного звука и отображения на экране\nvar gen_alarm = global.get(\"general_alarm_muslum_K9\");\n\npay['B1Up_cmd_man']  = data_array[0] & 0x0001;                 //Котел К1.1. Команда Больше в ручном режиме\npay['B1Dn_cmd_man']  = (data_array[0] >> 1) & 0x0001;          //Котел К1.1. Команда Меньше в ручном режиме\npay['B1Rst_cmd_man'] = (data_array[0] >> 2) & 0x0001;          //Котел К1.1. Сброс команды Больше/Меньше в ручном режиме\npay['B1Up_cmd_auto'] = (data_array[0] >> 3) & 0x0001;          //Котел К1.1. Команда Больше\npay['B1Dn_cmd_auto'] = (data_array[0] >> 4) & 0x0001;          //Котел К1.1. Команда Меньше\n\npay['B2Up_cmd_man']  = (data_array[0] >> 8) & 0x0001;          //Котел К1.1. Команда Больше в ручном режиме\npay['B2Dn_cmd_man']  = (data_array[0] >> 9) & 0x0001;          //Котел К1.1. Команда Меньше в ручном режиме\npay['B2Rst_cmd_man'] = (data_array[0] >> 10) & 0x0001;         //Котел К1.1. Сброс команды Больше/Меньше в ручном режиме\npay['B2Up_cmd_auto'] = (data_array[0] >> 11) & 0x0001;         //Котел К1.1. Команда Больше\npay['B2Dn_cmd_auto'] = (data_array[0] >> 12) & 0x0001;         //Котел К1.1. Команда Меньше\n\npay['Pump1_stat'] = data_array[3] & 0x0001;                    //состояние насос №1\npay['Pump2_stat'] = (data_array[3] >> 4) & 0x0001;             //состояние насос №2\npay['Pump3_stat'] = (data_array[3] >> 8) & 0x0001;             //состояние насос №3\n\npay['Boil1_block']      = data_array[4] & 0x0001;                 //котел №1 - блокировка\npay['Boil1_run']        = (data_array[4] >> 1) & 0x0001;          //котел №1 - работа\npay['Boil1_norm']       = (data_array[4] >> 2) & 0x0001;          //котел №1 - авария\n\npay['Boil1_cmd_Run']    = (data_array[4] >> 4) & 0x0001;          //котел №1 - команда включить в ручном режиме\npay['Boil1_cmd_Stp']    = (data_array[4] >> 5) & 0x0001;          //котел №1 - команда выключить в ручном режиме\n\npay['Boil2_block']      = (data_array[4] >> 8) & 0x0001;          //котел №2 - блокировка\npay['Boil2_run']        = (data_array[4] >> 9) & 0x0001;          //котел №2 - работа\npay['Boil2_norm']       = (data_array[4] >> 10) & 0x0001;         //котел №2 - авария\n\npay['Boil2_cmd_Run']    = (data_array[4] >> 12) & 0x0001;         //котел №2 - команда включить в ручном режиме\npay['Boil2_cmd_Stp']    = (data_array[4] >> 13) & 0x0001;         //котел №2 - команда выключить в ручном режиме\n\npay['GasValve']         = (data_array[5] >> 1) & 0x0001;          //Состояние газового клапана. 1 - закрыт, 0 - открыт\n\npay['TE1_H_act'] = (data_array[6] >> 15) & 0x0001;                //T1  - порог H активен\npay['TE2_H_act'] = data_array[7] & 0x0001;                        //T2  - порог H активен\npay['TE3_H_act'] = (data_array[7] >> 1) & 0x0001;                 //T3  - порог H активен\npay['PE1_H_act'] = (data_array[7] >> 2) & 0x0001;                 //P1 - порог H активен\npay['TE3_L_act'] = (data_array[7] >> 3) & 0x0001;                 //T3  - порог L активен\npay['TE4_L_act'] = (data_array[7] >> 4) & 0x0001;                 //T4 - порог L активен\npay['TE5_L_act'] = (data_array[7] >> 5) & 0x0001;                 //T5 - порог L активен\npay['PE1_L_act'] = (data_array[7] >> 6) & 0x0001;                 //P1  - порог L активен\npay['PE2_L_act'] = (data_array[7] >> 7) & 0x0001;                 //P2 - порог L активен\npay['PE3_L_act'] = (data_array[7] >> 8) & 0x0001;                 //P3 - порог L активен\n\npay['T1_err'] = data_array[9] & 0x0001;                        //T1     - ошибка датчика\npay['T2_err'] = (data_array[9] >> 1) & 0x0001;                 //T2     - ошибка датчика\npay['T3_err'] = (data_array[9] >> 2) & 0x0001;                 //T3     - ошибка датчика\npay['T4_err'] = (data_array[9] >> 3) & 0x0001;                 //T4     - ошибка датчика\npay['T5_err'] = (data_array[9] >> 4) & 0x0001;                 //T5     - ошибка датчика\npay['T6_err'] = (data_array[9] >> 5) & 0x0001;                 //T6     - ошибка датчика\npay['T_air_err'] = (data_array[9] >> 6) & 0x0001;              //Tн.в.  - ошибка датчика\n\npay['P1_err'] = (data_array[9] >> 10) & 0x0001;                //P1  - ошибка датчика\npay['P2_err'] = (data_array[9] >> 11) & 0x0001;                //Р2  - ошибка датчика\npay['P3_err'] = (data_array[9] >> 12) & 0x0001;                //Р3  - ошибка датчика\n\npay['Gas_alarm']    = (data_array[11] >> 1) & 0x0001;                 //GAS\npay['BSU_alarm']    = (data_array[11] >> 3) & 0x0001;                 //Охрана от БСУ\npay['Fire_alarm']   = (data_array[11] >> 4) & 0x0001;                 //Пожар\npay['Batt_alarm']   = (data_array[11] >> 5) & 0x0001;                 //Разряд батареи\npay['P1_max_alarm'] = (data_array[11] >> 6) & 0x0001;                 //Давление P1 в подачи высокое\npay['P2_min_alarm'] = (data_array[11] >> 7) & 0x0001;                 //Давление P2 минимальное\npay['P1_min_alarm'] = (data_array[11] >> 8) & 0x0001;                 //Давление P1 в подачи низкое\npay['P3_min_alarm'] = (data_array[11] >> 9) & 0x0001;                 //Давление P3 в обратке низкое\n\npay['T1_K1_max_alarm'] = (data_array[11] >> 10) & 0x0001;             //Т1 подачи контура 1 высокая\npay['T2_K2_max_alarm'] = (data_array[11] >> 11) & 0x0001;             //Т2 подачи контура 1 высокая\npay['T3_max_alarm']    = (data_array[11] >> 12) & 0x0001;             //Т3 подачи  высокая\npay['T3_min_alarm']    = (data_array[11] >> 13) & 0x0001;             //Т3 подачи низкая\npay['T4_min_alarm']    = (data_array[11] >> 14) & 0x0001;             //Т4 обратки низкая\n\npay['Boil1_alarm']     = (data_array[11] >> 15) & 0x0001;             //Ошибка котел №1\npay['Boil2_alarm']     = data_array[12] & 0x0001;                     //Ошибка котел №2\npay['T5_min_alarm']    = (data_array[12] >> 1) & 0x0001;              //Т5 обратки2 низкая\n\npay['Boil1_On_err'] = (data_array[12] >> 2) & 0x0001;                 //Ошибка включения котла №1\npay['Boil2_On_err'] = (data_array[12] >> 3) & 0x0001;                 //Ошибка включения котла №2\n\nflow.set(\"buf_data\", pay);\nmsg.payload = pay;\n\nif ((msg.payload.BSU_alarm == 1) || (msg.payload.Fire_alarm == 1) || (msg.payload.Gas_alarm == 1)\n    || (msg.payload.P1_max_alarm == 1)    || (msg.payload.P1_min_alarm == 1)\n    || (msg.payload.P3_min_alarm == 1)    || (msg.payload.P2_min_alarm == 1)\n    || (msg.payload.T1_K1_max_alarm == 1) || (msg.payload.T1_K2_max_alarm == 1)\n    || (msg.payload.T3_max_alarm == 1)    || (msg.payload.T3_min_alarm == 1)\n    || (msg.payload.T4_min_alarm == 1)    || (msg.payload.T5_min_alarm == 1)\n    || (msg.payload.Boil1_alarm == 1)     || (msg.payload.Boil2_alarm == 1)\n    || (msg.payload.Boil1_On_err == 1)    || (msg.payload.Boil2_On_err == 1)) {\n    msg.payload.gen_alarm = 1;\n    global.set(\"general_alarm_muslum_K9\", 1);\n    global.set('muslum_K9_global_state', 'НЕИСПРАВНОСТЬ');\n}\nelse {\n    msg.payload.gen_alarm = 0;\n    global.set(\"general_alarm_muslum_K9\", 0);\n    global.set('muslum_K9_global_state', 'НОРМА');\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 580,
+        "wires": [
+            [
+                "fdbaa2be08366c74"
+            ]
+        ]
+    },
+    {
+        "id": "b29d6f0a3fe232ed",
+        "type": "function",
+        "z": "364ac3dfdbd50871",
+        "name": "trigger",
+        "func": "var buffer_array = msg.payload.buffer;\nif (buffer_array.length > 0) {\n    msg.payload = 1;\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 620,
+        "wires": [
+            [
+                "034a31b963cc574f"
+            ]
+        ]
+    },
+    {
+        "id": "034a31b963cc574f",
+        "type": "modbus-getter",
+        "z": "364ac3dfdbd50871",
+        "name": "Block_Control_Integer_7",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "logIOActivities": false,
+        "unitid": "1",
+        "dataType": "HoldingRegister",
+        "adr": "19",
+        "quantity": "18",
+        "server": "f8db66b95f4d24ed",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 170,
+        "y": 680,
+        "wires": [
+            [],
+            [
+                "19c317f02be6f65f"
+            ]
+        ]
+    },
+    {
+        "id": "19c317f02be6f65f",
+        "type": "function",
+        "z": "364ac3dfdbd50871",
+        "name": "data_convert",
+        "func": "var data_array = msg.payload.data;\nvar changer;\nvar pay = flow.get(\"buf_data\");\n\npay['Battery_good'] = data_array[0];                 //батарея исправна = 0, авария = 1\npay['Battery_low']  = data_array[1];                 //батарея разряжена = 1, норма = 0\npay['Gas_status']   = data_array[3];                 //газ СО = 0, тревога = 1\npay['Secure_stat']  = data_array[5];                 //охрана БСУ = 0, тревога = 1\npay['Fire_stat']    = data_array[6];                 //пожар = 0, тревога = 1\npay['Queue_boil']   = data_array[7];                 //основной котел: 1,2,3\n\npay['Mode_ctrl']    = data_array[15];                //режим управления котлами: 1- дист., 0 - местное\npay['Mode_boil']    = data_array[16];                //режим работы котельной: 0 - ручной, 1 - авто\npay['Status_str']   = data_array[17];                //Строка состояния: 0 - исх., 1 - запуск котла, 2 - останов котла, 3 - работа\npay['Time_Rqst']    = Date.now();                    //Время последнего опроса\n\nflow.set(\"startMnemoFl\", 1);\n\nflow.set(\"buf_data\", pay);\n\nmsg.payload = pay;\nmsg.complete = true;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 680,
+        "wires": [
+            [
+                "fdbaa2be08366c74"
+            ]
+        ]
+    },
+    {
+        "id": "fdbaa2be08366c74",
+        "type": "join",
+        "z": "364ac3dfdbd50871",
+        "name": "joinData",
+        "mode": "custom",
+        "build": "merged",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "useparts": false,
+        "accumulate": false,
+        "timeout": "",
+        "count": "",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 880,
+        "y": 300,
+        "wires": [
+            [
+                "a8932ca25e899bb9"
+            ]
+        ]
+    },
+    {
+        "id": "a8932ca25e899bb9",
+        "type": "function",
+        "z": "364ac3dfdbd50871",
+        "name": "collect-device-state",
+        "func": "const { storeDeviceStateToCacheAsync } = global.get('helpers');\n\nconst payload = msg.payload;\n\nconst real = (value) => (value === null || value === undefined ? null : Number(value.toPrecision(7)));\nconst flag = (value) => (value === null || value === undefined ? null : Boolean(value));\n\nconst deviceState = {\n    \n\n    // Timestamp\n    timestamp: Date.now(),\n};\n\n// const DEVICE_CODE = 'muslumovo-9-boiler-room';\n// const flowUid = node.path.split('/').find(_ => true);\n// await storeDeviceStateToCacheAsync(global, DEVICE_CODE, deviceState, flowUid);\nmsg.deviceState = deviceState;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1110,
+        "y": 300,
+        "wires": [
+            [
+                "d0710b6ec98e87bb"
+            ]
+        ]
+    },
+    {
+        "id": "d0710b6ec98e87bb",
+        "type": "debug",
+        "z": "364ac3dfdbd50871",
+        "name": "debug 14",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1290,
+        "y": 300,
         "wires": []
     }
 ]
