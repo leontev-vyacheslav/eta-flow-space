@@ -15,6 +15,11 @@ ssh -p 8022 -o BatchMode=yes admin-leo@91.144.143.40 \
 # 2. run the tab's chain (its own collect-device-state, or a new mapping under test) and validate
 node .tools/flow-chain/run_modbus_tab.js gagarin-boiler-room words.json \
   --mapping new-mapping.js --schema flow-space-statics/devices/gagarin-boiler-room/data-schema.json
+
+# select instance B's exported flows instead of the default instance A
+node .tools/flow-chain/run_modbus_tab.js muslum-7-boiler-room words.json \
+  --flows flow-space-nodered-b/flows.json \
+  --schema flow-space-statics/devices/muslum-7-boiler-room/data-schema.json
 ```
 
 - Converters are the function nodes wired straight from a Modbus node whose outputs reach the join; output 0 gets
@@ -22,5 +27,7 @@ node .tools/flow-chain/run_modbus_tab.js gagarin-boiler-room words.json \
 - Registers missing from the dump read as 0 (the count is printed to stderr), so limit blocks that were not read do
   not stop the run.
 - `--mapping FILE.js` is the body of a function node (same as the `func` in flows.json).
+- `--flows FLOWS.json` selects another exported instance; the default remains instance A.
+  The offline context starts with an empty `buf_data` object for legacy converters.
 - `--schema` uses ajv from `flow-space-ui/node_modules` (run `npm install` there once) and validates the state as the
   web API serves it, i.e. with `isConnected: true` added (mappings never set it).

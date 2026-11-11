@@ -1,0 +1,3512 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "StateModel",
+  "description": "Состояние котельной Муслюмово-7. Полное отображение декодированных параметров из Node-RED B.",
+  "$comment": "Nullable primitives use the nullable keyword supported by the project Ajv validator, keeping scalar type names compatible with the dashboard schema helpers.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "isConnected": {
+      "type": "boolean",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "editorOptions": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "На связи"
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": false,
+                "white": true
+              },
+              "stroke": {
+                "yellow": false,
+                "black": true
+              }
+            }
+          ]
+        }
+      }
+    },
+    "tempOutAir": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "Node-RED payload.t_air; Температура нар.возд.",
+      "unit": "°C",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Температура наружного воздуха"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "tempOutNet": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "Node-RED payload.t_inl; Температура подачи в сеть",
+      "unit": "°C",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Температура подачи сетевого контура"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "tempInNet": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "Node-RED payload.t_out; Температура обратки в сеть",
+      "unit": "°C",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Температура обратки сетевого контура"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "tempOutBoiler": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "Node-RED payload.t_inb; Температура подачи в котловом контуре",
+      "unit": "°C",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Температура подачи котлового контура"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "tempInBoiler": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "Node-RED payload.t_oub; Температура обратки в котловом контуре",
+      "unit": "°C",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Температура обратки котлового контура"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "pressOutNet": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "Node-RED payload.P_inl; давление подачи сети",
+      "unit": "бар",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Давление подачи сетевого контура"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "pressInNet": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "Node-RED payload.P_out; давление обратки сети",
+      "unit": "бар",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Давление обратки сетевого контура"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "pressOutBoiler": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "Node-RED payload.P_inb; давление подачи котлового контура",
+      "unit": "бар",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Давление подачи котлового контура"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "pressInBoiler": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "Node-RED payload.P_oub; давление обратки котлового контура",
+      "unit": "бар",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Давление обратки котлового контура"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "boilerRoomState": {
+      "$ref": "#/$defs/BoilerRoomState",
+      "$comment": "Node-RED payload.Status_str; Строка состояния: 0 - исх., 1 - запуск котла, 2 - останов котла, 3 - работа",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxSelectBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Состояние котельной"
+          },
+          "editorOptions": {
+            "readOnly": true,
+            "valueExpr": "id",
+            "displayExpr": "description"
+          }
+        }
+      }
+    },
+    "controlMode": {
+      "$ref": "#/$defs/ControlMode",
+      "$comment": "Node-RED payload.Mode_ctrl; режим управления котлами: 1- дист., 0 - местное",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxSelectBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Режим управления котлами"
+          },
+          "editorOptions": {
+            "readOnly": true,
+            "valueExpr": "id",
+            "displayExpr": "description"
+          }
+        }
+      }
+    },
+    "boilerRoomMode": {
+      "$ref": "#/$defs/BoilerRoomMode",
+      "$comment": "Node-RED payload.Mode_boil; режим работы котельной: 0 - ручной, 1 - авто",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxSelectBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Режим работы котельной"
+          },
+          "editorOptions": {
+            "readOnly": true,
+            "valueExpr": "id",
+            "displayExpr": "description"
+          }
+        }
+      }
+    },
+    "mainNetworkPumpNumber": {
+      "type": "integer",
+      "nullable": true,
+      "$comment": "Node-RED payload.Main_pump; основной насос в сети: 1 или 2",
+      "ui": {
+        "group": 3,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Основной сетевой насос: номер"
+          },
+          "editorOptions": {
+            "readOnly": true,
+            "format": {
+              "type": "fixedPoint",
+              "precision": 0
+            }
+          }
+        }
+      }
+    },
+    "tempOutNetConfiguredSetpoint": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "Node-RED payload.tset; уставка температуры в сеть",
+      "unit": "°C",
+      "ui": {
+        "group": 10,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Уставка температуры подачи в сеть"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "tempOutNetCorrection": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "Node-RED payload.tcor; коррекция значения температуры в сеть",
+      "unit": "°C",
+      "ui": {
+        "group": 10,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Коррекция температуры подачи в сеть"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "tempOutNetSetpoint": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "Node-RED payload.t1_n; задание температуры в сеть по нар.возд.",
+      "unit": "°C",
+      "ui": {
+        "group": 10,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Задание подачи по наружному воздуху"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "tempOutNetTarget": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "Node-RED payload.tnet; задание температуры в сеть",
+      "unit": "°C",
+      "ui": {
+        "group": 10,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Текущее задание температуры подачи в сеть"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "tempOutNetMinLimit": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "Node-RED payload.tmin; ограничение подачи минимальное",
+      "unit": "°C",
+      "ui": {
+        "group": 10,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Минимальное ограничение температуры подачи"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "tempOutNetMaxLimit": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "Node-RED payload.tmax; ограничение подачи максимальное",
+      "unit": "°C",
+      "ui": {
+        "group": 10,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Максимальное ограничение температуры подачи"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "cascadeStageOffIntegralLimit": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "Node-RED payload.Imax; Настройка. Граница интеграла отключения ступени",
+      "ui": {
+        "group": 10,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Граница интеграла отключения ступени"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "cascadeStageOnIntegralLimit": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "Node-RED payload.Imin; Настройка. Граница интеграла включения ступени",
+      "ui": {
+        "group": 10,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Граница интеграла включения ступени"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "tempControlUpperBand": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "Node-RED payload.Tzmax; Настройка. Верхняя граница диапазона регулирования температуры",
+      "unit": "°C",
+      "ui": {
+        "group": 10,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Верхняя граница регулирования температуры"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "tempControlLowerBand": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "Node-RED payload.Tzmin; Настройка. Нижняя граница диапазона регулирования температуры",
+      "unit": "°C",
+      "ui": {
+        "group": 10,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Нижняя граница регулирования температуры"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "cascadeStageOnDelay": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "Node-RED payload.D_on; Задержка вкл. ступени",
+      "ui": {
+        "group": 10,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Задержка включения ступени"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "cascadeStageOffDelay": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "Node-RED payload.D_off; Настройка. Задержка отключения ступени",
+      "ui": {
+        "group": 10,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Задержка отключения ступени"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "cascadeFirstStageWarmupTime": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "Node-RED payload.Theat; Настройка. Время прогрева на первой ступени",
+      "ui": {
+        "group": 10,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Время прогрева на первой ступени"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "cascadeStageOffIntegral": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "Node-RED payload.Toff; Текущее значение интеграла отключения ступени",
+      "ui": {
+        "group": 10,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Текущий интеграл отключения ступени"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "cascadeStageOnIntegral": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "Node-RED payload.T_on; Текущее значение интеграла включения ступени",
+      "ui": {
+        "group": 10,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Текущий интеграл включения ступени"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "isGasAlarm": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "Node-RED payload.gas_alarm; ГАЗ",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Газовая тревога"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {
+          "series": {
+            "type": "stepline"
+          },
+          "valueAxis": {
+            "type": "discrete",
+            "valueType": "string",
+            "categories": [
+              "false",
+              "true"
+            ]
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isSecurityAlarm": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "Node-RED payload.BSU_alarm; Охрана от БСУ",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Охранная тревога БСУ"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {
+          "series": {
+            "type": "stepline"
+          },
+          "valueAxis": {
+            "type": "discrete",
+            "valueType": "string",
+            "categories": [
+              "false",
+              "true"
+            ]
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isFireAlarm": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "Node-RED payload.Fire_alarm; Пожар",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Пожарная тревога"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {
+          "series": {
+            "type": "stepline"
+          },
+          "valueAxis": {
+            "type": "discrete",
+            "valueType": "string",
+            "categories": [
+              "false",
+              "true"
+            ]
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isBatteryAlarm": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "Node-RED payload.Batt_alarm; Разряд батареи",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Авария разряда батареи"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {
+          "series": {
+            "type": "stepline"
+          },
+          "valueAxis": {
+            "type": "discrete",
+            "valueType": "string",
+            "categories": [
+              "false",
+              "true"
+            ]
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isGeneralAlarm": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "Node-RED payload.gen_alarm; Общая авария, рассчитанная существующим конвертером",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Общая авария"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {
+          "series": {
+            "type": "stepline"
+          },
+          "valueAxis": {
+            "type": "discrete",
+            "valueType": "string",
+            "categories": [
+              "false",
+              "true"
+            ]
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isBatteryFault": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "Node-RED payload.Battery_good; батарея исправна = 0, авария = 1",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Неисправность батареи"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {
+          "series": {
+            "type": "stepline"
+          },
+          "valueAxis": {
+            "type": "discrete",
+            "valueType": "string",
+            "categories": [
+              "false",
+              "true"
+            ]
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isBatteryLow": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "Node-RED payload.Battery_low; батарея разряжена = 1, норма = 0",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Батарея разряжена"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {
+          "series": {
+            "type": "stepline"
+          },
+          "valueAxis": {
+            "type": "discrete",
+            "valueType": "string",
+            "categories": [
+              "false",
+              "true"
+            ]
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isGasInputAlarm": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "Node-RED payload.gas_status; газ норма = 0, тревога = 1",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Вход газового извещателя: тревога"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {
+          "series": {
+            "type": "stepline"
+          },
+          "valueAxis": {
+            "type": "discrete",
+            "valueType": "string",
+            "categories": [
+              "false",
+              "true"
+            ]
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isSecurityInputAlarm": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "Node-RED payload.Secure_stat; охрана БСУ = 0, тревога = 1",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Вход охраны БСУ: тревога"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {
+          "series": {
+            "type": "stepline"
+          },
+          "valueAxis": {
+            "type": "discrete",
+            "valueType": "string",
+            "categories": [
+              "false",
+              "true"
+            ]
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isFireInputAlarm": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "Node-RED payload.Fire_stat; пожар = 0, тревога = 1",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Вход пожарной сигнализации: тревога"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {
+          "series": {
+            "type": "stepline"
+          },
+          "valueAxis": {
+            "type": "discrete",
+            "valueType": "string",
+            "categories": [
+              "false",
+              "true"
+            ]
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "sensors": {
+      "$ref": "#/$defs/SensorsModel"
+    },
+    "pressureLimits": {
+      "$ref": "#/$defs/PressureLimitsModel"
+    },
+    "pressureThresholds": {
+      "$ref": "#/$defs/PressureThresholdsModel"
+    },
+    "temperatureThresholds": {
+      "$ref": "#/$defs/TemperatureThresholdsModel"
+    },
+    "boilers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/BoilerModel"
+      },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "networkPumps": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/NetworkPumpModel"
+      },
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "boilerPumps": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/BoilerPumpModel"
+      },
+      "minItems": 2,
+      "maxItems": 2,
+      "description": "Индексы 0 и 1 соответствуют насосам Н4 и Н5; number хранит номер насоса на схеме."
+    },
+    "timestamp": {
+      "type": "integer",
+      "$comment": "Node-RED collector Date.now(); Время формирования состояния",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxDateBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Время опроса"
+          },
+          "editorOptions": {
+            "readOnly": true,
+            "type": "datetime",
+            "displayFormat": "dd.MM.yyyy HH:mm:ss"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "isConnected",
+    "tempOutAir",
+    "tempOutNet",
+    "tempInNet",
+    "tempOutBoiler",
+    "tempInBoiler",
+    "pressOutNet",
+    "pressInNet",
+    "pressOutBoiler",
+    "pressInBoiler",
+    "boilerRoomState",
+    "controlMode",
+    "boilerRoomMode",
+    "mainNetworkPumpNumber",
+    "tempOutNetConfiguredSetpoint",
+    "tempOutNetCorrection",
+    "tempOutNetSetpoint",
+    "tempOutNetTarget",
+    "tempOutNetMinLimit",
+    "tempOutNetMaxLimit",
+    "cascadeStageOffIntegralLimit",
+    "cascadeStageOnIntegralLimit",
+    "tempControlUpperBand",
+    "tempControlLowerBand",
+    "cascadeStageOnDelay",
+    "cascadeStageOffDelay",
+    "cascadeFirstStageWarmupTime",
+    "cascadeStageOffIntegral",
+    "cascadeStageOnIntegral",
+    "isGasAlarm",
+    "isSecurityAlarm",
+    "isFireAlarm",
+    "isBatteryAlarm",
+    "isGeneralAlarm",
+    "isBatteryFault",
+    "isBatteryLow",
+    "isGasInputAlarm",
+    "isSecurityInputAlarm",
+    "isFireInputAlarm",
+    "sensors",
+    "pressureLimits",
+    "pressureThresholds",
+    "temperatureThresholds",
+    "boilers",
+    "networkPumps",
+    "boilerPumps",
+    "timestamp"
+  ],
+  "$defs": {
+    "SensorsModel": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "isTempOutAirSensorError": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload.T_air_err; Tн.в.     - ошибка датчика",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Температура наружного воздуха: ошибка датчика"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isTempOutNetSensorError": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload.T_inl_err; Tподачи   - ошибка датчика - сеть",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Температура подачи сетевого контура: ошибка датчика"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isTempInNetSensorError": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload.T_out_err; Tобратки  - ошибка датчика - сеть",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Температура обратки сетевого контура: ошибка датчика"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isTempOutBoilerSensorError": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload.T_inb_err; Tподачи   - ошибка датчика - котел",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Температура подачи котлового контура: ошибка датчика"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isTempInBoilerSensorError": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload.T_oub_err; Tобратки  - ошибка датчика - котел",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Температура обратки котлового контура: ошибка датчика"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isPressOutNetSensorError": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload.P_inl_err; Pподачи   - ошибка датчика",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Давление подачи сетевого контура: ошибка датчика"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isPressInNetSensorError": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload.P_out_err; Робратки  - ошибка датчика",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Давление обратки сетевого контура: ошибка датчика"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isPressOutBoilerSensorError": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload.P_inb_err; Pподачи   - ошибка датчика",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Давление подачи котлового контура: ошибка датчика"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isPressInBoilerSensorError": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload.P_oub_err; Робратки  - ошибка датчика",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Давление обратки котлового контура: ошибка датчика"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isTempOutNetPreHighLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload.TE1_H_act; Tподачи  - порог H активен - сеть",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Температура подачи сетевого контура: верхнее предупреждение (H)"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "#FFC107": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isTempOutBoilerPreHighLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload.TE3_H_act; Tподачи  - порог H активен - котел",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Температура подачи котлового контура: верхнее предупреждение (H)"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "#FFC107": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isPressOutNetPreHighLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload.PE1_H_act; Pподачи  - порог H активен",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Давление подачи сетевого контура: верхнее предупреждение (H)"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "#FFC107": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isPressOutBoilerPreHighLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload.PE3_H_act; Pподачи  - порог H активен",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Давление подачи котлового контура: верхнее предупреждение (H)"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "#FFC107": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isTempOutNetPreLowLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload.TE1_L_act; Tподачи  - порог L активен - сеть",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Температура подачи сетевого контура: нижнее предупреждение (L)"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "#FFC107": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isTempInNetPreLowLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload.TE2_L_act; Tобратки - порог L активен - сеть",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Температура обратки сетевого контура: нижнее предупреждение (L)"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "#FFC107": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isTempInBoilerPreLowLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload.TE4_L_act; Tобратки - порог L активен - котел",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Температура обратки котлового контура: нижнее предупреждение (L)"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "#FFC107": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isPressOutNetPreLowLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload.PE1_L_act; Pподачи  - порог L активен",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Давление подачи сетевого контура: нижнее предупреждение (L)"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "#FFC107": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isPressInNetPreLowLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload.PE2_L_act; Pобратки - порог L активен",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Давление обратки сетевого контура: нижнее предупреждение (L)"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "#FFC107": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isPressOutBoilerPreLowLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload.PE3_L_act; Pподачи  - порог L активен",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Давление подачи котлового контура: нижнее предупреждение (L)"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "#FFC107": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isPressInBoilerPreLowLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload.PE4_L_act; Pобратки - порог L активен",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Давление обратки котлового контура: нижнее предупреждение (L)"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "#FFC107": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isPressOutNetHighLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload.P1_max_alarm; Давление в подачи высокое",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Давление подачи сетевого контура: верхний аварийный уровень (HH)"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isPressOutBoilerHighLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload.P3_max_alarm; Давление в подачи высокое",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Давление подачи котлового контура: верхний аварийный уровень (HH)"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isPressOutNetLowLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload.P1_min_alarm; Давление в подачи низкое",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Давление подачи сетевого контура: нижний аварийный уровень (LL)"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isPressInNetLowLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload.P2_min_alarm; Давление в обратки низкое",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Давление обратки сетевого контура: нижний аварийный уровень (LL)"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isPressOutBoilerLowLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload.P3_min_alarm; Давление в подачи низкое",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Давление подачи котлового контура: нижний аварийный уровень (LL)"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isPressInBoilerLowLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload.P4_min_alarm; Давление в обратки низкое",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Давление обратки котлового контура: нижний аварийный уровень (LL)"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isTempOutNetHighLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload.T1_max_alarm; Т подачи высокое",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Температура подачи сетевого контура: верхний аварийный уровень (HH)"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isTempOutBoilerHighLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload.T3_max_alarm; Т подачи котла высокая",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Температура подачи котлового контура: верхний аварийный уровень (HH)"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isTempOutBoilerLowLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload.T3_min_alarm; Т подачи котла низкая",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Температура подачи котлового контура: нижний аварийный уровень (LL)"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isTempOutNetLowLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload.T1_min_alarm; Т подачи низкая",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Температура подачи сетевого контура: нижний аварийный уровень (LL)"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isTempInNetLowLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload.T2_min_alarm; Т обратки низкая",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Температура обратки сетевого контура: нижний аварийный уровень (LL)"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isTempInBoilerLowLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload.T4_min_alarm; Т обратки котла низкая",
+          "ui": {
+            "group": 9,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Температура обратки котлового контура: нижний аварийный уровень (LL)"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "required": [
+        "isTempOutAirSensorError",
+        "isTempOutNetSensorError",
+        "isTempInNetSensorError",
+        "isTempOutBoilerSensorError",
+        "isTempInBoilerSensorError",
+        "isPressOutNetSensorError",
+        "isPressInNetSensorError",
+        "isPressOutBoilerSensorError",
+        "isPressInBoilerSensorError",
+        "isTempOutNetPreHighLevel",
+        "isTempOutBoilerPreHighLevel",
+        "isPressOutNetPreHighLevel",
+        "isPressOutBoilerPreHighLevel",
+        "isTempOutNetPreLowLevel",
+        "isTempInNetPreLowLevel",
+        "isTempInBoilerPreLowLevel",
+        "isPressOutNetPreLowLevel",
+        "isPressInNetPreLowLevel",
+        "isPressOutBoilerPreLowLevel",
+        "isPressInBoilerPreLowLevel",
+        "isPressOutNetHighLevel",
+        "isPressOutBoilerHighLevel",
+        "isPressOutNetLowLevel",
+        "isPressInNetLowLevel",
+        "isPressOutBoilerLowLevel",
+        "isPressInBoilerLowLevel",
+        "isTempOutNetHighLevel",
+        "isTempOutBoilerHighLevel",
+        "isTempOutBoilerLowLevel",
+        "isTempOutNetLowLevel",
+        "isTempInNetLowLevel",
+        "isTempInBoilerLowLevel"
+      ]
+    },
+    "PressureLimitsModel": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "pressOutNetMax": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload.P1_max_lim; верхний лимит Pe1",
+          "unit": "бар",
+          "ui": {
+            "group": 11,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Давление подачи сетевого контура: верхний предел"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "pressOutNetMin": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload.P1_min_lim; нижний лимит Pe1",
+          "unit": "бар",
+          "ui": {
+            "group": 11,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Давление подачи сетевого контура: нижний предел"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "pressInNetMax": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload.P2_max_lim; верхний лимит Pe2",
+          "unit": "бар",
+          "ui": {
+            "group": 11,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Давление обратки сетевого контура: верхний предел"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "pressInNetMin": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload.P2_min_lim; нижний лимит Pe2",
+          "unit": "бар",
+          "ui": {
+            "group": 11,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Давление обратки сетевого контура: нижний предел"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "pressOutBoilerMax": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload.P11_max_lim; верхний лимит Pe11",
+          "unit": "бар",
+          "ui": {
+            "group": 11,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Давление подачи котлового контура: верхний предел"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "pressOutBoilerMin": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload.P11_min_lim; нижний лимит Pe11",
+          "unit": "бар",
+          "ui": {
+            "group": 11,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Давление подачи котлового контура: нижний предел"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "pressInBoilerMax": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload.P12_max_lim; верхний лимит Pe12",
+          "unit": "бар",
+          "ui": {
+            "group": 11,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Давление обратки котлового контура: верхний предел"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "pressInBoilerMin": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload.P12_min_lim; нижний лимит Pe12",
+          "unit": "бар",
+          "ui": {
+            "group": 11,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Давление обратки котлового контура: нижний предел"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "pressOutNetMax",
+        "pressOutNetMin",
+        "pressInNetMax",
+        "pressInNetMin",
+        "pressOutBoilerMax",
+        "pressOutBoilerMin",
+        "pressInBoilerMax",
+        "pressInBoilerMin"
+      ]
+    },
+    "PressureThresholdsModel": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "pressOutNetHH": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload.P1_HH; аварийная верхняя граница Pe1",
+          "unit": "бар",
+          "ui": {
+            "group": 12,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Давление подачи сетевого контура: порог HH"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "pressOutNetH": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload.P1_H; верхнее предупреждение Pe1",
+          "unit": "бар",
+          "ui": {
+            "group": 12,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Давление подачи сетевого контура: порог H"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "pressOutNetL": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload.P1_L; нижнее предупреждение Pe1",
+          "unit": "бар",
+          "ui": {
+            "group": 12,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Давление подачи сетевого контура: порог L"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "pressOutNetLL": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload.P1_LL; аварийная нижняя граница Pe1",
+          "unit": "бар",
+          "ui": {
+            "group": 12,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Давление подачи сетевого контура: порог LL"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "pressInNetL": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload.P2_L; нижнее предупреждение Pe2",
+          "unit": "бар",
+          "ui": {
+            "group": 12,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Давление обратки сетевого контура: порог L"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "pressInNetLL": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload.P2_LL; аварийная нижняя граница Pe2",
+          "unit": "бар",
+          "ui": {
+            "group": 12,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Давление обратки сетевого контура: порог LL"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "pressOutBoilerHH": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload.P3_HH; аварийная верхняя граница Pe3",
+          "unit": "бар",
+          "ui": {
+            "group": 12,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Давление подачи котлового контура: порог HH"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "pressOutBoilerH": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload.P3_H; верхнее предупреждение Pe3",
+          "unit": "бар",
+          "ui": {
+            "group": 12,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Давление подачи котлового контура: порог H"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "pressOutBoilerL": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload.P3_L; нижнее предупреждение Pe3",
+          "unit": "бар",
+          "ui": {
+            "group": 12,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Давление подачи котлового контура: порог L"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "pressOutBoilerLL": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload.P3_LL; аварийная нижняя граница Pe3",
+          "unit": "бар",
+          "ui": {
+            "group": 12,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Давление подачи котлового контура: порог LL"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "pressInBoilerL": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload.P4_L; нижнее предупреждение Pe4",
+          "unit": "бар",
+          "ui": {
+            "group": 12,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Давление обратки котлового контура: порог L"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "pressInBoilerLL": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload.P4_LL; аварийная нижняя граница Pe4",
+          "unit": "бар",
+          "ui": {
+            "group": 12,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Давление обратки котлового контура: порог LL"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "pressOutNetHH",
+        "pressOutNetH",
+        "pressOutNetL",
+        "pressOutNetLL",
+        "pressInNetL",
+        "pressInNetLL",
+        "pressOutBoilerHH",
+        "pressOutBoilerH",
+        "pressOutBoilerL",
+        "pressOutBoilerLL",
+        "pressInBoilerL",
+        "pressInBoilerLL"
+      ]
+    },
+    "TemperatureThresholdsModel": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "tempOutNetHH": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload.T1_HH; аварийная верхняя граница Te1",
+          "unit": "°C",
+          "ui": {
+            "group": 13,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Температура подачи сетевого контура: порог HH"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "tempOutNetH": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload.T1_H; верхнее предупреждение Te1",
+          "unit": "°C",
+          "ui": {
+            "group": 13,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Температура подачи сетевого контура: порог H"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "tempOutNetL": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload.T1_L; нижнее предупреждение Te1",
+          "unit": "°C",
+          "ui": {
+            "group": 13,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Температура подачи сетевого контура: порог L"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "tempOutNetLL": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload.T1_LL; аварийная нижняя граница Te1",
+          "unit": "°C",
+          "ui": {
+            "group": 13,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Температура подачи сетевого контура: порог LL"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "tempInNetL": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload.T2_L; нижнее предупреждение Te2",
+          "unit": "°C",
+          "ui": {
+            "group": 13,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Температура обратки сетевого контура: порог L"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "tempInNetLL": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload.T2_LL; аварийная нижняя граница Te2",
+          "unit": "°C",
+          "ui": {
+            "group": 13,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Температура обратки сетевого контура: порог LL"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "tempOutBoilerHH": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload.T11_HH; аварийная верхняя граница Te11",
+          "unit": "°C",
+          "ui": {
+            "group": 13,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Температура подачи котлового контура: порог HH"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "tempOutBoilerH": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload.T11_H; верхнее предупреждение Te11",
+          "unit": "°C",
+          "ui": {
+            "group": 13,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Температура подачи котлового контура: порог H"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "tempInBoilerL": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload.T12_L; нижнее предупреждение Te12",
+          "unit": "°C",
+          "ui": {
+            "group": 13,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Температура обратки котлового контура: порог L"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "tempInBoilerLL": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload.T12_LL; аварийная нижняя граница Te12",
+          "unit": "°C",
+          "ui": {
+            "group": 13,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Температура обратки котлового контура: порог LL"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "tempOutNetHH",
+        "tempOutNetH",
+        "tempOutNetL",
+        "tempOutNetLL",
+        "tempInNetL",
+        "tempInNetLL",
+        "tempOutBoilerHH",
+        "tempOutBoilerH",
+        "tempInBoilerL",
+        "tempInBoilerLL"
+      ]
+    },
+    "BoilerModel": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "isLocked": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload: Boil1_block, Boil2_block",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Блокировка котла"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "#FFC107": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isPowered": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload: Boil1_pow, Boil2_pow",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Питание котла"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isWorking": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload: Boil1_run, Boil2_run",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Работа котла"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "chart": {
+              "series": {
+                "type": "stepline"
+              },
+              "valueAxis": {
+                "type": "discrete",
+                "valueType": "string",
+                "categories": [
+                  "false",
+                  "true"
+                ]
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "white": true,
+                    "#808080": false
+                  },
+                  "stroke": {
+                    "#0000FF": true,
+                    "#000000": false
+                  },
+                  "stroke-width": {
+                    "2": true,
+                    "1": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isMinBurning": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload: Boil1_min_B, Boil2_min_B",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Минимальное горение котла"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "chart": {
+              "series": {
+                "type": "stepline"
+              },
+              "valueAxis": {
+                "type": "discrete",
+                "valueType": "string",
+                "categories": [
+                  "false",
+                  "true"
+                ]
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "white": true,
+                    "#808080": false
+                  },
+                  "stroke": {
+                    "#0000FF": true,
+                    "#000000": false
+                  },
+                  "stroke-width": {
+                    "2": true,
+                    "1": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isMaxBurning": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload: Boil1_max_B, Boil2_max_B",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Максимальное горение котла"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "chart": {
+              "series": {
+                "type": "stepline"
+              },
+              "valueAxis": {
+                "type": "discrete",
+                "valueType": "string",
+                "categories": [
+                  "false",
+                  "true"
+                ]
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "white": true,
+                    "#808080": false
+                  },
+                  "stroke": {
+                    "#0000FF": true,
+                    "#000000": false
+                  },
+                  "stroke-width": {
+                    "2": true,
+                    "1": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isMinBurningStartCommand": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload: Boil1_cmd_Run_B1, Boil2_cmd_Run_B1",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Команда ПЛК: включить минимальное горение котла"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isMinBurningStopCommand": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload: Boil1_cmd_Stp_B1, Boil2_cmd_Stp_B1",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Команда ПЛК: выключить минимальное горение котла"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isMaxBurningStartCommand": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload: Boil1_cmd_Run_B2, Boil2_cmd_Run_B2",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Команда ПЛК: включить максимальное горение котла"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isMaxBurningStopCommand": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload: Boil1_cmd_Stp_B2, Boil2_cmd_Stp_B2",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Команда ПЛК: выключить максимальное горение котла"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isAlarm": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload: Boil1_alarm, Boil2_alarm",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Авария котла"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "chart": {
+              "series": {
+                "type": "stepline"
+              },
+              "valueAxis": {
+                "type": "discrete",
+                "valueType": "string",
+                "categories": [
+                  "false",
+                  "true"
+                ]
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isStartError": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload: Boil1_On_err, Boil2_On_err",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Ошибка включения котла"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "red": true,
+                    "white": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "startOrder": {
+          "type": "integer",
+          "nullable": true,
+          "$comment": "Node-RED payload: Queue_boil1, Queue_boil2",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Очередность включения котла"
+              },
+              "editorOptions": {
+                "readOnly": true,
+                "format": {
+                  "type": "fixedPoint",
+                  "precision": 0
+                }
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "isLocked",
+        "isPowered",
+        "isWorking",
+        "isMinBurning",
+        "isMaxBurning",
+        "isMinBurningStartCommand",
+        "isMinBurningStopCommand",
+        "isMaxBurningStartCommand",
+        "isMaxBurningStopCommand",
+        "isAlarm",
+        "isStartError",
+        "startOrder"
+      ]
+    },
+    "NetworkPumpModel": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "isWorking": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload: Pump1_stat, Pump2_stat, Pump3_stat",
+          "ui": {
+            "group": 3,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Работа насоса"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "chart": {
+              "series": {
+                "type": "stepline"
+              },
+              "valueAxis": {
+                "type": "discrete",
+                "valueType": "string",
+                "categories": [
+                  "false",
+                  "true"
+                ]
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "white": true,
+                    "#808080": false
+                  },
+                  "stroke": {
+                    "#0000FF": true,
+                    "#000000": false
+                  },
+                  "stroke-width": {
+                    "2": true,
+                    "1": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isStartCommand": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload: Pump1_run, Pump2_run, Pump3_run",
+          "ui": {
+            "group": 3,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Команда ПЛК: пуск насоса"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isStopCommand": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload: Pump1_stp, Pump2_stp, Pump3_stp",
+          "ui": {
+            "group": 3,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Команда ПЛК: останов насоса"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "number": {
+          "type": "integer",
+          "description": "Физический номер насоса на мнемосхеме.",
+          "ui": {
+            "group": 3,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Номер насоса на схеме"
+              },
+              "editorOptions": {
+                "readOnly": true,
+                "format": {
+                  "type": "fixedPoint",
+                  "precision": 0
+                }
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "isWorking",
+        "isStartCommand",
+        "isStopCommand",
+        "number"
+      ]
+    },
+    "BoilerPumpModel": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "isWorking": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload: Pump4_stat, Pump5_stat",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Работа насоса"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "chart": {
+              "series": {
+                "type": "stepline"
+              },
+              "valueAxis": {
+                "type": "discrete",
+                "valueType": "string",
+                "categories": [
+                  "false",
+                  "true"
+                ]
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "white": true,
+                    "#808080": false
+                  },
+                  "stroke": {
+                    "#0000FF": true,
+                    "#000000": false
+                  },
+                  "stroke-width": {
+                    "2": true,
+                    "1": false
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isStartCommand": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload: Pump4_run, Pump5_run",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Команда ПЛК: пуск насоса"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isStopCommand": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload: Pump4_stp, Pump5_stp",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Команда ПЛК: останов насоса"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "number": {
+          "type": "integer",
+          "description": "Физический номер насоса на мнемосхеме.",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Номер насоса на схеме"
+              },
+              "editorOptions": {
+                "readOnly": true,
+                "format": {
+                  "type": "fixedPoint",
+                  "precision": 0
+                }
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "isWorking",
+        "isStartCommand",
+        "isStopCommand",
+        "number"
+      ]
+    },
+    "BoilerRoomState": {
+      "type": "integer",
+      "nullable": true,
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        null
+      ],
+      "enumDescriptions": {
+        "0": "INITIAL - Исходное",
+        "1": "BOILER_STARTING - Запуск котла",
+        "2": "BOILER_STOPPING - Останов котла",
+        "3": "OPERATION - Работа"
+      }
+    },
+    "ControlMode": {
+      "type": "integer",
+      "nullable": true,
+      "enum": [
+        0,
+        1,
+        null
+      ],
+      "enumDescriptions": {
+        "0": "LOCAL - Местное",
+        "1": "REMOTE - Дистанционное"
+      }
+    },
+    "BoilerRoomMode": {
+      "type": "integer",
+      "nullable": true,
+      "enum": [
+        0,
+        1,
+        null
+      ],
+      "enumDescriptions": {
+        "0": "MANUAL - Ручной",
+        "1": "AUTO - Автоматический"
+      }
+    }
+  },
+  "ui": {
+    "useTabs": true,
+    "groups": [
+      {
+        "id": 1,
+        "name": "state",
+        "caption": "Состояния",
+        "order": 100
+      },
+      {
+        "id": 7,
+        "name": "emergency",
+        "caption": "Аварии и входы",
+        "order": 150
+      },
+      {
+        "id": 9,
+        "name": "sensors",
+        "caption": "Датчики",
+        "order": 170
+      },
+      {
+        "id": 2,
+        "name": "boilers",
+        "caption": "Котлы",
+        "order": 200
+      },
+      {
+        "id": 10,
+        "name": "cascade",
+        "caption": "Каскад котлов",
+        "order": 250
+      },
+      {
+        "id": 3,
+        "name": "networkPumps",
+        "caption": "Сетевые насосы",
+        "order": 300
+      },
+      {
+        "id": 5,
+        "name": "boilerPumps",
+        "caption": "Насосы котлов Н4/Н5",
+        "order": 450
+      },
+      {
+        "id": 11,
+        "name": "pressureLimits",
+        "caption": "Пределы давления",
+        "order": 500
+      },
+      {
+        "id": 12,
+        "name": "pressureThresholds",
+        "caption": "Пороги давления",
+        "order": 550
+      },
+      {
+        "id": 13,
+        "name": "temperatureThresholds",
+        "caption": "Пороги температуры",
+        "order": 600
+      }
+    ]
+  }
+}

@@ -4,9 +4,9 @@
 // .tools/device-probes/modbus_rtu_dump.js. Prints the device state collect-device-state would store.
 // Nothing is sent anywhere: storeDeviceStateToCacheAsync is replaced by a stub that records the call.
 //
-//   node .tools/flow-chain/run_modbus_tab.js TAB_LABEL WORDS.json [--mapping FILE.js] [--schema DATA-SCHEMA.json]
+//   node .tools/flow-chain/run_modbus_tab.js TAB_LABEL WORDS.json [--flows FLOWS.json] [--mapping FILE.js] [--schema DATA-SCHEMA.json]
 //
-// TAB_LABEL   label of the tab in flow-space-nodered-a/flows.json (e.g. gagarin-boiler-room)
+// TAB_LABEL   label of the tab in --flows (default: flow-space-nodered-a/flows.json)
 // WORDS.json  output of modbus_rtu_dump.js ("words": {"0x0001": "00ff", ...}); registers it lacks read as 0
 // --mapping   run this file as collect-device-state instead of the one in flows.json (to test a new mapping)
 // --schema    validate the state with this data schema (ajv from flow-space-ui/node_modules)
@@ -22,13 +22,14 @@ const option = (name) => {
 };
 const mappingFile = option('--mapping');
 const schemaFile = option('--schema');
+const flowsFile = option('--flows') ?? path.join(root, 'flow-space-nodered-a/flows.json');
 const [tabLabel, wordsFile] = args;
 if (!tabLabel || !wordsFile) {
-    console.error('usage: node run_modbus_tab.js TAB_LABEL WORDS.json [--mapping FILE.js] [--schema DATA-SCHEMA.json]');
+    console.error('usage: node run_modbus_tab.js TAB_LABEL WORDS.json [--flows FLOWS.json] [--mapping FILE.js] [--schema DATA-SCHEMA.json]');
     process.exit(2);
 }
 
-const flows = JSON.parse(fs.readFileSync(path.join(root, 'flow-space-nodered-a/flows.json'), 'utf8'));
+const flows = JSON.parse(fs.readFileSync(flowsFile, 'utf8'));
 const byId = new Map(flows.map((n) => [n.id, n]));
 const tab = flows.find((n) => n.type === 'tab' && n.label === tabLabel);
 if (!tab) throw new Error(`no tab labelled ${tabLabel}`);
@@ -46,7 +47,8 @@ const read = (start, count) => Array.from({ length: count }, (_, i) => {
 });
 
 const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;
-const context = new Map();
+// Legacy converters accumulate decoded fields in an existing flow-context buffer.
+const context = new Map([['buf_data', {}]]);
 const stored = [];
 const fakeGlobal = {
     get: (key) => (key === 'helpers'
