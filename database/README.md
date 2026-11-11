@@ -75,6 +75,9 @@ stop/start commands, and limitations.
 | `2026-11-08-add-kama-river-mouth-watcher.sql` | not yet |
 | `2026-11-08-remove-boiler-is-working.sql` | not yet |
 | `2026-11-09-link-latest-boiler-rooms-to-boiler-watcher.sql` | yes (applied and verified 2026-11-09) |
+| `2026-11-11-add-muslum-boiler-rooms.sql` | yes (applied and verified 2026-11-11) |
+| `2026-11-11-add-muslum-emergencies.sql` | yes (applied and verified 2026-11-11) |
+| `2026-11-11-link-muslum-boiler-room-users.sql` | yes (applied and verified 2026-11-11; sign-in and device access checked) |
 
 `object_location.locality` stores the canonical populated locality name, including its type
 (for example, `пгт. Камское Устье`). Use the same spelling for locations in the same locality.
