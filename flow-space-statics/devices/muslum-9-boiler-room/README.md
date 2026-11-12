@@ -67,6 +67,10 @@ words, and this schema. Storage is mocked during validation.
 The diagram binds the decoded readings to the corresponding equipment and pipe
 positions. Bound frames, alarm tiles, pump symbols and the information icon open
 the existing properties popover; graph links remain available for chartable fields.
+Hover styling follows Весна-2: yellow outlines and a yellow glow on bound shapes,
+with the original state colours restored after the pointer leaves. Burner clicks
+open the same ordered boiler properties as the boiler frame. Decorative pump
+rings/arrows and flame artwork do not intercept their underlying bound shapes.
 
 | Diagram element | State property |
 |---|---|
