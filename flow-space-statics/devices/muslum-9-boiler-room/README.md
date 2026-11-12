@@ -100,11 +100,13 @@ its network-pump tile summarises running states, because no pump-fault signals
 are decoded. No alarm is inferred from a stopped pump.
 
 Running pumps have blue outlines. Boiler outlines show running in blue and
-alarms/start errors in red; locked boilers have an amber body. Flames appear only
-when the reported boiler running flag is true and the device is not disconnected.
+alarms/start errors in red; locked boilers have an amber body. Flames appear
+when the reported boiler running flag is true.
 The bindings assume a complete state with populated fields and use the schema's
-formatting directly. A disconnected device marks the timestamp and top frame red
-and shows grey equipment/alarm states. The diagram does not interpret an unknown
+formatting directly. Connection status is bound only to `other-parameters-info`
+(the `infoIcon` instance) and `other-parameters-frame`; both turn red when the
+device is disconnected. Readings, timestamps, equipment and alarm symbols follow
+their own reported state properties. The diagram does not interpret an unknown
 `Boil*_norm` polarity as an alarm.
 
 These are local source changes; deployment and hardware validation are separate.
