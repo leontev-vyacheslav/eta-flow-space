@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Муслюмово-9: source topology in the Весна-2 drawing style.
-     Artwork only. Readings and equipment states are placeholders until the data schema and bindings are added. -->
+     Readings and equipment states bind to the Muslum-9 state schema; unconfirmed temperature-channel flags remain in the details. -->
 <svg version="1.1" id="muslum9-mnemoschema" xmlns="http://www.w3.org/2000/svg"
     xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1070 700"
     role="img" aria-labelledby="muslum9-title muslum9-description"
@@ -9,7 +9,7 @@
     <desc id="muslum9-description">Два котла, два выхода подачи Т1 и два ввода обратки Т2,
         три параллельных сетевых насоса Н1, Н2 и Н3, подготовка подпиточной воды,
         дренаж и шесть групп аварийных сигналов. Гидрострелки и отдельных котловых насосов нет.
-        Показания и состояния оборудования пока не подключены.</desc>
+        Показания и состояния оборудования подключены к данным котельной.</desc>
 
     <defs>
         <!-- Alarm symbols are reused from the existing Гагарина diagram. -->
@@ -79,33 +79,33 @@
 
     <!-- The top parameters panel follows the Гагарина layout. -->
     <g id="other-parameters">
-        <rect id="other-parameters-frame" x="20" y="12" width="1030" height="90" rx="13" fill="#FFFFFF" stroke="#808080" stroke-width="0.6"/>
+        <rect id="other-parameters-frame" x="20" y="12" width="1030" height="90" rx="13" fill="#FFFFFF" stroke="#808080" stroke-width="0.6" data-state="states['muslum-9-boiler-room'].isConnected;states['muslum-9-boiler-room'].isGeneralAlarm" data-state-eval="element.style.stroke = states['muslum-9-boiler-room'].isConnected === false || states['muslum-9-boiler-room'].isGeneralAlarm === true ? 'red' : '#808080'; element.style.strokeDasharray = states['muslum-9-boiler-room'].isConnected === false ? '4 2' : 'none';"/>
         <text x="535" y="36" text-anchor="middle">Прочие параметры работы котельной</text>
-        <g id="timestamp" font-size="11" letter-spacing="1">
-            <text id="timestamp-date" x="34" y="34">—.—.——</text>
-            <text id="timestamp-time" x="38" y="51">—:—:—</text>
+        <g id="timestamp" font-size="11" letter-spacing="1" data-state="states['muslum-9-boiler-room'].timestamp;states['muslum-9-boiler-room'].isConnected" data-state-eval="element.style.fill = states['muslum-9-boiler-room'].isConnected === false ? 'red' : '#000000';">
+            <text id="timestamp-date" x="34" y="34" data-state="states['muslum-9-boiler-room'].timestamp" data-state-format="date">—.—.——</text>
+            <text id="timestamp-time" x="38" y="51" data-state="states['muslum-9-boiler-room'].timestamp" data-state-format="time">—:—:—</text>
         </g>
         <g id="outdoor-temperature">
-            <rect x="235" y="50" width="140" height="42" rx="8" fill="#FFFFFF" stroke="#808080" stroke-width="0.5"/>
+            <rect x="235" y="50" width="140" height="42" rx="8" fill="#FFFFFF" stroke="#808080" stroke-width="0.5" id="outdoor-temperature-frame" data-state="states['muslum-9-boiler-room'].tempOutAir;states['muslum-9-boiler-room'].sensors.isTempOutAirSensorError;states['muslum-9-boiler-room'].isConnected" data-state-eval="element.style.stroke = states['muslum-9-boiler-room'].isConnected === false ? '#808080' : (states['muslum-9-boiler-room'].sensors.isTempOutAirSensorError === true ? 'red' : '#000000'); element.style.strokeWidth = states['muslum-9-boiler-room'].sensors.isTempOutAirSensorError === true ? '1.5' : '0.5';"/>
             <text x="305" y="66" font-size="13" text-anchor="middle">Тн.в.</text>
-            <text id="outdoor-temperature-value" x="305" y="85" font-size="13" text-anchor="middle">— °C</text>
+            <text id="outdoor-temperature-value" x="305" y="85" font-size="13" text-anchor="middle" data-state="states['muslum-9-boiler-room'].tempOutAir" pointer-events="none">— °C</text>
         </g>
         <g id="supply-setpoint">
-            <rect x="385" y="50" width="140" height="42" rx="8" fill="#FFFFFF" stroke="#808080" stroke-width="0.5"/>
+            <rect x="385" y="50" width="140" height="42" rx="8" fill="#FFFFFF" stroke="#808080" stroke-width="0.5" id="supply-setpoint-frame" data-state="states['muslum-9-boiler-room'].tempOutNetTarget;states['muslum-9-boiler-room'].tempOutNetConfiguredSetpoint;states['muslum-9-boiler-room'].tempOutNetCorrection"/>
             <text x="455" y="66" font-size="13" text-anchor="middle">Задание подачи</text>
-            <text id="supply-setpoint-value" x="455" y="85" font-size="13" text-anchor="middle">— °C</text>
+            <text id="supply-setpoint-value" x="455" y="85" font-size="13" text-anchor="middle" data-state="states['muslum-9-boiler-room'].tempOutNetTarget" pointer-events="none">— °C</text>
         </g>
-        <g id="boilers-setpoint">
-            <rect x="535" y="50" width="140" height="42" rx="8" fill="#FFFFFF" stroke="#808080" stroke-width="0.5"/>
-            <text x="605" y="66" font-size="13" text-anchor="middle">Задание котлов</text>
-            <text id="boilers-setpoint-value" x="605" y="85" font-size="13" text-anchor="middle">— °C</text>
+        <g id="weather-setpoint">
+            <rect x="535" y="50" width="140" height="42" rx="8" fill="#FFFFFF" stroke="#808080" stroke-width="0.5" id="weather-setpoint-frame" data-state="states['muslum-9-boiler-room'].tempOutNetSetpoint;states['muslum-9-boiler-room'].tempOutNetMinLimit;states['muslum-9-boiler-room'].tempOutNetMaxLimit"/>
+            <text x="605" y="66" font-size="13" text-anchor="middle">По погоде</text>
+            <text x="605" y="85" font-size="13" text-anchor="middle" id="weather-setpoint-value" data-state="states['muslum-9-boiler-room'].tempOutNetSetpoint" pointer-events="none">— °C</text>
         </g>
         <g id="boiler-room-state">
-            <rect x="685" y="50" width="156" height="42" rx="8" fill="#FFFFFF" stroke="#808080" stroke-width="0.5"/>
+            <rect x="685" y="50" width="156" height="42" rx="8" fill="#FFFFFF" stroke="#808080" stroke-width="0.5" id="boiler-room-state-frame" data-state="states['muslum-9-boiler-room'].boilerRoomState;states['muslum-9-boiler-room'].controlMode;states['muslum-9-boiler-room'].boilerRoomMode;states['muslum-9-boiler-room'].mainBoilerNumber"/>
             <text x="763" y="66" font-size="13" text-anchor="middle">Состояние</text>
-            <text id="boiler-room-state-value" x="763" y="85" font-size="13" text-anchor="middle">—</text>
+            <text id="boiler-room-state-value" x="763" y="85" font-size="13" text-anchor="middle" data-state="states['muslum-9-boiler-room'].boilerRoomState" pointer-events="none">—</text>
         </g>
-        <use id="other-parameters-info" href="#infoIcon" x="1020" y="22" width="18" height="18" fill="#0072C6"/>
+        <use id="other-parameters-info" href="#infoIcon" x="1020" y="22" width="18" height="18" fill="#0072C6" data-state="states['muslum-9-boiler-room'].isConnected;states['muslum-9-boiler-room'].tempOutAir;states['muslum-9-boiler-room'].tempOutNet;states['muslum-9-boiler-room'].tempInNetCircuit1;states['muslum-9-boiler-room'].tempInNetCircuit2;states['muslum-9-boiler-room'].tempInBoiler;states['muslum-9-boiler-room'].pressOutNet;states['muslum-9-boiler-room'].pressInBoiler;states['muslum-9-boiler-room'].pressInNet;states['muslum-9-boiler-room'].boilerRoomState;states['muslum-9-boiler-room'].controlMode;states['muslum-9-boiler-room'].boilerRoomMode;states['muslum-9-boiler-room'].mainBoilerNumber;states['muslum-9-boiler-room'].tempOutNetConfiguredSetpoint;states['muslum-9-boiler-room'].cascadeTempDeadband;states['muslum-9-boiler-room'].tempOutNetCorrection;states['muslum-9-boiler-room'].tempOutNetSetpoint;states['muslum-9-boiler-room'].tempOutNetTarget;states['muslum-9-boiler-room'].tempOutNetMinLimit;states['muslum-9-boiler-room'].tempOutNetMaxLimit;states['muslum-9-boiler-room'].cascadeMinTempRisePerMinute;states['muslum-9-boiler-room'].cascadeTempRisePerMinute;states['muslum-9-boiler-room'].isGasAlarm;states['muslum-9-boiler-room'].isSecurityAlarm;states['muslum-9-boiler-room'].isFireAlarm;states['muslum-9-boiler-room'].isBatteryAlarm;states['muslum-9-boiler-room'].isGeneralAlarm;states['muslum-9-boiler-room'].isBatteryFault;states['muslum-9-boiler-room'].isBatteryLow;states['muslum-9-boiler-room'].isGasInputAlarm;states['muslum-9-boiler-room'].isSecurityInputAlarm;states['muslum-9-boiler-room'].isFireInputAlarm;states['muslum-9-boiler-room'].isGasValveClosed;states['muslum-9-boiler-room'].timestamp;states['muslum-9-boiler-room'].sensors.isTemperature1SensorError;states['muslum-9-boiler-room'].sensors.isTemperature2SensorError;states['muslum-9-boiler-room'].sensors.isTemperature3SensorError;states['muslum-9-boiler-room'].sensors.isTemperature4SensorError;states['muslum-9-boiler-room'].sensors.isTemperature5SensorError;states['muslum-9-boiler-room'].sensors.isTemperature6SensorError;states['muslum-9-boiler-room'].sensors.isTempOutAirSensorError;states['muslum-9-boiler-room'].sensors.isPressure1SensorError;states['muslum-9-boiler-room'].sensors.isPressure2SensorError;states['muslum-9-boiler-room'].sensors.isPressure3SensorError;states['muslum-9-boiler-room'].sensors.isTemperature1PreHighLevel;states['muslum-9-boiler-room'].sensors.isTemperature2PreHighLevel;states['muslum-9-boiler-room'].sensors.isTemperature3PreHighLevel;states['muslum-9-boiler-room'].sensors.isPressure1PreHighLevel;states['muslum-9-boiler-room'].sensors.isTemperature3PreLowLevel;states['muslum-9-boiler-room'].sensors.isTemperature4PreLowLevel;states['muslum-9-boiler-room'].sensors.isTemperature5PreLowLevel;states['muslum-9-boiler-room'].sensors.isPressure1PreLowLevel;states['muslum-9-boiler-room'].sensors.isPressure2PreLowLevel;states['muslum-9-boiler-room'].sensors.isPressure3PreLowLevel;states['muslum-9-boiler-room'].sensors.isPressure1HighLevel;states['muslum-9-boiler-room'].sensors.isPressure1LowLevel;states['muslum-9-boiler-room'].sensors.isPressure2LowLevel;states['muslum-9-boiler-room'].sensors.isPressure3LowLevel;states['muslum-9-boiler-room'].sensors.isTemperature1HighLevel;states['muslum-9-boiler-room'].sensors.isTemperature2HighLevel;states['muslum-9-boiler-room'].sensors.isTemperature3HighLevel;states['muslum-9-boiler-room'].sensors.isTemperature3LowLevel;states['muslum-9-boiler-room'].sensors.isTemperature4LowLevel;states['muslum-9-boiler-room'].sensors.isTemperature5LowLevel" data-state-eval="element.style.fill = states['muslum-9-boiler-room'].isConnected === false || [states['muslum-9-boiler-room'].isGeneralAlarm, states['muslum-9-boiler-room'].isGasAlarm, states['muslum-9-boiler-room'].isSecurityAlarm, states['muslum-9-boiler-room'].isFireAlarm, states['muslum-9-boiler-room'].isBatteryAlarm, states['muslum-9-boiler-room'].isBatteryFault, states['muslum-9-boiler-room'].isBatteryLow, states['muslum-9-boiler-room'].sensors.isTemperature1SensorError, states['muslum-9-boiler-room'].sensors.isTemperature2SensorError, states['muslum-9-boiler-room'].sensors.isTemperature3SensorError, states['muslum-9-boiler-room'].sensors.isTemperature4SensorError, states['muslum-9-boiler-room'].sensors.isTemperature5SensorError, states['muslum-9-boiler-room'].sensors.isTemperature6SensorError, states['muslum-9-boiler-room'].sensors.isTempOutAirSensorError, states['muslum-9-boiler-room'].sensors.isPressure1SensorError, states['muslum-9-boiler-room'].sensors.isPressure2SensorError, states['muslum-9-boiler-room'].sensors.isPressure3SensorError, states['muslum-9-boiler-room'].sensors.isPressure1HighLevel, states['muslum-9-boiler-room'].sensors.isPressure1LowLevel, states['muslum-9-boiler-room'].sensors.isPressure2LowLevel, states['muslum-9-boiler-room'].sensors.isPressure3LowLevel, states['muslum-9-boiler-room'].sensors.isTemperature1HighLevel, states['muslum-9-boiler-room'].sensors.isTemperature2HighLevel, states['muslum-9-boiler-room'].sensors.isTemperature3HighLevel, states['muslum-9-boiler-room'].sensors.isTemperature3LowLevel, states['muslum-9-boiler-room'].sensors.isTemperature4LowLevel, states['muslum-9-boiler-room'].sensors.isTemperature5LowLevel].includes(true) ? 'red' : ([states['muslum-9-boiler-room'].sensors.isTemperature1PreHighLevel, states['muslum-9-boiler-room'].sensors.isTemperature2PreHighLevel, states['muslum-9-boiler-room'].sensors.isTemperature3PreHighLevel, states['muslum-9-boiler-room'].sensors.isPressure1PreHighLevel, states['muslum-9-boiler-room'].sensors.isTemperature3PreLowLevel, states['muslum-9-boiler-room'].sensors.isTemperature4PreLowLevel, states['muslum-9-boiler-room'].sensors.isTemperature5PreLowLevel, states['muslum-9-boiler-room'].sensors.isPressure1PreLowLevel, states['muslum-9-boiler-room'].sensors.isPressure2PreLowLevel, states['muslum-9-boiler-room'].sensors.isPressure3PreLowLevel].includes(true) ? '#FFC107' : '#0072C6');" data-device="muslum-9-boiler-room"/>
     </g>
 
     <g id="hydraulic-circuit" transform="translate(90 100)">
@@ -143,41 +143,41 @@
             <circle cx="930" cy="400" r="2.3"/>
         </g>
 
-        <!-- Shared boiler artwork; the flames are static until bindings are added. -->
+        <!-- Boiler flames follow the reported running state. -->
         <g id="boiler-1">
             <text x="60" y="199" font-size="16">К1</text>
-            <rect id="boiler-1-frame" x="60" y="205" width="100" height="110" fill="#FFFFFF" stroke="#000000" stroke-width="1.4"/>
-            <text id="boiler-1-status" x="110" y="246" text-anchor="middle">—</text>
-            <rect id="boiler-1-burner" x="80" y="267" width="60" height="42" rx="6" fill="#808080"/>
-            <use id="boiler-1-flame" href="#boilerFlame" x="98" y="270" width="24" height="36"/>
+            <rect id="boiler-1-frame" x="60" y="205" width="100" height="110" fill="#FFFFFF" stroke="#000000" stroke-width="1.4" data-state="states['muslum-9-boiler-room'].boilers[0].temperature;states['muslum-9-boiler-room'].boilers[0].isLocked;states['muslum-9-boiler-room'].boilers[0].isWorking;states['muslum-9-boiler-room'].boilers[0].isAlarmInput;states['muslum-9-boiler-room'].boilers[0].isManualStartCommand;states['muslum-9-boiler-room'].boilers[0].isManualStopCommand;states['muslum-9-boiler-room'].boilers[0].isManualIncreaseCommand;states['muslum-9-boiler-room'].boilers[0].isManualDecreaseCommand;states['muslum-9-boiler-room'].boilers[0].isManualModulationResetCommand;states['muslum-9-boiler-room'].boilers[0].isAutoIncreaseCommand;states['muslum-9-boiler-room'].boilers[0].isAutoDecreaseCommand;states['muslum-9-boiler-room'].boilers[0].isAlarm;states['muslum-9-boiler-room'].boilers[0].isStartError;states['muslum-9-boiler-room'].boilers[0].pidProportionalGain;states['muslum-9-boiler-room'].boilers[0].pidIntegralTime;states['muslum-9-boiler-room'].boilers[0].pidDeadband;states['muslum-9-boiler-room'].boilers[0].pidMinPulseTime;states['muslum-9-boiler-room'].boilers[0].pidMinPauseTime;states['muslum-9-boiler-room'].boilers[0].pidActuatorTravelTime;states['muslum-9-boiler-room'].isConnected" data-state-eval="element.style.fill = states['muslum-9-boiler-room'].boilers[0].isLocked === true ? '#FFC107' : '#FFFFFF'; element.style.stroke = states['muslum-9-boiler-room'].isConnected === false ? '#808080' : ((states['muslum-9-boiler-room'].boilers[0].isAlarm === true || states['muslum-9-boiler-room'].boilers[0].isStartError === true) ? 'red' : (states['muslum-9-boiler-room'].boilers[0].isWorking === true ? '#0000FF' : '#000000')); element.style.strokeWidth = (states['muslum-9-boiler-room'].boilers[0].isAlarm === true || states['muslum-9-boiler-room'].boilers[0].isStartError === true) || states['muslum-9-boiler-room'].boilers[0].isWorking === true ? '2' : '1.4';"/>
+            <text id="boiler-1-status" x="110" y="246" text-anchor="middle" data-state="states['muslum-9-boiler-room'].boilers[0].isWorking;states['muslum-9-boiler-room'].boilers[0].isLocked;states['muslum-9-boiler-room'].boilers[0].isAlarm;states['muslum-9-boiler-room'].boilers[0].isStartError;states['muslum-9-boiler-room'].isConnected" data-state-eval="element.textContent = states['muslum-9-boiler-room'].isConnected === false ? 'Нет связи' : ((states['muslum-9-boiler-room'].boilers[0].isAlarm === true || states['muslum-9-boiler-room'].boilers[0].isStartError === true) ? 'Авария' : (states['muslum-9-boiler-room'].boilers[0].isLocked === true ? 'Блок.' : (states['muslum-9-boiler-room'].boilers[0].isWorking === true ? 'Работа' : 'Останов')));" pointer-events="none">—</text>
+            <rect id="boiler-1-burner" x="80" y="267" width="60" height="42" rx="6" fill="#808080" data-state="states['muslum-9-boiler-room'].boilers[0].isWorking;states['muslum-9-boiler-room'].isConnected" data-state-eval="element.style.fill = !(states['muslum-9-boiler-room'].isConnected === false) &amp;&amp; states['muslum-9-boiler-room'].boilers[0].isWorking === true ? '#333333' : '#808080';" pointer-events="none"/>
+            <use id="boiler-1-flame" href="#boilerFlame" x="98" y="270" width="24" height="36" data-state="states['muslum-9-boiler-room'].boilers[0].isWorking;states['muslum-9-boiler-room'].isConnected" data-state-eval="element.style.display = !(states['muslum-9-boiler-room'].isConnected === false) &amp;&amp; states['muslum-9-boiler-room'].boilers[0].isWorking === true ? 'inline' : 'none';" style="display:none;pointer-events:none"/>
         </g>
         <g id="boiler-2">
             <text x="240" y="199" font-size="16">К2</text>
-            <rect id="boiler-2-frame" x="240" y="205" width="100" height="110" fill="#FFFFFF" stroke="#000000" stroke-width="1.4"/>
-            <text id="boiler-2-status" x="290" y="246" text-anchor="middle">—</text>
-            <rect id="boiler-2-burner" x="260" y="267" width="60" height="42" rx="6" fill="#808080"/>
-            <use id="boiler-2-flame" href="#boilerFlame" x="278" y="270" width="24" height="36"/>
+            <rect id="boiler-2-frame" x="240" y="205" width="100" height="110" fill="#FFFFFF" stroke="#000000" stroke-width="1.4" data-state="states['muslum-9-boiler-room'].boilers[1].temperature;states['muslum-9-boiler-room'].boilers[1].isLocked;states['muslum-9-boiler-room'].boilers[1].isWorking;states['muslum-9-boiler-room'].boilers[1].isAlarmInput;states['muslum-9-boiler-room'].boilers[1].isManualStartCommand;states['muslum-9-boiler-room'].boilers[1].isManualStopCommand;states['muslum-9-boiler-room'].boilers[1].isManualIncreaseCommand;states['muslum-9-boiler-room'].boilers[1].isManualDecreaseCommand;states['muslum-9-boiler-room'].boilers[1].isManualModulationResetCommand;states['muslum-9-boiler-room'].boilers[1].isAutoIncreaseCommand;states['muslum-9-boiler-room'].boilers[1].isAutoDecreaseCommand;states['muslum-9-boiler-room'].boilers[1].isAlarm;states['muslum-9-boiler-room'].boilers[1].isStartError;states['muslum-9-boiler-room'].boilers[1].pidProportionalGain;states['muslum-9-boiler-room'].boilers[1].pidIntegralTime;states['muslum-9-boiler-room'].boilers[1].pidDeadband;states['muslum-9-boiler-room'].boilers[1].pidMinPulseTime;states['muslum-9-boiler-room'].boilers[1].pidMinPauseTime;states['muslum-9-boiler-room'].boilers[1].pidActuatorTravelTime;states['muslum-9-boiler-room'].isConnected" data-state-eval="element.style.fill = states['muslum-9-boiler-room'].boilers[1].isLocked === true ? '#FFC107' : '#FFFFFF'; element.style.stroke = states['muslum-9-boiler-room'].isConnected === false ? '#808080' : ((states['muslum-9-boiler-room'].boilers[1].isAlarm === true || states['muslum-9-boiler-room'].boilers[1].isStartError === true) ? 'red' : (states['muslum-9-boiler-room'].boilers[1].isWorking === true ? '#0000FF' : '#000000')); element.style.strokeWidth = (states['muslum-9-boiler-room'].boilers[1].isAlarm === true || states['muslum-9-boiler-room'].boilers[1].isStartError === true) || states['muslum-9-boiler-room'].boilers[1].isWorking === true ? '2' : '1.4';"/>
+            <text id="boiler-2-status" x="290" y="246" text-anchor="middle" data-state="states['muslum-9-boiler-room'].boilers[1].isWorking;states['muslum-9-boiler-room'].boilers[1].isLocked;states['muslum-9-boiler-room'].boilers[1].isAlarm;states['muslum-9-boiler-room'].boilers[1].isStartError;states['muslum-9-boiler-room'].isConnected" data-state-eval="element.textContent = states['muslum-9-boiler-room'].isConnected === false ? 'Нет связи' : ((states['muslum-9-boiler-room'].boilers[1].isAlarm === true || states['muslum-9-boiler-room'].boilers[1].isStartError === true) ? 'Авария' : (states['muslum-9-boiler-room'].boilers[1].isLocked === true ? 'Блок.' : (states['muslum-9-boiler-room'].boilers[1].isWorking === true ? 'Работа' : 'Останов')));" pointer-events="none">—</text>
+            <rect id="boiler-2-burner" x="260" y="267" width="60" height="42" rx="6" fill="#808080" data-state="states['muslum-9-boiler-room'].boilers[1].isWorking;states['muslum-9-boiler-room'].isConnected" data-state-eval="element.style.fill = !(states['muslum-9-boiler-room'].isConnected === false) &amp;&amp; states['muslum-9-boiler-room'].boilers[1].isWorking === true ? '#333333' : '#808080';" pointer-events="none"/>
+            <use id="boiler-2-flame" href="#boilerFlame" x="278" y="270" width="24" height="36" data-state="states['muslum-9-boiler-room'].boilers[1].isWorking;states['muslum-9-boiler-room'].isConnected" data-state-eval="element.style.display = !(states['muslum-9-boiler-room'].isConnected === false) &amp;&amp; states['muslum-9-boiler-room'].boilers[1].isWorking === true ? 'inline' : 'none';" style="display:none;pointer-events:none"/>
         </g>
 
         <!-- Three network pumps in parallel; both return inlets feed the right manifold. -->
-        <g id="network-pump-1">
+        <g id="network-pump-1" data-state="states['muslum-9-boiler-room'].networkPumps[0].number;states['muslum-9-boiler-room'].networkPumps[0].isWorking;states['muslum-9-boiler-room'].isConnected">
             <text x="590" y="303" text-anchor="middle">Н1</text>
-            <rect id="network-pump-1-frame" x="570" y="310" width="40" height="40" rx="4" fill="#FFFFFF" stroke="#000000" stroke-width="1.4"/>
-            <circle id="network-pump-1-state" cx="590" cy="330" r="16" fill="#808080" stroke="#000000" stroke-width="1.2"/>
+            <rect id="network-pump-1-frame" x="570" y="310" width="40" height="40" rx="4" fill="#FFFFFF" stroke="#000000" stroke-width="1.4" data-state="states['muslum-9-boiler-room'].networkPumps[0].number;states['muslum-9-boiler-room'].networkPumps[0].isWorking;states['muslum-9-boiler-room'].isConnected" data-state-eval="element.style.stroke = states['muslum-9-boiler-room'].isConnected === false ? '#808080' : (states['muslum-9-boiler-room'].networkPumps[0].isWorking === true ? '#0000FF' : '#000000'); element.style.strokeWidth = !(states['muslum-9-boiler-room'].isConnected === false) &amp;&amp; states['muslum-9-boiler-room'].networkPumps[0].isWorking === true ? '2' : '1.4';"/>
+            <circle id="network-pump-1-state" cx="590" cy="330" r="16" fill="#808080" stroke="#000000" stroke-width="1.2" data-state="states['muslum-9-boiler-room'].networkPumps[0].number;states['muslum-9-boiler-room'].networkPumps[0].isWorking;states['muslum-9-boiler-room'].isConnected" data-state-eval="element.style.fill = states['muslum-9-boiler-room'].isConnected === false ? '#E0E0E0' : (states['muslum-9-boiler-room'].networkPumps[0].isWorking === true ? '#FFFFFF' : '#808080'); element.style.stroke = !(states['muslum-9-boiler-room'].isConnected === false) &amp;&amp; states['muslum-9-boiler-room'].networkPumps[0].isWorking === true ? '#0000FF' : '#000000'; element.style.strokeWidth = !(states['muslum-9-boiler-room'].isConnected === false) &amp;&amp; states['muslum-9-boiler-room'].networkPumps[0].isWorking === true ? '2' : '1.2';" pointer-events="none"/>
             <circle cx="590" cy="330" r="14" fill="none" stroke="#000000" stroke-width="0.4"/>
             <path d="M578 330L591 323V337Z" fill="#000000"/>
         </g>
-        <g id="network-pump-2">
+        <g id="network-pump-2" data-state="states['muslum-9-boiler-room'].networkPumps[1].number;states['muslum-9-boiler-room'].networkPumps[1].isWorking;states['muslum-9-boiler-room'].isConnected">
             <text x="590" y="373" text-anchor="middle">Н2</text>
-            <rect id="network-pump-2-frame" x="570" y="380" width="40" height="40" rx="4" fill="#FFFFFF" stroke="#000000" stroke-width="1.4"/>
-            <circle id="network-pump-2-state" cx="590" cy="400" r="16" fill="#808080" stroke="#000000" stroke-width="1.2"/>
+            <rect id="network-pump-2-frame" x="570" y="380" width="40" height="40" rx="4" fill="#FFFFFF" stroke="#000000" stroke-width="1.4" data-state="states['muslum-9-boiler-room'].networkPumps[1].number;states['muslum-9-boiler-room'].networkPumps[1].isWorking;states['muslum-9-boiler-room'].isConnected" data-state-eval="element.style.stroke = states['muslum-9-boiler-room'].isConnected === false ? '#808080' : (states['muslum-9-boiler-room'].networkPumps[1].isWorking === true ? '#0000FF' : '#000000'); element.style.strokeWidth = !(states['muslum-9-boiler-room'].isConnected === false) &amp;&amp; states['muslum-9-boiler-room'].networkPumps[1].isWorking === true ? '2' : '1.4';"/>
+            <circle id="network-pump-2-state" cx="590" cy="400" r="16" fill="#808080" stroke="#000000" stroke-width="1.2" data-state="states['muslum-9-boiler-room'].networkPumps[1].number;states['muslum-9-boiler-room'].networkPumps[1].isWorking;states['muslum-9-boiler-room'].isConnected" data-state-eval="element.style.fill = states['muslum-9-boiler-room'].isConnected === false ? '#E0E0E0' : (states['muslum-9-boiler-room'].networkPumps[1].isWorking === true ? '#FFFFFF' : '#808080'); element.style.stroke = !(states['muslum-9-boiler-room'].isConnected === false) &amp;&amp; states['muslum-9-boiler-room'].networkPumps[1].isWorking === true ? '#0000FF' : '#000000'; element.style.strokeWidth = !(states['muslum-9-boiler-room'].isConnected === false) &amp;&amp; states['muslum-9-boiler-room'].networkPumps[1].isWorking === true ? '2' : '1.2';" pointer-events="none"/>
             <circle cx="590" cy="400" r="14" fill="none" stroke="#000000" stroke-width="0.4"/>
             <path d="M578 400L591 393V407Z" fill="#000000"/>
         </g>
-        <g id="network-pump-3">
+        <g id="network-pump-3" data-state="states['muslum-9-boiler-room'].networkPumps[2].number;states['muslum-9-boiler-room'].networkPumps[2].isWorking;states['muslum-9-boiler-room'].isConnected">
             <text x="590" y="443" text-anchor="middle">Н3</text>
-            <rect id="network-pump-3-frame" x="570" y="450" width="40" height="40" rx="4" fill="#FFFFFF" stroke="#000000" stroke-width="1.4"/>
-            <circle id="network-pump-3-state" cx="590" cy="470" r="16" fill="#808080" stroke="#000000" stroke-width="1.2"/>
+            <rect id="network-pump-3-frame" x="570" y="450" width="40" height="40" rx="4" fill="#FFFFFF" stroke="#000000" stroke-width="1.4" data-state="states['muslum-9-boiler-room'].networkPumps[2].number;states['muslum-9-boiler-room'].networkPumps[2].isWorking;states['muslum-9-boiler-room'].isConnected" data-state-eval="element.style.stroke = states['muslum-9-boiler-room'].isConnected === false ? '#808080' : (states['muslum-9-boiler-room'].networkPumps[2].isWorking === true ? '#0000FF' : '#000000'); element.style.strokeWidth = !(states['muslum-9-boiler-room'].isConnected === false) &amp;&amp; states['muslum-9-boiler-room'].networkPumps[2].isWorking === true ? '2' : '1.4';"/>
+            <circle id="network-pump-3-state" cx="590" cy="470" r="16" fill="#808080" stroke="#000000" stroke-width="1.2" data-state="states['muslum-9-boiler-room'].networkPumps[2].number;states['muslum-9-boiler-room'].networkPumps[2].isWorking;states['muslum-9-boiler-room'].isConnected" data-state-eval="element.style.fill = states['muslum-9-boiler-room'].isConnected === false ? '#E0E0E0' : (states['muslum-9-boiler-room'].networkPumps[2].isWorking === true ? '#FFFFFF' : '#808080'); element.style.stroke = !(states['muslum-9-boiler-room'].isConnected === false) &amp;&amp; states['muslum-9-boiler-room'].networkPumps[2].isWorking === true ? '#0000FF' : '#000000'; element.style.strokeWidth = !(states['muslum-9-boiler-room'].isConnected === false) &amp;&amp; states['muslum-9-boiler-room'].networkPumps[2].isWorking === true ? '2' : '1.2';" pointer-events="none"/>
             <circle cx="590" cy="470" r="14" fill="none" stroke="#000000" stroke-width="0.4"/>
             <path d="M578 470L591 463V477Z" fill="#000000"/>
         </g>
@@ -187,63 +187,63 @@
             <path d="M110 151H145" fill="none" stroke="#000000" stroke-width="1.2"/>
             <circle cx="110" cy="151" r="2.3"/>
             <text x="185" y="137" text-anchor="middle">TE11</text>
-            <rect x="145" y="142" width="80" height="18" fill="#FFFFFF" stroke="#000000" stroke-width="0.4"/>
-            <text id="TE11-value" x="185" y="156" font-size="13" text-anchor="middle">— °C</text>
+            <rect x="145" y="142" width="80" height="18" fill="#FFFFFF" stroke="#000000" stroke-width="0.4" id="TE11-frame" data-state="states['muslum-9-boiler-room'].boilers[0].temperature;states['muslum-9-boiler-room'].isConnected" data-state-eval="element.style.stroke = states['muslum-9-boiler-room'].isConnected === false ? '#808080' : '#000000';"/>
+            <text id="TE11-value" x="185" y="156" font-size="13" text-anchor="middle" data-state="states['muslum-9-boiler-room'].boilers[0].temperature" pointer-events="none">— °C</text>
         </g>
         <g id="TE12">
             <path d="M290 151H325" fill="none" stroke="#000000" stroke-width="1.2"/>
             <circle cx="290" cy="151" r="2.3"/>
             <text x="365" y="137" text-anchor="middle">TE12</text>
-            <rect x="325" y="142" width="80" height="18" fill="#FFFFFF" stroke="#000000" stroke-width="0.4"/>
-            <text id="TE12-value" x="365" y="156" font-size="13" text-anchor="middle">— °C</text>
+            <rect x="325" y="142" width="80" height="18" fill="#FFFFFF" stroke="#000000" stroke-width="0.4" id="TE12-frame" data-state="states['muslum-9-boiler-room'].boilers[1].temperature;states['muslum-9-boiler-room'].isConnected" data-state-eval="element.style.stroke = states['muslum-9-boiler-room'].isConnected === false ? '#808080' : '#000000';"/>
+            <text id="TE12-value" x="365" y="156" font-size="13" text-anchor="middle" data-state="states['muslum-9-boiler-room'].boilers[1].temperature" pointer-events="none">— °C</text>
         </g>
         <g id="TE1">
             <path d="M625 83V120" fill="none" stroke="#000000" stroke-width="1.2"/>
             <circle cx="625" cy="120" r="2.3"/>
             <text x="625" y="60" text-anchor="middle">TE1</text>
-            <rect x="585" y="65" width="80" height="18" fill="#FFFFFF" stroke="#000000" stroke-width="0.4"/>
-            <text id="TE1-value" x="625" y="79" font-size="13" text-anchor="middle">— °C</text>
+            <rect x="585" y="65" width="80" height="18" fill="#FFFFFF" stroke="#000000" stroke-width="0.4" id="TE1-frame" data-state="states['muslum-9-boiler-room'].tempOutNet;states['muslum-9-boiler-room'].isConnected" data-state-eval="element.style.stroke = states['muslum-9-boiler-room'].isConnected === false ? '#808080' : '#000000';"/>
+            <text id="TE1-value" x="625" y="79" font-size="13" text-anchor="middle" data-state="states['muslum-9-boiler-room'].tempOutNet" pointer-events="none">— °C</text>
         </g>
         <g id="PE1">
             <path d="M475 83V120" fill="none" stroke="#000000" stroke-width="1.2"/>
             <circle cx="475" cy="120" r="2.3"/>
             <text x="475" y="60" text-anchor="middle">PE1</text>
-            <rect x="435" y="65" width="80" height="18" fill="#FFFFFF" stroke="#000000" stroke-width="0.4"/>
-            <text id="PE1-value" x="475" y="79" font-size="13" text-anchor="middle">— бар</text>
+            <rect x="435" y="65" width="80" height="18" fill="#FFFFFF" stroke="#000000" stroke-width="0.4" id="PE1-frame" data-state="states['muslum-9-boiler-room'].pressOutNet;states['muslum-9-boiler-room'].sensors.isPressure1SensorError;states['muslum-9-boiler-room'].sensors.isPressure1LowLevel;states['muslum-9-boiler-room'].sensors.isPressure1HighLevel;states['muslum-9-boiler-room'].sensors.isPressure1PreLowLevel;states['muslum-9-boiler-room'].sensors.isPressure1PreHighLevel;states['muslum-9-boiler-room'].pressureThresholds.pressOutNetHH;states['muslum-9-boiler-room'].pressureThresholds.pressOutNetH;states['muslum-9-boiler-room'].pressureThresholds.pressOutNetL;states['muslum-9-boiler-room'].pressureThresholds.pressOutNetLL;states['muslum-9-boiler-room'].isConnected" data-state-eval="element.style.stroke = states['muslum-9-boiler-room'].isConnected === false ? '#808080' : ((states['muslum-9-boiler-room'].sensors.isPressure1SensorError === true || states['muslum-9-boiler-room'].sensors.isPressure1LowLevel === true || states['muslum-9-boiler-room'].sensors.isPressure1HighLevel === true) ? 'red' : ((states['muslum-9-boiler-room'].sensors.isPressure1PreLowLevel === true || states['muslum-9-boiler-room'].sensors.isPressure1PreHighLevel === true) ? '#FFC107' : '#000000')); element.style.strokeWidth = (states['muslum-9-boiler-room'].sensors.isPressure1SensorError === true || states['muslum-9-boiler-room'].sensors.isPressure1LowLevel === true || states['muslum-9-boiler-room'].sensors.isPressure1HighLevel === true || states['muslum-9-boiler-room'].sensors.isPressure1PreLowLevel === true || states['muslum-9-boiler-room'].sensors.isPressure1PreHighLevel === true) ? '1.5' : '0.4';"/>
+            <text id="PE1-value" x="475" y="79" font-size="13" text-anchor="middle" data-state="states['muslum-9-boiler-room'].pressOutNet" pointer-events="none">— бар</text>
         </g>
         <g id="TE21">
             <path d="M865 263V285" fill="none" stroke="#000000" stroke-width="1.2"/>
             <circle cx="865" cy="285" r="2.3"/>
             <text x="865" y="240" text-anchor="middle">TE21</text>
-            <rect x="825" y="245" width="80" height="18" fill="#FFFFFF" stroke="#000000" stroke-width="0.4"/>
-            <text id="TE21-value" x="865" y="259" font-size="13" text-anchor="middle">— °C</text>
+            <rect x="825" y="245" width="80" height="18" fill="#FFFFFF" stroke="#000000" stroke-width="0.4" id="TE21-frame" data-state="states['muslum-9-boiler-room'].tempInNetCircuit1;states['muslum-9-boiler-room'].isConnected" data-state-eval="element.style.stroke = states['muslum-9-boiler-room'].isConnected === false ? '#808080' : '#000000';"/>
+            <text id="TE21-value" x="865" y="259" font-size="13" text-anchor="middle" data-state="states['muslum-9-boiler-room'].tempInNetCircuit1" pointer-events="none">— °C</text>
         </g>
         <g id="TE22">
             <path d="M865 361V400" fill="none" stroke="#000000" stroke-width="1.2"/>
             <text x="865" y="338" text-anchor="middle">TE22</text>
-            <rect x="825" y="343" width="80" height="18" fill="#FFFFFF" stroke="#000000" stroke-width="0.4"/>
-            <text id="TE22-value" x="865" y="357" font-size="13" text-anchor="middle">— °C</text>
+            <rect x="825" y="343" width="80" height="18" fill="#FFFFFF" stroke="#000000" stroke-width="0.4" id="TE22-frame" data-state="states['muslum-9-boiler-room'].tempInNetCircuit2;states['muslum-9-boiler-room'].isConnected" data-state-eval="element.style.stroke = states['muslum-9-boiler-room'].isConnected === false ? '#808080' : '#000000';"/>
+            <text id="TE22-value" x="865" y="357" font-size="13" text-anchor="middle" data-state="states['muslum-9-boiler-room'].tempInNetCircuit2" pointer-events="none">— °C</text>
         </g>
         <g id="TE2">
             <path d="M350 361V400" fill="none" stroke="#000000" stroke-width="1.2"/>
             <circle cx="350" cy="400" r="2.3"/>
             <text x="350" y="338" text-anchor="middle">TE2</text>
-            <rect x="310" y="343" width="80" height="18" fill="#FFFFFF" stroke="#000000" stroke-width="0.4"/>
-            <text id="TE2-value" x="350" y="357" font-size="13" text-anchor="middle">— °C</text>
+            <rect x="310" y="343" width="80" height="18" fill="#FFFFFF" stroke="#000000" stroke-width="0.4" id="TE2-frame" data-state="states['muslum-9-boiler-room'].tempInBoiler;states['muslum-9-boiler-room'].isConnected" data-state-eval="element.style.stroke = states['muslum-9-boiler-room'].isConnected === false ? '#808080' : '#000000';"/>
+            <text id="TE2-value" x="350" y="357" font-size="13" text-anchor="middle" data-state="states['muslum-9-boiler-room'].tempInBoiler" pointer-events="none">— °C</text>
         </g>
         <g id="PE22">
             <path d="M445 361V400" fill="none" stroke="#000000" stroke-width="1.2"/>
             <circle cx="445" cy="400" r="2.3"/>
             <text x="445" y="338" text-anchor="middle">PE22</text>
-            <rect x="405" y="343" width="80" height="18" fill="#FFFFFF" stroke="#000000" stroke-width="0.4"/>
-            <text id="PE22-value" x="445" y="357" font-size="13" text-anchor="middle">— бар</text>
+            <rect x="405" y="343" width="80" height="18" fill="#FFFFFF" stroke="#000000" stroke-width="0.4" id="PE22-frame" data-state="states['muslum-9-boiler-room'].pressInBoiler;states['muslum-9-boiler-room'].sensors.isPressure2SensorError;states['muslum-9-boiler-room'].sensors.isPressure2LowLevel;states['muslum-9-boiler-room'].sensors.isPressure2PreLowLevel;states['muslum-9-boiler-room'].pressureThresholds.pressInBoilerL;states['muslum-9-boiler-room'].pressureThresholds.pressInBoilerLL;states['muslum-9-boiler-room'].isConnected" data-state-eval="element.style.stroke = states['muslum-9-boiler-room'].isConnected === false ? '#808080' : ((states['muslum-9-boiler-room'].sensors.isPressure2SensorError === true || states['muslum-9-boiler-room'].sensors.isPressure2LowLevel === true) ? 'red' : ((states['muslum-9-boiler-room'].sensors.isPressure2PreLowLevel === true) ? '#FFC107' : '#000000')); element.style.strokeWidth = (states['muslum-9-boiler-room'].sensors.isPressure2SensorError === true || states['muslum-9-boiler-room'].sensors.isPressure2LowLevel === true || states['muslum-9-boiler-room'].sensors.isPressure2PreLowLevel === true) ? '1.5' : '0.4';"/>
+            <text id="PE22-value" x="445" y="357" font-size="13" text-anchor="middle" data-state="states['muslum-9-boiler-room'].pressInBoiler" pointer-events="none">— бар</text>
         </g>
         <g id="PE21">
             <path d="M700 361V400" fill="none" stroke="#000000" stroke-width="1.2"/>
             <circle cx="700" cy="400" r="2.3"/>
             <text x="700" y="338" text-anchor="middle">PE21</text>
-            <rect x="660" y="343" width="80" height="18" fill="#FFFFFF" stroke="#000000" stroke-width="0.4"/>
-            <text id="PE21-value" x="700" y="357" font-size="13" text-anchor="middle">— бар</text>
+            <rect x="660" y="343" width="80" height="18" fill="#FFFFFF" stroke="#000000" stroke-width="0.4" id="PE21-frame" data-state="states['muslum-9-boiler-room'].pressInNet;states['muslum-9-boiler-room'].sensors.isPressure3SensorError;states['muslum-9-boiler-room'].sensors.isPressure3LowLevel;states['muslum-9-boiler-room'].sensors.isPressure3PreLowLevel;states['muslum-9-boiler-room'].pressureThresholds.pressInNetL;states['muslum-9-boiler-room'].pressureThresholds.pressInNetLL;states['muslum-9-boiler-room'].isConnected" data-state-eval="element.style.stroke = states['muslum-9-boiler-room'].isConnected === false ? '#808080' : ((states['muslum-9-boiler-room'].sensors.isPressure3SensorError === true || states['muslum-9-boiler-room'].sensors.isPressure3LowLevel === true) ? 'red' : ((states['muslum-9-boiler-room'].sensors.isPressure3PreLowLevel === true) ? '#FFC107' : '#000000')); element.style.strokeWidth = (states['muslum-9-boiler-room'].sensors.isPressure3SensorError === true || states['muslum-9-boiler-room'].sensors.isPressure3LowLevel === true || states['muslum-9-boiler-room'].sensors.isPressure3PreLowLevel === true) ? '1.5' : '0.4';"/>
+            <text id="PE21-value" x="700" y="357" font-size="13" text-anchor="middle" data-state="states['muslum-9-boiler-room'].pressInNet" pointer-events="none">— бар</text>
         </g>
 
         <g id="pipe-terminals" font-size="15">
@@ -287,36 +287,36 @@
          height, 0.75 × 700 / 412 = 1.274271845 gives the same displayed item size. -->
     <g id="alarm-panel">
         <rect id="alarm-panel-frame" x="20" y="128" width="104" height="484" rx="13" fill="#FFFFFF" stroke="#808080" stroke-width="0.6"/>
-        <text x="72" y="148" font-size="12" text-anchor="middle">Аварийные</text>
-        <text x="72" y="163" font-size="12" text-anchor="middle">события</text>
-        <g id="security-alarm" transform="translate(40 174) scale(1.274271845)">
-            <rect id="security-alarm-frame" width="50" height="50" rx="12" fill="#FFFFFF" stroke="#000000" stroke-width="1"/>
+        <text x="72" y="148" font-size="12" text-anchor="middle">Состояния</text>
+        <text x="72" y="163" font-size="12" text-anchor="middle">и аварии</text>
+        <g id="security-alarm" transform="translate(40 174) scale(1.274271845)" data-state="states['muslum-9-boiler-room'].isSecurityAlarm;states['muslum-9-boiler-room'].isSecurityInputAlarm;states['muslum-9-boiler-room'].isConnected">
+            <rect id="security-alarm-frame" width="50" height="50" rx="12" fill="#FFFFFF" stroke="#000000" stroke-width="1" data-state="states['muslum-9-boiler-room'].isSecurityAlarm;states['muslum-9-boiler-room'].isSecurityInputAlarm;states['muslum-9-boiler-room'].isConnected" data-state-eval="element.style.fill = states['muslum-9-boiler-room'].isConnected === false ? '#E0E0E0' : (states['muslum-9-boiler-room'].isSecurityAlarm === true ? 'red' : '#FFFFFF');"/>
             <use href="#muslum9-security-alarm" x="9.5" y="2" width="30.45" height="28.65"/>
             <text x="25" y="42.1" text-anchor="middle" font-size="9">Охрана</text>
         </g>
-        <g id="fire-alarm" transform="translate(40 246) scale(1.274271845)">
-            <rect id="fire-alarm-frame" width="50" height="50" rx="12" fill="#FFFFFF" stroke="#000000" stroke-width="1"/>
+        <g id="fire-alarm" transform="translate(40 246) scale(1.274271845)" data-state="states['muslum-9-boiler-room'].isFireAlarm;states['muslum-9-boiler-room'].isFireInputAlarm;states['muslum-9-boiler-room'].isConnected">
+            <rect id="fire-alarm-frame" width="50" height="50" rx="12" fill="#FFFFFF" stroke="#000000" stroke-width="1" data-state="states['muslum-9-boiler-room'].isFireAlarm;states['muslum-9-boiler-room'].isFireInputAlarm;states['muslum-9-boiler-room'].isConnected" data-state-eval="element.style.fill = states['muslum-9-boiler-room'].isConnected === false ? '#E0E0E0' : (states['muslum-9-boiler-room'].isFireAlarm === true ? 'red' : '#FFFFFF');"/>
             <use href="#muslum9-fire-alarm" x="11" y="6.4" width="28" height="28"/>
             <text x="25" y="42.1" text-anchor="middle" font-size="9">Пожар</text>
         </g>
-        <g id="gas-alarm" transform="translate(40 318) scale(1.274271845)">
-            <rect id="gas-alarm-frame" width="50" height="50" rx="12" fill="#FFFFFF" stroke="#000000" stroke-width="1"/>
+        <g id="gas-alarm" transform="translate(40 318) scale(1.274271845)" data-state="states['muslum-9-boiler-room'].isGasAlarm;states['muslum-9-boiler-room'].isGasInputAlarm;states['muslum-9-boiler-room'].isConnected">
+            <rect id="gas-alarm-frame" width="50" height="50" rx="12" fill="#FFFFFF" stroke="#000000" stroke-width="1" data-state="states['muslum-9-boiler-room'].isGasAlarm;states['muslum-9-boiler-room'].isGasInputAlarm;states['muslum-9-boiler-room'].isConnected" data-state-eval="element.style.fill = states['muslum-9-boiler-room'].isConnected === false ? '#E0E0E0' : (states['muslum-9-boiler-room'].isGasAlarm === true ? 'red' : '#FFFFFF');"/>
             <use href="#muslum9-gas-alarm" x="10" y="4" width="30" height="28"/>
             <text x="25" y="42.1" text-anchor="middle" font-size="9">Газ</text>
         </g>
-        <g id="network-pumps-alarm" transform="translate(40 390) scale(1.274271845)">
-            <rect id="network-pumps-alarm-frame" width="50" height="50" rx="12" fill="#FFFFFF" stroke="#000000" stroke-width="1"/>
+        <g id="network-pumps-alarm" transform="translate(40 390) scale(1.274271845)" data-state="states['muslum-9-boiler-room'].networkPumps[0].number;states['muslum-9-boiler-room'].networkPumps[0].isWorking;states['muslum-9-boiler-room'].networkPumps[1].number;states['muslum-9-boiler-room'].networkPumps[1].isWorking;states['muslum-9-boiler-room'].networkPumps[2].number;states['muslum-9-boiler-room'].networkPumps[2].isWorking;states['muslum-9-boiler-room'].isConnected">
+            <rect id="network-pumps-alarm-frame" width="50" height="50" rx="12" fill="#FFFFFF" stroke="#000000" stroke-width="1" data-state="states['muslum-9-boiler-room'].networkPumps[0].number;states['muslum-9-boiler-room'].networkPumps[0].isWorking;states['muslum-9-boiler-room'].networkPumps[1].number;states['muslum-9-boiler-room'].networkPumps[1].isWorking;states['muslum-9-boiler-room'].networkPumps[2].number;states['muslum-9-boiler-room'].networkPumps[2].isWorking;states['muslum-9-boiler-room'].isConnected" data-state-eval="element.style.fill = states['muslum-9-boiler-room'].isConnected === false ? '#E0E0E0' : ((states['muslum-9-boiler-room'].networkPumps[0].isWorking === true || states['muslum-9-boiler-room'].networkPumps[1].isWorking === true || states['muslum-9-boiler-room'].networkPumps[2].isWorking === true) ? '#E3F2FD' : '#FFFFFF');"/>
             <use href="#muslum9-motor-alarm" x="10" y="3" width="30" height="23"/>
             <text x="25" y="36" text-anchor="middle" font-size="8.5">Сетевые</text>
             <text x="25" y="45" text-anchor="middle" font-size="8.5">насосы</text>
         </g>
-        <g id="boiler-1-alarm" transform="translate(40 462) scale(1.274271845)">
-            <rect id="boiler-1-alarm-frame" width="50" height="50" rx="12" fill="#FFFFFF" stroke="#000000" stroke-width="1"/>
+        <g id="boiler-1-alarm" transform="translate(40 462) scale(1.274271845)" data-state="states['muslum-9-boiler-room'].boilers[0].isAlarm;states['muslum-9-boiler-room'].boilers[0].isStartError;states['muslum-9-boiler-room'].boilers[0].isAlarmInput;states['muslum-9-boiler-room'].isConnected">
+            <rect id="boiler-1-alarm-frame" width="50" height="50" rx="12" fill="#FFFFFF" stroke="#000000" stroke-width="1" data-state="states['muslum-9-boiler-room'].boilers[0].isAlarm;states['muslum-9-boiler-room'].boilers[0].isStartError;states['muslum-9-boiler-room'].boilers[0].isAlarmInput;states['muslum-9-boiler-room'].isConnected" data-state-eval="element.style.fill = states['muslum-9-boiler-room'].isConnected === false ? '#E0E0E0' : ((states['muslum-9-boiler-room'].boilers[0].isAlarm === true || states['muslum-9-boiler-room'].boilers[0].isStartError === true) ? 'red' : '#FFFFFF');"/>
             <use href="#muslum9-boiler-alarm" x="14" y="3" width="22" height="25"/>
             <text x="25" y="42.1" text-anchor="middle" font-size="9">Котёл 1</text>
         </g>
-        <g id="boiler-2-alarm" transform="translate(40 534) scale(1.274271845)">
-            <rect id="boiler-2-alarm-frame" width="50" height="50" rx="12" fill="#FFFFFF" stroke="#000000" stroke-width="1"/>
+        <g id="boiler-2-alarm" transform="translate(40 534) scale(1.274271845)" data-state="states['muslum-9-boiler-room'].boilers[1].isAlarm;states['muslum-9-boiler-room'].boilers[1].isStartError;states['muslum-9-boiler-room'].boilers[1].isAlarmInput;states['muslum-9-boiler-room'].isConnected">
+            <rect id="boiler-2-alarm-frame" width="50" height="50" rx="12" fill="#FFFFFF" stroke="#000000" stroke-width="1" data-state="states['muslum-9-boiler-room'].boilers[1].isAlarm;states['muslum-9-boiler-room'].boilers[1].isStartError;states['muslum-9-boiler-room'].boilers[1].isAlarmInput;states['muslum-9-boiler-room'].isConnected" data-state-eval="element.style.fill = states['muslum-9-boiler-room'].isConnected === false ? '#E0E0E0' : ((states['muslum-9-boiler-room'].boilers[1].isAlarm === true || states['muslum-9-boiler-room'].boilers[1].isStartError === true) ? 'red' : '#FFFFFF');"/>
             <use href="#muslum9-boiler-alarm" x="14" y="3" width="22" height="25"/>
             <text x="25" y="42.1" text-anchor="middle" font-size="9">Котёл 2</text>
         </g>

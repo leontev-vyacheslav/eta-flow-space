@@ -1,0 +1,12 @@
+#muslum9-mnemoschema [data-state] {
+    cursor: pointer;
+}
+
+#muslum9-mnemoschema rect[data-state],
+#muslum9-mnemoschema circle[data-state] {
+    transition: fill 0.2s ease, stroke 0.2s ease;
+}
+
+#muslum9-mnemoschema rect[data-state]:hover {
+    filter: drop-shadow(0 0 2px rgba(0, 114, 198, 0.45));
+}

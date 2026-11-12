@@ -62,5 +62,49 @@ Offline validation uses the existing [.tools/flow-chain](../../../.tools/flow-ch
 runner with `--flows flow-space-nodered-b/flows.json`, complete synthetic register
 words, and this schema. Storage is mocked during validation.
 
-These are local source changes; live deployment and hardware validation have
-not been performed. Diagram bindings remain separate follow-up work.
+## Diagram bindings
+
+The diagram binds the decoded readings to the corresponding equipment and pipe
+positions. Bound frames, alarm tiles, pump symbols and the information icon open
+the existing properties popover; graph links remain available for chartable fields.
+
+| Diagram element | State property |
+|---|---|
+| Outdoor temperature | `tempOutAir` |
+| Supply target | `tempOutNetTarget` |
+| Weather-based supply setpoint (`По погоде`) | `tempOutNetSetpoint` |
+| Room state | `boilerRoomState`, with control/operation modes and main-boiler number in the details |
+| TE11 / TE12 | `boilers[0].temperature` / `boilers[1].temperature` |
+| TE1 | `tempOutNet` |
+| TE21 / TE22 | `tempInNetCircuit1` / `tempInNetCircuit2` |
+| TE2 | `tempInBoiler` |
+| PE1 | `pressOutNet`, with P1 fault, warning, alarm and threshold fields |
+| PE22 | `pressInBoiler`, with P2 fault, warning, alarm and threshold fields |
+| PE21 | `pressInNet`, with P3 fault, warning, alarm and threshold fields |
+| Н1 / Н2 / Н3 | The corresponding `networkPumps[].isWorking` and physical number |
+| Boiler body and flame | The corresponding boiler's running, locked, alarm and start-error flags |
+| Security / fire / gas tiles | The corresponding decoded alarm and original input flags |
+
+TE11 and TE12 display the channels associated with boilers 1 and 2; the second
+channel's supply/return ambiguity remains as described above. T1–T6 faults and
+warnings remain in the details until their association with the diagram
+instrument labels is confirmed. They are available through the top
+information icon and affect its overall warning/fault colour. They do not colour
+individual temperature instruments. The outdoor sensor and P1–P3 pressures have
+established mappings and receive their own fault/warning outlines.
+
+The former `Задание котлов` card now shows `По погоде`: this export has no separate
+boiler-temperature setpoint. The supply target and weather-based supply setpoint
+retain their distinct meanings. The left panel is labelled `Состояния и аварии`;
+its network-pump tile summarises running states, because no pump-fault signals
+are decoded. No alarm is inferred from a stopped pump.
+
+Running pumps have blue outlines. Boiler outlines show running in blue and
+alarms/start errors in red; locked boilers have an amber body. Flames appear only
+when the reported boiler running flag is true and the device is not disconnected.
+The bindings assume a complete state with populated fields and use the schema's
+formatting directly. A disconnected device marks the timestamp and top frame red
+and shows grey equipment/alarm states. The diagram does not interpret an unknown
+`Boil*_norm` polarity as an alarm.
+
+These are local source changes; deployment and hardware validation are separate.
