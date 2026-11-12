@@ -104,8 +104,8 @@ remain available in Parameters, without being assigned to an unrelated diagram t
 
 The information icon lists `isConnected`, `timestamp`, then seven unique cascade
 settings/current integrals. No alarm flags or other contextual duplicates are added.
-Connection status colours the icon, header frame and shared timestamp; a disconnected
-header has a dashed red outline. The outer frame also indicates the general alarm.
+Connection status colours the icon and shared timestamp. The header border stays
+solid grey regardless of connection status or the general-alarm flag.
 Other readings and equipment follow their own state fields. Single-property texts
 use schema formatting and enum descriptions. The inspected API response supplied
 every bound property without nulls; expressions use direct state access as in

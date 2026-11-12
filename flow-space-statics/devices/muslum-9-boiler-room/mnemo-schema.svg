@@ -78,7 +78,7 @@
 
     <!-- The top parameters panel follows the Гагарина layout. -->
     <g id="other-parameters">
-        <rect id="other-parameters-frame" x="20" y="12" width="1030" height="90" rx="13" fill="#FFFFFF" stroke="#808080" stroke-width="0.6" data-state="states['muslum-9-boiler-room'].isConnected;states['muslum-9-boiler-room'].isGeneralAlarm" data-state-eval="element.style.stroke = states['muslum-9-boiler-room'].isConnected === false || states['muslum-9-boiler-room'].isGeneralAlarm === true ? 'red' : '#808080'; element.style.strokeDasharray = states['muslum-9-boiler-room'].isConnected === false ? '4 2' : 'none';"/>
+        <rect id="other-parameters-frame" x="20" y="12" width="1030" height="90" rx="13" fill="#FFFFFF" stroke="#808080" stroke-width="0.6" data-state="states['muslum-9-boiler-room'].isConnected;states['muslum-9-boiler-room'].isGeneralAlarm"/>
         <text x="535" y="36" text-anchor="middle">Прочие параметры работы котельной</text>
         <g id="timestamp" font-size="11" letter-spacing="1" data-state="states['muslum-9-boiler-room'].timestamp;states['muslum-9-boiler-room'].isConnected" data-state-eval="element.style.fill = states['muslum-9-boiler-room'].isConnected === false ? 'red' : '#000000';">
             <text id="timestamp-date" x="34" y="34" data-state="states['muslum-9-boiler-room'].timestamp" data-state-format="date">—.—.——</text>

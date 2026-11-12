@@ -124,8 +124,9 @@ not on the boiler bodies or their status labels. Alarm/start-error colours remai
 on the corresponding emergency tiles.
 The bindings assume a complete state with populated fields and use the schema's
 formatting directly. `isConnected` is listed on the information icon,
-`other-parameters-frame` and the shared `timestamp` group. All three turn red
-when the device is disconnected; the date and time are black when connected.
+`other-parameters-frame` and the shared `timestamp` group. The icon and timestamp
+turn red when disconnected; the date and time are black when connected. The header
+border stays solid grey regardless of connection status or the general-alarm flag.
 Readings, equipment and alarm symbols follow their own reported state properties. The
 diagram does not interpret an unknown `Boil*_norm` polarity as an alarm.
 
