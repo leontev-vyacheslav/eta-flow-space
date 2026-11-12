@@ -84,7 +84,9 @@ the existing properties popover; graph links remain available for chartable fiel
 | PE22 | `pressInBoiler`, with P2 fault, warning, alarm and threshold fields |
 | PE21 | `pressInNet`, with P3 fault, warning, alarm and threshold fields |
 | Н1 / Н2 / Н3 | The corresponding `networkPumps[].isWorking` and physical number |
-| Boiler body and flame | The corresponding boiler's running, locked, alarm and start-error flags |
+| Boiler body | `isWorking`, `isLocked`, `temperature`, then command-feedback and PID properties |
+| Boiler flame | The corresponding boiler's `isWorking` flag |
+| Boiler emergency tiles | The corresponding boiler's `isAlarmInput`, `isStartError` and `isAlarm` flags |
 | Security / fire / gas tiles | The corresponding decoded alarm and original input flags |
 
 TE11 and TE12 display the channels associated with boilers 1 and 2; the second
@@ -110,8 +112,12 @@ No alarm is inferred from a stopped pump. The six header cards share one row;
 the control and operation modes use the same card style as the room state.
 
 Running pumps have blue outlines. Boiler outlines show running in blue and
-alarms/start errors in red; locked boilers have an amber body. Flames appear
-when the reported boiler running flag is true.
+stopped in black; locked boilers have an amber body. Flames appear when the
+reported boiler running flag is true. Boiler popovers always start with
+`isWorking`, `isLocked`, `temperature`, in that order. On the diagram,
+`isAlarmInput`, `isStartError` and `isAlarm` are bound only in the emergency panel,
+not on the boiler bodies or their status labels. Alarm/start-error colours remain
+on the corresponding emergency tiles.
 The bindings assume a complete state with populated fields and use the schema's
 formatting directly. `isConnected` is listed on the information icon,
 `other-parameters-frame` and the shared `timestamp` group. All three turn red
