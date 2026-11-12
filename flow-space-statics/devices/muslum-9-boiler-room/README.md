@@ -73,7 +73,9 @@ the existing properties popover; graph links remain available for chartable fiel
 | Outdoor temperature | `tempOutAir` |
 | Supply target | `tempOutNetTarget` |
 | Weather-based supply setpoint (`По погоде`) | `tempOutNetSetpoint` |
-| Room state | `boilerRoomState`, with control/operation modes and main-boiler number in the details |
+| Room state | `boilerRoomState`, with the main-boiler number in the details |
+| Control mode (`Режим управления`) | `controlMode` |
+| Operation mode (`Режим работы`) | `boilerRoomMode` |
 | TE11 / TE12 | `boilers[0].temperature` / `boilers[1].temperature` |
 | TE1 | `tempOutNet` |
 | TE21 / TE22 | `tempInNetCircuit1` / `tempInNetCircuit2` |
@@ -102,7 +104,10 @@ The former `Задание котлов` card now shows `По погоде`: thi
 boiler-temperature setpoint. The supply target and weather-based supply setpoint
 retain their distinct meanings. The left panel is labelled `Состояния и аварии`;
 its network-pump tile summarises running states, because no pump-fault signals
-are decoded. No alarm is inferred from a stopped pump.
+are decoded. Its popover contains only the three `networkPumps[].isWorking`
+properties. Physical pump numbers remain bound to the individual pump symbols.
+No alarm is inferred from a stopped pump. The six header cards share one row;
+the control and operation modes use the same card style as the room state.
 
 Running pumps have blue outlines. Boiler outlines show running in blue and
 alarms/start errors in red; locked boilers have an amber body. Flames appear
