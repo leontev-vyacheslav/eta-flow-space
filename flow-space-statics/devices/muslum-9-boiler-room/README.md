@@ -87,11 +87,12 @@ the existing properties popover; graph links remain available for chartable fiel
 
 TE11 and TE12 display the channels associated with boilers 1 and 2; the second
 channel's supply/return ambiguity remains as described above. T1–T6 faults and
-warnings remain in the details until their association with the diagram
-instrument labels is confirmed. They are available through the top
-information icon and affect its overall warning/fault colour. They do not colour
-individual temperature instruments. The outdoor sensor and P1–P3 pressures have
-established mappings and receive their own fault/warning outlines.
+warnings remain on the `Параметры` → `Датчики` tab until their association with
+the diagram instrument labels is confirmed. They do not colour individual
+temperature instruments. The information icon contains connection, measurement,
+mode and setting properties; alarm, fault and warning properties are excluded.
+Its colour follows connection status only. The outdoor sensor and P1–P3 pressures
+have established mappings and receive their own fault/warning outlines.
 
 The former `Задание котлов` card now shows `По погоде`: this export has no separate
 boiler-temperature setpoint. The supply target and weather-based supply setpoint
