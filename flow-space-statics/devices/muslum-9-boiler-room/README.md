@@ -89,10 +89,14 @@ TE11 and TE12 display the channels associated with boilers 1 and 2; the second
 channel's supply/return ambiguity remains as described above. T1–T6 faults and
 warnings remain on the `Параметры` → `Датчики` tab until their association with
 the diagram instrument labels is confirmed. They do not colour individual
-temperature instruments. The information icon contains connection, measurement,
-mode and setting properties; alarm, fault and warning properties are excluded.
-Its colour follows connection status only. The outdoor sensor and P1–P3 pressures
-have established mappings and receive their own fault/warning outlines.
+temperature instruments. The information icon always lists `isConnected` first
+and `timestamp` second, even though those properties are also bound elsewhere.
+They are followed by the properties unique to the icon: `cascadeTempDeadband`,
+`cascadeMinTempRisePerMinute`, `cascadeTempRisePerMinute` and `isGasValveClosed`.
+Alarm, fault, warning and other duplicate properties are excluded. Its colour
+follows connection status only.
+The outdoor sensor and P1–P3 pressures have established mappings and receive
+their own fault/warning outlines.
 
 The former `Задание котлов` card now shows `По погоде`: this export has no separate
 boiler-temperature setpoint. The supply target and weather-based supply setpoint
@@ -104,11 +108,10 @@ Running pumps have blue outlines. Boiler outlines show running in blue and
 alarms/start errors in red; locked boilers have an amber body. Flames appear
 when the reported boiler running flag is true.
 The bindings assume a complete state with populated fields and use the schema's
-formatting directly. Connection status is bound to `other-parameters-info`
-(the `infoIcon` instance), `other-parameters-frame` and the shared `timestamp`
-group. All three turn red when the device is disconnected; the date and time
-are black when connected. Readings, equipment and alarm symbols follow their
-own reported state properties. The diagram does not interpret an unknown
-`Boil*_norm` polarity as an alarm.
+formatting directly. `isConnected` is listed on the information icon,
+`other-parameters-frame` and the shared `timestamp` group. All three turn red
+when the device is disconnected; the date and time are black when connected.
+Readings, equipment and alarm symbols follow their own reported state properties. The
+diagram does not interpret an unknown `Boil*_norm` polarity as an alarm.
 
 These are local source changes; deployment and hardware validation are separate.
