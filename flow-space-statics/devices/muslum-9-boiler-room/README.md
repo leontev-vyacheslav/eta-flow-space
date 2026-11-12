@@ -103,10 +103,11 @@ Running pumps have blue outlines. Boiler outlines show running in blue and
 alarms/start errors in red; locked boilers have an amber body. Flames appear
 when the reported boiler running flag is true.
 The bindings assume a complete state with populated fields and use the schema's
-formatting directly. Connection status is bound only to `other-parameters-info`
-(the `infoIcon` instance) and `other-parameters-frame`; both turn red when the
-device is disconnected. Readings, timestamps, equipment and alarm symbols follow
-their own reported state properties. The diagram does not interpret an unknown
+formatting directly. Connection status is bound to `other-parameters-info`
+(the `infoIcon` instance), `other-parameters-frame` and the shared `timestamp`
+group. All three turn red when the device is disconnected; the date and time
+are black when connected. Readings, equipment and alarm symbols follow their
+own reported state properties. The diagram does not interpret an unknown
 `Boil*_norm` polarity as an alarm.
 
 These are local source changes; deployment and hardware validation are separate.
