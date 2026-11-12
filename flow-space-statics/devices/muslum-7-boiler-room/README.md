@@ -9,7 +9,7 @@ metadata is not stored. Each schema property records its source in `$comment`.
 The collector awaits `storeDeviceStateToCacheAsync` with device code
 `muslum-7-boiler-room` and the tab ID extracted from `node.path`, then sets
 `msg.deviceState`. Polling configuration, converter functions and wiring are unchanged.
-These are local source changes; no live deployment has been performed.
+The original mapping was validated offline; deployment was outside that change.
 The schema adds the API-provided `isConnected` property. It also includes physical pump
 numbers so the two boiler-pump entries can be identified as Н4 and Н5.
 
@@ -40,8 +40,9 @@ null, while their UI dictionaries contain numeric IDs only. `timestamp` always u
 The names and meanings follow the exported converter comments:
 
 - `t_inl` / `t_out` are network supply / return, despite their legacy abbreviations.
-- `t_inb` / `t_oub` are boiler-circuit supply / return. Their association with the
-  diagram's individual TE11/TE12 labels is not established by this export.
+- `t_inb` / `t_oub` are boiler-circuit supply / return. The threshold decoder names
+  the corresponding channels TE11 / TE12. Their diagram association was confirmed
+  for the binding update below; neither is an individual boiler temperature.
 - `t1_n` becomes `tempOutNetSetpoint`, the weather-based supply setpoint;
   `tnet` becomes `tempOutNetTarget`, the current network-supply target described by
   the converter. It is not relabelled as a boiler-temperature setpoint.
@@ -51,6 +52,71 @@ The names and meanings follow the exported converter comments:
 - The commented-out pump-error decoders are not collected, so the schema does not
   invent pump-fault fields.
 
-Diagram bindings and live deployment are separate follow-up work. Offline validation
-uses the existing [.tools/flow-chain](../../../.tools/flow-chain/README.md) runner with
+Offline mapping validation uses the existing
+[.tools/flow-chain](../../../.tools/flow-chain/README.md) runner with
 `--flows flow-space-nodered-b/flows.json` and synthetic register words.
+
+## Diagram bindings
+
+The diagram follows Muslum-9's property popovers, six header cards, equipment colours
+and scoped yellow hover highlighting. It binds 70 SVG elements to 143 distinct
+properties from this site's schema. The collector and schema are unchanged.
+
+| Diagram element | State property |
+|---|---|
+| Outdoor temperature | `tempOutAir`, with its sensor-fault flag |
+| Supply target | `tempOutNetTarget`, with configured setpoint, correction and control bands |
+| Weather-based setpoint (`По погоде`) | `tempOutNetSetpoint`, with minimum/maximum supply limits |
+| Room state / control mode / operation mode | Separate `boilerRoomState`, `controlMode`, `boilerRoomMode` cards |
+| TE1 / TE2 | `tempOutNet` / `tempInNet` |
+| TE11 / TE12 | `tempOutBoiler` / `tempInBoiler` (common boiler-circuit supply / return) |
+| PE1 / PE2 | `pressOutNet` / `pressInNet` |
+| PE11 / PE21 | `pressOutBoiler` / `pressInBoiler` |
+| Н1 / Н2 / Н3 | `networkPumps[0..2]`: number, running state, start/stop command feedback |
+| Н4 / Н5 | `boilerPumps[0..1]`: number, running state, start/stop command feedback |
+| Boiler body and burner | Running, locked, powered, minimum/maximum burning, four command-feedback bits, start order |
+| Boiler emergency tiles | The corresponding `isAlarm` and `isStartError` flags |
+| Security / fire / gas tiles | The corresponding decoded alarm and original input flags |
+
+TE12 was moved from boiler 2's supply outlet to the common boiler return, following
+the confirmed circuit meaning. TE11 retains the supply-side position. The physical
+PE21 label is retained from the drawing; it represents boiler-circuit return
+pressure (`P_oub`, with P12 limits and P4 warning/alarm thresholds).
+
+Each instrument's detail list includes its own available sensor faults, warning and
+alarm flags, thresholds, and pressure limits. Red outlines indicate a reported fault
+or alarm; amber indicates a warning. The diagram uses the PLC flags directly rather
+than recalculating them from displayed measurements. For example, the API snapshot
+used for verification reports a supply-pressure warning even though its displayed
+pressure is above the low-warning threshold; that discrepancy is retained.
+
+Boiler body/burner popovers start with `isWorking`, `isLocked`, `isPowered`, followed
+by the burning-stage and command-feedback fields, then `startOrder` (ten properties).
+This model has no individual boiler-temperature or PID fields. Alarm fields belong
+to the emergency tiles. Running equipment has blue outlines, stopped pumps are grey,
+locked boilers are amber, and flame visibility follows `isWorking` independently
+of power and command-feedback bits.
+
+The pump summary tiles show running states, with `mainNetworkPumpNumber` additionally
+on the network summary. Individual pumps retain their physical numbers and command
+feedback. A stopped pump is not treated as an alarm. Battery alarm/fault/low signals
+remain available in Parameters, without being assigned to an unrelated diagram tile.
+
+The information icon lists `isConnected`, `timestamp`, then seven unique cascade
+settings/current integrals. No alarm flags or other contextual duplicates are added.
+Connection status colours the icon, header frame and shared timestamp; a disconnected
+header has a dashed red outline. The outer frame also indicates the general alarm.
+Other readings and equipment follow their own state fields. Single-property texts
+use schema formatting and enum descriptions. The inspected API response supplied
+every bound property without nulls; expressions use direct state access as in
+Muslum-9, while collection/schema nullability stays unchanged.
+
+Flames and decorative pump rings/arrows do not intercept clicks. Bound shapes use
+Muslum-9's yellow outline/glow on hover and restore state colours on pointer leave.
+Burners open the same full properties as their boiler bodies.
+On phone-sized screens, popovers are constrained to the viewport and long property
+names can wrap. These rules apply only while the Muslum-7 diagram is displayed.
+
+The binding update is local. Browser verification uses the production API tunnel
+with overrides for the edited SVG/CSS only; simulated states stay in browser
+responses. See the [verification report](../../../.reports/2026-11-12-muslum7-diagram-bindings/README.md).
