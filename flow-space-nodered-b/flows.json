@@ -3303,7 +3303,7 @@
         "dataType": "HoldingRegister",
         "adr": "50",
         "quantity": "32",
-        "rate": "15",
+        "rate": "30",
         "rateUnit": "s",
         "delayOnStart": false,
         "enableDeformedMessages": false,
@@ -3763,26 +3763,6 @@
         ]
     },
     {
-        "id": "4a905f95cad46a90",
-        "type": "comment",
-        "z": "cf7c93d5a38dd948",
-        "name": "Глобальная переменная!",
-        "info": "",
-        "x": 610,
-        "y": 660,
-        "wires": []
-    },
-    {
-        "id": "aef1623f341ae774",
-        "type": "comment",
-        "z": "cf7c93d5a38dd948",
-        "name": "Глобальная переменная!",
-        "info": "",
-        "x": 610,
-        "y": 560,
-        "wires": []
-    },
-    {
         "id": "4fc9a324ac78f29c",
         "type": "join",
         "z": "cf7c93d5a38dd948",
@@ -3862,7 +3842,7 @@
         "dataType": "HoldingRegister",
         "adr": "50",
         "quantity": "42",
-        "rate": "15",
+        "rate": "30",
         "rateUnit": "s",
         "delayOnStart": false,
         "enableDeformedMessages": false,
