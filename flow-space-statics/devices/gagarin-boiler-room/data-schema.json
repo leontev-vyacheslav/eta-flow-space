@@ -33,7 +33,8 @@
             }
           ]
         }
-      }
+      },
+      "$comment": "Added by the Web API, not collected from the PLC."
     },
     "tempOutAir": {
       "type": "number",
@@ -52,7 +53,9 @@
           }
         },
         "chart": {}
-      }
+      },
+      "nullable": true,
+      "$comment": "Node-RED payload: t_air"
     },
     "tempOutNet": {
       "type": "number",
@@ -71,7 +74,9 @@
           }
         },
         "chart": {}
-      }
+      },
+      "nullable": true,
+      "$comment": "Node-RED payload: t_inl"
     },
     "tempInNet": {
       "type": "number",
@@ -90,7 +95,9 @@
           }
         },
         "chart": {}
-      }
+      },
+      "nullable": true,
+      "$comment": "Node-RED payload: t_out"
     },
     "pressOutNet": {
       "type": "number",
@@ -109,7 +116,9 @@
           }
         },
         "chart": {}
-      }
+      },
+      "nullable": true,
+      "$comment": "Node-RED payload: P_inl"
     },
     "pressInNet": {
       "type": "number",
@@ -128,7 +137,9 @@
           }
         },
         "chart": {}
-      }
+      },
+      "nullable": true,
+      "$comment": "Node-RED payload: P_out"
     },
     "boilerRoomState": {
       "$ref": "#/$defs/BoilerRoomState",
@@ -147,7 +158,8 @@
             "displayExpr": "description"
           }
         }
-      }
+      },
+      "$comment": "Node-RED payload: Status_str"
     },
     "tempOutNetSetpoint": {
       "type": "number",
@@ -166,7 +178,9 @@
           }
         },
         "chart": {}
-      }
+      },
+      "nullable": true,
+      "$comment": "Node-RED payload: t1_n"
     },
     "tempBoilersSetpoint": {
       "type": "number",
@@ -185,7 +199,9 @@
           }
         },
         "chart": {}
-      }
+      },
+      "nullable": true,
+      "$comment": "Node-RED payload: tnet"
     },
     "cascadeStageOnIntegral": {
       "type": "number",
@@ -202,7 +218,9 @@
             "readOnly": true
           }
         }
-      }
+      },
+      "nullable": true,
+      "$comment": "Node-RED payload: T_on"
     },
     "cascadeStageOffIntegral": {
       "type": "number",
@@ -219,7 +237,9 @@
             "readOnly": true
           }
         }
-      }
+      },
+      "nullable": true,
+      "$comment": "Node-RED payload: Toff"
     },
     "isCO": {
       "type": "boolean",
@@ -246,7 +266,9 @@
             }
           ]
         }
-      }
+      },
+      "nullable": true,
+      "$comment": "Node-RED payload: CO_alarm"
     },
     "isCH": {
       "type": "boolean",
@@ -273,7 +295,9 @@
             }
           ]
         }
-      }
+      },
+      "nullable": true,
+      "$comment": "Node-RED payload: CH4_alarm"
     },
     "isFireAlarm": {
       "type": "boolean",
@@ -300,7 +324,9 @@
             }
           ]
         }
-      }
+      },
+      "nullable": true,
+      "$comment": "Node-RED payload: Fire_alarm"
     },
     "isDoorAlarm": {
       "type": "boolean",
@@ -327,7 +353,9 @@
             }
           ]
         }
-      }
+      },
+      "nullable": true,
+      "$comment": "Node-RED payload: Door_alarm"
     },
     "isSecurityAlarm": {
       "type": "boolean",
@@ -354,7 +382,9 @@
             }
           ]
         }
-      }
+      },
+      "nullable": true,
+      "$comment": "Node-RED payload: BSU_alarm"
     },
     "isBatteryLow": {
       "type": "boolean",
@@ -381,7 +411,9 @@
             }
           ]
         }
-      }
+      },
+      "nullable": true,
+      "$comment": "Node-RED payload: Batt_alarm"
     },
     "isBatteryFault": {
       "type": "boolean",
@@ -408,7 +440,9 @@
             }
           ]
         }
-      }
+      },
+      "nullable": true,
+      "$comment": "Node-RED payload: Battery_good"
     },
     "sensors": {
       "$ref": "#/$defs/SensorsModel"
@@ -446,6 +480,557 @@
             "text": "Время опроса"
           }
         }
+      },
+      "$comment": "Collector Date.now(); converter Time_Rqst is not persisted."
+    },
+    "controlMode": {
+      "$ref": "#/$defs/ControlMode",
+      "$comment": "Node-RED payload: Mode_ctrl",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxSelectBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Режим управления котлами"
+          },
+          "editorOptions": {
+            "readOnly": true,
+            "valueExpr": "id",
+            "displayExpr": "description"
+          }
+        }
+      }
+    },
+    "boilerRoomMode": {
+      "$ref": "#/$defs/BoilerRoomMode",
+      "$comment": "Node-RED payload: Mode_boil",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxSelectBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Режим работы котельной"
+          },
+          "editorOptions": {
+            "readOnly": true,
+            "valueExpr": "id",
+            "displayExpr": "description"
+          }
+        }
+      }
+    },
+    "mainNetworkPumpNumber": {
+      "type": "integer",
+      "nullable": true,
+      "$comment": "Node-RED payload: Main_pump",
+      "ui": {
+        "group": 3,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Основной сетевой насос: номер"
+          },
+          "editorOptions": {
+            "readOnly": true,
+            "format": {
+              "type": "fixedPoint",
+              "precision": 0
+            }
+          }
+        }
+      }
+    },
+    "tempOutNetConfiguredSetpoint": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "Node-RED payload: tset",
+      "unit": "°C",
+      "ui": {
+        "group": 10,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Уставка температуры подачи в сеть"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "tempOutNetCorrection": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "Node-RED payload: tcor",
+      "unit": "°C",
+      "ui": {
+        "group": 10,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Коррекция температуры подачи в сеть"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "tempOutNetMinLimit": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "Node-RED payload: tmin",
+      "unit": "°C",
+      "ui": {
+        "group": 10,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Минимальное ограничение температуры подачи"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "tempOutNetMaxLimit": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "Node-RED payload: tmax",
+      "unit": "°C",
+      "ui": {
+        "group": 10,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Максимальное ограничение температуры подачи"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "cascadeStageOffIntegralLimit": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "Node-RED payload: Imax",
+      "ui": {
+        "group": 10,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Граница интеграла отключения ступени"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "cascadeStageOnIntegralLimit": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "Node-RED payload: Imin",
+      "ui": {
+        "group": 10,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Граница интеграла включения ступени"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "tempControlUpperBand": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "Node-RED payload: Tzmax",
+      "unit": "°C",
+      "ui": {
+        "group": 10,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Верхняя граница регулирования температуры"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "tempControlLowerBand": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "Node-RED payload: Tzmin",
+      "unit": "°C",
+      "ui": {
+        "group": 10,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Нижняя граница регулирования температуры"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "cascadeStageOnDelay": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "Node-RED payload: D_on",
+      "ui": {
+        "group": 10,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Задержка включения ступени"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "cascadeStageOffDelay": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "Node-RED payload: D_off",
+      "ui": {
+        "group": 10,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Задержка отключения ступени"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "cascadeFirstStageWarmupTime": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "Node-RED payload: Theat",
+      "ui": {
+        "group": 10,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Время прогрева на первой ступени"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      }
+    },
+    "isSecurityInputAlarm": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "Node-RED payload: Secure_stat",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Вход охраны БСУ: тревога"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {
+          "series": {
+            "type": "stepline"
+          },
+          "valueAxis": {
+            "type": "discrete",
+            "valueType": "string",
+            "categories": [
+              "false",
+              "true"
+            ]
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isFireInputAlarm": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "Node-RED payload: Fire_stat",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Вход пожарной сигнализации: тревога"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {
+          "series": {
+            "type": "stepline"
+          },
+          "valueAxis": {
+            "type": "discrete",
+            "valueType": "string",
+            "categories": [
+              "false",
+              "true"
+            ]
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "pressureLimits": {
+      "$ref": "#/$defs/PressureLimitsModel"
+    },
+    "pressureThresholds": {
+      "$ref": "#/$defs/PressureThresholdsModel"
+    },
+    "temperatureThresholds": {
+      "$ref": "#/$defs/TemperatureThresholdsModel"
+    },
+    "isBatteryInputLow": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "Node-RED payload: Battery_low",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Вход разряда батареи"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {
+          "series": {
+            "type": "stepline"
+          },
+          "valueAxis": {
+            "type": "discrete",
+            "valueType": "string",
+            "categories": [
+              "false",
+              "true"
+            ]
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isDoorInputAlarm": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "Node-RED payload: Door_status",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Вход охраны двери: тревога"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {
+          "series": {
+            "type": "stepline"
+          },
+          "valueAxis": {
+            "type": "discrete",
+            "valueType": "string",
+            "categories": [
+              "false",
+              "true"
+            ]
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isCOInputAlarm": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "Node-RED payload: CO_status",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Вход газового извещателя СО: тревога"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {
+          "series": {
+            "type": "stepline"
+          },
+          "valueAxis": {
+            "type": "discrete",
+            "valueType": "string",
+            "categories": [
+              "false",
+              "true"
+            ]
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "isCHInputAlarm": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "Node-RED payload: CH4_status",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Вход газового извещателя СН4: тревога"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {
+          "series": {
+            "type": "stepline"
+          },
+          "valueAxis": {
+            "type": "discrete",
+            "valueType": "string",
+            "categories": [
+              "false",
+              "true"
+            ]
+          }
+        },
+        "colorizer": {
+          "styleProps": [
+            {
+              "fill": {
+                "red": true,
+                "white": false
+              }
+            }
+          ]
+        }
       }
     }
   },
@@ -479,14 +1064,16 @@
         0,
         1,
         2,
-        3
+        3,
+        null
       ],
       "enumDescriptions": {
         "0": "INITIAL - Исходное",
         "1": "BOILER_STARTING - Запуск котла",
         "2": "BOILER_STOPPING - Останов котла",
         "3": "OPERATION - Работа"
-      }
+      },
+      "nullable": true
     },
     "SensorsModel": {
       "type": "object",
@@ -516,7 +1103,9 @@
                 }
               ]
             }
-          }
+          },
+          "nullable": true,
+          "$comment": "Node-RED payload: T_air_err"
         },
         "isTempOutNetSensorError": {
           "type": "boolean",
@@ -543,7 +1132,9 @@
                 }
               ]
             }
-          }
+          },
+          "nullable": true,
+          "$comment": "Node-RED payload: T_inl_err"
         },
         "isTempOutNetHighLevel": {
           "type": "boolean",
@@ -560,7 +1151,9 @@
                 "readOnly": true
               }
             }
-          }
+          },
+          "nullable": true,
+          "$comment": "Node-RED payload: T1_max_alarm"
         },
         "isTempOutNetPreHighLevel": {
           "type": "boolean",
@@ -577,7 +1170,9 @@
                 "readOnly": true
               }
             }
-          }
+          },
+          "nullable": true,
+          "$comment": "Node-RED payload: TE1_H_act"
         },
         "isTempOutNetPreLowLevel": {
           "type": "boolean",
@@ -594,7 +1189,9 @@
                 "readOnly": true
               }
             }
-          }
+          },
+          "nullable": true,
+          "$comment": "Node-RED payload: TE1_L_act"
         },
         "isTempOutNetLowLevel": {
           "type": "boolean",
@@ -611,7 +1208,9 @@
                 "readOnly": true
               }
             }
-          }
+          },
+          "nullable": true,
+          "$comment": "Node-RED payload: T1_min_alarm"
         },
         "isTempInNetSensorError": {
           "type": "boolean",
@@ -638,7 +1237,9 @@
                 }
               ]
             }
-          }
+          },
+          "nullable": true,
+          "$comment": "Node-RED payload: T_out_err"
         },
         "isTempInNetPreLowLevel": {
           "type": "boolean",
@@ -655,7 +1256,9 @@
                 "readOnly": true
               }
             }
-          }
+          },
+          "nullable": true,
+          "$comment": "Node-RED payload: TE2_L_act"
         },
         "isTempInNetLowLevel": {
           "type": "boolean",
@@ -672,7 +1275,9 @@
                 "readOnly": true
               }
             }
-          }
+          },
+          "nullable": true,
+          "$comment": "Node-RED payload: T2_min_alarm"
         },
         "isPressOutNetSensorError": {
           "type": "boolean",
@@ -699,7 +1304,9 @@
                 }
               ]
             }
-          }
+          },
+          "nullable": true,
+          "$comment": "Node-RED payload: P_inl_err"
         },
         "isPressOutNetHighLevel": {
           "type": "boolean",
@@ -716,7 +1323,9 @@
                 "readOnly": true
               }
             }
-          }
+          },
+          "nullable": true,
+          "$comment": "Node-RED payload: P1_max_alarm"
         },
         "isPressOutNetPreHighLevel": {
           "type": "boolean",
@@ -733,7 +1342,9 @@
                 "readOnly": true
               }
             }
-          }
+          },
+          "nullable": true,
+          "$comment": "Node-RED payload: PE1_H_act"
         },
         "isPressOutNetPreLowLevel": {
           "type": "boolean",
@@ -750,7 +1361,9 @@
                 "readOnly": true
               }
             }
-          }
+          },
+          "nullable": true,
+          "$comment": "Node-RED payload: PE1_L_act"
         },
         "isPressOutNetLowLevel": {
           "type": "boolean",
@@ -767,7 +1380,9 @@
                 "readOnly": true
               }
             }
-          }
+          },
+          "nullable": true,
+          "$comment": "Node-RED payload: P1_min_alarm"
         },
         "isPressInNetSensorError": {
           "type": "boolean",
@@ -794,7 +1409,9 @@
                 }
               ]
             }
-          }
+          },
+          "nullable": true,
+          "$comment": "Node-RED payload: P_out_err"
         },
         "isPressInNetPreLowLevel": {
           "type": "boolean",
@@ -811,7 +1428,9 @@
                 "readOnly": true
               }
             }
-          }
+          },
+          "nullable": true,
+          "$comment": "Node-RED payload: PE2_L_act"
         },
         "isPressInNetLowLevel": {
           "type": "boolean",
@@ -828,7 +1447,9 @@
                 "readOnly": true
               }
             }
-          }
+          },
+          "nullable": true,
+          "$comment": "Node-RED payload: P2_min_alarm"
         }
       },
       "required": [
@@ -882,7 +1503,9 @@
                 ]
               }
             }
-          }
+          },
+          "nullable": true,
+          "$comment": "Node-RED payload: Boil1_norm, Boil2_norm, Boil3_norm"
         },
         "isLocked": {
           "type": "boolean",
@@ -899,7 +1522,9 @@
                 "readOnly": true
               }
             }
-          }
+          },
+          "nullable": true,
+          "$comment": "Node-RED payload: Boil1_block, Boil2_block, Boil3_block"
         },
         "isAlarm": {
           "type": "boolean",
@@ -926,7 +1551,9 @@
                 }
               ]
             }
-          }
+          },
+          "nullable": true,
+          "$comment": "Node-RED payload: Boil1_alarm, Boil2_alarm, Boil3_alarm"
         },
         "isStartError": {
           "type": "boolean",
@@ -952,6 +1579,257 @@
                   }
                 }
               ]
+            }
+          },
+          "nullable": true,
+          "$comment": "Node-RED payload: Boil1_On_err, Boil2_On_err, Boil3_On_err"
+        },
+        "isWorking": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload: Boil1_run, Boil2_run, Boil3_run",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Работа котла"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "chart": {
+              "series": {
+                "type": "stepline"
+              },
+              "valueAxis": {
+                "type": "discrete",
+                "valueType": "string",
+                "categories": [
+                  "false",
+                  "true"
+                ]
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "white": true,
+                    "#808080": false
+                  },
+                  "stroke": {
+                    "#0000FF": true,
+                    "#000000": false
+                  },
+                  "stroke-width": {
+                    "1": false,
+                    "2": true
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isMinBurning": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload: Boil1_min_B, Boil2_min_B, Boil3_min_B",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Минимальное горение котла"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "chart": {
+              "series": {
+                "type": "stepline"
+              },
+              "valueAxis": {
+                "type": "discrete",
+                "valueType": "string",
+                "categories": [
+                  "false",
+                  "true"
+                ]
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "white": true,
+                    "#808080": false
+                  },
+                  "stroke": {
+                    "#0000FF": true,
+                    "#000000": false
+                  },
+                  "stroke-width": {
+                    "1": false,
+                    "2": true
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isMaxBurning": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload: Boil1_max_B, Boil2_max_B, Boil3_max_B",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Максимальное горение котла"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "chart": {
+              "series": {
+                "type": "stepline"
+              },
+              "valueAxis": {
+                "type": "discrete",
+                "valueType": "string",
+                "categories": [
+                  "false",
+                  "true"
+                ]
+              }
+            },
+            "colorizer": {
+              "styleProps": [
+                {
+                  "fill": {
+                    "white": true,
+                    "#808080": false
+                  },
+                  "stroke": {
+                    "#0000FF": true,
+                    "#000000": false
+                  },
+                  "stroke-width": {
+                    "1": false,
+                    "2": true
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "isMinBurningStartCommand": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload: Boil1_cmd_Run_B1, Boil2_cmd_Run_B1, Boil3_cmd_Run_B1",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Команда ПЛК: включить минимальное горение котла"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isMinBurningStopCommand": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload: Boil1_cmd_Stp_B1, Boil2_cmd_Stp_B1, Boil3_cmd_Stp_B1",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Команда ПЛК: выключить минимальное горение котла"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isMaxBurningStartCommand": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload: Boil1_cmd_Run_B2, Boil2_cmd_Run_B2, Boil3_cmd_Run_B2",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Команда ПЛК: включить максимальное горение котла"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isMaxBurningStopCommand": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload: Boil1_cmd_Stp_B2, Boil2_cmd_Stp_B2, Boil3_cmd_Stp_B2",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Команда ПЛК: выключить максимальное горение котла"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "startOrder": {
+          "type": "integer",
+          "nullable": true,
+          "$comment": "Node-RED payload: Queue_boil1, Queue_boil2, Queue_boil3",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Очередность включения котла"
+              },
+              "editorOptions": {
+                "readOnly": true,
+                "format": {
+                  "type": "fixedPoint",
+                  "precision": 0
+                }
+              }
             }
           }
         }
@@ -991,7 +1869,9 @@
                 }
               ]
             }
-          }
+          },
+          "nullable": true,
+          "$comment": "Node-RED payload: Pump1_stat, Pump2_stat"
         },
         "isStartError": {
           "type": "boolean",
@@ -1018,12 +1898,522 @@
                 }
               ]
             }
+          },
+          "nullable": true,
+          "$comment": "Node-RED payload: Pump1_err, Pump2_err"
+        },
+        "isStartCommand": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload: Pump1_run, Pump2_run",
+          "ui": {
+            "group": 3,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Команда ПЛК: пуск насоса"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isStopCommand": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "Node-RED payload: Pump1_stp, Pump2_stp",
+          "ui": {
+            "group": 3,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Команда ПЛК: останов насоса"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
           }
         }
       },
       "required": [
         "isWorking",
         "isStartError"
+      ]
+    },
+    "ControlMode": {
+      "type": "integer",
+      "nullable": true,
+      "enum": [
+        0,
+        1,
+        null
+      ],
+      "enumDescriptions": {
+        "0": "LOCAL - Местное",
+        "1": "REMOTE - Дистанционное"
+      }
+    },
+    "BoilerRoomMode": {
+      "type": "integer",
+      "nullable": true,
+      "enum": [
+        0,
+        1,
+        null
+      ],
+      "enumDescriptions": {
+        "0": "MANUAL - Ручной",
+        "1": "AUTO - Автоматический"
+      }
+    },
+    "PressureLimitsModel": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "pressOutNetMax": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload: P1_max_lim",
+          "unit": "бар",
+          "ui": {
+            "group": 11,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Давление подачи сетевого контура: верхний предел"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "pressOutNetMin": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload: P1_min_lim",
+          "unit": "бар",
+          "ui": {
+            "group": 11,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Давление подачи сетевого контура: нижний предел"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "pressInNetMax": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload: P2_max_lim",
+          "unit": "бар",
+          "ui": {
+            "group": 11,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Давление обратки сетевого контура: верхний предел"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "pressInNetMin": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload: P2_min_lim",
+          "unit": "бар",
+          "ui": {
+            "group": 11,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Давление обратки сетевого контура: нижний предел"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "pressOutNetMax",
+        "pressOutNetMin",
+        "pressInNetMax",
+        "pressInNetMin"
+      ]
+    },
+    "PressureThresholdsModel": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "pressOutNetHH": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload: P1_HH",
+          "unit": "бар",
+          "ui": {
+            "group": 12,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Давление подачи сетевого контура: порог HH"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "pressOutNetH": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload: P1_H",
+          "unit": "бар",
+          "ui": {
+            "group": 12,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Давление подачи сетевого контура: порог H"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "pressOutNetL": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload: P1_L",
+          "unit": "бар",
+          "ui": {
+            "group": 12,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Давление подачи сетевого контура: порог L"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "pressOutNetLL": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload: P1_LL",
+          "unit": "бар",
+          "ui": {
+            "group": 12,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Давление подачи сетевого контура: порог LL"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "pressInNetL": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload: P2_L",
+          "unit": "бар",
+          "ui": {
+            "group": 12,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Давление обратки сетевого контура: порог L"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "pressInNetLL": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload: P2_LL",
+          "unit": "бар",
+          "ui": {
+            "group": 12,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Давление обратки сетевого контура: порог LL"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "pressInNetHH": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload: P2_HH",
+          "unit": "бар",
+          "ui": {
+            "group": 12,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Давление обратки сетевого контура: порог HH"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "pressInNetH": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload: P2_H",
+          "unit": "бар",
+          "ui": {
+            "group": 12,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Давление обратки сетевого контура: порог H"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "pressOutNetHH",
+        "pressOutNetH",
+        "pressOutNetL",
+        "pressOutNetLL",
+        "pressInNetL",
+        "pressInNetLL",
+        "pressInNetHH",
+        "pressInNetH"
+      ]
+    },
+    "TemperatureThresholdsModel": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "tempOutNetHH": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload: T1_HH",
+          "unit": "°C",
+          "ui": {
+            "group": 13,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Температура подачи сетевого контура: порог HH"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "tempOutNetH": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload: T1_H",
+          "unit": "°C",
+          "ui": {
+            "group": 13,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Температура подачи сетевого контура: порог H"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "tempOutNetL": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload: T1_L",
+          "unit": "°C",
+          "ui": {
+            "group": 13,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Температура подачи сетевого контура: порог L"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "tempOutNetLL": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload: T1_LL",
+          "unit": "°C",
+          "ui": {
+            "group": 13,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Температура подачи сетевого контура: порог LL"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "tempInNetL": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload: T2_L",
+          "unit": "°C",
+          "ui": {
+            "group": 13,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Температура обратки сетевого контура: порог L"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "tempInNetLL": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload: T2_LL",
+          "unit": "°C",
+          "ui": {
+            "group": 13,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Температура обратки сетевого контура: порог LL"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "tempInNetHH": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload: T2_HH",
+          "unit": "°C",
+          "ui": {
+            "group": 13,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Температура обратки сетевого контура: порог HH"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "tempInNetH": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "Node-RED payload: T2_H",
+          "unit": "°C",
+          "ui": {
+            "group": 13,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Температура обратки сетевого контура: порог H"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "tempOutNetHH",
+        "tempOutNetH",
+        "tempOutNetL",
+        "tempOutNetLL",
+        "tempInNetL",
+        "tempInNetLL",
+        "tempInNetHH",
+        "tempInNetH"
       ]
     }
   },
@@ -1065,6 +2455,24 @@
         "name": "networkPumps",
         "caption": "Сетевые насосы",
         "order": 300
+      },
+      {
+        "id": 11,
+        "name": "pressureLimits",
+        "caption": "Пределы давления",
+        "order": 500
+      },
+      {
+        "id": 12,
+        "name": "pressureThresholds",
+        "caption": "Пороги давления",
+        "order": 550
+      },
+      {
+        "id": 13,
+        "name": "temperatureThresholds",
+        "caption": "Пороги температуры",
+        "order": 600
       }
     ]
   }
