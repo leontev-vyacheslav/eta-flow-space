@@ -20,3 +20,13 @@
     filter: drop-shadow(0 0 4px rgba(255, 235, 59, 0.5));
     opacity: 0.9 !important;
 }
+
+@media (max-width: 599px) {
+    body:has(#muslum9-mnemoschema) .mnemoschema-popover .dx-overlay-content {
+        max-width: calc(100vw - 20px);
+    }
+
+    body:has(#muslum9-mnemoschema) .mnemoschema-popover td:first-child {
+        overflow-wrap: anywhere;
+    }
+}

@@ -40,9 +40,13 @@ Channel meanings and ambiguities are preserved:
 - `t_inb1` is described as boiler-1 supply, while `t_inb2` is described as
   boiler-2 return. Both use the neutral `boilers[].temperature` field until
   the second channel's supply/return meaning is confirmed.
-- T1–T6 sensor flags and T1–T5 thresholds keep their exported identifiers;
-  their association with the diagram's TE11/TE12/TE1/TE21/TE22/TE2 labels is
-  not established by the export.
+- T1–T6 sensor flags and T1–T5 thresholds keep their exported identifiers.
+  The old Muslum-9 alarm-page wiring establishes T1 → TE11 (boiler 1),
+  T2 → TE12 (boiler 2), T3 → TE1 (network supply), T4 → TE21 (circuit 1
+  return) and T5 → TE22 (circuit 2 return). Its measurement-to-SVG commands
+  agree with these reading positions. T6's association with TE2 remains
+  unconfirmed: the old export decodes `T6_err` but never uses it in a labelled
+  display. See the [decoded wiring evidence](../../../.reports/2026-11-13-muslum9-temperature-mapping/README.md).
 - `Boil1_norm`/`Boil2_norm` are commented as alarm inputs despite the `norm`
   suffix. `isAlarmInput` preserves the bit without inversion or alarm coloring.
   `isAlarm` separately maps `Boil1_alarm`/`Boil2_alarm`.
@@ -80,10 +84,10 @@ rings/arrows and flame artwork do not intercept their underlying bound shapes.
 | Room state | `boilerRoomState`, with the main-boiler number in the details |
 | Control mode (`Режим управления`) | `controlMode` |
 | Operation mode (`Режим работы`) | `boilerRoomMode` |
-| TE11 / TE12 | `boilers[0].temperature` / `boilers[1].temperature` |
-| TE1 | `tempOutNet` |
-| TE21 / TE22 | `tempInNetCircuit1` / `tempInNetCircuit2` |
-| TE2 | `tempInBoiler` |
+| TE11 / TE12 | `boilers[0].temperature` / `boilers[1].temperature`, with T1/T2 fault, warning, high-alarm and threshold fields |
+| TE1 | `tempOutNet`, with T3 fault, high/low warning, alarm and threshold fields |
+| TE21 / TE22 | `tempInNetCircuit1` / `tempInNetCircuit2`, with T4/T5 fault, low-warning, low-alarm and threshold fields |
+| TE2 | `tempInBoiler`; no unconfirmed T6 fault binding |
 | PE1 | `pressOutNet`, with P1 fault, warning, alarm and threshold fields |
 | PE22 | `pressInBoiler`, with P2 fault, warning, alarm and threshold fields |
 | PE21 | `pressInNet`, with P3 fault, warning, alarm and threshold fields |
@@ -94,11 +98,18 @@ rings/arrows and flame artwork do not intercept their underlying bound shapes.
 | Security / fire / gas tiles | The corresponding decoded alarm and original input flags |
 
 TE11 and TE12 display the channels associated with boilers 1 and 2; the second
-channel's supply/return ambiguity remains as described above. T1–T6 faults and
-warnings remain on the `Параметры` → `Датчики` tab until their association with
-the diagram instrument labels is confirmed. They do not colour individual
-temperature instruments. The information icon always lists `isConnected` first
-and `timestamp` second, even though those properties are also bound elsewhere.
+channel's supply/return ambiguity remains as described above. The five confirmed
+T1–T5 instruments now have red outlines for a reported sensor fault or alarm,
+amber outlines for a warning, and black outlines otherwise. Faults/alarms take
+priority over warnings. Their frame popovers start with the reading, then include
+the channel's available fault/alarm/warning flags and numeric threshold settings.
+The UI follows controller bits rather than comparing readings with thresholds.
+Value formatting, chart links and hover highlighting retain the existing behaviour.
+T6 remains available only on `Параметры` → `Датчики`, without colouring TE2.
+On phone-sized screens, property popovers stay within the viewport and long
+property names can wrap; these rules apply only while this diagram is displayed.
+The information icon always lists `isConnected` first and `timestamp` second,
+even though those properties are also bound elsewhere.
 They are followed by the properties unique to the icon: `cascadeTempDeadband`,
 `cascadeMinTempRisePerMinute`, `cascadeTempRisePerMinute` and `isGasValveClosed`.
 Alarm, fault, warning and other duplicate properties are excluded. Its colour
