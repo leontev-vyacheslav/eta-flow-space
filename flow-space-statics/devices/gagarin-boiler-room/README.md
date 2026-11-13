@@ -115,3 +115,10 @@ snapshot. Running/stopped, locked, alarm, warning, disconnected and reconnect ca
 were also exercised with browser-only states, alongside desktop clicks and phone
 taps. The local [diagram report](../../../.reports/2026-11-13-gagarin-diagram/README.md)
 contains screenshots and verification results. This diagram change is not deployed.
+
+
+Boiler border styling matches Muslum-7/9. Burners have no normal outline, with
+`#808080` fill when stopped and `#333333` when running. Body strokes use the same
+proportions: 1.4% of boiler width when stopped and 2% when running (0.8904 / 1.272
+SVG units for these 63.6-unit-wide boilers). Locked fill and yellow hover feedback
+are preserved; body/burner sizes, positions and property lists are unchanged.

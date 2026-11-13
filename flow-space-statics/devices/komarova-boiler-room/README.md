@@ -108,3 +108,10 @@ stay in browser responses. The local
 [verification report](../../../.reports/2026-11-13-komarova-refinement/README.md)
 contains the decoded collector diff, source inventory and browser evidence.
 These source changes are local; deployment is outside this change.
+
+
+Boiler border styling matches Muslum-7/9. Burners have no normal outline, with
+`#808080` fill when stopped and `#333333` when running. Body strokes use the same
+proportions: 1.4% of boiler width when stopped and 2% when running (0.8904 / 1.272
+SVG units for these 63.6-unit-wide boilers). Locked fill and yellow hover feedback
+are preserved; body/burner sizes, positions and property lists are unchanged.
