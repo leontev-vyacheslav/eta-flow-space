@@ -80,6 +80,14 @@ stop/start commands, and limitations.
 | `2026-11-11-link-muslum-boiler-room-users.sql` | yes (applied and verified 2026-11-11; sign-in and device access checked) |
 | `2026-11-13-update-muslum-watcher-access.sql` | yes (applied and verified 2026-11-13; 10-character password reset, both watcher accounts linked to Muslum-7/9, sign-in and device access checked) |
 | `2026-11-13-reset-boiler-watcher-password.sql` | yes (applied and verified 2026-11-13; 10-character password reset, sign-in and all 21 existing device links checked) |
+| `2026-11-13-add-muslum-emergency-rules.sql` | not yet; 43 reasons for Muslum-7 and 41 for Muslum-9, validated with the API evaluator and isolated PostgreSQL 17 |
+
+The Muslum emergency-rules migration populates only the existing registrations for
+`muslum-7-boiler-room` and `muslum-9-boiler-room`. It uses their collected boolean alarm,
+warning and sensor-fault flags, following the rules stored for Gagarin, Komarova and Kirov.
+It preserves registration IDs and polling intervals. Identical reruns change nothing;
+unexpected non-empty rule lists abort the transaction. Connection loss remains the
+dispatcher's built-in reason 100. No schema change or application deployment is required.
 
 `object_location.locality` stores the canonical populated locality name, including its type
 (for example, `пгт. Камское Устье`). Use the same spelling for locations in the same locality.
