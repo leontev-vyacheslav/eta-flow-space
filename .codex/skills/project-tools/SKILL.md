@@ -18,6 +18,7 @@ an individual tool README specifies otherwise. Inspect an existing tool before i
 | XLSX register maps without openpyxl | `.tools/xlsx-dump/README.md`; `xlsx_dump.py` |
 | UI source-map size by package/chunk | `.tools/bundle-size/README.md`; `bundle-size.mjs` |
 | Isolated local PostgreSQL with reference schema, demo fixtures and Redis | `.tools/local-development/README.md`; `local-development.sh` |
+| Lightweight SQL backup with latest device/emergency states and disposable restore verification | `.tools/database-backup/README.md`; `lightweight-backup.sh`, `test.sh` |
 
 ## Operational details
 

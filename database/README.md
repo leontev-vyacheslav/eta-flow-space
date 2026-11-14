@@ -10,6 +10,13 @@ the web API's Sequelize models only describe it and no longer create tables (`sy
 
 ## Local development
 
+For a lightweight, human-readable backup with only the latest device and emergency
+state per device, run `bash .tools/database-backup/lightweight-backup.sh` through
+the existing developer tunnel. It saves a timestamped SQL file in the Git-ignored
+`flow-space-backups/` directory and verifies it in disposable PostgreSQL before
+publishing. See [the backup tool](../.tools/database-backup/README.md) for settings,
+verification and restore usage.
+
 For an isolated local PostgreSQL deployment, run
 `bash .tools/local-development/local-development.sh up`. It uses port **55432**, a separate Docker
 volume, and this reference schema with synthetic demo users and measurements.

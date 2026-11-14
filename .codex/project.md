@@ -53,6 +53,8 @@ instructions refer to the repository root unless the link or instruction says ot
   remain unapplied until verified; never infer production status from the presence of a file.
 - Prepare changes locally within the user's scope. These skills do not independently authorize
   production deployment, migrations, equipment commands, listener takeover or container restarts.
+- Keep helpers with repeatable project use in `.tools/<name>/`, with a README and an entry in the
+  `project-tools` index. Reserve `/tmp` for disposable experiments.
 - Propose a concise commit subject after changes. The user normally commits; commit only when asked.
 
 ## Verification
