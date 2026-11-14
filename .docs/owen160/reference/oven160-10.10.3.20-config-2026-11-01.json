@@ -1,0 +1,33 @@
+{
+  "archive": "/mnt/d/Projects/Eta/ETA24 (2026-11-01#08-55-03).zip.zip",
+  "snapshot_date": "2026-11-01",
+  "accesspoints": [
+    {
+      "Id": 809,
+      "Description": "Ethernet-Moxa5110-10.10.3.20:502",
+      "NetAddress": "10.10.3.20",
+      "Port": 502,
+      "TransportServerModelId": 2,
+      "IsNeedToReconfigure": false
+    }
+  ],
+  "devices": [
+    {
+      "Id": 1766,
+      "Description": "Oven160-1",
+      "DeviceId": 91,
+      "AccessPointId": 809,
+      "ProtocolSubTypeId": 1,
+      "NetworkAddress": 1,
+      "TurnOn": true,
+      "BaudId": 5,
+      "DataBitId": 2,
+      "ParityId": 1,
+      "StopBitId": 2
+    }
+  ],
+  "dynamic_parameter_id": 115,
+  "register_map_record_id": 8508,
+  "protocol": "Modbus TCP",
+  "evidence": "Legacy C# source plus archived device-specific configuration; no live protocol probe"
+}

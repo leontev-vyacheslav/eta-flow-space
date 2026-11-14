@@ -1,0 +1,1575 @@
+{
+  "source_snapshot": "ETA24 (2026-11-01#08-55-03).zip.zip",
+  "measurement_device_id": 1766,
+  "dynamic_parameter_id": 115,
+  "protocol": "Modbus TCP",
+  "unit_id": 1,
+  "registers": [
+    {
+      "ResponseLength": 11,
+      "RegisterNumber": 0,
+      "RegistersCount": 1,
+      "ModbusFunction": 3,
+      "Description": "Клапаны (регистр 0)",
+      "DeviceParametersInfo": [
+        {
+          "DeviceParameterId": 91000003,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 3,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1,
+          "IgnoreCheckToUpdate": true
+        },
+        {
+          "DeviceParameterId": 91000004,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 4,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1,
+          "IgnoreCheckToUpdate": true
+        },
+        {
+          "DeviceParameterId": 910000011,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 11,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1,
+          "IgnoreCheckToUpdate": true
+        },
+        {
+          "DeviceParameterId": 910000012,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 12,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1,
+          "IgnoreCheckToUpdate": true
+        }
+      ]
+    },
+    {
+      "ResponseLength": 177,
+      "RegisterNumber": 92,
+      "RegistersCount": 84,
+      "ModbusFunction": 3,
+      "Description": "Мгновенные давления и температуры",
+      "DeviceParametersInfo": [
+        {
+          "DeviceParameterId": 9100092,
+          "Position": 1,
+          "ParseType": 2,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 9100094,
+          "Position": 2,
+          "ParseType": 2,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 9100096,
+          "Position": 3,
+          "ParseType": 2,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 9100098,
+          "Position": 4,
+          "ParseType": 2,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 9100100,
+          "Position": 5,
+          "ParseType": 2,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 9100102,
+          "Position": 6,
+          "ParseType": 2,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 9100104,
+          "Position": 7,
+          "ParseType": 2,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 9100106,
+          "Position": 8,
+          "ParseType": 2,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 9100108,
+          "Position": 9,
+          "ParseType": 2,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 9100110,
+          "Position": 10,
+          "ParseType": 2,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 9100112,
+          "Position": 11,
+          "ParseType": 2,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 9100114,
+          "Position": 12,
+          "ParseType": 2,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 9100116,
+          "Position": 13,
+          "ParseType": 2,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 9100118,
+          "Position": 14,
+          "ParseType": 2,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 9100120,
+          "Position": 15,
+          "ParseType": 2,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 9100122,
+          "Position": 16,
+          "ParseType": 2,
+          "BitNumber": 0,
+          "Scale": 10,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 9100124,
+          "Position": 17,
+          "ParseType": 2,
+          "BitNumber": 0,
+          "Scale": 10,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 9100126,
+          "Position": 18,
+          "ParseType": 2,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 9100128,
+          "Position": 19,
+          "ParseType": 2,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 9100130,
+          "Position": 20,
+          "ParseType": 2,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 9100132,
+          "Position": 21,
+          "ParseType": 2,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        }
+      ]
+    },
+    {
+      "ResponseLength": 15,
+      "RegisterNumber": 1,
+      "RegistersCount": 3,
+      "ModbusFunction": 3,
+      "Description": "Состояние насосов, стоп/работа (регистры 1-3)",
+      "DeviceParametersInfo": [
+        {
+          "DeviceParameterId": 91000010,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000014,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 4,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000018,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 8,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 910000112,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 12,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000020,
+          "Position": 2,
+          "ParseType": 1,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000024,
+          "Position": 2,
+          "ParseType": 1,
+          "BitNumber": 4,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000028,
+          "Position": 2,
+          "ParseType": 1,
+          "BitNumber": 8,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 910000212,
+          "Position": 2,
+          "ParseType": 1,
+          "BitNumber": 12,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000030,
+          "Position": 3,
+          "ParseType": 1,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000034,
+          "Position": 3,
+          "ParseType": 1,
+          "BitNumber": 4,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        }
+      ]
+    },
+    {
+      "ResponseLength": 11,
+      "RegisterNumber": 4,
+      "RegistersCount": 1,
+      "ModbusFunction": 3,
+      "Description": "Режимы работы котлов (регистр 4)",
+      "DeviceParametersInfo": [
+        {
+          "DeviceParameterId": 91000040,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000041,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 1,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000042,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 2,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000044,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 4,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000045,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 5,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000048,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 8,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000049,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 9,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 910000410,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 10,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 910000412,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 12,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 910000413,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 13,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        }
+      ]
+    },
+    {
+      "ResponseLength": 13,
+      "RegisterNumber": 5,
+      "RegistersCount": 2,
+      "ModbusFunction": 3,
+      "Description": "Управляющие сигналы клапанов + звуковая сигнализация (регистры 4-5)",
+      "DeviceParametersInfo": [
+        {
+          "DeviceParameterId": 91000050,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000054,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 4,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000058,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 8,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 910000512,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 12,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000060,
+          "Position": 2,
+          "ParseType": 1,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000064,
+          "Position": 2,
+          "ParseType": 1,
+          "BitNumber": 4,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000068,
+          "Position": 2,
+          "ParseType": 1,
+          "BitNumber": 8,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        }
+      ]
+    },
+    {
+      "ResponseLength": 13,
+      "RegisterNumber": 7,
+      "RegistersCount": 2,
+      "ModbusFunction": 3,
+      "Description": "Режимы работы котлов (регистры 7-8)",
+      "DeviceParametersInfo": [
+        {
+          "DeviceParameterId": 91000070,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000071,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 1,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000072,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 2,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000073,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 3,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000074,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 4,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000075,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 5,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000076,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 6,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000077,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 7,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000078,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 8,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000079,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 9,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 910000710,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 10,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 910000711,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 11,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 910000712,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 12,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1,
+          "IgnoreCheckToUpdate": true
+        },
+        {
+          "DeviceParameterId": 910000713,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 13,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 910000714,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 14,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 910000715,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 15,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000080,
+          "Position": 2,
+          "ParseType": 1,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000081,
+          "Position": 2,
+          "ParseType": 1,
+          "BitNumber": 1,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000082,
+          "Position": 2,
+          "ParseType": 1,
+          "BitNumber": 2,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        }
+      ]
+    },
+    {
+      "ResponseLength": 17,
+      "RegisterNumber": 7,
+      "RegistersCount": 4,
+      "ModbusFunction": 3,
+      "Description": "Тревоги (регистры 9-10-11-12)",
+      "DeviceParametersInfo": [
+        {
+          "DeviceParameterId": 91000090,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000091,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 1,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000092,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 2,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000093,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 3,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000094,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 4,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000095,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 5,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000096,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 6,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000097,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 7,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000098,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 8,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000099,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 9,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 910000910,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 10,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 910000911,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 11,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 910000912,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 12,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1,
+          "IgnoreCheckToUpdate": true
+        },
+        {
+          "DeviceParameterId": 910000913,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 13,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 910000914,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 14,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 910000915,
+          "Position": 1,
+          "ParseType": 1,
+          "BitNumber": 15,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000100,
+          "Position": 2,
+          "ParseType": 1,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000101,
+          "Position": 2,
+          "ParseType": 1,
+          "BitNumber": 1,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000102,
+          "Position": 2,
+          "ParseType": 1,
+          "BitNumber": 2,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000103,
+          "Position": 2,
+          "ParseType": 1,
+          "BitNumber": 3,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000104,
+          "Position": 2,
+          "ParseType": 1,
+          "BitNumber": 4,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000105,
+          "Position": 2,
+          "ParseType": 1,
+          "BitNumber": 5,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000106,
+          "Position": 2,
+          "ParseType": 1,
+          "BitNumber": 6,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000107,
+          "Position": 2,
+          "ParseType": 1,
+          "BitNumber": 7,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000108,
+          "Position": 2,
+          "ParseType": 1,
+          "BitNumber": 8,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000109,
+          "Position": 2,
+          "ParseType": 1,
+          "BitNumber": 9,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 910001010,
+          "Position": 2,
+          "ParseType": 1,
+          "BitNumber": 10,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 910001011,
+          "Position": 2,
+          "ParseType": 1,
+          "BitNumber": 11,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 910001012,
+          "Position": 2,
+          "ParseType": 1,
+          "BitNumber": 12,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 910001013,
+          "Position": 2,
+          "ParseType": 1,
+          "BitNumber": 13,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 910001014,
+          "Position": 2,
+          "ParseType": 1,
+          "BitNumber": 14,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 910001015,
+          "Position": 2,
+          "ParseType": 1,
+          "BitNumber": 15,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000110,
+          "Position": 3,
+          "ParseType": 1,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000111,
+          "Position": 3,
+          "ParseType": 1,
+          "BitNumber": 1,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000112,
+          "Position": 3,
+          "ParseType": 1,
+          "BitNumber": 2,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000113,
+          "Position": 3,
+          "ParseType": 1,
+          "BitNumber": 3,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000114,
+          "Position": 3,
+          "ParseType": 1,
+          "BitNumber": 4,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000115,
+          "Position": 3,
+          "ParseType": 1,
+          "BitNumber": 5,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000116,
+          "Position": 3,
+          "ParseType": 1,
+          "BitNumber": 6,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000117,
+          "Position": 3,
+          "ParseType": 1,
+          "BitNumber": 7,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000118,
+          "Position": 3,
+          "ParseType": 1,
+          "BitNumber": 8,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000119,
+          "Position": 3,
+          "ParseType": 1,
+          "BitNumber": 9,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 910001110,
+          "Position": 3,
+          "ParseType": 1,
+          "BitNumber": 10,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 910001111,
+          "Position": 3,
+          "ParseType": 1,
+          "BitNumber": 11,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 910001112,
+          "Position": 3,
+          "ParseType": 1,
+          "BitNumber": 12,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 910001113,
+          "Position": 3,
+          "ParseType": 1,
+          "BitNumber": 13,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 910001114,
+          "Position": 3,
+          "ParseType": 1,
+          "BitNumber": 14,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 910001115,
+          "Position": 3,
+          "ParseType": 1,
+          "BitNumber": 15,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000120,
+          "Position": 4,
+          "ParseType": 1,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000121,
+          "Position": 4,
+          "ParseType": 1,
+          "BitNumber": 1,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000122,
+          "Position": 4,
+          "ParseType": 1,
+          "BitNumber": 2,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000123,
+          "Position": 4,
+          "ParseType": 1,
+          "BitNumber": 3,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000124,
+          "Position": 4,
+          "ParseType": 1,
+          "BitNumber": 4,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000125,
+          "Position": 4,
+          "ParseType": 1,
+          "BitNumber": 5,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000126,
+          "Position": 4,
+          "ParseType": 1,
+          "BitNumber": 6,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000127,
+          "Position": 4,
+          "ParseType": 1,
+          "BitNumber": 7,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000128,
+          "Position": 4,
+          "ParseType": 1,
+          "BitNumber": 8,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 91000129,
+          "Position": 4,
+          "ParseType": 1,
+          "BitNumber": 9,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 910001210,
+          "Position": 4,
+          "ParseType": 1,
+          "BitNumber": 10,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        }
+      ]
+    },
+    {
+      "ResponseLength": 31,
+      "RegisterNumber": 15,
+      "RegistersCount": 11,
+      "ModbusFunction": 3,
+      "Description": "Аварии (регистры 15-25)",
+      "DeviceParametersInfo": [
+        {
+          "DeviceParameterId": 9100015,
+          "Position": 1,
+          "ParseType": 0,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 9100016,
+          "Position": 2,
+          "ParseType": 0,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 9100017,
+          "Position": 3,
+          "ParseType": 0,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 9100018,
+          "Position": 4,
+          "ParseType": 0,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 9100019,
+          "Position": 5,
+          "ParseType": 0,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 9100020,
+          "Position": 6,
+          "ParseType": 0,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 9100021,
+          "Position": 7,
+          "ParseType": 0,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 9100022,
+          "Position": 8,
+          "ParseType": 0,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 9100023,
+          "Position": 9,
+          "ParseType": 0,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 9100024,
+          "Position": 10,
+          "ParseType": 0,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 9100025,
+          "Position": 11,
+          "ParseType": 0,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        }
+      ]
+    },
+    {
+      "ResponseLength": 13,
+      "RegisterNumber": 35,
+      "RegistersCount": 2,
+      "ModbusFunction": 3,
+      "Description": "Режим (регистры 35-36)",
+      "DeviceParametersInfo": [
+        {
+          "DeviceParameterId": 9100035,
+          "Position": 1,
+          "ParseType": 0,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1,
+          "CriticalDiff": 0
+        },
+        {
+          "DeviceParameterId": 9100036,
+          "Position": 2,
+          "ParseType": 0,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        }
+      ]
+    },
+    {
+      "ResponseLength": 17,
+      "RegisterNumber": 56,
+      "RegistersCount": 4,
+      "ModbusFunction": 3,
+      "Description": "Температуры регулятора (регистры 56 и 58)",
+      "DeviceParametersInfo": [
+        {
+          "DeviceParameterId": 9100056,
+          "Position": 1,
+          "ParseType": 2,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        },
+        {
+          "DeviceParameterId": 9100058,
+          "Position": 2,
+          "ParseType": 2,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        }
+      ]
+    },
+    {
+      "ResponseLength": 13,
+      "RegisterNumber": 66,
+      "RegistersCount": 2,
+      "ModbusFunction": 3,
+      "Description": "Температуры регулятора (регистр 66)",
+      "DeviceParametersInfo": [
+        {
+          "DeviceParameterId": 9100066,
+          "Position": 1,
+          "ParseType": 2,
+          "BitNumber": 0,
+          "Scale": 1,
+          "CurrentValue": null,
+          "PreviousValue": null,
+          "PeriodTypeId": 1
+        }
+      ]
+    }
+  ]
+}

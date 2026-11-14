@@ -1,8 +1,14 @@
 # Documentation
 
-Meter manuals and protocol descriptions, one folder per device type (named like `device_type.code` in the database).
+Device manuals, programming guides and protocol descriptions, one folder per device type (named like `device_type.code` in the database).
 File names are ASCII: `<type>-<kind>-<edition>.pdf`. The original titles and where each file came from are listed
 below; look there for a newer edition.
+
+PLC documentation: [OWEN PLC160 / ОВЕН ПЛК160](owen160/README.md) — a focused set of operating and
+programming manuals for the original and [M02] controllers, Russian/English CODESYS 2.3 references,
+I/O/debugging guides, Modbus/TCP library references and the troubleshooting FAQ.
+The [source investigation for 10.10.3.20:502](owen160/PROTOCOL.md) identifies the legacy reader's
+Modbus TCP framing and preserves its archived unit ID and instantaneous register map.
 
 | File | Original title | Source |
 |---|---|---|

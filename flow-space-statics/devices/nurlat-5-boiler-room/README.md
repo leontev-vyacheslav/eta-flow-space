@@ -119,9 +119,13 @@ file is `/tmp/nurlat5-forward-relay.pid` inside B. The relay listens only on B's
 the Unix socket is group-readable/writable. No firewall rules or persistent service
 configuration were changed. The earlier unused Docker-bridge TCP forwarding was closed.
 
-The temporary SSH master and relay remain running for importing/testing this tab. The
-relay disappears when B's container restarts and the SSH session is not installed as a
-service. Keep the old `ETA$RealTimeDeviceReader` stopped while this tab polls, because
+The temporary forwarding was released at the user's request on **2026-11-14**. The
+relay had already exited; its stale PID file, the SSH master and both temporary sockets
+were removed. Port **15020** was verified free on .246 and inside B. This tab's temporary
+client address requires forwarding to be recreated before polling through that address.
+
+The relay disappears when B's container restarts and the SSH session was not installed
+as a service. Keep the old `ETA$RealTimeDeviceReader` stopped while this tab polls, because
 the previous old-system connection prevented an additional connection from opening.
 
 To stop this forwarding, first disable the new tab if it has been imported. Then run
