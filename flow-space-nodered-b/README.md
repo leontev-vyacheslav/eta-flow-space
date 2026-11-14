@@ -19,6 +19,12 @@ Reader subflows are developed here. When a reader goes live at a boiler room, co
 must stay identical. A tab moved between the instances keeps its ids: the device cache ties each device to its tab's
 id.
 
+The local `nurlat-5-boiler-room` tab reads the Oven160's 146 workbook parameters marked `R`
+using seven stock Modbus TCP blocks and an explicit `collect-device-state` mapping. Its test
+collector has `DEVICE_CODE = null` and stores nothing. The [site README](../flow-space-statics/devices/nurlat-5-boiler-room/README.md)
+records the temporary `.249 → .246/B` forwarding path, source inventory and live verification.
+The tab is prepared locally; it has not been deployed into the running B editor.
+
 **Permissions on the server**: git writes this folder as the deploying user (uid 1001), Node-RED runs as uid 1000.
 Both can write when the group is node-red and folders carry the setgid bit (once, after the folder first arrives):
 

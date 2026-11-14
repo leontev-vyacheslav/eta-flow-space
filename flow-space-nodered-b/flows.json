@@ -4383,5 +4383,634 @@
         "x": 1170,
         "y": 160,
         "wires": []
+    },
+    {
+        "id": "93dc403dd0a3e7b1",
+        "type": "tab",
+        "label": "nurlat-5-boiler-room",
+        "disabled": false,
+        "info": "Нурлат, котельная №5. Oven160: Modbus TCP, unit 1. Workbook R parameters only; function 03. Temporary B loopback 127.0.0.1:15020 → Unix socket → SSH .249 → 10.10.3.20:502. Test collector DEVICE_CODE=null: no persistence. Poll every 60 seconds. See flow-space-statics/devices/nurlat-5-boiler-room/README.md.",
+        "env": []
+    },
+    {
+        "id": "c068ff25a66c08cd",
+        "type": "comment",
+        "z": "93dc403dd0a3e7b1",
+        "name": "Oven160 — 146 R params / FC03 / unit 1 / SSH via .249 / test: no persistence",
+        "info": "Source: .docs/.sources/Карта регистров Нурлат.xlsx, Лист1. R/W settings and W commands are excluded. Converter keys retain workbook names. Pressures become бар only in collect-device-state.",
+        "x": 500,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "21ab507b210d90d0",
+        "type": "modbus-client",
+        "name": "nurlat-5-boiler-room-modbus-via-249",
+        "clienttype": "tcp",
+        "bufferCommands": true,
+        "stateLogEnabled": false,
+        "queueLogEnabled": false,
+        "failureLogEnabled": true,
+        "tcpHost": "127.0.0.1",
+        "tcpPort": "15020",
+        "tcpType": "DEFAULT",
+        "serialPort": "/dev/ttyUSB",
+        "serialType": "RTU-BUFFERD",
+        "serialBaudrate": "9600",
+        "serialDatabits": "8",
+        "serialStopbits": "1",
+        "serialParity": "none",
+        "serialConnectionDelay": "100",
+        "serialAsciiResponseStartDelimiter": "0x3A",
+        "unit_id": 1,
+        "commandDelay": 150,
+        "clientTimeout": 4000,
+        "reconnectOnTimeout": true,
+        "reconnectTimeout": 10000,
+        "parallelUnitIdsAllowed": false,
+        "showErrors": true,
+        "showWarnings": true,
+        "showLogs": false
+    },
+    {
+        "id": "0e586224bb2ad1e8",
+        "type": "modbus-read",
+        "z": "93dc403dd0a3e7b1",
+        "name": "Block_StatusBits_1",
+        "topic": "",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": true,
+        "showWarnings": true,
+        "unitid": "1",
+        "dataType": "HoldingRegister",
+        "adr": "0",
+        "quantity": "13",
+        "rate": "60",
+        "rateUnit": "s",
+        "delayOnStart": true,
+        "enableDeformedMessages": false,
+        "startDelayTime": "3",
+        "server": "21ab507b210d90d0",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "x": 180,
+        "y": 110,
+        "wires": [
+            [],
+            [
+                "b1af397150669a35",
+                "1f4433279cb6ed8d"
+            ]
+        ]
+    },
+    {
+        "id": "b1af397150669a35",
+        "type": "function",
+        "z": "93dc403dd0a3e7b1",
+        "name": "data_convert_StatusBits",
+        "func": "// StatusBits: FC03, unit 1, zero-based registers 0–12.\n// Only named R variables are decoded; workbook names and native units are preserved.\nconst data = msg.payload?.data;\nconst sourceBuffer = msg.payload?.buffer;\nif (!Array.isArray(data) || data.length !== 13 || !sourceBuffer || sourceBuffer.length !== 26) {\n    node.error('Unexpected Nurlat-5 StatusBits response length', msg);\n    return null;\n}\nconst buffer = Buffer.from(sourceBuffer);\nconst pay = {};\n\npay.ip_M1_Up = Boolean((data[0] >>> 3) & 1); // 400001.3: M1. Клапан котла К1.1.Управляющий сигнал на открытие\npay.ip_M1_Dn = Boolean((data[0] >>> 4) & 1); // 400001.4: M1. Клапан котла К1.1.Управляющий сигнал на закрытие\npay.ip_M2_Up = Boolean((data[0] >>> 11) & 1); // 400001.11: M2. Клапан котла К1.2.Управляющий сигнал на открытие\npay.ip_M2_Dn = Boolean((data[0] >>> 12) & 1); // 400001.12: M2. Клапан котла К1.2.Управляющий сигнал на закрытие\npay.ip_H1_1_Run = Boolean((data[1] >>> 0) & 1); // 400002.0: H1.1. Насос №1 котла К1.1. Состояние (0=остановлен; 1=работает)\npay.ip_H1_2_Run = Boolean((data[1] >>> 4) & 1); // 400002.4: H1.2. Насос №2 котла К1.1. Состояние (0=остановлен; 1=работает)\npay.ip_H2_1_Run = Boolean((data[1] >>> 8) & 1); // 400002.8: H2.1. Насос №1 котла К1.2. Состояние (0=остановлен; 1=работает)\npay.ip_H2_2_Run = Boolean((data[1] >>> 12) & 1); // 400002.12: H2.2. Насос №2 котла К1.2. Состояние (0=остановлен; 1=работает)\npay.ip_H3_1_Run = Boolean((data[2] >>> 0) & 1); // 400003.0: H3.1. Насос №1 подпитки котлового контура. Состояние (0=остановлен; 1=работает)\npay.ip_H3_2_Run = Boolean((data[2] >>> 4) & 1); // 400003.4: H3.2. Насос №2 подпитки котлового контура. Состояние (0=остановлен; 1=работает)\npay.ip_H4_1_Run = Boolean((data[2] >>> 8) & 1); // 400003.8: H4.1. Насос №1 подпитки сетевого контура. Состояние (0=остановлен; 1=работает)\npay.ip_H4_2_Run = Boolean((data[2] >>> 12) & 1); // 400003.12: H4.2. Насос №2 подпитки сетевого контура. Состояние (0=остановлен; 1=работает)\npay.ip_H5_1_Run = Boolean((data[3] >>> 0) & 1); // 400004.0: H5.1. Насос №1 сетевой. Состояние (0=остановлен; 1=работает)\npay.ip_H5_2_Run = Boolean((data[3] >>> 4) & 1); // 400004.4: H5.2. Насос №2 сетевой. Состояние (0=остановлен; 1=работает)\npay.ip_K1_1_Lock = Boolean((data[4] >>> 0) & 1); // 400005.0: Котел К1.1. Блокировка\npay.ip_K1_1_Run = Boolean((data[4] >>> 1) & 1); // 400005.1: Котел К1.1. Работа\npay.ip_K1_1_Fault = Boolean((data[4] >>> 2) & 1); // 400005.2: Котел К1.1. Авария\npay.ip_K1_1_Start = Boolean((data[4] >>> 4) & 1); // 400005.4: Котел К1.1. Команда на включение в ручном режиме\npay.ip_K1_1_Stop = Boolean((data[4] >>> 5) & 1); // 400005.5: Котел К1.1. Команда на отключение в ручном режиме\npay.ip_K1_2_Lock = Boolean((data[4] >>> 8) & 1); // 400005.8: Котел К1.2. Блокировка\npay.ip_K1_2_Run = Boolean((data[4] >>> 9) & 1); // 400005.9: Котел К1.2. Работа\npay.ip_K1_2_Fault = Boolean((data[4] >>> 10) & 1); // 400005.10: Котел К1.2. Авария\npay.ip_K1_2_Start = Boolean((data[4] >>> 12) & 1); // 400005.12: Котел К1.2. Команда на включение в ручном режиме\npay.ip_K1_2_Stop = Boolean((data[4] >>> 13) & 1); // 400005.13: Котел К1.2. Команда на отключение в ручном режиме\npay.ip_HV1_Out = Boolean((data[5] >>> 0) & 1); // 400006.0: Клапан заполнения емкости котлового контура. Управляющий сигнал (0=закрыть; 1=открыть)\npay.ip_HV2_Out = Boolean((data[5] >>> 4) & 1); // 400006.4: Клапан подпитки котлового контура. Управляющий сигнал (0=закрыть; 1=открыть)\npay.ip_HV3_Out = Boolean((data[5] >>> 8) & 1); // 400006.8: Клапан заполнения емкости сетевого контура. Управляющий сигнал (0=закрыть; 1=открыть)\npay.ip_HV4_Out = Boolean((data[5] >>> 12) & 1); // 400006.12: Клапан подпитки сетевого контура. Управляющий сигнал (0=закрыть; 1=открыть)\npay.ip_HV5_Out = Boolean((data[6] >>> 0) & 1); // 400007.0: Газовый клапан. Управляющий сигнал (0=закрыть; 1=открыть)\npay.ip_HA1_Out = Boolean((data[6] >>> 4) & 1); // 400007.4: Звуковая сигнализация №1. Управляющий сигнал (0=отключить; 1=включить)\npay.ip_HA2_Out = Boolean((data[6] >>> 8) & 1); // 400007.8: Звуковая сигнализация №2. Управляющий сигнал (0=отключить; 1=включить)\npay.ip_TE3_PV_WH_Act = Boolean((data[7] >>> 0) & 1); // 400008.0: ТЕ3. Активен Порог H\npay.ip_TE5_PV_WH_Act = Boolean((data[7] >>> 1) & 1); // 400008.1: ТЕ5. Активен Порог H\npay.ip_PE1_PV_WH_Act = Boolean((data[7] >>> 2) & 1); // 400008.2: PE1. Активен Порог H\npay.ip_PE3_PV_WH_Act = Boolean((data[7] >>> 3) & 1); // 400008.3: PE3. Активен Порог H\npay.ip_PE1_PV_WL_Act = Boolean((data[7] >>> 4) & 1); // 400008.4: PE1. Активен Порог L\npay.ip_PE3_PV_WL_Act = Boolean((data[7] >>> 5) & 1); // 400008.5: PE3. Активен Порог L\npay.ip_PE2_PV_WL_Act = Boolean((data[7] >>> 6) & 1); // 400008.6: PE2. Активен Порог L\npay.ip_PE4_PV_WL_Act = Boolean((data[7] >>> 7) & 1); // 400008.7: PE4. Активен Порог L\npay.ip_PE9_PV_WL_Act = Boolean((data[7] >>> 8) & 1); // 400008.8: PE9. Активен Порог L\npay.ip_PE9_PV_WH_Act = Boolean((data[7] >>> 9) & 1); // 400008.9: PE9. Активен Порог H\npay.ip_PE10_PV_WL_Act = Boolean((data[7] >>> 10) & 1); // 400008.10: PE10. Активен Порог L\npay.ip_PE6_PV_WL_Act = Boolean((data[7] >>> 11) & 1); // 400008.11: PE6. Активен Порог L\npay.ip_PE6_PV_WH_Act = Boolean((data[7] >>> 12) & 1); // 400008.12: PE6. Активен Порог H\npay.ip_PE7_PV_WL_Act = Boolean((data[7] >>> 13) & 1); // 400008.13: PE7. Активен Порог L\npay.ip_PE7_PV_WH_Act = Boolean((data[7] >>> 14) & 1); // 400008.14: PE7. Активен Порог H\npay.ip_PE11_PV_WL_Act = Boolean((data[7] >>> 15) & 1); // 400008.15: PE11. Активен Порог L\npay.ip_PE11_PV_WH_Act = Boolean((data[8] >>> 0) & 1); // 400009.0: PE11. Активен Порог H\npay.ip_PC1_Out = Boolean((data[8] >>> 1) & 1); // 400009.1: Давление теплоносителя. Подпитка котлового контура \npay.ip_PC2_Out = Boolean((data[8] >>> 2) & 1); // 400009.2: Давление теплоносителя. Подпитка сетевого контура \npay.ip_TE1_PV_Bad = Boolean((data[9] >>> 0) & 1); // 400010.0: TE1. Неисправность\npay.ip_TE2_PV_Bad = Boolean((data[9] >>> 1) & 1); // 400010.1: TE2. Неисправность\npay.ip_TE3_PV_Bad = Boolean((data[9] >>> 2) & 1); // 400010.2: ТЕ3. Неисправность\npay.ip_TE4_PV_Bad = Boolean((data[9] >>> 3) & 1); // 400010.3: TE4. Неисправность\npay.ip_TE5_PV_Bad = Boolean((data[9] >>> 4) & 1); // 400010.4: ТЕ5. Неисправность\npay.ip_TE6_PV_Bad = Boolean((data[9] >>> 5) & 1); // 400010.5: TE6. Неисправность\npay.ip_TE7_PV_Bad = Boolean((data[9] >>> 6) & 1); // 400010.6: TE7. Неисправность\npay.ip_TE8_PV_Bad = Boolean((data[9] >>> 7) & 1); // 400010.7: TE8. Неисправность\npay.ip_TE9_PV_Bad = Boolean((data[9] >>> 8) & 1); // 400010.8: TE9. Неисправность\npay.ip_TE10_PV_Bad = Boolean((data[9] >>> 9) & 1); // 400010.9: TE10. Неисправность\npay.ip_PE1_PV_Bad = Boolean((data[9] >>> 10) & 1); // 400010.10: PE1. Неисправность\npay.ip_PE2_PV_Bad = Boolean((data[9] >>> 11) & 1); // 400010.11: PE2. Неисправность\npay.ip_PE3_PV_Bad = Boolean((data[9] >>> 12) & 1); // 400010.12: PE3. Неисправность\npay.ip_PE4_PV_Bad = Boolean((data[9] >>> 13) & 1); // 400010.13: PE4. Неисправность\npay.ip_PE5_PV_Bad = Boolean((data[9] >>> 14) & 1); // 400010.14: PE5. Неисправность\npay.ip_PE6_PV_Bad = Boolean((data[9] >>> 15) & 1); // 400010.15: PE6. Неисправность\npay.ip_PE7_PV_Bad = Boolean((data[10] >>> 0) & 1); // 400011.0: PE7. Неисправность\npay.ip_PE8_PV_Bad = Boolean((data[10] >>> 1) & 1); // 400011.1: РЕ8. Неисправность\npay.ip_PE9_PV_Bad = Boolean((data[10] >>> 2) & 1); // 400011.2: PE9. Неисправность\npay.ip_PE10_PV_Bad = Boolean((data[10] >>> 3) & 1); // 400011.3: PE10. Неисправность\npay.ip_PE11_PV_Bad = Boolean((data[10] >>> 4) & 1); // 400011.4: PE11. Неисправность\npay.ip_H1_1_ErrStart = Boolean((data[10] >>> 5) & 1); // 400011.5: H1.1. Ошибка запуска или самопроизвольный останов\npay.ip_H1_2_ErrStart = Boolean((data[10] >>> 6) & 1); // 400011.6: H1.2. Ошибка запуска или самопроизвольный останов\npay.ip_H2_1_ErrStart = Boolean((data[10] >>> 7) & 1); // 400011.7: H2.1. Ошибка запуска или самопроизвольный останов\npay.ip_H2_2_ErrStart = Boolean((data[10] >>> 8) & 1); // 400011.8: H2.2. Ошибка запуска или самопроизвольный останов\npay.ip_H3_1_ErrStart = Boolean((data[10] >>> 9) & 1); // 400011.9: H3.1. Ошибка запуска или самопроизвольный останов\npay.ip_H3_2_ErrStart = Boolean((data[10] >>> 10) & 1); // 400011.10: H3.2. Ошибка запуска или самопроизвольный останов\npay.ip_H4_1_ErrStart = Boolean((data[10] >>> 11) & 1); // 400011.11: H4.1. Ошибка запуска или самопроизвольный останов\npay.ip_H4_2_ErrStart = Boolean((data[10] >>> 12) & 1); // 400011.12: H4.2. Ошибка запуска или самопроизвольный останов\npay.ip_H5_1_ErrStart = Boolean((data[10] >>> 13) & 1); // 400011.13: H5.1. Ошибка запуска или самопроизвольный останов\npay.ip_H5_2_ErrStart = Boolean((data[10] >>> 14) & 1); // 400011.14: H5.2. Ошибка запуска или самопроизвольный останов\npay.ip_PC3_Out = Boolean((data[10] >>> 15) & 1); // 400011.15: Список тревог. PC3 \"сухой ход\" Н1\npay.ip_PC4_Out = Boolean((data[11] >>> 0) & 1); // 400012.0: Список тревог. PC4 \"сухой ход\" Н2\npay.ip_PC5_Out = Boolean((data[11] >>> 1) & 1); // 400012.1: Список тревог. PC5 \"сухой ход\" Н3\npay.ip_PC6_Out = Boolean((data[11] >>> 2) & 1); // 400012.2: Список тревог. PC6 \"сухой ход\" Н4\npay.ip_PC7_Out = Boolean((data[11] >>> 3) & 1); // 400012.3: Список тревог. PC7 \"сухой ход\" Н5\npay.ip_TE3_PV_AH_Act = Boolean((data[11] >>> 4) & 1); // 400012.4: ТЕ3. Активен Порог HH\npay.ip_TE5_PV_AH_Act = Boolean((data[11] >>> 5) & 1); // 400012.5: ТЕ5. Активен Порог HH\npay.ip_PE1_PV_AH_Act = Boolean((data[11] >>> 6) & 1); // 400012.6: PE1. Активен Порог HH\npay.ip_PE3_PV_AH_Act = Boolean((data[11] >>> 7) & 1); // 400012.7: PE3. Активен Порог HH\npay.ip_PE1_PV_AL_Act = Boolean((data[11] >>> 8) & 1); // 400012.8: PE1. Активен Порог LL\npay.ip_PE3_PV_AL_Act = Boolean((data[11] >>> 9) & 1); // 400012.9: PE3. Активен Порог LL\npay.ip_PE2_PV_AL_Act = Boolean((data[11] >>> 10) & 1); // 400012.10: PE2. Активен Порог LL\npay.ip_PE4_PV_AL_Act = Boolean((data[11] >>> 11) & 1); // 400012.11: PE4. Активен Порог LL\npay.ip_PE9_PV_AL_Act = Boolean((data[11] >>> 12) & 1); // 400012.12: PE9. Активен Порог LL\npay.ip_PE9_PV_AH_Act = Boolean((data[11] >>> 13) & 1); // 400012.13: PE9. Активен Порог HH\npay.ip_PE10_PV_AL_Act = Boolean((data[11] >>> 14) & 1); // 400012.14: PE10. Активен Порог LL\npay.ip_K1_1_Alarm = Boolean((data[11] >>> 15) & 1); // 400012.15: Список тревог. Авария котла К1.1\npay.ip_K1_2_Alarm = Boolean((data[12] >>> 0) & 1); // 400013.0: Список тревог. Авария котла К1.2\npay.ip_PE6_PV_AL_Act = Boolean((data[12] >>> 1) & 1); // 400013.1: PE6. Активен Порог LL\npay.ip_PE6_PV_AH_Act = Boolean((data[12] >>> 2) & 1); // 400013.2: PE6. Активен Порог HH\npay.ip_PE7_PV_AL_Act = Boolean((data[12] >>> 3) & 1); // 400013.3: PE7. Активен Порог LL\npay.ip_PE7_PV_AH_Act = Boolean((data[12] >>> 4) & 1); // 400013.4: PE7. Активен Порог HH\npay.ip_PE11_PV_AL_Act = Boolean((data[12] >>> 5) & 1); // 400013.5: PE11. Активен Порог LL\npay.ip_PE11_PV_AH_Act = Boolean((data[12] >>> 6) & 1); // 400013.6: PE11. Активен Порог HH\npay.ip_GAZ_CO_Out = Boolean((data[12] >>> 7) & 1); // 400013.7: Список тревог. Газ СО\npay.ip_GAZ_CH4_Out = Boolean((data[12] >>> 8) & 1); // 400013.8: Список тревог. Газ СН4\npay.ip_Security_Out = Boolean((data[12] >>> 9) & 1); // 400013.9: Список тревог. Охрана\npay.ip_Fire_Out = Boolean((data[12] >>> 10) & 1); // 400013.10: Список тревог. Пожар\n\nmsg.payload = pay;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 110,
+        "wires": [
+            [
+                "5e187b84fe245bd9"
+            ]
+        ]
+    },
+    {
+        "id": "1f4433279cb6ed8d",
+        "type": "function",
+        "z": "93dc403dd0a3e7b1",
+        "name": "trigger_StatusBits",
+        "func": "// A successful block starts the next read; failed blocks produce no trigger.\nif (!msg.payload?.buffer || msg.payload.buffer.length !== 26) {\n    node.error('Cannot continue incomplete Nurlat-5 StatusBits block', msg);\n    return null;\n}\nmsg.payload = 1;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 180,
+        "wires": [
+            [
+                "297cc3a96e816cad"
+            ]
+        ]
+    },
+    {
+        "id": "297cc3a96e816cad",
+        "type": "modbus-getter",
+        "z": "93dc403dd0a3e7b1",
+        "name": "Block_AlarmInputs_2",
+        "showStatusActivities": false,
+        "showErrors": true,
+        "logIOActivities": false,
+        "unitid": "1",
+        "dataType": "HoldingRegister",
+        "adr": "15",
+        "quantity": "11",
+        "server": "21ab507b210d90d0",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "x": 180,
+        "y": 260,
+        "wires": [
+            [],
+            [
+                "48d635c6ec317d55",
+                "bc807dbdd5cab8e3"
+            ]
+        ]
+    },
+    {
+        "id": "48d635c6ec317d55",
+        "type": "function",
+        "z": "93dc403dd0a3e7b1",
+        "name": "data_convert_AlarmInputs",
+        "func": "// AlarmInputs: FC03, unit 1, zero-based registers 15–25.\n// Only named R variables are decoded; workbook names and native units are preserved.\nconst data = msg.payload?.data;\nconst sourceBuffer = msg.payload?.buffer;\nif (!Array.isArray(data) || data.length !== 11 || !sourceBuffer || sourceBuffer.length !== 22) {\n    node.error('Unexpected Nurlat-5 AlarmInputs response length', msg);\n    return null;\n}\nconst buffer = Buffer.from(sourceBuffer);\nconst pay = {};\n\npay.ip_PC1_Out_Int = buffer.readInt16BE(0); // 400016: Давление теплоносителя. Подпитка котлового контура (1=авария; 0=норма)\npay.ip_PC2_Out_Int = buffer.readInt16BE(2); // 400017: Давление теплоносителя. Подпитка сетевого контура (1=авария; 0=норма)\npay.ip_PC3_Out_Int = buffer.readInt16BE(4); // 400018: Давление теплоносителя. Защита \"сухой ход\" насосов К1.1 (1=авария; 0=норма)\npay.ip_PC4_Out_Int = buffer.readInt16BE(6); // 400019: Давление теплоносителя. Защита \"сухой ход\" насосов К1.2  (1=авария; 0=норма)\npay.ip_PC5_Out_Int = buffer.readInt16BE(8); // 400020: Давление теплоносителя. Защита \"сухой ход\" насосов подпитки котлового контура (1=авария; 0=норма)\npay.ip_PC6_Out_Int = buffer.readInt16BE(10); // 400021: Давление теплоносителя. Защита \"сухой ход\" насосов подпитки сетевого контура (1=авария; 0=норма)\npay.ip_PC7_Out_Int = buffer.readInt16BE(12); // 400022: Давление теплоносителя. Защита \"сухой ход\" насосов сетевого контура (1=авария; 0=норма)\npay.ip_GAZ_CO_Out_Int = buffer.readInt16BE(14); // 400023: Газ СО (1=авария; 0=норма)\npay.ip_GAZ_CH4_Out_Int = buffer.readInt16BE(16); // 400024: Газ СН4 (1=авария; 0=норма)\npay.ip_Security_Out_Int = buffer.readInt16BE(18); // 400025: Охрана (1=авария; 0=норма)\npay.ip_Fire_Out_Int = buffer.readInt16BE(20); // 400026: Пожар (1=авария; 0=норма)\n\nmsg.payload = pay;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 260,
+        "wires": [
+            [
+                "5e187b84fe245bd9"
+            ]
+        ]
+    },
+    {
+        "id": "bc807dbdd5cab8e3",
+        "type": "function",
+        "z": "93dc403dd0a3e7b1",
+        "name": "trigger_AlarmInputs",
+        "func": "// A successful block starts the next read; failed blocks produce no trigger.\nif (!msg.payload?.buffer || msg.payload.buffer.length !== 22) {\n    node.error('Cannot continue incomplete Nurlat-5 AlarmInputs block', msg);\n    return null;\n}\nmsg.payload = 1;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 330,
+        "wires": [
+            [
+                "f9bb4ab170e1b165"
+            ]
+        ]
+    },
+    {
+        "id": "f9bb4ab170e1b165",
+        "type": "modbus-getter",
+        "z": "93dc403dd0a3e7b1",
+        "name": "Block_RoomMode_3",
+        "showStatusActivities": false,
+        "showErrors": true,
+        "logIOActivities": false,
+        "unitid": "1",
+        "dataType": "HoldingRegister",
+        "adr": "35",
+        "quantity": "2",
+        "server": "21ab507b210d90d0",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "x": 180,
+        "y": 410,
+        "wires": [
+            [],
+            [
+                "88ac0a1dac6762da",
+                "be45387c2290a8e5"
+            ]
+        ]
+    },
+    {
+        "id": "88ac0a1dac6762da",
+        "type": "function",
+        "z": "93dc403dd0a3e7b1",
+        "name": "data_convert_RoomMode",
+        "func": "// RoomMode: FC03, unit 1, zero-based registers 35–36.\n// Only named R variables are decoded; workbook names and native units are preserved.\nconst data = msg.payload?.data;\nconst sourceBuffer = msg.payload?.buffer;\nif (!Array.isArray(data) || data.length !== 2 || !sourceBuffer || sourceBuffer.length !== 4) {\n    node.error('Unexpected Nurlat-5 RoomMode response length', msg);\n    return null;\n}\nconst buffer = Buffer.from(sourceBuffer);\nconst pay = {};\n\npay.ip_Kot_Mode = buffer.readInt16BE(0); // 400036: Режим работы котельной (0=ручной; 1=автоматический)\npay.ip_Kot_State = buffer.readInt16BE(2); // 400037: Состояние:0=Исходное; 1 = Запуск котла; 2 = Останов котла; 3 = Работа \n\nmsg.payload = pay;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 410,
+        "wires": [
+            [
+                "5e187b84fe245bd9"
+            ]
+        ]
+    },
+    {
+        "id": "be45387c2290a8e5",
+        "type": "function",
+        "z": "93dc403dd0a3e7b1",
+        "name": "trigger_RoomMode",
+        "func": "// A successful block starts the next read; failed blocks produce no trigger.\nif (!msg.payload?.buffer || msg.payload.buffer.length !== 4) {\n    node.error('Cannot continue incomplete Nurlat-5 RoomMode block', msg);\n    return null;\n}\nmsg.payload = 1;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 480,
+        "wires": [
+            [
+                "df7afea1661c77a5"
+            ]
+        ]
+    },
+    {
+        "id": "df7afea1661c77a5",
+        "type": "modbus-getter",
+        "z": "93dc403dd0a3e7b1",
+        "name": "Block_TemperatureTargets_4",
+        "showStatusActivities": false,
+        "showErrors": true,
+        "logIOActivities": false,
+        "unitid": "1",
+        "dataType": "HoldingRegister",
+        "adr": "56",
+        "quantity": "4",
+        "server": "21ab507b210d90d0",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "x": 180,
+        "y": 560,
+        "wires": [
+            [],
+            [
+                "8127ed4796dc5232",
+                "8a7748c0fec8f148"
+            ]
+        ]
+    },
+    {
+        "id": "8127ed4796dc5232",
+        "type": "function",
+        "z": "93dc403dd0a3e7b1",
+        "name": "data_convert_TemperatureTargets",
+        "func": "// TemperatureTargets: FC03, unit 1, zero-based registers 56–59.\n// Only named R variables are decoded; workbook names and native units are preserved.\nconst data = msg.payload?.data;\nconst sourceBuffer = msg.payload?.buffer;\nif (!Array.isArray(data) || data.length !== 4 || !sourceBuffer || sourceBuffer.length !== 8) {\n    node.error('Unexpected Nurlat-5 TemperatureTargets response length', msg);\n    return null;\n}\nconst buffer = Buffer.from(sourceBuffer);\n// CODESYS REAL: low word first, big-endian bytes within each word.\nconst floats = Buffer.from(buffer).swap16();\nconst pay = {};\n\npay.ip_Cascad_SP_TE_C = floats.readFloatLE(0); // 400057: Задание температуры подачи в теплосеть с учетом температуры наружного воздуха\npay.ip_Cascad_SP_TE_K = floats.readFloatLE(4); // 400059: Задание температуры подачи в теплосеть\n\nmsg.payload = pay;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 560,
+        "wires": [
+            [
+                "5e187b84fe245bd9"
+            ]
+        ]
+    },
+    {
+        "id": "8a7748c0fec8f148",
+        "type": "function",
+        "z": "93dc403dd0a3e7b1",
+        "name": "trigger_TemperatureTargets",
+        "func": "// A successful block starts the next read; failed blocks produce no trigger.\nif (!msg.payload?.buffer || msg.payload.buffer.length !== 8) {\n    node.error('Cannot continue incomplete Nurlat-5 TemperatureTargets block', msg);\n    return null;\n}\nmsg.payload = 1;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 630,
+        "wires": [
+            [
+                "8b76d1d8905a165c"
+            ]
+        ]
+    },
+    {
+        "id": "8b76d1d8905a165c",
+        "type": "modbus-getter",
+        "z": "93dc403dd0a3e7b1",
+        "name": "Block_TemperatureRise_5",
+        "showStatusActivities": false,
+        "showErrors": true,
+        "logIOActivities": false,
+        "unitid": "1",
+        "dataType": "HoldingRegister",
+        "adr": "66",
+        "quantity": "2",
+        "server": "21ab507b210d90d0",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "x": 180,
+        "y": 710,
+        "wires": [
+            [],
+            [
+                "12b171ba4be47dac",
+                "29fc20875021c691"
+            ]
+        ]
+    },
+    {
+        "id": "12b171ba4be47dac",
+        "type": "function",
+        "z": "93dc403dd0a3e7b1",
+        "name": "data_convert_TemperatureRise",
+        "func": "// TemperatureRise: FC03, unit 1, zero-based registers 66–67.\n// Only named R variables are decoded; workbook names and native units are preserved.\nconst data = msg.payload?.data;\nconst sourceBuffer = msg.payload?.buffer;\nif (!Array.isArray(data) || data.length !== 2 || !sourceBuffer || sourceBuffer.length !== 4) {\n    node.error('Unexpected Nurlat-5 TemperatureRise response length', msg);\n    return null;\n}\nconst buffer = Buffer.from(sourceBuffer);\n// CODESYS REAL: low word first, big-endian bytes within each word.\nconst floats = Buffer.from(buffer).swap16();\nconst pay = {};\n\npay.ip_Cascad_IncT = floats.readFloatLE(0); // 400067: Текущий прирост температуры прямой воды в котловом контуре в течение 1 мин.\n\nmsg.payload = pay;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 710,
+        "wires": [
+            [
+                "5e187b84fe245bd9"
+            ]
+        ]
+    },
+    {
+        "id": "29fc20875021c691",
+        "type": "function",
+        "z": "93dc403dd0a3e7b1",
+        "name": "trigger_TemperatureRise",
+        "func": "// A successful block starts the next read; failed blocks produce no trigger.\nif (!msg.payload?.buffer || msg.payload.buffer.length !== 4) {\n    node.error('Cannot continue incomplete Nurlat-5 TemperatureRise block', msg);\n    return null;\n}\nmsg.payload = 1;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 780,
+        "wires": [
+            [
+                "201689b48d788032"
+            ]
+        ]
+    },
+    {
+        "id": "201689b48d788032",
+        "type": "modbus-getter",
+        "z": "93dc403dd0a3e7b1",
+        "name": "Block_Temperatures_6",
+        "showStatusActivities": false,
+        "showErrors": true,
+        "logIOActivities": false,
+        "unitid": "1",
+        "dataType": "HoldingRegister",
+        "adr": "92",
+        "quantity": "20",
+        "server": "21ab507b210d90d0",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "x": 180,
+        "y": 860,
+        "wires": [
+            [],
+            [
+                "5e79da6721b29347",
+                "bcfe5d15fb2a9269"
+            ]
+        ]
+    },
+    {
+        "id": "5e79da6721b29347",
+        "type": "function",
+        "z": "93dc403dd0a3e7b1",
+        "name": "data_convert_Temperatures",
+        "func": "// Temperatures: FC03, unit 1, zero-based registers 92–111.\n// Only named R variables are decoded; workbook names and native units are preserved.\nconst data = msg.payload?.data;\nconst sourceBuffer = msg.payload?.buffer;\nif (!Array.isArray(data) || data.length !== 20 || !sourceBuffer || sourceBuffer.length !== 40) {\n    node.error('Unexpected Nurlat-5 Temperatures response length', msg);\n    return null;\n}\nconst buffer = Buffer.from(sourceBuffer);\n// CODESYS REAL: low word first, big-endian bytes within each word.\nconst floats = Buffer.from(buffer).swap16();\nconst pay = {};\n\npay.ip_TE1_PV_Out = floats.readFloatLE(0); // 400093: Температура воздуха наружняя (-50…50 °С)\npay.ip_TE2_PV_Out = floats.readFloatLE(4); // 400095: Температура воздуха в помещении (-50…50 °С)\npay.ip_TE3_PV_Out = floats.readFloatLE(8); // 400097: Температура теплоносителя после котла К1.1 (0…170 °С)\npay.ip_TE4_PV_Out = floats.readFloatLE(12); // 400099: Температура теплоносителя до котла К1.1 (0…170 °С)\npay.ip_TE5_PV_Out = floats.readFloatLE(16); // 400101: Температура теплоносителя после котла К1.2 (0…170 °С)\npay.ip_TE6_PV_Out = floats.readFloatLE(20); // 400103: Температура теплоносителя до котла К1.2 (0…170 °С)\npay.ip_TE7_PV_Out = floats.readFloatLE(24); // 400105: Температура теплоносителя после ТОА (0…170 °С)\npay.ip_TE8_PV_Out = floats.readFloatLE(28); // 400107: Температура теплоносителя до ТОА (0…170 °С)\npay.ip_TE9_PV_Out = floats.readFloatLE(32); // 400109: Температура теплоносителя на теплосеть (0…170 °С)\npay.ip_TE10_PV_Out = floats.readFloatLE(36); // 400111: Температура теплоносителя из теплосети (0…170 °С)\n\nmsg.payload = pay;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 860,
+        "wires": [
+            [
+                "5e187b84fe245bd9"
+            ]
+        ]
+    },
+    {
+        "id": "bcfe5d15fb2a9269",
+        "type": "function",
+        "z": "93dc403dd0a3e7b1",
+        "name": "trigger_Temperatures",
+        "func": "// A successful block starts the next read; failed blocks produce no trigger.\nif (!msg.payload?.buffer || msg.payload.buffer.length !== 40) {\n    node.error('Cannot continue incomplete Nurlat-5 Temperatures block', msg);\n    return null;\n}\nmsg.payload = 1;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 930,
+        "wires": [
+            [
+                "23bb783f537f5b45"
+            ]
+        ]
+    },
+    {
+        "id": "23bb783f537f5b45",
+        "type": "modbus-getter",
+        "z": "93dc403dd0a3e7b1",
+        "name": "Block_PressuresLevels_7",
+        "showStatusActivities": false,
+        "showErrors": true,
+        "logIOActivities": false,
+        "unitid": "1",
+        "dataType": "HoldingRegister",
+        "adr": "112",
+        "quantity": "22",
+        "server": "21ab507b210d90d0",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "x": 180,
+        "y": 1010,
+        "wires": [
+            [],
+            [
+                "6647d91cba8dfb80"
+            ]
+        ]
+    },
+    {
+        "id": "6647d91cba8dfb80",
+        "type": "function",
+        "z": "93dc403dd0a3e7b1",
+        "name": "data_convert_PressuresLevels",
+        "func": "// PressuresLevels: FC03, unit 1, zero-based registers 112–133.\n// Only named R variables are decoded; workbook names and native units are preserved.\nconst data = msg.payload?.data;\nconst sourceBuffer = msg.payload?.buffer;\nif (!Array.isArray(data) || data.length !== 22 || !sourceBuffer || sourceBuffer.length !== 44) {\n    node.error('Unexpected Nurlat-5 PressuresLevels response length', msg);\n    return null;\n}\nconst buffer = Buffer.from(sourceBuffer);\n// CODESYS REAL: low word first, big-endian bytes within each word.\nconst floats = Buffer.from(buffer).swap16();\nconst pay = {};\n\npay.ip_PE1_PV_Out = floats.readFloatLE(0); // 400113: Давление теплоносителя после котла К1.1 (0…16 кгс/см2)\npay.ip_PE2_PV_Out = floats.readFloatLE(4); // 400115: Давление теплоносителя до котла К1.1 (0…16 кгс/см2)\npay.ip_PE3_PV_Out = floats.readFloatLE(8); // 400117: Давление теплоносителя после котла К1.2 (0…16 кгс/см2)\npay.ip_PE4_PV_Out = floats.readFloatLE(12); // 400119: Давление теплоносителя до котла К1.2 (0…16 кгс/см2)\npay.ip_PE5_PV_Out = floats.readFloatLE(16); // 400121: Давление теплоносителя котлового контура (0…16 кгс/см2)\npay.ip_PE6_PV_Out = floats.readFloatLE(20); // 400123: Уровень в емкости подпитки котлового контура (0…10 м)\npay.ip_PE7_PV_Out = floats.readFloatLE(24); // 400125: Уровень в емкости подпитки сетевого контура (0…10 м)\npay.ip_PE8_PV_Out = floats.readFloatLE(28); // 400127: Давление теплоносителя до ТОА (0…16 кгс/см2)\npay.ip_PE9_PV_Out = floats.readFloatLE(32); // 400129: Давление теплоносителя после сетевых насосов (0…16 кгс/см2)\npay.ip_PE10_PV_Out = floats.readFloatLE(36); // 400131: Давление теплоносителя обратка теплосети (0…16 кгс/см2)\npay.ip_PE11_PV_Out = floats.readFloatLE(40); // 400133: Давление газа (0…1 кгс/см2)\n\nmsg.payload = pay;\nmsg.complete = true; // Emit only after the complete sequential read chain.\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 1010,
+        "wires": [
+            [
+                "5e187b84fe245bd9"
+            ]
+        ]
+    },
+    {
+        "id": "5e187b84fe245bd9",
+        "type": "join",
+        "z": "93dc403dd0a3e7b1",
+        "name": "joinData",
+        "mode": "custom",
+        "build": "merged",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "useparts": false,
+        "accumulate": false,
+        "timeout": "",
+        "count": "",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 900,
+        "y": 440,
+        "wires": [
+            [
+                "4da4306ea807234d"
+            ]
+        ]
+    },
+    {
+        "id": "4da4306ea807234d",
+        "type": "function",
+        "z": "93dc403dd0a3e7b1",
+        "name": "collect-device-state",
+        "func": "// Нурлат-5: all 146 named R parameters from Карта регистров Нурлат.xlsx.\n// Converters retain workbook ip_* names and native units; this function supplies site meaning.\n// Pressure: кгс/см² in the workbook, бар in device state. Temperature: °C, level: м.\nconst payload = msg.payload;\nconst requiredSources = [\n    \"ip_M1_Up\",\n    \"ip_M1_Dn\",\n    \"ip_M2_Up\",\n    \"ip_M2_Dn\",\n    \"ip_H1_1_Run\",\n    \"ip_H1_2_Run\",\n    \"ip_H2_1_Run\",\n    \"ip_H2_2_Run\",\n    \"ip_H3_1_Run\",\n    \"ip_H3_2_Run\",\n    \"ip_H4_1_Run\",\n    \"ip_H4_2_Run\",\n    \"ip_H5_1_Run\",\n    \"ip_H5_2_Run\",\n    \"ip_K1_1_Lock\",\n    \"ip_K1_1_Run\",\n    \"ip_K1_1_Fault\",\n    \"ip_K1_1_Start\",\n    \"ip_K1_1_Stop\",\n    \"ip_K1_2_Lock\",\n    \"ip_K1_2_Run\",\n    \"ip_K1_2_Fault\",\n    \"ip_K1_2_Start\",\n    \"ip_K1_2_Stop\",\n    \"ip_HV1_Out\",\n    \"ip_HV2_Out\",\n    \"ip_HV3_Out\",\n    \"ip_HV4_Out\",\n    \"ip_HV5_Out\",\n    \"ip_HA1_Out\",\n    \"ip_HA2_Out\",\n    \"ip_TE3_PV_WH_Act\",\n    \"ip_TE5_PV_WH_Act\",\n    \"ip_PE1_PV_WH_Act\",\n    \"ip_PE3_PV_WH_Act\",\n    \"ip_PE1_PV_WL_Act\",\n    \"ip_PE3_PV_WL_Act\",\n    \"ip_PE2_PV_WL_Act\",\n    \"ip_PE4_PV_WL_Act\",\n    \"ip_PE9_PV_WL_Act\",\n    \"ip_PE9_PV_WH_Act\",\n    \"ip_PE10_PV_WL_Act\",\n    \"ip_PE6_PV_WL_Act\",\n    \"ip_PE6_PV_WH_Act\",\n    \"ip_PE7_PV_WL_Act\",\n    \"ip_PE7_PV_WH_Act\",\n    \"ip_PE11_PV_WL_Act\",\n    \"ip_PE11_PV_WH_Act\",\n    \"ip_PC1_Out\",\n    \"ip_PC2_Out\",\n    \"ip_TE1_PV_Bad\",\n    \"ip_TE2_PV_Bad\",\n    \"ip_TE3_PV_Bad\",\n    \"ip_TE4_PV_Bad\",\n    \"ip_TE5_PV_Bad\",\n    \"ip_TE6_PV_Bad\",\n    \"ip_TE7_PV_Bad\",\n    \"ip_TE8_PV_Bad\",\n    \"ip_TE9_PV_Bad\",\n    \"ip_TE10_PV_Bad\",\n    \"ip_PE1_PV_Bad\",\n    \"ip_PE2_PV_Bad\",\n    \"ip_PE3_PV_Bad\",\n    \"ip_PE4_PV_Bad\",\n    \"ip_PE5_PV_Bad\",\n    \"ip_PE6_PV_Bad\",\n    \"ip_PE7_PV_Bad\",\n    \"ip_PE8_PV_Bad\",\n    \"ip_PE9_PV_Bad\",\n    \"ip_PE10_PV_Bad\",\n    \"ip_PE11_PV_Bad\",\n    \"ip_H1_1_ErrStart\",\n    \"ip_H1_2_ErrStart\",\n    \"ip_H2_1_ErrStart\",\n    \"ip_H2_2_ErrStart\",\n    \"ip_H3_1_ErrStart\",\n    \"ip_H3_2_ErrStart\",\n    \"ip_H4_1_ErrStart\",\n    \"ip_H4_2_ErrStart\",\n    \"ip_H5_1_ErrStart\",\n    \"ip_H5_2_ErrStart\",\n    \"ip_PC3_Out\",\n    \"ip_PC4_Out\",\n    \"ip_PC5_Out\",\n    \"ip_PC6_Out\",\n    \"ip_PC7_Out\",\n    \"ip_TE3_PV_AH_Act\",\n    \"ip_TE5_PV_AH_Act\",\n    \"ip_PE1_PV_AH_Act\",\n    \"ip_PE3_PV_AH_Act\",\n    \"ip_PE1_PV_AL_Act\",\n    \"ip_PE3_PV_AL_Act\",\n    \"ip_PE2_PV_AL_Act\",\n    \"ip_PE4_PV_AL_Act\",\n    \"ip_PE9_PV_AL_Act\",\n    \"ip_PE9_PV_AH_Act\",\n    \"ip_PE10_PV_AL_Act\",\n    \"ip_K1_1_Alarm\",\n    \"ip_K1_2_Alarm\",\n    \"ip_PE6_PV_AL_Act\",\n    \"ip_PE6_PV_AH_Act\",\n    \"ip_PE7_PV_AL_Act\",\n    \"ip_PE7_PV_AH_Act\",\n    \"ip_PE11_PV_AL_Act\",\n    \"ip_PE11_PV_AH_Act\",\n    \"ip_GAZ_CO_Out\",\n    \"ip_GAZ_CH4_Out\",\n    \"ip_Security_Out\",\n    \"ip_Fire_Out\",\n    \"ip_PC1_Out_Int\",\n    \"ip_PC2_Out_Int\",\n    \"ip_PC3_Out_Int\",\n    \"ip_PC4_Out_Int\",\n    \"ip_PC5_Out_Int\",\n    \"ip_PC6_Out_Int\",\n    \"ip_PC7_Out_Int\",\n    \"ip_GAZ_CO_Out_Int\",\n    \"ip_GAZ_CH4_Out_Int\",\n    \"ip_Security_Out_Int\",\n    \"ip_Fire_Out_Int\",\n    \"ip_Kot_Mode\",\n    \"ip_Kot_State\",\n    \"ip_Cascad_SP_TE_C\",\n    \"ip_Cascad_SP_TE_K\",\n    \"ip_Cascad_IncT\",\n    \"ip_TE1_PV_Out\",\n    \"ip_TE2_PV_Out\",\n    \"ip_TE3_PV_Out\",\n    \"ip_TE4_PV_Out\",\n    \"ip_TE5_PV_Out\",\n    \"ip_TE6_PV_Out\",\n    \"ip_TE7_PV_Out\",\n    \"ip_TE8_PV_Out\",\n    \"ip_TE9_PV_Out\",\n    \"ip_TE10_PV_Out\",\n    \"ip_PE1_PV_Out\",\n    \"ip_PE2_PV_Out\",\n    \"ip_PE3_PV_Out\",\n    \"ip_PE4_PV_Out\",\n    \"ip_PE5_PV_Out\",\n    \"ip_PE6_PV_Out\",\n    \"ip_PE7_PV_Out\",\n    \"ip_PE8_PV_Out\",\n    \"ip_PE9_PV_Out\",\n    \"ip_PE10_PV_Out\",\n    \"ip_PE11_PV_Out\"\n];\nif (!payload || requiredSources.some((key) => !Object.prototype.hasOwnProperty.call(payload, key))) {\n    node.error('Incomplete Nurlat-5 polling cycle: missing workbook parameters', msg);\n    return null;\n}\n\nconst KGF_CM2_TO_BAR = 0.980665;\nconst real = (value, factor = 1) => (value === null || value === undefined || !Number.isFinite(value)\n    ? null : Number((value * factor).toPrecision(7)));\nconst flag = (value) => (value === null || value === undefined ? null : Boolean(value));\n\nconst deviceState = {\n    boilerValves: [\n        {\n            isOpeningCommand: flag(payload.ip_M1_Up), // 400001.3: M1. Клапан котла К1.1.Управляющий сигнал на открытие\n            isClosingCommand: flag(payload.ip_M1_Dn), // 400001.4: M1. Клапан котла К1.1.Управляющий сигнал на закрытие\n        },\n        {\n            isOpeningCommand: flag(payload.ip_M2_Up), // 400001.11: M2. Клапан котла К1.2.Управляющий сигнал на открытие\n            isClosingCommand: flag(payload.ip_M2_Dn), // 400001.12: M2. Клапан котла К1.2.Управляющий сигнал на закрытие\n        }\n    ],\n    boilerPumps: [\n        {\n            isWorking: flag(payload.ip_H1_1_Run), // 400002.0: H1.1. Насос №1 котла К1.1. Состояние (0=остановлен; 1=работает)\n            isStartError: flag(payload.ip_H1_1_ErrStart), // 400011.5: H1.1. Ошибка запуска или самопроизвольный останов\n        },\n        {\n            isWorking: flag(payload.ip_H1_2_Run), // 400002.4: H1.2. Насос №2 котла К1.1. Состояние (0=остановлен; 1=работает)\n            isStartError: flag(payload.ip_H1_2_ErrStart), // 400011.6: H1.2. Ошибка запуска или самопроизвольный останов\n        },\n        {\n            isWorking: flag(payload.ip_H2_1_Run), // 400002.8: H2.1. Насос №1 котла К1.2. Состояние (0=остановлен; 1=работает)\n            isStartError: flag(payload.ip_H2_1_ErrStart), // 400011.7: H2.1. Ошибка запуска или самопроизвольный останов\n        },\n        {\n            isWorking: flag(payload.ip_H2_2_Run), // 400002.12: H2.2. Насос №2 котла К1.2. Состояние (0=остановлен; 1=работает)\n            isStartError: flag(payload.ip_H2_2_ErrStart), // 400011.8: H2.2. Ошибка запуска или самопроизвольный останов\n        }\n    ],\n    boilerMakeupPumps: [\n        {\n            isWorking: flag(payload.ip_H3_1_Run), // 400003.0: H3.1. Насос №1 подпитки котлового контура. Состояние (0=остановлен; 1=работает)\n            isStartError: flag(payload.ip_H3_1_ErrStart), // 400011.9: H3.1. Ошибка запуска или самопроизвольный останов\n        },\n        {\n            isWorking: flag(payload.ip_H3_2_Run), // 400003.4: H3.2. Насос №2 подпитки котлового контура. Состояние (0=остановлен; 1=работает)\n            isStartError: flag(payload.ip_H3_2_ErrStart), // 400011.10: H3.2. Ошибка запуска или самопроизвольный останов\n        }\n    ],\n    networkMakeupPumps: [\n        {\n            isWorking: flag(payload.ip_H4_1_Run), // 400003.8: H4.1. Насос №1 подпитки сетевого контура. Состояние (0=остановлен; 1=работает)\n            isStartError: flag(payload.ip_H4_1_ErrStart), // 400011.11: H4.1. Ошибка запуска или самопроизвольный останов\n        },\n        {\n            isWorking: flag(payload.ip_H4_2_Run), // 400003.12: H4.2. Насос №2 подпитки сетевого контура. Состояние (0=остановлен; 1=работает)\n            isStartError: flag(payload.ip_H4_2_ErrStart), // 400011.12: H4.2. Ошибка запуска или самопроизвольный останов\n        }\n    ],\n    networkPumps: [\n        {\n            isWorking: flag(payload.ip_H5_1_Run), // 400004.0: H5.1. Насос №1 сетевой. Состояние (0=остановлен; 1=работает)\n            isStartError: flag(payload.ip_H5_1_ErrStart), // 400011.13: H5.1. Ошибка запуска или самопроизвольный останов\n        },\n        {\n            isWorking: flag(payload.ip_H5_2_Run), // 400004.4: H5.2. Насос №2 сетевой. Состояние (0=остановлен; 1=работает)\n            isStartError: flag(payload.ip_H5_2_ErrStart), // 400011.14: H5.2. Ошибка запуска или самопроизвольный останов\n        }\n    ],\n    boilers: [\n        {\n            isLocked: flag(payload.ip_K1_1_Lock), // 400005.0: Котел К1.1. Блокировка\n            isWorking: flag(payload.ip_K1_1_Run), // 400005.1: Котел К1.1. Работа\n            isFault: flag(payload.ip_K1_1_Fault), // 400005.2: Котел К1.1. Авария\n            isStartCommand: flag(payload.ip_K1_1_Start), // 400005.4: Котел К1.1. Команда на включение в ручном режиме\n            isStopCommand: flag(payload.ip_K1_1_Stop), // 400005.5: Котел К1.1. Команда на отключение в ручном режиме\n            isPumpDryRunAlarm: flag(payload.ip_PC3_Out), // 400011.15: Список тревог. PC3 \"сухой ход\" Н1\n            isAlarm: flag(payload.ip_K1_1_Alarm), // 400012.15: Список тревог. Авария котла К1.1\n            isPumpDryRunInputAlarm: flag(payload.ip_PC3_Out_Int), // 400018: Давление теплоносителя. Защита \"сухой ход\" насосов К1.1 (1=авария; 0=норма)\n            tempOut: real(payload.ip_TE3_PV_Out), // 400097: Температура теплоносителя после котла К1.1 (0…170 °С)\n            tempIn: real(payload.ip_TE4_PV_Out), // 400099: Температура теплоносителя до котла К1.1 (0…170 °С)\n            pressOut: real(payload.ip_PE1_PV_Out, KGF_CM2_TO_BAR), // 400113: Давление теплоносителя после котла К1.1 (0…16 кгс/см2); кгс/см² → бар (×0.980665)\n            pressIn: real(payload.ip_PE2_PV_Out, KGF_CM2_TO_BAR), // 400115: Давление теплоносителя до котла К1.1 (0…16 кгс/см2); кгс/см² → бар (×0.980665)\n        },\n        {\n            isLocked: flag(payload.ip_K1_2_Lock), // 400005.8: Котел К1.2. Блокировка\n            isWorking: flag(payload.ip_K1_2_Run), // 400005.9: Котел К1.2. Работа\n            isFault: flag(payload.ip_K1_2_Fault), // 400005.10: Котел К1.2. Авария\n            isStartCommand: flag(payload.ip_K1_2_Start), // 400005.12: Котел К1.2. Команда на включение в ручном режиме\n            isStopCommand: flag(payload.ip_K1_2_Stop), // 400005.13: Котел К1.2. Команда на отключение в ручном режиме\n            isPumpDryRunAlarm: flag(payload.ip_PC4_Out), // 400012.0: Список тревог. PC4 \"сухой ход\" Н2\n            isAlarm: flag(payload.ip_K1_2_Alarm), // 400013.0: Список тревог. Авария котла К1.2\n            isPumpDryRunInputAlarm: flag(payload.ip_PC4_Out_Int), // 400019: Давление теплоносителя. Защита \"сухой ход\" насосов К1.2  (1=авария; 0=норма)\n            tempOut: real(payload.ip_TE5_PV_Out), // 400101: Температура теплоносителя после котла К1.2 (0…170 °С)\n            tempIn: real(payload.ip_TE6_PV_Out), // 400103: Температура теплоносителя до котла К1.2 (0…170 °С)\n            pressOut: real(payload.ip_PE3_PV_Out, KGF_CM2_TO_BAR), // 400117: Давление теплоносителя после котла К1.2 (0…16 кгс/см2); кгс/см² → бар (×0.980665)\n            pressIn: real(payload.ip_PE4_PV_Out, KGF_CM2_TO_BAR), // 400119: Давление теплоносителя до котла К1.2 (0…16 кгс/см2); кгс/см² → бар (×0.980665)\n        }\n    ],\n    isBoilerMakeupTankFillValveOpenCommand: flag(payload.ip_HV1_Out), // 400006.0: Клапан заполнения емкости котлового контура. Управляющий сигнал (0=закрыть; 1=открыть)\n    isBoilerMakeupValveOpenCommand: flag(payload.ip_HV2_Out), // 400006.4: Клапан подпитки котлового контура. Управляющий сигнал (0=закрыть; 1=открыть)\n    isNetworkMakeupTankFillValveOpenCommand: flag(payload.ip_HV3_Out), // 400006.8: Клапан заполнения емкости сетевого контура. Управляющий сигнал (0=закрыть; 1=открыть)\n    isNetworkMakeupValveOpenCommand: flag(payload.ip_HV4_Out), // 400006.12: Клапан подпитки сетевого контура. Управляющий сигнал (0=закрыть; 1=открыть)\n    isGasValveOpenCommand: flag(payload.ip_HV5_Out), // 400007.0: Газовый клапан. Управляющий сигнал (0=закрыть; 1=открыть)\n    isSoundAlarm1Command: flag(payload.ip_HA1_Out), // 400007.4: Звуковая сигнализация №1. Управляющий сигнал (0=отключить; 1=включить)\n    isSoundAlarm2Command: flag(payload.ip_HA2_Out), // 400007.8: Звуковая сигнализация №2. Управляющий сигнал (0=отключить; 1=включить)\n    sensors: {\n        isTempOutBoiler1PreHighLevel: flag(payload.ip_TE3_PV_WH_Act), // 400008.0: ТЕ3. Активен Порог H\n        isTempOutBoiler2PreHighLevel: flag(payload.ip_TE5_PV_WH_Act), // 400008.1: ТЕ5. Активен Порог H\n        isPressOutBoiler1PreHighLevel: flag(payload.ip_PE1_PV_WH_Act), // 400008.2: PE1. Активен Порог H\n        isPressOutBoiler2PreHighLevel: flag(payload.ip_PE3_PV_WH_Act), // 400008.3: PE3. Активен Порог H\n        isPressOutBoiler1PreLowLevel: flag(payload.ip_PE1_PV_WL_Act), // 400008.4: PE1. Активен Порог L\n        isPressOutBoiler2PreLowLevel: flag(payload.ip_PE3_PV_WL_Act), // 400008.5: PE3. Активен Порог L\n        isPressInBoiler1PreLowLevel: flag(payload.ip_PE2_PV_WL_Act), // 400008.6: PE2. Активен Порог L\n        isPressInBoiler2PreLowLevel: flag(payload.ip_PE4_PV_WL_Act), // 400008.7: PE4. Активен Порог L\n        isPressOutNetPreLowLevel: flag(payload.ip_PE9_PV_WL_Act), // 400008.8: PE9. Активен Порог L\n        isPressOutNetPreHighLevel: flag(payload.ip_PE9_PV_WH_Act), // 400008.9: PE9. Активен Порог H\n        isPressInNetPreLowLevel: flag(payload.ip_PE10_PV_WL_Act), // 400008.10: PE10. Активен Порог L\n        isLevelBoilerMakeupTankPreLowLevel: flag(payload.ip_PE6_PV_WL_Act), // 400008.11: PE6. Активен Порог L\n        isLevelBoilerMakeupTankPreHighLevel: flag(payload.ip_PE6_PV_WH_Act), // 400008.12: PE6. Активен Порог H\n        isLevelNetworkMakeupTankPreLowLevel: flag(payload.ip_PE7_PV_WL_Act), // 400008.13: PE7. Активен Порог L\n        isLevelNetworkMakeupTankPreHighLevel: flag(payload.ip_PE7_PV_WH_Act), // 400008.14: PE7. Активен Порог H\n        isPressGasPreLowLevel: flag(payload.ip_PE11_PV_WL_Act), // 400008.15: PE11. Активен Порог L\n        isPressGasPreHighLevel: flag(payload.ip_PE11_PV_WH_Act), // 400009.0: PE11. Активен Порог H\n        isTempOutAirSensorError: flag(payload.ip_TE1_PV_Bad), // 400010.0: TE1. Неисправность\n        isTempRoomAirSensorError: flag(payload.ip_TE2_PV_Bad), // 400010.1: TE2. Неисправность\n        isTempOutBoiler1SensorError: flag(payload.ip_TE3_PV_Bad), // 400010.2: ТЕ3. Неисправность\n        isTempInBoiler1SensorError: flag(payload.ip_TE4_PV_Bad), // 400010.3: TE4. Неисправность\n        isTempOutBoiler2SensorError: flag(payload.ip_TE5_PV_Bad), // 400010.4: ТЕ5. Неисправность\n        isTempInBoiler2SensorError: flag(payload.ip_TE6_PV_Bad), // 400010.5: TE6. Неисправность\n        isTempOutHeatExchangerSensorError: flag(payload.ip_TE7_PV_Bad), // 400010.6: TE7. Неисправность\n        isTempInHeatExchangerSensorError: flag(payload.ip_TE8_PV_Bad), // 400010.7: TE8. Неисправность\n        isTempOutNetSensorError: flag(payload.ip_TE9_PV_Bad), // 400010.8: TE9. Неисправность\n        isTempInNetSensorError: flag(payload.ip_TE10_PV_Bad), // 400010.9: TE10. Неисправность\n        isPressOutBoiler1SensorError: flag(payload.ip_PE1_PV_Bad), // 400010.10: PE1. Неисправность\n        isPressInBoiler1SensorError: flag(payload.ip_PE2_PV_Bad), // 400010.11: PE2. Неисправность\n        isPressOutBoiler2SensorError: flag(payload.ip_PE3_PV_Bad), // 400010.12: PE3. Неисправность\n        isPressInBoiler2SensorError: flag(payload.ip_PE4_PV_Bad), // 400010.13: PE4. Неисправность\n        isPressBoilerCircuitSensorError: flag(payload.ip_PE5_PV_Bad), // 400010.14: PE5. Неисправность\n        isLevelBoilerMakeupTankSensorError: flag(payload.ip_PE6_PV_Bad), // 400010.15: PE6. Неисправность\n        isLevelNetworkMakeupTankSensorError: flag(payload.ip_PE7_PV_Bad), // 400011.0: PE7. Неисправность\n        isPressInHeatExchangerSensorError: flag(payload.ip_PE8_PV_Bad), // 400011.1: РЕ8. Неисправность\n        isPressOutNetSensorError: flag(payload.ip_PE9_PV_Bad), // 400011.2: PE9. Неисправность\n        isPressInNetSensorError: flag(payload.ip_PE10_PV_Bad), // 400011.3: PE10. Неисправность\n        isPressGasSensorError: flag(payload.ip_PE11_PV_Bad), // 400011.4: PE11. Неисправность\n        isTempOutBoiler1HighLevel: flag(payload.ip_TE3_PV_AH_Act), // 400012.4: ТЕ3. Активен Порог HH\n        isTempOutBoiler2HighLevel: flag(payload.ip_TE5_PV_AH_Act), // 400012.5: ТЕ5. Активен Порог HH\n        isPressOutBoiler1HighLevel: flag(payload.ip_PE1_PV_AH_Act), // 400012.6: PE1. Активен Порог HH\n        isPressOutBoiler2HighLevel: flag(payload.ip_PE3_PV_AH_Act), // 400012.7: PE3. Активен Порог HH\n        isPressOutBoiler1LowLevel: flag(payload.ip_PE1_PV_AL_Act), // 400012.8: PE1. Активен Порог LL\n        isPressOutBoiler2LowLevel: flag(payload.ip_PE3_PV_AL_Act), // 400012.9: PE3. Активен Порог LL\n        isPressInBoiler1LowLevel: flag(payload.ip_PE2_PV_AL_Act), // 400012.10: PE2. Активен Порог LL\n        isPressInBoiler2LowLevel: flag(payload.ip_PE4_PV_AL_Act), // 400012.11: PE4. Активен Порог LL\n        isPressOutNetLowLevel: flag(payload.ip_PE9_PV_AL_Act), // 400012.12: PE9. Активен Порог LL\n        isPressOutNetHighLevel: flag(payload.ip_PE9_PV_AH_Act), // 400012.13: PE9. Активен Порог HH\n        isPressInNetLowLevel: flag(payload.ip_PE10_PV_AL_Act), // 400012.14: PE10. Активен Порог LL\n        isLevelBoilerMakeupTankLowLevel: flag(payload.ip_PE6_PV_AL_Act), // 400013.1: PE6. Активен Порог LL\n        isLevelBoilerMakeupTankHighLevel: flag(payload.ip_PE6_PV_AH_Act), // 400013.2: PE6. Активен Порог HH\n        isLevelNetworkMakeupTankLowLevel: flag(payload.ip_PE7_PV_AL_Act), // 400013.3: PE7. Активен Порог LL\n        isLevelNetworkMakeupTankHighLevel: flag(payload.ip_PE7_PV_AH_Act), // 400013.4: PE7. Активен Порог HH\n        isPressGasLowLevel: flag(payload.ip_PE11_PV_AL_Act), // 400013.5: PE11. Активен Порог LL\n        isPressGasHighLevel: flag(payload.ip_PE11_PV_AH_Act), // 400013.6: PE11. Активен Порог HH\n    },\n    isBoilerMakeupPressureAlarm: flag(payload.ip_PC1_Out), // 400009.1: Давление теплоносителя. Подпитка котлового контура \n    isNetworkMakeupPressureAlarm: flag(payload.ip_PC2_Out), // 400009.2: Давление теплоносителя. Подпитка сетевого контура \n    isBoilerMakeupPumpDryRunAlarm: flag(payload.ip_PC5_Out), // 400012.1: Список тревог. PC5 \"сухой ход\" Н3\n    isNetworkMakeupPumpDryRunAlarm: flag(payload.ip_PC6_Out), // 400012.2: Список тревог. PC6 \"сухой ход\" Н4\n    isNetworkPumpDryRunAlarm: flag(payload.ip_PC7_Out), // 400012.3: Список тревог. PC7 \"сухой ход\" Н5\n    isCO: flag(payload.ip_GAZ_CO_Out), // 400013.7: Список тревог. Газ СО\n    isCH: flag(payload.ip_GAZ_CH4_Out), // 400013.8: Список тревог. Газ СН4\n    isSecurityAlarm: flag(payload.ip_Security_Out), // 400013.9: Список тревог. Охрана\n    isFireAlarm: flag(payload.ip_Fire_Out), // 400013.10: Список тревог. Пожар\n    isBoilerMakeupPressureInputAlarm: flag(payload.ip_PC1_Out_Int), // 400016: Давление теплоносителя. Подпитка котлового контура (1=авария; 0=норма)\n    isNetworkMakeupPressureInputAlarm: flag(payload.ip_PC2_Out_Int), // 400017: Давление теплоносителя. Подпитка сетевого контура (1=авария; 0=норма)\n    isBoilerMakeupPumpDryRunInputAlarm: flag(payload.ip_PC5_Out_Int), // 400020: Давление теплоносителя. Защита \"сухой ход\" насосов подпитки котлового контура (1=авария; 0=норма)\n    isNetworkMakeupPumpDryRunInputAlarm: flag(payload.ip_PC6_Out_Int), // 400021: Давление теплоносителя. Защита \"сухой ход\" насосов подпитки сетевого контура (1=авария; 0=норма)\n    isNetworkPumpDryRunInputAlarm: flag(payload.ip_PC7_Out_Int), // 400022: Давление теплоносителя. Защита \"сухой ход\" насосов сетевого контура (1=авария; 0=норма)\n    isCOInputAlarm: flag(payload.ip_GAZ_CO_Out_Int), // 400023: Газ СО (1=авария; 0=норма)\n    isCHInputAlarm: flag(payload.ip_GAZ_CH4_Out_Int), // 400024: Газ СН4 (1=авария; 0=норма)\n    isSecurityInputAlarm: flag(payload.ip_Security_Out_Int), // 400025: Охрана (1=авария; 0=норма)\n    isFireInputAlarm: flag(payload.ip_Fire_Out_Int), // 400026: Пожар (1=авария; 0=норма)\n    boilerRoomMode: payload.ip_Kot_Mode ?? null, // 400036: Режим работы котельной (0=ручной; 1=автоматический)\n    boilerRoomState: payload.ip_Kot_State ?? null, // 400037: Состояние:0=Исходное; 1 = Запуск котла; 2 = Останов котла; 3 = Работа \n    tempOutNetSetpoint: real(payload.ip_Cascad_SP_TE_C), // 400057: Задание температуры подачи в теплосеть с учетом температуры наружного воздуха\n    tempBoilersSetpoint: real(payload.ip_Cascad_SP_TE_K), // 400059: Задание температуры подачи в теплосеть\n    boilerCircuitTemperatureRise: real(payload.ip_Cascad_IncT), // 400067: Текущий прирост температуры прямой воды в котловом контуре в течение 1 мин.\n    tempOutAir: real(payload.ip_TE1_PV_Out), // 400093: Температура воздуха наружняя (-50…50 °С)\n    tempRoomAir: real(payload.ip_TE2_PV_Out), // 400095: Температура воздуха в помещении (-50…50 °С)\n    heatExchanger: {\n        tempOut: real(payload.ip_TE7_PV_Out), // 400105: Температура теплоносителя после ТОА (0…170 °С)\n        tempIn: real(payload.ip_TE8_PV_Out), // 400107: Температура теплоносителя до ТОА (0…170 °С)\n        pressIn: real(payload.ip_PE8_PV_Out, KGF_CM2_TO_BAR), // 400127: Давление теплоносителя до ТОА (0…16 кгс/см2); кгс/см² → бар (×0.980665)\n    },\n    tempOutNet: real(payload.ip_TE9_PV_Out), // 400109: Температура теплоносителя на теплосеть (0…170 °С)\n    tempInNet: real(payload.ip_TE10_PV_Out), // 400111: Температура теплоносителя из теплосети (0…170 °С)\n    pressBoilerCircuit: real(payload.ip_PE5_PV_Out, KGF_CM2_TO_BAR), // 400121: Давление теплоносителя котлового контура (0…16 кгс/см2); кгс/см² → бар (×0.980665)\n    levelBoilerMakeupTank: real(payload.ip_PE6_PV_Out), // 400123: Уровень в емкости подпитки котлового контура (0…10 м)\n    levelNetworkMakeupTank: real(payload.ip_PE7_PV_Out), // 400125: Уровень в емкости подпитки сетевого контура (0…10 м)\n    pressOutNet: real(payload.ip_PE9_PV_Out, KGF_CM2_TO_BAR), // 400129: Давление теплоносителя после сетевых насосов (0…16 кгс/см2); кгс/см² → бар (×0.980665)\n    pressInNet: real(payload.ip_PE10_PV_Out, KGF_CM2_TO_BAR), // 400131: Давление теплоносителя обратка теплосети (0…16 кгс/см2); кгс/см² → бар (×0.980665)\n    pressGas: real(payload.ip_PE11_PV_Out, KGF_CM2_TO_BAR), // 400133: Давление газа (0…1 кгс/см2); кгс/см² → бар (×0.980665)\n    timestamp: Date.now(), // Время полного опроса, Unix milliseconds\n};\n\n// Testing instance B: assign the registered device code here only when persistence is intended.\nconst DEVICE_CODE = null;\nif (DEVICE_CODE !== null) {\n    const { storeDeviceStateToCacheAsync } = global.get('helpers');\n    const flowUid = node.path.split('/').find((part) => part.length > 0);\n    await storeDeviceStateToCacheAsync(global, DEVICE_CODE, deviceState, flowUid);\n}\nmsg.deviceState = deviceState;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1150,
+        "y": 440,
+        "wires": [
+            [
+                "9f52d124b39417cf"
+            ]
+        ]
+    },
+    {
+        "id": "9f52d124b39417cf",
+        "type": "debug",
+        "z": "93dc403dd0a3e7b1",
+        "name": "nurlat-5 deviceState (test)",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "deviceState",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1430,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "b946e3f2fdff7931",
+        "type": "catch",
+        "z": "93dc403dd0a3e7b1",
+        "name": "Read errors",
+        "scope": [
+            "0e586224bb2ad1e8",
+            "b1af397150669a35",
+            "1f4433279cb6ed8d",
+            "297cc3a96e816cad",
+            "48d635c6ec317d55",
+            "bc807dbdd5cab8e3",
+            "f9bb4ab170e1b165",
+            "88ac0a1dac6762da",
+            "be45387c2290a8e5",
+            "df7afea1661c77a5",
+            "8127ed4796dc5232",
+            "8a7748c0fec8f148",
+            "8b76d1d8905a165c",
+            "12b171ba4be47dac",
+            "29fc20875021c691",
+            "201689b48d788032",
+            "5e79da6721b29347",
+            "bcfe5d15fb2a9269",
+            "23bb783f537f5b45",
+            "6647d91cba8dfb80",
+            "4da4306ea807234d"
+        ],
+        "uncaught": false,
+        "x": 900,
+        "y": 700,
+        "wires": [
+            [
+                "84be3d6b6c61172d"
+            ]
+        ]
+    },
+    {
+        "id": "84be3d6b6c61172d",
+        "type": "debug",
+        "z": "93dc403dd0a3e7b1",
+        "name": "nurlat-5 read error",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "error",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1150,
+        "y": 700,
+        "wires": []
     }
 ]

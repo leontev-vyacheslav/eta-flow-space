@@ -1,0 +1,2765 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "nurlat-5-boiler-room",
+  "description": "Нурлат, котельная №5. Все 146 именованных параметров R из карты регистров; тестовая коллекция без сохранения.",
+  "$comment": "Workbook source names remain in Node-RED payload; explicit collect-device-state mapping supplies normalized state. isConnected is supplied by the API. All editors are read-only.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "isConnected": {
+      "type": "boolean",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "text": "На связи"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "boilerValves": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/BoilerValveModel"
+      },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "boilerPumps": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/BoilerPumpModel"
+      },
+      "minItems": 4,
+      "maxItems": 4
+    },
+    "boilerMakeupPumps": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/BoilerMakeupPumpModel"
+      },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "networkMakeupPumps": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/NetworkMakeupPumpModel"
+      },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "networkPumps": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/NetworkPumpModel"
+      },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "boilers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/BoilerModel"
+      },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "isBoilerMakeupTankFillValveOpenCommand": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "payload.ip_HV1_Out → isBoilerMakeupTankFillValveOpenCommand; 400006.0",
+      "description": "Клапан заполнения емкости котлового контура. Управляющий сигнал (0=закрыть; 1=открыть)",
+      "ui": {
+        "group": 4,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Клапан заполнения емкости котлового контура. Управляющий сигнал (0=закрыть; 1=открыть)"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "isBoilerMakeupValveOpenCommand": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "payload.ip_HV2_Out → isBoilerMakeupValveOpenCommand; 400006.4",
+      "description": "Клапан подпитки котлового контура. Управляющий сигнал (0=закрыть; 1=открыть)",
+      "ui": {
+        "group": 4,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Клапан подпитки котлового контура. Управляющий сигнал (0=закрыть; 1=открыть)"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "isNetworkMakeupTankFillValveOpenCommand": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "payload.ip_HV3_Out → isNetworkMakeupTankFillValveOpenCommand; 400006.8",
+      "description": "Клапан заполнения емкости сетевого контура. Управляющий сигнал (0=закрыть; 1=открыть)",
+      "ui": {
+        "group": 4,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Клапан заполнения емкости сетевого контура. Управляющий сигнал (0=закрыть; 1=открыть)"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "isNetworkMakeupValveOpenCommand": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "payload.ip_HV4_Out → isNetworkMakeupValveOpenCommand; 400006.12",
+      "description": "Клапан подпитки сетевого контура. Управляющий сигнал (0=закрыть; 1=открыть)",
+      "ui": {
+        "group": 4,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Клапан подпитки сетевого контура. Управляющий сигнал (0=закрыть; 1=открыть)"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "isGasValveOpenCommand": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "payload.ip_HV5_Out → isGasValveOpenCommand; 400007.0",
+      "description": "Газовый клапан. Управляющий сигнал (0=закрыть; 1=открыть)",
+      "ui": {
+        "group": 4,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Газовый клапан. Управляющий сигнал (0=закрыть; 1=открыть)"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "isSoundAlarm1Command": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "payload.ip_HA1_Out → isSoundAlarm1Command; 400007.4",
+      "description": "Звуковая сигнализация №1. Управляющий сигнал (0=отключить; 1=включить)",
+      "ui": {
+        "group": 4,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Звуковая сигнализация №1. Управляющий сигнал (0=отключить; 1=включить)"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "isSoundAlarm2Command": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "payload.ip_HA2_Out → isSoundAlarm2Command; 400007.8",
+      "description": "Звуковая сигнализация №2. Управляющий сигнал (0=отключить; 1=включить)",
+      "ui": {
+        "group": 4,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Звуковая сигнализация №2. Управляющий сигнал (0=отключить; 1=включить)"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "sensors": {
+      "$ref": "#/$defs/SensorsModel"
+    },
+    "isBoilerMakeupPressureAlarm": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "payload.ip_PC1_Out → isBoilerMakeupPressureAlarm; 400009.1",
+      "description": "Давление теплоносителя. Подпитка котлового контура ",
+      "ui": {
+        "group": 6,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Давление теплоносителя. Подпитка котлового контура "
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "isNetworkMakeupPressureAlarm": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "payload.ip_PC2_Out → isNetworkMakeupPressureAlarm; 400009.2",
+      "description": "Давление теплоносителя. Подпитка сетевого контура ",
+      "ui": {
+        "group": 6,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Давление теплоносителя. Подпитка сетевого контура "
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "isBoilerMakeupPumpDryRunAlarm": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "payload.ip_PC5_Out → isBoilerMakeupPumpDryRunAlarm; 400012.1",
+      "description": "Список тревог. PC5 \"сухой ход\" Н3",
+      "ui": {
+        "group": 6,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Список тревог. PC5 \"сухой ход\" Н3"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "isNetworkMakeupPumpDryRunAlarm": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "payload.ip_PC6_Out → isNetworkMakeupPumpDryRunAlarm; 400012.2",
+      "description": "Список тревог. PC6 \"сухой ход\" Н4",
+      "ui": {
+        "group": 6,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Список тревог. PC6 \"сухой ход\" Н4"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "isNetworkPumpDryRunAlarm": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "payload.ip_PC7_Out → isNetworkPumpDryRunAlarm; 400012.3",
+      "description": "Список тревог. PC7 \"сухой ход\" Н5",
+      "ui": {
+        "group": 6,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Список тревог. PC7 \"сухой ход\" Н5"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "isCO": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "payload.ip_GAZ_CO_Out → isCO; 400013.7",
+      "description": "Список тревог. Газ СО",
+      "ui": {
+        "group": 6,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Список тревог. Газ СО"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "isCH": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "payload.ip_GAZ_CH4_Out → isCH; 400013.8",
+      "description": "Список тревог. Газ СН4",
+      "ui": {
+        "group": 6,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Список тревог. Газ СН4"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "isSecurityAlarm": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "payload.ip_Security_Out → isSecurityAlarm; 400013.9",
+      "description": "Список тревог. Охрана",
+      "ui": {
+        "group": 6,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Список тревог. Охрана"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "isFireAlarm": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "payload.ip_Fire_Out → isFireAlarm; 400013.10",
+      "description": "Список тревог. Пожар",
+      "ui": {
+        "group": 6,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Список тревог. Пожар"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "isBoilerMakeupPressureInputAlarm": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "payload.ip_PC1_Out_Int → isBoilerMakeupPressureInputAlarm; 400016",
+      "description": "Давление теплоносителя. Подпитка котлового контура (1=авария; 0=норма)",
+      "ui": {
+        "group": 6,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Давление теплоносителя. Подпитка котлового контура (1=авария; 0=норма)"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "isNetworkMakeupPressureInputAlarm": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "payload.ip_PC2_Out_Int → isNetworkMakeupPressureInputAlarm; 400017",
+      "description": "Давление теплоносителя. Подпитка сетевого контура (1=авария; 0=норма)",
+      "ui": {
+        "group": 6,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Давление теплоносителя. Подпитка сетевого контура (1=авария; 0=норма)"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "isBoilerMakeupPumpDryRunInputAlarm": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "payload.ip_PC5_Out_Int → isBoilerMakeupPumpDryRunInputAlarm; 400020",
+      "description": "Давление теплоносителя. Защита \"сухой ход\" насосов подпитки котлового контура (1=авария; 0=норма)",
+      "ui": {
+        "group": 6,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Давление теплоносителя. Защита \"сухой ход\" насосов подпитки котлового контура (1=авария; 0=норма)"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "isNetworkMakeupPumpDryRunInputAlarm": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "payload.ip_PC6_Out_Int → isNetworkMakeupPumpDryRunInputAlarm; 400021",
+      "description": "Давление теплоносителя. Защита \"сухой ход\" насосов подпитки сетевого контура (1=авария; 0=норма)",
+      "ui": {
+        "group": 6,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Давление теплоносителя. Защита \"сухой ход\" насосов подпитки сетевого контура (1=авария; 0=норма)"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "isNetworkPumpDryRunInputAlarm": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "payload.ip_PC7_Out_Int → isNetworkPumpDryRunInputAlarm; 400022",
+      "description": "Давление теплоносителя. Защита \"сухой ход\" насосов сетевого контура (1=авария; 0=норма)",
+      "ui": {
+        "group": 6,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Давление теплоносителя. Защита \"сухой ход\" насосов сетевого контура (1=авария; 0=норма)"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "isCOInputAlarm": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "payload.ip_GAZ_CO_Out_Int → isCOInputAlarm; 400023",
+      "description": "Газ СО (1=авария; 0=норма)",
+      "ui": {
+        "group": 6,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Газ СО (1=авария; 0=норма)"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "isCHInputAlarm": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "payload.ip_GAZ_CH4_Out_Int → isCHInputAlarm; 400024",
+      "description": "Газ СН4 (1=авария; 0=норма)",
+      "ui": {
+        "group": 6,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Газ СН4 (1=авария; 0=норма)"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "isSecurityInputAlarm": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "payload.ip_Security_Out_Int → isSecurityInputAlarm; 400025",
+      "description": "Охрана (1=авария; 0=норма)",
+      "ui": {
+        "group": 6,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Охрана (1=авария; 0=норма)"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "isFireInputAlarm": {
+      "type": "boolean",
+      "nullable": true,
+      "$comment": "payload.ip_Fire_Out_Int → isFireInputAlarm; 400026",
+      "description": "Пожар (1=авария; 0=норма)",
+      "ui": {
+        "group": 6,
+        "editor": {
+          "editorType": "dxCheckBox",
+          "label": {
+            "location": "left",
+            "showColon": true,
+            "text": "Пожар (1=авария; 0=норма)"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "boilerRoomMode": {
+      "$comment": "payload.ip_Kot_Mode → boilerRoomMode; 400036",
+      "description": "Режим работы котельной (0=ручной; 1=автоматический)",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxSelectBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Режим работы котельной (0=ручной; 1=автоматический)"
+          },
+          "editorOptions": {
+            "readOnly": true,
+            "valueExpr": "id",
+            "displayExpr": "description"
+          }
+        }
+      },
+      "$ref": "#/$defs/BoilerRoomMode"
+    },
+    "boilerRoomState": {
+      "$comment": "payload.ip_Kot_State → boilerRoomState; 400037",
+      "description": "Состояние:0=Исходное; 1 = Запуск котла; 2 = Останов котла; 3 = Работа ",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxSelectBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Состояние:0=Исходное; 1 = Запуск котла; 2 = Останов котла; 3 = Работа "
+          },
+          "editorOptions": {
+            "readOnly": true,
+            "valueExpr": "id",
+            "displayExpr": "description"
+          }
+        }
+      },
+      "$ref": "#/$defs/BoilerRoomState"
+    },
+    "tempOutNetSetpoint": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "payload.ip_Cascad_SP_TE_C → tempOutNetSetpoint; 400057",
+      "description": "Задание температуры подачи в теплосеть с учетом температуры наружного воздуха",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Задание температуры подачи в теплосеть с учетом температуры наружного воздуха"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      },
+      "unit": "°C"
+    },
+    "tempBoilersSetpoint": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "payload.ip_Cascad_SP_TE_K → tempBoilersSetpoint; 400059",
+      "description": "Задание температуры подачи в теплосеть",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Задание температуры подачи в теплосеть"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      },
+      "unit": "°C"
+    },
+    "boilerCircuitTemperatureRise": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "payload.ip_Cascad_IncT → boilerCircuitTemperatureRise; 400067",
+      "description": "Текущий прирост температуры прямой воды в котловом контуре в течение 1 мин.",
+      "ui": {
+        "group": 7,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Текущий прирост температуры прямой воды в котловом контуре в течение 1 мин."
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      },
+      "unit": "°C/min"
+    },
+    "tempOutAir": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "payload.ip_TE1_PV_Out → tempOutAir; 400093",
+      "description": "Температура воздуха наружняя (-50…50 °С)",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Температура воздуха наружняя (-50…50 °С)"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      },
+      "unit": "°C"
+    },
+    "tempRoomAir": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "payload.ip_TE2_PV_Out → tempRoomAir; 400095",
+      "description": "Температура воздуха в помещении (-50…50 °С)",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Температура воздуха в помещении (-50…50 °С)"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      },
+      "unit": "°C"
+    },
+    "heatExchanger": {
+      "$ref": "#/$defs/HeatExchangerModel"
+    },
+    "tempOutNet": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "payload.ip_TE9_PV_Out → tempOutNet; 400109",
+      "description": "Температура теплоносителя на теплосеть (0…170 °С)",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Температура теплоносителя на теплосеть (0…170 °С)"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      },
+      "unit": "°C"
+    },
+    "tempInNet": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "payload.ip_TE10_PV_Out → tempInNet; 400111",
+      "description": "Температура теплоносителя из теплосети (0…170 °С)",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Температура теплоносителя из теплосети (0…170 °С)"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      },
+      "unit": "°C"
+    },
+    "pressBoilerCircuit": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "payload.ip_PE5_PV_Out → pressBoilerCircuit; 400121",
+      "description": "Давление теплоносителя котлового контура (0…16 кгс/см2)",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Давление теплоносителя котлового контура (0…16 кгс/см2)"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      },
+      "unit": "бар"
+    },
+    "levelBoilerMakeupTank": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "payload.ip_PE6_PV_Out → levelBoilerMakeupTank; 400123",
+      "description": "Уровень в емкости подпитки котлового контура (0…10 м)",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Уровень в емкости подпитки котлового контура (0…10 м)"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      },
+      "unit": "м"
+    },
+    "levelNetworkMakeupTank": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "payload.ip_PE7_PV_Out → levelNetworkMakeupTank; 400125",
+      "description": "Уровень в емкости подпитки сетевого контура (0…10 м)",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Уровень в емкости подпитки сетевого контура (0…10 м)"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      },
+      "unit": "м"
+    },
+    "pressOutNet": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "payload.ip_PE9_PV_Out → pressOutNet; 400129",
+      "description": "Давление теплоносителя после сетевых насосов (0…16 кгс/см2)",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Давление теплоносителя после сетевых насосов (0…16 кгс/см2)"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      },
+      "unit": "бар"
+    },
+    "pressInNet": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "payload.ip_PE10_PV_Out → pressInNet; 400131",
+      "description": "Давление теплоносителя обратка теплосети (0…16 кгс/см2)",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Давление теплоносителя обратка теплосети (0…16 кгс/см2)"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      },
+      "unit": "бар"
+    },
+    "pressGas": {
+      "type": "number",
+      "nullable": true,
+      "$comment": "payload.ip_PE11_PV_Out → pressGas; 400133",
+      "description": "Давление газа (0…1 кгс/см2)",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxNumberBox",
+          "label": {
+            "location": "top",
+            "showColon": true,
+            "text": "Давление газа (0…1 кгс/см2)"
+          },
+          "editorOptions": {
+            "readOnly": true
+          }
+        },
+        "chart": {}
+      },
+      "unit": "бар"
+    },
+    "timestamp": {
+      "type": "integer",
+      "description": "Время полного опроса, Unix milliseconds",
+      "ui": {
+        "group": 1,
+        "editor": {
+          "editorType": "dxDateBox",
+          "label": {
+            "text": "Время опроса"
+          },
+          "editorOptions": {
+            "readOnly": true,
+            "type": "datetime"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "boilerValves",
+    "boilerPumps",
+    "boilerMakeupPumps",
+    "networkMakeupPumps",
+    "networkPumps",
+    "boilers",
+    "isBoilerMakeupTankFillValveOpenCommand",
+    "isBoilerMakeupValveOpenCommand",
+    "isNetworkMakeupTankFillValveOpenCommand",
+    "isNetworkMakeupValveOpenCommand",
+    "isGasValveOpenCommand",
+    "isSoundAlarm1Command",
+    "isSoundAlarm2Command",
+    "sensors",
+    "isBoilerMakeupPressureAlarm",
+    "isNetworkMakeupPressureAlarm",
+    "isBoilerMakeupPumpDryRunAlarm",
+    "isNetworkMakeupPumpDryRunAlarm",
+    "isNetworkPumpDryRunAlarm",
+    "isCO",
+    "isCH",
+    "isSecurityAlarm",
+    "isFireAlarm",
+    "isBoilerMakeupPressureInputAlarm",
+    "isNetworkMakeupPressureInputAlarm",
+    "isBoilerMakeupPumpDryRunInputAlarm",
+    "isNetworkMakeupPumpDryRunInputAlarm",
+    "isNetworkPumpDryRunInputAlarm",
+    "isCOInputAlarm",
+    "isCHInputAlarm",
+    "isSecurityInputAlarm",
+    "isFireInputAlarm",
+    "boilerRoomMode",
+    "boilerRoomState",
+    "tempOutNetSetpoint",
+    "tempBoilersSetpoint",
+    "boilerCircuitTemperatureRise",
+    "tempOutAir",
+    "tempRoomAir",
+    "heatExchanger",
+    "tempOutNet",
+    "tempInNet",
+    "pressBoilerCircuit",
+    "levelBoilerMakeupTank",
+    "levelNetworkMakeupTank",
+    "pressOutNet",
+    "pressInNet",
+    "pressGas",
+    "timestamp"
+  ],
+  "$defs": {
+    "BoilerValveModel": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "isOpeningCommand": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_M1_Up → boilerValves.0.isOpeningCommand; 400001.3 | payload.ip_M2_Up → boilerValves.1.isOpeningCommand; 400001.11",
+          "description": "Управляющий сигнал на открытие клапана",
+          "ui": {
+            "group": 4,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Управляющий сигнал на открытие клапана"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isClosingCommand": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_M1_Dn → boilerValves.0.isClosingCommand; 400001.4 | payload.ip_M2_Dn → boilerValves.1.isClosingCommand; 400001.12",
+          "description": "Управляющий сигнал на закрытие клапана",
+          "ui": {
+            "group": 4,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Управляющий сигнал на закрытие клапана"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "isOpeningCommand",
+        "isClosingCommand"
+      ]
+    },
+    "BoilerPumpModel": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "isWorking": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_H1_1_Run → boilerPumps.0.isWorking; 400002.0 | payload.ip_H1_2_Run → boilerPumps.1.isWorking; 400002.4 | payload.ip_H2_1_Run → boilerPumps.2.isWorking; 400002.8 | payload.ip_H2_2_Run → boilerPumps.3.isWorking; 400002.12",
+          "description": "Работа насоса",
+          "ui": {
+            "group": 3,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Работа насоса"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isStartError": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_H1_1_ErrStart → boilerPumps.0.isStartError; 400011.5 | payload.ip_H1_2_ErrStart → boilerPumps.1.isStartError; 400011.6 | payload.ip_H2_1_ErrStart → boilerPumps.2.isStartError; 400011.7 | payload.ip_H2_2_ErrStart → boilerPumps.3.isStartError; 400011.8",
+          "description": "Ошибка запуска или самопроизвольный останов насоса",
+          "ui": {
+            "group": 3,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Ошибка запуска или самопроизвольный останов насоса"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "isWorking",
+        "isStartError"
+      ]
+    },
+    "BoilerMakeupPumpModel": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "isWorking": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_H3_1_Run → boilerMakeupPumps.0.isWorking; 400003.0 | payload.ip_H3_2_Run → boilerMakeupPumps.1.isWorking; 400003.4",
+          "description": "Работа насоса",
+          "ui": {
+            "group": 3,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Работа насоса"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isStartError": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_H3_1_ErrStart → boilerMakeupPumps.0.isStartError; 400011.9 | payload.ip_H3_2_ErrStart → boilerMakeupPumps.1.isStartError; 400011.10",
+          "description": "Ошибка запуска или самопроизвольный останов насоса",
+          "ui": {
+            "group": 3,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Ошибка запуска или самопроизвольный останов насоса"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "isWorking",
+        "isStartError"
+      ]
+    },
+    "NetworkMakeupPumpModel": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "isWorking": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_H4_1_Run → networkMakeupPumps.0.isWorking; 400003.8 | payload.ip_H4_2_Run → networkMakeupPumps.1.isWorking; 400003.12",
+          "description": "Работа насоса",
+          "ui": {
+            "group": 3,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Работа насоса"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isStartError": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_H4_1_ErrStart → networkMakeupPumps.0.isStartError; 400011.11 | payload.ip_H4_2_ErrStart → networkMakeupPumps.1.isStartError; 400011.12",
+          "description": "Ошибка запуска или самопроизвольный останов насоса",
+          "ui": {
+            "group": 3,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Ошибка запуска или самопроизвольный останов насоса"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "isWorking",
+        "isStartError"
+      ]
+    },
+    "NetworkPumpModel": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "isWorking": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_H5_1_Run → networkPumps.0.isWorking; 400004.0 | payload.ip_H5_2_Run → networkPumps.1.isWorking; 400004.4",
+          "description": "Работа насоса",
+          "ui": {
+            "group": 3,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Работа насоса"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isStartError": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_H5_1_ErrStart → networkPumps.0.isStartError; 400011.13 | payload.ip_H5_2_ErrStart → networkPumps.1.isStartError; 400011.14",
+          "description": "Ошибка запуска или самопроизвольный останов насоса",
+          "ui": {
+            "group": 3,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Ошибка запуска или самопроизвольный останов насоса"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "isWorking",
+        "isStartError"
+      ]
+    },
+    "BoilerModel": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "isLocked": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_K1_1_Lock → boilers.0.isLocked; 400005.0 | payload.ip_K1_2_Lock → boilers.1.isLocked; 400005.8",
+          "description": "Блокировка котла",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Блокировка котла"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isWorking": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_K1_1_Run → boilers.0.isWorking; 400005.1 | payload.ip_K1_2_Run → boilers.1.isWorking; 400005.9",
+          "description": "Работа котла",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Работа котла"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isFault": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_K1_1_Fault → boilers.0.isFault; 400005.2 | payload.ip_K1_2_Fault → boilers.1.isFault; 400005.10",
+          "description": "Авария котла: состояние",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Авария котла: состояние"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isStartCommand": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_K1_1_Start → boilers.0.isStartCommand; 400005.4 | payload.ip_K1_2_Start → boilers.1.isStartCommand; 400005.12",
+          "description": "Сигнал включения котла в ручном режиме",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Сигнал включения котла в ручном режиме"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isStopCommand": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_K1_1_Stop → boilers.0.isStopCommand; 400005.5 | payload.ip_K1_2_Stop → boilers.1.isStopCommand; 400005.13",
+          "description": "Сигнал отключения котла в ручном режиме",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Сигнал отключения котла в ручном режиме"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPumpDryRunAlarm": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PC3_Out → boilers.0.isPumpDryRunAlarm; 400011.15 | payload.ip_PC4_Out → boilers.1.isPumpDryRunAlarm; 400012.0",
+          "description": "Защита от сухого хода насосов котла: список тревог",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Защита от сухого хода насосов котла: список тревог"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isAlarm": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_K1_1_Alarm → boilers.0.isAlarm; 400012.15 | payload.ip_K1_2_Alarm → boilers.1.isAlarm; 400013.0",
+          "description": "Авария котла: список тревог",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Авария котла: список тревог"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPumpDryRunInputAlarm": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PC3_Out_Int → boilers.0.isPumpDryRunInputAlarm; 400018 | payload.ip_PC4_Out_Int → boilers.1.isPumpDryRunInputAlarm; 400019",
+          "description": "Защита от сухого хода насосов котла: вход",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "Защита от сухого хода насосов котла: вход"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "tempOut": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "payload.ip_TE3_PV_Out → boilers.0.tempOut; 400097 | payload.ip_TE5_PV_Out → boilers.1.tempOut; 400101",
+          "description": "Температура после котла",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Температура после котла"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "chart": {}
+          },
+          "unit": "°C"
+        },
+        "tempIn": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "payload.ip_TE4_PV_Out → boilers.0.tempIn; 400099 | payload.ip_TE6_PV_Out → boilers.1.tempIn; 400103",
+          "description": "Температура до котла",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Температура до котла"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "chart": {}
+          },
+          "unit": "°C"
+        },
+        "pressOut": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "payload.ip_PE1_PV_Out → boilers.0.pressOut; 400113 | payload.ip_PE3_PV_Out → boilers.1.pressOut; 400117",
+          "description": "Давление после котла",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Давление после котла"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "chart": {}
+          },
+          "unit": "бар"
+        },
+        "pressIn": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "payload.ip_PE2_PV_Out → boilers.0.pressIn; 400115 | payload.ip_PE4_PV_Out → boilers.1.pressIn; 400119",
+          "description": "Давление до котла",
+          "ui": {
+            "group": 2,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Давление до котла"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "chart": {}
+          },
+          "unit": "бар"
+        }
+      },
+      "required": [
+        "isLocked",
+        "isWorking",
+        "isFault",
+        "isStartCommand",
+        "isStopCommand",
+        "isPumpDryRunAlarm",
+        "isAlarm",
+        "isPumpDryRunInputAlarm",
+        "tempOut",
+        "tempIn",
+        "pressOut",
+        "pressIn"
+      ]
+    },
+    "SensorsModel": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "isTempOutBoiler1PreHighLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_TE3_PV_WH_Act → sensors.isTempOutBoiler1PreHighLevel; 400008.0",
+          "description": "ТЕ3. Активен Порог H",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "ТЕ3. Активен Порог H"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isTempOutBoiler2PreHighLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_TE5_PV_WH_Act → sensors.isTempOutBoiler2PreHighLevel; 400008.1",
+          "description": "ТЕ5. Активен Порог H",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "ТЕ5. Активен Порог H"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressOutBoiler1PreHighLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE1_PV_WH_Act → sensors.isPressOutBoiler1PreHighLevel; 400008.2",
+          "description": "PE1. Активен Порог H",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "PE1. Активен Порог H"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressOutBoiler2PreHighLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE3_PV_WH_Act → sensors.isPressOutBoiler2PreHighLevel; 400008.3",
+          "description": "PE3. Активен Порог H",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "PE3. Активен Порог H"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressOutBoiler1PreLowLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE1_PV_WL_Act → sensors.isPressOutBoiler1PreLowLevel; 400008.4",
+          "description": "PE1. Активен Порог L",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "PE1. Активен Порог L"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressOutBoiler2PreLowLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE3_PV_WL_Act → sensors.isPressOutBoiler2PreLowLevel; 400008.5",
+          "description": "PE3. Активен Порог L",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "PE3. Активен Порог L"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressInBoiler1PreLowLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE2_PV_WL_Act → sensors.isPressInBoiler1PreLowLevel; 400008.6",
+          "description": "PE2. Активен Порог L",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "PE2. Активен Порог L"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressInBoiler2PreLowLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE4_PV_WL_Act → sensors.isPressInBoiler2PreLowLevel; 400008.7",
+          "description": "PE4. Активен Порог L",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "PE4. Активен Порог L"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressOutNetPreLowLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE9_PV_WL_Act → sensors.isPressOutNetPreLowLevel; 400008.8",
+          "description": "PE9. Активен Порог L",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "PE9. Активен Порог L"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressOutNetPreHighLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE9_PV_WH_Act → sensors.isPressOutNetPreHighLevel; 400008.9",
+          "description": "PE9. Активен Порог H",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "PE9. Активен Порог H"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressInNetPreLowLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE10_PV_WL_Act → sensors.isPressInNetPreLowLevel; 400008.10",
+          "description": "PE10. Активен Порог L",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "PE10. Активен Порог L"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isLevelBoilerMakeupTankPreLowLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE6_PV_WL_Act → sensors.isLevelBoilerMakeupTankPreLowLevel; 400008.11",
+          "description": "PE6. Активен Порог L",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "PE6. Активен Порог L"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isLevelBoilerMakeupTankPreHighLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE6_PV_WH_Act → sensors.isLevelBoilerMakeupTankPreHighLevel; 400008.12",
+          "description": "PE6. Активен Порог H",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "PE6. Активен Порог H"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isLevelNetworkMakeupTankPreLowLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE7_PV_WL_Act → sensors.isLevelNetworkMakeupTankPreLowLevel; 400008.13",
+          "description": "PE7. Активен Порог L",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "PE7. Активен Порог L"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isLevelNetworkMakeupTankPreHighLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE7_PV_WH_Act → sensors.isLevelNetworkMakeupTankPreHighLevel; 400008.14",
+          "description": "PE7. Активен Порог H",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "PE7. Активен Порог H"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressGasPreLowLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE11_PV_WL_Act → sensors.isPressGasPreLowLevel; 400008.15",
+          "description": "PE11. Активен Порог L",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "PE11. Активен Порог L"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressGasPreHighLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE11_PV_WH_Act → sensors.isPressGasPreHighLevel; 400009.0",
+          "description": "PE11. Активен Порог H",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "PE11. Активен Порог H"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isTempOutAirSensorError": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_TE1_PV_Bad → sensors.isTempOutAirSensorError; 400010.0",
+          "description": "TE1. Неисправность",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "TE1. Неисправность"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isTempRoomAirSensorError": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_TE2_PV_Bad → sensors.isTempRoomAirSensorError; 400010.1",
+          "description": "TE2. Неисправность",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "TE2. Неисправность"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isTempOutBoiler1SensorError": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_TE3_PV_Bad → sensors.isTempOutBoiler1SensorError; 400010.2",
+          "description": "ТЕ3. Неисправность",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "ТЕ3. Неисправность"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isTempInBoiler1SensorError": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_TE4_PV_Bad → sensors.isTempInBoiler1SensorError; 400010.3",
+          "description": "TE4. Неисправность",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "TE4. Неисправность"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isTempOutBoiler2SensorError": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_TE5_PV_Bad → sensors.isTempOutBoiler2SensorError; 400010.4",
+          "description": "ТЕ5. Неисправность",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "ТЕ5. Неисправность"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isTempInBoiler2SensorError": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_TE6_PV_Bad → sensors.isTempInBoiler2SensorError; 400010.5",
+          "description": "TE6. Неисправность",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "TE6. Неисправность"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isTempOutHeatExchangerSensorError": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_TE7_PV_Bad → sensors.isTempOutHeatExchangerSensorError; 400010.6",
+          "description": "TE7. Неисправность",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "TE7. Неисправность"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isTempInHeatExchangerSensorError": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_TE8_PV_Bad → sensors.isTempInHeatExchangerSensorError; 400010.7",
+          "description": "TE8. Неисправность",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "TE8. Неисправность"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isTempOutNetSensorError": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_TE9_PV_Bad → sensors.isTempOutNetSensorError; 400010.8",
+          "description": "TE9. Неисправность",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "TE9. Неисправность"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isTempInNetSensorError": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_TE10_PV_Bad → sensors.isTempInNetSensorError; 400010.9",
+          "description": "TE10. Неисправность",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "TE10. Неисправность"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressOutBoiler1SensorError": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE1_PV_Bad → sensors.isPressOutBoiler1SensorError; 400010.10",
+          "description": "PE1. Неисправность",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "PE1. Неисправность"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressInBoiler1SensorError": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE2_PV_Bad → sensors.isPressInBoiler1SensorError; 400010.11",
+          "description": "PE2. Неисправность",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "PE2. Неисправность"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressOutBoiler2SensorError": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE3_PV_Bad → sensors.isPressOutBoiler2SensorError; 400010.12",
+          "description": "PE3. Неисправность",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "PE3. Неисправность"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressInBoiler2SensorError": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE4_PV_Bad → sensors.isPressInBoiler2SensorError; 400010.13",
+          "description": "PE4. Неисправность",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "PE4. Неисправность"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressBoilerCircuitSensorError": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE5_PV_Bad → sensors.isPressBoilerCircuitSensorError; 400010.14",
+          "description": "PE5. Неисправность",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "PE5. Неисправность"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isLevelBoilerMakeupTankSensorError": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE6_PV_Bad → sensors.isLevelBoilerMakeupTankSensorError; 400010.15",
+          "description": "PE6. Неисправность",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "PE6. Неисправность"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isLevelNetworkMakeupTankSensorError": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE7_PV_Bad → sensors.isLevelNetworkMakeupTankSensorError; 400011.0",
+          "description": "PE7. Неисправность",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "PE7. Неисправность"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressInHeatExchangerSensorError": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE8_PV_Bad → sensors.isPressInHeatExchangerSensorError; 400011.1",
+          "description": "РЕ8. Неисправность",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "РЕ8. Неисправность"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressOutNetSensorError": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE9_PV_Bad → sensors.isPressOutNetSensorError; 400011.2",
+          "description": "PE9. Неисправность",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "PE9. Неисправность"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressInNetSensorError": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE10_PV_Bad → sensors.isPressInNetSensorError; 400011.3",
+          "description": "PE10. Неисправность",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "PE10. Неисправность"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressGasSensorError": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE11_PV_Bad → sensors.isPressGasSensorError; 400011.4",
+          "description": "PE11. Неисправность",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "PE11. Неисправность"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isTempOutBoiler1HighLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_TE3_PV_AH_Act → sensors.isTempOutBoiler1HighLevel; 400012.4",
+          "description": "ТЕ3. Активен Порог HH",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "ТЕ3. Активен Порог HH"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isTempOutBoiler2HighLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_TE5_PV_AH_Act → sensors.isTempOutBoiler2HighLevel; 400012.5",
+          "description": "ТЕ5. Активен Порог HH",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "ТЕ5. Активен Порог HH"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressOutBoiler1HighLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE1_PV_AH_Act → sensors.isPressOutBoiler1HighLevel; 400012.6",
+          "description": "PE1. Активен Порог HH",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "PE1. Активен Порог HH"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressOutBoiler2HighLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE3_PV_AH_Act → sensors.isPressOutBoiler2HighLevel; 400012.7",
+          "description": "PE3. Активен Порог HH",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "PE3. Активен Порог HH"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressOutBoiler1LowLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE1_PV_AL_Act → sensors.isPressOutBoiler1LowLevel; 400012.8",
+          "description": "PE1. Активен Порог LL",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "PE1. Активен Порог LL"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressOutBoiler2LowLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE3_PV_AL_Act → sensors.isPressOutBoiler2LowLevel; 400012.9",
+          "description": "PE3. Активен Порог LL",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "PE3. Активен Порог LL"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressInBoiler1LowLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE2_PV_AL_Act → sensors.isPressInBoiler1LowLevel; 400012.10",
+          "description": "PE2. Активен Порог LL",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "PE2. Активен Порог LL"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressInBoiler2LowLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE4_PV_AL_Act → sensors.isPressInBoiler2LowLevel; 400012.11",
+          "description": "PE4. Активен Порог LL",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "PE4. Активен Порог LL"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressOutNetLowLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE9_PV_AL_Act → sensors.isPressOutNetLowLevel; 400012.12",
+          "description": "PE9. Активен Порог LL",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "PE9. Активен Порог LL"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressOutNetHighLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE9_PV_AH_Act → sensors.isPressOutNetHighLevel; 400012.13",
+          "description": "PE9. Активен Порог HH",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "PE9. Активен Порог HH"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressInNetLowLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE10_PV_AL_Act → sensors.isPressInNetLowLevel; 400012.14",
+          "description": "PE10. Активен Порог LL",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "PE10. Активен Порог LL"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isLevelBoilerMakeupTankLowLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE6_PV_AL_Act → sensors.isLevelBoilerMakeupTankLowLevel; 400013.1",
+          "description": "PE6. Активен Порог LL",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "PE6. Активен Порог LL"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isLevelBoilerMakeupTankHighLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE6_PV_AH_Act → sensors.isLevelBoilerMakeupTankHighLevel; 400013.2",
+          "description": "PE6. Активен Порог HH",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "PE6. Активен Порог HH"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isLevelNetworkMakeupTankLowLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE7_PV_AL_Act → sensors.isLevelNetworkMakeupTankLowLevel; 400013.3",
+          "description": "PE7. Активен Порог LL",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "PE7. Активен Порог LL"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isLevelNetworkMakeupTankHighLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE7_PV_AH_Act → sensors.isLevelNetworkMakeupTankHighLevel; 400013.4",
+          "description": "PE7. Активен Порог HH",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "PE7. Активен Порог HH"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressGasLowLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE11_PV_AL_Act → sensors.isPressGasLowLevel; 400013.5",
+          "description": "PE11. Активен Порог LL",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "PE11. Активен Порог LL"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "isPressGasHighLevel": {
+          "type": "boolean",
+          "nullable": true,
+          "$comment": "payload.ip_PE11_PV_AH_Act → sensors.isPressGasHighLevel; 400013.6",
+          "description": "PE11. Активен Порог HH",
+          "ui": {
+            "group": 5,
+            "editor": {
+              "editorType": "dxCheckBox",
+              "label": {
+                "location": "left",
+                "showColon": true,
+                "text": "PE11. Активен Порог HH"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "isTempOutBoiler1PreHighLevel",
+        "isTempOutBoiler2PreHighLevel",
+        "isPressOutBoiler1PreHighLevel",
+        "isPressOutBoiler2PreHighLevel",
+        "isPressOutBoiler1PreLowLevel",
+        "isPressOutBoiler2PreLowLevel",
+        "isPressInBoiler1PreLowLevel",
+        "isPressInBoiler2PreLowLevel",
+        "isPressOutNetPreLowLevel",
+        "isPressOutNetPreHighLevel",
+        "isPressInNetPreLowLevel",
+        "isLevelBoilerMakeupTankPreLowLevel",
+        "isLevelBoilerMakeupTankPreHighLevel",
+        "isLevelNetworkMakeupTankPreLowLevel",
+        "isLevelNetworkMakeupTankPreHighLevel",
+        "isPressGasPreLowLevel",
+        "isPressGasPreHighLevel",
+        "isTempOutAirSensorError",
+        "isTempRoomAirSensorError",
+        "isTempOutBoiler1SensorError",
+        "isTempInBoiler1SensorError",
+        "isTempOutBoiler2SensorError",
+        "isTempInBoiler2SensorError",
+        "isTempOutHeatExchangerSensorError",
+        "isTempInHeatExchangerSensorError",
+        "isTempOutNetSensorError",
+        "isTempInNetSensorError",
+        "isPressOutBoiler1SensorError",
+        "isPressInBoiler1SensorError",
+        "isPressOutBoiler2SensorError",
+        "isPressInBoiler2SensorError",
+        "isPressBoilerCircuitSensorError",
+        "isLevelBoilerMakeupTankSensorError",
+        "isLevelNetworkMakeupTankSensorError",
+        "isPressInHeatExchangerSensorError",
+        "isPressOutNetSensorError",
+        "isPressInNetSensorError",
+        "isPressGasSensorError",
+        "isTempOutBoiler1HighLevel",
+        "isTempOutBoiler2HighLevel",
+        "isPressOutBoiler1HighLevel",
+        "isPressOutBoiler2HighLevel",
+        "isPressOutBoiler1LowLevel",
+        "isPressOutBoiler2LowLevel",
+        "isPressInBoiler1LowLevel",
+        "isPressInBoiler2LowLevel",
+        "isPressOutNetLowLevel",
+        "isPressOutNetHighLevel",
+        "isPressInNetLowLevel",
+        "isLevelBoilerMakeupTankLowLevel",
+        "isLevelBoilerMakeupTankHighLevel",
+        "isLevelNetworkMakeupTankLowLevel",
+        "isLevelNetworkMakeupTankHighLevel",
+        "isPressGasLowLevel",
+        "isPressGasHighLevel"
+      ]
+    },
+    "BoilerRoomMode": {
+      "type": "integer",
+      "nullable": true,
+      "enum": [
+        0,
+        1,
+        null
+      ],
+      "enumDescriptions": {
+        "0": "Ручной",
+        "1": "Автоматический"
+      }
+    },
+    "BoilerRoomState": {
+      "type": "integer",
+      "nullable": true,
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        null
+      ],
+      "enumDescriptions": {
+        "0": "Исходное",
+        "1": "Запуск котла",
+        "2": "Останов котла",
+        "3": "Работа"
+      }
+    },
+    "HeatExchangerModel": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "tempOut": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "payload.ip_TE7_PV_Out → heatExchanger.tempOut; 400105",
+          "description": "Температура теплоносителя после ТОА (0…170 °С)",
+          "ui": {
+            "group": 1,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Температура теплоносителя после ТОА (0…170 °С)"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "chart": {}
+          },
+          "unit": "°C"
+        },
+        "tempIn": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "payload.ip_TE8_PV_Out → heatExchanger.tempIn; 400107",
+          "description": "Температура теплоносителя до ТОА (0…170 °С)",
+          "ui": {
+            "group": 1,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Температура теплоносителя до ТОА (0…170 °С)"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "chart": {}
+          },
+          "unit": "°C"
+        },
+        "pressIn": {
+          "type": "number",
+          "nullable": true,
+          "$comment": "payload.ip_PE8_PV_Out → heatExchanger.pressIn; 400127",
+          "description": "Давление теплоносителя до ТОА (0…16 кгс/см2)",
+          "ui": {
+            "group": 1,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "location": "top",
+                "showColon": true,
+                "text": "Давление теплоносителя до ТОА (0…16 кгс/см2)"
+              },
+              "editorOptions": {
+                "readOnly": true
+              }
+            },
+            "chart": {}
+          },
+          "unit": "бар"
+        }
+      },
+      "required": [
+        "tempOut",
+        "tempIn",
+        "pressIn"
+      ]
+    }
+  }
+}
