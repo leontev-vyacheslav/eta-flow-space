@@ -10,7 +10,7 @@ an individual tool README specifies otherwise. Inspect an existing tool before i
 
 | Task | Existing tool and documentation |
 |---|---|
-| Diagram preview, real state, info-icon geometry | `.tools/diagram-renderer/README.md`; `fetch_states.py`, `render.js`, `measure.js` |
+| Diagram preview, real state, info-icon geometry and native component dimensions | `.tools/diagram-renderer/README.md`; `fetch_states.py`, `render.js`, `measure.js`, `measure-components.mjs`, `component-standard.json` |
 | Manifest hashes for devices and quick-help | `bash .tools/diagram-renderer/gen-manifest.sh` |
 | Meter probes, subflows, GPRS and meter emulators | `.tools/device-probes/README.md`; `subflow_run.js`, `reader_via_emulator.js`, `spt_meter_emulator.js` |
 | Offline stock Modbus converter/join/mapping chain | `.tools/flow-chain/README.md`; `run_modbus_tab.js` |

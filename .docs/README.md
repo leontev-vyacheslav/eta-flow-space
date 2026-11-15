@@ -1,5 +1,7 @@
 # Documentation
 
+Diagram authoring: [Mnemoschema component dimensions and styling](mnemoschema-components.md).
+
 Device manuals, programming guides and protocol descriptions, one folder per device type (named like `device_type.code` in the database).
 File names are ASCII: `<type>-<kind>-<edition>.pdf`. The original titles and where each file came from are listed
 below; look there for a newer edition.

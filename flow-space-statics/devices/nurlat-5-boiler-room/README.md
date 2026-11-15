@@ -87,6 +87,101 @@ physical meaning. Heat-exchanger measurements likewise retain neutral inlet/outl
 and the original INT alarm inputs also have separate state properties. No alarm is
 inferred from measured pressure, temperature, stopped pumps or another flag.
 
+## Mnemoschema
+
+`mnemo-schema.svg` preserves the supplied legacy topology: К1.1 and К1.2, four boiler
+circulation pumps with M1/M2 mixing valves, two parallel heat exchangers, two network
+pumps, and independent tank/makeup-pump circuits. It uses the established native component
+units from **Кирова, Гагарина, Комарова and Весна-2**. See the
+[shared component standard](../../../.docs/mnemoschema-components.md) and its
+[machine-readable dimensions](../../../.tools/diagram-renderer/component-standard.json).
+
+The canvas is **880 × 412** (`viewBox="0 4 880 412"`). Boilers are 63.6 × 69.3, burners
+38.4 × 28.8, pump frames 26.8 × 26.2, reading boxes 45 × 11.2 and emergency tiles 43 × 43.
+Reading/status text is size 9, captions 8 and compact/emergency labels 7. Component groups
+have no compensating scale: their effective sizes match the references at 100% SVG zoom.
+The common 412-unit height also matches Kirov/Gagarin/Komarova in the existing desktop
+viewport. Width-constrained screens retain the application's normal pan/pinch/zoom behaviour.
+
+Both boiler groups are translated 2.65 units upward so their fixed supply and return
+pipes have equal 12.65-unit clearances from the body top and bottom. Their labels,
+status, burners and flames move together; the gas inlets remain centered.
+
+The upper exchanger fragment is raised 14 units: its primary supply takeoff aligns
+with the boiler supply at y = 132. Both exchangers, the network-supply header, TE7/PE8/TE9,
+arrow and captions move together. Lower return headers and pumps stay in place, with
+extended exchanger connections and the existing crossing bridges retained.
+
+The boiler-pump, network-pump and both makeup summary captions use text only, without
+outlined rectangles. Each label retains the former frame's ordered alarm properties;
+its text turns red when any associated alarm/input flag is active and black otherwise.
+The labels remain clickable, with the existing text hover feedback.
+
+Essential fonts and stroke rules are embedded in the SVG for standalone previews. Boiler
+strokes are 0.8904 / 1.272, pump strokes 1 / 2, and instrument strokes 0.25 / 0.5 / 1 for
+normal / warning / alarm. The scoped stylesheet retains yellow hover feedback. Pipe bridges
+mark crossings; filled dots mark connections. All five parallel pump groups have matching
+1.3-radius black junction dots at both common headers. Gas pipework uses Spring-2's approved orange
+`#FF9800`. Both gas takeoffs align with the vertical centers of their boiler bodies.
+HV5 keeps its actuator on the left and remains upstream of both takeoffs, 25 units below
+the lower branch; its label moves together with the valve. The user's removal of the
+first gas-junction dot is preserved.
+
+PE6 and PE7 connect vertically to the horizontal tank-fill pipes above their reading
+boxes, with their labels below. Each sensor is centered between its valve body and tank;
+the network tank is shifted 30 units right to preserve the standard reading width and
+clearance. Their level bindings and units remain unchanged.
+
+The Н5 network-pump pair is centered at x = 748.25 in the clear space between the PE9
+reading box's right edge at x = 702.5 and the makeup vertical at x = 794. Its common
+headers at x = 722.25 / 774.25 leave equal 19.75-unit gaps; pump labels, caption and both
+junction dots follow the pair.
+
+The emergency panel is directly below the parameter panel and contains connection,
+security, fire, CO and methane tiles in the Kirov order. Its tiles are native 43 × 43,
+with placement translations only. The connection tile binds solely `isConnected` and
+turns red when disconnected. Both sound-output tiles are omitted; their fields remain
+collected and available in Parameters.
+
+The diagram exposes **146 state leaves**: 144 mapped PLC parameters, `timestamp`, and
+API-provided `isConnected`. The complete model still has 148 leaves. Existing ordered
+property lists, units, enum meanings and independent alarm/input flags are preserved.
+No controller-specific JavaScript plugin is needed.
+
+| Diagram | State binding |
+|---|---|
+| TE1 / TE2 | Outdoor / room air cards |
+| TE3 / TE4; PE1 / PE2 | К1.1 outlet / inlet temperatures and pressures |
+| TE5 / TE6; PE3 / PE4 | К1.2 outlet / inlet temperatures and pressures |
+| TE7 / TE8; PE8 | Common exchanger outlet / inlet temperatures and inlet pressure |
+| TE9 / TE10 | Network supply / return temperatures |
+| PE9 / PE10 | Pressure after network pumps / network-return pressure |
+| PE5 | Boiler-circuit pressure |
+| PE6 / PE7 | Boiler / network makeup-tank levels |
+| Н1.1, Н1.2, Н2.1, Н2.2 | `boilerPumps[0..3]` |
+| Н3.1, Н3.2; Н4.1, Н4.2; Н5.1, Н5.2 | Boiler makeup, network makeup, network pumps |
+| M1 / M2 | `boilerValves[0..1]` opening/closing command feedback |
+| HV1 / HV2; HV3 / HV4; HV5 | Tank-fill/makeup output feedback for each circuit; gas-valve output feedback |
+
+Instrument associations come from `source-map.json`. PE9 stays on the pump-discharge side.
+PE8 keeps the legacy drawing's upper-header placement and the source description “before
+ТОА”, without reinterpreting that channel. Each instrument shows its own sensor-error,
+warning and alarm flags. Running/stopped pumps do not generate inferred faults. Boiler
+fault/alarm and pump dry-run/input signals remain independent and available in their details.
+Valve blue/grey colouring represents command feedback, not measured valve position.
+
+Pressures retain the existing bar conversion and tank levels retain metres. The supplied
+network level `89.82943` remains **89,83 м**; it is not rescaled as a percentage. Tank water
+artwork is symbolic. Null readings show a dash; zero values remain zero. The ambiguous
+`tempBoilersSetpoint` keeps the label **Задание TE_K**. The information icon starts with
+connection and timestamp, followed by measured boiler-circuit temperature rise.
+
+Verification uses the supplied dump with browser-only device metadata and synthetic state
+cases, not new controller polling. See the [component-standardization report](../../../.reports/2026-11-15-nurlat-standardization/README.md)
+for native 100% and dashboard comparisons, state/interaction checks and phone evidence.
+The [initial diagram report](../../../.reports/2026-11-15-nurlat-5-diagram/README.md) preserves
+the earlier layout history. Changes remain local until deployment is authorized.
+
 ## Test-mode persistence and deployment
 
 The collector has **`DEVICE_CODE = null`** and explicitly skips persistence in that mode.
