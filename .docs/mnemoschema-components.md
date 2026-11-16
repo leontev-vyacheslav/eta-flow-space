@@ -10,7 +10,8 @@ The machine-readable values are in
 Gagarin and Komarova provide matching reference equipment footprints; Spring-2 supplies the same
 component family and the original drawing conventions. The accepted defaults below
 supersede their older equipment/reading sizes, typography, strokes and radii for further work.
-The reference diagrams have not been modified by this standardization.
+Kirov was updated to the accepted standard on 16 November 2026. Gagarin,
+Komarova and Spring-2 retain their historical dimensions until their update is requested.
 
 Use the [mnemoschema-standard skill](../.codex/skills/mnemoschema-standard/SKILL.md) for
 the workflow that applies and verifies these values when creating or changing components.
@@ -33,7 +34,8 @@ its own coordinates, but its instance must occupy the standard component/icon bo
 | Emergency tile | 43 × 43; radius 10 | 0.5 |
 | Emergency icon instance | 24 × 25, or the reference CO artwork at its existing normalized size | Artwork-specific |
 | Water/gas pipe | Junction radius 1.5 | 1 |
-| Valve artwork | Reference orientation and suitable ports for its function | 0.5 |
+| Water tank/vessel | **32 × 50**; radius 10; white body with three blue dashed water lines | 1 / 0.5 |
+| Valve body | **16 × 10** bow-tie; **8 × 8** square actuator on an 11-unit stem; no enclosing frame | 0.5 / 1 |
 | Parameter/emergency panel | Radius 10; parameter-panel height 70 | 0.5 |
 
 The corrected boiler, burner and pump-frame dimensions were accepted on **16 November
@@ -61,8 +63,44 @@ the real value and units require more room. Larger parameter cards keep their ow
 When changing frame height, keep its top position and update attached stems and value
 alignment together. The older reference diagrams use 45-unit reading frames and earlier
 stroke/radius values. Their geometry is a starting point; the accepted defaults above
-take precedence for new diagrams and component updates. Existing reference SVGs remain
-unchanged unless their update is requested.
+take precedence for new diagrams and component updates. Reference SVGs retain their
+historical values until their update is requested; Kirov now follows the accepted defaults.
+
+## Water tanks and valves
+
+The Nurlat-5 tank and actuated-valve symbols were accepted as shared defaults on
+**16 November 2026**, and applied to Kirov's ХПВ vessel and two valves.
+
+Water tanks/vessels use a **32 × 50** white body, radius **10**, black stroke **1**.
+Draw three horizontal blue (`#0083CD`) dashed lines with stroke **0.5**, dash pattern
+**5 3**, and a **4-unit** inset from each side. Their y offsets from the top are
+**18, 28 and 38**, matching Nurlat's makeup tanks. These lines are symbolic water
+artwork, independent of a measured level. Preserve the site's label and process
+meaning, and adapt inlet/outlet ports to its existing topology. Resize around the
+existing vessel center and move connected pipe endpoints to the new body edges.
+
+Use this local geometry for a horizontal actuated valve, with its pipe axis at y = 0:
+
+```xml
+<g transform="translate(430 380)">
+    <path d="M-8 -5L8 5V-5L-8 5Z" fill="#808080" stroke="#000000" stroke-width="0.5"/>
+    <path d="M0 0V-11" fill="none" stroke="#000000" stroke-width="1"/>
+    <rect x="-4" y="-19" width="8" height="8" fill="#FFFFFF" stroke="#000000" stroke-width="0.5"/>
+</g>
+```
+
+The grey bow-tie body is **16 × 10** with stroke **0.5**. The stem extends **11**
+units from the pipe axis, with stroke **1**; its white square actuator is **8 × 8**
+with stroke **0.5** and square corners. Do not add an enclosing rounded frame.
+Connect pipes directly to the body ports at x = **−8 / +8**. Place the caption
+baseline **25 units above** the axis for an actuator above the pipe. Translate or
+rotate the complete symbol for the actual pipe direction; keep captions upright
+and clear of the actuator. Nurlat HV5 and Kirov's drain valve use **−90°** for a
+vertical pipe with the actuator on the left. Preserve existing names and any
+confirmed state bindings; static valves without a state channel keep the grey fill.
+
+The profile records these defaults under `tank` and `valve`. Other valve functions,
+such as three-way mixing valves, retain their appropriate ports and artwork.
 
 ## Typography
 
@@ -108,11 +146,11 @@ The canonical machine-readable settings are in `component-standard.json` under `
 `reading: 9`, `emergencyLabel: 7`, `other: 10`, `multilineBaseline: 12`. These values
 replace the earlier Nurlat-only trial; there is no separate `fontTrials` profile.
 
-Gagarin, Komarova and Kirov remain geometry/style references. Their existing typography
+Gagarin and Komarova remain geometry/style references. Their existing typography
 is historical: some text uses 9 px status/timestamps, 8.5 px parameter captions and an
 8 px emergency heading. Those sizes do not override this accepted standard for further
-work. Updating the guide does not imply changing every existing SVG; preserve unrelated
-or explicitly excluded site layouts.
+work. Kirov now uses the accepted typography. Updating the guide does not imply changing
+every existing SVG; preserve unrelated or explicitly excluded site layouts.
 
 ## State styling
 
@@ -136,8 +174,8 @@ the completed layout; retain at least four units of outer padding.
 Kirov/Gagarin/Komarova use a **412-unit** viewBox height. Nurlat uses **880 × 456** to
 leave more space above both makeup assemblies and accommodate longer tank inlet drops.
 Its equipment groups have no compensating scale; component dimensions remain those
-listed above. Unique equipment, such as Nurlat's storage tanks and exchangers, uses its
-declared font profile and the common stroke rules with geometry appropriate to its topology.
+listed above. Tank ports follow the site's topology. Unique equipment, such as Nurlat's
+exchangers, uses the common font/stroke rules with geometry appropriate to its function.
 
 The dashboard still fits SVGs into its existing responsive viewport. Different viewBox
 heights, or width-constrained screens, can produce different screen scales; compare native

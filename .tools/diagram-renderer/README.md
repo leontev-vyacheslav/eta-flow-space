@@ -37,6 +37,11 @@ Stroke widths use the nearest of **1 / 0.5 / 0.25**; emergency-tile borders alwa
 **1.5** and pump-frame corners **3**. Existing reference SVGs retain their current
 values until an update is requested.
 
+Water tanks/vessels default to **32 × 50**, radius **10**, with three blue dashed
+water lines. Actuated valves use a **16 × 10** bow-tie, an **11-unit** stem and an
+**8 × 8** square actuator, without an enclosing frame. The `tank` / `valve` profile
+entries and component guide specify their strokes, offsets and rotation conventions.
+
 Shared panel wording is stored under `labels`; the boiler-room other-parameters heading
 uses `labels.otherParameters`.
 

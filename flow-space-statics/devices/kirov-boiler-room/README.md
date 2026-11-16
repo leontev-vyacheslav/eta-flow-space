@@ -82,7 +82,7 @@ Running pumps have blue outlines; stopped centres are grey. A reported start
 error makes the outline red. The pump summary contains both pumps' running/error
 states and the main pump number; stopped pumps alone do not make it red.
 
-The emergency panel retains Gagarin's corrected square 43 × 43 tiles in a
+The emergency panel retains square 43 × 43 tiles in a
 112-unit-wide panel, equal side margins and a 10-unit column gap. The connection
 tile uses the original crossed wireless artwork, which matches Kirov's older
 connection icon. Other tiles keep alarm bits separate from original input signals.
@@ -101,17 +101,64 @@ with `--flows flow-space-nodered-b/flows.json`. It checks all 118 mapped paramet
 unchanged existing values, schema/UI-helper compatibility, null preservation and
 the awaited storage contract with Kirov's device code and tab UID.
 
-The live API used for the local preview still returns the older 50-parameter
-mapping. Browser verification keeps those values live and fills only the newly
+During the 13 November verification, the live API returned the older 50-parameter
+mapping. That browser preview kept those values live and filled only the newly
 mapped fields with synthetic fixture values. Alarm/connection scenarios also
-stay in browser responses. The local
+stayed in browser responses. The local
 [verification report](../../../.reports/2026-11-13-kirov-refinement/README.md)
 contains the decoded collector diff, source inventory and browser evidence.
-These source changes are local; deployment is outside this change.
+That report records local verification, not deployment confirmation.
 
 
-Boiler border styling matches Muslum-7/9. Burners have no normal outline, with
-`#808080` fill when stopped and `#333333` when running. Body strokes use the same
-proportions: 1.4% of boiler width when stopped and 2% when running (0.8904 / 1.272
-SVG units for these 63.6-unit-wide boilers). Locked fill and yellow hover feedback
-are preserved; body/burner sizes, positions and property lists are unchanged.
+## Component standard — 16 November 2026
+
+The diagram now follows the current [component standard](../../../.docs/mnemoschema-components.md),
+using Nurlat-5 as the implementation example. These dimensions supersede Kirov's
+earlier reference dimensions and proportional boiler-border widths.
+
+- Boiler bodies are **65 × 70**, centered at x = 181.8 / 311.8, y = 195.
+  Their tops remain at y = 160; both supply/return clearances are **40**.
+  Lower pipe endpoints follow the new bottom edge at y = 230.
+- Burners are **40 × 30**, radius **5**. Their horizontal centers now match
+  the boiler and flame centers; the old 1.2-unit offset is removed. Burner
+  vertical centers remain y = 211.8; the **18 × 27** flames align to them.
+- Network pump frames are **27 × 27**, radius **3**, at the original centers
+  (440, 270) and (440, 310). Both concentric circles use radius **10**;
+  connected branch endpoints follow x = 426.5 / 453.5.
+- All four network reading frames are **55 × 12**, centered on their existing
+  sensor tags, values and stems. Tops remain y = 96 / 246; value baselines
+  are y = 105 / 255 and attached stems begin at y = 108 / 258.
+- Readings and numeric setpoints use **9 px**, emergency-tile captions **7 px**,
+  and other text **10 px**, with root `Roboto, Arial, sans-serif` inheritance.
+  The parameter heading is **«Прочие параметры котельной»**.
+- Component strokes use **1 / 0.5 / 0.25**. Boiler and pump borders use **1**
+  in every state; yellow hover uses **1**, with emergency tiles fixed at **0.5**.
+  Panel/card/tile corners use radius **10**, and junction dots **1.5**.
+  Intrinsic alarm-symbol artwork retains its own geometry and strokes.
+
+Decorative text passes pointer events through to equipment targets, matching Nurlat-5.
+This prevents the СН1 caption from intercepting the pump frame's upper-edge hover.
+
+The ХПВ vessel and both valves also use the Nurlat-5 symbols, now recorded as
+shared `tank` / `valve` defaults. The vessel is **32 × 50**, radius **10**, centered
+at its original (202.5, 380), with three blue dashed water lines. Its label stays
+ХПВ, six units above the top; horizontal inlet/outlet connections end at
+x = 186.5 / 218.5. The water artwork is symbolic and has no level binding.
+
+The КП valve stays at (430, 380) and the drain valve at (675, 300). Both use the
+**16 × 10** bow-tie, **11-unit** stem and **8 × 8** square actuator, with no
+surrounding frame. КП's actuator sits above the pipe and its caption baseline is
+y = 355. The drain symbol rotates **−90°**, putting the actuator on the left;
+its original drain caption stays upright. Pipe endpoints now meet the valve bodies
+directly. Neither valve has a collected state channel, so both remain static grey.
+See the [tank/valve report](../../../.reports/2026-11-16-kirov-tanks-valves/README.md).
+
+The **724 × 412** canvas (`viewBox="0 4 724 412"`), two-boiler topology,
+all 56 bound elements and 108 distinct properties, their ordered lists, units,
+state predicates and colours are preserved. Stopped burners remain `#808080`,
+running burners `#333333`, running outlines blue and locked body fill amber.
+
+The [standardization report](../../../.reports/2026-11-16-kirov-standardization/README.md)
+records current browser checks and before/after evidence separately from the
+historical mapping verification above. These assets are prepared locally;
+production deployment is outside this change.
