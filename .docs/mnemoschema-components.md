@@ -10,8 +10,8 @@ The machine-readable values are in
 Gagarin and Komarova provide matching reference equipment footprints; Spring-2 supplies the same
 component family and the original drawing conventions. The accepted defaults below
 supersede their older equipment/reading sizes, typography, strokes and radii for further work.
-Kirov was updated to the accepted standard on 16 November 2026. Gagarin,
-Komarova and Spring-2 retain their historical dimensions until their update is requested.
+Kirov, Gagarin and Komarova were updated to the accepted standard on 16 November
+2026. Spring-2 retains its historical dimensions until its update is requested.
 
 Use the [mnemoschema-standard skill](../.codex/skills/mnemoschema-standard/SKILL.md) for
 the workflow that applies and verifies these values when creating or changing components.
@@ -64,12 +64,14 @@ When changing frame height, keep its top position and update attached stems and 
 alignment together. The older reference diagrams use 45-unit reading frames and earlier
 stroke/radius values. Their geometry is a starting point; the accepted defaults above
 take precedence for new diagrams and component updates. Reference SVGs retain their
-historical values until their update is requested; Kirov now follows the accepted defaults.
+historical values until their update is requested; Kirov, Gagarin and Komarova now
+follow the accepted defaults.
 
 ## Water tanks and valves
 
 The Nurlat-5 tank and actuated-valve symbols were accepted as shared defaults on
-**16 November 2026**, and applied to Kirov's ХПВ vessel and two valves.
+**16 November 2026**, and applied to the ХПВ vessels and two valves in Kirov,
+Gagarin and Komarova.
 
 Water tanks/vessels use a **32 × 50** white body, radius **10**, black stroke **1**.
 Draw three horizontal blue (`#0083CD`) dashed lines with stroke **0.5**, dash pattern
@@ -146,11 +148,10 @@ The canonical machine-readable settings are in `component-standard.json` under `
 `reading: 9`, `emergencyLabel: 7`, `other: 10`, `multilineBaseline: 12`. These values
 replace the earlier Nurlat-only trial; there is no separate `fontTrials` profile.
 
-Gagarin and Komarova remain geometry/style references. Their existing typography
-is historical: some text uses 9 px status/timestamps, 8.5 px parameter captions and an
-8 px emergency heading. Those sizes do not override this accepted standard for further
-work. Kirov now uses the accepted typography. Updating the guide does not imply changing
-every existing SVG; preserve unrelated or explicitly excluded site layouts.
+The earlier Kirov/Gagarin/Komarova reference assets used 9 px status/timestamps,
+8.5 px parameter captions and an 8 px emergency heading. All three now use the
+accepted typography above. Updating the guide does not imply changing every existing
+SVG; preserve unrelated or explicitly excluded site layouts.
 
 ## State styling
 
