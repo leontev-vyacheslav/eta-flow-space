@@ -88,6 +88,25 @@ stop/start commands, and limitations.
 | `2026-11-13-update-muslum-watcher-access.sql` | yes (applied and verified 2026-11-13; 10-character password reset, both watcher accounts linked to Muslum-7/9, sign-in and device access checked) |
 | `2026-11-13-reset-boiler-watcher-password.sql` | yes (applied and verified 2026-11-13; 10-character password reset, sign-in and all 21 existing device links checked) |
 | `2026-11-13-add-muslum-emergency-rules.sql` | not yet; 43 reasons for Muslum-7 and 41 for Muslum-9, validated with the API evaluator and isolated PostgreSQL 17 |
+| `2026-11-16-add-nurlat-5-boiler-room.sql` | yes (applied and verified 2026-11-16; device 35, flow 13, own mnemoschema and both shared watcher links) |
+| `2026-11-16-add-nurlat-5-location.sql` | yes (applied and verified 2026-11-16; location 15, address and supplied coordinates; production API list/detail checked) |
+
+The Nurlat-5 migration registers `nurlat-5-boiler-room` as `Котельная Нурлат-5`,
+linked to Node-RED B tab `93dc403dd0a3e7b1`. It uses the existing boiler-room settings:
+10-minute state TTL and history interval, with list order 10. Both `admin-boiler-watcher`
+and `boiler-watcher` receive access. The supplied address is РТ, Нурлат,
+ул. Ленинградская, 15А, retained in the device description. The registration initially
+left the location unset. After the user supplied coordinates, the separate location
+migration added locality `г. Нурлат` and position `54.43420093, 50.82059551`
+(rounded to the columns' eight decimal places). Controller type remains unset pending
+hardware confirmation. Registration reruns preserve existing metadata, restore missing
+access/diagram links and reject conflicting identities. The location migration changes
+nothing on identical reruns and rejects a different existing location. All 18 isolated
+PostgreSQL 17 checks passed; production application was verified against the database
+and the configured watcher's API list/detail, followed by sign-out.
+It adds no emergency registration while the collector is in test mode without stored
+telemetry. Emergency monitoring can be added when persistence is enabled. No schema,
+ORM, Node-RED deployment or service restart is required for this registration.
 
 The Muslum emergency-rules migration populates only the existing registrations for
 `muslum-7-boiler-room` and `muslum-9-boiler-room`. It uses their collected boolean alarm,

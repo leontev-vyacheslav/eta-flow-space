@@ -218,14 +218,29 @@ the earlier layout history. Changes remain local until deployment is authorized.
 
 ## Test-mode persistence and deployment
 
+The [database registration migration](../../../database/migrations/2026-11-16-add-nurlat-5-boiler-room.sql)
+was applied and verified in production on **16 November 2026**: device **35**, flow **13**,
+its own mnemoschema selector and access for
+`admin-boiler-watcher` and `boiler-watcher`. The display name is `Котельная Нурлат-5`;
+state TTL and history interval are 10 minutes, with list order 10. The supplied address
+is **РТ, Нурлат, ул. Ленинградская, 15А**. After the initial registration without a map
+location, the [location migration](../../../database/migrations/2026-11-16-add-nurlat-5-location.sql)
+added location **15**, locality `г. Нурлат`, and the user's coordinates
+**54.43420093, 50.82059551** (rounded to eight decimal places). Database and production
+API list/detail checks confirmed the registration and location; the viewing session was
+signed out. All 18 isolated migration checks passed. Controller type remains unassigned. No
+emergency registration is created while telemetry persistence is disabled, avoiding
+a permanent connection-loss alarm. See the [database migration log](../../../database/README.md)
+and [verification report](../../../.reports/2026-11-16-nurlat-5-database/README.md).
+
 The collector has **`DEVICE_CODE = null`** and explicitly skips persistence in that mode.
 It assigns the normalized object to `msg.deviceState`. When a device is registered and
 persistence is intended, set its exact code in that guard; the existing storage helper
 is awaited with the device code and tab ID before `msg.deviceState` is assigned.
 
-These changes prepare the local B flow file and schema. They do not deploy into the
-running B editor, create a database device, update Redis or restart a service. Live
-validation used a separate disposable Node-RED runtime inside B's container, with an
+The Node-RED flow and schema changes remain prepared locally. The database registration
+above does not deploy into the running B editor, enable persistence or restart a service.
+The earlier live validation used a separate disposable Node-RED runtime inside B's container, with an
 observer in place of the inactive state debug node. Its initial polling interval was
 shortened to 10 seconds for one test cycle; the saved tab uses 60 seconds.
 
