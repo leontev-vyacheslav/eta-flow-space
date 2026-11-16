@@ -66,6 +66,11 @@ unchanged unless their update is requested.
 
 ## Typography
 
+Use the exact heading **«Прочие параметры котельной»** for the boiler-room panel of
+other parameters. Its canonical wording is `labels.otherParameters` in the JSON profile;
+use the general text role (`font.other`). Keep the boiler-room identity in the SVG title
+and application header.
+
 The following scheme was accepted on **16 November 2026**. Use it for new mnemoschemas
 and when typography is part of the requested work on an existing diagram.
 

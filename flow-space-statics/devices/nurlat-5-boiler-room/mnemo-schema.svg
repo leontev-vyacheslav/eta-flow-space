@@ -87,7 +87,7 @@
     </defs>
     <g id="other-parameters">
         <rect id="other-parameters-frame" x="4" y="8" width="872" height="70" rx="10" class="card"/>
-        <text x="440" y="21" font-size="10px" text-anchor="middle" pointer-events="none">Нурлат · котельная №5</text>
+        <text x="440" y="21" font-size="10px" text-anchor="middle" pointer-events="none">Прочие параметры котельной</text>
         <g data-state="states['nurlat-5-boiler-room'].timestamp;states['nurlat-5-boiler-room'].isConnected" data-state-eval="element.style.fill = states['nurlat-5-boiler-room'].isConnected === false ? 'red' : '#000000';">
         <text x="43" y="27" id="timestamp-date" font-size="10px" text-anchor="middle" data-state="states['nurlat-5-boiler-room'].timestamp" data-state-format="date">—</text>
         <text x="43" y="39" id="timestamp-time" font-size="10px" text-anchor="middle" data-state="states['nurlat-5-boiler-room'].timestamp" data-state-format="time">—</text>

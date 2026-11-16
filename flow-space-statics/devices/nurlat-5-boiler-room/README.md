@@ -104,6 +104,8 @@ tags, boiler statuses, timestamps, headings and tank/pump/makeup captions. Multi
 captions use 12-unit baseline spacing, with small caption-position adjustments to avoid
 overlap. Component groups have no compensating scale. Equipment dimensions, reading
 frames, fonts, strokes and radii follow the current shared standard for further work.
+The parameter-panel heading is **«Прочие параметры котельной»**, following
+`labels.otherParameters` in the shared profile.
 The taller canvas accommodates the lowered makeup assemblies. Native component sizes
 stay fixed; the application's responsive fit, pan, pinch and zoom behaviour remains available.
 

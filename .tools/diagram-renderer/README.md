@@ -35,8 +35,12 @@ Resize around existing centers and update attached pipe endpoints; flames remain
 Stroke widths use the nearest of **1 / 0.5 / 0.25**; emergency-tile borders always use
 **0.5**. Component radii default to **10**, with burner corners **5**, junction dots
 **1.5** and pump-frame corners **3**. Existing reference SVGs retain their current
-values until an update is requested. Audit native dimensions,
-typography and ancestor scales:
+values until an update is requested.
+
+Shared panel wording is stored under `labels`; the boiler-room other-parameters heading
+uses `labels.otherParameters`.
+
+Audit native dimensions, typography and ancestor scales:
 
 ```bash
 # from the repository root; an optional CSS selector limits the output

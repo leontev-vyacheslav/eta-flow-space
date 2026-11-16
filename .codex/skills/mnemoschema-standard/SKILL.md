@@ -14,7 +14,8 @@ the repository root; Markdown links are relative to this file.
 Read these together before choosing dimensions or styles:
 
 - [Component profile](../../../.tools/diagram-renderer/component-standard.json): numeric
-  defaults, font roles, stroke palette, state/hover widths, radii and colours.
+  defaults, standard headings, font roles, stroke palette, state/hover widths, radii
+  and colours.
 - [Component guide](../../../.docs/mnemoschema-components.md): how those values apply,
   native-unit rules, layout conventions and documented exceptions.
 - The target device's `README.md`, `mnemo-schema.svg` and `mnemo-schema.css` under
@@ -49,9 +50,10 @@ README; a local layout adjustment does not establish a new universal default.
 
 ## Apply typography and state styling
 
-Use the profile's `font` roles for root inheritance, readings/setpoints, emergency-tile
-captions and multiline spacing. Keep essential typography and initial styles in the SVG
-so standalone and application previews agree. Emergency-panel headings use the general
+Use the profile's `labels` for shared panel headings and its `font` roles for root
+inheritance, readings/setpoints, emergency-tile captions and multiline spacing. Keep
+essential typography and initial styles in the SVG so standalone and application
+previews agree. Emergency-panel headings use the general
 text role; numeric readings retain their own role.
 
 Apply `strokeWidths`, component/state widths, `hover` and radius settings to initial SVG
