@@ -6,7 +6,7 @@
 #nurlat5-mnemoschema text[data-state]:hover,
 #nurlat5-mnemoschema tspan[data-state]:hover {
     font-weight: bold;
-    stroke-width: 2px !important;
+    stroke-width: 1px !important;
 }
 
 #nurlat5-mnemoschema circle[data-state]:hover,
@@ -16,7 +16,7 @@
 #nurlat5-mnemoschema use[data-state]:hover,
 #nurlat5-mnemoschema #alarm-panel g[data-state]:hover > rect[data-state] {
     stroke: #ffeb3b !important;
-    stroke-width: 2px !important;
+    stroke-width: 1px !important;
     filter: drop-shadow(0 0 4px rgba(255, 235, 59, 0.5));
     opacity: 0.9 !important;
 }
@@ -33,4 +33,9 @@
 
 #nurlat5-mnemoschema text:not([data-state]) {
     pointer-events: none;
+}
+
+#nurlat5-mnemoschema #alarm-panel rect[data-state]:hover,
+#nurlat5-mnemoschema #alarm-panel g[data-state]:hover > rect[data-state] {
+    stroke-width: 0.5px !important;
 }

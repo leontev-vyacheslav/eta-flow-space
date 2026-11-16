@@ -9,6 +9,10 @@ Use the Muslum-9 session's binding conventions when creating or revising boiler-
 Apply corrections within the requested scope; a hover-only request does not imply reorganizing all
 properties. Paths below are relative to the repository root unless expressed as Markdown links.
 
+For component geometry, typography or visual-style changes, also use
+[mnemoschema-standard](../mnemoschema-standard/SKILL.md), which applies the current shared
+guide and profile ahead of older reference SVG measurements.
+
 ## Establish the state contract
 
 Read the device's `flow-space-statics/devices/<code>/README.md`, `data-schema.json`,

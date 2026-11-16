@@ -22,8 +22,21 @@ bash gen-manifest.sh
 ## Component dimensions
 
 The [component standard](../../.docs/mnemoschema-components.md) and
-[`component-standard.json`](component-standard.json) record the existing Kirov/Gagarin/
-Komarova/Spring-2 component sizes. Audit native dimensions, typography and ancestor scales:
+[`component-standard.json`](component-standard.json) record the Kirov/Gagarin/
+Komarova/Spring-2 equipment family and the accepted defaults: readings/setpoints
+**9 px**, emergency-tile captions **7 px**, all other text **10 px**. Set the root SVG
+font size to 10 px and use explicit overrides for the two exceptions. Multiline captions
+use at least 12 units between baselines. The version 2 JSON profile records these values
+under `font`; Nurlat-5 is the current typography example. Sensor-reading frames default
+to **55 × 12** (`instrument.width` / `instrument.height`), centered on their value and
+connection stem. Keep the 9 px value font and adjust neighbouring clearances as needed.
+Boiler bodies default to **65 × 70**, burners to **40 × 30** and pump frames to **27 × 27**.
+Resize around existing centers and update attached pipe endpoints; flames remain 18 × 27.
+Stroke widths use the nearest of **1 / 0.5 / 0.25**; emergency-tile borders always use
+**0.5**. Component radii default to **10**, with burner corners **5**, junction dots
+**1.5** and pump-frame corners **3**. Existing reference SVGs retain their current
+values until an update is requested. Audit native dimensions,
+typography and ancestor scales:
 
 ```bash
 # from the repository root; an optional CSS selector limits the output

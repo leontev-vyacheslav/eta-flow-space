@@ -96,16 +96,22 @@ units from **Кирова, Гагарина, Комарова and Весна-2**
 [shared component standard](../../../.docs/mnemoschema-components.md) and its
 [machine-readable dimensions](../../../.tools/diagram-renderer/component-standard.json).
 
-The canvas is **880 × 412** (`viewBox="0 4 880 412"`). Boilers are 63.6 × 69.3, burners
-38.4 × 28.8, pump frames 26.8 × 26.2, reading boxes 45 × 11.2 and emergency tiles 43 × 43.
-Reading/status text is size 9, captions 8 and compact/emergency labels 7. Component groups
-have no compensating scale: their effective sizes match the references at 100% SVG zoom.
-The common 412-unit height also matches Kirov/Gagarin/Komarova in the existing desktop
-viewport. Width-constrained screens retain the application's normal pan/pinch/zoom behaviour.
+The canvas is **880 × 456** (`viewBox="0 4 880 456"`). Boilers are 65 × 70, burners
+40 × 30, pump frames 27 × 27, reading boxes 55 × 12 and emergency tiles 43 × 43.
+The font scheme accepted on 16 November uses **9 px** for sensor readings and numeric setpoints,
+**7 px** for emergency-tile captions, and **10 px** for all other text, including sensor
+tags, boiler statuses, timestamps, headings and tank/pump/makeup captions. Multiline
+captions use 12-unit baseline spacing, with small caption-position adjustments to avoid
+overlap. Component groups have no compensating scale. Equipment dimensions, reading
+frames, fonts, strokes and radii follow the current shared standard for further work.
+The taller canvas accommodates the lowered makeup assemblies. Native component sizes
+stay fixed; the application's responsive fit, pan, pinch and zoom behaviour remains available.
 
 Both boiler groups are translated 2.65 units upward so their fixed supply and return
-pipes have equal 12.65-unit clearances from the body top and bottom. Their labels,
-status, burners and flames move together; the gas inlets remain centered.
+pipes have equal 13-unit clearances from the resized body top and bottom. The 65 × 70
+bodies, 40 × 30 burners and ten 27 × 27 pump frames retain their previous centers;
+connected pipe endpoints meet the resized edges. Gas inlets remain centered, and flame
+instances remain 18 × 27.
 
 The upper exchanger fragment is raised 14 units: its primary supply takeoff aligns
 with the boiler supply at y = 132. Both exchangers, the network-supply header, TE7/PE8/TE9,
@@ -118,24 +124,40 @@ its text turns red when any associated alarm/input flag is active and black othe
 The labels remain clickable, with the existing text hover feedback.
 
 Essential fonts and stroke rules are embedded in the SVG for standalone previews. Boiler
-strokes are 0.8904 / 1.272, pump strokes 1 / 2, and instrument strokes 0.25 / 0.5 / 1 for
-normal / warning / alarm. The scoped stylesheet retains yellow hover feedback. Pipe bridges
+and pump strokes are 1 in every state; instrument strokes are 0.25 / 0.5 / 1 for
+normal / warning / alarm. Emergency-tile borders stay at 0.5, including hover. Other
+hover outlines use 1. Radii are 10, except burner corners 5, pump-frame corners 3 and
+junction dots 1.5. The scoped stylesheet retains yellow hover feedback. Pipe bridges
 mark crossings; filled dots mark connections. All five parallel pump groups have matching
-1.3-radius black junction dots at both common headers. Gas pipework uses Spring-2's approved orange
+1.5-radius black junction dots at both common headers. Gas pipework uses Spring-2's approved orange
 `#FF9800`. Both gas takeoffs align with the vertical centers of their boiler bodies.
 HV5 keeps its actuator on the left and remains upstream of both takeoffs, 25 units below
 the lower branch; its label moves together with the valve. The user's removal of the
 first gas-junction dot is preserved.
 
 PE6 and PE7 connect vertically to the horizontal tank-fill pipes above their reading
-boxes, with their labels below. Each sensor is centered between its valve body and tank;
-the network tank is shifted 30 units right to preserve the standard reading width and
-clearance. Their level bindings and units remain unchanged.
+boxes, with their labels below. Each 55-unit frame is centered between its valve body
+and tank with six units of tank clearance. For the wider frames, both tanks move ten
+units right and PE6/PE7 move five units right; connected pipe endpoints and captions
+follow. Their level bindings and units remain unchanged.
 
-The Н5 network-pump pair is centered at x = 748.25 in the clear space between the PE9
-reading box's right edge at x = 702.5 and the makeup vertical at x = 794. Its common
-headers at x = 722.25 / 774.25 leave equal 19.75-unit gaps; pump labels, caption and both
+Both makeup assemblies have the same added spacing. Fill headers, HV1/HV3, level
+sensors, sources and upper captions move down 30 units. Tank inlet drops grow from
+4 to 16 units, adding 12 more units above the tank bodies and outlet equipment; both
+tanks, all four makeup pumps, HV2/HV4 and their output captions therefore move down
+42 units overall. Tank and upper-pump captions retain the 30-unit offset to stay above
+the fill headers. Pump manifolds and both junctions follow; the fixed boiler/network
+connection points remain connected through extended return/makeup pipes.
+
+The Н5 network-pump pair is centered at x = 750.75 in the clear space between the wider
+PE9 reading box's right edge at x = 707.5 and the makeup vertical at x = 794. Its common
+headers at x = 724.75 / 776.75 leave equal 17.25-unit gaps; pump labels, caption and both
 junction dots follow the pair.
+
+PE5, TE8, PE9 and TE10 reading frames share the top edge at y = 297. PE5's side branch
+and junction follow its center at y = 303. PE10's upper stem is 16 units, matching the
+upper instrument row; TE10's lower stem is 19 units, matching TE8. Their labels and
+values move with the frames, preserving the existing properties and diagnostics.
 
 The emergency panel is directly below the parameter panel and contains connection,
 security, fire, CO and methane tiles in the Kirov order. Its tiles are native 43 × 43,
@@ -177,7 +199,17 @@ artwork is symbolic. Null readings show a dash; zero values remain zero. The amb
 connection and timestamp, followed by measured boiler-circuit temperature rise.
 
 Verification uses the supplied dump with browser-only device metadata and synthetic state
-cases, not new controller polling. See the [component-standardization report](../../../.reports/2026-11-15-nurlat-standardization/README.md)
+cases, not new controller polling. The [makeup-spacing report](../../../.reports/2026-11-16-makeup-spacing/README.md)
+records the lowered assemblies, longer tank inlet drops and expanded canvas. The
+[sensor-alignment report](../../../.reports/2026-11-16-sensor-alignment/README.md)
+records PE10/TE10 stem lengths and the aligned lower reading row. The
+[equipment-dimension report](../../../.reports/2026-11-16-equipment-dimensions/README.md)
+records the current 65 × 70 boilers, 40 × 30 burners and 27 × 27 pump frames, with
+preserved centers and adjusted pipe endpoints. The [rounded-component report](../../../.reports/2026-11-16-rounded-standard/README.md)
+records 55 × 12 sensor frames, the stroke palette, radii and state checks. The
+[55-unit reading-width report](../../../.reports/2026-11-16-sensor-width/README.md)
+records the preceding widening and longer-value checks. The [font verification report](../../../.reports/2026-11-16-font-trial/README.md)
+records the current font roles, layout checks and desktop/phone previews. See the [component-standardization report](../../../.reports/2026-11-15-nurlat-standardization/README.md)
 for native 100% and dashboard comparisons, state/interaction checks and phone evidence.
 The [initial diagram report](../../../.reports/2026-11-15-nurlat-5-diagram/README.md) preserves
 the earlier layout history. Changes remain local until deployment is authorized.
