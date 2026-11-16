@@ -14,6 +14,7 @@
 #nurlat5-mnemoschema rect[data-state]:hover,
 #nurlat5-mnemoschema polygon[data-state]:hover,
 #nurlat5-mnemoschema use[data-state]:hover,
+#nurlat5-mnemoschema .alarm-summary:hover > rect[data-state],
 #nurlat5-mnemoschema #alarm-panel g[data-state]:hover > rect[data-state] {
     stroke: #ffeb3b !important;
     stroke-width: 1px !important;

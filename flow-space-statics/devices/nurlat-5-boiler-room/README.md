@@ -120,10 +120,17 @@ with the boiler supply at y = 132. Both exchangers, the network-supply header, T
 arrow and captions move together. Lower return headers and pumps stay in place, with
 extended exchanger connections and the existing crossing bridges retained.
 
-The boiler-pump, network-pump and both makeup summary captions use text only, without
-outlined rectangles. Each label retains the former frame's ordered alarm properties;
-its text turns red when any associated alarm/input flag is active and black otherwise.
-The labels remain clickable, with the existing text hover feedback.
+The boiler-pump, network-pump and both makeup summaries use restored rounded white
+cards. Each frame and label share the original ordered alarm properties. Normal borders
+are grey at 0.5; any associated alarm/input flag gives a red border at 1 and red text.
+Labels use the agreed 10 px font. Hovering either the frame or its label highlights the
+border in yellow; text retains bold hover feedback. Both targets open the same details.
+
+The two makeup cards are 88 × 44, centered at x = 335 / 745 above HV2/HV4, with their
+top at y = 326. Three-line captions retain the standard font and leave five units between
+the network card and its return pipe. Boiler-pump cards are 64 × 28; the network-pump
+card is 110 × 24. All corners use radius 10. The boiler return elbow is lowered from
+y = 330 to 340 to clear the restored second boiler-pump card; its connections are preserved.
 
 Essential fonts and stroke rules are embedded in the SVG for standalone previews. Boiler
 and pump strokes are 1 in every state; instrument strokes are 0.25 / 0.5 / 1 for
@@ -137,6 +144,9 @@ HV5 keeps its actuator on the left and remains upstream of both takeoffs, 25 uni
 the lower branch; its label moves together with the valve. The user's removal of the
 first gas-junction dot is preserved.
 
+Below ТО1, the primary-return branch at (546, 258) has a junction dot. The bend below
+ТО2 at (610, 258) has no dot; the crossing bridge between these points is preserved.
+
 PE6 and PE7 connect vertically to the horizontal tank-fill pipes above their reading
 boxes, with their labels below. Each 55-unit frame is centered between its valve body
 and tank with six units of tank clearance. For the wider frames, both tanks move ten
@@ -146,9 +156,10 @@ follow. Their level bindings and units remain unchanged.
 Both makeup assemblies have the same added spacing. Fill headers, HV1/HV3, level
 sensors, sources and upper captions move down 30 units. Tank inlet drops grow from
 4 to 16 units, adding 12 more units above the tank bodies and outlet equipment; both
-tanks, all four makeup pumps, HV2/HV4 and their output captions therefore move down
-42 units overall. Tank and upper-pump captions retain the 30-unit offset to stay above
-the fill headers. Pump manifolds and both junctions follow; the fixed boiler/network
+tanks, all four makeup pumps and HV2/HV4 therefore move down 42 units overall. Their
+summary cards sit separately above HV2/HV4. Tank and upper-pump captions retain the
+30-unit offset to stay above the fill headers. Pump manifolds and both junctions follow;
+the fixed boiler/network
 connection points remain connected through extended return/makeup pipes.
 
 The Н5 network-pump pair is centered at x = 750.75 in the clear space between the wider
@@ -201,7 +212,9 @@ artwork is symbolic. Null readings show a dash; zero values remain zero. The amb
 connection and timestamp, followed by measured boiler-circuit temperature rise.
 
 Verification uses the supplied dump with browser-only device metadata and synthetic state
-cases, not new controller polling. The [makeup-spacing report](../../../.reports/2026-11-16-makeup-spacing/README.md)
+cases, not new controller polling. The [summary-card report](../../../.reports/2026-11-16-summary-cards/README.md)
+records the restored state-aware frames, makeup-card placement and desktop/phone checks.
+The [makeup-spacing report](../../../.reports/2026-11-16-makeup-spacing/README.md)
 records the lowered assemblies, longer tank inlet drops and expanded canvas. The
 [sensor-alignment report](../../../.reports/2026-11-16-sensor-alignment/README.md)
 records PE10/TE10 stem lengths and the aligned lower reading row. The
