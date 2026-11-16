@@ -6,7 +6,7 @@
 #muslum9-mnemoschema text[data-state]:hover,
 #muslum9-mnemoschema tspan[data-state]:hover {
     font-weight: bold;
-    stroke-width: 2px !important;
+    stroke-width: 1px !important;
 }
 
 #muslum9-mnemoschema circle[data-state]:hover,
@@ -16,7 +16,7 @@
 #muslum9-mnemoschema use[data-state]:hover,
 #muslum9-mnemoschema #alarm-panel g[data-state]:hover > rect[data-state] {
     stroke: #ffeb3b !important;
-    stroke-width: 2px !important;
+    stroke-width: 1px !important;
     filter: drop-shadow(0 0 4px rgba(255, 235, 59, 0.5));
     opacity: 0.9 !important;
 }
@@ -29,4 +29,13 @@
     body:has(#muslum9-mnemoschema) .mnemoschema-popover td:first-child {
         overflow-wrap: anywhere;
     }
+}
+
+#muslum9-mnemoschema text:not([data-state]) {
+    pointer-events: none;
+}
+
+#muslum9-mnemoschema #alarm-panel rect[data-state]:hover,
+#muslum9-mnemoschema #alarm-panel g[data-state]:hover > rect[data-state] {
+    stroke-width: 0.5px !important;
 }

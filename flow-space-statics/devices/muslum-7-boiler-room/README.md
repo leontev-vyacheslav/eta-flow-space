@@ -120,3 +120,53 @@ names can wrap. These rules apply only while the Muslum-7 diagram is displayed.
 The binding update is local. Browser verification uses the production API tunnel
 with overrides for the edited SVG/CSS only; simulated states stay in browser
 responses. See the [verification report](../../../.reports/2026-11-12-muslum7-diagram-bindings/README.md).
+
+
+## Component standard — 16 November 2026
+
+Applied the [shared component standard](../../../.docs/mnemoschema-components.md)
+to this site's own circuit. The former 1070 × 700 drawing grid is normalized to
+**700 × 468**: layout coordinates convert by **0.65**, with actual component
+sizes set explicitly rather than placing equipment inside a scaled group. The
+hydraulic translation is **(58.5, 57.5)**, including 12 additional units below the
+70-unit header. This keeps the circuit proportions and leaves room for the standard
+fonts and alarm tiles. The application's existing fit, zoom and pan remain in use.
+
+- Boiler bodies **65 × 70**, burners **40 × 30** (radius **5**), flames **18 × 27**.
+  Each is centered on its converted original position; pipe endpoints follow body edges.
+- Pump frames **27 × 27**, radius **3**, with radius-**10** outer and inner circles.
+  Frame/rotor strokes use **1**, inner rings **0.25**; all branch endpoints meet frames.
+- Reading frames **55 × 12**, centered on their tags and values; value baselines
+  are top + 9. Horizontal TE11/TE12 stems and their junctions meet frame centers,
+  and vertical stems follow the new frame edges.
+- The ХПВ vessel is **32 × 50**, radius **10**, centered at local **(149.5, 347.75)**,
+  with three symbolic blue dashed water lines. Its side ports meet the existing
+  makeup route. The makeup and drain valves use **16 × 10** bow-ties, **11-unit**
+  stems and white **8 × 8** square actuators. The drain actuator remains on the
+  left. The distinct check-valve symbol and its direction are retained.
+- Readings/setpoints **9 px**, emergency captions **7 px**, other text **10 px**,
+  using `Roboto, Arial, sans-serif`. The heading is **«Прочие параметры котельной»**.
+  The control-mode card is **103.4** units wide, centered at x = 520, to leave
+  sufficient clearance for «Режим управления» with phone font metrics.
+- Alarm tiles are **43 × 43**, radius **10**, with no group scaling. Their original
+  order and property ownership stay in one column at x = 25.5, first y = 120,
+  with a **48-unit** pitch. Each icon instance is **24 × 25**; two-line pump
+  captions use 7 px with separate baselines. Panel/card corners use radius **10**,
+  junctions **1.5**, and stroke widths **1 / 0.5 / 0.25**. Emergency borders stay
+  **0.5**, including hover; equipment and other yellow hover outlines use **1**.
+
+All ordered bindings, units, colour predicates and non-width state expressions
+are preserved. Instrument widths now follow their existing red/amber/black colour
+conditions: **1 / 0.5 / 0.25**. No alarm is inferred from a stopped pump or a
+reading, and the tank/valves remain static. Decorative text passes pointer events
+through to equipment targets, while bound text keeps its existing behaviour.
+
+See the [source comparison and browser report](../../../.reports/2026-11-16-muslum-standardization/README.md)
+for before/after images, native dimensions, source checks and desktop/phone evidence.
+These assets are prepared locally; no production deployment is included.
+
+Muslum-7 retains its hydraulic separator and all five pumps. The separator has
+local geometry **53.625 × 230.75**, radius **10**, with its original diagonal
+divider. TE11 remains on the common boiler supply and TE12 on the common boiler
+return; neither is an individual boiler-temperature channel. All **70 bound
+elements** and **143 distinct properties** remain unchanged.

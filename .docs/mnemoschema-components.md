@@ -11,7 +11,8 @@ Gagarin and Komarova provide matching reference equipment footprints; Spring-2 s
 component family and the original drawing conventions. The accepted defaults below
 supersede their older equipment/reading sizes, typography, strokes and radii for further work.
 Kirov, Gagarin and Komarova were updated to the accepted standard on 16 November
-2026. Spring-2 retains its historical dimensions until its update is requested.
+2026, followed by Muslum-7 and Muslum-9. Spring-2 retains its historical dimensions
+until its update is requested.
 
 Use the [mnemoschema-standard skill](../.codex/skills/mnemoschema-standard/SKILL.md) for
 the workflow that applies and verifies these values when creating or changing components.
@@ -65,13 +66,13 @@ alignment together. The older reference diagrams use 45-unit reading frames and 
 stroke/radius values. Their geometry is a starting point; the accepted defaults above
 take precedence for new diagrams and component updates. Reference SVGs retain their
 historical values until their update is requested; Kirov, Gagarin and Komarova now
-follow the accepted defaults.
+follow the accepted defaults, as do Muslum-7/9.
 
 ## Water tanks and valves
 
 The Nurlat-5 tank and actuated-valve symbols were accepted as shared defaults on
 **16 November 2026**, and applied to the ХПВ vessels and two valves in Kirov,
-Gagarin and Komarova.
+Gagarin, Komarova and Muslum-7/9.
 
 Water tanks/vessels use a **32 × 50** white body, radius **10**, black stroke **1**.
 Draw three horizontal blue (`#0083CD`) dashed lines with stroke **0.5**, dash pattern
@@ -177,6 +178,16 @@ leave more space above both makeup assemblies and accommodate longer tank inlet 
 Its equipment groups have no compensating scale; component dimensions remain those
 listed above. Tank ports follow the site's topology. Unique equipment, such as Nurlat's
 exchangers, uses the common font/stroke rules with geometry appropriate to its function.
+
+Muslum-7/9 were drawn on a larger **1070 × 700** coordinate grid. Their standard
+versions use **700 × 468**, with native equipment and reading dimensions as listed
+above. Layout coordinates were converted by 0.65, then actual component sizes, ports,
+captions, the 70-unit header and unscaled 43-unit alarm tiles were set explicitly.
+The hydraulic groups use translations only; no equipment/panel scale compensates
+for component size. This local canvas accommodates Muslum-7's seven single-column
+alarm tiles while retaining both sites' distinct circuits. See their device READMEs
+for coordinates and exceptions, including Muslum-7's hydraulic separator and the
+slightly wider control-mode card needed for phone text metrics.
 
 The dashboard still fits SVGs into its existing responsive viewport. Different viewBox
 heights, or width-constrained screens, can produce different screen scales; compare native
