@@ -165,11 +165,22 @@ See the [source comparison and browser report](../../../.reports/2026-11-16-musl
 for before/after images, native dimensions, source checks and desktop/phone evidence.
 These assets are prepared locally; no production deployment is included.
 
-Muslum-7 retains its hydraulic separator and all five pumps. The separator has
-local geometry **53.625 × 230.75**, radius **10**, with its original diagonal
-divider. TE11 remains on the common boiler supply and TE12 on the common boiler
+Muslum-7 retains all five pumps. The central component is a **heat exchanger**,
+labelled **«Теплообменник»**. Following the Nurlat-5 symbol, it has a square-cornered
+**53.625 × 230.75** rectangle with a diagonal from its lower-left to upper-right
+corner. Its top is at local **y = 53.625** and bottom at **y = 284.375**,
+giving equal **24.375-unit** margins from the upper (**y = 78**) and lower
+(**y = 260**) pipe connections. The caption baseline is **y = 297.375**.
+The body size and four side connections are preserved. TE11
+remains on the common boiler supply and TE12 on the common boiler
 return; neither is an individual boiler-temperature channel. All **70 bound
 elements** and **143 distinct properties** remain unchanged.
+
+The heat-exchanger identity and symbol were corrected on **17 November 2026**:
+the former «Гидрострелка» caption and rounded body were replaced with the
+rectangular exchanger convention used in Nurlat-5. Desktop/phone browser checks
+with production API values confirmed caption clearance and nearby instrument
+popovers. See the [before/after report](../../../.reports/2026-11-17-muslum7-heat-exchanger/README.md).
 
 ## Burner glow standard — 17 November 2026
 

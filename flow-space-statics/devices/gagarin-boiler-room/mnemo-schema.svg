@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Котельная Гагарина (Камское Устье): drawn from the old dispatch picture in the Весна-2 style; the register map has a third boiler, not drawn (not on site) -->
-<svg id="gagarin-mnemoschema" role="img" aria-labelledby="gagarin-title gagarin-description" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 4 724 412" style="enable-background:new 0 4 724 412;font-family:Roboto,Arial,sans-serif;font-size:10px;" xml:space="preserve">
-	<title id="gagarin-title">Котельная Гагарина</title>
+<svg id="gagarin-mnemoschema" role="img" aria-label="Котельная Гагарина" aria-describedby="gagarin-description" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 4 724 412" style="enable-background:new 0 4 724 412;font-family:Roboto,Arial,sans-serif;font-size:10px;" xml:space="preserve">
 	<desc id="gagarin-description">Два котла, сетевые насосы, датчики подачи и обратки, режимы работы и аварийные события.</desc>
 	<defs>
 		<g id="infoIcon">

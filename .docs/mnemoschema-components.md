@@ -109,8 +109,10 @@ such as three-way mixing valves, retain their appropriate ports and artwork.
 
 Use the exact heading **«Прочие параметры котельной»** for the boiler-room panel of
 other parameters. Its canonical wording is `labels.otherParameters` in the JSON profile;
-use the general text role (`font.other`). Keep the boiler-room identity in the SVG title
-and application header.
+use the general text role (`font.other`). Keep the boiler-room identity in the SVG
+root's `aria-label` and application header. Use `aria-describedby` to reference a
+`<desc>` when present. Do not add SVG `<title>` elements or `title` attributes to
+diagrams: their browser tooltips cover equipment while the user inspects it.
 
 The following scheme was accepted on **16 November 2026**. Use it for new mnemoschemas
 and when typography is part of the requested work on an existing diagram.
@@ -227,7 +229,7 @@ captions, the 70-unit header and unscaled 43-unit alarm tiles were set explicitl
 The hydraulic groups use translations only; no equipment/panel scale compensates
 for component size. This local canvas accommodates Muslum-7's seven single-column
 alarm tiles while retaining both sites' distinct circuits. See their device READMEs
-for coordinates and exceptions, including Muslum-7's hydraulic separator and the
+for coordinates and exceptions, including Muslum-7's heat exchanger and the
 slightly wider control-mode card needed for phone text metrics.
 
 Spring-2 uses **`-98 8 736 485`**. Its initial standardized 636-unit width was

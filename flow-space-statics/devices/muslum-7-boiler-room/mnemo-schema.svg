@@ -3,10 +3,9 @@
      Readings, equipment states and property popovers use the Muslum-7 state schema. -->
 <svg version="1.1" id="muslum7-mnemoschema" xmlns="http://www.w3.org/2000/svg"
     xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 700 468"
-    role="img" aria-labelledby="muslum7-title muslum7-description"
+    role="img" aria-label="Котельная Муслюмово-7" aria-describedby="muslum7-description"
     style="font-family:Roboto,Arial,sans-serif;font-size:10px;fill:#000000;">
-    <title id="muslum7-title">Котельная Муслюмово-7</title>
-    <desc id="muslum7-description">Два котла с насосами Н4 и Н5, гидравлический разделитель,
+    <desc id="muslum7-description">Два котла с насосами Н4 и Н5, теплообменник,
         три параллельных сетевых насоса Н1, Н2 и Н3, подача Т1, обратка Т2,
         химическая подготовка подпиточной воды, дренаж и аварийные сигналы.
         Показания, состояния оборудования и аварии связаны с данными контроллера.</desc>
@@ -184,12 +183,12 @@
         </g>
 
         <g id="hydraulic-separator">
-            <rect x="322.562" y="48.75" width="53.625" height="230.75" rx="10" fill="#FFFFFF" stroke="#000000" stroke-width="1"/>
-            <path d="M330.363 50.7L368.387 277.55" fill="none" stroke="#000000" stroke-width="1"/>
-            <text x="349.375" y="292.5" font-size="10" text-anchor="middle">Гидрострелка</text>
+            <rect x="322.562" y="53.625" width="53.625" height="230.75" fill="#FFFFFF" stroke="#000000" stroke-width="1"/>
+            <path d="M322.562 284.375L376.187 53.625" fill="none" stroke="#000000" stroke-width="1"/>
+            <text x="349.375" y="297.375" font-size="10" text-anchor="middle">Теплообменник</text>
         </g>
 
-        <!-- Network circulation pumps: Т2 enters on the right and returns to the separator on the left. -->
+        <!-- Network circulation pumps: Т2 enters on the right and returns to the heat exchanger on the left. -->
         <g id="network-pump-1" data-state="states['muslum-7-boiler-room'].networkPumps[0].number;states['muslum-7-boiler-room'].networkPumps[0].isWorking;states['muslum-7-boiler-room'].networkPumps[0].isStartCommand;states['muslum-7-boiler-room'].networkPumps[0].isStopCommand">
             <text x="442" y="196.95" text-anchor="middle" font-size="10">Н1</text>
             <rect id="network-pump-1-frame" x="428.5" y="201" width="27" height="27" rx="3" fill="#FFFFFF" stroke="#000000" stroke-width="1" data-state="states['muslum-7-boiler-room'].networkPumps[0].number;states['muslum-7-boiler-room'].networkPumps[0].isWorking;states['muslum-7-boiler-room'].networkPumps[0].isStartCommand;states['muslum-7-boiler-room'].networkPumps[0].isStopCommand" data-state-eval="element.style.stroke = states['muslum-7-boiler-room'].networkPumps[0].isWorking === true ? '#0000FF' : '#000000'; element.style.strokeWidth = '1';"/>

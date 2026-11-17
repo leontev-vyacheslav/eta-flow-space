@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Нурлат-5. Native component units follow the shared standard; layout groups do not scale equipment. -->
-<svg id="nurlat5-mnemoschema" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 4 880 456" role="img" aria-labelledby="nurlat5-title nurlat5-description" style="font-family:Roboto,Arial,sans-serif;font-size:10px;fill:#000000;">
-    <title id="nurlat5-title">Нурлат — городская котельная №5</title>
+<svg id="nurlat5-mnemoschema" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 4 880 456" role="img" aria-label="Нурлат — городская котельная №5" aria-describedby="nurlat5-description" style="font-family:Roboto,Arial,sans-serif;font-size:10px;fill:#000000;">
     <desc id="nurlat5-description">Два котла К1.1 и К1.2, два параллельных теплообменника, десять насосов и отдельные контуры подпитки. Размеры оборудования, приборов и линий соответствуют действующим мнемосхемам. Показания и диагностика доступны по нажатию.</desc>
     <style>
         #nurlat5-mnemoschema .pipe { fill:none; stroke:#000000; stroke-width:1; pointer-events:none; }

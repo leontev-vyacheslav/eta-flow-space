@@ -3,7 +3,7 @@
      Readings and equipment states bind to the Muslum-9 state schema; unconfirmed temperature-channel flags remain in the details. -->
 <svg version="1.1" id="muslum9-mnemoschema" xmlns="http://www.w3.org/2000/svg"
     xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 700 468"
-    role="img" aria-labelledby="muslum9-title muslum9-description"
+    role="img" aria-label="Котельная Муслюмово-9" aria-describedby="muslum9-description"
     style="font-family:Roboto,Arial,sans-serif;font-size:10px;fill:#000000;">
     <desc id="muslum9-description">Два котла, два выхода подачи Т1 и два ввода обратки Т2,
         три параллельных сетевых насоса Н1, Н2 и Н3, подготовка подпиточной воды,
