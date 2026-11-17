@@ -162,6 +162,24 @@ use **0.25** normally, **0.5** for a warning and **1** for a fault/alarm. Yellow
 outlines use **1**, except emergency tiles, which stay at **0.5**. Restore the state
 appearance after pointer leave.
 
+Burner backgrounds use **`#808080` in both stopped and running states**, accepted
+on **17 November 2026**. A running boiler is distinguished by its flame and the
+animated orange glow from Spring-2, replacing the previous `#333333` running
+background. Keep the site's own boiler-body colours, locked/fault indicators,
+ordered property lists and exact flame-visibility predicate.
+
+Use Spring-2's flame filter keyframes with a **3-second**, **ease-in-out**,
+**infinite** pulse. The timing/reference are recorded under `flameGlow` in the
+profile. Add `boiler-flame-animation` to the existing 18 × 27 flame instances,
+with a diagram-scoped selector and unique keyframe name; flame artwork remains
+non-interactive so clicks reach the burner. Apply the animation to the flame
+instance, and disable the older inner static shadow to avoid combining effects.
+The original flame paths and component geometry stay unchanged.
+
+Nurlat-5, Kirov, Gagarin, Komarova and Muslum-7/9 now use this appearance. Spring-2
+retains its approved glow and grey burner background, including its own fault
+outline semantics.
+
 The standard defines appearance. Each site's own state paths, signal polarity, units,
 alarm/input distinction and command-feedback meanings remain authoritative. Do not infer
 an alarm from a numeric value, a stopped pump or another site's field order.

@@ -155,10 +155,32 @@ See the [tank/valve report](../../../.reports/2026-11-16-kirov-tanks-valves/READ
 
 The **724 × 412** canvas (`viewBox="0 4 724 412"`), two-boiler topology,
 all 56 bound elements and 108 distinct properties, their ordered lists, units,
-state predicates and colours are preserved. Stopped burners remain `#808080`,
-running burners `#333333`, running outlines blue and locked body fill amber.
+state predicates are preserved. Burner backgrounds now stay `#808080` in both
+stopped and running states; the running flame uses the Spring-2 animated glow.
+Running boiler outlines stay blue and locked body fill amber.
 
 The [standardization report](../../../.reports/2026-11-16-kirov-standardization/README.md)
 records current browser checks and before/after evidence separately from the
 historical mapping verification above. These assets are prepared locally;
 production deployment is outside this change.
+
+## Burner glow standard — 17 November 2026
+
+Both burner backgrounds remain **#808080** while stopped or running. The existing
+flame instances use Spring-2's orange glow: the same **3-second ease-in-out
+infinite** keyframes, scoped to this diagram with a unique animation name. This
+replaces the earlier dark running background and inner static flame shadow. The
+legacy filter definition is retained, while its inner artwork reference is removed.
+Original flame paths, 18 × 27 instances, 40 × 30 burner geometry and hit targets
+are unchanged.
+
+Each existing running predicate still controls flame visibility. Boiler-body,
+locked/fault and pump colours retain their existing meanings. All ordered
+`data-state` lists, hints and other expressions are preserved; only the two
+burner fill expressions now assign the constant grey background. The original
+full-detail burner popovers remain available. CSS glow artwork passes pointer
+events through to those targets.
+
+Before/after screenshots, synthetic state checks and desktop/phone evidence are
+recorded in `.reports/2026-11-17-standard-burner-glow/`. These files remain local;
+no deployment or controller change is implied.

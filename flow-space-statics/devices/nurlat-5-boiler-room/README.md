@@ -305,3 +305,24 @@ export and verification results. Checks cover every workbook address and mapped 
 all 109 bit positions, null/undefined preservation, non-finite floats, malformed block
 handling, schema/UI-helper compatibility and the guarded/awaited persistence contract.
 All 174 pre-existing B nodes remain byte-equivalent as parsed JSON objects.
+
+## Burner glow standard — 17 November 2026
+
+Both burner backgrounds remain **#808080** while stopped or running. The existing
+flame instances use Spring-2's orange glow: the same **3-second ease-in-out
+infinite** keyframes, scoped to this diagram with a unique animation name. This
+replaces the earlier dark running background and inner static flame shadow. The
+legacy filter definition is retained, while its inner artwork reference is removed.
+Original flame paths, 18 × 27 instances, 40 × 30 burner geometry and hit targets
+are unchanged.
+
+Each existing running predicate still controls flame visibility. Boiler-body,
+locked/fault and pump colours retain their existing meanings. All ordered
+`data-state` lists, hints and other expressions are preserved; only the two
+burner fill expressions now assign the constant grey background. The original
+full-detail burner popovers remain available. CSS glow artwork passes pointer
+events through to those targets.
+
+Before/after screenshots, synthetic state checks and desktop/phone evidence are
+recorded in `.reports/2026-11-17-standard-burner-glow/`. These files remain local;
+no deployment or controller change is implied.
