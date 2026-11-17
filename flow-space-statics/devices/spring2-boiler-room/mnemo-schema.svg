@@ -2,7 +2,9 @@
 <!-- Generator: Adobe Illustrator 27.3.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="Layer_1"
 	xmlns="http://www.w3.org/2000/svg"
-	xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="-70 8 600 485" style="enable-background:new -70 8 600 485;" xml:space="preserve">
+	xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="-98 8 736 485" style="enable-background:new -98 8 736 485;font-family:Roboto,Arial,sans-serif;font-size:10px;" xml:space="preserve" class="spring2-mnemoschema" role="img" aria-labelledby="spring2-title spring2-description">
+<title id="spring2-title">Котельная ЖК Весна-2</title>
+<desc id="spring2-description">Четыре котла, циркуляционные и сетевые насосы, контроллер котельной, тепловычислитель ВКТ-7 и расходомер газа Ирвис.</desc>
 
 	<defs>
 		<g id="infoIcon">
@@ -14,516 +16,17 @@
 		</g>
 
 		<g id="boilerFlame">
-			<path style="fill:#E17A2D;" d="M186.141,168.802c18.63-48.445,15.042-121.667,15.042-121.667s49.541,20.759,83.744,77.761
-					c32.149,53.578,1.777,133.398,1.777,133.398c23.685-23.693,32.464-47.382,33.268-75.827c26.608,42.473,47.165,91.146,47.165,140.398
-					c0,60.938-55.412,110.285-123.837,110.318c-68.396-0.037-123.837-49.38-123.837-110.318
-					C119.463,263.555,164.173,225.931,186.141,168.802z" />
+			<path style="fill:#E17A2D;" d="M186.141,168.802c18.63-48.445,15.042-121.667,15.042-121.667s49.541,20.759,83.744,77.761      c32.149,53.578,1.777,133.398,1.777,133.398c23.685-23.693,32.464-47.382,33.268-75.827c26.608,42.473,47.165,91.146,47.165,140.398      c0,60.938-55.412,110.285-123.837,110.318c-68.396-0.037-123.837-49.38-123.837-110.318      C119.463,263.555,164.173,225.931,186.141,168.802z" />
 			<g style="opacity:0.8;">
-				<path style="fill:#F4E028;" d="M210.455,272.583c10.222-29.384,8.258-73.791,8.258-73.791s98.12,74.674,91.131,167.227
-						c-2.791,36.856-30.424,66.888-68.01,66.91c-37.556-0.022-68.003-29.949-68.003-66.91
-						C173.835,330.049,198.388,307.232,210.455,272.583z" />
+				<path style="fill:#F4E028;" d="M210.455,272.583c10.222-29.384,8.258-73.791,8.258-73.791s98.12,74.674,91.131,167.227       c-2.791,36.856-30.424,66.888-68.01,66.91c-37.556-0.022-68.003-29.949-68.003-66.91       C173.835,330.049,198.388,307.232,210.455,272.583z" />
 			</g>
 			<g style="opacity:0.8;">
-				<path style="fill:#FFFFFF;" d="M222.017,330.072c6.481-18.619,5.231-46.753,5.231-46.753s62.169,47.318,57.743,105.963
-						c-1.77,23.349-19.278,42.372-43.09,42.39c-23.794-0.019-43.09-18.978-43.09-42.39C198.815,366.483,214.38,352.025,222.017,330.072z
-						" />
+				<path style="fill:#FFFFFF;" d="M222.017,330.072c6.481-18.619,5.231-46.753,5.231-46.753s62.169,47.318,57.743,105.963       c-1.77,23.349-19.278,42.372-43.09,42.39c-23.794-0.019-43.09-18.978-43.09-42.39C198.815,366.483,214.38,352.025,222.017,330.072z       " />
 			</g>
 		</g>
-	</defs>
-	<defs>
-		<g id="emergencyIcon">
-			<rect style="fill:#606060;" width="2" height="10" transform="translate(8, 5)"/>
-			<path style="fill:#FFC107;cursor:pointer" transform="scale(0.035)" d="M479 447.77 268.43 56.64a8 8 0 0 0-14.09 0L43.73 447.77a8 8 0 0 0 7.05 11.79H472a8 8 0 0 0 7-11.79zm-197.62-36.29h-40v-40h40zm-4-63.92h-32l-6-160h44z">
-			</path>
-		</g>
-	</defs>
 
-
-
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="109.4" y1="94.1" x2="109.4" y2="128.4" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="108.7" y1="241.8" x2="108.7" y2="253.9" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="109.3" y1="114.9" x2="56.3" y2="114.9" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="108.7" y1="210" x2="56.3" y2="210" />
-	<g data-section="boilerPumps[0]">
-		<text transform="matrix(1 0 0 1 36.7539 146.0158)" style="font-family:'Roboto'; font-size:10px;">НК1</text>
-		<circle data-state="states['spring2-boiler-room'].boilerPumps[0].state" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="56.3" cy="162.2" r="10.6" />
-		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="56.3" cy="162.2" r="9.3" />
-		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="56.4,170.9 52.4,164.3 60.3,164.3 56.4,170.9
-		" />
-		<g>
-			<path data-state="states['spring2-boiler-room'].boilerPumps[0].state;states['spring2-boiler-room'].boilerPumps[0].statusCurrentSensor" data-state-eval="element.style.stroke = (states['spring2-boiler-room'].boilerPumps[0].state === 2 || states['spring2-boiler-room'].boilerPumps[0].statusCurrentSensor !== 1) ? 'red' : (states['spring2-boiler-room'].boilerPumps[0].state === 1 ? '#0000FF' : 'gray')" style="fill:none;stroke:gray;stroke-width:2;stroke-miterlimit:10;" d="M66.9,175.6h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
-			c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6V173C69.5,174.5,68.3,175.6,66.9,175.6z" />
-		</g>
-		<use data-state="states['spring2-boiler-room'].boilerPumps[0].state;states['spring2-boiler-room'].boilerPumps[0].statusCurrentSensor" data-state-eval="element.style.display = (states['spring2-boiler-room'].boilerPumps[0].state === 2 || states['spring2-boiler-room'].boilerPumps[0].statusCurrentSensor !== 1) ? 'initial' : 'none'" href='#emergencyIcon' transform="translate(58, 130)" />
-	</g>
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="56.3" y1="114.9" x2="56.3" y2="148.9" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="56.3" y1="175.6" x2="56.3" y2="209.5" />
-	<g data-section="boilerOutputValves[0]">
-		<polygon data-state="states['spring2-boiler-room'].boilerOutputValves[0].state" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="108.7,267.4 103.5,259.3 114,259.3
-		108.7,267.4 	" />
-		<polygon data-state="states['spring2-boiler-room'].boilerOutputValves[0].state" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="108.7,267.2 114,275.3 103.5,275.3
-		108.7,267.2 	" />
-		<g>
-			<path data-state="states['spring2-boiler-room'].boilerOutputValves[0].state" data-colorizer-hint="stroke;stroke-width" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" d="M119.2,280.7h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
-			c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6v21.6C121.8,279.5,120.7,280.7,119.2,280.7z" />
-		</g>
-	</g>
-
-	<g data-section="boilers[0].tempOut">
-		<text transform="matrix(1 0 0 1 128 111)" style="font-family:'Roboto'; font-size:10px;">TE1</text>
-		<rect data-state="states['spring2-boiler-room'].boilers[0].statusTempOutSensor" x="119.8" y="113.2" width="45" height="11.2" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-		<text data-state="states['spring2-boiler-room'].boilers[0].tempOut" transform="matrix(1 0 0 1 123 121.9492)" style="font-family:'Roboto'; font-size:9px;"></text>
-		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="119.8" y1="118.8" x2="109.4" y2="118.8" />
-	</g>
-
-	<text transform="matrix(1 0 0 1 90.8535 251.2384)" style="font-family:'Roboto'; font-size:10px;">ЗК1</text>
-
-
-	<g data-section="boilers[0]">
-		<rect data-state="states['spring2-boiler-room'].boilers[0].state;states['spring2-boiler-room'].boilers[0].isBurnerFailure;states['spring2-boiler-room'].boilers[0].isGasRelayPressure;states['spring2-boiler-room'].boilers[0].isMinWaterPressure;states['spring2-boiler-room'].boilers[0].isMaxWaterPressure;states['spring2-boiler-room'].boilers[0].isMaxWaterTemperature" data-state-eval="element.style.stroke = (states['spring2-boiler-room'].boilers[0].isBurnerFailure || states['spring2-boiler-room'].boilers[0].isGasRelayPressure || states['spring2-boiler-room'].boilers[0].isMinWaterPressure || states['spring2-boiler-room'].boilers[0].isMaxWaterPressure ||  states['spring2-boiler-room'].boilers[0].isMaxWaterTemperature ? 'red': 'black');" x="77.6" y="128.4" style="fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;" width="63.6" height="69.3" />
-		<g>
-			<text transform="matrix(1 0 0 1 99.2257 147.8056)" style="font-family:'Roboto'; font-size:10px;">TE7</text>
-			<rect x="93.5" y="149.9" width="45" height="11.2" data-state="states['spring2-boiler-room'].boilers[0].statusTempFlueGasesSensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-			<text data-state="states['spring2-boiler-room'].boilers[0].tempFlueGases" transform="matrix(1 0 0 1 96 158.643)" style="font-family:'Roboto'; font-size:9px;"></text>
-			<path style="fill:none;stroke:#000000;stroke-miterlimit:10;" d="M86.1,151.4c1.2,0.7,2,1.4,2,2.2c0,1-1.6,2.1-2,3.4
-			c-0.3,1.1,0.4,1.5,1.4,2.7" />
-			<path style="fill:none;stroke:#000000;stroke-miterlimit:10;" d="M88.9,151.4c1.2,0.7,2,1.4,2,2.2c0,1-1.6,2.1-2,3.4
-			c-0.3,1.1,0.4,1.5,1.4,2.7" />
-		</g>
-		<g data-section="boilers[0].burner">
-			<text transform="matrix(1 0 0 1 77.5861 125.3774)" style="font-family:'Roboto'; font-size:10px;">К1</text>
-			<path data-state="states['spring2-boiler-room'].boilers[0].isBurnerFailure" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" d="M125.3,194.6H95.9c-2.5,0-4.5-2-4.5-4.5v-19.9
-		c0-2.5,2-4.5,4.5-4.5h29.5c2.5,0,4.5,2,4.5,4.5v19.9C129.8,192.6,127.8,194.6,125.3,194.6z" />
-			<use data-state="states['spring2-boiler-room'].boilers[0].isWorking" data-state-eval="element.style.display = (states['spring2-boiler-room'].boilers[0].isWorking ? 'initial': 'none');" href='#boilerFlame' transform="translate(94, 168) rotate(0, 25, 25) scale(0.06)" class="boiler-flame-animation" />
-		</g>
-		<use data-state="states['spring2-boiler-room'].boilers[0].state;states['spring2-boiler-room'].boilers[0].isBurnerFailure;states['spring2-boiler-room'].boilers[0].isGasRelayPressure;states['spring2-boiler-room'].boilers[0].isMinWaterPressure;states['spring2-boiler-room'].boilers[0].isMaxWaterPressure;states['spring2-boiler-room'].boilers[0].isMaxWaterTemperature" data-state-eval="element.style.display = (states['spring2-boiler-room'].boilers[0].isBurnerFailure || states['spring2-boiler-room'].boilers[0].isGasRelayPressure || states['spring2-boiler-room'].boilers[0].isMinWaterPressure || states['spring2-boiler-room'].boilers[0].isMaxWaterPressure ||  states['spring2-boiler-room'].boilers[0].isMaxWaterTemperature ? 'initial': 'none')" href='#emergencyIcon' transform="translate(120, 130)" />
-	</g>
-
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="108.7" y1="280.6" x2="108.7" y2="307.2" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="228.8" y1="94" x2="228.8" y2="128.3" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="228.8" y1="114.8" x2="175.7" y2="114.8" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="228.2" y1="209.9" x2="175.8" y2="209.9" />
-	<g data-section="boilerPumps[1]">
-		<text transform="matrix(1 0 0 1 156.1857 145.9151)" style="font-family:'Roboto'; font-size:10px;">НК2</text>
-		<circle data-state="states['spring2-boiler-room'].boilerPumps[1].state" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="175.8" cy="162.1" r="10.6" />
-		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="175.7" cy="162.1" r="9.3" />
-		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="175.8,170.8 171.9,164.2 179.8,164.2
-		175.8,170.8 	" />
-		<g>
-			<path data-state="states['spring2-boiler-room'].boilerPumps[1].state;states['spring2-boiler-room'].boilerPumps[1].statusCurrentSensor" data-state-eval="element.style.stroke = (states['spring2-boiler-room'].boilerPumps[1].state === 2 || states['spring2-boiler-room'].boilerPumps[1].statusCurrentSensor !== 1) ? 'red' : (states['spring2-boiler-room'].boilerPumps[1].state === 1 ? '#0000FF' : 'gray')" style="fill:none;stroke:gray;stroke-width:2;stroke-miterlimit:10;" d="M186.3,175.5h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
-			c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6v21.6C188.9,174.4,187.7,175.5,186.3,175.5z" />
-		</g>
-		<use data-state="states['spring2-boiler-room'].boilerPumps[1].state;states['spring2-boiler-room'].boilerPumps[1].statusCurrentSensor" data-state-eval="element.style.display = (states['spring2-boiler-room'].boilerPumps[1].state === 2 || states['spring2-boiler-room'].boilerPumps[1].statusCurrentSensor !== 1) ? 'initial' : 'none'" href='#emergencyIcon' transform="translate(178, 130)" />
-	</g>
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="175.7" y1="114.8" x2="175.8" y2="148.8" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="175.8" y1="175.5" x2="175.8" y2="209.4" />
-	<g data-section="boilerOutputValves[1]">
-		<polygon data-state="states['spring2-boiler-room'].boilerOutputValves[1].state" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="228.2,267.3 222.9,259.2
-		233.4,259.2 228.2,267.3" />
-		<polygon data-state="states['spring2-boiler-room'].boilerOutputValves[1].state" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="228.2,267.1 233.4,275.2
-		222.9,275.2 228.2,267.1" />
-		<g>
-			<path data-state="states['spring2-boiler-room'].boilerOutputValves[1].state" data-colorizer-hint="stroke;stroke-width" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" d="M238.7,280.6h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
-			c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6V278C241.2,279.4,240.1,280.6,238.7,280.6z" />
-		</g>
-	</g>
-	<g data-section="boilers[1].tempOut">
-		<text transform="matrix(1 0 0 1 245.8132 111.1325)" style="font-family:'Roboto'; font-size:10px;">TE2</text>
-		<rect x="239.2" y="113.1" width="45" height="11.2" data-state="states['spring2-boiler-room'].boilers[1].statusTempOutSensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-		<text data-state="states['spring2-boiler-room'].boilers[1].tempOut" transform="matrix(1 0 0 1 243 121.8485)" style="font-family:'Roboto'; font-size:9px;"></text>
-		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="239.2" y1="118.7" x2="228.8" y2="118.7" />
-	</g>
-	<text transform="matrix(1 0 0 1 208.3075 251.1377)" style="font-family:'Roboto'; font-size:10px;">ЗК2</text>
-
-	<g data-section="boilers[1]">
-		<rect data-state="states['spring2-boiler-room'].boilers[1].state;states['spring2-boiler-room'].boilers[1].isBurnerFailure;states['spring2-boiler-room'].boilers[1].isGasRelayPressure;states['spring2-boiler-room'].boilers[1].isMinWaterPressure;states['spring2-boiler-room'].boilers[1].isMaxWaterPressure;states['spring2-boiler-room'].boilers[1].isMaxWaterTemperature" data-state-eval="element.style.stroke = (states['spring2-boiler-room'].boilers[1].isBurnerFailure || states['spring2-boiler-room'].boilers[1].isGasRelayPressure || states['spring2-boiler-room'].boilers[1].isMinWaterPressure || states['spring2-boiler-room'].boilers[1].isMaxWaterPressure ||  states['spring2-boiler-room'].boilers[1].isMaxWaterTemperature ? 'red': 'black');" x="197" y="128.3" style="fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;" width="63.6" height="69.3" />
-		<g data-section="boilers[1].tempFlueGases">
-			<text transform="matrix(1 0 0 1 219.6575 147.7048)" style="font-family:'Roboto'; font-size:10px;">TE8</text>
-			<rect x="212.9" y="149.8" width="45" height="11.2" data-state="states['spring2-boiler-room'].boilers[1].statusTempFlueGasesSensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-			<text data-state="states['spring2-boiler-room'].boilers[1].tempFlueGases" transform="matrix(1 0 0 1 216.101 158.5423)" style="font-family:'Roboto'; font-size:9px;"></text>
-			<path style="fill:none;stroke:#000000;stroke-miterlimit:10;" d="M205.5,151.3c1.2,0.7,2,1.4,2,2.2c0,1-1.6,2.1-2,3.4
-			c-0.3,1.1,0.4,1.5,1.4,2.7" />
-			<path style="fill:none;stroke:#000000;stroke-miterlimit:10;" d="M208.3,151.3c1.2,0.7,2,1.4,2,2.2c0,1-1.6,2.1-2,3.4
-			c-0.3,1.1,0.4,1.5,1.4,2.7" />
-		</g>
-		<g data-section="boilers[1].burner">
-			<text transform="matrix(1 0 0 1 197.018 125.2767)" style="font-family:'Roboto'; font-size:10px;">К2</text>
-			<path data-state="states['spring2-boiler-room'].boilers[1].isBurnerFailure" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" d="M244.7,194.5h-29.5c-2.5,0-4.5-2-4.5-4.5v-19.9
-			c0-2.5,2-4.5,4.5-4.5h29.5c2.5,0,4.5,2,4.5,4.5v19.9C249.2,192.5,247.2,194.5,244.7,194.5z" />
-			<use data-state="states['spring2-boiler-room'].boilers[1].isWorking" data-state-eval="element.style.display = (states['spring2-boiler-room'].boilers[1].isWorking ? 'initial': 'none');" href='#boilerFlame' transform="translate(214, 168) rotate(0, 25, 25) scale(0.06)" class="boiler-flame-animation" />
-		</g>
-		<use data-state="states['spring2-boiler-room'].boilers[1].state;states['spring2-boiler-room'].boilers[1].isBurnerFailure;states['spring2-boiler-room'].boilers[1].isGasRelayPressure;states['spring2-boiler-room'].boilers[1].isMinWaterPressure;states['spring2-boiler-room'].boilers[1].isMaxWaterPressure;states['spring2-boiler-room'].boilers[1].isMaxWaterTemperature" data-state-eval="element.style.display = (states['spring2-boiler-room'].boilers[1].isBurnerFailure || states['spring2-boiler-room'].boilers[1].isGasRelayPressure || states['spring2-boiler-room'].boilers[1].isMinWaterPressure || states['spring2-boiler-room'].boilers[1].isMaxWaterPressure ||  states['spring2-boiler-room'].boilers[1].isMaxWaterTemperature ? 'initial': 'none')" href='#emergencyIcon' transform="translate(240, 130)" />
-	</g>
-
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="228.2" y1="280.7" x2="228.2" y2="289.1" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="109.4" y1="94.1" x2="228.8" y2="94.1" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="108.7" y1="289.2" x2="228.2" y2="289.2" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="348.4" y1="93.9" x2="348.4" y2="128.2" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="348.3" y1="114.8" x2="295.3" y2="114.8" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="347.7" y1="209.9" x2="295.3" y2="209.9" />
-	<g data-section="boilerPumps[2]">
-		<text transform="matrix(1 0 0 1 275.7352 145.8647)" style="font-family:'Roboto'; font-size:10px;">НК3</text>
-		<circle data-state="states['spring2-boiler-room'].boilerPumps[2].state" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="295.3" cy="162" r="10.6" />
-		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="295.3" cy="162" r="9.3" />
-		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="295.4,170.7 291.4,164.1 299.3,164.1
-		295.4,170.7 	" />
-		<g>
-			<path data-state="states['spring2-boiler-room'].boilerPumps[2].state;states['spring2-boiler-room'].boilerPumps[2].statusCurrentSensor" data-state-eval="element.style.stroke = (states['spring2-boiler-room'].boilerPumps[2].state === 2 || states['spring2-boiler-room'].boilerPumps[2].statusCurrentSensor !== 1) ? 'red' : (states['spring2-boiler-room'].boilerPumps[2].state === 1 ? '#0000FF' : 'gray')" style="fill:none;stroke:gray;stroke-width:2;stroke-miterlimit:10;" d="M305.9,175.5h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
-			c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6v21.6C308.4,174.3,307.3,175.5,305.9,175.5z" />
-		</g>
-		<use data-state="states['spring2-boiler-room'].boilerPumps[2].state;states['spring2-boiler-room'].boilerPumps[2].statusCurrentSensor" data-state-eval="element.style.display = (states['spring2-boiler-room'].boilerPumps[2].state === 2 || states['spring2-boiler-room'].boilerPumps[2].statusCurrentSensor !== 1) ? 'initial' : 'none'" href='#emergencyIcon' transform="translate(298, 130)" />
-	</g>
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="295.3" y1="114.8" x2="295.3" y2="148.7" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="295.3" y1="175.5" x2="295.3" y2="209.3" />
-	<g data-section="boilerOutputValves[2]">
-		<polygon data-state="states['spring2-boiler-room'].boilerOutputValves[2].state" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="347.7,267.2 342.5,259.1 353,259.1
-		347.7,267.2" />
-		<polygon data-state="states['spring2-boiler-room'].boilerOutputValves[2].state" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="347.7,267.1 353,275.2 342.5,275.2
-		347.7,267.1" />
-		<g>
-			<path data-state="states['spring2-boiler-room'].boilerOutputValves[2].state" data-colorizer-hint="stroke;stroke-width" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" d="M358.2,280.5h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
-			c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6V278C360.8,279.4,359.6,280.5,358.2,280.5z" />
-		</g>
-	</g>
-	<g data-section="boilers[2].tempOut">
-		<text transform="matrix(1 0 0 1 365.3627 111.0821)" style="font-family:'Roboto'; font-size:10px;">TE3</text>
-		<rect x="358.8" y="113.1" width="45" height="11.1" data-state="states['spring2-boiler-room'].boilers[2].statusTempOutSensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-		<text data-state="states['spring2-boiler-room'].boilers[2].tempOut" transform="matrix(1 0 0 1 362 121.7981)" style="font-family:'Roboto'; font-size:9px;"></text>
-		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="358.8" y1="118.7" x2="348.4" y2="118.7" />
-	</g>
-	<text transform="matrix(1 0 0 1 327.857 251.0874)" style="font-family:'Roboto'; font-size:10px;">ЗК3</text>
-
-	<g data-section="boilers[2]">
-		<rect data-state="states['spring2-boiler-room'].boilers[2].state;states['spring2-boiler-room'].boilers[2].isBurnerFailure;states['spring2-boiler-room'].boilers[2].isGasRelayPressure;states['spring2-boiler-room'].boilers[2].isMinWaterPressure;states['spring2-boiler-room'].boilers[2].isMaxWaterPressure;states['spring2-boiler-room'].boilers[2].isMaxWaterTemperature" data-state-eval="element.style.stroke = (states['spring2-boiler-room'].boilers[2].isBurnerFailure || states['spring2-boiler-room'].boilers[2].isGasRelayPressure || states['spring2-boiler-room'].boilers[2].isMinWaterPressure || states['spring2-boiler-room'].boilers[2].isMaxWaterPressure ||  states['spring2-boiler-room'].boilers[2].isMaxWaterTemperature ? 'red': 'black');" x="316.6" y="128.2" style="fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;" width="63.6" height="69.3" />
-		<g data-section="boilers[2].tempFlueGases">
-			<text transform="matrix(1 0 0 1 339.2071 147.6545)" style="font-family:'Roboto'; font-size:10px;">TE9</text>
-			<rect x="332.5" y="149.8" width="45" height="11.1" data-state="states['spring2-boiler-room'].boilers[2].statusTempFlueGasesSensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-			<text data-state="states['spring2-boiler-room'].boilers[2].tempFlueGases" transform="matrix(1 0 0 1 335.6505 158.492)" style="font-family:'Roboto'; font-size:9px;"></text>
-			<path style="fill:none;stroke:#000000;stroke-miterlimit:10;" d="M325.1,151.2c1.2,0.7,2,1.4,2,2.2c0,1-1.6,2.1-2,3.4
-			c-0.3,1.1,0.4,1.5,1.4,2.7" />
-			<path style="fill:none;stroke:#000000;stroke-miterlimit:10;" d="M327.9,151.2c1.2,0.7,2,1.4,2,2.2c0,1-1.6,2.1-2,3.4
-			c-0.3,1.1,0.4,1.5,1.4,2.7" />
-		</g>
-
-		<g data-section="boilers[2].burner">
-			<text transform="matrix(1 0 0 1 316.5675 125.2263)" style="font-family:'Roboto'; font-size:10px;">К3</text>
-			<path data-state="states['spring2-boiler-room'].boilers[2].isBurnerFailure" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" d="M364.3,194.5h-29.5c-2.5,0-4.5-2-4.5-4.5v-19.9
-			c0-2.5,2-4.5,4.5-4.5h29.5c2.5,0,4.5,2,4.5,4.5V190C368.8,192.5,366.8,194.5,364.3,194.5z" />
-			<use data-state="states['spring2-boiler-room'].boilers[2].isWorking" data-state-eval="element.style.display = (states['spring2-boiler-room'].boilers[2].isWorking ? 'initial': 'none');" href='#boilerFlame' transform="translate(333, 168) rotate(0, 25, 25) scale(0.06)" class="boiler-flame-animation" />
-		</g>
-
-		<use data-state="states['spring2-boiler-room'].boilers[2].state;states['spring2-boiler-room'].boilers[2].isBurnerFailure;states['spring2-boiler-room'].boilers[2].isGasRelayPressure;states['spring2-boiler-room'].boilers[2].isMinWaterPressure;states['spring2-boiler-room'].boilers[2].isMaxWaterPressure;states['spring2-boiler-room'].boilers[2].isMaxWaterTemperature" data-state-eval="element.style.display = (states['spring2-boiler-room'].boilers[2].isBurnerFailure || states['spring2-boiler-room'].boilers[2].isGasRelayPressure || states['spring2-boiler-room'].boilers[2].isMinWaterPressure || states['spring2-boiler-room'].boilers[2].isMaxWaterPressure ||  states['spring2-boiler-room'].boilers[2].isMaxWaterTemperature ? 'initial': 'none')" href='#emergencyIcon' transform="translate(360, 130)" />
-	</g>
-
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="347.7" y1="280.5" x2="347.7" y2="289" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="228.9" y1="94" x2="348.4" y2="94" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="228.3" y1="289.1" x2="347.7" y2="289.1" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="468.3" y1="93.8" x2="468.3" y2="128.1" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="468.3" y1="114.7" x2="415.2" y2="114.7" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="467.7" y1="209.8" x2="415.3" y2="209.8" />
-	<g data-section="boilerPumps[3]">
-		<text transform="matrix(1 0 0 1 395.6823 145.764)" style="font-family:'Roboto'; font-size:10px;">НК4</text>
-		<circle data-state="states['spring2-boiler-room'].boilerPumps[3].state" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="415.3" cy="161.9" r="10.6" />
-		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="415.2" cy="161.9" r="9.3" />
-		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="415.3,170.6 411.4,164 419.3,164 415.3,170.6
-		" />
-		<g>
-			<path data-state="states['spring2-boiler-room'].boilerPumps[3].state;states['spring2-boiler-room'].boilerPumps[3].statusCurrentSensor" data-state-eval="element.style.stroke = (states['spring2-boiler-room'].boilerPumps[3].state === 2 || states['spring2-boiler-room'].boilerPumps[3].statusCurrentSensor !== 1) ? 'red' : (states['spring2-boiler-room'].boilerPumps[3].state === 1 ? '#0000FF' : 'gray')" style="fill:none;stroke:gray;stroke-width:2;stroke-miterlimit:10;" d="M425.8,175.4h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
-			c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6v21.6C428.4,174.2,427.2,175.4,425.8,175.4z" />
-		</g>
-		<use data-state="states['spring2-boiler-room'].boilerPumps[3].state;states['spring2-boiler-room'].boilerPumps[3].statusCurrentSensor" data-state-eval="element.style.display = (states['spring2-boiler-room'].boilerPumps[3].state === 2 || states['spring2-boiler-room'].boilerPumps[3].statusCurrentSensor !== 1) ? 'initial' : 'none'" href='#emergencyIcon' transform="translate(418, 130)" />
-	</g>
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="415.2" y1="114.7" x2="415.3" y2="148.6" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="415.3" y1="175.4" x2="415.3" y2="209.2" />
-	<g data-section="boilerOutputValves[3]">
-		<polygon data-state="states['spring2-boiler-room'].boilerOutputValves[3].state" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="467.7,267.1 462.4,259 472.9,259
-		467.7,267.1" />
-		<polygon data-state="states['spring2-boiler-room'].boilerOutputValves[3].state" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="467.7,267 472.9,275.1 462.4,275.1
-		467.7,267" />
-		<g>
-			<path data-state="states['spring2-boiler-room'].boilerOutputValves[3].state" data-colorizer-hint="stroke;stroke-width" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" d="M478.2,280.4h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
-			c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6v21.6C480.7,279.3,479.6,280.4,478.2,280.4z" />
-		</g>
-	</g>
-	<g data-section="boilers[3].tempOut">
-		<text transform="matrix(1 0 0 1 485.3098 110.9814)" style="font-family:'Roboto'; font-size:10px;">TE4</text>
-		<rect x="478.7" y="113" width="45" height="11.1" data-state="states['spring2-boiler-room'].boilers[3].statusTempOutSensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-		<text data-state="states['spring2-boiler-room'].boilers[3].tempOut" transform="matrix(1 0 0 1 482 121.5)" style="font-family:'Roboto'; font-size:9px;"></text>
-		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="478.7" y1="118.6" x2="468.3" y2="118.6" />
-	</g>
-	<text transform="matrix(1 0 0 1 447.8041 250.9867)" style="font-family:'Roboto'; font-size:10px;">ЗК4</text>
-
-	<g data-section="boilers[3]">
-		<rect data-state="states['spring2-boiler-room'].boilers[3].state;states['spring2-boiler-room'].boilers[3].isBurnerFailure;states['spring2-boiler-room'].boilers[3].isGasRelayPressure;states['spring2-boiler-room'].boilers[3].isMinWaterPressure;states['spring2-boiler-room'].boilers[3].isMaxWaterPressure;states['spring2-boiler-room'].boilers[3].isMaxWaterTemperature" data-state-eval="element.style.stroke = (states['spring2-boiler-room'].boilers[3].isBurnerFailure || states['spring2-boiler-room'].boilers[3].isGasRelayPressure || states['spring2-boiler-room'].boilers[3].isMinWaterPressure || states['spring2-boiler-room'].boilers[3].isMaxWaterPressure ||  states['spring2-boiler-room'].boilers[3].isMaxWaterTemperature ? 'red': 'black');" x="436.5" y="128.1" style="fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;" width="63.6" height="69.3" />
-		<g data-section="boilers[3].tempFlueGases">
-			<text transform="matrix(1 0 0 1 455 147.5538)" style="font-family:'Roboto'; font-size:10px;">TE10</text>
-			<rect x="452.4" y="149.7" width="45" height="11.1" data-state="states['spring2-boiler-room'].boilers[3].statusTempFlueGasesSensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-			<text data-state="states['spring2-boiler-room'].boilers[3].tempFlueGases" transform="matrix(1 0 0 1 455.5977 158.3913)" style="font-family:'Roboto'; font-size:9px;"></text>
-			<path style="fill:none;stroke:#000000;stroke-miterlimit:10;" d="M445,151.1c1.2,0.7,2,1.4,2,2.2c0,1-1.6,2.1-2,3.4
-		c-0.3,1.1,0.4,1.5,1.4,2.7" />
-			<path style="fill:none;stroke:#000000;stroke-miterlimit:10;" d="M447.8,151.1c1.2,0.7,2,1.4,2,2.2c0,1-1.6,2.1-2,3.4
-		c-0.3,1.1,0.4,1.5,1.4,2.7" />
-		</g>
-		<g data-section="boilers[3].burner">
-			<text transform="matrix(1 0 0 1 436.5146 125.1256)" style="font-family:'Roboto'; font-size:10px;">К4</text>
-			<path data-state="states['spring2-boiler-room'].boilers[3].isBurnerFailure" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" d="M484.2,194.4h-29.5c-2.5,0-4.5-2-4.5-4.5v-19.9
-			c0-2.5,2-4.5,4.5-4.5h29.5c2.5,0,4.5,2,4.5,4.5v19.9C488.7,192.4,486.7,194.4,484.2,194.4z" />
-			<use data-state="states['spring2-boiler-room'].boilers[3].isWorking" data-state-eval="element.style.display = (states['spring2-boiler-room'].boilers[3].isWorking ? 'initial': 'none');" href='#boilerFlame' transform="translate(453, 168) rotate(0, 25, 25) scale(0.06)" class="boiler-flame-animation" />
-		</g>
-
-		<use data-state="states['spring2-boiler-room'].boilers[3].state;states['spring2-boiler-room'].boilers[3].isBurnerFailure;states['spring2-boiler-room'].boilers[3].isGasRelayPressure;states['spring2-boiler-room'].boilers[3].isMinWaterPressure;states['spring2-boiler-room'].boilers[3].isMaxWaterPressure;states['spring2-boiler-room'].boilers[3].isMaxWaterTemperature" data-state-eval="element.style.display = (states['spring2-boiler-room'].boilers[3].isBurnerFailure || states['spring2-boiler-room'].boilers[3].isGasRelayPressure || states['spring2-boiler-room'].boilers[3].isMinWaterPressure || states['spring2-boiler-room'].boilers[3].isMaxWaterPressure ||  states['spring2-boiler-room'].boilers[3].isMaxWaterTemperature ? 'initial': 'none')" href='#emergencyIcon' transform="translate(480, 130)" />
-
-	</g>
-
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="467.7" y1="280.4" x2="467.7" y2="288.9" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="348.9" y1="93.9" x2="468.3" y2="93.9" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="348.2" y1="289" x2="467.7" y2="289" />
-
-
-	<g data-section="networkPumps[0]" transform="translate(-10, 10)">
-		<text transform="matrix(1 0 0 1 52.5014 320.2943)" style="font-family:'Roboto'; font-size:10px;">СН1</text>
-		<circle data-state="states['spring2-boiler-room'].networkPumps[0].state" data-state-eval="element.style.fill = ([32, 64].includes(value) ? 'white' : '#808080')" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="73.2" cy="337.6" r="10.6" />
-		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="73.2" cy="337.6" r="9.3" />
-		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="73.1,328.9 77.1,335.5 69.2,335.5 73.1,328.9
-		" />
-		<g>
-			<path data-state="states['spring2-boiler-room'].networkPumps[0].state;states['spring2-boiler-room'].networkPumps[0].statusFc;states['spring2-boiler-room'].networkPumps[0].isDryRun" data-state-eval="element.style.stroke = (states['spring2-boiler-room'].networkPumps[0].state === 512 || states['spring2-boiler-room'].networkPumps[0].statusFc === 2 || states['spring2-boiler-room'].networkPumps[0].isDryRun) ? 'red' : ([32, 64].includes(states['spring2-boiler-room'].networkPumps[0].state) ? '#0000FF' : 'black'); element.style.strokeWidth = (states['spring2-boiler-room'].networkPumps[0].state === 512 || states['spring2-boiler-room'].networkPumps[0].statusFc === 2 || states['spring2-boiler-room'].networkPumps[0].isDryRun || [32, 64].includes(states['spring2-boiler-room'].networkPumps[0].state)) ? '2' : '1'" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" d="M62.7,324.2h21c1.4,0,2.6,1.2,2.6,2.6v21.6
-			c0,1.4-1.2,2.6-2.6,2.6h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6C60.1,325.3,61.2,324.2,62.7,324.2z" />
-		</g>
-		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="72.8" y1="287.2" x2="72.8" y2="324.2" />
-		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="72.8" y1="350.9" x2="72.8" y2="403.5" />
-		<use data-state="states['spring2-boiler-room'].networkPumps[0].state;states['spring2-boiler-room'].networkPumps[0].statusFc;states['spring2-boiler-room'].networkPumps[0].isDryRun" data-state-eval="element.style.display = (states['spring2-boiler-room'].networkPumps[0].state === 512 || states['spring2-boiler-room'].networkPumps[0].statusFc === 2 || states['spring2-boiler-room'].networkPumps[0].isDryRun) ? 'initial' : 'none'" href="#emergencyIcon" transform="translate(75, 304)"/>
-	</g>
-
-
-	<g data-section="networkPumps[1]" transform="translate(0, 10)">
-		<text transform="matrix(1 0 0 1 87.1158 320.3167)" style="font-family:'Roboto'; font-size:10px;">СН2</text>
-		<circle data-state="states['spring2-boiler-room'].networkPumps[1].state" data-state-eval="element.style.fill = ([32, 64].includes(value) ? 'white' : '#808080')" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="108.8" cy="337.6" r="10.6" />
-		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="108.8" cy="337.6" r="9.3" />
-		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="108.8,328.9 112.7,335.5 104.8,335.5
-		108.8,328.9" />
-		<g>states['spring2-boiler-room']
-			<path data-state="states['spring2-boiler-room'].networkPumps[1].state;states['spring2-boiler-room'].networkPumps[1].statusFc;states['spring2-boiler-room'].networkPumps[1].isDryRun" data-state-eval="element.style.stroke = (states['spring2-boiler-room'].networkPumps[1].state === 512 || states['spring2-boiler-room'].networkPumps[1].statusFc === 2 || states['spring2-boiler-room'].networkPumps[1].isDryRun) ? 'red' : ([32, 64].includes(states['spring2-boiler-room'].networkPumps[1].state) ? '#0000FF' : 'black'); element.style.strokeWidth = (states['spring2-boiler-room'].networkPumps[1].state === 512 || states['spring2-boiler-room'].networkPumps[1].statusFc === 2 || states['spring2-boiler-room'].networkPumps[1].isDryRun || [32, 64].includes(states['spring2-boiler-room'].networkPumps[1].state)) ? '2' : '1'" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" d="M98.3,324.2h21c1.4,0,2.6,1.2,2.6,2.6v21.6
-			c0,1.4-1.2,2.6-2.6,2.6h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6C95.7,325.3,96.8,324.2,98.3,324.2z" />
-		</g>
-		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="108.7" y1="297.2" x2="108.7" y2="324.2" />
-		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="108.4" y1="350.9" x2="108.4" y2="403.5" />
-		<use data-state="states['spring2-boiler-room'].networkPumps[1].state;states['spring2-boiler-room'].networkPumps[1].statusFc;states['spring2-boiler-room'].networkPumps[1].isDryRun" data-state-eval="element.style.display = (states['spring2-boiler-room'].networkPumps[1].state === 512 || states['spring2-boiler-room'].networkPumps[1].statusFc === 2 || states['spring2-boiler-room'].networkPumps[1].isDryRun) ? 'initial' : 'none'" href="#emergencyIcon" transform="translate(111, 304)"/>
-	</g>
-
-
-	<g data-section="networkPumps[2]" transform="translate(10, 10)">
-		<text transform="matrix(1 0 0 1 122.7933 320.3167)" style="font-family:'Roboto'; font-size:10px;">СН3</text>
-		<circle data-state="states['spring2-boiler-room'].networkPumps[2].state" data-state-eval="element.style.fill = ([32, 64].includes(value) ? 'white' : '#808080')" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="144.5" cy="337.6" r="10.6" />
-		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="144.5" cy="337.6" r="9.3" />
-		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="144.4,328.9 148.4,335.5 140.5,335.5
-		144.4,328.9" />
-		<g>
-			<path data-state="states['spring2-boiler-room'].networkPumps[2].state;states['spring2-boiler-room'].networkPumps[2].statusFc;states['spring2-boiler-room'].networkPumps[2].isDryRun" data-state-eval="element.style.stroke = (states['spring2-boiler-room'].networkPumps[2].state === 512 || states['spring2-boiler-room'].networkPumps[2].statusFc === 2 || states['spring2-boiler-room'].networkPumps[2].isDryRun) ? 'red' : ([32, 64].includes(states['spring2-boiler-room'].networkPumps[2].state) ? '#0000FF' : 'black'); element.style.strokeWidth = (states['spring2-boiler-room'].networkPumps[2].state === 512 || states['spring2-boiler-room'].networkPumps[2].statusFc === 2 || states['spring2-boiler-room'].networkPumps[2].isDryRun || [32, 64].includes(states['spring2-boiler-room'].networkPumps[2].state)) ? '2' : '1'" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" d="M133.9,324.2h21c1.4,0,2.6,1.2,2.6,2.6v21.6
-			c0,1.4-1.2,2.6-2.6,2.6h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6C131.4,325.3,132.5,324.2,133.9,324.2z" />
-		</g>
-		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="144.4" y1="287.2" x2="144.4" y2="324.2" />
-		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="144.1" y1="350.9" x2="144.1" y2="403.5" />
-		<use data-state="states['spring2-boiler-room'].networkPumps[2].state;states['spring2-boiler-room'].networkPumps[2].statusFc;states['spring2-boiler-room'].networkPumps[2].isDryRun" data-state-eval="element.style.display = (states['spring2-boiler-room'].networkPumps[2].state === 512 || states['spring2-boiler-room'].networkPumps[2].statusFc === 2 || states['spring2-boiler-room'].networkPumps[2].isDryRun) ? 'initial' : 'none'" href="#emergencyIcon" transform="translate(147, 304)" />
-	</g>
-
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="108.4" y1="297.3" x2="62.5" y2="297.3" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="154.3" y1="297.3" x2="98.7" y2="297.3" />
-
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="108.4" y1="413.5" x2="62.5" y2="413.5" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="144.1" y1="413.5" x2="108.6" y2="413.5" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="144.1" y1="413.5" x2="307.9" y2="413.5" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="362.9" y1="413.5" x2="512.7" y2="413.5" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="109.4" y1="94.1" x2="33.6" y2="94.1" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="33.6" y1="94.1" x2="33.6" y2="374.3" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="33.6" y1="374.3" x2="60.2" y2="374.3" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="65.4" y1="374.3" x2="105.8" y2="374.3" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="111" y1="374.3" x2="151.5" y2="374.3" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="156.7" y1="374.3" x2="197.4" y2="374.3" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="202.6" y1="374.3" x2="308.2" y2="374.3" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="363.2" y1="374.3" x2="512.7" y2="374.3" />
-	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="109.4" cy="94.1" r="1.3" />
-	<g data-section="vkt7" transform="translate(-183 0)">
-		<use data-device="spring2-vkt7-289452" href="#infoIcon"
-			data-state-eval="element.style.fill = (states['spring2-vkt7-289452'].isConnected === false ? '#F44336': '#0072C6')"
-			data-state="states['spring2-vkt7-289452'].isConnected;states['spring2-vkt7-289452'].timestamp;states['spring2-vkt7-289452'].totalHeatConsumption;states['spring2-vkt7-289452'].volumeInputPipe;states['spring2-vkt7-289452'].volumeReturnPipe;states['spring2-vkt7-289452'].massInputPipe;states['spring2-vkt7-289452'].massReturnPipe;states['spring2-vkt7-289452'].normalOperationTime;states['spring2-vkt7-289452'].noCountTime"
-			style="fill:#0072C6" transform="translate(555 341.7) scale(0.55)" />
-		<rect data-device="spring2-vkt7-289452" style="fill:none;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;" rx="10" ry="10" width="168" height="100" transform="translate(405 336.7)" />
-		<text transform="translate(489 431.7)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">Тепловычислитель ВКТ-7</text>
-		<g transform="translate(6.8 15)">
-			<text transform="matrix(1 0 0 1 435 335.5)" style="font-family:'Roboto'; font-size:10px;">TE13.1</text>
-			<rect x="425" y="337.9" width="50" height="11.1" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-			<text data-state="states['spring2-vkt7-289452'].temperatureInputPipe" transform="matrix(1 0 0 1 430 346.6)" style="font-family:'Roboto'; font-size:9px;"></text>
-			<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="452.5" y1="359.3" x2="452.5" y2="349.0" />
-			<circle style="stroke:#000000;stroke-miterlimit:10;" cx="452.5" cy="359.3" r="1.3" />
-		</g>
-		<g transform="translate(30.8 15)">
-			<text transform="matrix(1 0 0 1 476.9 350.4)" style="font-family:'Roboto'; font-size:10px;">FE1</text>
-			<rect x="460.4" y="352.8" width="55" height="12.3" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-			<text data-state="states['spring2-vkt7-289452'].volumeFlowRateInputPipe" transform="matrix(1 0 0 1 464.4 362.6)" style="font-family:'Roboto'; font-size:9px;"></text>
-		</g>
-		<g transform="translate(6.8 0)">
-			<text transform="matrix(1 0 0 1 435 389.7)" style="font-family:'Roboto'; font-size:10px;">TE13.2</text>
-			<rect x="425" y="392.1" width="50" height="11.1" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-			<text data-state="states['spring2-vkt7-289452'].temperatureReturnPipe" transform="matrix(1 0 0 1 430 400.8)" style="font-family:'Roboto'; font-size:9px;"></text>
-			<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="452.5" y1="413.5" x2="452.5" y2="403.2" />
-			<circle style="stroke:#000000;stroke-miterlimit:10;" cx="452.5" cy="413.5" r="1.3" />
-		</g>
-		<g transform="translate(30.8 0)">
-			<text transform="matrix(1 0 0 1 476.9 404.6)" style="font-family:'Roboto'; font-size:10px;">FE2</text>
-			<rect x="460.4" y="407.0" width="55" height="12.3" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-			<text data-state="states['spring2-vkt7-289452'].volumeFlowRateReturnPipe" transform="matrix(1 0 0 1 464.4 416.8)" style="font-family:'Roboto'; font-size:9px;"></text>
-		</g>
-	</g>
-	<g data-section="pressOutNet" transform="translate(-138 15)">
-		<text transform="matrix(1 0 0 1 562.5 335.8)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">PE1</text>
-		<rect x="540" y="337.8" width="45" height="11.2" data-state="states['spring2-boiler-room'].statusPressOutNetSensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-		<text data-state="states['spring2-boiler-room'].pressOutNet" transform="matrix(1 0 0 1 543 346.5)" style="font-family:'Roboto'; font-size:9px;"></text>
-		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="562.5" y1="359.3" x2="562.5" y2="349.0" />
-		<circle style="stroke:#000000;stroke-miterlimit:10;" cx="562.5" cy="359.3" r="1.3" />
-	</g>
-	<g data-section="tempOutNet" transform="translate(-138 15)">
-		<text transform="matrix(1 0 0 1 617.5 335.8)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">TE5</text>
-		<rect x="595" y="337.8" width="45" height="11.2" data-state="states['spring2-boiler-room'].statusTempOutNetSensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-		<text data-state="states['spring2-boiler-room'].tempOutNet" transform="matrix(1 0 0 1 598 346.5)" style="font-family:'Roboto'; font-size:9px;"></text>
-		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="617.5" y1="359.3" x2="617.5" y2="349.0" />
-		<circle style="stroke:#000000;stroke-miterlimit:10;" cx="617.5" cy="359.3" r="1.3" />
-	</g>
-	<g transform="translate(-138 0)">
-		<text transform="matrix(1 0 0 1 562.5 390.0)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">PE2</text>
-		<rect x="540" y="392.0" width="45" height="11.2" data-state="states['spring2-boiler-room'].statusPressInNetSensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-		<text data-state="states['spring2-boiler-room'].pressInNet" transform="matrix(1 0 0 1 543 400.7)" style="font-family:'Roboto'; font-size:9px;"></text>
-		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="562.5" y1="413.5" x2="562.5" y2="403.2" />
-		<circle style="stroke:#000000;stroke-miterlimit:10;" cx="562.5" cy="413.5" r="1.3" />
-	</g>
-	<g transform="translate(-138 0)">
-		<text transform="matrix(1 0 0 1 617.5 390.0)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">TE6</text>
-		<rect x="595" y="392.0" width="45" height="11.2" data-state="states['spring2-boiler-room'].statusTempInNetSensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-		<text data-state="states['spring2-boiler-room'].tempInNet" transform="matrix(1 0 0 1 598 400.7)" style="font-family:'Roboto'; font-size:9px;"></text>
-		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="617.5" y1="413.5" x2="617.5" y2="403.2" />
-		<circle style="stroke:#000000;stroke-miterlimit:10;" cx="617.5" cy="413.5" r="1.3" />
-	</g>
-	<g transform="translate(-138 13)">
-		<text transform="matrix(1 0 0 1 562.5 432.7)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">PE3</text>
-		<rect x="540" y="434.7" width="45" height="11.2" data-state="states['spring2-boiler-room'].statusPressOutSrcWSensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" />
-		<text data-state="states['spring2-boiler-room'].pressOutSrcW" transform="matrix(1 0 0 1 543 443.4)" style="font-family:'Roboto'; font-size:9px;"></text>
-		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="562.5" y1="456.2" x2="562.5" y2="445.9" />
-		<circle style="stroke:#000000;stroke-miterlimit:10;" cx="562.5" cy="456.2" r="1.3" />
-	</g>
-	<polygon style="fill:#FF0000;stroke:#FF0000;stroke-width:0.5;stroke-miterlimit:10;" points="527.1,374.3 516.0,379.7 516.0,368.9
-	527.1,374.3 " />
-	<polygon style="fill:#0000FF;stroke:#0000FF;stroke-width:0.5;stroke-miterlimit:10;" points="515.0,413.5 526.1,408.1 526.1,418.9
-	515.0,413.5 " />
-	<text transform="matrix(1 0 0 1 516.0 391.9)" style="font-family:'Roboto'; font-size:10px;">Т1</text>
-	<text transform="matrix(1 0 0 1 515.0 433.0)" style="font-family:'Roboto'; font-size:10px;">Т2</text>
-	<polygon style="fill:#0071BC;stroke:#0071BC;stroke-width:0.5;stroke-miterlimit:10;" points="516.0,469.2 527.1,463.8 527.1,474.6
-	516.0,469.2 " />
-	<text transform="matrix(1 0 0 1 518.0 488.7)" style="font-family:'Roboto'; font-size:10px;">В1</text>
-	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="154.1" cy="413.5" r="1.3" />
-	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="108.4" cy="413.5" r="1.3" />
-	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="108.7" cy="297.2" r="1.3" />
-	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="108.7" cy="289.2" r="1.3" />
-	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="108.7" cy="210" r="1.3" />
-	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="109.3" cy="118.8" r="1.3" />
-	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="109.4" cy="114.9" r="1.3" />
-	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="228.2" cy="289" r="1.3" />
-	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="228.2" cy="209.9" r="1.3" />
-	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="228.8" cy="118.7" r="1.3" />
-	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="228.8" cy="114.8" r="1.3" />
-	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="228.8" cy="93.7" r="1.3" />
-	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="347.7" cy="289.1" r="1.3" />
-	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="347.7" cy="209.9" r="1.3" />
-	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="348.3" cy="118.7" r="1.3" />
-	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="348.3" cy="114.9" r="1.3" />
-	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="348.3" cy="93.8" r="1.3" />
-	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="467.7" cy="209.8" r="1.3" />
-	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="468.3" cy="118.6" r="1.3" />
-	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="468.3" cy="114.8" r="1.3" />
-	<g data-section="sourceWaterPumps[0]" transform="translate(-23.5 58.7)">
-		<circle data-state="states['spring2-boiler-room'].sourceWaterPumps[0].state" data-colorizer-hint="fill" data-state-eval="element.style.fill = ([4, 16, 128, 256].includes(value) ? 'white' : '#808080')" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="353.2" cy="410.3" r="10.6" />
-		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="353.3" cy="410.2" r="9.3" />
-		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="344.5,410.3 351.2,406.4 351.2,414.3
-		344.5,410.3" />
-		<g>
-			<path data-state="states['spring2-boiler-room'].sourceWaterPumps[0].state" data-state-eval="element.style.stroke = (value === 8 ? 'red' : ([4, 16, 128, 256].includes(value) ? '#0000FF' : 'black')); element.style.strokeWidth = ((value === 8 || [4, 16, 128, 256].includes(value)) ? '2' : '1')" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" d="M339.8,420.8v-21c0-1.4,1.2-2.6,2.6-2.6H364
-			c1.4,0,2.6,1.2,2.6,2.6v21c0,1.4-1.2,2.6-2.6,2.6h-21.6C340.9,423.4,339.8,422.2,339.8,420.8z" />
-		</g>
-		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="238.3" y1="410.4" x2="339.8" y2="410.4" />
-		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="366.5" y1="410.7" x2="536.2" y2="410.7" />
-		<text transform="matrix(1 0 0 1 337.0391 392.4808)" style="font-family:'Roboto'; font-size:10px;">ЧРП ПН</text>
-		<use data-state="states['spring2-boiler-room'].sourceWaterPumps[0].state" data-state-eval="element.style.display = (states['spring2-boiler-room'].sourceWaterPumps[0].state === 8 ? 'initial': 'none')" href='#emergencyIcon' transform="translate(368, 391)" />
-	</g>
-	<g data-section="isSourceWaterRelay" transform="translate(-48.8 58.7)">
-		<text transform="matrix(1 0 0 1 331.4 394.1)" style="font-family:'Roboto'; font-size:10px; text-anchor:middle">PS1</text>
-		<g transform="rotate(90 331.4 410.4)">
-			<rect data-state="states['spring2-boiler-room'].isSourceWaterRelay" data-colorizer-hint="stroke" data-state-eval="element.style.stroke = value ? '#0000FF' : 'black'; element.style.strokeWidth = value ? '2' : '1'" x="318.3" y="397.0" width="26.2" height="26.8" rx="2.6" style="fill:none;stroke:#000000;stroke-miterlimit:10;" />
-			<circle data-state="states['spring2-boiler-room'].isSourceWaterRelay" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="331.4" cy="410.4" r="10.6" />
-			<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="331.4" cy="410.4" r="9.3" />
-			<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="325.2" y1="403.5" x2="331.4" y2="419.6" />
-			<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="337.6" y1="403.5" x2="331.4" y2="419.6" />
-		</g>
-	</g>
-
-
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="214.8" y1="469.1" x2="214.8" y2="413.5" />
-	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="214.8" cy="413.5" r="1.3" />
-
-
-	<g transform="translate(-70, 0)">
-		<use data-device="spring2-boiler-room" href="#infoIcon"
-			data-state-eval="element.style.fill = (states['spring2-boiler-room'].isConnected === false ? '#F44336': '#0072C6')"
-			data-state="states['spring2-boiler-room'].isConnected;states['spring2-boiler-room'].timestamp"
-			style="fill:#0072C6;" transform="translate(577.1 17) scale(0.55)" />
-		<g transform="translate(0, 0)">
-			<path data-state="states['spring2-boiler-room'].statusTempOutSensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M164,74H98.6c-3.1,0-5.7-2.5-5.7-5.7V49.6
-		c0-3.1,2.5-5.7,5.7-5.7H164c3.1,0,5.7,2.5,5.7,5.7v18.7C169.7,71.4,167.2,74,164,74z" />
-			<text transform="matrix(1 0 0 1 112.5324 56.0185)" style="font-family:'Roboto'; font-size:10px;">Т11 (н.в.)</text>
-			<text data-state="states['spring2-boiler-room'].tempOutAir" transform="matrix(1 0 0 1 120 68.608)" style="font-family:'Roboto'; font-size:10px;"></text>
-		</g>
-		<g transform="translate(0.3, 0)">
-			<path data-state="states['spring2-boiler-room'].statusPressGasSensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M248.1,74h-65.5c-3.1,0-5.7-2.5-5.7-5.7V49.6
-		c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C253.7,71.4,251.2,74,248.1,74z" />
-			<text transform="matrix(1 0 0 1 206.1582 56.0721)" style="font-family:'Roboto'; font-size:10px;">Ргаза</text>
-			<text data-state="states['spring2-boiler-room'].pressGas" transform="matrix(1 0 0 1 200 68.608)" style="font-family:'Roboto'; font-size:10px;"></text>
-		</g>
-		<g transform="translate(-1.6, 0)">
-			<path data-state="states['spring2-boiler-room'].statusLevelDt1Sensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M334.3,74h-65.5c-3.1,0-5.7-2.5-5.7-5.7V49.6
-		c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C340,71.4,337.4,74,334.3,74z" />
-			<text transform="matrix(1 0 0 1 274.0237 56.0721)" style="font-family:'Roboto'; font-size:10px;">Уровень ДТ1</text>
-			<text data-state="states['spring2-boiler-room'].levelDt1" transform="matrix(1 0 0 1 285 68.608)" style="font-family:'Roboto'; font-size:10px;"></text>
-		</g>
-		<g transform="translate(-4.6, 0)">
-			<path data-state="states['spring2-boiler-room'].statusLevelDt2Sensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M421.6,74h-65.5c-3.1,0-5.7-2.5-5.7-5.7V49.6
-		c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C427.3,71.4,424.7,74,421.6,74z" />
-			<text transform="matrix(1 0 0 1 361.3008 56.0721)" style="font-family:'Roboto'; font-size:10px;">Уровень ДТ2</text>
-			<text data-state="states['spring2-boiler-room'].levelDt2" transform="matrix(1 0 0 1 370 68.608)" style="font-family:'Roboto'; font-size:10px;"></text>
-		</g>
-		<g>
-			<path data-state="states['spring2-boiler-room'].statusTempRoomAirSensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M79.7,74H14.3c-3.1,0-5.7-2.5-5.7-5.7V49.6
-		c0-3.1,2.5-5.7,5.7-5.7h65.5c3.1,0,5.7,2.5,5.7,5.7v18.7C85.4,71.4,82.8,74,79.7,74z" />
-			<text transform="matrix(1 0 0 1 23.2174 56.0721)" style="font-family:'Roboto'; font-size:10px;">Т12 (внутр.)</text>
-			<text data-state="states['spring2-boiler-room'].tempRoomAir" transform="matrix(1 0 0 1 30 68.608)" style="font-family:'Roboto'; font-size:10px;"></text>
-		</g>
-		<rect data-device="spring2-boiler-room" x="3.1" y="12" width="594" height="69.5" rx="9.4" ry="9.4"
-			style="fill:none;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;" />
-		<text transform="matrix(1 0 0 1 211.7 27)" style="font-family:'Roboto'; font-size:10px;">Прочие параметры
-		работы котельной</text>
-
-		<g transform="matrix(1 0 0 1 13 24)" style="letter-spacing: 1px" data-state="states['spring2-boiler-room'].timestamp" data-state-eval="if(states['spring2-boiler-room'].isConnected === false) {element.style.fill = 'red'}">
-			<text data-state="states['spring2-boiler-room'].timestamp" data-state-format="date" style="font-family:'Roboto'; font-size:9px;">{{timestamp}}</text>
-			<text data-state="states['spring2-boiler-room'].timestamp" data-state-format="time" transform="matrix(1 0 0 1 5 13)" style="font-family:'Roboto'; font-size:9px;">{{timestamp}}</text>
-		</g>
-	</g>
-
-	<g data-section="emergency" transform="translate(-28 35) scale(0.65)">
-		<rect data-device="spring2-boiler-room" x="-60" y="85" width="150" height="290" rx="10" ry="10" fill="none" stroke="gray" />
-		<text transform="matrix(1 0 0 1 -40 365)" style="font-family:'Roboto'; font-size:12px;">Аварийные события</text>
-		<g>
-			<g data-section="isConnected" transform="translate(-117 -370)">
-				<path data-colorizer-hint="fill" data-state="states['spring2-boiler-room'].isConnected" style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;" d="M116.6,522.9H82.8c-6.6,0-12-5.4-12-12v-33.8
-				c0-6.6,5.4-12,12-12h33.8c6.6,0,12,5.4,12,12v33.8C128.6,517.5,123.2,522.9,116.6,522.9z" />
-				<text transform="matrix(1 0 0 1 85.793 513.8691)" style="font-family:'Roboto'; font-size:10px;">Связь</text>
-				<path d="M104.2,476.8c-1.5-0.3-3-0.5-4.6-0.5c-4.6,0-8.9,1.5-12.3,4c-0.4,0.3-0.4,0.8-0.2,1.1c0,0,0.1,0.1,0.1,0.1
+<symbol id="spring2-alarm-1-art" viewBox="86.9686 474.175 25.3628 19.85">
+<path d="M104.2,476.8c-1.5-0.3-3-0.5-4.6-0.5c-4.6,0-8.9,1.5-12.3,4c-0.4,0.3-0.4,0.8-0.2,1.1c0,0,0.1,0.1,0.1,0.1
 				c0.3,0.3,0.8,0.3,1.1,0.1c3.3-2.4,7.2-3.6,11.3-3.6c1.1,0,2.1,0.1,3.1,0.2L104.2,476.8z M99.7,481.3c-3.2,0-6.2,0.9-8.7,2.6
 				c-0.4,0.2-0.5,0.8-0.2,1.1c0,0,0.1,0.1,0.1,0.1c0.3,0.3,0.8,0.3,1.1,0.1c1.8-1.1,3.8-1.9,5.9-2.1L99.7,481.3z M104,483.7l1.3-1.3
 				c1.1,0.4,2.1,0.9,3,1.5c0.4,0.3,0.5,0.8,0.2,1.1c0,0-0.1,0.1-0.1,0.1c-0.3,0.3-0.8,0.3-1.1,0.1C106.3,484.6,105.2,484.1,104,483.7
@@ -532,13 +35,8 @@
 				c-0.3,0.3-0.8,0.3-1.1,0.1C110,480.9,109,480.3,107.9,479.8 M101.4,491c0.4,0.2,0.4,0.8,0.1,1.1l-1.2,1.2c-0.3,0.3-0.9,0.3-1.2,0
 				l-1.2-1.2c-0.3-0.3-0.3-0.9,0.1-1.1c0.5-0.3,1.1-0.5,1.7-0.5C100.3,490.6,100.9,490.7,101.4,491L101.4,491z M108.7,474.4
 				c0.3-0.3,0.9-0.3,1.3,0c0.3,0.3,0.3,0.9,0,1.3l-18.1,18.1c-0.3,0.3-0.9,0.3-1.3,0c-0.3-0.3-0.3-0.9,0-1.3L108.7,474.4z" />
-			</g>
-
-			<g data-section="isOffInput1" transform="translate(-180 -305)">
-				<path data-colorizer-hint="fill" data-state="states['spring2-boiler-room'].isOffInput1" style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;" d="M179.5,522.5h-33.8c-6.6,0-12-5.4-12-12
-				v-33.8c0-6.6,5.4-12,12-12h33.8c6.6,0,12,5.4,12,12v33.8C191.5,517.1,186.1,522.5,179.5,522.5z" />
-				<text transform="matrix(1 0 0 1 146.785 513.4594)" style="font-family:'Roboto'; font-size:10px;">Ввод 1</text>
-				<g id="g6586" transform="translate(-394.74965,-227.9771)">
+</symbol><symbol id="spring2-alarm-2-art" viewBox="156.2503 472.1229 13 23.7001">
+<g id="g6586" transform="translate(-394.74965,-227.9771)">
 					<path id="path5741" style="fill:none;stroke:#060606;stroke-width:1.7921;stroke-linecap:round;" d="M564,705.5v3.5
 				c-0.2,7.8-12.8,8.1-13,0l0-3.4l0-1.8l13,0L564,705.5z" />
 					<path id="path5745" style="fill:none;stroke:#060606;stroke-width:1.7921;stroke-linecap:round;" d="M554.3,700.1v3.4 M560.7,700.1
@@ -550,12 +48,8 @@
 					<path id="path6578" style="fill:none;stroke:#060606;stroke-width:1.0111;stroke-linecap:round;stroke-miterlimit:5.8623;" d="
 				M555.8,709l3.7-0.1l-3,3" />
 				</g>
-			</g>
-
-			<g data-section="isOffInput2" transform="translate(-243 -240)">
-				<path data-colorizer-hint="fill" data-state="states['spring2-boiler-room'].isOffInput2" style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;" d="M242.9,522h-33.8c-6.6,0-12-5.4-12-12v-33.8	c0-6.6,5.4-12,12-12h33.8c6.6,0,12,5.4,12,12V510C254.9,516.6,249.5,522,242.9,522z" />
-				<text transform="matrix(1 0 0 1 210.1237 513.0164)" style="font-family:'Roboto'; font-size:10px;">Ввод 2</text>
-				<g id="g6586_1_" transform="translate(-394.74965,-227.9771)">
+</symbol><symbol id="spring2-alarm-3-art" viewBox="219.6504 471.7229 13 23.7">
+<g id="g6586_1_" transform="translate(-394.74965,-227.9771)">
 					<path id="path5741_1_" style="fill:none;stroke:#060606;stroke-width:1.7921;stroke-linecap:round;" d="M627.4,705.1v3.5
 					c-0.2,7.8-12.8,8.1-13,0l0-3.4l0-1.8l13,0L627.4,705.1z" />
 					<path id="path5745_1_" style="fill:none;stroke:#060606;stroke-width:1.7921;stroke-linecap:round;" d="M617.7,699.7v3.4
@@ -567,13 +61,8 @@
 					<path id="path6578_1_" style="fill:none;stroke:#060606;stroke-width:1.0111;stroke-linecap:round;stroke-miterlimit:5.8623;" d="
 					M619.1,708.5l3.7-0.1l-3,3" />
 				</g>
-			</g>
-
-			<g data-section="isCO1" transform="translate(-306 -175)">
-				<path data-colorizer-hint="fill" data-state="states['spring2-boiler-room'].isCO1" style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;" d="M305.9,522.5h-33.8c-6.6,0-12-5.4-12-12
-				v-33.8c0-6.6,5.4-12,12-12h33.8c6.6,0,12,5.4,12,12v33.8C317.9,517.1,312.5,522.5,305.9,522.5z" />
-				<text transform="matrix(1 0 0 1 277.3695 513.4589)" style="font-family:'Roboto'; font-size:10px;">CO 1</text>
-				<g id="g3517-3" transform="matrix(0.93449242,0,0,0.93449242,-75.04396,-3.2503739)">
+</symbol><symbol id="spring2-alarm-4-art" viewBox="271.7712 469.416 34.337 31.6142">
+<g id="g3517-3" transform="matrix(0.93449242,0,0,0.93449242,-75.04396,-3.2503739)">
 					<path id="path3513-9" d="M407.5,532.3C407.5,532.3,407.5,532.3,407.5,532.3l-3.4-3c-0.4-0.3-1.1-0.6-2.4-0.1l-2.6-2.3
 				c0.8-1,0.9-1.1,1.2-1.5l0.6,0.6c0.9,0.8,2.4,0.8,3.4,0c0.9-0.8,0.9-2.2,0-3l-1.9-1.7c0.4-1.1,0.5-2.3,0.5-3.5c0-1-0.1-2-0.4-3
 				l1.8-1.6c0.9-0.8,0.9-2.2,0-3c-0.9-0.8-2.4-0.8-3.4,0l-0.6,0.5c-2.5-3.1-6.5-4.9-10.9-4.9s-8.4,1.9-10.9,4.9l-0.6-0.5
@@ -608,15 +97,8 @@
 					<path id="path3489-3" d="M393.5,509.4c-0.4,0-0.8,0.3-0.8,0.7c0,0.4,0.4,0.7,0.8,0.7s0.8-0.3,0.8-0.7
 				C394.3,509.7,394,509.4,393.5,509.4z" />
 				</g>
-			</g>
-		</g>
-
-		<g transform="translate(65 -258)">
-			<g data-section="isCH1" transform="translate(-369 -110)">
-				<path data-colorizer-hint="fill" data-state="states['spring2-boiler-room'].isCH1" style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;" d="M369,522.5h-33.8c-6.6,0-12-5.4-12-12v-33.8
-					c0-6.6,5.4-12,12-12H369c6.6,0,12,5.4,12,12v33.8C381,517.1,375.6,522.5,369,522.5z" />
-				<text transform="matrix(1 0 0 1 340.7314 513.4589)" style="font-family:'Roboto'; font-size:10px;">CH 1</text>
-				<g id="g3517-3_1_" transform="matrix(0.93449242,0,0,0.93449242,-75.04396,-3.2503739)">
+</symbol><symbol id="spring2-alarm-5-art" viewBox="334.8495 469.416 34.337 31.6142">
+<g id="g3517-3_1_" transform="matrix(0.93449242,0,0,0.93449242,-75.04396,-3.2503739)">
 					<path id="path3513-9_1_" d="M475,532.3C475,532.3,475,532.3,475,532.3l-3.4-3c-0.4-0.3-1.1-0.6-2.4-0.1l-2.6-2.3
 						c0.8-1,0.9-1.1,1.2-1.5l0.6,0.6c0.9,0.8,2.4,0.8,3.4,0c0.9-0.8,0.9-2.2,0-3l-1.9-1.7c0.4-1.1,0.5-2.3,0.5-3.5c0-1-0.1-2-0.4-3
 						l1.8-1.6c0.9-0.8,0.9-2.2,0-3c-0.9-0.8-2.4-0.8-3.4,0l-0.6,0.5c-2.5-3.1-6.5-4.9-10.9-4.9c-4.4,0-8.4,1.9-10.9,4.9l-0.6-0.5
@@ -651,16 +133,8 @@
 					<path id="path3489-3_1_" d="M461,509.4c-0.4,0-0.8,0.3-0.8,0.7c0,0.4,0.4,0.7,0.8,0.7s0.8-0.3,0.8-0.7
 						C461.8,509.7,461.5,509.4,461,509.4z" />
 				</g>
-			</g>
-			<g data-section="isGasFlap" transform="translate(-432 -45)">
-				<path data-colorizer-hint="fill" data-state="states['spring2-boiler-room'].isGasFlap" style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;" d="M432.5,522.5h-33.8c-6.6,0-12-5.4-12-12
-			v-33.8c0-6.6,5.4-12,12-12h33.8c6.6,0,12,5.4,12,12v33.8C444.5,517.1,439.1,522.5,432.5,522.5z" />
-
-				<text transform="matrix(1 0 0 1 399.5168 506.2176)">
-					<tspan x="0" y="0" style="font-family:'Roboto'; font-size:10px;">клапан</tspan>
-					<tspan x="-2.6" y="11" style="font-family:'Roboto'; font-size:10px;">газовый</tspan>
-				</text>
-				<g id="g11940-1" transform="translate(-204.57034,-228.09317)">
+</symbol><symbol id="spring2-alarm-6-art" viewBox="403.4297 468.9068 24.4 22.8">
+<g id="g11940-1" transform="translate(-204.57034,-228.09317)">
 					<path id="path11920-9" style="fill:none;stroke:#060606;stroke-width:1.0422;stroke-linecap:round;stroke-miterlimit:5.8623;" d="
 			M610,719.7v-10.9l20.5,11v-10.9L610,719.7z" />
 					<path id="path11922-6" style="fill:none;stroke:#060606;stroke-width:1.7824;stroke-linecap:round;stroke-miterlimit:5.8623;" d="
@@ -675,13 +149,8 @@
 					<path id="path11942-6" style="fill:none;stroke:#060606;stroke-width:0.7731;stroke-linecap:round;stroke-miterlimit:5.8623;" d="
 			M617.2,703.8c0,0,0.5-1.5,1.7-1.5c1.2,0,1.6,2.1,2.7,2.1c1,0,1.7-1.4,1.7-1.4" />
 				</g>
-			</g>
-
-			<g data-section="isVaporDt1" transform="translate(-495 20)">
-				<path data-colorizer-hint="fill" data-state="states['spring2-boiler-room'].isVaporDt1" style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;" d="M495.9,522.5h-33.8c-6.6,0-12-5.4-12-12
-			v-33.8c0-6.6,5.4-12,12-12h33.8c6.6,0,12,5.4,12,12v33.8C507.9,517.1,502.5,522.5,495.9,522.5z" />
-				<text transform="matrix(1 0 0 1 456.5355 513.4589)" style="font-family:'Roboto'; font-size:10px;">пары ДТ1</text>
-				<g id="g3517-3_5_" transform="matrix(0.93449242,0,0,0.93449242,-75.04396,-3.2503739)">
+</symbol><symbol id="spring2-alarm-7-art" viewBox="461.847 469.416 34.2064 31.6142">
+<g id="g3517-3_5_" transform="matrix(0.93449242,0,0,0.93449242,-75.04396,-3.2503739)">
 					<path id="path3513-9_5_" d="M610.8,532.3C610.8,532.3,610.8,532.3,610.8,532.3l-3.4-3c-0.4-0.3-1.1-0.6-2.4-0.1l-2.6-2.3
 				c0.8-1,0.9-1.1,1.2-1.5l0.6,0.6c0.9,0.8,2.4,0.8,3.4,0c0.9-0.8,0.9-2.2,0-3l-1.9-1.7c0.4-1.1,0.5-2.3,0.5-3.5c0-1-0.1-2-0.4-3
 				l1.8-1.6c0.9-0.8,0.9-2.2,0-3c-0.9-0.8-2.4-0.8-3.4,0l-0.6,0.5c-2.5-3.1-6.5-4.9-10.9-4.9c-4.4,0-8.4,1.9-10.9,4.9l-0.6-0.5
@@ -715,13 +184,8 @@
 					<path id="path3489-3_5_" d="M596.8,509.4c-0.4,0-0.8,0.3-0.8,0.7c0,0.4,0.4,0.7,0.8,0.7c0.4,0,0.8-0.3,0.8-0.7
 				C597.6,509.7,597.3,509.4,596.8,509.4z" />
 				</g>
-			</g>
-
-			<g data-section="isVaporDt2" transform="translate(-558 85)">
-				<path data-colorizer-hint="fill" data-state="states['spring2-boiler-room'].isVaporDt2" style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;" d="M559,522.5h-33.8c-6.6,0-12-5.4-12-12v-33.8
-			c0-6.6,5.4-12,12-12H559c6.6,0,12,5.4,12,12v33.8C571,517.1,565.6,522.5,559,522.5z" />
-				<text transform="matrix(1 0 0 1 519.6191 513.4589)" style="font-family:'Roboto'; font-size:10px;">пары ДТ2</text>
-				<g id="g3517-3_4_" transform="matrix(0.93449242,0,0,0.93449242,-75.04396,-3.2503739)">
+</symbol><symbol id="spring2-alarm-8-art" viewBox="524.8316 469.416 34.299 31.6142">
+<g id="g3517-3_4_" transform="matrix(0.93449242,0,0,0.93449242,-75.04396,-3.2503739)">
 					<path id="path3513-9_4_" d="M678.3,532.3C678.3,532.3,678.3,532.3,678.3,532.3l-3.4-3c-0.4-0.3-1.1-0.6-2.4-0.1l-2.6-2.3
 				c0.8-1,0.9-1.1,1.2-1.5l0.6,0.6c0.9,0.8,2.4,0.8,3.4,0c0.9-0.8,0.9-2.2,0-3l-1.9-1.7c0.4-1.1,0.5-2.3,0.5-3.5c0-1-0.1-2-0.4-3
 				l1.8-1.6c0.9-0.8,0.9-2.2,0-3c-0.9-0.8-2.4-0.8-3.4,0l-0.6,0.5c-2.5-3.1-6.5-4.9-10.9-4.9s-8.4,1.9-10.9,4.9l-0.6-0.5
@@ -755,126 +219,639 @@
 					<path id="path3489-3_4_" d="M664.3,509.4c-0.4,0-0.8,0.3-0.8,0.7c0,0.4,0.4,0.7,0.8,0.7c0.4,0,0.8-0.3,0.8-0.7
 				C665.1,509.7,664.8,509.4,664.3,509.4z" />
 				</g>
-			</g>
+</symbol><symbol id="spring2-boiler-flame" viewBox="115 40 260 400" overflow="visible"><use href="#boilerFlame"/></symbol>
+</defs>
+	<defs>
+		<g id="emergencyIcon">
+			<rect style="fill:#606060;" width="2" height="10" transform="translate(8, 5)"/>
+			<path style="fill:#FFC107;cursor:pointer" transform="scale(0.035)" d="M479 447.77 268.43 56.64a8 8 0 0 0-14.09 0L43.73 447.77a8 8 0 0 0 7.05 11.79H472a8 8 0 0 0 7-11.79zm-197.62-36.29h-40v-40h40zm-4-63.92h-32l-6-160h44z">
+			</path>
+		</g>
+	</defs>
+
+
+
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="119.4" y1="94.1" x2="119.4" y2="128.05" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="118.8" y1="242.1" x2="118.7" y2="259.3" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="119.3" y1="114.9" x2="66.3" y2="114.9" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="118.7" y1="210" x2="66.3" y2="210" />
+	<g data-section="boilerPumps[0]" id="boiler-pump-1" transform="translate(10 0)">
+		<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="52.3" y="144.7" text-anchor="end">НК1</text>
+		<circle data-state="states['spring2-boiler-room'].boilerPumps[0].state" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;stroke-width:1;" cx="56.3" cy="162.2" r="10"  id="boiler-pump-1-state" class="pump-state"/>
+		<circle style="fill:none;stroke:#000000;stroke-miterlimit:10;stroke-width:0.25;" cx="56.3" cy="162.2" r="10"  pointer-events="none"/>
+		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="56.4,170.9 52.4,164.3 60.3,164.3 56.4,170.9   "  pointer-events="none"/>
+		<g>
+			<path data-state="states['spring2-boiler-room'].boilerPumps[0].state;states['spring2-boiler-room'].boilerPumps[0].statusCurrentSensor" data-state-eval="element.style.stroke = (states['spring2-boiler-room'].boilerPumps[0].state === 2 || states['spring2-boiler-room'].boilerPumps[0].statusCurrentSensor !== 1) ? 'red' : (states['spring2-boiler-room'].boilerPumps[0].state === 1 ? '#0000FF' : 'gray')" style="fill:none;stroke:gray;stroke-miterlimit:10;stroke-width:1;" d="M45.8 148.7H66.8A3 3 0 0 1 69.8 151.7V172.7A3 3 0 0 1 66.8 175.7H45.8A3 3 0 0 1 42.8 172.7V151.7A3 3 0 0 1 45.8 148.7Z"  id="boiler-pump-1-frame" class="pump-frame"/>
+		</g>
+		<use data-state="states['spring2-boiler-room'].boilerPumps[0].state;states['spring2-boiler-room'].boilerPumps[0].statusCurrentSensor" data-state-eval="element.style.display = (states['spring2-boiler-room'].boilerPumps[0].state === 2 || states['spring2-boiler-room'].boilerPumps[0].statusCurrentSensor !== 1) ? 'initial' : 'none'" href='#emergencyIcon' transform="translate(58, 130)" />
+	</g>
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="66.3" y1="114.9" x2="66.3" y2="148.7" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="66.3" y1="175.7" x2="66.3" y2="209.5" />
+	<g data-section="boilerOutputValves[0]" id="boiler-output-valve-1" transform="translate(10 0)">
+		<polygon data-state="states['spring2-boiler-room'].boilerOutputValves[0].state" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;stroke-width:0.5;" points="108.7,267.3 103.7,259.3 113.7,259.3"  id="boiler-output-valve-1-half-1"/>
+		<polygon data-state="states['spring2-boiler-room'].boilerOutputValves[0].state" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;stroke-width:0.5;" points="108.7,267.3 113.7,275.3 103.7,275.3"  id="boiler-output-valve-1-half-2"/>
+		<g>
+			<path data-state="states['spring2-boiler-room'].boilerOutputValves[0].state" data-colorizer-hint="stroke;stroke-width" style="stroke:#000000;stroke-miterlimit:10;fill:#FFFFFF;stroke-width:0.5;" d="M89.7 263.3H97.7V271.3H89.7Z"  id="boiler-output-valve-1-actuator" class="valve-actuator"/>
+		</g>
+
+<path class="valve-stem" d="M108.7 267.3H97.7" fill="none" stroke="#000000" stroke-width="1" pointer-events="none"/></g>
+
+	<g data-section="boilers[0].tempOut" transform="translate(10 0)">
+		<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="146.9" y="105.9" text-anchor="middle">TE1</text>
+		<rect data-state="states['spring2-boiler-room'].boilers[0].statusTempOutSensor" x="119.4" y="108.9" width="55" height="12" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;"  id="boilers-0-tempOut-frame" class="reading-frame"/>
+		<text data-state="states['spring2-boiler-room'].boilers[0].tempOut" transform="translate(0 0)" style="font-family:'Roboto';font-size:9px;" id="boilers-0-tempOut-value" x="146.9" y="117.9" text-anchor="middle"></text>
+		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="119.4" y1="114.9" x2="109.4" y2="114.9"  id="boiler-1-temperature-stem"/>
+	</g>
+
+	<text transform="translate(10 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="84.7" y="270.8" text-anchor="end" id="boiler-output-valve-1-label">ЗК1</text>
+
+
+	<g data-section="boilers[0]" id="boiler-1" transform="translate(10 0)">
+		<rect data-state="states['spring2-boiler-room'].boilers[0].state;states['spring2-boiler-room'].boilers[0].isBurnerFailure;states['spring2-boiler-room'].boilers[0].isGasRelayPressure;states['spring2-boiler-room'].boilers[0].isMinWaterPressure;states['spring2-boiler-room'].boilers[0].isMaxWaterPressure;states['spring2-boiler-room'].boilers[0].isMaxWaterTemperature" data-state-eval="element.style.stroke = (states['spring2-boiler-room'].boilers[0].isBurnerFailure || states['spring2-boiler-room'].boilers[0].isGasRelayPressure || states['spring2-boiler-room'].boilers[0].isMinWaterPressure || states['spring2-boiler-room'].boilers[0].isMaxWaterPressure ||  states['spring2-boiler-room'].boilers[0].isMaxWaterTemperature ? 'red': 'black');" x="76.9" y="128.05" style="fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;stroke-width:1;" width="65" height="70"  id="boiler-1-frame" class="boiler-frame"/>
+		<g>
+			<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="109.4" y="146.9" text-anchor="middle">TE7</text>
+			<rect x="81.9" y="149.9" width="55" height="12" data-state="states['spring2-boiler-room'].boilers[0].statusTempFlueGasesSensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;"  id="boilers-0-tempFlueGases-frame" class="reading-frame"/>
+			<text data-state="states['spring2-boiler-room'].boilers[0].tempFlueGases" transform="translate(0 0)" style="font-family:'Roboto';font-size:9px;" id="boilers-0-tempFlueGases-value" x="109.4" y="158.9" text-anchor="middle"></text>
+			<path style="fill:none;stroke:#000000;stroke-miterlimit:10;" d="M86.1,151.4c1.2,0.7,2,1.4,2,2.2c0,1-1.6,2.1-2,3.4    c-0.3,1.1,0.4,1.5,1.4,2.7"  transform="translate(0 -12)" pointer-events="none"/>
+			<path style="fill:none;stroke:#000000;stroke-miterlimit:10;" d="M88.9,151.4c1.2,0.7,2,1.4,2,2.2c0,1-1.6,2.1-2,3.4    c-0.3,1.1,0.4,1.5,1.4,2.7"  transform="translate(0 -12)" pointer-events="none"/>
+		</g>
+		<g data-section="boilers[0].burner" id="boiler-1-burner-group">
+			<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="76.9" y="124.05" text-anchor="start">К1</text>
+			<path data-state="states['spring2-boiler-room'].boilers[0].isBurnerFailure" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;stroke-width:1;" d="M94.4 165.15H124.4A5 5 0 0 1 129.4 170.15V190.15A5 5 0 0 1 124.4 195.15H94.4A5 5 0 0 1 89.4 190.15V170.15A5 5 0 0 1 94.4 165.15Z"  id="boiler-1-burner" class="burner"/>
+			<use data-state="states['spring2-boiler-room'].boilers[0].isWorking" data-state-eval="element.style.display = (states['spring2-boiler-room'].boilers[0].isWorking ? 'initial': 'none');" href='#spring2-boiler-flame' transform="translate(0 0)" class="boiler-flame-animation"  id="boiler-1-flame" x="100.4" y="166.65" width="18" height="27" pointer-events="none"/>
+		</g>
+		<use data-state="states['spring2-boiler-room'].boilers[0].state;states['spring2-boiler-room'].boilers[0].isBurnerFailure;states['spring2-boiler-room'].boilers[0].isGasRelayPressure;states['spring2-boiler-room'].boilers[0].isMinWaterPressure;states['spring2-boiler-room'].boilers[0].isMaxWaterPressure;states['spring2-boiler-room'].boilers[0].isMaxWaterTemperature" data-state-eval="element.style.display = (states['spring2-boiler-room'].boilers[0].isBurnerFailure || states['spring2-boiler-room'].boilers[0].isGasRelayPressure || states['spring2-boiler-room'].boilers[0].isMinWaterPressure || states['spring2-boiler-room'].boilers[0].isMaxWaterPressure ||  states['spring2-boiler-room'].boilers[0].isMaxWaterTemperature ? 'initial': 'none')" href='#emergencyIcon' transform="translate(120, 130)" />
+	</g>
+
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="118.7" y1="275.3" x2="118.7" y2="307.2" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="263.8" y1="94" x2="263.8" y2="127.95" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="263.8" y1="114.8" x2="210.7" y2="114.8" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="263.2" y1="209.9" x2="210.8" y2="209.9" />
+	<g data-section="boilerPumps[1]" id="boiler-pump-2" transform="translate(35 0)">
+		<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="171.8" y="144.6" text-anchor="end">НК2</text>
+		<circle data-state="states['spring2-boiler-room'].boilerPumps[1].state" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;stroke-width:1;" cx="175.8" cy="162.1" r="10"  id="boiler-pump-2-state" class="pump-state"/>
+		<circle style="fill:none;stroke:#000000;stroke-miterlimit:10;stroke-width:0.25;" cx="175.8" cy="162.1" r="10"  pointer-events="none"/>
+		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="175.8,170.8 171.9,164.2 179.8,164.2   175.8,170.8  "  pointer-events="none"/>
+		<g>
+			<path data-state="states['spring2-boiler-room'].boilerPumps[1].state;states['spring2-boiler-room'].boilerPumps[1].statusCurrentSensor" data-state-eval="element.style.stroke = (states['spring2-boiler-room'].boilerPumps[1].state === 2 || states['spring2-boiler-room'].boilerPumps[1].statusCurrentSensor !== 1) ? 'red' : (states['spring2-boiler-room'].boilerPumps[1].state === 1 ? '#0000FF' : 'gray')" style="fill:none;stroke:gray;stroke-miterlimit:10;stroke-width:1;" d="M165.3 148.6H186.3A3 3 0 0 1 189.3 151.6V172.6A3 3 0 0 1 186.3 175.6H165.3A3 3 0 0 1 162.3 172.6V151.6A3 3 0 0 1 165.3 148.6Z"  id="boiler-pump-2-frame" class="pump-frame"/>
+		</g>
+		<use data-state="states['spring2-boiler-room'].boilerPumps[1].state;states['spring2-boiler-room'].boilerPumps[1].statusCurrentSensor" data-state-eval="element.style.display = (states['spring2-boiler-room'].boilerPumps[1].state === 2 || states['spring2-boiler-room'].boilerPumps[1].statusCurrentSensor !== 1) ? 'initial' : 'none'" href='#emergencyIcon' transform="translate(178, 130)" />
+	</g>
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="210.7" y1="114.8" x2="210.8" y2="148.6" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="210.8" y1="175.6" x2="210.8" y2="209.4" />
+	<g data-section="boilerOutputValves[1]" id="boiler-output-valve-2" transform="translate(35 0)">
+		<polygon data-state="states['spring2-boiler-room'].boilerOutputValves[1].state" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;stroke-width:0.5;" points="228.2,267.2 223.2,259.2 233.2,259.2"  id="boiler-output-valve-2-half-1"/>
+		<polygon data-state="states['spring2-boiler-room'].boilerOutputValves[1].state" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;stroke-width:0.5;" points="228.2,267.2 233.2,275.2 223.2,275.2"  id="boiler-output-valve-2-half-2"/>
+		<g>
+			<path data-state="states['spring2-boiler-room'].boilerOutputValves[1].state" data-colorizer-hint="stroke;stroke-width" style="stroke:#000000;stroke-miterlimit:10;fill:#FFFFFF;stroke-width:0.5;" d="M209.2 263.2H217.2V271.2H209.2Z"  id="boiler-output-valve-2-actuator" class="valve-actuator"/>
+		</g>
+
+<path class="valve-stem" d="M228.2 267.2H217.2" fill="none" stroke="#000000" stroke-width="1" pointer-events="none"/></g>
+	<g data-section="boilers[1].tempOut" transform="translate(35 0)">
+		<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="266.3" y="105.8" text-anchor="middle">TE2</text>
+		<rect x="238.8" y="108.8" width="55" height="12" data-state="states['spring2-boiler-room'].boilers[1].statusTempOutSensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;"  id="boilers-1-tempOut-frame" class="reading-frame"/>
+		<text data-state="states['spring2-boiler-room'].boilers[1].tempOut" transform="translate(0 0)" style="font-family:'Roboto';font-size:9px;" id="boilers-1-tempOut-value" x="266.3" y="117.8" text-anchor="middle"></text>
+		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="238.8" y1="114.8" x2="228.8" y2="114.8"  id="boiler-2-temperature-stem"/>
+	</g>
+	<text transform="translate(35 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="204.2" y="270.7" text-anchor="end" id="boiler-output-valve-2-label">ЗК2</text>
+
+	<g data-section="boilers[1]" id="boiler-2" transform="translate(35 0)">
+		<rect data-state="states['spring2-boiler-room'].boilers[1].state;states['spring2-boiler-room'].boilers[1].isBurnerFailure;states['spring2-boiler-room'].boilers[1].isGasRelayPressure;states['spring2-boiler-room'].boilers[1].isMinWaterPressure;states['spring2-boiler-room'].boilers[1].isMaxWaterPressure;states['spring2-boiler-room'].boilers[1].isMaxWaterTemperature" data-state-eval="element.style.stroke = (states['spring2-boiler-room'].boilers[1].isBurnerFailure || states['spring2-boiler-room'].boilers[1].isGasRelayPressure || states['spring2-boiler-room'].boilers[1].isMinWaterPressure || states['spring2-boiler-room'].boilers[1].isMaxWaterPressure ||  states['spring2-boiler-room'].boilers[1].isMaxWaterTemperature ? 'red': 'black');" x="196.3" y="127.95" style="fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;stroke-width:1;" width="65" height="70"  id="boiler-2-frame" class="boiler-frame"/>
+		<g data-section="boilers[1].tempFlueGases">
+			<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="228.8" y="146.8" text-anchor="middle">TE8</text>
+			<rect x="201.3" y="149.8" width="55" height="12" data-state="states['spring2-boiler-room'].boilers[1].statusTempFlueGasesSensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;"  id="boilers-1-tempFlueGases-frame" class="reading-frame"/>
+			<text data-state="states['spring2-boiler-room'].boilers[1].tempFlueGases" transform="translate(0 0)" style="font-family:'Roboto';font-size:9px;" id="boilers-1-tempFlueGases-value" x="228.8" y="158.8" text-anchor="middle"></text>
+			<path style="fill:none;stroke:#000000;stroke-miterlimit:10;" d="M205.5,151.3c1.2,0.7,2,1.4,2,2.2c0,1-1.6,2.1-2,3.4    c-0.3,1.1,0.4,1.5,1.4,2.7"  transform="translate(0 -12)" pointer-events="none"/>
+			<path style="fill:none;stroke:#000000;stroke-miterlimit:10;" d="M208.3,151.3c1.2,0.7,2,1.4,2,2.2c0,1-1.6,2.1-2,3.4    c-0.3,1.1,0.4,1.5,1.4,2.7"  transform="translate(0 -12)" pointer-events="none"/>
+		</g>
+		<g data-section="boilers[1].burner" id="boiler-2-burner-group">
+			<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="196.3" y="123.95" text-anchor="start">К2</text>
+			<path data-state="states['spring2-boiler-room'].boilers[1].isBurnerFailure" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;stroke-width:1;" d="M213.8 165.05H243.8A5 5 0 0 1 248.8 170.05V190.05A5 5 0 0 1 243.8 195.05H213.8A5 5 0 0 1 208.8 190.05V170.05A5 5 0 0 1 213.8 165.05Z"  id="boiler-2-burner" class="burner"/>
+			<use data-state="states['spring2-boiler-room'].boilers[1].isWorking" data-state-eval="element.style.display = (states['spring2-boiler-room'].boilers[1].isWorking ? 'initial': 'none');" href='#spring2-boiler-flame' transform="translate(0 0)" class="boiler-flame-animation"  id="boiler-2-flame" x="219.8" y="166.55" width="18" height="27" pointer-events="none"/>
+		</g>
+		<use data-state="states['spring2-boiler-room'].boilers[1].state;states['spring2-boiler-room'].boilers[1].isBurnerFailure;states['spring2-boiler-room'].boilers[1].isGasRelayPressure;states['spring2-boiler-room'].boilers[1].isMinWaterPressure;states['spring2-boiler-room'].boilers[1].isMaxWaterPressure;states['spring2-boiler-room'].boilers[1].isMaxWaterTemperature" data-state-eval="element.style.display = (states['spring2-boiler-room'].boilers[1].isBurnerFailure || states['spring2-boiler-room'].boilers[1].isGasRelayPressure || states['spring2-boiler-room'].boilers[1].isMinWaterPressure || states['spring2-boiler-room'].boilers[1].isMaxWaterPressure ||  states['spring2-boiler-room'].boilers[1].isMaxWaterTemperature ? 'initial': 'none')" href='#emergencyIcon' transform="translate(240, 130)" />
+	</g>
+
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="263.2" y1="275.2" x2="263.2" y2="289.1" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="119.4" y1="94.1" x2="263.8" y2="94.1" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="118.7" y1="289.2" x2="263.2" y2="289.2" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="408.4" y1="93.9" x2="408.4" y2="127.85" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="408.3" y1="114.8" x2="355.3" y2="114.8" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="407.7" y1="209.9" x2="355.3" y2="209.9" />
+	<g data-section="boilerPumps[2]" id="boiler-pump-3" transform="translate(60 0)">
+		<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="291.3" y="144.5" text-anchor="end">НК3</text>
+		<circle data-state="states['spring2-boiler-room'].boilerPumps[2].state" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;stroke-width:1;" cx="295.3" cy="162" r="10"  id="boiler-pump-3-state" class="pump-state"/>
+		<circle style="fill:none;stroke:#000000;stroke-miterlimit:10;stroke-width:0.25;" cx="295.3" cy="162" r="10"  pointer-events="none"/>
+		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="295.4,170.7 291.4,164.1 299.3,164.1   295.4,170.7  "  pointer-events="none"/>
+		<g>
+			<path data-state="states['spring2-boiler-room'].boilerPumps[2].state;states['spring2-boiler-room'].boilerPumps[2].statusCurrentSensor" data-state-eval="element.style.stroke = (states['spring2-boiler-room'].boilerPumps[2].state === 2 || states['spring2-boiler-room'].boilerPumps[2].statusCurrentSensor !== 1) ? 'red' : (states['spring2-boiler-room'].boilerPumps[2].state === 1 ? '#0000FF' : 'gray')" style="fill:none;stroke:gray;stroke-miterlimit:10;stroke-width:1;" d="M284.8 148.5H305.8A3 3 0 0 1 308.8 151.5V172.5A3 3 0 0 1 305.8 175.5H284.8A3 3 0 0 1 281.8 172.5V151.5A3 3 0 0 1 284.8 148.5Z"  id="boiler-pump-3-frame" class="pump-frame"/>
+		</g>
+		<use data-state="states['spring2-boiler-room'].boilerPumps[2].state;states['spring2-boiler-room'].boilerPumps[2].statusCurrentSensor" data-state-eval="element.style.display = (states['spring2-boiler-room'].boilerPumps[2].state === 2 || states['spring2-boiler-room'].boilerPumps[2].statusCurrentSensor !== 1) ? 'initial' : 'none'" href='#emergencyIcon' transform="translate(298, 130)" />
+	</g>
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="355.3" y1="114.8" x2="355.3" y2="148.5" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="355.3" y1="175.5" x2="355.3" y2="209.3" />
+	<g data-section="boilerOutputValves[2]" id="boiler-output-valve-3" transform="translate(60 0)">
+		<polygon data-state="states['spring2-boiler-room'].boilerOutputValves[2].state" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;stroke-width:0.5;" points="347.7,267.1 342.7,259.1 352.7,259.1"  id="boiler-output-valve-3-half-1"/>
+		<polygon data-state="states['spring2-boiler-room'].boilerOutputValves[2].state" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;stroke-width:0.5;" points="347.7,267.1 352.7,275.1 342.7,275.1"  id="boiler-output-valve-3-half-2"/>
+		<g>
+			<path data-state="states['spring2-boiler-room'].boilerOutputValves[2].state" data-colorizer-hint="stroke;stroke-width" style="stroke:#000000;stroke-miterlimit:10;fill:#FFFFFF;stroke-width:0.5;" d="M328.7 263.1H336.7V271.1H328.7Z"  id="boiler-output-valve-3-actuator" class="valve-actuator"/>
+		</g>
+
+<path class="valve-stem" d="M347.7 267.1H336.7" fill="none" stroke="#000000" stroke-width="1" pointer-events="none"/></g>
+	<g data-section="boilers[2].tempOut" transform="translate(60 0)">
+		<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="385.8" y="105.9" text-anchor="middle">TE3</text>
+		<rect x="358.3" y="108.9" width="55" height="12" data-state="states['spring2-boiler-room'].boilers[2].statusTempOutSensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;"  id="boilers-2-tempOut-frame" class="reading-frame"/>
+		<text data-state="states['spring2-boiler-room'].boilers[2].tempOut" transform="translate(0 0)" style="font-family:'Roboto';font-size:9px;" id="boilers-2-tempOut-value" x="385.8" y="117.9" text-anchor="middle"></text>
+		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="358.3" y1="114.9" x2="348.3" y2="114.9"  id="boiler-3-temperature-stem"/>
+	</g>
+	<text transform="translate(60 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="323.7" y="270.6" text-anchor="end" id="boiler-output-valve-3-label">ЗК3</text>
+
+	<g data-section="boilers[2]" id="boiler-3" transform="translate(60 0)">
+		<rect data-state="states['spring2-boiler-room'].boilers[2].state;states['spring2-boiler-room'].boilers[2].isBurnerFailure;states['spring2-boiler-room'].boilers[2].isGasRelayPressure;states['spring2-boiler-room'].boilers[2].isMinWaterPressure;states['spring2-boiler-room'].boilers[2].isMaxWaterPressure;states['spring2-boiler-room'].boilers[2].isMaxWaterTemperature" data-state-eval="element.style.stroke = (states['spring2-boiler-room'].boilers[2].isBurnerFailure || states['spring2-boiler-room'].boilers[2].isGasRelayPressure || states['spring2-boiler-room'].boilers[2].isMinWaterPressure || states['spring2-boiler-room'].boilers[2].isMaxWaterPressure ||  states['spring2-boiler-room'].boilers[2].isMaxWaterTemperature ? 'red': 'black');" x="315.9" y="127.85" style="fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;stroke-width:1;" width="65" height="70"  id="boiler-3-frame" class="boiler-frame"/>
+		<g data-section="boilers[2].tempFlueGases">
+			<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="348.4" y="146.8" text-anchor="middle">TE9</text>
+			<rect x="320.9" y="149.8" width="55" height="12" data-state="states['spring2-boiler-room'].boilers[2].statusTempFlueGasesSensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;"  id="boilers-2-tempFlueGases-frame" class="reading-frame"/>
+			<text data-state="states['spring2-boiler-room'].boilers[2].tempFlueGases" transform="translate(0 0)" style="font-family:'Roboto';font-size:9px;" id="boilers-2-tempFlueGases-value" x="348.4" y="158.8" text-anchor="middle"></text>
+			<path style="fill:none;stroke:#000000;stroke-miterlimit:10;" d="M325.1,151.2c1.2,0.7,2,1.4,2,2.2c0,1-1.6,2.1-2,3.4    c-0.3,1.1,0.4,1.5,1.4,2.7"  transform="translate(0 -12)" pointer-events="none"/>
+			<path style="fill:none;stroke:#000000;stroke-miterlimit:10;" d="M327.9,151.2c1.2,0.7,2,1.4,2,2.2c0,1-1.6,2.1-2,3.4    c-0.3,1.1,0.4,1.5,1.4,2.7"  transform="translate(0 -12)" pointer-events="none"/>
+		</g>
+
+		<g data-section="boilers[2].burner" id="boiler-3-burner-group">
+			<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="315.9" y="123.85" text-anchor="start">К3</text>
+			<path data-state="states['spring2-boiler-room'].boilers[2].isBurnerFailure" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;stroke-width:1;" d="M333.4 165.05H363.4A5 5 0 0 1 368.4 170.05V190.05A5 5 0 0 1 363.4 195.05H333.4A5 5 0 0 1 328.4 190.05V170.05A5 5 0 0 1 333.4 165.05Z"  id="boiler-3-burner" class="burner"/>
+			<use data-state="states['spring2-boiler-room'].boilers[2].isWorking" data-state-eval="element.style.display = (states['spring2-boiler-room'].boilers[2].isWorking ? 'initial': 'none');" href='#spring2-boiler-flame' transform="translate(0 0)" class="boiler-flame-animation"  id="boiler-3-flame" x="339.4" y="166.55" width="18" height="27" pointer-events="none"/>
+		</g>
+
+		<use data-state="states['spring2-boiler-room'].boilers[2].state;states['spring2-boiler-room'].boilers[2].isBurnerFailure;states['spring2-boiler-room'].boilers[2].isGasRelayPressure;states['spring2-boiler-room'].boilers[2].isMinWaterPressure;states['spring2-boiler-room'].boilers[2].isMaxWaterPressure;states['spring2-boiler-room'].boilers[2].isMaxWaterTemperature" data-state-eval="element.style.display = (states['spring2-boiler-room'].boilers[2].isBurnerFailure || states['spring2-boiler-room'].boilers[2].isGasRelayPressure || states['spring2-boiler-room'].boilers[2].isMinWaterPressure || states['spring2-boiler-room'].boilers[2].isMaxWaterPressure ||  states['spring2-boiler-room'].boilers[2].isMaxWaterTemperature ? 'initial': 'none')" href='#emergencyIcon' transform="translate(360, 130)" />
+	</g>
+
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="407.7" y1="275.1" x2="407.7" y2="289" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="263.9" y1="94" x2="408.4" y2="94" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="263.3" y1="289.1" x2="407.7" y2="289.1" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="553.3" y1="93.8" x2="553.3" y2="127.75" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="553.3" y1="114.7" x2="500.2" y2="114.7" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="552.7" y1="209.8" x2="500.3" y2="209.8" />
+	<g data-section="boilerPumps[3]" id="boiler-pump-4" transform="translate(85 0)">
+		<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="411.3" y="144.4" text-anchor="end">НК4</text>
+		<circle data-state="states['spring2-boiler-room'].boilerPumps[3].state" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;stroke-width:1;" cx="415.3" cy="161.9" r="10"  id="boiler-pump-4-state" class="pump-state"/>
+		<circle style="fill:none;stroke:#000000;stroke-miterlimit:10;stroke-width:0.25;" cx="415.3" cy="161.9" r="10"  pointer-events="none"/>
+		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="415.3,170.6 411.4,164 419.3,164 415.3,170.6   "  pointer-events="none"/>
+		<g>
+			<path data-state="states['spring2-boiler-room'].boilerPumps[3].state;states['spring2-boiler-room'].boilerPumps[3].statusCurrentSensor" data-state-eval="element.style.stroke = (states['spring2-boiler-room'].boilerPumps[3].state === 2 || states['spring2-boiler-room'].boilerPumps[3].statusCurrentSensor !== 1) ? 'red' : (states['spring2-boiler-room'].boilerPumps[3].state === 1 ? '#0000FF' : 'gray')" style="fill:none;stroke:gray;stroke-miterlimit:10;stroke-width:1;" d="M404.8 148.4H425.8A3 3 0 0 1 428.8 151.4V172.4A3 3 0 0 1 425.8 175.4H404.8A3 3 0 0 1 401.8 172.4V151.4A3 3 0 0 1 404.8 148.4Z"  id="boiler-pump-4-frame" class="pump-frame"/>
+		</g>
+		<use data-state="states['spring2-boiler-room'].boilerPumps[3].state;states['spring2-boiler-room'].boilerPumps[3].statusCurrentSensor" data-state-eval="element.style.display = (states['spring2-boiler-room'].boilerPumps[3].state === 2 || states['spring2-boiler-room'].boilerPumps[3].statusCurrentSensor !== 1) ? 'initial' : 'none'" href='#emergencyIcon' transform="translate(418, 130)" />
+	</g>
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="500.2" y1="114.7" x2="500.3" y2="148.4" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="500.3" y1="175.4" x2="500.3" y2="209.2" />
+	<g data-section="boilerOutputValves[3]" id="boiler-output-valve-4" transform="translate(85 0)">
+		<polygon data-state="states['spring2-boiler-room'].boilerOutputValves[3].state" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;stroke-width:0.5;" points="467.7,267 462.7,259 472.7,259"  id="boiler-output-valve-4-half-1"/>
+		<polygon data-state="states['spring2-boiler-room'].boilerOutputValves[3].state" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;stroke-width:0.5;" points="467.7,267 472.7,275 462.7,275"  id="boiler-output-valve-4-half-2"/>
+		<g>
+			<path data-state="states['spring2-boiler-room'].boilerOutputValves[3].state" data-colorizer-hint="stroke;stroke-width" style="stroke:#000000;stroke-miterlimit:10;fill:#FFFFFF;stroke-width:0.5;" d="M448.7 263H456.7V271H448.7Z"  id="boiler-output-valve-4-actuator" class="valve-actuator"/>
+		</g>
+
+<path class="valve-stem" d="M467.7 267H456.7" fill="none" stroke="#000000" stroke-width="1" pointer-events="none"/></g>
+	<g data-section="boilers[3].tempOut" transform="translate(85 0)">
+		<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="505.8" y="105.8" text-anchor="middle">TE4</text>
+		<rect x="478.3" y="108.8" width="55" height="12" data-state="states['spring2-boiler-room'].boilers[3].statusTempOutSensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;"  id="boilers-3-tempOut-frame" class="reading-frame"/>
+		<text data-state="states['spring2-boiler-room'].boilers[3].tempOut" transform="translate(0 0)" style="font-family:'Roboto';font-size:9px;" id="boilers-3-tempOut-value" x="505.8" y="117.8" text-anchor="middle"></text>
+		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="478.3" y1="114.8" x2="468.3" y2="114.8"  id="boiler-4-temperature-stem"/>
+	</g>
+	<text transform="translate(85 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="443.7" y="270.5" text-anchor="end" id="boiler-output-valve-4-label">ЗК4</text>
+
+	<g data-section="boilers[3]" id="boiler-4" transform="translate(85 0)">
+		<rect data-state="states['spring2-boiler-room'].boilers[3].state;states['spring2-boiler-room'].boilers[3].isBurnerFailure;states['spring2-boiler-room'].boilers[3].isGasRelayPressure;states['spring2-boiler-room'].boilers[3].isMinWaterPressure;states['spring2-boiler-room'].boilers[3].isMaxWaterPressure;states['spring2-boiler-room'].boilers[3].isMaxWaterTemperature" data-state-eval="element.style.stroke = (states['spring2-boiler-room'].boilers[3].isBurnerFailure || states['spring2-boiler-room'].boilers[3].isGasRelayPressure || states['spring2-boiler-room'].boilers[3].isMinWaterPressure || states['spring2-boiler-room'].boilers[3].isMaxWaterPressure ||  states['spring2-boiler-room'].boilers[3].isMaxWaterTemperature ? 'red': 'black');" x="435.8" y="127.75" style="fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;stroke-width:1;" width="65" height="70"  id="boiler-4-frame" class="boiler-frame"/>
+		<g data-section="boilers[3].tempFlueGases">
+			<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="468.3" y="146.7" text-anchor="middle">TE10</text>
+			<rect x="440.8" y="149.7" width="55" height="12" data-state="states['spring2-boiler-room'].boilers[3].statusTempFlueGasesSensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;"  id="boilers-3-tempFlueGases-frame" class="reading-frame"/>
+			<text data-state="states['spring2-boiler-room'].boilers[3].tempFlueGases" transform="translate(0 0)" style="font-family:'Roboto';font-size:9px;" id="boilers-3-tempFlueGases-value" x="468.3" y="158.7" text-anchor="middle"></text>
+			<path style="fill:none;stroke:#000000;stroke-miterlimit:10;" d="M445,151.1c1.2,0.7,2,1.4,2,2.2c0,1-1.6,2.1-2,3.4   c-0.3,1.1,0.4,1.5,1.4,2.7"  transform="translate(0 -12)" pointer-events="none"/>
+			<path style="fill:none;stroke:#000000;stroke-miterlimit:10;" d="M447.8,151.1c1.2,0.7,2,1.4,2,2.2c0,1-1.6,2.1-2,3.4   c-0.3,1.1,0.4,1.5,1.4,2.7"  transform="translate(0 -12)" pointer-events="none"/>
+		</g>
+		<g data-section="boilers[3].burner" id="boiler-4-burner-group">
+			<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="435.8" y="123.75" text-anchor="start">К4</text>
+			<path data-state="states['spring2-boiler-room'].boilers[3].isBurnerFailure" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;stroke-width:1;" d="M453.3 164.95H483.3A5 5 0 0 1 488.3 169.95V189.95A5 5 0 0 1 483.3 194.95H453.3A5 5 0 0 1 448.3 189.95V169.95A5 5 0 0 1 453.3 164.95Z"  id="boiler-4-burner" class="burner"/>
+			<use data-state="states['spring2-boiler-room'].boilers[3].isWorking" data-state-eval="element.style.display = (states['spring2-boiler-room'].boilers[3].isWorking ? 'initial': 'none');" href='#spring2-boiler-flame' transform="translate(0 0)" class="boiler-flame-animation"  id="boiler-4-flame" x="459.3" y="166.45" width="18" height="27" pointer-events="none"/>
+		</g>
+
+		<use data-state="states['spring2-boiler-room'].boilers[3].state;states['spring2-boiler-room'].boilers[3].isBurnerFailure;states['spring2-boiler-room'].boilers[3].isGasRelayPressure;states['spring2-boiler-room'].boilers[3].isMinWaterPressure;states['spring2-boiler-room'].boilers[3].isMaxWaterPressure;states['spring2-boiler-room'].boilers[3].isMaxWaterTemperature" data-state-eval="element.style.display = (states['spring2-boiler-room'].boilers[3].isBurnerFailure || states['spring2-boiler-room'].boilers[3].isGasRelayPressure || states['spring2-boiler-room'].boilers[3].isMinWaterPressure || states['spring2-boiler-room'].boilers[3].isMaxWaterPressure ||  states['spring2-boiler-room'].boilers[3].isMaxWaterTemperature ? 'initial': 'none')" href='#emergencyIcon' transform="translate(480, 130)" />
+
+	</g>
+
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="552.7" y1="275" x2="552.7" y2="288.9" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="408.9" y1="93.9" x2="553.3" y2="93.9" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="408.2" y1="289" x2="552.7" y2="289" />
+
+
+	<g data-section="networkPumps[0]" transform="translate(10 0) translate(-10, 10)" id="network-pump-1">
+		<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="69.2" y="320.1" text-anchor="end">СН1</text>
+		<circle data-state="states['spring2-boiler-room'].networkPumps[0].state" data-state-eval="element.style.fill = ([32, 64].includes(value) ? 'white' : '#808080')" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;stroke-width:1;" cx="73.2" cy="337.6" r="10"  id="network-pump-1-state" class="pump-state"/>
+		<circle style="fill:none;stroke:#000000;stroke-miterlimit:10;stroke-width:0.25;" cx="73.2" cy="337.6" r="10"  pointer-events="none"/>
+		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="73.1,328.9 77.1,335.5 69.2,335.5 73.1,328.9   "  pointer-events="none"/>
+		<g>
+			<path data-state="states['spring2-boiler-room'].networkPumps[0].state;states['spring2-boiler-room'].networkPumps[0].statusFc;states['spring2-boiler-room'].networkPumps[0].isDryRun" data-state-eval="element.style.stroke = (states['spring2-boiler-room'].networkPumps[0].state === 512 || states['spring2-boiler-room'].networkPumps[0].statusFc === 2 || states['spring2-boiler-room'].networkPumps[0].isDryRun) ? 'red' : ([32, 64].includes(states['spring2-boiler-room'].networkPumps[0].state) ? '#0000FF' : 'black'); element.style.strokeWidth = '1';" style="fill:none;stroke:#000000;stroke-miterlimit:10;stroke-width:1;" d="M62.7 324.1H83.7A3 3 0 0 1 86.7 327.1V348.1A3 3 0 0 1 83.7 351.1H62.7A3 3 0 0 1 59.7 348.1V327.1A3 3 0 0 1 62.7 324.1Z"  id="network-pump-1-frame" class="pump-frame"/>
+		</g>
+		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="72.8" y1="287.2" x2="73.2" y2="324.1" />
+		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="73.2" y1="351.1" x2="72.8" y2="403.5" />
+		<use data-state="states['spring2-boiler-room'].networkPumps[0].state;states['spring2-boiler-room'].networkPumps[0].statusFc;states['spring2-boiler-room'].networkPumps[0].isDryRun" data-state-eval="element.style.display = (states['spring2-boiler-room'].networkPumps[0].state === 512 || states['spring2-boiler-room'].networkPumps[0].statusFc === 2 || states['spring2-boiler-room'].networkPumps[0].isDryRun) ? 'initial' : 'none'" href="#emergencyIcon" transform="translate(75, 304)"/>
+	</g>
+
+
+	<g data-section="networkPumps[1]" transform="translate(10 0) translate(0, 10)" id="network-pump-2">
+		<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="104.8" y="320.1" text-anchor="end">СН2</text>
+		<circle data-state="states['spring2-boiler-room'].networkPumps[1].state" data-state-eval="element.style.fill = ([32, 64].includes(value) ? 'white' : '#808080')" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;stroke-width:1;" cx="108.8" cy="337.6" r="10"  id="network-pump-2-state" class="pump-state"/>
+		<circle style="fill:none;stroke:#000000;stroke-miterlimit:10;stroke-width:0.25;" cx="108.8" cy="337.6" r="10"  pointer-events="none"/>
+		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="108.8,328.9 112.7,335.5 104.8,335.5   108.8,328.9"  pointer-events="none"/>
+		<g>states['spring2-boiler-room']
+			<path data-state="states['spring2-boiler-room'].networkPumps[1].state;states['spring2-boiler-room'].networkPumps[1].statusFc;states['spring2-boiler-room'].networkPumps[1].isDryRun" data-state-eval="element.style.stroke = (states['spring2-boiler-room'].networkPumps[1].state === 512 || states['spring2-boiler-room'].networkPumps[1].statusFc === 2 || states['spring2-boiler-room'].networkPumps[1].isDryRun) ? 'red' : ([32, 64].includes(states['spring2-boiler-room'].networkPumps[1].state) ? '#0000FF' : 'black'); element.style.strokeWidth = '1';" style="fill:none;stroke:#000000;stroke-miterlimit:10;stroke-width:1;" d="M98.3 324.1H119.3A3 3 0 0 1 122.3 327.1V348.1A3 3 0 0 1 119.3 351.1H98.3A3 3 0 0 1 95.3 348.1V327.1A3 3 0 0 1 98.3 324.1Z"  id="network-pump-2-frame" class="pump-frame"/>
+		</g>
+		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="108.7" y1="297.2" x2="108.8" y2="324.1" />
+		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="108.8" y1="351.1" x2="108.4" y2="403.5" />
+		<use data-state="states['spring2-boiler-room'].networkPumps[1].state;states['spring2-boiler-room'].networkPumps[1].statusFc;states['spring2-boiler-room'].networkPumps[1].isDryRun" data-state-eval="element.style.display = (states['spring2-boiler-room'].networkPumps[1].state === 512 || states['spring2-boiler-room'].networkPumps[1].statusFc === 2 || states['spring2-boiler-room'].networkPumps[1].isDryRun) ? 'initial' : 'none'" href="#emergencyIcon" transform="translate(111, 304)"/>
+	</g>
+
+
+	<g data-section="networkPumps[2]" transform="translate(10 0) translate(10, 10)" id="network-pump-3">
+		<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="140.5" y="320.1" text-anchor="end">СН3</text>
+		<circle data-state="states['spring2-boiler-room'].networkPumps[2].state" data-state-eval="element.style.fill = ([32, 64].includes(value) ? 'white' : '#808080')" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;stroke-width:1;" cx="144.5" cy="337.6" r="10"  id="network-pump-3-state" class="pump-state"/>
+		<circle style="fill:none;stroke:#000000;stroke-miterlimit:10;stroke-width:0.25;" cx="144.5" cy="337.6" r="10"  pointer-events="none"/>
+		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="144.4,328.9 148.4,335.5 140.5,335.5   144.4,328.9"  pointer-events="none"/>
+		<g>
+			<path data-state="states['spring2-boiler-room'].networkPumps[2].state;states['spring2-boiler-room'].networkPumps[2].statusFc;states['spring2-boiler-room'].networkPumps[2].isDryRun" data-state-eval="element.style.stroke = (states['spring2-boiler-room'].networkPumps[2].state === 512 || states['spring2-boiler-room'].networkPumps[2].statusFc === 2 || states['spring2-boiler-room'].networkPumps[2].isDryRun) ? 'red' : ([32, 64].includes(states['spring2-boiler-room'].networkPumps[2].state) ? '#0000FF' : 'black'); element.style.strokeWidth = '1';" style="fill:none;stroke:#000000;stroke-miterlimit:10;stroke-width:1;" d="M134 324.1H155A3 3 0 0 1 158 327.1V348.1A3 3 0 0 1 155 351.1H134A3 3 0 0 1 131 348.1V327.1A3 3 0 0 1 134 324.1Z"  id="network-pump-3-frame" class="pump-frame"/>
+		</g>
+		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="144.4" y1="287.2" x2="144.5" y2="324.1" />
+		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="144.5" y1="351.1" x2="144.1" y2="403.5" />
+		<use data-state="states['spring2-boiler-room'].networkPumps[2].state;states['spring2-boiler-room'].networkPumps[2].statusFc;states['spring2-boiler-room'].networkPumps[2].isDryRun" data-state-eval="element.style.display = (states['spring2-boiler-room'].networkPumps[2].state === 512 || states['spring2-boiler-room'].networkPumps[2].statusFc === 2 || states['spring2-boiler-room'].networkPumps[2].isDryRun) ? 'initial' : 'none'" href="#emergencyIcon" transform="translate(147, 304)" />
+	</g>
+
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="118.4" y1="297.3" x2="72.5" y2="297.3" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="164.3" y1="297.3" x2="108.7" y2="297.3" />
+
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="118.4" y1="413.5" x2="72.5" y2="413.5" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="154.1" y1="413.5" x2="118.6" y2="413.5" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="154.1" y1="413.5" x2="362.9" y2="413.5" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="417.9" y1="413.5" x2="612.7" y2="413.5" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="119.4" y1="94.1" x2="33.6" y2="94.1" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="33.6" y1="94.1" x2="33.6" y2="374.3"  id="supply-header-left-vertical"/>
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="33.6" y1="374.3" x2="70.2" y2="374.3" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="75.4" y1="374.3" x2="115.8" y2="374.3" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="121" y1="374.3" x2="161.5" y2="374.3" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="166.7" y1="374.3" x2="217.4" y2="374.3" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="222.6" y1="374.3" x2="363.2" y2="374.3" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="418.2" y1="374.3" x2="612.7" y2="374.3" />
+	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="119.4" cy="94.1" r="1.5" />
+	<g data-section="vkt7" transform="translate(55 0) translate(-183 0)">
+		<use data-device="spring2-vkt7-289452" href="#infoIcon"
+			data-state-eval="element.style.fill = (states['spring2-vkt7-289452'].isConnected === false ? '#F44336': '#0072C6')"
+			data-state="states['spring2-vkt7-289452'].isConnected;states['spring2-vkt7-289452'].timestamp;states['spring2-vkt7-289452'].totalHeatConsumption;states['spring2-vkt7-289452'].volumeInputPipe;states['spring2-vkt7-289452'].volumeReturnPipe;states['spring2-vkt7-289452'].massInputPipe;states['spring2-vkt7-289452'].massReturnPipe;states['spring2-vkt7-289452'].normalOperationTime;states['spring2-vkt7-289452'].noCountTime"
+			style="fill:#0072C6" transform="translate(555 341.7) scale(0.55)"  id="heat-meter-info"/>
+		<rect data-device="spring2-vkt7-289452" style="fill:none;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;" rx="10" ry="10" width="168" height="100" transform="translate(405 336.7)"  id="heat-meter-panel"/>
+		<text transform="translate(489 431.7)" style="font-family:'Roboto';  text-anchor:middle;font-size:10px;" pointer-events="none">Тепловычислитель ВКТ-7</text>
+		<g transform="translate(6.8 15)">
+			<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="452.5" y="334.9" text-anchor="middle">TE13.1</text>
+			<rect x="425" y="337.9" width="55" height="12" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;"  id="vkt7-temperatureInputPipe-frame" class="reading-frame"/>
+			<text data-state="states['spring2-vkt7-289452'].temperatureInputPipe" transform="translate(0 0)" style="font-family:'Roboto';font-size:9px;" id="vkt7-temperatureInputPipe-value" x="452.5" y="346.9" text-anchor="middle"></text>
+			<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="452.5" y1="359.3" x2="452.5" y2="349.9" />
+			<circle style="stroke:#000000;stroke-miterlimit:10;" cx="452.5" cy="359.3" r="1.5" />
+		</g>
+		<g transform="translate(30.8 15)">
+			<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="487.9" y="349.8" text-anchor="middle">FE1</text>
+			<rect x="452.9" y="352.8" width="70" height="12" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;"  id="vkt7-volumeFlowRateInputPipe-frame" class="reading-frame"/>
+			<text data-state="states['spring2-vkt7-289452'].volumeFlowRateInputPipe" transform="translate(0 0)" style="font-family:'Roboto';font-size:9px;" id="vkt7-volumeFlowRateInputPipe-value" x="487.9" y="361.8" text-anchor="middle"></text>
+		</g>
+		<g transform="translate(6.8 0)">
+			<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="452.5" y="389.1" text-anchor="middle">TE13.2</text>
+			<rect x="425" y="392.1" width="55" height="12" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;"  id="vkt7-temperatureReturnPipe-frame" class="reading-frame"/>
+			<text data-state="states['spring2-vkt7-289452'].temperatureReturnPipe" transform="translate(0 0)" style="font-family:'Roboto';font-size:9px;" id="vkt7-temperatureReturnPipe-value" x="452.5" y="401.1" text-anchor="middle"></text>
+			<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="452.5" y1="413.5" x2="452.5" y2="404.1" />
+			<circle style="stroke:#000000;stroke-miterlimit:10;" cx="452.5" cy="413.5" r="1.5" />
+		</g>
+		<g transform="translate(30.8 0)">
+			<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="487.9" y="404" text-anchor="middle">FE2</text>
+			<rect x="452.9" y="407.0" width="70" height="12" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;"  id="vkt7-volumeFlowRateReturnPipe-frame" class="reading-frame"/>
+			<text data-state="states['spring2-vkt7-289452'].volumeFlowRateReturnPipe" transform="translate(0 0)" style="font-family:'Roboto';font-size:9px;" id="vkt7-volumeFlowRateReturnPipe-value" x="487.9" y="416" text-anchor="middle"></text>
+		</g>
+	</g>
+	<g data-section="pressOutNet" transform="translate(55 0) translate(-138 15)">
+		<text transform="translate(0 0)" style="font-family:'Roboto';  text-anchor:middle;font-size:10px;" pointer-events="none" x="562.5" y="334.8" text-anchor="middle">PE1</text>
+		<rect x="535" y="337.8" width="55" height="12" data-state="states['spring2-boiler-room'].statusPressOutNetSensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;"  id="pressOutNet-frame" class="reading-frame"/>
+		<text data-state="states['spring2-boiler-room'].pressOutNet" transform="translate(0 0)" style="font-family:'Roboto';font-size:9px;" id="pressOutNet-value" x="562.5" y="346.8" text-anchor="middle"></text>
+		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="562.5" y1="359.3" x2="562.5" y2="349.8" />
+		<circle style="stroke:#000000;stroke-miterlimit:10;" cx="562.5" cy="359.3" r="1.5" />
+	</g>
+	<g data-section="tempOutNet" transform="translate(55 0) translate(-128 15)">
+		<text transform="translate(0 0)" style="font-family:'Roboto';  text-anchor:middle;font-size:10px;" pointer-events="none" x="617.5" y="334.8" text-anchor="middle">TE5</text>
+		<rect x="590" y="337.8" width="55" height="12" data-state="states['spring2-boiler-room'].statusTempOutNetSensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;"  id="tempOutNet-frame" class="reading-frame"/>
+		<text data-state="states['spring2-boiler-room'].tempOutNet" transform="translate(0 0)" style="font-family:'Roboto';font-size:9px;" id="tempOutNet-value" x="617.5" y="346.8" text-anchor="middle"></text>
+		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="617.5" y1="359.3" x2="617.5" y2="349.8" />
+		<circle style="stroke:#000000;stroke-miterlimit:10;" cx="617.5" cy="359.3" r="1.5" />
+	</g>
+	<g transform="translate(55 0) translate(-138 0)">
+		<text transform="translate(0 0)" style="font-family:'Roboto';  text-anchor:middle;font-size:10px;" pointer-events="none" x="562.5" y="389" text-anchor="middle">PE2</text>
+		<rect x="535" y="392.0" width="55" height="12" data-state="states['spring2-boiler-room'].statusPressInNetSensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;"  id="pressInNet-frame" class="reading-frame"/>
+		<text data-state="states['spring2-boiler-room'].pressInNet" transform="translate(0 0)" style="font-family:'Roboto';font-size:9px;" id="pressInNet-value" x="562.5" y="401" text-anchor="middle"></text>
+		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="562.5" y1="413.5" x2="562.5" y2="404" />
+		<circle style="stroke:#000000;stroke-miterlimit:10;" cx="562.5" cy="413.5" r="1.5" />
+	</g>
+	<g transform="translate(55 0) translate(-128 0)">
+		<text transform="translate(0 0)" style="font-family:'Roboto';  text-anchor:middle;font-size:10px;" pointer-events="none" x="617.5" y="389" text-anchor="middle">TE6</text>
+		<rect x="590" y="392.0" width="55" height="12" data-state="states['spring2-boiler-room'].statusTempInNetSensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;"  id="tempInNet-frame" class="reading-frame"/>
+		<text data-state="states['spring2-boiler-room'].tempInNet" transform="translate(0 0)" style="font-family:'Roboto';font-size:9px;" id="tempInNet-value" x="617.5" y="401" text-anchor="middle"></text>
+		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="617.5" y1="413.5" x2="617.5" y2="404" />
+		<circle style="stroke:#000000;stroke-miterlimit:10;" cx="617.5" cy="413.5" r="1.5" />
+	</g>
+	<g transform="translate(55 0) translate(-138 13)">
+		<text transform="translate(0 0)" style="font-family:'Roboto';  text-anchor:middle;font-size:10px;" pointer-events="none" x="562.5" y="431.7" text-anchor="middle">PE3</text>
+		<rect x="535" y="434.7" width="55" height="12" data-state="states['spring2-boiler-room'].statusPressOutSrcWSensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;"  id="pressOutSrcW-frame" class="reading-frame"/>
+		<text data-state="states['spring2-boiler-room'].pressOutSrcW" transform="translate(0 0)" style="font-family:'Roboto';font-size:9px;" id="pressOutSrcW-value" x="562.5" y="443.7" text-anchor="middle"></text>
+		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="562.5" y1="456.2" x2="562.5" y2="446.7" />
+		<circle style="stroke:#000000;stroke-miterlimit:10;" cx="562.5" cy="456.2" r="1.5" />
+	</g>
+	<polygon style="fill:#FF0000;stroke:#FF0000;stroke-width:0.5;stroke-miterlimit:10;" points="527.1,374.3 516.0,379.7 516.0,368.9  527.1,374.3 "  transform="translate(100 0)"/>
+	<polygon style="fill:#0000FF;stroke:#0000FF;stroke-width:0.5;stroke-miterlimit:10;" points="515.0,413.5 526.1,408.1 526.1,418.9  515.0,413.5 "  transform="translate(100 0)"/>
+	<text transform="translate(100 0) matrix(1 0 0 1 516.0 391.9)" style="font-family:'Roboto';font-size:10px;" pointer-events="none">Т1</text>
+	<text transform="translate(100 0) matrix(1 0 0 1 515.0 433.0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none">Т2</text>
+	<polygon style="fill:#0071BC;stroke:#0071BC;stroke-width:0.5;stroke-miterlimit:10;" points="516.0,469.2 527.1,463.8 527.1,474.6  516.0,469.2 "  transform="translate(100 0)"/>
+	<text transform="translate(100 0) matrix(1 0 0 1 518.0 488.7)" style="font-family:'Roboto';font-size:10px;" pointer-events="none">В1</text>
+	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="164.1" cy="413.5" r="1.5" />
+	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="118.4" cy="413.5" r="1.5" />
+	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="118.7" cy="297.2" r="1.5" />
+	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="118.7" cy="289.2" r="1.5" />
+	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="118.7" cy="210" r="1.5" />
+
+	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="119.4" cy="114.9" r="1.5"  id="boiler-1-supply-junction"/>
+	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="263.2" cy="289" r="1.5" />
+	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="263.2" cy="209.9" r="1.5" />
+
+	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="263.8" cy="114.8" r="1.5"  id="boiler-2-supply-junction"/>
+	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="263.8" cy="93.7" r="1.5" />
+	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="407.7" cy="289.1" r="1.5" />
+	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="407.7" cy="209.9" r="1.5" />
+
+	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="408.3" cy="114.9" r="1.5"  id="boiler-3-supply-junction"/>
+	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="408.3" cy="93.8" r="1.5" />
+	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="552.7" cy="209.8" r="1.5" />
+
+	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="553.3" cy="114.8" r="1.5"  id="boiler-4-supply-junction"/>
+	<g data-section="sourceWaterPumps[0]" transform="translate(55 0) translate(-23.5 58.7)" id="makeup-pump-1">
+		<circle data-state="states['spring2-boiler-room'].sourceWaterPumps[0].state" data-colorizer-hint="fill" data-state-eval="element.style.fill = ([4, 16, 128, 256].includes(value) ? 'white' : '#808080')" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;stroke-width:1;" cx="353.2" cy="410.3" r="10"  id="makeup-pump-1-state" class="pump-state"/>
+		<circle style="fill:none;stroke:#000000;stroke-miterlimit:10;stroke-width:0.25;" cx="353.2" cy="410.3" r="10"  pointer-events="none"/>
+		<polygon style="stroke:#4D4D4D;stroke-width:0.25;stroke-miterlimit:10;" points="344.5,410.3 351.2,406.4 351.2,414.3   344.5,410.3"  pointer-events="none"/>
+		<g>
+			<path data-state="states['spring2-boiler-room'].sourceWaterPumps[0].state" data-state-eval="element.style.stroke = (value === 8 ? 'red' : ([4, 16, 128, 256].includes(value) ? '#0000FF' : 'black')); element.style.strokeWidth = '1';" style="fill:none;stroke:#000000;stroke-miterlimit:10;stroke-width:1;" d="M342.7 396.8H363.7A3 3 0 0 1 366.7 399.8V420.8A3 3 0 0 1 363.7 423.8H342.7A3 3 0 0 1 339.7 420.8V399.8A3 3 0 0 1 342.7 396.8Z"  id="makeup-pump-1-frame" class="pump-frame"/>
+		</g>
+		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="203.3" y1="410.4" x2="339.7" y2="410.3" />
+		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="366.7" y1="410.3" x2="581.2" y2="410.7" />
+		<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="353.2" y="392.8" text-anchor="middle">ЧРП ПН</text>
+		<use data-state="states['spring2-boiler-room'].sourceWaterPumps[0].state" data-state-eval="element.style.display = (states['spring2-boiler-room'].sourceWaterPumps[0].state === 8 ? 'initial': 'none')" href='#emergencyIcon' transform="translate(368, 391)" />
+	</g>
+	<g data-section="isSourceWaterRelay" transform="translate(55 0) translate(-48.8 58.7)" id="source-water-relay">
+		<text transform="translate(0 0)" style="font-family:'Roboto';  text-anchor:middle;font-size:10px;" pointer-events="none" x="331.4" y="392.9" text-anchor="middle">PS1</text>
+		<g transform="rotate(90 331.4 410.4)">
+			<rect data-state="states['spring2-boiler-room'].isSourceWaterRelay" data-colorizer-hint="stroke" data-state-eval="element.style.stroke = value ? '#0000FF' : 'black'; element.style.strokeWidth = '1';" x="317.9" y="396.9" width="27" height="27" rx="3" style="fill:none;stroke:#000000;stroke-miterlimit:10;stroke-width:1;"  id="source-water-relay-frame" class="relay-frame"/>
+			<circle data-state="states['spring2-boiler-room'].isSourceWaterRelay" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;stroke-width:1;" cx="331.4" cy="410.4" r="10"  id="source-water-relay-state" class="relay-state"/>
+			<circle style="fill:none;stroke:#000000;stroke-miterlimit:10;stroke-width:0.25;" cx="331.4" cy="410.4" r="10"  pointer-events="none"/>
+			<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="325.2" y1="403.5" x2="331.4" y2="419.6" />
+			<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="337.6" y1="403.5" x2="331.4" y2="419.6" />
 		</g>
 	</g>
 
-	<g data-section="boilers[0].flowRelay">
-		<text transform="matrix(1 0 0 1 114.0116 212.3356)" style="font-family:'Roboto'; font-size:10px;">FS1</text>
-		<g>
-			<path data-state="states['spring2-boiler-room'].boilers[0].isFlowRelay" data-colorizer-hint="stroke;stroke-width" style="fill:none;stroke:#000000;stroke-miterlimit:10;" d="M119.3,241.8h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
-			c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6v21.6C121.9,240.6,120.7,241.8,119.3,241.8z" />
+
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="234.8" y1="469.1" x2="234.8" y2="413.5"  id="makeup-inlet-riser"/>
+	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="234.8" cy="413.5" r="1.5"  id="makeup-inlet-junction"/>
+
+
+	<g transform="translate(-70, 0)" id="other-parameters">
+		<use data-device="spring2-boiler-room" href="#infoIcon"
+			data-state-eval="element.style.fill = (states['spring2-boiler-room'].isConnected === false ? '#F44336': '#0072C6')"
+			data-state="states['spring2-boiler-room'].isConnected;states['spring2-boiler-room'].timestamp"
+			style="fill:#0072C6;" transform="translate(100 0) translate(577.1 17) scale(0.55)"  id="controller-info"/>
+		<g id="parameter-cards" transform="translate(267.9 0)">
+		<g transform="translate(0, 0)">
+			<path data-state="states['spring2-boiler-room'].statusTempOutSensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M102.9 43.9H159.7A10 10 0 0 1 169.7 53.9V64A10 10 0 0 1 159.7 74H102.9A10 10 0 0 1 92.9 64V53.9A10 10 0 0 1 102.9 43.9Z"  id="header-outdoor-temperature-frame"/>
+			<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="131.3" y="55" text-anchor="middle">Т11 (н.в.)</text>
+			<text data-state="states['spring2-boiler-room'].tempOutAir" transform="translate(0 0)" style="font-family:'Roboto';font-size:9px;" x="131.3" y="68.6" text-anchor="middle" id="header-outdoor-temperature-value"></text>
 		</g>
-		<circle data-state="states['spring2-boiler-room'].boilers[0].isFlowRelay" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="108.8" cy="228.6" r="10.6" />
-		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="108.8" cy="228.6" r="9.3" />
+		<g transform="translate(0.3, 0)">
+			<path data-state="states['spring2-boiler-room'].statusPressGasSensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M186.9 43.9H243.8A10 10 0 0 1 253.8 53.9V64A10 10 0 0 1 243.8 74H186.9A10 10 0 0 1 176.9 64V53.9A10 10 0 0 1 186.9 43.9Z"  id="header-gas-pressure-frame"/>
+			<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="215.35" y="55" text-anchor="middle">Ргаза</text>
+			<text data-state="states['spring2-boiler-room'].pressGas" transform="translate(0 0)" style="font-family:'Roboto';font-size:9px;" x="215.35" y="68.6" text-anchor="middle" id="header-gas-pressure-value"></text>
+		</g>
+		<g transform="translate(-1.6, 0)">
+			<path data-state="states['spring2-boiler-room'].statusLevelDt1Sensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M273.1 43.9H330A10 10 0 0 1 340 53.9V64A10 10 0 0 1 330 74H273.1A10 10 0 0 1 263.1 64V53.9A10 10 0 0 1 273.1 43.9Z"  id="header-dt1-level-frame"/>
+			<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="301.55" y="55" text-anchor="middle">Уровень ДТ1</text>
+			<text data-state="states['spring2-boiler-room'].levelDt1" transform="translate(0 0)" style="font-family:'Roboto';font-size:9px;" x="301.55" y="68.6" text-anchor="middle" id="header-dt1-level-value"></text>
+		</g>
+		<g transform="translate(-4.6, 0)">
+			<path data-state="states['spring2-boiler-room'].statusLevelDt2Sensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M360.4 43.9H417.3A10 10 0 0 1 427.3 53.9V64A10 10 0 0 1 417.3 74H360.4A10 10 0 0 1 350.4 64V53.9A10 10 0 0 1 360.4 43.9Z"  id="header-dt2-level-frame"/>
+			<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="388.85" y="55" text-anchor="middle">Уровень ДТ2</text>
+			<text data-state="states['spring2-boiler-room'].levelDt2" transform="translate(0 0)" style="font-family:'Roboto';font-size:9px;" x="388.85" y="68.6" text-anchor="middle" id="header-dt2-level-value"></text>
+		</g>
+		<g transform="translate(-168.6 0)">
+			<path data-state="states['spring2-boiler-room'].statusTempRoomAirSensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M18.6 43.9H75.5A10 10 0 0 1 85.5 53.9V64A10 10 0 0 1 75.5 74H18.6A10 10 0 0 1 8.6 64V53.9A10 10 0 0 1 18.6 43.9Z"  id="header-room-temperature-frame"/>
+			<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="47.05" y="55" text-anchor="middle">Т12 (внутр.)</text>
+			<text data-state="states['spring2-boiler-room'].tempRoomAir" transform="translate(0 0)" style="font-family:'Roboto';font-size:9px;" x="47.05" y="68.6" text-anchor="middle" id="header-room-temperature-value"></text>
+		</g>
+		<g id="header-supply-temperature" transform="translate(-84.3 0)">
+			<path id="header-supply-temperature-frame" data-state="states['spring2-boiler-room'].statusTempOutNetSensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M18.6 43.9H75.5A10 10 0 0 1 85.5 53.9V64A10 10 0 0 1 75.5 74H18.6A10 10 0 0 1 8.6 64V53.9A10 10 0 0 1 18.6 43.9Z"/>
+			<text x="47.05" y="55" text-anchor="middle" style="font-family:'Roboto';font-size:10px;" pointer-events="none">TE5 (подача)</text>
+			<text id="header-supply-temperature-value" x="47.05" y="68.6" text-anchor="middle" style="font-family:'Roboto';font-size:9px;" data-state="states['spring2-boiler-room'].tempOutNet"></text>
+		</g>
+		<g id="header-supply-pressure" transform="translate(0 0)">
+			<path id="header-supply-pressure-frame" data-state="states['spring2-boiler-room'].statusPressOutNetSensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M18.6 43.9H75.5A10 10 0 0 1 85.5 53.9V64A10 10 0 0 1 75.5 74H18.6A10 10 0 0 1 8.6 64V53.9A10 10 0 0 1 18.6 43.9Z"/>
+			<text x="47.05" y="55" text-anchor="middle" style="font-family:'Roboto';font-size:10px;" pointer-events="none">PE1 (подача)</text>
+			<text id="header-supply-pressure-value" x="47.05" y="68.6" text-anchor="middle" style="font-family:'Roboto';font-size:9px;" data-state="states['spring2-boiler-room'].pressOutNet"></text>
+		</g>
+		</g>
+		<rect data-device="spring2-boiler-room" x="-22" y="12" width="719.1" height="70" rx="10" ry="10"
+			style="fill:none;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;"  id="other-parameters-frame"/>
+		<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="337.55" y="27" text-anchor="middle" id="other-parameters-heading">Прочие параметры котельной</text>
+
+		<g transform="translate(-13 28)" style="letter-spacing: 1px" data-state="states['spring2-boiler-room'].timestamp" data-state-eval="if(states['spring2-boiler-room'].isConnected === false) {element.style.fill = 'red'}" id="timestamp">
+			<text data-state="states['spring2-boiler-room'].timestamp" data-state-format="date" style="font-family:'Roboto';font-size:10px;" id="timestamp-date">{{timestamp}}</text>
+			<text data-state="states['spring2-boiler-room'].timestamp" data-state-format="time" transform="matrix(1 0 0 1 5 13)" style="font-family:'Roboto';font-size:10px;" id="timestamp-time">{{timestamp}}</text>
+		</g>
+	</g>
+
+	<g data-section="emergency" transform="translate(0 0)" id="alarm-panel">
+		<rect data-device="spring2-boiler-room" x="-92" y="90" width="112" height="228" rx="10" ry="10" fill="none" stroke="gray"  id="alarm-panel-frame" stroke-width="0.5"/>
+		<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" x="-36" y="105" text-anchor="middle" pointer-events="none">Аварийные события</text>
+		<g transform="translate(0 0)">
+			<g data-section="isConnected" transform="translate(-84 114)" id="alarm-isConnected">
+				<path data-colorizer-hint="fill" data-state="states['spring2-boiler-room'].isConnected" style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;stroke-width:0.5;" d="M10 0H33A10 10 0 0 1 43 10V33A10 10 0 0 1 33 43H10A10 10 0 0 1 0 33V10A10 10 0 0 1 10 0Z"  id="alarm-isConnected-frame" class="emergency-tile"/>
+				<text transform="translate(0 0)" style="font-family:'Roboto';font-size:7px;" x="21.5" y="37" text-anchor="middle" pointer-events="none">Связь</text>
+
+
+<use href="#spring2-alarm-1-art" x="9.5" y="4" width="24" height="25" pointer-events="none"/></g>
+
+			<g data-section="isOffInput1" transform="translate(-84 165)" id="alarm-isOffInput1">
+				<path data-colorizer-hint="fill" data-state="states['spring2-boiler-room'].isOffInput1" style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;stroke-width:0.5;" d="M10 0H33A10 10 0 0 1 43 10V33A10 10 0 0 1 33 43H10A10 10 0 0 1 0 33V10A10 10 0 0 1 10 0Z"  id="alarm-isOffInput1-frame" class="emergency-tile"/>
+				<text transform="translate(0 0)" style="font-family:'Roboto';font-size:7px;" x="21.5" y="37" text-anchor="middle" pointer-events="none">Ввод 1</text>
+
+
+<use href="#spring2-alarm-2-art" x="9.5" y="4" width="24" height="25" pointer-events="none"/></g>
+
+			<g data-section="isOffInput2" transform="translate(-84 216)" id="alarm-isOffInput2">
+				<path data-colorizer-hint="fill" data-state="states['spring2-boiler-room'].isOffInput2" style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;stroke-width:0.5;" d="M10 0H33A10 10 0 0 1 43 10V33A10 10 0 0 1 33 43H10A10 10 0 0 1 0 33V10A10 10 0 0 1 10 0Z"  id="alarm-isOffInput2-frame" class="emergency-tile"/>
+				<text transform="translate(0 0)" style="font-family:'Roboto';font-size:7px;" x="21.5" y="37" text-anchor="middle" pointer-events="none">Ввод 2</text>
+
+
+<use href="#spring2-alarm-3-art" x="9.5" y="4" width="24" height="25" pointer-events="none"/></g>
+
+			<g data-section="isCO1" transform="translate(-84 267)" id="alarm-isCO1">
+				<path data-colorizer-hint="fill" data-state="states['spring2-boiler-room'].isCO1" style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;stroke-width:0.5;" d="M10 0H33A10 10 0 0 1 43 10V33A10 10 0 0 1 33 43H10A10 10 0 0 1 0 33V10A10 10 0 0 1 10 0Z"  id="alarm-isCO1-frame" class="emergency-tile"/>
+				<text transform="translate(0 0)" style="font-family:'Roboto';font-size:7px;" x="21.5" y="37" text-anchor="middle" pointer-events="none">CO 1</text>
+
+
+<use href="#spring2-alarm-4-art" x="9.5" y="4" width="24" height="25" pointer-events="none"/></g>
+		</g>
+
+		<g transform="translate(0 0)">
+			<g data-section="isCH1" transform="translate(-31 114)" id="alarm-isCH1">
+				<path data-colorizer-hint="fill" data-state="states['spring2-boiler-room'].isCH1" style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;stroke-width:0.5;" d="M10 0H33A10 10 0 0 1 43 10V33A10 10 0 0 1 33 43H10A10 10 0 0 1 0 33V10A10 10 0 0 1 10 0Z"  id="alarm-isCH1-frame" class="emergency-tile"/>
+				<text transform="translate(0 0)" style="font-family:'Roboto';font-size:7px;" x="21.5" y="37" text-anchor="middle" pointer-events="none">CH 1</text>
+
+
+<use href="#spring2-alarm-5-art" x="9.5" y="4" width="24" height="25" pointer-events="none"/></g>
+			<g data-section="isGasFlap" transform="translate(-31 165)" id="alarm-isGasFlap">
+				<path data-colorizer-hint="fill" data-state="states['spring2-boiler-room'].isGasFlap" style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;stroke-width:0.5;" d="M10 0H33A10 10 0 0 1 43 10V33A10 10 0 0 1 33 43H10A10 10 0 0 1 0 33V10A10 10 0 0 1 10 0Z"  id="alarm-isGasFlap-frame" class="emergency-tile"/>
+
+				<text transform="translate(0 0)" x="21.5" y="0" text-anchor="middle" style="font-size:7px;" pointer-events="none">
+					<tspan x="21.5" y="31" style="font-family:'Roboto';font-size:7px;">клапан</tspan>
+					<tspan x="21.5" y="39" style="font-family:'Roboto';font-size:7px;">газовый</tspan>
+				</text>
+
+
+<use href="#spring2-alarm-6-art" x="9.5" y="1" width="24" height="25" pointer-events="none"/></g>
+
+			<g data-section="isVaporDt1" transform="translate(-31 216)" id="alarm-isVaporDt1">
+				<path data-colorizer-hint="fill" data-state="states['spring2-boiler-room'].isVaporDt1" style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;stroke-width:0.5;" d="M10 0H33A10 10 0 0 1 43 10V33A10 10 0 0 1 33 43H10A10 10 0 0 1 0 33V10A10 10 0 0 1 10 0Z"  id="alarm-isVaporDt1-frame" class="emergency-tile"/>
+				<text transform="translate(0 0)" style="font-family:'Roboto';font-size:7px;" x="21.5" y="37" text-anchor="middle" pointer-events="none">пары ДТ1</text>
+
+
+<use href="#spring2-alarm-7-art" x="9.5" y="4" width="24" height="25" pointer-events="none"/></g>
+
+			<g data-section="isVaporDt2" transform="translate(-31 267)" id="alarm-isVaporDt2">
+				<path data-colorizer-hint="fill" data-state="states['spring2-boiler-room'].isVaporDt2" style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;stroke-width:0.5;" d="M10 0H33A10 10 0 0 1 43 10V33A10 10 0 0 1 33 43H10A10 10 0 0 1 0 33V10A10 10 0 0 1 10 0Z"  id="alarm-isVaporDt2-frame" class="emergency-tile"/>
+				<text transform="translate(0 0)" style="font-family:'Roboto';font-size:7px;" x="21.5" y="37" text-anchor="middle" pointer-events="none">пары ДТ2</text>
+
+
+<use href="#spring2-alarm-8-art" x="9.5" y="4" width="24" height="25" pointer-events="none"/></g>
+		</g>
+	</g>
+
+	<g data-section="boilers[0].flowRelay" id="boiler-flow-relay-1" transform="translate(10 0)">
+		<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="113.8" y="211.1" text-anchor="start">FS1</text>
+		<g>
+			<path data-state="states['spring2-boiler-room'].boilers[0].isFlowRelay" data-colorizer-hint="stroke;stroke-width" style="fill:none;stroke:#000000;stroke-miterlimit:10;stroke-width:1;" d="M98.3 215.1H119.3A3 3 0 0 1 122.3 218.1V239.1A3 3 0 0 1 119.3 242.1H98.3A3 3 0 0 1 95.3 239.1V218.1A3 3 0 0 1 98.3 215.1Z"  id="boiler-flow-relay-1-frame" class="relay-frame"/>
+		</g>
+		<circle data-state="states['spring2-boiler-room'].boilers[0].isFlowRelay" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;stroke-width:1;" cx="108.8" cy="228.6" r="10"  id="boiler-flow-relay-1-state" class="relay-state"/>
+		<circle style="fill:none;stroke:#000000;stroke-miterlimit:10;stroke-width:0.25;" cx="108.8" cy="228.6" r="10"  pointer-events="none"/>
 		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="102.6" y1="221.7" x2="108.8" y2="237.8" />
 		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="115" y1="221.7" x2="108.8" y2="237.8" />
 	</g>
 
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="108.8" y1="215" x2="108.7" y2="197.7" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="228.3" y1="241.8" x2="228.3" y2="253.9" />
-	<g data-section="boilers[1].flowRelay">
-		<text transform="matrix(1 0 0 1 233.56 212.3356)" style="font-family:'Roboto'; font-size:10px;">FS2</text>
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="118.8" y1="215.1" x2="118.7" y2="197.7" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="263.4" y1="242.1" x2="263.2" y2="259.2" />
+	<g data-section="boilers[1].flowRelay" id="boiler-flow-relay-2" transform="translate(35 0)">
+		<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="233.4" y="211.1" text-anchor="start">FS2</text>
 		<g>
-			<path data-state="states['spring2-boiler-room'].boilers[1].isFlowRelay" data-colorizer-hint="stroke;stroke-width" style="fill:none;stroke:#000000;stroke-miterlimit:10;" d="M238.9,241.8h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
-			c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6v21.6C241.4,240.6,240.3,241.8,238.9,241.8z" />
+			<path data-state="states['spring2-boiler-room'].boilers[1].isFlowRelay" data-colorizer-hint="stroke;stroke-width" style="fill:none;stroke:#000000;stroke-miterlimit:10;stroke-width:1;" d="M217.9 215.1H238.9A3 3 0 0 1 241.9 218.1V239.1A3 3 0 0 1 238.9 242.1H217.9A3 3 0 0 1 214.9 239.1V218.1A3 3 0 0 1 217.9 215.1Z"  id="boiler-flow-relay-2-frame" class="relay-frame"/>
 		</g>
-		<circle data-state="states['spring2-boiler-room'].boilers[1].isFlowRelay" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="228.4" cy="228.6" r="10.6" />
-		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="228.3" cy="228.6" r="9.3" />
+		<circle data-state="states['spring2-boiler-room'].boilers[1].isFlowRelay" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;stroke-width:1;" cx="228.4" cy="228.6" r="10"  id="boiler-flow-relay-2-state" class="relay-state"/>
+		<circle style="fill:none;stroke:#000000;stroke-miterlimit:10;stroke-width:0.25;" cx="228.4" cy="228.6" r="10"  pointer-events="none"/>
 		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="222.1" y1="221.7" x2="228.3" y2="237.8" />
 		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="234.6" y1="221.7" x2="228.3" y2="237.8" />
 	</g>
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="228.4" y1="215" x2="228.3" y2="197.7" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="347.6" y1="241.2" x2="347.6" y2="253.4" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="263.4" y1="215.1" x2="263.8" y2="197.95" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="407.7" y1="241.6" x2="407.7" y2="259.1" />
 
-	<g data-section="boilers[2].flowRelay">
-		<text transform="matrix(1 0 0 1 352.9061 211.8015)" style="font-family:'Roboto'; font-size:10px;">FS3</text>
+	<g data-section="boilers[2].flowRelay" id="boiler-flow-relay-3" transform="translate(60 0)">
+		<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="352.7" y="210.6" text-anchor="start">FS3</text>
 		<g>
-			<path data-state="states['spring2-boiler-room'].boilers[2].isFlowRelay" data-colorizer-hint="stroke;stroke-width" style="fill:none;stroke:#000000;stroke-miterlimit:10;" d="M358.2,241.2h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
-			c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6v21.6C360.8,240.1,359.6,241.2,358.2,241.2z" />
+			<path data-state="states['spring2-boiler-room'].boilers[2].isFlowRelay" data-colorizer-hint="stroke;stroke-width" style="fill:none;stroke:#000000;stroke-miterlimit:10;stroke-width:1;" d="M337.2 214.6H358.2A3 3 0 0 1 361.2 217.6V238.6A3 3 0 0 1 358.2 241.6H337.2A3 3 0 0 1 334.2 238.6V217.6A3 3 0 0 1 337.2 214.6Z"  id="boiler-flow-relay-3-frame" class="relay-frame"/>
 		</g>
-		<circle data-state="states['spring2-boiler-room'].boilers[2].isFlowRelay" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="347.7" cy="228.1" r="10.6" />
-		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="347.7" cy="228" r="9.3" />
+		<circle data-state="states['spring2-boiler-room'].boilers[2].isFlowRelay" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;stroke-width:1;" cx="347.7" cy="228.1" r="10"  id="boiler-flow-relay-3-state" class="relay-state"/>
+		<circle style="fill:none;stroke:#000000;stroke-miterlimit:10;stroke-width:0.25;" cx="347.7" cy="228.1" r="10"  pointer-events="none"/>
 		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="341.5" y1="221.2" x2="347.7" y2="237.3" />
 		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="353.9" y1="221.2" x2="347.7" y2="237.3" />
 	</g>
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="347.7" y1="214.5" x2="347.6" y2="197.1" />
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="467.6" y1="241.7" x2="467.6" y2="253.8" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="407.7" y1="214.6" x2="407.6" y2="197.1" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="552.7" y1="242" x2="552.7" y2="259" />
 
-	<g data-section="states['spring2-boiler-room'].boilers[3].flowRelay">
-		<text transform="matrix(1 0 0 1 472.8532 212.2349)" style="font-family:'Roboto'; font-size:10px;">FS4</text>
+	<g data-section="states['spring2-boiler-room'].boilers[3].flowRelay" id="boiler-flow-relay-4" transform="translate(85 0)">
+		<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="472.7" y="211" text-anchor="start">FS4</text>
 		<g>
-			<path data-state="states['spring2-boiler-room'].boilers[3].isFlowRelay" data-colorizer-hint="stroke;stroke-width" style="fill:none;stroke:#000000;stroke-miterlimit:10;" d="M478.2,241.7h-21c-1.4,0-2.6-1.2-2.6-2.6v-21.6
-			c0-1.4,1.2-2.6,2.6-2.6h21c1.4,0,2.6,1.2,2.6,2.6v21.6C480.7,240.5,479.6,241.7,478.2,241.7z" />
+			<path data-state="states['spring2-boiler-room'].boilers[3].isFlowRelay" data-colorizer-hint="stroke;stroke-width" style="fill:none;stroke:#000000;stroke-miterlimit:10;stroke-width:1;" d="M457.2 215H478.2A3 3 0 0 1 481.2 218V239A3 3 0 0 1 478.2 242H457.2A3 3 0 0 1 454.2 239V218A3 3 0 0 1 457.2 215Z"  id="boiler-flow-relay-4-frame" class="relay-frame"/>
 		</g>
-		<circle data-state="states['spring2-boiler-room'].boilers[3].isFlowRelay" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;" cx="467.7" cy="228.5" r="10.6" />
-		<circle style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" cx="467.6" cy="228.5" r="9.3" />
+		<circle data-state="states['spring2-boiler-room'].boilers[3].isFlowRelay" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;stroke-width:1;" cx="467.7" cy="228.5" r="10"  id="boiler-flow-relay-4-state" class="relay-state"/>
+		<circle style="fill:none;stroke:#000000;stroke-miterlimit:10;stroke-width:0.25;" cx="467.7" cy="228.5" r="10"  pointer-events="none"/>
 		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="461.4" y1="221.6" x2="467.6" y2="237.7" />
 		<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="473.9" y1="221.6" x2="467.6" y2="237.7" />
 	</g>
-	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="467.7" y1="214.9" x2="467.6" y2="197.6" />
+	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="552.7" y1="215" x2="552.6" y2="197.6" />
 
-	<g data-section="irvis" transform="translate(-75)">
+	<g data-section="irvis" transform="translate(10 0) translate(-75)">
 		<style>
-			.st6{font-family:'Roboto';font-size:9px;}
-			.st8{fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;}
-			.st35{fill:none;stroke:#060606;stroke-width:0.7731;stroke-linecap:round;stroke-miterlimit:5.8623;}
-			.st36{fill:none;stroke:#F7931E;stroke-miterlimit:10;}
-			.st37{fill:#F7931E;stroke:#F7931E;stroke-miterlimit:10;}
-			.st38{fill:#F7931E;stroke:#F7931E;stroke-width:0.5;stroke-miterlimit:10;}
+			.spring2-mnemoschema .st6{font-family:'Roboto';font-size:9px;}
+			.spring2-mnemoschema .st8{fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;}
+			.spring2-mnemoschema .st35{fill:none;stroke:#060606;stroke-width:1;stroke-linecap:round;stroke-miterlimit:5.8623;}
+			.spring2-mnemoschema .st36{fill:none;stroke:#FF9800;stroke-miterlimit:10;}
+			.spring2-mnemoschema .st37{fill:#FF9800;stroke:#FF9800;stroke-miterlimit:10;}
+			.spring2-mnemoschema .st38{fill:#FF9800;stroke:#FF9800;stroke-width:0.5;stroke-miterlimit:10;}
 		</style>
 
 		<g transform="translate(-105 45.7)">
 		<use data-device="spring2-irvis-29804" href="#infoIcon"
 			data-state-eval="element.style.fill = (states['spring2-irvis-29804'].isConnected === false ? '#F44336': '#0072C6')"
 			data-state="states['spring2-irvis-29804'].isConnected;states['spring2-irvis-29804'].timestamp;states['spring2-irvis-29804'].volumeStandard;states['spring2-irvis-29804'].operatingTime"
-			style="fill:#0072C6" transform="translate(353 380) scale(0.55)" />
+			style="fill:#0072C6" transform="translate(353 380) scale(0.55)"  id="gas-meter-info"/>
 		<rect data-device="spring2-irvis-29804" style="fill:none;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;"
 			rx="10" ry="10"
-			 width="218" height="65"  transform="translate(155 375)" />
-		<text transform="translate(220 435)" style="font-family:'Roboto'; font-size:10px;">Расходомер газа Irvis</text>
+			 width="218" height="65"  transform="translate(155 375)"  id="gas-meter-panel"/>
+		<text transform="translate(220 435)" style="font-family:'Roboto';font-size:10px;" pointer-events="none">Расходомер газа Irvis</text>
 
 
-		<line class="st36" x1="147.4" y1="410.5" x2="380.0" y2="410.5"/>
+		<line class="st36" x1="147.4" y1="410.5" x2="390" y2="410.5"/>
 		</g>
-		<line class="st36" x1="216.4" y1="190.7" x2="247.4" y2="190.7"/>
-		<line class="st36" x1="255.3" y1="190.7" x2="272.5" y2="190.7"/>
-		<line class="st36" x1="455.4" y1="190.7" x2="486.2" y2="190.7"/>
-		<line class="st36" x1="495.1" y1="190.7" x2="512" y2="190.7"/>
-		<line class="st36" x1="275.0" y1="456.2" x2="275.0" y2="416.2"/>
+		<line class="st36" x1="216.9" y1="190.7" x2="272.4" y2="190.7"/>
+		<line class="st36" x1="280.3" y1="190.7" x2="296.3" y2="190.7"/>
+		<line class="st36" x1="505.9" y1="190.7" x2="561.2" y2="190.7"/>
+		<line class="st36" x1="570.1" y1="190.7" x2="585.8" y2="190.7"/>
+		<line class="st36" x1="285" y1="456.2" x2="285" y2="416.2" id="gas-main-rise-1"/>
 		<g transform="translate(-105 45.7)">
 		<g>
-			<rect x="171.2" y="404.6" width="65" height="12.3" class="st8" />
-			<text data-state="states['spring2-irvis-29804'].volumeFlowRateWorking" transform="matrix(1 0 0 1 174 414.4297)" class="st6">419.8н.м³/ч</text>
-			<text transform="matrix(1 0 0 1 192.4455 400.9655)" class="st6">FE3.1</text>
+			<rect x="163.7" y="404.6" width="80" height="12" class="st8 reading-frame"  id="irvis-volumeFlowRateWorking-frame"/>
+			<text data-state="states['spring2-irvis-29804'].volumeFlowRateWorking" transform="translate(0 0)" class="st6" style="font-size:9px;" id="irvis-volumeFlowRateWorking-value" x="203.7" y="413.6" text-anchor="middle">419.8н.м³/ч</text>
+			<text transform="translate(0 0)" class="st6" style="font-size:10px;" pointer-events="none" x="203.7" y="401.6" text-anchor="middle">FE3.1</text>
 		</g>
 		<g>
-			<rect x="232.5" y="389.4" width="45" height="11.2" class="st8" />
-			<text data-state="states['spring2-irvis-29804'].temperature" transform="matrix(1 0 0 1 235 398.1299)" class="st6">9,4ºC</text>
-			<line class="st36" x1="251.6" y1="410.8" x2="251.6" y2="400.6"/>
-			<text transform="matrix(1 0 0 1 239.116 387.4139)" class="st6">TE14</text>
-			<circle class="st37" cx="251.6" cy="410.7" r="1.3"/>
+			<rect x="224.1" y="389.4" width="55" height="12" class="st8 reading-frame"  id="irvis-temperature-frame"/>
+			<text data-state="states['spring2-irvis-29804'].temperature" transform="translate(0 0)" class="st6" style="font-size:9px;" id="irvis-temperature-value" x="251.6" y="398.4" text-anchor="middle">9,4ºC</text>
+			<line class="st36" x1="251.6" y1="410.8" x2="251.6" y2="401.4"/>
+			<text transform="translate(0 0)" class="st6" style="font-size:10px;" pointer-events="none" x="251.6" y="386.4" text-anchor="middle">TE14</text>
+			<circle class="st37" cx="251.6" cy="410.7" r="1.5"/>
 		</g>
 		<g transform="translate(10 0)">
-			<rect x="275.5" y="389.1" width="55" height="11.1" class="st8" />
-			<text data-state="states['spring2-irvis-29804'].pressure" transform="matrix(1 0 0 1 278.6857 397.7684)" class="st6">374.2кПа</text>
-			<line class="st36" x1="298" y1="410.5" x2="298" y2="400.1"/>
-			<text transform="matrix(1 0 0 1 291.7077 387.0526)" class="st6">PE4</text>
-			<circle class="st37" cx="298" cy="410.5" r="1.3"/>
+			<rect x="270.5" y="389.1" width="55" height="12" class="st8 reading-frame"  id="irvis-pressure-frame"/>
+			<text data-state="states['spring2-irvis-29804'].pressure" transform="translate(0 0)" class="st6" style="font-size:9px;" id="irvis-pressure-value" x="298" y="398.1" text-anchor="middle">374.2кПа</text>
+			<line class="st36" x1="298" y1="410.5" x2="298" y2="401.1"/>
+			<text transform="translate(0 0)" class="st6" style="font-size:10px;" pointer-events="none" x="298" y="386.1" text-anchor="middle">PE4</text>
+			<circle class="st37" cx="298" cy="410.5" r="1.5"/>
 		</g>
 		</g>
 
-		<circle class="st37" cx="475.4" cy="190.7" r="1.3"/>
-		<circle class="st37" cx="275.0" cy="303.6" r="1.3"/>
-		<circle class="st37" cx="238.5" cy="190.7" r="1.3"/>
+		<circle class="st37" cx="525.4" cy="190.7" r="1.5"/>
+		<circle class="st37" cx="285" cy="303.6" r="1.5" id="gas-main-rise-junction"/>
+		<circle class="st37" cx="238.5" cy="190.7" r="1.5"/>
 		<polygon class="st38" transform="translate(-105 45.7)" points="141.4,410.8 130.3,416.2 130.3,405.4 141.4,410.8 "/>
-		<text transform="matrix(1 0 0 1 25.3 474.1)" class="st6 st7">Г1</text>
-		<line class="st36" x1="275.0" y1="410.8" x2="275.0" y2="376.9"/>
-		<line class="st36" x1="275.0" y1="371.7" x2="275.0" y2="303.6"/>
-		<line class="st36" x1="238.3" y1="303.6" x2="475.3" y2="303.6"/>
+		<text transform="matrix(1 0 0 1 25.3 474.1)" class="st6 st7" style="font-size:10px;" pointer-events="none">Г1</text>
+		<line class="st36" x1="285" y1="410.8" x2="285" y2="376.9" id="gas-main-rise-2"/>
+		<line class="st36" x1="285" y1="371.7" x2="285" y2="303.6" id="gas-main-rise-3"/>
+		<line class="st36" x1="238.3" y1="303.6" x2="525.3" y2="303.6"/>
 		<line class="st36" x1="238.5" y1="284.8" x2="238.5" y2="190.7"/>
 		<line class="st36" x1="238.5" y1="304" x2="238.5" y2="292.8"/>
-		<line class="st36" x1="475.4" y1="284.9" x2="475.4" y2="190.7"/>
-		<line class="st36" x1="475.4" y1="304.1" x2="475.4" y2="292.6"/>
+		<line class="st36" x1="525.4" y1="284.9" x2="525.4" y2="190.7"/>
+		<line class="st36" x1="525.4" y1="304.1" x2="525.4" y2="292.6"/>
 	</g>
 </svg>

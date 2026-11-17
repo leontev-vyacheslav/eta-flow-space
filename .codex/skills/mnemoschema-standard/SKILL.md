@@ -23,6 +23,8 @@ Read these together before choosing dimensions or styles:
 
 Use the accepted profile and guide ahead of older measurements from reference SVGs.
 Nurlat-5 is the implementation example; the guide names the historical reference family.
+Spring-2 is the flame-glow reference; its animation does not replace another site's
+running, locked or fault semantics.
 Keep the numeric defaults in the profile and explanations in the guide. When the user
 changes the shared standard, update both and their relevant documentation together.
 Record local coordinates, canvas extents and site-specific exceptions in the device
@@ -61,6 +63,15 @@ attributes, embedded styles, state expressions and scoped CSS. Check computed st
 inline expressions and schema colourizers can override initial attributes. Preserve icon
 artwork and components whose corners are square in the standard.
 
+For boiler burners, apply the guide's
+[burner and flame-glow rules](../../../.docs/mnemoschema-components.md#boiler-burners-and-flame-glow):
+grey backgrounds in running and stopped states, Spring-2's exact filter phases and
+the profile's pulse timing. Use diagram-scoped CSS and a unique keyframe name on the
+existing flame instance; avoid stacking the old inner shadow. Keep flame artwork
+non-interactive so the burner remains the property-popover target. Update initial
+and evaluated fills together while preserving ordered bindings, hints, other state
+expressions and the exact existing flame-visibility predicate.
+
 For bindings, alarm/popover ownership or interactive state styling, also use
 [diagram-state-binding](../diagram-state-binding/SKILL.md). Geometry-only edits preserve
 IDs, ordered `data-state` lists, units, signal polarity and full state expressions;
@@ -91,6 +102,11 @@ representative state styling, hover/restoration, moved or resized hit targets, p
 and phone interaction as relevant to the change. Keep checks focused and reuse existing
 scenarios. Save inspectable before/after PNGs and measurements; distinguish supplied
 saved data, synthetic cases and live reads in the result.
+
+For burner-glow changes, follow the guide's focused verification: every affected
+burner running/stopped, multiple burners running together, locked/fault appearance, computed
+animation phases/timing, full property popovers and phone taps. Compare matching
+before/after states and remember that a PNG records only one animation phase.
 
 After SVG/CSS or other static assets change, run:
 

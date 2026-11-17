@@ -11,8 +11,8 @@ Gagarin and Komarova provide matching reference equipment footprints; Spring-2 s
 component family and the original drawing conventions. The accepted defaults below
 supersede their older equipment/reading sizes, typography, strokes and radii for further work.
 Kirov, Gagarin and Komarova were updated to the accepted standard on 16 November
-2026, followed by Muslum-7 and Muslum-9. Spring-2 retains its historical dimensions
-until its update is requested.
+2026, followed by Muslum-7, Muslum-9 and Spring-2. Spring-2 retains its
+three-device ownership, existing controller semantics and site-specific pipe routing.
 
 Use the [mnemoschema-standard skill](../.codex/skills/mnemoschema-standard/SKILL.md) for
 the workflow that applies and verifies these values when creating or changing components.
@@ -66,7 +66,7 @@ alignment together. The older reference diagrams use 45-unit reading frames and 
 stroke/radius values. Their geometry is a starting point; the accepted defaults above
 take precedence for new diagrams and component updates. Reference SVGs retain their
 historical values until their update is requested; Kirov, Gagarin and Komarova now
-follow the accepted defaults, as do Muslum-7/9.
+follow the accepted defaults, as do Muslum-7/9 and Spring-2.
 
 ## Water tanks and valves
 
@@ -166,6 +166,47 @@ The standard defines appearance. Each site's own state paths, signal polarity, u
 alarm/input distinction and command-feedback meanings remain authoritative. Do not infer
 an alarm from a numeric value, a stopped pump or another site's field order.
 
+### Boiler burners and flame glow
+
+Burner backgrounds use **`#808080` in both stopped and running states**, accepted
+on **17 November 2026**. A running boiler is distinguished by its flame and the
+animated orange glow from Spring-2, replacing the previous `#333333` running
+background. Keep the site's own boiler-body colours, locked/fault indicators,
+ordered property lists and exact flame-visibility predicate.
+
+Use Spring-2's flame filter keyframes with a **3-second**, **ease-in-out**,
+**infinite** pulse. The timing/reference are recorded under `flameGlow` in the
+profile. Add `boiler-flame-animation` to the existing 18 × 27 flame instances,
+with a diagram-scoped selector and unique keyframe name; flame artwork remains
+non-interactive so clicks reach the burner. Apply the animation to the flame
+instance, and disable the older inner static shadow to avoid combining effects.
+The original flame paths and component geometry stay unchanged.
+
+The animation source is
+[Spring-2's CSS](../flow-space-statics/devices/spring2-boiler-room/mnemo-schema.css).
+Copy its filter declarations at **0 / 25 / 50 / 75 / 100%** unchanged, giving the
+keyframes a name unique to the target diagram. For example,
+[Kirov's CSS](../flow-space-statics/devices/kirov-boiler-room/mnemo-schema.css) uses:
+
+```css
+#kirov-mnemoschema .boiler-flame-animation {
+    animation: kirov_mnemoschema_burner_glow 3s ease-in-out infinite;
+    pointer-events: none;
+}
+```
+
+Keep the burner's initial SVG fill and evaluated fill consistent. Where an existing
+`data-state-eval` switches between dark running and grey stopped fills, replace only
+that fill assignment with `element.style.fill = '#808080';`. Retain its other
+expressions, ordered `data-state` properties and colourizer hints so the full burner
+popover and hover restoration still work. Preserve the flame's existing visibility
+expression exactly; adding the animation class does not introduce another working,
+normal or lock condition. Stopped flames remain hidden according to that site's logic.
+
+Nurlat-5, Kirov, Gagarin, Komarova and Muslum-7/9 now use this appearance. Spring-2
+retains its approved glow and grey burner background, including its own fault
+outline semantics.
+
 ## Layout and canvas
 
 Resize and reposition the whole component, including its burner, flame, labels, hit targets
@@ -188,6 +229,23 @@ for component size. This local canvas accommodates Muslum-7's seven single-colum
 alarm tiles while retaining both sites' distinct circuits. See their device READMEs
 for coordinates and exceptions, including Muslum-7's hydraulic separator and the
 slightly wider control-mode card needed for phone text metrics.
+
+Spring-2 uses **`-98 8 736 485`**. Its initial standardized 636-unit width was
+increased by 100 on 17 November 2026, initially adding 25 units to each of the four gaps
+from its fixed emergency panel through the four boiler assemblies. Equipment
+sizes and the 485-unit height stay unchanged; complete assemblies, connected
+pipes and crossing gaps follow the new positions. Its eight unscaled alarm tiles
+remain in two columns. The process subsequently moves 15 units left toward the
+emergency panel, with the heat-meter/instrument/makeup block another 30 units
+left. The header, emergency panel and three labelled outlet arrows stay fixed.
+Its controller, IRVIS gas meter and
+VKT-7 heat calculator share the diagram while retaining their individual state
+paths, units, property lists and selection markers. The meter flow frames are
+**70 units** wide for VKT-7 and **80 units** for IRVIS working flow; other reading
+frames use 55 × 12. The four boiler-output valves use the standard vertical
+bow-tie and left actuator. Gas branches keep their original lower-body entry
+height to avoid crossing circulation pumps. The device README records these
+local coordinates and the controller temperature assemblies' extra clearance.
 
 The dashboard still fits SVGs into its existing responsive viewport. Different viewBox
 heights, or width-constrained screens, can produce different screen scales; compare native
@@ -212,3 +270,12 @@ measurements against the references. Check normal/running/locked, connected/disc
 warnings/alarms, hover enter/leave, popup scrolling/closing and phone gestures. Validate
 all state paths and preserve the source topology. Regenerate the static manifest and
 keep screenshots and machine-readable results beside the work report.
+
+For burner-glow changes, check every affected burner in running and stopped cases,
+plus the site's locked/fault appearance. In the application, confirm the grey fill,
+unchanged flame visibility and body colours, all five animation phases and the
+profile's timing. When multiple burners run together, every visible flame must
+animate under its existing predicate. Check full burner property popovers, hover/restoration
+and phone taps through the non-interactive flame. Save before/after captures with
+the same operating case and zoom; label synthetic states and note that each PNG
+captures only one phase of the continuous glow.

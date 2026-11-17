@@ -246,6 +246,14 @@ emergency registration is created while telemetry persistence is disabled, avoid
 a permanent connection-loss alarm. See the [database migration log](../../../database/README.md)
 and [verification report](../../../.reports/2026-11-16-nurlat-5-database/README.md).
 
+On **17 November 2026**, the [watcher migration](../../../database/migrations/2026-11-17-add-nurlat-boiler-watcher.sql)
+created `nurlat-boiler-watcher` (user **8**) with operator role and access only to this
+boiler room. Its generated password has 10 characters and is kept outside Git; the
+migration stores only its bcrypt hash. The existing `boiler-watcher` access was confirmed
+and preserved. Sign-in, the one-device list, device details, rejection of an unrelated
+device and sign-out passed through the production API. All 13 isolated migration
+checks passed. See the [watcher verification report](../../../.reports/2026-11-17-nurlat-watcher/README.md).
+
 The collector has **`DEVICE_CODE = null`** and explicitly skips persistence in that mode.
 It assigns the normalized object to `msg.deviceState`. When a device is registered and
 persistence is intended, set its exact code in that guard; the existing storage helper
@@ -305,3 +313,24 @@ export and verification results. Checks cover every workbook address and mapped 
 all 109 bit positions, null/undefined preservation, non-finite floats, malformed block
 handling, schema/UI-helper compatibility and the guarded/awaited persistence contract.
 All 174 pre-existing B nodes remain byte-equivalent as parsed JSON objects.
+
+## Burner glow standard — 17 November 2026
+
+Both burner backgrounds remain **#808080** while stopped or running. The existing
+flame instances use Spring-2's orange glow: the same **3-second ease-in-out
+infinite** keyframes, scoped to this diagram with a unique animation name. This
+replaces the earlier dark running background and inner static flame shadow. The
+legacy filter definition is retained, while its inner artwork reference is removed.
+Original flame paths, 18 × 27 instances, 40 × 30 burner geometry and hit targets
+are unchanged.
+
+Each existing running predicate still controls flame visibility. Boiler-body,
+locked/fault and pump colours retain their existing meanings. All ordered
+`data-state` lists, hints and other expressions are preserved; only the two
+burner fill expressions now assign the constant grey background. The original
+full-detail burner popovers remain available. CSS glow artwork passes pointer
+events through to those targets.
+
+Before/after screenshots, synthetic state checks and desktop/phone evidence are
+recorded in `.reports/2026-11-17-standard-burner-glow/`. These files remain local;
+no deployment or controller change is implied.

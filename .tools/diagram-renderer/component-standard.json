@@ -9,11 +9,12 @@
   "hover": { "strokeWidth": 1, "emergencyStrokeWidth": 0.5 },
   "pipe": { "strokeWidth": 1, "junctionRadius": 1.5, "gasColor": "#FF9800", "supplyColor": "#FF0000", "returnColor": "#0000FF", "waterColor": "#0083CD" },
   "boiler": { "width": 65, "height": 70, "strokeWidth": 1, "activeStrokeWidth": 1, "burnerWidth": 40, "burnerHeight": 30, "burnerRadius": 5, "flameWidth": 18, "flameHeight": 27 },
+  "flameGlow": { "reference": "spring2-boiler-room", "durationSeconds": 3, "easing": "ease-in-out", "iterations": "infinite" },
   "pump": { "frameWidth": 27, "frameHeight": 27, "frameRadius": 3, "radius": 10, "innerRadius": 10, "strokeWidth": 1, "activeStrokeWidth": 1, "innerStrokeWidth": 0.25 },
   "instrument": { "width": 55, "height": 12, "strokeWidth": 0.25, "warningStrokeWidth": 0.5, "alarmStrokeWidth": 1 },
   "emergencyTile": { "width": 43, "height": 43, "radius": 10, "strokeWidth": 0.5, "iconWidth": 24, "iconHeight": 25, "labelSize": 7 },
   "panel": { "radius": 10, "strokeWidth": 0.5, "headerHeight": 70 },
   "tank": { "width": 32, "height": 50, "radius": 10, "strokeWidth": 1, "fillColor": "#FFFFFF", "waterColor": "#0083CD", "waterStrokeWidth": 0.5, "waterInset": 4, "waterLineOffsets": [18, 28, 38], "waterDasharray": "5 3" },
   "valve": { "width": 16, "height": 10, "strokeWidth": 0.5, "stemLength": 11, "stemStrokeWidth": 1, "actuatorWidth": 8, "actuatorHeight": 8, "actuatorStrokeWidth": 0.5, "labelOffset": 25 },
-  "colors": { "stroke": "#000000", "stopped": "#808080", "running": "#0000FF", "burnerRunning": "#333333", "warning": "#FFC107", "alarm": "red", "hover": "#ffeb3b" }
+  "colors": { "stroke": "#000000", "stopped": "#808080", "running": "#0000FF", "burnerRunning": "#808080", "warning": "#FFC107", "alarm": "red", "hover": "#ffeb3b" }
 }

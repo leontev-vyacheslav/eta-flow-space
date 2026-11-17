@@ -14,7 +14,7 @@ export function create({ signal } = {}) {
 
                 // only the middle keyframe is given: the animation starts and ends at the element's own colours
                 const keyframe = shapeTags.includes(element.tagName.toLowerCase())
-                    ? { offset: 0.5, stroke: highlightColor, strokeWidth: '2.5' }
+                    ? { offset: 0.5, stroke: highlightColor, strokeWidth: '1' }
                     : { offset: 0.5, fill: highlightColor };
 
                 const animation = element.animate([keyframe], highlightTiming);
