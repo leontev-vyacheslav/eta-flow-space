@@ -189,8 +189,15 @@ alarm tiles while retaining both sites' distinct circuits. See their device READ
 for coordinates and exceptions, including Muslum-7's hydraulic separator and the
 slightly wider control-mode card needed for phone text metrics.
 
-Spring-2 uses **`-98 8 636 485`**, widening the original 600-unit canvas for its
-eight unscaled alarm tiles in two columns. Its controller, IRVIS gas meter and
+Spring-2 uses **`-98 8 736 485`**. Its initial standardized 636-unit width was
+increased by 100 on 17 November 2026, initially adding 25 units to each of the four gaps
+from its fixed emergency panel through the four boiler assemblies. Equipment
+sizes and the 485-unit height stay unchanged; complete assemblies, connected
+pipes and crossing gaps follow the new positions. Its eight unscaled alarm tiles
+remain in two columns. The process subsequently moves 15 units left toward the
+emergency panel, with the heat-meter/instrument/makeup block another 30 units
+left. The header, emergency panel and three labelled outlet arrows stay fixed.
+Its controller, IRVIS gas meter and
 VKT-7 heat calculator share the diagram while retaining their individual state
 paths, units, property lists and selection markers. The meter flow frames are
 **70 units** wide for VKT-7 and **80 units** for IRVIS working flow; other reading
