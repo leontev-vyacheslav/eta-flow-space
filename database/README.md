@@ -91,6 +91,17 @@ stop/start commands, and limitations.
 | `2026-11-16-add-nurlat-5-boiler-room.sql` | yes (applied and verified 2026-11-16; device 35, flow 13, own mnemoschema and both shared watcher links) |
 | `2026-11-16-add-nurlat-5-location.sql` | yes (applied and verified 2026-11-16; location 15, address and supplied coordinates; production API list/detail checked) |
 | `2026-11-17-add-nurlat-boiler-watcher.sql` | yes (applied and verified 2026-11-17; user 8, 10-character password, Nurlat-5 access for both watcher accounts; sign-in and access isolation checked) |
+| `2026-11-17-add-nurlat-5-emergency-rules.sql` | yes (applied and verified 2026-11-17; emergency 25, 80 reasons covering 93 PLC flags, three-minute history interval; live API and stored emergency history checked; 124 evaluator and 12 isolated PostgreSQL checks passed) |
+
+The Nurlat-5 emergency migration creates its missing registration or populates an
+existing empty reason list. It covers gas/fire/security, pressure and dry-run
+protections, boiler faults/locks, pump start errors and all available sensor faults
+and H/L/HH/LL flags. Paired alarm/input flags and each boiler's fault/alarm flags
+activate one reason per event; warning and alarm thresholds remain separate.
+Connection loss remains the dispatcher's reason 100. Identical reruns preserve all
+metadata; conflicting non-empty rules, duplicate registrations and malformed lists
+abort. Existing intervals and unrelated registrations are preserved. See the
+[verification report](../.reports/2026-11-17-nurlat-5-emergency-rules/README.md).
 
 The Nurlat watcher migration creates `nurlat-boiler-watcher` with operator role 2,
 standard initial watcher settings and access only to `nurlat-5-boiler-room` (device 35).
@@ -114,9 +125,10 @@ access/diagram links and reject conflicting identities. The location migration c
 nothing on identical reruns and rejects a different existing location. All 18 isolated
 PostgreSQL 17 checks passed; production application was verified against the database
 and the configured watcher's API list/detail, followed by sign-out.
-It adds no emergency registration while the collector is in test mode without stored
-telemetry. Emergency monitoring can be added when persistence is enabled. No schema,
-ORM, Node-RED deployment or service restart is required for this registration.
+The 16 November registration omitted emergency monitoring while telemetry storage
+was disabled. Production telemetry was confirmed on 17 November, and the separate
+emergency migration above then enabled monitoring. These data migrations require no
+schema, ORM, Node-RED deployment or service restart.
 
 The Muslum emergency-rules migration populates only the existing registrations for
 `muslum-7-boiler-room` and `muslum-9-boiler-room`. It uses their collected boolean alarm,

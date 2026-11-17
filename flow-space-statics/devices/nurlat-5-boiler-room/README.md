@@ -229,7 +229,7 @@ for native 100% and dashboard comparisons, state/interaction checks and phone ev
 The [initial diagram report](../../../.reports/2026-11-15-nurlat-5-diagram/README.md) preserves
 the earlier layout history. Changes remain local until deployment is authorized.
 
-## Test-mode persistence and deployment
+## Persistence and deployment
 
 The [database registration migration](../../../database/migrations/2026-11-16-add-nurlat-5-boiler-room.sql)
 was applied and verified in production on **16 November 2026**: device **35**, flow **13**,
@@ -241,9 +241,9 @@ location, the [location migration](../../../database/migrations/2026-11-16-add-n
 added location **15**, locality `г. Нурлат`, and the user's coordinates
 **54.43420093, 50.82059551** (rounded to eight decimal places). Database and production
 API list/detail checks confirmed the registration and location; the viewing session was
-signed out. All 18 isolated migration checks passed. Controller type remains unassigned. No
-emergency registration is created while telemetry persistence is disabled, avoiding
-a permanent connection-loss alarm. See the [database migration log](../../../database/README.md)
+signed out. All 18 isolated migration checks passed. Controller type remains unassigned.
+That registration deferred emergency monitoring until telemetry storage was enabled.
+See the [database migration log](../../../database/README.md)
 and [verification report](../../../.reports/2026-11-16-nurlat-5-database/README.md).
 
 On **17 November 2026**, the [watcher migration](../../../database/migrations/2026-11-17-add-nurlat-boiler-watcher.sql)
@@ -254,13 +254,24 @@ and preserved. Sign-in, the one-device list, device details, rejection of an unr
 device and sign-out passed through the production API. All 13 isolated migration
 checks passed. See the [watcher verification report](../../../.reports/2026-11-17-nurlat-watcher/README.md).
 
-The collector has **`DEVICE_CODE = null`** and explicitly skips persistence in that mode.
-It assigns the normalized object to `msg.deviceState`. When a device is registered and
-persistence is intended, set its exact code in that guard; the existing storage helper
-is awaited with the device code and tab ID before `msg.deviceState` is assigned.
+The current collector has **`DEVICE_CODE = 'nurlat-5-boiler-room'`**. It awaits the
+existing storage helper with that code and tab ID before assigning `msg.deviceState`.
+Production live telemetry and stored history were confirmed on **17 November 2026**.
 
-The Node-RED flow and schema changes remain prepared locally. The database registration
-above does not deploy into the running B editor, enable persistence or restart a service.
+The [emergency migration](../../../database/migrations/2026-11-17-add-nurlat-5-emergency-rules.sql)
+was applied on **17 November 2026**, creating emergency registration **25** with
+**80 reasons covering 93 PLC boolean flags** and a **three-minute** history interval.
+It covers CO/CH₄, fire/security, pressure and dry-run protections, boiler faults/locks,
+pump start errors and all available sensor faults and H/L/HH/LL threshold flags.
+Alarm-list/input pairs and each boiler's fault/alarm pair activate one reason per
+event; warning and alarm levels remain separate. Connection loss is the dispatcher's
+built-in reason **100**. All 124 evaluator checks and 12 isolated PostgreSQL scenarios
+passed. The watcher's live emergency feed and stored emergency history matched the
+corresponding captured PLC samples; the session was signed out. See the
+[emergency verification report](../../../.reports/2026-11-17-nurlat-5-emergency-rules/README.md).
+This task changed database configuration only; it performed no collector deployment
+or service restart.
+
 The earlier live validation used a separate disposable Node-RED runtime inside B's container, with an
 observer in place of the inactive state debug node. Its initial polling interval was
 shortened to 10 seconds for one test cycle; the saved tab uses 60 seconds.
