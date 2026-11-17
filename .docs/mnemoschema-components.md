@@ -162,6 +162,12 @@ use **0.25** normally, **0.5** for a warning and **1** for a fault/alarm. Yellow
 outlines use **1**, except emergency tiles, which stay at **0.5**. Restore the state
 appearance after pointer leave.
 
+The standard defines appearance. Each site's own state paths, signal polarity, units,
+alarm/input distinction and command-feedback meanings remain authoritative. Do not infer
+an alarm from a numeric value, a stopped pump or another site's field order.
+
+### Boiler burners and flame glow
+
 Burner backgrounds use **`#808080` in both stopped and running states**, accepted
 on **17 November 2026**. A running boiler is distinguished by its flame and the
 animated orange glow from Spring-2, replacing the previous `#333333` running
@@ -176,13 +182,30 @@ non-interactive so clicks reach the burner. Apply the animation to the flame
 instance, and disable the older inner static shadow to avoid combining effects.
 The original flame paths and component geometry stay unchanged.
 
+The animation source is
+[Spring-2's CSS](../flow-space-statics/devices/spring2-boiler-room/mnemo-schema.css).
+Copy its filter declarations at **0 / 25 / 50 / 75 / 100%** unchanged, giving the
+keyframes a name unique to the target diagram. For example,
+[Kirov's CSS](../flow-space-statics/devices/kirov-boiler-room/mnemo-schema.css) uses:
+
+```css
+#kirov-mnemoschema .boiler-flame-animation {
+    animation: kirov_mnemoschema_burner_glow 3s ease-in-out infinite;
+    pointer-events: none;
+}
+```
+
+Keep the burner's initial SVG fill and evaluated fill consistent. Where an existing
+`data-state-eval` switches between dark running and grey stopped fills, replace only
+that fill assignment with `element.style.fill = '#808080';`. Retain its other
+expressions, ordered `data-state` properties and colourizer hints so the full burner
+popover and hover restoration still work. Preserve the flame's existing visibility
+expression exactly; adding the animation class does not introduce another working,
+normal or lock condition. Stopped flames remain hidden according to that site's logic.
+
 Nurlat-5, Kirov, Gagarin, Komarova and Muslum-7/9 now use this appearance. Spring-2
 retains its approved glow and grey burner background, including its own fault
 outline semantics.
-
-The standard defines appearance. Each site's own state paths, signal polarity, units,
-alarm/input distinction and command-feedback meanings remain authoritative. Do not infer
-an alarm from a numeric value, a stopped pump or another site's field order.
 
 ## Layout and canvas
 
@@ -247,3 +270,12 @@ measurements against the references. Check normal/running/locked, connected/disc
 warnings/alarms, hover enter/leave, popup scrolling/closing and phone gestures. Validate
 all state paths and preserve the source topology. Regenerate the static manifest and
 keep screenshots and machine-readable results beside the work report.
+
+For burner-glow changes, check every affected burner in running and stopped cases,
+plus the site's locked/fault appearance. In the application, confirm the grey fill,
+unchanged flame visibility and body colours, all five animation phases and the
+profile's timing. When multiple burners run together, every visible flame must
+animate under its existing predicate. Check full burner property popovers, hover/restoration
+and phone taps through the non-interactive flame. Save before/after captures with
+the same operating case and zoom; label synthetic states and note that each PNG
+captures only one phase of the continuous glow.
