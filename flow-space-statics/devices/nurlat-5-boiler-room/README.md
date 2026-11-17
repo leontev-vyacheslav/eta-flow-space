@@ -87,6 +87,21 @@ physical meaning. Heat-exchanger measurements likewise retain neutral inlet/outl
 and the original INT alarm inputs also have separate state properties. No alarm is
 inferred from measured pressure, temperature, stopped pumps or another flag.
 
+## Parameters form
+
+The schema's root `ui` enables tabs and defines every group referenced by the
+field editors: states (1), alarms and inputs (6), sensors (5), boilers (2), pumps (3),
+valves and output signals (4), and operating mode and setpoints (7). These IDs
+follow this site's existing assignments. All editors remain read-only.
+The dashboard parameters form and map details use these root group definitions.
+
+On 17 November, Playwright reproduced a blank dashboard on opening «Параметры»
+because the root `ui` was missing (`Cannot read properties of undefined (reading
+'useTabs')`). With the corrected local schema and live API state, all seven groups
+and 148 fields rendered on desktop and phone; desktop editors were verified read-only,
+and diagram return/reload checks passed. Only the schema request was overridden;
+the schema and manifest change has not been deployed.
+
 ## Mnemoschema
 
 `mnemo-schema.svg` preserves the supplied legacy topology: К1.1 and К1.2, four boiler

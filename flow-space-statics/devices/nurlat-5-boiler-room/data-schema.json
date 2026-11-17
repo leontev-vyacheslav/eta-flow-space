@@ -2761,5 +2761,52 @@
         "pressIn"
       ]
     }
+  },
+  "ui": {
+    "useTabs": true,
+    "groups": [
+      {
+        "id": 1,
+        "name": "state",
+        "caption": "Состояния",
+        "order": 100
+      },
+      {
+        "id": 6,
+        "name": "emergency",
+        "caption": "Аварии и входы",
+        "order": 150
+      },
+      {
+        "id": 5,
+        "name": "sensors",
+        "caption": "Датчики",
+        "order": 170
+      },
+      {
+        "id": 2,
+        "name": "boilers",
+        "caption": "Котлы",
+        "order": 200
+      },
+      {
+        "id": 3,
+        "name": "pumps",
+        "caption": "Насосы",
+        "order": 300
+      },
+      {
+        "id": 4,
+        "name": "valvesAndSignals",
+        "caption": "Клапаны и сигналы",
+        "order": 400
+      },
+      {
+        "id": 7,
+        "name": "modeAndSetpoints",
+        "caption": "Режим и уставки",
+        "order": 500
+      }
+    ]
   }
 }
