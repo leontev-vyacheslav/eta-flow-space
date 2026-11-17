@@ -90,6 +90,16 @@ stop/start commands, and limitations.
 | `2026-11-13-add-muslum-emergency-rules.sql` | not yet; 43 reasons for Muslum-7 and 41 for Muslum-9, validated with the API evaluator and isolated PostgreSQL 17 |
 | `2026-11-16-add-nurlat-5-boiler-room.sql` | yes (applied and verified 2026-11-16; device 35, flow 13, own mnemoschema and both shared watcher links) |
 | `2026-11-16-add-nurlat-5-location.sql` | yes (applied and verified 2026-11-16; location 15, address and supplied coordinates; production API list/detail checked) |
+| `2026-11-17-add-nurlat-boiler-watcher.sql` | yes (applied and verified 2026-11-17; user 8, 10-character password, Nurlat-5 access for both watcher accounts; sign-in and access isolation checked) |
+
+The Nurlat watcher migration creates `nurlat-boiler-watcher` with operator role 2,
+standard initial watcher settings and access only to `nurlat-5-boiler-room` (device 35).
+The generated password is 10 characters; only its bcrypt hash (cost 12) is committed.
+The readable credential is kept in a private, Git-ignored local file. The existing
+`boiler-watcher` already had Nurlat-5 access; its password, settings and other links
+were preserved. Reruns restore missing target links without changing credentials.
+All 13 isolated PostgreSQL checks passed. Production sign-in, the one-device list,
+device details and rejection of unrelated-device access were checked, then signed out.
 
 The Nurlat-5 migration registers `nurlat-5-boiler-room` as `Котельная Нурлат-5`,
 linked to Node-RED B tab `93dc403dd0a3e7b1`. It uses the existing boiler-room settings:

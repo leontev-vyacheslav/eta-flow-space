@@ -246,6 +246,14 @@ emergency registration is created while telemetry persistence is disabled, avoid
 a permanent connection-loss alarm. See the [database migration log](../../../database/README.md)
 and [verification report](../../../.reports/2026-11-16-nurlat-5-database/README.md).
 
+On **17 November 2026**, the [watcher migration](../../../database/migrations/2026-11-17-add-nurlat-boiler-watcher.sql)
+created `nurlat-boiler-watcher` (user **8**) with operator role and access only to this
+boiler room. Its generated password has 10 characters and is kept outside Git; the
+migration stores only its bcrypt hash. The existing `boiler-watcher` access was confirmed
+and preserved. Sign-in, the one-device list, device details, rejection of an unrelated
+device and sign-out passed through the production API. All 13 isolated migration
+checks passed. See the [watcher verification report](../../../.reports/2026-11-17-nurlat-watcher/README.md).
+
 The collector has **`DEVICE_CODE = null`** and explicitly skips persistence in that mode.
 It assigns the normalized object to `msg.deviceState`. When a device is registered and
 persistence is intended, set its exact code in that guard; the existing storage helper
