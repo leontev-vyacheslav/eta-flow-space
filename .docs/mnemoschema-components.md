@@ -11,8 +11,8 @@ Gagarin and Komarova provide matching reference equipment footprints; Spring-2 s
 component family and the original drawing conventions. The accepted defaults below
 supersede their older equipment/reading sizes, typography, strokes and radii for further work.
 Kirov, Gagarin and Komarova were updated to the accepted standard on 16 November
-2026, followed by Muslum-7 and Muslum-9. Spring-2 retains its historical dimensions
-until its update is requested.
+2026, followed by Muslum-7, Muslum-9 and Spring-2. Spring-2 retains its
+three-device ownership, existing controller semantics and site-specific pipe routing.
 
 Use the [mnemoschema-standard skill](../.codex/skills/mnemoschema-standard/SKILL.md) for
 the workflow that applies and verifies these values when creating or changing components.
@@ -66,7 +66,7 @@ alignment together. The older reference diagrams use 45-unit reading frames and 
 stroke/radius values. Their geometry is a starting point; the accepted defaults above
 take precedence for new diagrams and component updates. Reference SVGs retain their
 historical values until their update is requested; Kirov, Gagarin and Komarova now
-follow the accepted defaults, as do Muslum-7/9.
+follow the accepted defaults, as do Muslum-7/9 and Spring-2.
 
 ## Water tanks and valves
 
@@ -188,6 +188,16 @@ for component size. This local canvas accommodates Muslum-7's seven single-colum
 alarm tiles while retaining both sites' distinct circuits. See their device READMEs
 for coordinates and exceptions, including Muslum-7's hydraulic separator and the
 slightly wider control-mode card needed for phone text metrics.
+
+Spring-2 uses **`-98 8 636 485`**, widening the original 600-unit canvas for its
+eight unscaled alarm tiles in two columns. Its controller, IRVIS gas meter and
+VKT-7 heat calculator share the diagram while retaining their individual state
+paths, units, property lists and selection markers. The meter flow frames are
+**70 units** wide for VKT-7 and **80 units** for IRVIS working flow; other reading
+frames use 55 × 12. The four boiler-output valves use the standard vertical
+bow-tie and left actuator. Gas branches keep their original lower-body entry
+height to avoid crossing circulation pumps. The device README records these
+local coordinates and the controller temperature assemblies' extra clearance.
 
 The dashboard still fits SVGs into its existing responsive viewport. Different viewBox
 heights, or width-constrained screens, can produce different screen scales; compare native
