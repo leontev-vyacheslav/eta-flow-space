@@ -230,8 +230,8 @@ Vertical positions, pump geometry and all state bindings remain unchanged.
 
 The top panel follows the shared reference layout: white rounded cards for
 **T12 (н.в.) → TE2 (обратка) → PE2 (обратка)**, grouped against its right edge.
-Each is **76.9 × 30.1**, radius **10**, with **7.4-unit gaps**, x positions
-**476.1 / 560.4 / 644.7**, top **43.9**, bottom **74**. Labels use 10 px and
+Each is now **112 × 30.1**, matching Nurlat-5's reading-card width, with radius
+**10**, **7.4-unit gaps**, x positions **370.8 / 490.2 / 609.6**, top **43.9**, bottom **74**. Labels use 10 px and
 values 9 px. The last card ends at **721.6**, inset **6.5** from the panel edge.
 The standard heading, information icon and date/time positions remain unchanged.
 
@@ -263,3 +263,13 @@ All tile contents, IDs, bindings, colourizers and state expressions are unchange
 The rest of the diagram, including the pending header cards and the 837 × 485
 canvas, stays fixed. Browser evidence and static comparison are recorded in
 `.reports/2026-11-18-spring1-alarm-column/`.
+
+## Header-card width matched to Nurlat-5 — 18 November 2026
+
+All three header cards widen **76.9 → 112** native units, matching Nurlat-5's
+outdoor/room/setpoint reading cards. Their right-aligned row still ends at
+**721.6**, with the same 7.4-unit gaps and 6.5-unit panel inset; the row starts
+at **370.8**. Card text is re-centred at local **x = 56**.
+Height, vertical positions, fonts, radius, all bindings and state expressions
+are unchanged. The remainder of the diagram stays fixed. Evidence is in
+`.reports/2026-11-18-spring1-card-width/`.
