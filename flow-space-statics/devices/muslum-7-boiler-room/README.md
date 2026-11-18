@@ -202,3 +202,10 @@ events through to those targets.
 Before/after screenshots, synthetic state checks and desktop/phone evidence are
 recorded in `.reports/2026-11-17-standard-burner-glow/`. These files remain local;
 no deployment or controller change is implied.
+
+## Emergency-panel heading — 18 November 2026
+
+The shared heading is **«Аварийные события»**, split into two centred lines for
+the narrow single-column panel. The existing 10 px font, x = 47 anchor and
+y = 100 / 112 baselines are retained. Tile layout, state bindings and alarm
+semantics are unchanged.

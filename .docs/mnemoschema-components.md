@@ -114,6 +114,12 @@ root's `aria-label` and application header. Use `aria-describedby` to reference 
 `<desc>` when present. Do not add SVG `<title>` elements or `title` attributes to
 diagrams: their browser tooltips cover equipment while the user inspects it.
 
+Use the exact heading **«Аварийные события»** for every emergency panel. Its
+canonical wording is `labels.emergencyEvents` in the JSON profile. Use the
+general 10 px text role. Narrow single-column panels split it into centred
+**«Аварийные» / «события»** lines with at least 12 units between baselines;
+wider panels may keep one line. Preserve the panel's existing state meanings.
+
 The following scheme was accepted on **16 November 2026**. Use it for new mnemoschemas
 and when typography is part of the requested work on an existing diagram.
 

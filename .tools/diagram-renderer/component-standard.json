@@ -3,7 +3,7 @@
   "references": ["kirov-boiler-room", "gagarin-boiler-room", "komarova-boiler-room", "spring2-boiler-room"],
   "referenceViewBoxHeight": 412,
   "font": { "family": "Roboto,Arial,sans-serif", "reading": 9, "emergencyLabel": 7, "other": 10, "multilineBaseline": 12 },
-  "labels": { "otherParameters": "Прочие параметры котельной" },
+  "labels": { "otherParameters": "Прочие параметры котельной", "emergencyEvents": "Аварийные события" },
   "strokeWidths": [1, 0.5, 0.25],
   "radius": 10,
   "hover": { "strokeWidth": 1, "emergencyStrokeWidth": 0.5 },
