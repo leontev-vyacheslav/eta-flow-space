@@ -396,8 +396,8 @@
 	<text transform="translate(48.4689 0) translate(50 0) translate(-53 0) matrix(1 0 0 1 670.9551 385.3874)" style="font-family:'Roboto';font-size:10px;" pointer-events="none">Т1</text>
 	<text transform="translate(48.4689 0) translate(50 0) translate(-53 0) matrix(1 0 0 1 669.9711 330.5885)" style="font-family:'Roboto';font-size:10px;" pointer-events="none">Т2</text>
 	<polygon style="fill:#0071BC;stroke:#0071BC;stroke-width:0.5;stroke-miterlimit:10;" points="671,427.5 682,422.1 682,432.9
-	671,427.5 "  transform="translate(50 0) translate(-53 0) "/>
-	<text transform="translate(50 0) translate(-53 0) matrix(1 0 0 1 670.9545 447.0123)" style="font-family:'Roboto';font-size:10px;" pointer-events="none">В1</text>
+	671,427.5 "  transform="translate(47.4689 0) translate(50 0) translate(-53 0) "/>
+	<text transform="translate(48.4689 0) translate(50 0) translate(-53 0) matrix(1 0 0 1 670.9545 447.0123)" style="font-family:'Roboto';font-size:10px;" pointer-events="none">В1</text>
 	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="228" cy="367.8" r="1.5"  transform="translate(-50 0) translate(-53.9 0) "/>
 	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="172.3" cy="367.8" r="1.5"  transform="translate(-50 0) translate(-53.9 0) "/>
 	<circle style="stroke:#000000;stroke-miterlimit:10;" cx="172.6" cy="297.2" r="1.5"  transform="translate(-50 0) translate(-53.9 0) "/>
@@ -685,9 +685,9 @@
 		<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="305.2" y="393.2" text-anchor="middle">PE4</text>
 	</g>
 	<circle style="fill:#FF9800;stroke:#FF9800;stroke-miterlimit:10;" cx="304.5" cy="417.3" r="1.5"  transform="translate(-50 0) translate(-90 0) "/>
-	<circle style="fill:#FF9800;stroke:#FF9800;stroke-miterlimit:10;" cx="450.1481" cy="190.7" r="1.5" />
+	<circle style="fill:#FF9800;stroke:#FF9800;stroke-miterlimit:10;" cx="480.1481" cy="190.7" r="1.5" />
 	<circle style="fill:#FF9800;stroke:#FF9800;stroke-miterlimit:10;" cx="270" cy="244.8" r="1.5"  transform="translate(-50 0)"/>
-	<circle style="fill:#FF9800;stroke:#FF9800;stroke-miterlimit:10;" cx="198.005" cy="190.7" r="1.5" />
+	<circle style="fill:#FF9800;stroke:#FF9800;stroke-miterlimit:10;" cx="188.005" cy="190.7" r="1.5" />
 
 
 	<use data-device="spring1-ek270-1116061420" href="#infoIcon"
@@ -702,10 +702,10 @@
 	129.8,417.6 "  transform="translate(-50 0) translate(-90 0) "/>
 	<text transform="translate(-50 0) translate(-90 0) matrix(1 0 0 1 118.7411 435.1607)" style="font-family:'Roboto';font-size:10px;" pointer-events="none">Г1</text>
 	<line style="fill:none;stroke:#FF9800;stroke-miterlimit:10;" x1="270" y1="362.9" x2="270" y2="258.8"  transform="translate(-50 0)"/>
-	<line style="fill:none;stroke:#FF9800;stroke-miterlimit:10;" x1="197.9043" y1="244.8" x2="450.1481" y2="244.8" />
-	<line style="fill:none;stroke:#FF9800;stroke-miterlimit:10;" x1="198.005" y1="244.8" x2="198.005" y2="190.7" />
+	<line style="fill:none;stroke:#FF9800;stroke-miterlimit:10;" x1="187.9043" y1="244.8" x2="480.1481" y2="244.8" />
+	<line style="fill:none;stroke:#FF9800;stroke-miterlimit:10;" x1="188.005" y1="244.8" x2="188.005" y2="190.7" />
 	<line style="fill:none;stroke:#FF9800;stroke-miterlimit:10;" x1="220" y1="244.8" x2="220" y2="249.5" />
-	<line style="fill:none;stroke:#FF9800;stroke-miterlimit:10;" x1="450.1481" y1="244.8" x2="450.1481" y2="190.7" />
+	<line style="fill:none;stroke:#FF9800;stroke-miterlimit:10;" x1="480.1481" y1="244.8" x2="480.1481" y2="190.7" />
 
 	<g data-section="sourceWaterPumps[0]" transform="translate(-20 0) translate(-30 0) translate(20 0) translate(-78.1 0) translate(0 10)" id="makeup-pump-1">
 		<circle style="fill:#808080;stroke:#000000;stroke-miterlimit:10;stroke-width:0.25;" cx="398.1" cy="403.2" r="10"  pointer-events="none"/>
@@ -756,6 +756,6 @@
 
 
 
-<line x1="355" y1="413.2" x2="355" y2="447.1" stroke="#000000" stroke-width="1" transform="translate(-20 0) translate(-30 0) translate(20 0)"/><line x1="275.0" y1="427.7" x2="618" y2="427.7" stroke="#000000" stroke-width="1" transform="translate(50 0)"/><circle cx="355" cy="427.7" r="1.5" fill="#000000" transform="translate(-20 0) translate(-30 0) translate(20 0)"/>
+<line x1="355" y1="413.2" x2="355" y2="447.1" stroke="#000000" stroke-width="1" transform="translate(-20 0) translate(-30 0) translate(20 0)"/><line x1="275.0" y1="427.7" x2="665.4689" y2="427.7" stroke="#000000" stroke-width="1" transform="translate(50 0)"/><circle cx="355" cy="427.7" r="1.5" fill="#000000" transform="translate(-20 0) translate(-30 0) translate(20 0)"/>
 	<circle id="makeup-inlet-branch-junction" cx="250" cy="413.3" r="1.5" fill="#000000" pointer-events="none"/>
 </svg>

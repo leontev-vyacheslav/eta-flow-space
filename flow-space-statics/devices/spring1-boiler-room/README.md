@@ -218,3 +218,10 @@ upper inlet T-junction dot is restored at **(250, 413.3)** with radius **1.5**.
 Both pump alarms are displayed in browser-only fixtures when checking the layout.
 The original alarm visibility predicates, property lists and pump geometry remain
 unchanged. Evidence is in `.reports/2026-11-18-spring1-pump-warning-clearance/`.
+
+## B1 connector alignment — 18 November 2026
+
+The B1 inlet arrow moves **47.4689 units right** to match the T2 arrow's
+horizontal bounds (**x = 715.4689–726.4689**). Its caption moves **48.4689 units
+right** to match T1's caption anchor; the connected pipe extends to **x = 715.4689**.
+Vertical positions, pump geometry and all state bindings remain unchanged.
