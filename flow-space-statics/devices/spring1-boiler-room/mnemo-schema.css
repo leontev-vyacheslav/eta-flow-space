@@ -1,32 +1,55 @@
-[data-state] {
+.spring1-mnemoschema [data-state] {
   transition: fill 0.25s ease, stroke 0.25s ease !important;
   cursor: pointer;
 }
 
-text[data-state]:hover,
-svg tspan[data-state]:hover {
-  /* fill: #ffeb3b !important; */
+.spring1-mnemoschema text[data-state]:hover,
+.spring1-mnemoschema tspan[data-state]:hover {
   font-weight: bold;
-  stroke-width: 2px !important;
+  stroke-width: 1px !important;
 }
 
-
-circle[data-state]:hover,
-path[data-state]:hover,
-rect[data-state]:hover,
-polygon[data-state]:hover {
+.spring1-mnemoschema circle[data-state]:hover,
+.spring1-mnemoschema path[data-state]:hover,
+.spring1-mnemoschema rect[data-state]:hover,
+.spring1-mnemoschema polygon[data-state]:hover,
+.spring1-mnemoschema use[data-state]:hover {
   stroke: #ffeb3b !important;
-  stroke-width: 2px !important;
+  stroke-width: 1px !important;
   filter: drop-shadow(0 0 4px rgba(255, 235, 59, 0.5));
   opacity: 0.9 !important;
 }
 
-g#boilerFlame>path:hover {
-  stroke: #ffeb3b !important;
-  stroke-width: 15px;
+.spring1-mnemoschema .pump-frame,
+.spring1-mnemoschema .pump-state,
+.spring1-mnemoschema .relay-frame,
+.spring1-mnemoschema .relay-state {
+  stroke-width: 1px !important;
 }
 
-@keyframes intenseGlow {
+.spring1-mnemoschema .valve-actuator {
+  stroke-width: 0.5px !important;
+}
+
+.spring1-mnemoschema #alarm-panel .emergency-tile,
+.spring1-mnemoschema #alarm-panel .emergency-tile:hover {
+  stroke-width: 0.5px !important;
+}
+
+.spring1-mnemoschema text:not([data-state]) {
+  pointer-events: none;
+}
+
+@media (max-width: 599px) {
+  body:has(.spring1-mnemoschema) .mnemoschema-popover .dx-overlay-content {
+    max-width: calc(100vw - 20px);
+  }
+  body:has(.spring1-mnemoschema) .mnemoschema-popover td:first-child {
+    overflow-wrap: anywhere;
+  }
+}
+
+@keyframes spring1IntenseGlow {
   0% {
     filter:
       drop-shadow(0 0 10px rgba(255, 100, 0, 0.8)) drop-shadow(0 0 20px rgba(255, 60, 0, 0.6)) drop-shadow(0 0 30px rgba(255, 30, 0, 0.4)) brightness(1);
@@ -53,7 +76,10 @@ g#boilerFlame>path:hover {
   }
 }
 
-.boiler-flame-animation {
+.spring1-mnemoschema .boiler-flame-animation {
   animation:
-    intenseGlow 3s ease-in-out infinite;
+    spring1IntenseGlow 3s ease-in-out infinite;
+}
+.spring1-mnemoschema .boiler-flame-animation {
+  pointer-events: none;
 }

@@ -249,6 +249,14 @@ bow-tie and left actuator. Gas branches keep their original lower-body entry
 height to avoid crossing circulation pumps. The device README records these
 local coordinates and the controller temperature assemblies' extra clearance.
 
+Spring-1 uses **`-98 8 837 485`**: Spring-2's expanded **736-unit** width plus its
+**101-unit** electricity-meter side panel. Its four boiler assemblies have equal
+144.5-unit centre spacing. The controller, EK270, Взлет026 and two Mercury230 meters
+keep their individual bindings and selection highlights. Its three-way mixing
+valve retains the appropriate three-port artwork. See the
+[Spring-1 README](../flow-space-statics/devices/spring1-boiler-room/README.md) for
+local coordinates, wider meter-reading frames and verification.
+
 The dashboard still fits SVGs into its existing responsive viewport. Different viewBox
 heights, or width-constrained screens, can produce different screen scales; compare native
 units at 100% or use the same actual zoom when checking component sizes. Do not compensate
