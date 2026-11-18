@@ -75,7 +75,7 @@ stop/start commands, and limitations.
 | `2026-10-15-tsarevo1-vkt7-gas-per-boiler.sql` | yes (verified 2026-10-15) |
 | `2026-10-16-remove-tsarevo1-tv7.sql` | yes (verified 2026-10-16) |
 | `2026-10-22-spring2-boiler-alarm-emergency.sql` | yes (verified 2026-10-22) |
-| `2026-10-22-spring2-pump-sensor-relay-emergencies.sql` | not yet |
+| `2026-10-22-spring2-pump-sensor-relay-emergencies.sql` | yes (all 11 reasons verified by a read-only query on 2026-11-18; application date unknown) |
 | `2026-10-27-add-gagarin-boiler-room.sql` | not yet |
 | `2026-11-07-add-object-location-locality.sql` | yes (applied and verified 2026-11-07) |
 | `2026-11-07-normalize-locality-abbreviations.sql` | yes (applied and verified 2026-11-07, including a second run) |
@@ -92,6 +92,20 @@ stop/start commands, and limitations.
 | `2026-11-16-add-nurlat-5-location.sql` | yes (applied and verified 2026-11-16; location 15, address and supplied coordinates; production API list/detail checked) |
 | `2026-11-17-add-nurlat-boiler-watcher.sql` | yes (applied and verified 2026-11-17; user 8, 10-character password, Nurlat-5 access for both watcher accounts; sign-in and access isolation checked) |
 | `2026-11-17-add-nurlat-5-emergency-rules.sql` | yes (applied and verified 2026-11-17; emergency 25, 80 reasons covering 93 PLC flags, three-minute history interval; live API and stored emergency history checked; 124 evaluator and 12 isolated PostgreSQL checks passed) |
+| `2026-11-18-spring2-sensor-status-emergencies.sql` | not yet; all 22 SensorStatus fields, seven existing rules extended and 15 added; 141 evaluator and 25 isolated PostgreSQL checks passed |
+
+The Spring-2 SensorStatus migration covers all boiler outlet/flue temperatures,
+diesel levels, boiler-pump current sensors and common temperature/pressure sensors.
+Each sensor has one reason for exact numeric status 4, 8, 16 or 32; its dynamic
+description names the current alarm, fault, calibration error or overload.
+WARNING (2) is excluded for every sensor.
+Existing reasons 55–61 retain their IDs and descriptions while gaining the requested alarm/fault
+coverage; new reasons use 63–77. The current 43-reason registration would become
+58 reasons. Existing numeric limits, unrelated rules, intervals and history remain
+unchanged. Persistent sensor faults are deliberately included. Identical reruns
+change nothing; conflicting managed IDs, malformed arrays and missing/duplicate
+registrations abort. No schema, ORM or application deployment is needed. See the
+[migration review and saved-state preview](../.reports/2026-11-18-spring2-sensor-status-emergencies/README.md).
 
 The Nurlat-5 emergency migration creates its missing registration or populates an
 existing empty reason list. It covers gas/fire/security, pressure and dry-run
