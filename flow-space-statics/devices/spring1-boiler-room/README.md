@@ -42,8 +42,8 @@ its name through `aria-label`, without a browser tooltip.
 | Heat-meter flow / pressure frames | 70 × 12 / 65 × 12 for value and unit clearance |
 | EK270 flow frame / electricity readings | 80 × 12 / 75 × 12 |
 | Other-parameters panel | x = −92, y = 12, width 820.1, height 70, radius 10 |
-| Alarm panel | x = −92, y = 90, width 112, height 177, radius 10 |
-| Five emergency tiles | 43 × 43, radius 10; two columns, 24 × 25 icon instances |
+| Alarm panel | x = −92, y = 90, width 68, height 277, radius 10 |
+| Five emergency tiles | 43 × 43, radius 10; one column, 24 × 25 icon instances |
 | Electricity panel | x = 627.1, y = 90, width 101, height 165, radius 10 |
 
 Complete boiler/circulation-pump assemblies move together. Connected pipe endpoints,
@@ -59,8 +59,8 @@ in separate sections of their original circuits, clear of the heat-meter reading
 The **ЧРП ПН** caption sits above the upper makeup pump, clear of both
 its frame and the heat-calculator panel border.
 
-The header uses **«Прочие параметры котельной»**, with its existing T12 card aligned
-to the right. Date/time anchors are **(−83, 28)** and **(−78, 41)**, matching Spring-2.
+The header uses **«Прочие параметры котельной»**, with **T12 → TE2 → PE2** cards
+aligned together to the right. Date/time anchors are **(−83, 28)** and **(−78, 41)**, matching Spring-2.
 Readings use **9 px**, emergency captions **7 px**, and other text **10 px**.
 Two invisible exporter artifacts with empty artwork are removed, including a line
 whose enormous bounds extended far outside the canvas.
@@ -225,3 +225,41 @@ The B1 inlet arrow moves **47.4689 units right** to match the T2 arrow's
 horizontal bounds (**x = 715.4689–726.4689**). Its caption moves **48.4689 units
 right** to match T1's caption anchor; the connected pipe extends to **x = 715.4689**.
 Vertical positions, pump geometry and all state bindings remain unchanged.
+
+## Header summary cards — 18 November 2026
+
+The top panel follows the shared reference layout: white rounded cards for
+**T12 (н.в.) → TE2 (обратка) → PE2 (обратка)**, grouped against its right edge.
+Each is **76.9 × 30.1**, radius **10**, with **7.4-unit gaps**, x positions
+**476.1 / 560.4 / 644.7**, top **43.9**, bottom **74**. Labels use 10 px and
+values 9 px. The last card ends at **721.6**, inset **6.5** from the panel edge.
+The standard heading, information icon and date/time positions remain unchanged.
+
+TE2 repeats controller **tempOutNet**, and PE2 repeats **pressOutNet**, both on the
+return line. Their card frames retain the corresponding instrument's exact
+ordered six-property list and warning/error stroke expressions. T12 retains
+**tempOutAir**, and its frame also opens that property's details. All values use
+the owning schema's units; there are no collector or schema changes.
+
+The original 75 bindings remain; five additional bound elements bring the total
+to **80**, with **37 state expressions**. All source geometry outside the cards
+is unchanged. Browser verification covers reading parity, card spacing/value fit,
+normal/warning/fault styles, hover restoration and desktop/phone popovers.
+Evidence: `.reports/2026-11-18-spring1-top-panel/`.
+
+## Single-column emergency panel — 18 November 2026
+
+The emergency panel follows Muslum-7/9's **68-unit width**, **12.5-unit side
+insets** and **48-unit vertical pitch**: five 43 × 43 tiles with 5-unit gaps.
+Its left/top edges remain **(−92, 90)**; height increases **177 → 277** and width
+decreases **112 → 68**. The white frame is behind the existing tile hit targets.
+The heading keeps **«Аварийные события»**, split into two centred 10 px lines at
+**x = −58**, baselines **104 / 116**.
+
+Visual order is **Связь → Пожар → Охрана → CO → CH**, matching the previous
+row-by-row order. Complete tile assemblies use **x = −79.5**, tops
+**124 / 172 / 220 / 268 / 316**; captions remain 7 px, icons 24 × 25.
+All tile contents, IDs, bindings, colourizers and state expressions are unchanged.
+The rest of the diagram, including the pending header cards and the 837 × 485
+canvas, stays fixed. Browser evidence and static comparison are recorded in
+`.reports/2026-11-18-spring1-alarm-column/`.

@@ -551,18 +551,29 @@
 			data-state-eval="element.style.fill = (states['spring1-boiler-room'].isConnected === false ? '#F44336': '#0072C6')"
 			data-state="states['spring1-boiler-room'].isConnected;states['spring1-boiler-room'].timestamp;states['spring1-boiler-room'].isWorkingAsmNetworkPumps;states['spring1-boiler-room'].isAlarmAsmNetworkPumps;states['spring1-boiler-room'].isAlarmStopAsmNetworkPumps"
 			style="fill:#0072C6;" transform="translate(708.1 19) scale(0.55)"  id="controller-info"/>
-		<g transform="translate(340.2 0)" id="parameter-cards">
-			<path style="fill:#CCCCCC;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;" d="M314.5 43.9H371.4A10 10 0 0 1 381.4 53.9V64A10 10 0 0 1 371.4 74H314.5A10 10 0 0 1 304.5 64V53.9A10 10 0 0 1 314.5 43.9Z" />
-			<text transform="translate(0 0)"
-				style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="342.95" y="55" text-anchor="middle">Т12&#160;(н.в.)</text>
-			<text data-state="states['spring1-boiler-room'].tempOutAir" transform="translate(0 0)"
-				style="font-family:'Roboto';font-size:9px;" x="342.95" y="68.6" text-anchor="middle">20,56ºC</text>
+		<g id="parameter-cards">
+			<g id="header-outdoor-temperature" transform="translate(476.1 0)">
+				<rect id="header-outdoor-temperature-frame" data-state="states['spring1-boiler-room'].tempOutAir" x="0" y="43.9" width="76.9" height="30.1" rx="10" ry="10" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;"/>
+				<text x="38.45" y="55" text-anchor="middle" style="font-family:'Roboto';font-size:10px;" pointer-events="none">Т12 (н.в.)</text>
+				<text id="header-outdoor-temperature-value" data-state="states['spring1-boiler-room'].tempOutAir" x="38.45" y="68.6" text-anchor="middle" style="font-family:'Roboto';font-size:9px;"></text>
+			</g>
+			<g id="header-return-temperature" transform="translate(560.4 0)">
+				<rect id="header-return-temperature-frame" data-state="states['spring1-boiler-room'].tempOutNet;states['spring1-boiler-room'].sensors.isTempOutNetSensorError;states['spring1-boiler-room'].sensors.isTempOutNetHighLevel;states['spring1-boiler-room'].sensors.isTempOutNetPreHighLevel;states['spring1-boiler-room'].sensors.isTempOutNetPreLowLevel;states['spring1-boiler-room'].sensors.isTempOutNetLowLevel" data-state-eval="element.style.stroke = (states['spring1-boiler-room'].sensors.isTempOutNetSensorError || states['spring1-boiler-room'].sensors.isTempOutNetHighLevel || states['spring1-boiler-room'].sensors.isTempOutNetLowLevel) ? 'red' : ((states['spring1-boiler-room'].sensors.isTempOutNetPreHighLevel || states['spring1-boiler-room'].sensors.isTempOutNetPreLowLevel) ? '#FFC107' : 'black'); element.style.strokeWidth = (states['spring1-boiler-room'].sensors.isTempOutNetSensorError || states['spring1-boiler-room'].sensors.isTempOutNetHighLevel || states['spring1-boiler-room'].sensors.isTempOutNetLowLevel) ? '1' : ((states['spring1-boiler-room'].sensors.isTempOutNetPreHighLevel || states['spring1-boiler-room'].sensors.isTempOutNetPreLowLevel) ? '0.5' : '0.25')" x="0" y="43.9" width="76.9" height="30.1" rx="10" ry="10" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;"/>
+				<text x="38.45" y="55" text-anchor="middle" style="font-family:'Roboto';font-size:10px;" pointer-events="none">TE2 (обратка)</text>
+				<text id="header-return-temperature-value" data-state="states['spring1-boiler-room'].tempOutNet" x="38.45" y="68.6" text-anchor="middle" style="font-family:'Roboto';font-size:9px;"></text>
+			</g>
+			<g id="header-return-pressure" transform="translate(644.7 0)">
+				<rect id="header-return-pressure-frame" data-state="states['spring1-boiler-room'].pressOutNet;states['spring1-boiler-room'].sensors.isPressOutNetSensorError;states['spring1-boiler-room'].sensors.isPressOutHighLevel;states['spring1-boiler-room'].sensors.isPressOutPreHighLevel;states['spring1-boiler-room'].sensors.isPressOutPreLowLevel;states['spring1-boiler-room'].sensors.isPressOutLowLevel" data-state-eval="element.style.stroke = (states['spring1-boiler-room'].sensors.isPressOutNetSensorError || states['spring1-boiler-room'].sensors.isPressOutHighLevel || states['spring1-boiler-room'].sensors.isPressOutLowLevel) ? 'red' : ((states['spring1-boiler-room'].sensors.isPressOutPreHighLevel || states['spring1-boiler-room'].sensors.isPressOutPreLowLevel) ? '#FFC107' : 'black'); element.style.strokeWidth = (states['spring1-boiler-room'].sensors.isPressOutNetSensorError || states['spring1-boiler-room'].sensors.isPressOutHighLevel || states['spring1-boiler-room'].sensors.isPressOutLowLevel) ? '1' : ((states['spring1-boiler-room'].sensors.isPressOutPreHighLevel || states['spring1-boiler-room'].sensors.isPressOutPreLowLevel) ? '0.5' : '0.25')" x="0" y="43.9" width="76.9" height="30.1" rx="10" ry="10" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;"/>
+				<text x="38.45" y="55" text-anchor="middle" style="font-family:'Roboto';font-size:10px;" pointer-events="none">PE2 (обратка)</text>
+				<text id="header-return-pressure-value" data-state="states['spring1-boiler-room'].pressOutNet" x="38.45" y="68.6" text-anchor="middle" style="font-family:'Roboto';font-size:9px;"></text>
+			</g>
 		</g>
 		<path data-device="spring1-boiler-room" style="fill:none;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;" d="M-82 12H718.1A10 10 0 0 1 728.1 22V72A10 10 0 0 1 718.1 82H-82A10 10 0 0 1 -92 72V22A10 10 0 0 1 -82 12Z"  id="other-parameters-frame"/>
 		<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="318.05" y="27" text-anchor="middle" id="other-parameters-heading">Прочие параметры котельной</text>
 	</g>
 	<g data-section="emergency" id="alarm-panel">
-		<g data-section="isConnected" id="alarm-isConnected" transform="translate(-84 114)">
+		<rect data-device="spring1-boiler-room" x="-92" y="90" width="68" height="277" rx="10" style="fill:#FFFFFF;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;"  id="alarm-panel-frame" ry="10"/>
+		<g data-section="isConnected" id="alarm-isConnected" transform="translate(-79.5 124)">
 			<path data-colorizer-hint="fill" data-state="states['spring1-boiler-room'].isConnected"
 				style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;stroke-width:0.5;" d="M10 0H33A10 10 0 0 1 43 10V33A10 10 0 0 1 33 43H10A10 10 0 0 1 0 33V10A10 10 0 0 1 10 0Z"  id="alarm-isConnected-frame" class="emergency-tile"/>
 			<text transform="translate(0 0)" style="font-family:'Roboto';font-size:7px;" x="21.5" y="37" text-anchor="middle" pointer-events="none">Связь</text>
@@ -571,7 +582,7 @@
 <use href="#spring1-alarm-isConnected-art" x="9.5" y="4" width="24" height="25" pointer-events="none"/>
 </g>
 
-		<g data-section="isCO" id="alarm-isCO" transform="translate(-31 165)">
+		<g data-section="isCO" id="alarm-isCO" transform="translate(-79.5 268)">
 			<path data-colorizer="fill" data-state="states['spring1-boiler-room'].isCO"
 				style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;stroke-width:0.5;" d="M10 0H33A10 10 0 0 1 43 10V33A10 10 0 0 1 33 43H10A10 10 0 0 1 0 33V10A10 10 0 0 1 10 0Z"  id="alarm-isCO-frame" class="emergency-tile"/>
 
@@ -580,7 +591,7 @@
 <use href="#spring1-alarm-isCO-art" x="9.5" y="4" width="24" height="25" pointer-events="none"/>
 </g>
 
-		<g data-section="isCH" id="alarm-isCH" transform="translate(-84 216)">
+		<g data-section="isCH" id="alarm-isCH" transform="translate(-79.5 316)">
 			<path data-colorizer-hint="fill" data-state="states['spring1-boiler-room'].isCH"
 				style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;stroke-width:0.5;" d="M10 0H33A10 10 0 0 1 43 10V33A10 10 0 0 1 33 43H10A10 10 0 0 1 0 33V10A10 10 0 0 1 10 0Z"  id="alarm-isCH-frame" class="emergency-tile"/>
 
@@ -591,7 +602,7 @@
 <use href="#spring1-alarm-isCH-art" x="9.5" y="4" width="24" height="25" pointer-events="none"/>
 </g>
 
-		<g data-section="isFireAlarm" id="alarm-isFireAlarm" transform="translate(-31 114)">
+		<g data-section="isFireAlarm" id="alarm-isFireAlarm" transform="translate(-79.5 172)">
 			<path data-colorizer-hint="fill" data-state="states['spring1-boiler-room'].isFireAlarm"
 				style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;stroke-width:0.5;" d="M10 0H33A10 10 0 0 1 43 10V33A10 10 0 0 1 33 43H10A10 10 0 0 1 0 33V10A10 10 0 0 1 10 0Z"  id="alarm-isFireAlarm-frame" class="emergency-tile"/>
 
@@ -601,7 +612,7 @@
 <use href="#spring1-alarm-isFireAlarm-art" x="9.5" y="4" width="24" height="25" pointer-events="none"/>
 </g>
 
-		<g data-section="isSecurityAlarm" id="alarm-isSecurityAlarm" transform="translate(-84 165)">
+		<g data-section="isSecurityAlarm" id="alarm-isSecurityAlarm" transform="translate(-79.5 220)">
 			<path data-colorizer-hint="fill" data-state="states['spring1-boiler-room'].isSecurityAlarm"
 				style="fill:none;stroke:#060606;stroke-linecap:round;stroke-miterlimit:10;stroke-width:0.5;" d="M10 0H33A10 10 0 0 1 43 10V33A10 10 0 0 1 33 43H10A10 10 0 0 1 0 33V10A10 10 0 0 1 10 0Z"  id="alarm-isSecurityAlarm-frame" class="emergency-tile"/>
 
@@ -610,8 +621,7 @@
 <use href="#spring1-alarm-isSecurityAlarm-art" x="9.5" y="4" width="24" height="25" pointer-events="none"/>
 </g>
 
-		<rect data-device="spring1-boiler-room" x="-92" y="90" width="112" height="177" rx="10" style="fill:none;stroke:#666666;stroke-width:0.5;stroke-miterlimit:10;"  id="alarm-panel-frame" ry="10"/>
-		<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" x="-36" y="105" text-anchor="middle">Аварийные события</text>
+		<text id="alarm-panel-heading" style="font-family:'Roboto';font-size:10px;" text-anchor="middle" pointer-events="none"><tspan x="-58" y="104">Аварийные</tspan><tspan x="-58" y="116">события</tspan></text>
 	</g>
 
 	<g data-section="electroPowerMeters" transform="translate(-22.9 -50)" id="electricity-meters">
