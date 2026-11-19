@@ -3,7 +3,7 @@ import { Injectable, OnModuleDestroy, OnModuleInit, Logger } from '@nestjs/commo
 import { InjectModel } from '@nestjs/sequelize';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { ConfigService } from '@nestjs/config';
-import { DeviceDataModel, FlowDataModel } from '../../../database/models';
+import { DeviceDataModel, FlowDataModel, ObjectLocationDataModel } from '../../../database/models';
 
 @Injectable()
 export class DevicePoolSyncService implements OnModuleInit, OnModuleDestroy {
@@ -43,6 +43,12 @@ export class DevicePoolSyncService implements OnModuleInit, OnModuleDestroy {
                         model: FlowDataModel,
                         as: 'flow',
                         attributes: ['uid'],
+                    },
+                    {
+                        model: ObjectLocationDataModel,
+                        as: 'objectLocation',
+                        attributes: ['id', 'address', 'locality', 'latitude', 'longitude'],
+                        required: false,
                     },
                 ],
             });
