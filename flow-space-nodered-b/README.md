@@ -44,11 +44,24 @@ Missing credentials or invalid/missing coordinates skip the request. The API's l
 must be deployed before this branch can run.
 
 The HTTP request uses metric units, Russian descriptions and a ten-second timeout. `weather-response`
-returns the full provider JSON through the subflow output in `msg.payload`, with `deviceCode` and
-`objectLocationId`, excluding request URLs/headers that contain the key. Enable the internal
-`current-weather` debug node to inspect it. Network/HTTP/invalid-response failures produce a status and
-warning without changing the PLC polling branch. Weather is not merged into PLC state or persisted;
-`tempOutAir` remains TE1.
+validates the full provider JSON and removes request URLs/headers containing the key.
+`store-weather-to-cache` then awaits the shared `storeWeatherToCacheAsync` helper before emitting the
+JSON through the subflow output in `msg.payload`, with `deviceCode`, `objectLocationId` and
+`weatherCacheKey`. Enable the internal `current-weather` debug node to inspect it.
+
+Redis key `weather:location:<objectLocationId>` is shared by devices at that location. Its JSON contains
+`provider: "openweather"`, `objectLocationId`, `units: "metric"`, `observedAt` and `fetchedAt` (epoch
+milliseconds), and the **complete unchanged provider response** in `data`, including all returned
+temperature, wind, humidity, pressure, precipitation, cloud, visibility, condition and solar fields.
+Optional fields remain absent when the provider omits them. TTL is three `INTERVAL`s: 90 minutes for
+the default 30-minute polling. Request failures leave the previous entry and its expiry untouched.
+Request/validation/Redis errors produce a status and warning and emit no output. The cache value and
+expiry are written together in one Redis SET operation.
+Weather is separate from PLC `deviceState`; `tempOutAir` remains TE1, with no weather history in PostgreSQL.
+
+Restart the consuming Node-RED instance to load the new shared helper before deploying this subflow.
+Helper/subflow cache checks: `node flow-space-nodered-a/src/helpers/store-weather-to-cache.test.js`
+(run from the repository root; Redis is mocked and no external requests are made).
 
 **Permissions on the server**: git writes this folder as the deploying user (uid 1001), Node-RED runs as uid 1000.
 Both can write when the group is node-red and folders carry the setgid bit (once, after the folder first arrives):
