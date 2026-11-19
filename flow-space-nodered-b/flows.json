@@ -5032,5 +5032,179 @@
         "x": 1120,
         "y": 700,
         "wires": []
+    },
+    {
+        "id": "2eea89802c2549be",
+        "type": "group",
+        "z": "93dc403dd0a3e7b1",
+        "name": "Weather — OpenWeather (30 min)",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "ab3e9ce62a0cf16c",
+            "1599462523c1f7c1",
+            "435f93c55a558f5f",
+            "c97452b948d66227",
+            "e8db35cfc41694bc",
+            "f6ab4c1a30e92c0b",
+            "4fcfc693f0398d12"
+        ],
+        "x": 54,
+        "y": 1139,
+        "w": 1412,
+        "h": 202
+    },
+    {
+        "id": "ab3e9ce62a0cf16c",
+        "type": "inject",
+        "z": "93dc403dd0a3e7b1",
+        "g": "2eea89802c2549be",
+        "name": "weather every 30 min",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1800",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "30",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 210,
+        "y": 1200,
+        "wires": [
+            [
+                "1599462523c1f7c1"
+            ]
+        ]
+    },
+    {
+        "id": "1599462523c1f7c1",
+        "type": "function",
+        "z": "93dc403dd0a3e7b1",
+        "g": "2eea89802c2549be",
+        "name": "prepare-weather-request",
+        "func": "const DEVICE_CODE = 'nurlat-5-boiler-room';\nconst apiKey = env.get('OPENWEATHER_API_KEY');\nif (typeof apiKey !== 'string' || apiKey.trim() === '') {\n    node.status({ fill: 'yellow', shape: 'ring', text: 'missing API key' });\n    node.warn('Set OPENWEATHER_API_KEY in the container environment');\n    return null;\n}\n\nlet device;\ntry {\n    const { getDeviceFromCacheAsync } = global.get('helpers');\n    device = await getDeviceFromCacheAsync(global, DEVICE_CODE);\n} catch (error) {\n    node.status({ fill: 'red', shape: 'ring', text: 'device cache unavailable' });\n    node.warn('Could not read weather location from the device cache');\n    return null;\n}\n\nconst flowUid = node.path.split('/').find((part) => part.length > 0);\nif (!device || device.flow?.uid !== flowUid) {\n    node.status({ fill: 'yellow', shape: 'ring', text: 'device not found on this tab' });\n    node.warn('Weather device is missing from this tab in the device cache');\n    return null;\n}\n\n// PostgreSQL DECIMAL coordinates may be strings; null/blank must not become zero.\nconst coordinate = (value) => {\n    if ((typeof value !== 'string' && typeof value !== 'number') || String(value).trim() === '') {\n        return NaN;\n    }\n    return Number(value);\n};\nconst latitude = coordinate(device.objectLocation?.latitude);\nconst longitude = coordinate(device.objectLocation?.longitude);\nif (!Number.isFinite(latitude) || latitude < -90 || latitude > 90 ||\n    !Number.isFinite(longitude) || longitude < -180 || longitude > 180) {\n    node.status({ fill: 'yellow', shape: 'ring', text: 'missing/invalid location' });\n    node.warn('Weather requires valid coordinates in device.objectLocation');\n    return null;\n}\n\nnode.status({ fill: 'blue', shape: 'dot', text: 'requesting weather' });\nreturn {\n    _msgid: msg._msgid,\n    deviceCode: DEVICE_CODE,\n    objectLocationId: device.objectLocationId,\n    url: 'https://api.openweathermap.org/data/2.5/weather' +\n        '?lat=' + encodeURIComponent(latitude) + '&lon=' + encodeURIComponent(longitude) +\n        '&units=metric&lang=ru&appid=' + encodeURIComponent(apiKey.trim()),\n    requestTimeout: 10000,\n};\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 1200,
+        "wires": [
+            [
+                "435f93c55a558f5f"
+            ]
+        ]
+    },
+    {
+        "id": "435f93c55a558f5f",
+        "type": "http request",
+        "z": "93dc403dd0a3e7b1",
+        "g": "2eea89802c2549be",
+        "name": "get-current-weather",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": true,
+        "headers": [],
+        "x": 770,
+        "y": 1200,
+        "wires": [
+            [
+                "c97452b948d66227"
+            ]
+        ]
+    },
+    {
+        "id": "c97452b948d66227",
+        "type": "function",
+        "z": "93dc403dd0a3e7b1",
+        "g": "2eea89802c2549be",
+        "name": "weather-response",
+        "func": "const weather = msg.payload;\nif (msg.statusCode !== 200 || weather?.cod !== 200 ||\n    typeof weather?.main?.temp !== 'number' || !Number.isFinite(weather.main.temp) ||\n    !Number.isFinite(weather?.dt) || weather.dt <= 0) {\n    node.status({ fill: 'red', shape: 'ring', text: 'invalid weather response' });\n    node.warn('OpenWeather response rejected; check HTTP status and API key');\n    return null;\n}\n\nnode.status({ fill: 'green', shape: 'dot', text: weather.main.temp + ' °C' });\n// Return the provider response without request URLs/headers containing the API key.\n// This branch does not replace PLC measurements or write deviceState.\nreturn {\n    _msgid: msg._msgid,\n    topic: msg.deviceCode + '/weather',\n    deviceCode: msg.deviceCode,\n    objectLocationId: msg.objectLocationId,\n    payload: weather,\n};\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1050,
+        "y": 1200,
+        "wires": [
+            [
+                "e8db35cfc41694bc"
+            ]
+        ]
+    },
+    {
+        "id": "e8db35cfc41694bc",
+        "type": "debug",
+        "z": "93dc403dd0a3e7b1",
+        "g": "2eea89802c2549be",
+        "name": "current-weather",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1310,
+        "y": 1200,
+        "wires": []
+    },
+    {
+        "id": "f6ab4c1a30e92c0b",
+        "type": "catch",
+        "z": "93dc403dd0a3e7b1",
+        "g": "2eea89802c2549be",
+        "name": "Weather request errors",
+        "scope": [
+            "435f93c55a558f5f"
+        ],
+        "uncaught": false,
+        "x": 770,
+        "y": 1300,
+        "wires": [
+            [
+                "4fcfc693f0398d12"
+            ]
+        ]
+    },
+    {
+        "id": "4fcfc693f0398d12",
+        "type": "function",
+        "z": "93dc403dd0a3e7b1",
+        "g": "2eea89802c2549be",
+        "name": "weather-request-error",
+        "func": "node.status({ fill: 'red', shape: 'ring', text: 'weather request failed' });\n// HTTP errors may carry a URL with appid; do not forward/log the original message.\nnode.warn('OpenWeather request failed (network error or timeout)');\nreturn null;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1050,
+        "y": 1300,
+        "wires": [
+            []
+        ]
     }
 ]

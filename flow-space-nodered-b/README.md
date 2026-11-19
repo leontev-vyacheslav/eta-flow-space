@@ -14,6 +14,12 @@ The second Node-RED (`eta-flow-space-nodered-b` in `docker-compose.yaml`, editor
 - **One gateway, one instance**: `withConnectionLock` queues reads within one Node-RED only, so never poll a gateway
   from both instances.
 
+Node-RED A, B and C load the shared `../flow-space-nodered-a/.env-flows` file through Docker Compose.
+For a new installation, copy `../flow-space-nodered-a/.env.example` to that path and set
+`OPENWEATHER_API_KEY`. Keep the real key in the ignored `.env-flows` file; Function nodes read it with
+`env.get('OPENWEATHER_API_KEY')`. Environment changes take effect when the consuming container is
+recreated; deploying flows alone does not reload them.
+
 Reader subflows are developed here. When a reader goes live at a boiler room, copy its subflow to
 `../flow-space-nodered-a/flows.json` with the same id; the subflows both files have (KM5, VKT7, Vzljot026 Client)
 must stay identical. A tab moved between the instances keeps its ids: the device cache ties each device to its tab's
@@ -24,6 +30,19 @@ using seven stock Modbus TCP blocks and an explicit `collect-device-state` mappi
 collector has `DEVICE_CODE = null` and stores nothing. The [site README](../flow-space-statics/devices/nurlat-5-boiler-room/README.md)
 records the temporary `.249 → .246/B` forwarding path, source inventory and live verification.
 The tab is prepared locally; it has not been deployed into the running B editor.
+
+The Nurlat-5 tab also has an independent **Weather — OpenWeather (30 min)** group. It starts
+30 seconds after deployment and repeats every 30 minutes; its Inject button allows a manual request.
+`prepare-weather-request` finds `nurlat-5-boiler-room` in the shared device cache, verifies its tab,
+and reads `objectLocation.latitude`/`longitude` and the container's `OPENWEATHER_API_KEY`.
+Missing credentials or invalid/missing coordinates skip the request. The API's location-cache change
+must be deployed before this branch can run.
+
+The HTTP request uses metric units, Russian descriptions and a ten-second timeout. `weather-response`
+returns the full provider JSON in `msg.payload` with `deviceCode` and `objectLocationId`, excluding
+request URLs/headers that contain the key. Enable the initially inactive `current-weather` debug node
+to inspect it. Network/HTTP/invalid-response failures produce a status and warning without changing
+the PLC polling branch. Weather is not merged into PLC state or persisted; `tempOutAir` remains TE1.
 
 **Permissions on the server**: git writes this folder as the deploying user (uid 1001), Node-RED runs as uid 1000.
 Both can write when the group is node-red and folders carry the setgid bit (once, after the folder first arrives):

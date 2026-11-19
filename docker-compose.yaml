@@ -5,6 +5,7 @@ services:
     ports:
       # Node-RED editor: open to the office network on purpose (used from other machines); protected by adminAuth in settings.js
       - "1895:1880"
+    # Shared Node-RED environment, including OPENWEATHER_API_KEY; see flow-space-nodered-a/.env.example.
     env_file:
       - ./flow-space-nodered-a/.env-flows
     volumes:
