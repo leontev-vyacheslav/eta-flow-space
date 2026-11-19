@@ -29,5 +29,6 @@ node .tools/flow-chain/run_modbus_tab.js muslum-7-boiler-room words.json \
 - `--mapping FILE.js` is the body of a function node (same as the `func` in flows.json).
 - `--flows FLOWS.json` selects another exported instance; the default remains instance A.
   The offline context starts with an empty `buf_data` object for legacy converters.
+- Optional weather reads return `undefined` in the offline context; the runner never reads Redis.
 - `--schema` uses ajv from `flow-space-ui/node_modules` (run `npm install` there once) and validates the state as the
   web API serves it, i.e. with `isConnected: true` added (mappings never set it).

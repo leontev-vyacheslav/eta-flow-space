@@ -52,7 +52,10 @@ const context = new Map([['buf_data', {}]]);
 const stored = [];
 const fakeGlobal = {
     get: (key) => (key === 'helpers'
-        ? { storeDeviceStateToCacheAsync: async (...call) => stored.push(call) }
+        ? {
+            storeDeviceStateToCacheAsync: async (...call) => stored.push(call),
+            getWeatherFromCacheAsync: async () => undefined,
+        }
         : context.get(key)),
     set: (key, value) => context.set(key, value),
 };

@@ -903,6 +903,9 @@
       },
       "unit": "бар"
     },
+    "weather": {
+      "$ref": "#/$defs/WeatherModel"
+    },
     "timestamp": {
       "type": "integer",
       "description": "Время полного опроса, Unix milliseconds",
@@ -973,6 +976,66 @@
     "timestamp"
   ],
   "$defs": {
+    "WeatherModel": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Погода из Redis-кэша OpenWeather; объект отсутствует, если доступных данных нет.",
+      "properties": {
+        "temp": {
+          "type": "number",
+          "description": "Температура наружного воздуха по OpenWeather",
+          "unit": "°C"
+        },
+        "pressure": {
+          "type": "number",
+          "nullable": true,
+          "description": "Атмосферное давление, приведенное к уровню моря",
+          "unit": "гПа"
+        },
+        "humidity": {
+          "type": "number",
+          "nullable": true,
+          "description": "Относительная влажность воздуха",
+          "unit": "%"
+        },
+        "wind": {
+          "$ref": "#/$defs/WeatherWindModel"
+        }
+      },
+      "required": [
+        "temp",
+        "pressure",
+        "humidity"
+      ]
+    },
+    "WeatherWindModel": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "speed": {
+          "type": "number",
+          "nullable": true,
+          "description": "Скорость ветра",
+          "unit": "м/с"
+        },
+        "deg": {
+          "type": "number",
+          "nullable": true,
+          "description": "Направление, откуда дует ветер",
+          "unit": "°"
+        },
+        "gust": {
+          "type": "number",
+          "nullable": true,
+          "description": "Скорость порывов ветра; поле присутствует, если его вернул OpenWeather",
+          "unit": "м/с"
+        }
+      },
+      "required": [
+        "speed",
+        "deg"
+      ]
+    },
     "BoilerValveModel": {
       "type": "object",
       "additionalProperties": false,

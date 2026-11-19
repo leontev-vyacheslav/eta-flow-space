@@ -57,11 +57,20 @@ Optional fields remain absent when the provider omits them. TTL is three `INTERV
 the default 30-minute polling. Request failures leave the previous entry and its expiry untouched.
 Request/validation/Redis errors produce a status and warning and emit no output. The cache value and
 expiry are written together in one Redis SET operation.
-Weather is separate from PLC `deviceState`; `tempOutAir` remains TE1, with no weather history in PostgreSQL.
+The full provider response remains in this separate cache. On every successful Nurlat-5 PLC poll,
+`collect-device-state` reads that device's current location cache and optionally adds
+`weather: { temp, pressure, humidity, wind: { speed, deg, gust } }` before storing device state.
+Temperature is °C, pressure is hPa, humidity is %, wind speeds are m/s and direction is degrees.
+Wind and gust are omitted when absent; unavailable pressure/humidity/wind numbers remain `null`.
+Missing/expired/malformed weather produces no `weather` object. Read errors warn and still allow PLC
+state storage. `tempOutAir` remains the PLC's TE1 reading. The API's normal JSON state history now
+includes this optional object in future samples; existing historical states remain valid without it.
 
 Restart the consuming Node-RED instance to load the new shared helper before deploying this subflow.
 Helper/subflow cache checks: `node flow-space-nodered-a/src/helpers/store-weather-to-cache.test.js`
 (run from the repository root; Redis is mocked and no external requests are made).
+Collector/cache-read/schema checks: `node flow-space-nodered-a/src/helpers/get-weather-from-cache.test.js`
+(also mocked; verifies weather is optional and PLC storage continues on weather-cache errors).
 
 **Permissions on the server**: git writes this folder as the deploying user (uid 1001), Node-RED runs as uid 1000.
 Both can write when the group is node-red and folders carry the setgid bit (once, after the folder first arrives):

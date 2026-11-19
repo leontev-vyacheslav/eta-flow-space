@@ -87,6 +87,19 @@ physical meaning. Heat-exchanger measurements likewise retain neutral inlet/outl
 and the original INT alarm inputs also have separate state properties. No alarm is
 inferred from measured pressure, temperature, stopped pumps or another flag.
 
+## Optional cached weather
+
+Each complete PLC poll reads `weather:location:<objectLocationId>` through the shared
+`getWeatherFromCacheAsync` helper and adds an optional `weather` object before state persistence.
+Its fields are `temp` (°C), `pressure` (hPa, sea level), `humidity` (%) and optional
+`wind.speed`/`wind.gust` (m/s), `wind.deg` (degrees). Only these fields are copied; the complete
+provider response stays in the separate location cache. Wind/gust absent from the response remain
+absent; unavailable other numeric fields are `null`. Missing, expired or malformed cache entries
+omit `weather`; read errors warn without preventing PLC state storage. The measured `tempOutAir`
+remains TE1. New API history samples include weather automatically, while older states without it
+remain schema-valid. No migration or history backfill is needed. No weather form editors or diagram
+bindings are added by this change.
+
 ## Parameters form
 
 The schema's root `ui` enables tabs and defines every group referenced by the
