@@ -31,18 +31,24 @@ collector has `DEVICE_CODE = null` and stores nothing. The [site README](../flow
 records the temporary `.249 → .246/B` forwarding path, source inventory and live verification.
 The tab is prepared locally; it has not been deployed into the running B editor.
 
-The Nurlat-5 tab also has an independent **Weather — OpenWeather (30 min)** group. It starts
-30 seconds after deployment and repeats every 30 minutes; its Inject button allows a manual request.
-`prepare-weather-request` finds `nurlat-5-boiler-room` in the shared device cache, verifies its tab,
-and reads `objectLocation.latitude`/`longitude` and the container's `OPENWEATHER_API_KEY`.
+The Nurlat-5 tab also has an independent **OpenWeather** subflow instance, `nurlat-5-weather`.
+The entire weather group, including its timer, request/error handling and initially inactive debug
+node, is inside the subflow. Its two instance properties are `INTERVAL` (seconds; positive, at most
+2147483; default `1800` = 30 minutes) and `DEVICE_CODE` (required; `nurlat-5-boiler-room` here).
+The timer starts 30 seconds after deployment. Its internal Inject button or the subflow input allows
+a manual request. Status appears on the subflow instance.
+
+`prepare-weather-request` finds `DEVICE_CODE` in the shared device cache, verifies its containing tab,
+and reads `objectLocation.latitude`/`longitude` and the inherited container `OPENWEATHER_API_KEY`.
 Missing credentials or invalid/missing coordinates skip the request. The API's location-cache change
 must be deployed before this branch can run.
 
 The HTTP request uses metric units, Russian descriptions and a ten-second timeout. `weather-response`
-returns the full provider JSON in `msg.payload` with `deviceCode` and `objectLocationId`, excluding
-request URLs/headers that contain the key. Enable the initially inactive `current-weather` debug node
-to inspect it. Network/HTTP/invalid-response failures produce a status and warning without changing
-the PLC polling branch. Weather is not merged into PLC state or persisted; `tempOutAir` remains TE1.
+returns the full provider JSON through the subflow output in `msg.payload`, with `deviceCode` and
+`objectLocationId`, excluding request URLs/headers that contain the key. Enable the internal
+`current-weather` debug node to inspect it. Network/HTTP/invalid-response failures produce a status and
+warning without changing the PLC polling branch. Weather is not merged into PLC state or persisted;
+`tempOutAir` remains TE1.
 
 **Permissions on the server**: git writes this folder as the deploying user (uid 1001), Node-RED runs as uid 1000.
 Both can write when the group is node-red and folders carry the setgid bit (once, after the folder first arrives):
