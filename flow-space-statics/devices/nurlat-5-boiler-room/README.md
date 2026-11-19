@@ -97,8 +97,19 @@ provider response stays in the separate location cache. Wind/gust absent from th
 absent; unavailable other numeric fields are `null`. Missing, expired or malformed cache entries
 omit `weather`; read errors warn without preventing PLC state storage. The measured `tempOutAir`
 remains TE1. New API history samples include weather automatically, while older states without it
-remain schema-valid. No migration or history backfill is needed. No weather form editors or diagram
-bindings are added by this change.
+remain schema-valid. No migration or history backfill is needed.
+
+The top panel's **24 × 24** sun/cloud weather icon starts at **(12, 46)**, with an **8-unit**
+inset from its left and bottom edges, below the clock. Its full square is clickable; decorative
+artwork does not intercept clicks. The ordered popover shows temperature, sea-level pressure,
+humidity, wind speed, wind direction and gust speed. Weather schema labels are popover-only
+(`editor.visible: false`), so they add no visible controls to the parameters form.
+Absent weather dims the icon and opens no empty popover; absent gusts are omitted, and nullable
+readings display **—** with their units. Hover uses the existing yellow outline and restores the
+normal appearance on pointer leave. Other top-panel cards and bindings remain unchanged.
+
+The UI's nested-property traversal retains the complete `weather.wind.*` path. Deploy the UI
+bundle changes as well as the SVG, schema and manifest for these bindings and null formatting.
 
 ## Parameters form
 

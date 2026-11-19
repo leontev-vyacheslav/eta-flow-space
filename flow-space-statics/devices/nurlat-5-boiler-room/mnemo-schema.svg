@@ -91,6 +91,14 @@
         <text x="43" y="27" id="timestamp-date" font-size="10px" text-anchor="middle" data-state="states['nurlat-5-boiler-room'].timestamp" data-state-format="date">—</text>
         <text x="43" y="39" id="timestamp-time" font-size="10px" text-anchor="middle" data-state="states['nurlat-5-boiler-room'].timestamp" data-state-format="time">—</text>
         </g>
+        <g id="weather-info" aria-label="Погода OpenWeather" data-state="states['nurlat-5-boiler-room'].weather.temp;states['nurlat-5-boiler-room'].weather.pressure;states['nurlat-5-boiler-room'].weather.humidity;states['nurlat-5-boiler-room'].weather.wind.speed;states['nurlat-5-boiler-room'].weather.wind.deg;states['nurlat-5-boiler-room'].weather.wind.gust" data-state-eval="element.style.opacity = states['nurlat-5-boiler-room'].weather ? '1' : '0.4';">
+            <rect id="weather-icon-hitbox" x="12" y="46" width="24" height="24" rx="3" fill="transparent" stroke="none" data-state="states['nurlat-5-boiler-room'].weather.temp;states['nurlat-5-boiler-room'].weather.pressure;states['nurlat-5-boiler-room'].weather.humidity;states['nurlat-5-boiler-room'].weather.wind.speed;states['nurlat-5-boiler-room'].weather.wind.deg;states['nurlat-5-boiler-room'].weather.wind.gust" data-colorizer-hint="none"/>
+            <g transform="translate(12 46)" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" pointer-events="none">
+                <circle cx="8" cy="8" r="3.5" fill="#FFC107" stroke="#E6A000"/>
+                <path d="M8 1V2 M8 14V15 M1 8H2 M14 8H15 M3 3L4 4 M12 12L13 13 M3 13L4 12 M12 4L13 3" stroke="#E6A000"/>
+                <path d="M6 20H18A4 4 0 0 0 18 12A6 6 0 0 0 6.5 11A4.5 4.5 0 0 0 6 20Z" fill="#FFFFFF" stroke="#0072C6"/>
+            </g>
+        </g>
         <rect id="outdoor-temperature-frame" x="94" y="40" width="112" height="30" rx="10" class="card" data-state="states['nurlat-5-boiler-room'].tempOutAir;states['nurlat-5-boiler-room'].sensors.isTempOutAirSensorError" data-state-eval="element.style.stroke = (states['nurlat-5-boiler-room'].sensors.isTempOutAirSensorError === true) ? 'red' : (false ? '#FFC107' : '#666666'); element.style.strokeWidth = (states['nurlat-5-boiler-room'].sensors.isTempOutAirSensorError === true) ? '1' : (false ? '0.5' : '0.5');"/>
         <text x="150.0" y="51" font-size="10px" text-anchor="middle" pointer-events="none">Тн.в. · TE1</text>
         <text x="150.0" y="64" id="outdoor-temperature-value" text-anchor="middle" pointer-events="none" data-state="states['nurlat-5-boiler-room'].tempOutAir" data-state-eval="if (value === null || value === undefined) { element.textContent = '—'; }" font-size="9px">—</text>

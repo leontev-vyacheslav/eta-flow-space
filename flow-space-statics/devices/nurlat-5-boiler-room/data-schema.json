@@ -984,19 +984,58 @@
         "temp": {
           "type": "number",
           "description": "Температура наружного воздуха по OpenWeather",
-          "unit": "°C"
+          "unit": "°C",
+          "ui": {
+            "group": 1,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "text": "Температура воздуха (OpenWeather)"
+              },
+              "editorOptions": {
+                "readOnly": true
+              },
+              "visible": false
+            }
+          }
         },
         "pressure": {
           "type": "number",
           "nullable": true,
           "description": "Атмосферное давление, приведенное к уровню моря",
-          "unit": "гПа"
+          "unit": "гПа",
+          "ui": {
+            "group": 1,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "text": "Давление (уровень моря)"
+              },
+              "editorOptions": {
+                "readOnly": true
+              },
+              "visible": false
+            }
+          }
         },
         "humidity": {
           "type": "number",
           "nullable": true,
           "description": "Относительная влажность воздуха",
-          "unit": "%"
+          "unit": "%",
+          "ui": {
+            "group": 1,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "text": "Влажность воздуха"
+              },
+              "editorOptions": {
+                "readOnly": true
+              },
+              "visible": false
+            }
+          }
         },
         "wind": {
           "$ref": "#/$defs/WeatherWindModel"
@@ -1016,19 +1055,58 @@
           "type": "number",
           "nullable": true,
           "description": "Скорость ветра",
-          "unit": "м/с"
+          "unit": "м/с",
+          "ui": {
+            "group": 1,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "text": "Скорость ветра"
+              },
+              "editorOptions": {
+                "readOnly": true
+              },
+              "visible": false
+            }
+          }
         },
         "deg": {
           "type": "number",
           "nullable": true,
           "description": "Направление, откуда дует ветер",
-          "unit": "°"
+          "unit": "°",
+          "ui": {
+            "group": 1,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "text": "Направление ветра"
+              },
+              "editorOptions": {
+                "readOnly": true
+              },
+              "visible": false
+            }
+          }
         },
         "gust": {
           "type": "number",
           "nullable": true,
           "description": "Скорость порывов ветра; поле присутствует, если его вернул OpenWeather",
-          "unit": "м/с"
+          "unit": "м/с",
+          "ui": {
+            "group": 1,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "text": "Порывы ветра"
+              },
+              "editorOptions": {
+                "readOnly": true
+              },
+              "visible": false
+            }
+          }
         }
       },
       "required": [
