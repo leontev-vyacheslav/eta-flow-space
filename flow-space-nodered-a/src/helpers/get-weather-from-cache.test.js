@@ -272,3 +272,61 @@ for (const tab of flows.filter((node) => node.type === 'tab' && node.label.endsW
         assert.deepEqual(fixture.warnings, ['Weather cache unavailable; storing PLC state without weather']);
     });
 }
+
+const instanceA = JSON.parse(fs.readFileSync(path.join(root, 'flow-space-nodered-a/flows.json'), 'utf8'));
+for (const siteCode of ['spring1-boiler-room', 'spring2-boiler-room']) {
+    test(`${siteCode}: cached weather enriches only the controller and survives weather failures`, async () => {
+        const tab = instanceA.find((node) => node.type === 'tab' && node.label === siteCode);
+        const mapping = instanceA.find((node) => node.z === tab.id && node.name === 'collect-device-state'
+            && node.func.includes(`const DEVICE_CODE = '${siteCode}';`));
+        const instances = instanceA.filter((node) => node.z === tab.id && node.type === 'subflow:00a0617d2752349c');
+        assert.equal(instances.length, 1);
+        assert.deepEqual(instances[0].env, [
+            { name: 'INTERVAL', value: '1800', type: 'num' },
+            { name: 'DEVICE_CODE', value: siteCode, type: 'str' },
+        ]);
+        for (const node of flows.filter((node) => node.id === '00a0617d2752349c' || node.z === '00a0617d2752349c')) {
+            assert.deepEqual(instanceA.find((candidate) => candidate.id === node.id), node);
+        }
+        const collect = new AsyncFunction('msg', 'global', 'node', mapping.func);
+        const fixture = setup(siteCode, tab.id);
+        fixture.entries.set('weather:location:15', JSON.stringify({ ...fixture.cached, data: {
+            ...provider, weather: [{ description: 'пасмурно', icon: '04d' }, { description: 'ясно', icon: '01n' }],
+        } }));
+        const siteSchema = JSON.parse(fs.readFileSync(path.join(root, 'flow-space-statics/devices', siteCode, 'data-schema.json'), 'utf8'));
+        const validWeather = new Ajv2020({ strict: false }).compile({ $ref: '#/$defs/WeatherModel', $defs: siteSchema.$defs });
+        const run = async () => {
+            const msg = { payload: { tempOutAir: 23.5, TE11: 23.5 } };
+            await collect(msg, fixture.global, { path: `${tab.id}/${mapping.id}`, warn: (message) => fixture.warnings.push(message) });
+            return fixture.stored.at(-1)[2];
+        };
+        const full = await run();
+        assert.deepEqual(full.weather, { description: 'пасмурно', icon: '04d', temp: 0, pressure: 1008, humidity: 94, wind: { speed: 0, deg: 0, gust: 12.47 } });
+        assert.equal(full.tempOutAir, 23.5);
+        assert(validWeather(full.weather), JSON.stringify(validWeather.errors));
+        fixture.entries.set('weather:location:15', JSON.stringify({ ...fixture.cached, data: { cod: 200, main: { temp: -5 } } }));
+        const partial = await run();
+        assert.deepEqual(partial.weather, { temp: -5, pressure: null, humidity: null });
+        assert(validWeather(partial.weather), JSON.stringify(validWeather.errors));
+        fixture.entries.delete('weather:location:15');
+        const expired = await run();
+        assert(!Object.hasOwn(expired, 'weather'));
+        fixture.redis.get = async () => { throw new Error('private connection details'); };
+        const failed = await run();
+        assert(!Object.hasOwn(failed, 'weather'));
+        const plcOnly = ({ weather, timestamp, ...state }) => state;
+        for (const state of [partial, expired, failed]) {
+            assert.deepEqual(plcOnly(full), plcOnly(state));
+        }
+        assert.equal(fixture.stored.length, 4);
+        assert.equal(fixture.reads.length, 3);
+        for (const call of fixture.stored) {
+            assert.equal(call[1], siteCode);
+            assert.equal(call[3], tab.id);
+        }
+        assert.deepEqual(fixture.warnings, ['Weather cache unavailable; storing PLC state without weather']);
+        for (const meter of instanceA.filter((node) => node.z === tab.id && node.name === 'collect-device-state' && node.id !== mapping.id)) {
+            assert(!meter.func.includes('getWeatherFromCacheAsync'));
+        }
+    });
+}

@@ -1,5 +1,26 @@
 # Котельная ЖК Весна-2 — mnemoschema
 
+## Cached weather — 20 November 2026
+
+Instance A now has one `spring2-weather` instance of the shared `Weather` subflow:
+`INTERVAL=1800`, `DEVICE_CODE=spring2-boiler-room`. It uses the controller's registered location,
+the inherited `OPENWEATHER_API_KEY`, and the full `weather:location:<objectLocationId>` cache
+with a 5400-second TTL. Each complete controller poll optionally adds `weather.temp` (°C),
+`pressure` (sea-level hPa), `humidity` (%), available `wind.speed`/`gust` (m/s) and `wind.deg`
+(degrees from), plus first-condition `description`/`icon` strings. Missing weather is omitted;
+read errors do not prevent PLC storage. Controller measurements and both meter collectors
+retain their existing meanings and behavior. Weather schema fields are optional and their editors hidden.
+
+Inside the header's existing `translate(-70, 0)`, the icon uses **translate(-26, 4)** to match the
+latest Nurlat-5 reference. Its effective hitbox is **(-83, 48)**, size **27 × 27**, and artwork
+starts at **(-81, 49)**. Description and temperature anchors are **(-51, 58)** and **(-51, 70)**,
+both **8 px**; missing values leave the labels blank. This is the user's weather-text exception
+to the general font roles. The effective clip is **x=-54…-4**, **y=47…75**. Long descriptions
+remain available in the icon's popover. Existing cards, timestamp, canvas, topology, linked-device
+bindings and CRLF endings are preserved. The new weather target belongs to the controller,
+including when a linked meter is selected.
+See [previews, verification and deployment notes](../../../.reports/2026-11-20-spring-weather/README.md).
+
 This is one shared diagram for the controller and two measuring devices. The
 current [component standard](../../../.docs/mnemoschema-components.md) was applied
 on 16 November 2026. The controller's process topology and all three devices'

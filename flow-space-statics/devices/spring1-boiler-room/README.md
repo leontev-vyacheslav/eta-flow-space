@@ -1,5 +1,29 @@
 # Котельная ЖК Весна-1 — mnemoschema
 
+## Cached weather — 20 November 2026
+
+Instance A now has one `spring1-weather` instance of the shared `Weather` subflow:
+`INTERVAL=1800`, `DEVICE_CODE=spring1-boiler-room`. It uses the controller's registered location,
+the inherited `OPENWEATHER_API_KEY`, and the full `weather:location:<objectLocationId>` cache
+with a 5400-second TTL. Each complete controller poll optionally adds `weather.temp` (°C),
+`pressure` (sea-level hPa), `humidity` (%), available `wind.speed`/`gust` (m/s) and `wind.deg`
+(degrees from), plus first-condition `description`/`icon` strings. Missing weather is omitted;
+read errors do not prevent PLC storage. Controller measurements and all four meter collectors
+retain their existing meanings and behavior. Weather schema fields are optional and their editors hidden.
+
+The icon follows the user's latest Nurlat-5 reference, translated by **(-96, 4)** in this header.
+Its effective hitbox is **(-83, 48)**, size **27 × 27**, with artwork at **(-81, 49)**.
+Description and temperature anchors are **(-51, 58)** and **(-51, 70)**, both **8 px**;
+missing values leave the labels blank. This is the user's weather-text exception to the general font roles.
+The clip is **x=-54…-4**, **y=47…75**. Long descriptions remain available in the icon's popover.
+The existing cards, timestamp, canvas, topology, linked-device bindings and CRLF endings are preserved.
+The new weather selection target belongs to the controller, including when a linked meter is selected.
+
+The pre-existing Spring-1 collector/schema mismatch is unchanged: the collector emits two source-water
+pumps while the schema allows one, and its boiler objects lack ten schema-required fields per boiler.
+Weather validation is checked separately; offline full-state validation reproduces the same baseline errors.
+See [previews, verification and deployment notes](../../../.reports/2026-11-20-spring-weather/README.md).
+
 The shared [component standard](../../../.docs/mnemoschema-components.md) was applied
 on **17 November 2026**. This diagram belongs to the controller and four meters;
 each device retains its own state paths, units, property lists and selection targets.
