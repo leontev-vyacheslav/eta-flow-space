@@ -99,8 +99,9 @@ omit `weather`; read errors warn without preventing PLC state storage. The measu
 remains TE1. New API history samples include weather automatically, while older states without it
 remain schema-valid. No migration or history backfill is needed.
 
-The top panel's **24 × 24** blue cloud/receiving-dish weather-station icon starts at **(12, 46)**, with an **8-unit**
-inset from its left and bottom edges, below the clock. Its full square is clickable; decorative
+The top panel's weather-station icon uses black **0.5-unit** strokes and a **27 × 27** click target
+starting at **(13, 44)**, below the clock; its artwork is translated to **(15, 45)**.
+These are the user's revised 20 November coordinates. Its full square is clickable; decorative
 artwork does not intercept clicks. The ordered popover shows temperature, sea-level pressure,
 humidity, wind speed, wind direction and gust speed. Weather schema labels are popover-only
 (`editor.visible: false`), so they add no visible controls to the parameters form.

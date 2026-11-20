@@ -167,3 +167,21 @@ events through to those targets.
 Before/after screenshots, synthetic state checks and desktop/phone evidence are
 recorded in `.reports/2026-11-17-standard-burner-glow/`. These files remain local;
 no deployment or controller change is implied.
+
+## Weather — 20 November 2026
+
+The B tab uses one independent `Weather` subflow (`INTERVAL=1800`, `DEVICE_CODE=komarova-boiler-room`).
+Requests use this device's cached location coordinates and the inherited `OPENWEATHER_API_KEY`;
+full responses are cached at `weather:location:<objectLocationId>` with a 5400-second TTL.
+Each PLC poll optionally adds `weather.temp` (°C), `pressure` (sea-level hPa), `humidity` (%)
+and available `wind.speed`/`gust` (m/s) and `wind.deg` (degrees, direction from).
+Missing/expired weather omits the object; Redis errors do not prevent PLC state storage.
+Controller readings, including `tempOutAir`, retain their existing meanings. Historical states
+without weather remain valid; no migration or backfill is required.
+
+The top-panel icon follows the user's revised Nurlat-5 artwork: black 0.5-unit strokes,
+a 27 × 27 hitbox at **(13, 44)**, and artwork translated to **(15, 45)**.
+The popover order is temperature, pressure, humidity, wind speed, direction and gusts.
+Weather editors stay hidden; chart metadata matches Nurlat-5. Missing weather dims the icon
+and opens no empty popover. Nullable values display a dash; absent wind/gust fields are omitted.
+See the [verification and deployment notes](../../../.reports/2026-11-20-b-weather/README.md).
