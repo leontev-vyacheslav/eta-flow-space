@@ -1070,7 +1070,8 @@
                 "readOnly": true
               },
               "visible": false
-            }
+            },
+            "chart": {}
           }
         },
         "deg": {
@@ -1089,7 +1090,8 @@
                 "readOnly": true
               },
               "visible": false
-            }
+            },
+            "chart": {}
           }
         },
         "gust": {
@@ -1108,7 +1110,8 @@
                 "readOnly": true
               },
               "visible": false
-            }
+            },
+             "chart": {}
           }
         }
       },
