@@ -1075,6 +1075,9 @@
       "maxItems": 2,
       "description": "Индексы 0 и 1 соответствуют насосам Н4 и Н5; number хранит номер насоса на схеме."
     },
+    "weather": {
+      "$ref": "#/$defs/WeatherModel"
+    },
     "timestamp": {
       "type": "integer",
       "$comment": "Node-RED collector Date.now(); Время формирования состояния",
@@ -1146,6 +1149,150 @@
     "timestamp"
   ],
   "$defs": {
+    "WeatherModel": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Погода из Redis-кэша; объект отсутствует, если доступных данных нет.",
+      "properties": {
+        "temp": {
+          "type": "number",
+          "description": "Температура наружного воздуха",
+          "unit": "°C",
+          "ui": {
+            "group": 1,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "text": "Температура воздуха"
+              },
+              "editorOptions": {
+                "readOnly": true
+              },
+              "visible": false
+            },
+            "chart": {}
+          }
+        },
+        "pressure": {
+          "type": "number",
+          "nullable": true,
+          "description": "Атмосферное давление, приведенное к уровню моря",
+          "unit": "гПа",
+          "ui": {
+            "group": 1,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "text": "Давление"
+              },
+              "editorOptions": {
+                "readOnly": true
+              },
+              "visible": false
+            },
+            "chart": {}
+          }
+        },
+        "humidity": {
+          "type": "number",
+          "nullable": true,
+          "description": "Относительная влажность воздуха",
+          "unit": "%",
+          "ui": {
+            "group": 1,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "text": "Влажность воздуха"
+              },
+              "editorOptions": {
+                "readOnly": true
+              },
+              "visible": false
+            },
+            "chart": {}
+          }
+        },
+        "wind": {
+          "$ref": "#/$defs/WeatherWindModel"
+        }
+      },
+      "required": [
+        "temp",
+        "pressure",
+        "humidity"
+      ]
+    },
+    "WeatherWindModel": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "speed": {
+          "type": "number",
+          "nullable": true,
+          "description": "Скорость ветра",
+          "unit": "м/с",
+          "ui": {
+            "group": 1,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "text": "Скорость ветра"
+              },
+              "editorOptions": {
+                "readOnly": true
+              },
+              "visible": false
+            },
+            "chart": {}
+          }
+        },
+        "deg": {
+          "type": "number",
+          "nullable": true,
+          "description": "Направление, откуда дует ветер",
+          "unit": "°",
+          "ui": {
+            "group": 1,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "text": "Направление ветра"
+              },
+              "editorOptions": {
+                "readOnly": true
+              },
+              "visible": false
+            },
+            "chart": {}
+          }
+        },
+        "gust": {
+          "type": "number",
+          "nullable": true,
+          "description": "Скорость порывов ветра; поле присутствует, если его вернул провайдер погоды",
+          "unit": "м/с",
+          "ui": {
+            "group": 1,
+            "editor": {
+              "editorType": "dxNumberBox",
+              "label": {
+                "text": "Порывы ветра"
+              },
+              "editorOptions": {
+                "readOnly": true
+              },
+              "visible": false
+            },
+            "chart": {}
+          }
+        }
+      },
+      "required": [
+        "speed",
+        "deg"
+      ]
+    },
     "SensorsModel": {
       "type": "object",
       "additionalProperties": false,

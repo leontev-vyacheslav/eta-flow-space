@@ -16,8 +16,8 @@ const provider = {
     snow: { '1h': 0.4 },
 };
 
-function setup() {
-    const device = { id: 35, code, flow: { uid: flowUid }, objectLocationId: 15 };
+function setup(deviceCode = code, tabUid = flowUid) {
+    const device = { id: 35, code: deviceCode, flow: { uid: tabUid }, objectLocationId: 15 };
     const cached = { provider: 'openweather', objectLocationId: 15, units: 'metric', data: provider };
     const entries = new Map([
         ['device:35', JSON.stringify(device)],
@@ -177,3 +177,57 @@ test('schema allows historical states without weather and rejects extra weather 
     validateState(state);
     assert.equal(validate({ isConnected: true, ...state, weather: { temp: 0, pressure: 1000, humidity: 80, feels_like: -5 } }), false);
 });
+
+for (const tab of flows.filter((node) => node.type === 'tab' && node.label.endsWith('-boiler-room'))) {
+    test(`${tab.label}: independent weather timer and optional per-poll state enrichment`, async () => {
+        const instances = flows.filter((node) => node.z === tab.id && node.type === 'subflow:00a0617d2752349c');
+        assert.equal(instances.length, 1);
+        assert.deepEqual(instances[0].env, [
+            { name: 'INTERVAL', value: '1800', type: 'num' },
+            { name: 'DEVICE_CODE', value: tab.label, type: 'str' },
+        ]);
+        const mapping = flows.find((node) => node.z === tab.id && node.name === 'collect-device-state');
+        const collect = new AsyncFunction('msg', 'global', 'node', mapping.func);
+        // Complete synthetic decoded poll: zeros plus a distinct controller outdoor reading.
+        const values = tab.label === code ? { ...payload } : Object.fromEntries(
+            [...mapping.func.matchAll(/payload\.(\w+)/g)].map((match) => [match[1], 0]),
+        );
+        if (tab.label !== code) {
+            values.t_air = 23.5;
+        }
+        const fixture = setup(tab.label, tab.id);
+        const run = () => collect({ payload: values }, fixture.global, {
+            path: `${tab.id}/${mapping.id}`, warn: (message) => fixture.warnings.push(message),
+        });
+        const siteSchema = JSON.parse(fs.readFileSync(path.join(root, 'flow-space-statics/devices', tab.label, 'data-schema.json'), 'utf8'));
+        const valid = new Ajv2020({ strict: false, allErrors: true }).compile(siteSchema);
+        const check = (state) => assert(valid({ isConnected: true, ...state }), JSON.stringify(valid.errors));
+        const first = (await run()).deviceState;
+        assert.deepEqual(first.weather, { temp: 0, pressure: 1008, humidity: 94, wind: { speed: 0, deg: 0, gust: 12.47 } });
+        assert.equal(first.tempOutAir, 23.5);
+        check(first);
+        fixture.entries.set('weather:location:15', JSON.stringify({ ...fixture.cached, data: { ...provider, main: { temp: -5 }, wind: { speed: null, deg: 0 } } }));
+        const partial = (await run()).deviceState;
+        assert.deepEqual(partial.weather, { temp: -5, pressure: null, humidity: null, wind: { speed: null, deg: 0 } });
+        check(partial);
+        fixture.entries.delete('weather:location:15');
+        const expired = (await run()).deviceState;
+        assert(!Object.hasOwn(expired, 'weather'));
+        check(expired);
+        fixture.redis.get = async () => { throw new Error('private connection details'); };
+        const failed = (await run()).deviceState;
+        assert(!Object.hasOwn(failed, 'weather'));
+        check(failed);
+        const plcOnly = ({ weather, timestamp, ...state }) => state;
+        for (const state of [partial, expired, failed]) {
+            assert.deepEqual(plcOnly(first), plcOnly(state));
+        }
+        assert.equal(fixture.stored.length, 4);
+        for (const call of fixture.stored) {
+            assert.equal(call[1], tab.label);
+            assert.equal(call[3], tab.id);
+        }
+        assert.equal(fixture.reads.length, 3);
+        assert.deepEqual(fixture.warnings, ['Weather cache unavailable; storing PLC state without weather']);
+    });
+}

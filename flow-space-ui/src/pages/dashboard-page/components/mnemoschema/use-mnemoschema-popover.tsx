@@ -201,7 +201,7 @@ export const useMnemoschemaPopover = () => {
                     value = value === true ? 'Да' : 'Нет';
                 }
                 if (propertyInfo.typeInfo?.typeName === 'number') {
-                    value = formatNumber(value, propertyInfo.typeInfo);
+                    value = value === null || value === undefined ? '—' : formatNumber(value, propertyInfo.typeInfo);
                 }
 
                 if (isDateTime(propertyInfo.typeInfo)) {

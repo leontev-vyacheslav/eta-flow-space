@@ -87,7 +87,8 @@ test('invalid responses cannot replace a previous cache entry or refresh its TTL
 });
 
 const nodes = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../../../flow-space-nodered-b/flows.json'), 'utf8'));
-const subflow = nodes.find((node) => node.type === 'subflow' && node.name === 'OpenWeather');
+const weatherInstance = nodes.find((node) => node.name === 'nurlat-5-weather');
+const subflow = nodes.find((node) => `subflow:${node.id}` === weatherInstance.type);
 const inside = nodes.filter((node) => node.z === subflow.id);
 const cacheNode = inside.find((node) => node.name === 'store-weather-to-cache');
 const responseNode = inside.find((node) => node.name === 'weather-response');

@@ -1,10 +1,10 @@
-# Node-RED instance B (testing)
+# Node-RED instance B
 
-The second Node-RED (`eta-flow-space-nodered-b` in `docker-compose.yaml`, editor on port 1896) runs the
-`testing-of-device-readers` tab, so trying a new or reworked reader never restarts or redeploys instance A
-(`eta-flow-space-nodered-a`, port 1895, folder `../flow-space-nodered-a`), which polls the boiler rooms.
+The second Node-RED (`eta-flow-space-nodered-b` in `docker-compose.yaml`, editor on port 1896) owns the
+Gagarin, Komarova, Kirov, Muslum-7, Muslum-9 and Nurlat-5 boiler-room tabs in this export.
+Instance A (`eta-flow-space-nodered-a`, port 1895, folder `../flow-space-nodered-a`) polls other sites.
 
-- **This folder is its user directory** (`/data`): `flows.json` (the testing tab and the reader subflows it uses),
+- **This folder is its user directory** (`/data`): `flows.json` (the boiler-room tabs and their shared subflows),
   `package.json` (the same nodes as A, `node-red-contrib-modbus` included).
 - **Shared with A** (mounted read-only from `../flow-space-nodered-a`): `settings.js` and `src/` (device readers,
   helpers), so a reader's code exists once. `EDITOR_TITLE` in the compose service names this editor.
@@ -25,13 +25,15 @@ Reader subflows are developed here. When a reader goes live at a boiler room, co
 must stay identical. A tab moved between the instances keeps its ids: the device cache ties each device to its tab's
 id.
 
-The local `nurlat-5-boiler-room` tab reads the Oven160's 146 workbook parameters marked `R`
-using seven stock Modbus TCP blocks and an explicit `collect-device-state` mapping. Its test
-collector has `DEVICE_CODE = null` and stores nothing. The [site README](../flow-space-statics/devices/nurlat-5-boiler-room/README.md)
+The `nurlat-5-boiler-room` tab reads the Oven160's 146 workbook parameters marked `R`
+using seven stock Modbus TCP blocks and an explicit `collect-device-state` mapping. Its
+collector stores state under `DEVICE_CODE = 'nurlat-5-boiler-room'`. The [site README](../flow-space-statics/devices/nurlat-5-boiler-room/README.md)
 records the temporary `.249 → .246/B` forwarding path, source inventory and live verification.
-The tab is prepared locally; it has not been deployed into the running B editor.
+Check the running B editor separately before assuming that a local export is deployed.
 
-The Nurlat-5 tab also has an independent **OpenWeather** subflow instance, `nurlat-5-weather`.
+Each of the six boiler-room tabs has one independent **Weather** subflow instance:
+`gagarin-weather`, `komarova-weather`, `kirov-weather`, `muslum-7-weather`, `muslum-9-weather`
+and the existing `nurlat-5-weather`. All use the same subflow definition and existing shared helpers.
 The entire weather group, including its timer, request/error handling and initially inactive debug
 node, is inside the subflow. Its two instance properties are `INTERVAL` (seconds; positive, at most
 2147483; default `1800` = 30 minutes) and `DEVICE_CODE` (required; `nurlat-5-boiler-room` here).
@@ -57,16 +59,21 @@ Optional fields remain absent when the provider omits them. TTL is three `INTERV
 the default 30-minute polling. Request failures leave the previous entry and its expiry untouched.
 Request/validation/Redis errors produce a status and warning and emit no output. The cache value and
 expiry are written together in one Redis SET operation.
-The full provider response remains in this separate cache. On every successful Nurlat-5 PLC poll,
-`collect-device-state` reads that device's current location cache and optionally adds
+The full provider response remains in this separate cache. On every successful PLC poll,
+`collect-device-state` in every B boiler-room tab reads that device's current location cache and optionally adds
 `weather: { temp, pressure, humidity, wind: { speed, deg, gust } }` before storing device state.
 Temperature is °C, pressure is hPa, humidity is %, wind speeds are m/s and direction is degrees.
 Wind and gust are omitted when absent; unavailable pressure/humidity/wind numbers remain `null`.
 Missing/expired/malformed weather produces no `weather` object. Read errors warn and still allow PLC
-state storage. `tempOutAir` remains the PLC's TE1 reading. The API's normal JSON state history now
+state storage. `tempOutAir` remains the controller's measured outdoor temperature. The API's normal JSON state history now
 includes this optional object in future samples; existing historical states remain valid without it.
 
-Restart the consuming Node-RED instance to load the new shared helper before deploying this subflow.
+For this all-room extension, deploy the updated B flow and the five sites' SVG/schema files plus the
+static manifest. The existing `Weather` definition, shared helpers, environment key and Nurlat-5
+assets are reused. No helper reload or UI rebuild is required if the preceding Nurlat-5 weather
+changes are already deployed. Each device needs cached location metadata with valid coordinates;
+otherwise its weather request is skipped. Import into a freshly reloaded editor and deploy only
+the modified nodes, preserving running PLC polling and any newer server edits.
 Helper/subflow cache checks: `node flow-space-nodered-a/src/helpers/store-weather-to-cache.test.js`
 (run from the repository root; Redis is mocked and no external requests are made).
 Collector/cache-read/schema checks: `node flow-space-nodered-a/src/helpers/get-weather-from-cache.test.js`

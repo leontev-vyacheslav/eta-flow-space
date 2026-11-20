@@ -28,11 +28,11 @@ export function getKeyValuePairs(data: any): PropertiesChainValuePairModel[] {
                 value.forEach((_, i) => {
                     const vv = value[i];
                     if (typeof vv === 'object' && vv !== null) {
-                        collectKeyValuePairs(vv, `${k}[${i}].`, i);
+                        collectKeyValuePairs(vv, `${s}${k}[${i}].`, i);
                     }
                 });
             } else if (typeof value === 'object' && value !== null) {
-                collectKeyValuePairs(value, `${k}.`, arrayIndex);
+                collectKeyValuePairs(value, `${s}${k}.`, arrayIndex);
             } else {
                 propertiesChainValuePairs.push({ propertiesChain: `${s}${k}`, value: value, arrayIndex: arrayIndex });
             }
