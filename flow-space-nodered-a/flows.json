@@ -509,6 +509,84 @@
         }
     },
     {
+        "id": "00a0617d2752349c",
+        "type": "subflow",
+        "name": "Weather",
+        "info": "Fetch current weather for a cached device location. The internal timer starts 30 seconds after deployment and then repeats every INTERVAL seconds.\n\nProperties:\n- INTERVAL: positive polling interval in seconds (default 1800 = 30 minutes; maximum 2147483).\n- DEVICE_CODE: required device code from the shared Redis device cache. Its flow must match the containing tab.\n\nOPENWEATHER_API_KEY is inherited from the container environment; it is not a subflow property.\n\nInput: optional manual trigger. Output: validated OpenWeather JSON in msg.payload, plus deviceCode and objectLocationId. Metric units, Russian descriptions, ten-second HTTP timeout. Output is emitted only after a successful Redis cache write; msg.weatherCacheKey identifies the entry. Failed requests or cache writes emit no output. Request URLs/headers are removed from output.\n\nThe internal current-weather debug node is initially inactive. Status is shown on each instance. The complete provider response is cached under weather:location:<objectLocationId>, with provider, units, observedAt/fetchedAt (epoch ms), and the raw JSON in data. TTL is three INTERVALs. Failures do not replace the last successful entry or extend its TTL. PLC deviceState is unchanged.",
+        "category": "subflows",
+        "in": [
+            {
+                "x": 260,
+                "y": 40,
+                "wires": [
+                    {
+                        "id": "1599462523c1f7c1"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1460,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "8c285efd9d910aa5",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "INTERVAL",
+                "type": "num",
+                "value": "1800"
+            },
+            {
+                "name": "DEVICE_CODE",
+                "type": "str",
+                "value": ""
+            }
+        ],
+        "meta": {},
+        "color": "#87A9C6",
+        "icon": "font-awesome/fa-cloud",
+        "status": {
+            "x": 430,
+            "y": 340,
+            "wires": [
+                {
+                    "id": "069f523968fde624",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "2eea89802c2549be",
+        "type": "group",
+        "z": "00a0617d2752349c",
+        "name": "Weather",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "ab3e9ce62a0cf16c",
+            "1599462523c1f7c1",
+            "435f93c55a558f5f",
+            "c97452b948d66227",
+            "e8db35cfc41694bc",
+            "f6ab4c1a30e92c0b",
+            "4fcfc693f0398d12",
+            "8c285efd9d910aa5"
+        ],
+        "x": 54,
+        "y": 59,
+        "w": 1412,
+        "h": 202
+    },
+    {
         "id": "17c1930de88ea78c",
         "type": "modbus-client",
         "name": "statum-boiler-room-modbus",
@@ -841,6 +919,196 @@
         "y": 220,
         "wires": [
             []
+        ]
+    },
+    {
+        "id": "ab3e9ce62a0cf16c",
+        "type": "inject",
+        "z": "00a0617d2752349c",
+        "g": "2eea89802c2549be",
+        "name": "weather timer",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "${INTERVAL}",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "30",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 210,
+        "y": 120,
+        "wires": [
+            [
+                "1599462523c1f7c1"
+            ]
+        ]
+    },
+    {
+        "id": "1599462523c1f7c1",
+        "type": "function",
+        "z": "00a0617d2752349c",
+        "g": "2eea89802c2549be",
+        "name": "prepare-weather-request",
+        "func": "const configuredCode = env.get('DEVICE_CODE');\nconst DEVICE_CODE = typeof configuredCode === 'string' ? configuredCode.trim() : '';\nif (!DEVICE_CODE) {\n    node.status({ fill: 'yellow', shape: 'ring', text: 'missing device code' });\n    node.warn('Set DEVICE_CODE on the weather subflow instance');\n    return null;\n}\n\nconst interval = Number(env.get('INTERVAL'));\nif (!Number.isFinite(interval) || interval <= 0 || interval > 2147483) {\n    node.status({ fill: 'yellow', shape: 'ring', text: 'invalid interval' });\n    node.warn('INTERVAL must be a positive number of seconds, at most 2147483');\n    return null;\n}\nconst apiKey = env.get('OPENWEATHER_API_KEY');\nif (typeof apiKey !== 'string' || apiKey.trim() === '') {\n    node.status({ fill: 'yellow', shape: 'ring', text: 'missing API key' });\n    node.warn('Set OPENWEATHER_API_KEY in the container environment');\n    return null;\n}\n\nlet device;\ntry {\n    const { getDeviceFromCacheAsync } = global.get('helpers');\n    device = await getDeviceFromCacheAsync(global, DEVICE_CODE);\n} catch (error) {\n    node.status({ fill: 'red', shape: 'ring', text: 'device cache unavailable' });\n    node.warn('Could not read weather location from the device cache');\n    return null;\n}\n\nconst flowUid = node.path.split('/').find((part) => part.length > 0);\nif (!device || device.flow?.uid !== flowUid) {\n    node.status({ fill: 'yellow', shape: 'ring', text: 'device not found on this tab' });\n    node.warn('Weather device is missing from this tab in the device cache');\n    return null;\n}\n\n// PostgreSQL DECIMAL coordinates may be strings; null/blank must not become zero.\nconst coordinate = (value) => {\n    if ((typeof value !== 'string' && typeof value !== 'number') || String(value).trim() === '') {\n        return NaN;\n    }\n    return Number(value);\n};\nconst latitude = coordinate(device.objectLocation?.latitude);\nconst longitude = coordinate(device.objectLocation?.longitude);\nif (!Number.isFinite(latitude) || latitude < -90 || latitude > 90 ||\n    !Number.isFinite(longitude) || longitude < -180 || longitude > 180) {\n    node.status({ fill: 'yellow', shape: 'ring', text: 'missing/invalid location' });\n    node.warn('Weather requires valid coordinates in device.objectLocation');\n    return null;\n}\n\nnode.status({ fill: 'blue', shape: 'dot', text: 'requesting weather' });\nreturn {\n    _msgid: msg._msgid,\n    deviceCode: DEVICE_CODE,\n    objectLocationId: device.objectLocationId,\n    url: 'https://api.openweathermap.org/data/2.5/weather' +\n        '?lat=' + encodeURIComponent(latitude) + '&lon=' + encodeURIComponent(longitude) +\n        '&units=metric&lang=ru&appid=' + encodeURIComponent(apiKey.trim()),\n    requestTimeout: 10000,\n};\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 120,
+        "wires": [
+            [
+                "435f93c55a558f5f"
+            ]
+        ]
+    },
+    {
+        "id": "435f93c55a558f5f",
+        "type": "http request",
+        "z": "00a0617d2752349c",
+        "g": "2eea89802c2549be",
+        "name": "get-current-weather",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": true,
+        "headers": [],
+        "x": 770,
+        "y": 120,
+        "wires": [
+            [
+                "c97452b948d66227"
+            ]
+        ]
+    },
+    {
+        "id": "c97452b948d66227",
+        "type": "function",
+        "z": "00a0617d2752349c",
+        "g": "2eea89802c2549be",
+        "name": "weather-response",
+        "func": "const weather = msg.payload;\nif (msg.statusCode !== 200 || weather?.cod !== 200 ||\n    typeof weather?.main?.temp !== 'number' || !Number.isFinite(weather.main.temp) ||\n    !Number.isFinite(weather?.dt) || weather.dt <= 0) {\n    node.status({ fill: 'red', shape: 'ring', text: 'invalid weather response' });\n    node.warn('OpenWeather response rejected; check HTTP status and API key');\n    return null;\n}\n\nnode.status({ fill: 'green', shape: 'dot', text: weather.main.temp + ' °C' });\n// Return the provider response without request URLs/headers containing the API key.\n// Weather is cached separately downstream; PLC deviceState is unchanged.\nreturn {\n    _msgid: msg._msgid,\n    topic: msg.deviceCode + '/weather',\n    deviceCode: msg.deviceCode,\n    objectLocationId: msg.objectLocationId,\n    payload: weather,\n};\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1050,
+        "y": 120,
+        "wires": [
+            [
+                "8c285efd9d910aa5"
+            ]
+        ]
+    },
+    {
+        "id": "e8db35cfc41694bc",
+        "type": "debug",
+        "z": "00a0617d2752349c",
+        "g": "2eea89802c2549be",
+        "name": "current-weather",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1310,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "f6ab4c1a30e92c0b",
+        "type": "catch",
+        "z": "00a0617d2752349c",
+        "g": "2eea89802c2549be",
+        "name": "Weather request errors",
+        "scope": [
+            "435f93c55a558f5f"
+        ],
+        "uncaught": false,
+        "x": 770,
+        "y": 220,
+        "wires": [
+            [
+                "4fcfc693f0398d12"
+            ]
+        ]
+    },
+    {
+        "id": "4fcfc693f0398d12",
+        "type": "function",
+        "z": "00a0617d2752349c",
+        "g": "2eea89802c2549be",
+        "name": "weather-request-error",
+        "func": "node.status({ fill: 'red', shape: 'ring', text: 'weather request failed' });\n// HTTP errors may carry a URL with appid; do not forward/log the original message.\nnode.warn('OpenWeather request failed (network error or timeout)');\nreturn null;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1050,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "069f523968fde624",
+        "type": "status",
+        "z": "00a0617d2752349c",
+        "name": "weather status",
+        "scope": [
+            "1599462523c1f7c1",
+            "c97452b948d66227",
+            "4fcfc693f0398d12",
+            "8c285efd9d910aa5"
+        ],
+        "x": 200,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8c285efd9d910aa5",
+        "type": "function",
+        "z": "00a0617d2752349c",
+        "g": "2eea89802c2549be",
+        "name": "store-weather-to-cache",
+        "func": "try {\n    const { storeWeatherToCacheAsync } = global.get('helpers');\n    msg.weatherCacheKey = await storeWeatherToCacheAsync(\n        global,\n        msg.objectLocationId,\n        msg.payload,\n        Number(env.get('INTERVAL')),\n    );\n} catch (error) {\n    node.status({ fill: 'red', shape: 'ring', text: 'weather cache failed' });\n    node.warn('Could not store OpenWeather data in Redis');\n    return null;\n}\n\nnode.status({ fill: 'green', shape: 'dot', text: 'cached ' + msg.payload.main.temp + ' °C' });\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1310,
+        "y": 120,
+        "wires": [
+            [
+                "e8db35cfc41694bc"
+            ]
         ]
     },
     {
@@ -2713,6 +2981,29 @@
         "wires": []
     },
     {
+        "id": "60d5b76d7976c2c8",
+        "type": "subflow:00a0617d2752349c",
+        "z": "a03807f6777b0746",
+        "name": "spring1-weather",
+        "env": [
+            {
+                "name": "INTERVAL",
+                "value": "600",
+                "type": "num"
+            },
+            {
+                "name": "DEVICE_CODE",
+                "value": "spring1-boiler-room",
+                "type": "str"
+            }
+        ],
+        "x": 230,
+        "y": 1060,
+        "wires": [
+            []
+        ]
+    },
+    {
         "id": "6d7a267c53a1ac48",
         "type": "function",
         "z": "2d15e59c76504bcb",
@@ -3513,6 +3804,29 @@
         "wires": []
     },
     {
+        "id": "c43f518531edc1f3",
+        "type": "subflow:00a0617d2752349c",
+        "z": "2d15e59c76504bcb",
+        "name": "spring2-weather",
+        "env": [
+            {
+                "name": "INTERVAL",
+                "value": "600",
+                "type": "num"
+            },
+            {
+                "name": "DEVICE_CODE",
+                "value": "spring2-boiler-room",
+                "type": "str"
+            }
+        ],
+        "x": 230,
+        "y": 1180,
+        "wires": [
+            []
+        ]
+    },
+    {
         "id": "13bfc5999f0041c0",
         "type": "modbus-read",
         "z": "7ada8f3f5d804ee5",
@@ -4296,319 +4610,5 @@
         "x": 190,
         "y": 60,
         "wires": []
-    },
-    {
-        "id": "2eea89802c2549be",
-        "type": "group",
-        "z": "00a0617d2752349c",
-        "name": "Weather",
-        "style": {
-            "label": true
-        },
-        "nodes": [
-            "ab3e9ce62a0cf16c",
-            "1599462523c1f7c1",
-            "435f93c55a558f5f",
-            "c97452b948d66227",
-            "e8db35cfc41694bc",
-            "f6ab4c1a30e92c0b",
-            "4fcfc693f0398d12",
-            "8c285efd9d910aa5"
-        ],
-        "x": 54,
-        "y": 59,
-        "w": 1412,
-        "h": 202
-    },
-    {
-        "id": "ab3e9ce62a0cf16c",
-        "type": "inject",
-        "z": "00a0617d2752349c",
-        "g": "2eea89802c2549be",
-        "name": "weather timer",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "${INTERVAL}",
-        "crontab": "",
-        "once": true,
-        "onceDelay": "30",
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 210,
-        "y": 120,
-        "wires": [
-            [
-                "1599462523c1f7c1"
-            ]
-        ]
-    },
-    {
-        "id": "1599462523c1f7c1",
-        "type": "function",
-        "z": "00a0617d2752349c",
-        "g": "2eea89802c2549be",
-        "name": "prepare-weather-request",
-        "func": "const configuredCode = env.get('DEVICE_CODE');\nconst DEVICE_CODE = typeof configuredCode === 'string' ? configuredCode.trim() : '';\nif (!DEVICE_CODE) {\n    node.status({ fill: 'yellow', shape: 'ring', text: 'missing device code' });\n    node.warn('Set DEVICE_CODE on the weather subflow instance');\n    return null;\n}\n\nconst interval = Number(env.get('INTERVAL'));\nif (!Number.isFinite(interval) || interval <= 0 || interval > 2147483) {\n    node.status({ fill: 'yellow', shape: 'ring', text: 'invalid interval' });\n    node.warn('INTERVAL must be a positive number of seconds, at most 2147483');\n    return null;\n}\nconst apiKey = env.get('OPENWEATHER_API_KEY');\nif (typeof apiKey !== 'string' || apiKey.trim() === '') {\n    node.status({ fill: 'yellow', shape: 'ring', text: 'missing API key' });\n    node.warn('Set OPENWEATHER_API_KEY in the container environment');\n    return null;\n}\n\nlet device;\ntry {\n    const { getDeviceFromCacheAsync } = global.get('helpers');\n    device = await getDeviceFromCacheAsync(global, DEVICE_CODE);\n} catch (error) {\n    node.status({ fill: 'red', shape: 'ring', text: 'device cache unavailable' });\n    node.warn('Could not read weather location from the device cache');\n    return null;\n}\n\nconst flowUid = node.path.split('/').find((part) => part.length > 0);\nif (!device || device.flow?.uid !== flowUid) {\n    node.status({ fill: 'yellow', shape: 'ring', text: 'device not found on this tab' });\n    node.warn('Weather device is missing from this tab in the device cache');\n    return null;\n}\n\n// PostgreSQL DECIMAL coordinates may be strings; null/blank must not become zero.\nconst coordinate = (value) => {\n    if ((typeof value !== 'string' && typeof value !== 'number') || String(value).trim() === '') {\n        return NaN;\n    }\n    return Number(value);\n};\nconst latitude = coordinate(device.objectLocation?.latitude);\nconst longitude = coordinate(device.objectLocation?.longitude);\nif (!Number.isFinite(latitude) || latitude < -90 || latitude > 90 ||\n    !Number.isFinite(longitude) || longitude < -180 || longitude > 180) {\n    node.status({ fill: 'yellow', shape: 'ring', text: 'missing/invalid location' });\n    node.warn('Weather requires valid coordinates in device.objectLocation');\n    return null;\n}\n\nnode.status({ fill: 'blue', shape: 'dot', text: 'requesting weather' });\nreturn {\n    _msgid: msg._msgid,\n    deviceCode: DEVICE_CODE,\n    objectLocationId: device.objectLocationId,\n    url: 'https://api.openweathermap.org/data/2.5/weather' +\n        '?lat=' + encodeURIComponent(latitude) + '&lon=' + encodeURIComponent(longitude) +\n        '&units=metric&lang=ru&appid=' + encodeURIComponent(apiKey.trim()),\n    requestTimeout: 10000,\n};\n",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 490,
-        "y": 120,
-        "wires": [
-            [
-                "435f93c55a558f5f"
-            ]
-        ]
-    },
-    {
-        "id": "435f93c55a558f5f",
-        "type": "http request",
-        "z": "00a0617d2752349c",
-        "g": "2eea89802c2549be",
-        "name": "get-current-weather",
-        "method": "GET",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "insecureHTTPParser": false,
-        "authType": "",
-        "senderr": true,
-        "headers": [],
-        "x": 770,
-        "y": 120,
-        "wires": [
-            [
-                "c97452b948d66227"
-            ]
-        ]
-    },
-    {
-        "id": "c97452b948d66227",
-        "type": "function",
-        "z": "00a0617d2752349c",
-        "g": "2eea89802c2549be",
-        "name": "weather-response",
-        "func": "const weather = msg.payload;\nif (msg.statusCode !== 200 || weather?.cod !== 200 ||\n    typeof weather?.main?.temp !== 'number' || !Number.isFinite(weather.main.temp) ||\n    !Number.isFinite(weather?.dt) || weather.dt <= 0) {\n    node.status({ fill: 'red', shape: 'ring', text: 'invalid weather response' });\n    node.warn('OpenWeather response rejected; check HTTP status and API key');\n    return null;\n}\n\nnode.status({ fill: 'green', shape: 'dot', text: weather.main.temp + ' °C' });\n// Return the provider response without request URLs/headers containing the API key.\n// Weather is cached separately downstream; PLC deviceState is unchanged.\nreturn {\n    _msgid: msg._msgid,\n    topic: msg.deviceCode + '/weather',\n    deviceCode: msg.deviceCode,\n    objectLocationId: msg.objectLocationId,\n    payload: weather,\n};\n",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1050,
-        "y": 120,
-        "wires": [
-            [
-                "8c285efd9d910aa5"
-            ]
-        ]
-    },
-    {
-        "id": "e8db35cfc41694bc",
-        "type": "debug",
-        "z": "00a0617d2752349c",
-        "g": "2eea89802c2549be",
-        "name": "current-weather",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1310,
-        "y": 220,
-        "wires": []
-    },
-    {
-        "id": "f6ab4c1a30e92c0b",
-        "type": "catch",
-        "z": "00a0617d2752349c",
-        "g": "2eea89802c2549be",
-        "name": "Weather request errors",
-        "scope": [
-            "435f93c55a558f5f"
-        ],
-        "uncaught": false,
-        "x": 770,
-        "y": 220,
-        "wires": [
-            [
-                "4fcfc693f0398d12"
-            ]
-        ]
-    },
-    {
-        "id": "4fcfc693f0398d12",
-        "type": "function",
-        "z": "00a0617d2752349c",
-        "g": "2eea89802c2549be",
-        "name": "weather-request-error",
-        "func": "node.status({ fill: 'red', shape: 'ring', text: 'weather request failed' });\n// HTTP errors may carry a URL with appid; do not forward/log the original message.\nnode.warn('OpenWeather request failed (network error or timeout)');\nreturn null;\n",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1050,
-        "y": 220,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "00a0617d2752349c",
-        "type": "subflow",
-        "name": "Weather",
-        "info": "Fetch current weather for a cached device location. The internal timer starts 30 seconds after deployment and then repeats every INTERVAL seconds.\n\nProperties:\n- INTERVAL: positive polling interval in seconds (default 1800 = 30 minutes; maximum 2147483).\n- DEVICE_CODE: required device code from the shared Redis device cache. Its flow must match the containing tab.\n\nOPENWEATHER_API_KEY is inherited from the container environment; it is not a subflow property.\n\nInput: optional manual trigger. Output: validated OpenWeather JSON in msg.payload, plus deviceCode and objectLocationId. Metric units, Russian descriptions, ten-second HTTP timeout. Output is emitted only after a successful Redis cache write; msg.weatherCacheKey identifies the entry. Failed requests or cache writes emit no output. Request URLs/headers are removed from output.\n\nThe internal current-weather debug node is initially inactive. Status is shown on each instance. The complete provider response is cached under weather:location:<objectLocationId>, with provider, units, observedAt/fetchedAt (epoch ms), and the raw JSON in data. TTL is three INTERVALs. Failures do not replace the last successful entry or extend its TTL. PLC deviceState is unchanged.",
-        "category": "subflows",
-        "in": [
-            {
-                "x": 260,
-                "y": 40,
-                "wires": [
-                    {
-                        "id": "1599462523c1f7c1"
-                    }
-                ]
-            }
-        ],
-        "out": [
-            {
-                "x": 1460,
-                "y": 120,
-                "wires": [
-                    {
-                        "id": "8c285efd9d910aa5",
-                        "port": 0
-                    }
-                ]
-            }
-        ],
-        "env": [
-            {
-                "name": "INTERVAL",
-                "type": "num",
-                "value": "1800"
-            },
-            {
-                "name": "DEVICE_CODE",
-                "type": "str",
-                "value": ""
-            }
-        ],
-        "meta": {},
-        "color": "#87A9C6",
-        "icon": "font-awesome/fa-cloud",
-        "status": {
-            "x": 430,
-            "y": 340,
-            "wires": [
-                {
-                    "id": "069f523968fde624",
-                    "port": 0
-                }
-            ]
-        }
-    },
-    {
-        "id": "069f523968fde624",
-        "type": "status",
-        "z": "00a0617d2752349c",
-        "name": "weather status",
-        "scope": [
-            "1599462523c1f7c1",
-            "c97452b948d66227",
-            "4fcfc693f0398d12",
-            "8c285efd9d910aa5"
-        ],
-        "x": 200,
-        "y": 340,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "8c285efd9d910aa5",
-        "type": "function",
-        "z": "00a0617d2752349c",
-        "g": "2eea89802c2549be",
-        "name": "store-weather-to-cache",
-        "func": "try {\n    const { storeWeatherToCacheAsync } = global.get('helpers');\n    msg.weatherCacheKey = await storeWeatherToCacheAsync(\n        global,\n        msg.objectLocationId,\n        msg.payload,\n        Number(env.get('INTERVAL')),\n    );\n} catch (error) {\n    node.status({ fill: 'red', shape: 'ring', text: 'weather cache failed' });\n    node.warn('Could not store OpenWeather data in Redis');\n    return null;\n}\n\nnode.status({ fill: 'green', shape: 'dot', text: 'cached ' + msg.payload.main.temp + ' °C' });\nreturn msg;\n",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1310,
-        "y": 120,
-        "wires": [
-            [
-                "e8db35cfc41694bc"
-            ]
-        ]
-    },
-    {
-        "id": "60d5b76d7976c2c8",
-        "type": "subflow:00a0617d2752349c",
-        "z": "a03807f6777b0746",
-        "name": "spring1-weather",
-        "env": [
-            {
-                "name": "INTERVAL",
-                "value": "1800",
-                "type": "num"
-            },
-            {
-                "name": "DEVICE_CODE",
-                "value": "spring1-boiler-room",
-                "type": "str"
-            }
-        ],
-        "x": 230,
-        "y": 1060,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "c43f518531edc1f3",
-        "type": "subflow:00a0617d2752349c",
-        "z": "2d15e59c76504bcb",
-        "name": "spring2-weather",
-        "env": [
-            {
-                "name": "INTERVAL",
-                "value": "1800",
-                "type": "num"
-            },
-            {
-                "name": "DEVICE_CODE",
-                "value": "spring2-boiler-room",
-                "type": "str"
-            }
-        ],
-        "x": 230,
-        "y": 1180,
-        "wires": [
-            []
-        ]
     }
 ]
