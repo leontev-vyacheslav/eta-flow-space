@@ -983,20 +983,21 @@
       "properties": {
         "temp": {
           "type": "number",
-          "description": "Температура наружного воздуха по OpenWeather",
+          "description": "Температура наружного воздуха",
           "unit": "°C",
           "ui": {
             "group": 1,
             "editor": {
               "editorType": "dxNumberBox",
               "label": {
-                "text": "Температура воздуха (OpenWeather)"
+                "text": "Температура воздуха"
               },
               "editorOptions": {
                 "readOnly": true
               },
               "visible": false
-            }
+            },
+            "chart": {}
           }
         },
         "pressure": {
@@ -1009,13 +1010,14 @@
             "editor": {
               "editorType": "dxNumberBox",
               "label": {
-                "text": "Давление (уровень моря)"
+                "text": "Давление"
               },
               "editorOptions": {
                 "readOnly": true
               },
               "visible": false
-            }
+            },
+            "chart": {}
           }
         },
         "humidity": {
@@ -1034,7 +1036,8 @@
                 "readOnly": true
               },
               "visible": false
-            }
+            },
+            "chart": {}
           }
         },
         "wind": {
