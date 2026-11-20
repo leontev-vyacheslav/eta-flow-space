@@ -57,3 +57,13 @@ g#boilerFlame>path:hover {
   animation:
     intenseGlow 3s ease-in-out infinite;
 }
+
+/* The body lobes, stem and actuator highlight as one valve assembly. */
+.tsarevo1-mnemoschema .valve:hover > .valve-body,
+.tsarevo1-mnemoschema .valve:hover > .valve-stem,
+.tsarevo1-mnemoschema .valve:hover > .valve-actuator {
+  stroke: #ffeb3b !important;
+  stroke-width: 1px !important;
+  filter: drop-shadow(0 0 4px rgba(255, 235, 59, 0.5));
+  opacity: 0.9 !important;
+}

@@ -262,11 +262,11 @@
         <circle cx="676" cy="387" r="10" fill="none" stroke="#000000" stroke-width="0.25" pointer-events="none"/>
         <path d="M684 387L674 382.4V391.6Z" fill="#000000" pointer-events="none"/>
     </g>
-    <g id="mixing-valve-1">
+    <g id="mixing-valve-1" class="valve" data-state="states['nurlat-5-boiler-room'].boilerValves[0].isOpeningCommand;states['nurlat-5-boiler-room'].boilerValves[0].isClosingCommand" data-colorizer-hint="none">
         <path id="mixing-valve-1-state" d="M422 171L438 181V171L422 181Z M425 167L430 176L435 167Z" class="valve-body" data-state="states['nurlat-5-boiler-room'].boilerValves[0].isOpeningCommand;states['nurlat-5-boiler-room'].boilerValves[0].isClosingCommand" data-state-eval="element.style.fill = (states['nurlat-5-boiler-room'].boilerValves[0].isOpeningCommand === true || states['nurlat-5-boiler-room'].boilerValves[0].isClosingCommand === true) ? '#0072C6' : '#808080';"/>
         <text x="430" y="197" text-anchor="middle" pointer-events="none">M1</text>
     </g>
-    <g id="mixing-valve-2">
+    <g id="mixing-valve-2" class="valve" data-state="states['nurlat-5-boiler-room'].boilerValves[1].isOpeningCommand;states['nurlat-5-boiler-room'].boilerValves[1].isClosingCommand" data-colorizer-hint="none">
         <path id="mixing-valve-2-state" d="M422 273L438 283V273L422 283Z M425 269L430 278L435 269Z" class="valve-body" data-state="states['nurlat-5-boiler-room'].boilerValves[1].isOpeningCommand;states['nurlat-5-boiler-room'].boilerValves[1].isClosingCommand" data-state-eval="element.style.fill = (states['nurlat-5-boiler-room'].boilerValves[1].isOpeningCommand === true || states['nurlat-5-boiler-room'].boilerValves[1].isClosingCommand === true) ? '#0072C6' : '#808080';"/>
         <text x="430" y="299" text-anchor="middle" pointer-events="none">M2</text>
     </g>
@@ -425,34 +425,34 @@
         <rect id="PE7-frame" x="539" y="368" width="55" height="12" class="reading-frame" data-state="states['nurlat-5-boiler-room'].levelNetworkMakeupTank;states['nurlat-5-boiler-room'].sensors.isLevelNetworkMakeupTankSensorError;states['nurlat-5-boiler-room'].sensors.isLevelNetworkMakeupTankLowLevel;states['nurlat-5-boiler-room'].sensors.isLevelNetworkMakeupTankHighLevel;states['nurlat-5-boiler-room'].sensors.isLevelNetworkMakeupTankPreLowLevel;states['nurlat-5-boiler-room'].sensors.isLevelNetworkMakeupTankPreHighLevel" data-state-eval="element.style.stroke = (states['nurlat-5-boiler-room'].sensors.isLevelNetworkMakeupTankSensorError === true || states['nurlat-5-boiler-room'].sensors.isLevelNetworkMakeupTankLowLevel === true || states['nurlat-5-boiler-room'].sensors.isLevelNetworkMakeupTankHighLevel === true) ? 'red' : ((states['nurlat-5-boiler-room'].sensors.isLevelNetworkMakeupTankPreLowLevel === true || states['nurlat-5-boiler-room'].sensors.isLevelNetworkMakeupTankPreHighLevel === true) ? '#FFC107' : '#000000'); element.style.strokeWidth = (states['nurlat-5-boiler-room'].sensors.isLevelNetworkMakeupTankSensorError === true || states['nurlat-5-boiler-room'].sensors.isLevelNetworkMakeupTankLowLevel === true || states['nurlat-5-boiler-room'].sensors.isLevelNetworkMakeupTankHighLevel === true) ? '1' : ((states['nurlat-5-boiler-room'].sensors.isLevelNetworkMakeupTankPreLowLevel === true || states['nurlat-5-boiler-room'].sensors.isLevelNetworkMakeupTankPreHighLevel === true) ? '0.5' : '0.25');"/>
         <text x="566.5" y="377" id="PE7-value" text-anchor="middle" pointer-events="none" data-state="states['nurlat-5-boiler-room'].levelNetworkMakeupTank" data-state-eval="if (value === null || value === undefined) { element.textContent = '—'; }" font-size="9px">—</text>
     </g>
-    <g id="HV1" transform="translate(90 381)">
+    <g id="HV1" class="valve" data-state="states['nurlat-5-boiler-room'].isBoilerMakeupTankFillValveOpenCommand" data-colorizer-hint="none" transform="translate(90 381)">
         <path id="HV1-state" d="M-8 -5L8 5V-5L-8 5Z" class="valve-body" data-state="states['nurlat-5-boiler-room'].isBoilerMakeupTankFillValveOpenCommand" data-state-eval="element.style.fill = value === true ? '#0072C6' : '#808080';" data-colorizer-hint="none"/>
-        <path d="M0 0V-11" class="pipe"/>
-        <rect x="-4" y="-19" width="8" height="8" fill="#FFFFFF" stroke="#000000" stroke-width="0.5" pointer-events="none"/>
+        <path d="M0 0V-11" class="valve-stem" fill="none" stroke="#000000" stroke-width="1" pointer-events="stroke"/>
+        <path id="HV1-actuator" class="valve-actuator" d="M-4 -19H4V-11H-4Z" fill="#FFFFFF" stroke="#000000" stroke-width="0.5"/>
     </g>
         <text x="90" y="356" text-anchor="middle" pointer-events="none">HV1</text>
-    <g id="HV2" transform="translate(335 413)">
+    <g id="HV2" class="valve" data-state="states['nurlat-5-boiler-room'].isBoilerMakeupValveOpenCommand" data-colorizer-hint="none" transform="translate(335 413)">
         <path id="HV2-state" d="M-8 -5L8 5V-5L-8 5Z" class="valve-body" data-state="states['nurlat-5-boiler-room'].isBoilerMakeupValveOpenCommand" data-state-eval="element.style.fill = value === true ? '#0072C6' : '#808080';" data-colorizer-hint="none"/>
-        <path d="M0 0V-11" class="pipe"/>
-        <rect x="-4" y="-19" width="8" height="8" fill="#FFFFFF" stroke="#000000" stroke-width="0.5" pointer-events="none"/>
+        <path d="M0 0V-11" class="valve-stem" fill="none" stroke="#000000" stroke-width="1" pointer-events="stroke"/>
+        <path id="HV2-actuator" class="valve-actuator" d="M-4 -19H4V-11H-4Z" fill="#FFFFFF" stroke="#000000" stroke-width="0.5"/>
     </g>
         <text x="335" y="388" text-anchor="middle" pointer-events="none">HV2</text>
-    <g id="HV3" transform="translate(530 381)">
+    <g id="HV3" class="valve" data-state="states['nurlat-5-boiler-room'].isNetworkMakeupTankFillValveOpenCommand" data-colorizer-hint="none" transform="translate(530 381)">
         <path id="HV3-state" d="M-8 -5L8 5V-5L-8 5Z" class="valve-body" data-state="states['nurlat-5-boiler-room'].isNetworkMakeupTankFillValveOpenCommand" data-state-eval="element.style.fill = value === true ? '#0072C6' : '#808080';" data-colorizer-hint="none"/>
-        <path d="M0 0V-11" class="pipe"/>
-        <rect x="-4" y="-19" width="8" height="8" fill="#FFFFFF" stroke="#000000" stroke-width="0.5" pointer-events="none"/>
+        <path d="M0 0V-11" class="valve-stem" fill="none" stroke="#000000" stroke-width="1" pointer-events="stroke"/>
+        <path id="HV3-actuator" class="valve-actuator" d="M-4 -19H4V-11H-4Z" fill="#FFFFFF" stroke="#000000" stroke-width="0.5"/>
     </g>
         <text x="530" y="356" text-anchor="middle" pointer-events="none">HV3</text>
-    <g id="HV4" transform="translate(745 413)">
+    <g id="HV4" class="valve" data-state="states['nurlat-5-boiler-room'].isNetworkMakeupValveOpenCommand" data-colorizer-hint="none" transform="translate(745 413)">
         <path id="HV4-state" d="M-8 -5L8 5V-5L-8 5Z" class="valve-body" data-state="states['nurlat-5-boiler-room'].isNetworkMakeupValveOpenCommand" data-state-eval="element.style.fill = value === true ? '#0072C6' : '#808080';" data-colorizer-hint="none"/>
-        <path d="M0 0V-11" class="pipe"/>
-        <rect x="-4" y="-19" width="8" height="8" fill="#FFFFFF" stroke="#000000" stroke-width="0.5" pointer-events="none"/>
+        <path d="M0 0V-11" class="valve-stem" fill="none" stroke="#000000" stroke-width="1" pointer-events="stroke"/>
+        <path id="HV4-actuator" class="valve-actuator" d="M-4 -19H4V-11H-4Z" fill="#FFFFFF" stroke="#000000" stroke-width="0.5"/>
     </g>
         <text x="745" y="388" text-anchor="middle" pointer-events="none">HV4</text>
-    <g id="HV5" transform="translate(140 281) rotate(-90)">
+    <g id="HV5" class="valve" data-state="states['nurlat-5-boiler-room'].isGasValveOpenCommand" data-colorizer-hint="none" transform="translate(140 281) rotate(-90)">
         <path id="HV5-state" d="M-8 -5L8 5V-5L-8 5Z" class="valve-body" data-state="states['nurlat-5-boiler-room'].isGasValveOpenCommand" data-state-eval="element.style.fill = value === true ? '#0072C6' : '#808080';" data-colorizer-hint="none"/>
-        <path d="M0 0V-11" class="pipe"/>
-        <rect x="-4" y="-19" width="8" height="8" fill="#FFFFFF" stroke="#000000" stroke-width="0.5" pointer-events="none"/>
+        <path d="M0 0V-11" class="valve-stem" fill="none" stroke="#000000" stroke-width="1" pointer-events="stroke"/>
+        <path id="HV5-actuator" class="valve-actuator" d="M-4 -19H4V-11H-4Z" fill="#FFFFFF" stroke="#000000" stroke-width="0.5"/>
     </g>
         <text x="110" y="284" text-anchor="middle" pointer-events="none">HV5</text>
         <path d="M359 413L369 408V418Z M372 407V419" fill="#000000" stroke="#000000" stroke-width="0.5"/>

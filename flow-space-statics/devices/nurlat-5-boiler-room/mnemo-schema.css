@@ -73,3 +73,13 @@
     animation: nurlat5_mnemoschema_burner_glow 3s ease-in-out infinite;
     pointer-events: none;
 }
+
+/* The body lobes, stem and actuator highlight as one valve assembly. */
+#nurlat5-mnemoschema .valve:hover > .valve-body,
+#nurlat5-mnemoschema .valve:hover > .valve-stem,
+#nurlat5-mnemoschema .valve:hover > .valve-actuator {
+  stroke: #ffeb3b !important;
+  stroke-width: 1px !important;
+  filter: drop-shadow(0 0 4px rgba(255, 235, 59, 0.5));
+  opacity: 0.9 !important;
+}

@@ -84,3 +84,13 @@
 .spring1-mnemoschema .boiler-flame-animation {
   pointer-events: none;
 }
+
+/* The body lobes, stem and actuator highlight as one valve assembly. */
+.spring1-mnemoschema .valve:hover > .valve-body,
+.spring1-mnemoschema .valve:hover > .valve-stem,
+.spring1-mnemoschema .valve:hover > .valve-actuator {
+  stroke: #ffeb3b !important;
+  stroke-width: 1px !important;
+  filter: drop-shadow(0 0 4px rgba(255, 235, 59, 0.5));
+  opacity: 0.9 !important;
+}

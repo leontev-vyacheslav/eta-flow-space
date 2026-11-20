@@ -86,10 +86,10 @@ existing vessel center and move connected pipe endpoints to the new body edges.
 Use this local geometry for a horizontal actuated valve, with its pipe axis at y = 0:
 
 ```xml
-<g transform="translate(430 380)">
-    <path d="M-8 -5L8 5V-5L-8 5Z" fill="#808080" stroke="#000000" stroke-width="0.5"/>
-    <path d="M0 0V-11" fill="none" stroke="#000000" stroke-width="1"/>
-    <rect x="-4" y="-19" width="8" height="8" fill="#FFFFFF" stroke="#000000" stroke-width="0.5"/>
+<g class="valve" transform="translate(430 380)">
+    <path class="valve-body" d="M-8 -5L8 5V-5L-8 5Z" fill="#808080" stroke="#000000" stroke-width="0.5"/>
+    <path class="valve-stem" d="M0 0V-11" fill="none" stroke="#000000" stroke-width="1" pointer-events="stroke"/>
+    <path class="valve-actuator" d="M-4 -19H4V-11H-4Z" fill="#FFFFFF" stroke="#000000" stroke-width="0.5"/>
 </g>
 ```
 
@@ -103,8 +103,63 @@ and clear of the actuator. Nurlat HV5 and Kirov's drain valve use **−90°** fo
 vertical pipe with the actuator on the left. Preserve existing names and any
 confirmed state bindings; static valves without a state channel keep the grey fill.
 
-The profile records these defaults under `tank` and `valve`. Other valve functions,
-such as three-way mixing valves, retain their appropriate ports and artwork.
+### Unified valve bodies and three-way valves
+
+Use **one SVG `<path>` for every valve body's lobes**, following Nurlat-5's
+`HV1-state`–`HV5-state` and `mixing-valve-1-state` / `mixing-valve-2-state`.
+Two separate bound polygons make each half highlight independently. Keep the bow-tie
+in one path; a three-way valve adds its third triangle as another subpath in that
+**same path**, sharing the same fill, state binding and hover target:
+
+```xml
+<path class="valve-body"
+      d="M-8 -5L8 5V-5L-8 5Z M-5 -9L0 0L5 -9Z"
+      fill="#808080" stroke="#000000" stroke-width="0.5"/>
+```
+
+This mixing body is **16 × 14**, with horizontal ports at x = −8 / +8 and its
+third port at **(0, −9)**. Translate/rotate it for the site's actual pipe directions.
+Add a stem/actuator only where that equipment has one; keep all three ports and
+their connected pipes. `valve.bodyPath` and `valve.threeWay.bodyPath` in the profile
+record the canonical local paths, measured at the body centre. These are geometric
+defaults; Nurlat-5's command-feedback colours do not establish another site's state meanings.
+
+Keep an actuated valve's body, stem and square actuator in one `.valve` group.
+Separate paths preserve the body's state fill and the actuator's white fill.
+Use scoped `.valve:hover > .valve-body`, `.valve:hover > .valve-stem` and
+`.valve:hover > .valve-actuator` rules to highlight the complete assembly in yellow
+(`#ffeb3b`), with **1-unit** outlines and the established glow. Hovering either
+body half, the stem or actuator must produce the same highlight and restore each
+part's original state appearance on pointer leave. Captions remain upright and
+non-interactive. An actuator to the left of a vertical pipe uses an end-aligned
+caption with a **5-unit gap** before the actuator; do not enclose the symbol in a frame.
+
+For a bound assembly, give its group the existing ordered `data-state` list and
+`data-colorizer-hint="none"`; the group lets stem clicks resolve to the same popover.
+Bind the body once with its existing fill semantics. Where the actuator already
+shows state, retain the same property with the `stroke` hint and a **0.5-unit**
+normal outline; do not import an enum's unrelated stroke-width mapping. Keep the
+stem unbound with `pointer-events="stroke"` so the group receives its clicks.
+For an unmapped/static valve, retain its grey body and omit `data-state` entirely:
+hover can highlight geometry without inventing a channel or a property popup.
+
+Applied on **20 November 2026** to **ЗК1–ЗК4 in Spring-2 and Tsarevo-1**. Spring-2
+keeps its `boilerOutputValves[i].state` semantics; Tsarevo-1's `returnValves[i]`
+sections remain static layout markers. Their device READMEs record local positions.
+See the [before/after and interaction checks](../.reports/2026-11-20-unified-valves/README.md).
+
+The follow-up on the same date applies grouped interaction to **Nurlat-5 HV1–HV5
+and M1/M2**, preserving their original blue/grey command-feedback semantics, and
+replaces **Spring-1 РК1** with a single three-way body. Spring-1 rotates the canonical
+body 90° to keep its third port on the right, removes its enclosing frame and
+extends connected pipes to the body ports. Its status/alarm outlines move from the
+frame onto the body, while its alarm icon retains the same visibility predicate.
+Every lobe opens the complete existing status/alarm list. Do not discard a frame's
+state information when removing it, or add an actuator to a symbol that has none.
+See the [follow-up geometry and interaction evidence](../.reports/2026-11-20-valve-followup/README.md).
+Other site layouts remain outside this update.
+
+The profile records tank and valve defaults under `tank` and `valve`.
 
 ## Typography
 

@@ -48,6 +48,10 @@ Water tanks/vessels default to **32 × 50**, radius **10**, with three blue dash
 water lines. Actuated valves use a **16 × 10** bow-tie, an **11-unit** stem and an
 **8 × 8** square actuator, without an enclosing frame. The `tank` / `valve` profile
 entries and component guide specify their strokes, offsets and rotation conventions.
+Valve bodies use a single path for all lobes, including the third port of a mixing
+valve. `valve.bodyPath` / `valve.threeWay.bodyPath` record Nurlat-5's local geometry.
+Keep stem/actuator paths in one group and verify the whole assembly's hover in the UI;
+see [unified valves](../../.docs/mnemoschema-components.md#unified-valve-bodies-and-three-way-valves).
 
 Shared panel wording is stored under `labels`; the boiler-room other-parameters heading
 uses `labels.otherParameters`.

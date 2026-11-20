@@ -96,6 +96,27 @@ dimmed absent weather and pointer targets through
 hover and phone interaction using the guide's focused weather checks when changing
 the visual result. Record local width/coordinate decisions in the device README.
 
+## Construct unified valves
+
+Follow the guide's
+[unified valve standard](../../../.docs/mnemoschema-components.md#unified-valve-bodies-and-three-way-valves)
+and the profile's `valve` paths. Nurlat-5's `HV*-state` and `mixing-valve-*-state`
+are the references: one path contains every body lobe, including the third triangle
+of a three-way valve. Do not split lobes into separately bound polygons. Keep the
+stem and white square actuator as separate paths in one `.valve` group, with no
+enclosing frame. Translate/rotate the whole symbol and preserve its pipe ports.
+
+Apply scoped group-hover rules so either body half, stem or actuator highlights the
+whole assembly and restores its own state colours afterward. Preserve each site's
+confirmed bindings and signal meanings; static valves stay unbound. Spring-2 and
+Tsarevo-1's ЗК1–ЗК4 implement this group interaction. Verify both body halves,
+stem/actuator hover, bound popovers, open/closed restoration and phone taps.
+Spring-1 РК1 demonstrates a three-way body rotated to a right-hand third port;
+Nurlat-5 HV1–HV5 and M1/M2 also implement the grouped interaction. When removing
+an enclosing frame, transfer its confirmed status/alarm outline to the body and
+connect pipes to the actual ports. Retain any alarm icon's visibility predicate;
+do not invent an actuator for a symbol that has none.
+
 ## Verify the affected result
 
 Reuse [project-tools](../project-tools/SKILL.md) and the

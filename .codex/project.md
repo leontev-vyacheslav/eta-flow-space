@@ -53,6 +53,10 @@ instructions refer to the repository root unless the link or instruction says ot
   [component guide](../.docs/mnemoschema-components.md) and
   [numeric profile](../.tools/diagram-renderer/component-standard.json). Preserve unrelated
   existing diagrams and site-specific state semantics.
+- For valves and three-way valves, follow the component guide's
+  [unified valve bodies](../.docs/mnemoschema-components.md#unified-valve-bodies-and-three-way-valves):
+  one path for all body lobes, Nurlat-5 geometry, grouped stem/actuator hover and the
+  site's own state meanings. Static valves remain unbound.
 - For weather blocks, reuse the established station artwork and header-relative placement
   from the [weather standard](../.docs/mnemoschema-components.md#weather-station) and the
   profile's `weather` section. Preserve temperature above the wrapped description, 8 px

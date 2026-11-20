@@ -249,14 +249,11 @@
 	</g>
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="66.3" y1="114.9" x2="66.3" y2="148.7" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="66.3" y1="175.7" x2="66.3" y2="209.5" />
-	<g data-section="boilerOutputValves[0]" id="boiler-output-valve-1" transform="translate(10 0)">
-		<polygon data-state="states['spring2-boiler-room'].boilerOutputValves[0].state" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;stroke-width:0.5;" points="108.7,267.3 103.7,259.3 113.7,259.3"  id="boiler-output-valve-1-half-1"/>
-		<polygon data-state="states['spring2-boiler-room'].boilerOutputValves[0].state" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;stroke-width:0.5;" points="108.7,267.3 113.7,275.3 103.7,275.3"  id="boiler-output-valve-1-half-2"/>
-		<g>
-			<path data-state="states['spring2-boiler-room'].boilerOutputValves[0].state" data-colorizer-hint="stroke;stroke-width" style="stroke:#000000;stroke-miterlimit:10;fill:#FFFFFF;stroke-width:0.5;" d="M89.7 263.3H97.7V271.3H89.7Z"  id="boiler-output-valve-1-actuator" class="valve-actuator"/>
-		</g>
-
-<path class="valve-stem" d="M108.7 267.3H97.7" fill="none" stroke="#000000" stroke-width="1" pointer-events="none"/></g>
+	<g data-section="boilerOutputValves[0]" id="boiler-output-valve-1" class="valve" transform="translate(10 0)" data-state="states['spring2-boiler-room'].boilerOutputValves[0].state" data-colorizer-hint="none">
+		<path id="boiler-output-valve-1-state" class="valve-body" data-state="states['spring2-boiler-room'].boilerOutputValves[0].state" data-colorizer-hint="fill" d="M103.7 259.3L113.7 275.3H103.7L113.7 259.3Z" fill="#808080" stroke="#000000" stroke-width="0.5"/>
+		<path class="valve-stem" d="M108.7 267.3H97.7" fill="none" stroke="#000000" stroke-width="1" pointer-events="stroke"/>
+		<path id="boiler-output-valve-1-actuator" class="valve-actuator" data-state="states['spring2-boiler-room'].boilerOutputValves[0].state" data-colorizer-hint="stroke" d="M89.7 263.3H97.7V271.3H89.7Z" fill="#FFFFFF" stroke="#000000" stroke-width="0.5"/>
+	</g>
 
 	<g data-section="boilers[0].tempOut" transform="translate(10 0)">
 		<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="146.9" y="105.9" text-anchor="middle">TE1</text>
@@ -301,14 +298,11 @@
 	</g>
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="210.7" y1="114.8" x2="210.8" y2="148.6" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="210.8" y1="175.6" x2="210.8" y2="209.4" />
-	<g data-section="boilerOutputValves[1]" id="boiler-output-valve-2" transform="translate(35 0)">
-		<polygon data-state="states['spring2-boiler-room'].boilerOutputValves[1].state" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;stroke-width:0.5;" points="228.2,267.2 223.2,259.2 233.2,259.2"  id="boiler-output-valve-2-half-1"/>
-		<polygon data-state="states['spring2-boiler-room'].boilerOutputValves[1].state" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;stroke-width:0.5;" points="228.2,267.2 233.2,275.2 223.2,275.2"  id="boiler-output-valve-2-half-2"/>
-		<g>
-			<path data-state="states['spring2-boiler-room'].boilerOutputValves[1].state" data-colorizer-hint="stroke;stroke-width" style="stroke:#000000;stroke-miterlimit:10;fill:#FFFFFF;stroke-width:0.5;" d="M209.2 263.2H217.2V271.2H209.2Z"  id="boiler-output-valve-2-actuator" class="valve-actuator"/>
-		</g>
-
-<path class="valve-stem" d="M228.2 267.2H217.2" fill="none" stroke="#000000" stroke-width="1" pointer-events="none"/></g>
+	<g data-section="boilerOutputValves[1]" id="boiler-output-valve-2" class="valve" transform="translate(35 0)" data-state="states['spring2-boiler-room'].boilerOutputValves[1].state" data-colorizer-hint="none">
+		<path id="boiler-output-valve-2-state" class="valve-body" data-state="states['spring2-boiler-room'].boilerOutputValves[1].state" data-colorizer-hint="fill" d="M223.2 259.2L233.2 275.2H223.2L233.2 259.2Z" fill="#808080" stroke="#000000" stroke-width="0.5"/>
+		<path class="valve-stem" d="M228.2 267.2H217.2" fill="none" stroke="#000000" stroke-width="1" pointer-events="stroke"/>
+		<path id="boiler-output-valve-2-actuator" class="valve-actuator" data-state="states['spring2-boiler-room'].boilerOutputValves[1].state" data-colorizer-hint="stroke" d="M209.2 263.2H217.2V271.2H209.2Z" fill="#FFFFFF" stroke="#000000" stroke-width="0.5"/>
+	</g>
 	<g data-section="boilers[1].tempOut" transform="translate(35 0)">
 		<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="266.3" y="105.8" text-anchor="middle">TE2</text>
 		<rect x="238.8" y="108.8" width="55" height="12" data-state="states['spring2-boiler-room'].boilers[1].statusTempOutSensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;"  id="boilers-1-tempOut-frame" class="reading-frame"/>
@@ -352,14 +346,11 @@
 	</g>
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="355.3" y1="114.8" x2="355.3" y2="148.5" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="355.3" y1="175.5" x2="355.3" y2="209.3" />
-	<g data-section="boilerOutputValves[2]" id="boiler-output-valve-3" transform="translate(60 0)">
-		<polygon data-state="states['spring2-boiler-room'].boilerOutputValves[2].state" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;stroke-width:0.5;" points="347.7,267.1 342.7,259.1 352.7,259.1"  id="boiler-output-valve-3-half-1"/>
-		<polygon data-state="states['spring2-boiler-room'].boilerOutputValves[2].state" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;stroke-width:0.5;" points="347.7,267.1 352.7,275.1 342.7,275.1"  id="boiler-output-valve-3-half-2"/>
-		<g>
-			<path data-state="states['spring2-boiler-room'].boilerOutputValves[2].state" data-colorizer-hint="stroke;stroke-width" style="stroke:#000000;stroke-miterlimit:10;fill:#FFFFFF;stroke-width:0.5;" d="M328.7 263.1H336.7V271.1H328.7Z"  id="boiler-output-valve-3-actuator" class="valve-actuator"/>
-		</g>
-
-<path class="valve-stem" d="M347.7 267.1H336.7" fill="none" stroke="#000000" stroke-width="1" pointer-events="none"/></g>
+	<g data-section="boilerOutputValves[2]" id="boiler-output-valve-3" class="valve" transform="translate(60 0)" data-state="states['spring2-boiler-room'].boilerOutputValves[2].state" data-colorizer-hint="none">
+		<path id="boiler-output-valve-3-state" class="valve-body" data-state="states['spring2-boiler-room'].boilerOutputValves[2].state" data-colorizer-hint="fill" d="M342.7 259.1L352.7 275.1H342.7L352.7 259.1Z" fill="#808080" stroke="#000000" stroke-width="0.5"/>
+		<path class="valve-stem" d="M347.7 267.1H336.7" fill="none" stroke="#000000" stroke-width="1" pointer-events="stroke"/>
+		<path id="boiler-output-valve-3-actuator" class="valve-actuator" data-state="states['spring2-boiler-room'].boilerOutputValves[2].state" data-colorizer-hint="stroke" d="M328.7 263.1H336.7V271.1H328.7Z" fill="#FFFFFF" stroke="#000000" stroke-width="0.5"/>
+	</g>
 	<g data-section="boilers[2].tempOut" transform="translate(60 0)">
 		<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="385.8" y="105.9" text-anchor="middle">TE3</text>
 		<rect x="358.3" y="108.9" width="55" height="12" data-state="states['spring2-boiler-room'].boilers[2].statusTempOutSensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;"  id="boilers-2-tempOut-frame" class="reading-frame"/>
@@ -405,14 +396,11 @@
 	</g>
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="500.2" y1="114.7" x2="500.3" y2="148.4" />
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="500.3" y1="175.4" x2="500.3" y2="209.2" />
-	<g data-section="boilerOutputValves[3]" id="boiler-output-valve-4" transform="translate(85 0)">
-		<polygon data-state="states['spring2-boiler-room'].boilerOutputValves[3].state" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;stroke-width:0.5;" points="467.7,267 462.7,259 472.7,259"  id="boiler-output-valve-4-half-1"/>
-		<polygon data-state="states['spring2-boiler-room'].boilerOutputValves[3].state" data-colorizer-hint="fill" style="fill:#808080;stroke:#000000;stroke-miterlimit:10;stroke-width:0.5;" points="467.7,267 472.7,275 462.7,275"  id="boiler-output-valve-4-half-2"/>
-		<g>
-			<path data-state="states['spring2-boiler-room'].boilerOutputValves[3].state" data-colorizer-hint="stroke;stroke-width" style="stroke:#000000;stroke-miterlimit:10;fill:#FFFFFF;stroke-width:0.5;" d="M448.7 263H456.7V271H448.7Z"  id="boiler-output-valve-4-actuator" class="valve-actuator"/>
-		</g>
-
-<path class="valve-stem" d="M467.7 267H456.7" fill="none" stroke="#000000" stroke-width="1" pointer-events="none"/></g>
+	<g data-section="boilerOutputValves[3]" id="boiler-output-valve-4" class="valve" transform="translate(85 0)" data-state="states['spring2-boiler-room'].boilerOutputValves[3].state" data-colorizer-hint="none">
+		<path id="boiler-output-valve-4-state" class="valve-body" data-state="states['spring2-boiler-room'].boilerOutputValves[3].state" data-colorizer-hint="fill" d="M462.7 259L472.7 275H462.7L472.7 259Z" fill="#808080" stroke="#000000" stroke-width="0.5"/>
+		<path class="valve-stem" d="M467.7 267H456.7" fill="none" stroke="#000000" stroke-width="1" pointer-events="stroke"/>
+		<path id="boiler-output-valve-4-actuator" class="valve-actuator" data-state="states['spring2-boiler-room'].boilerOutputValves[3].state" data-colorizer-hint="stroke" d="M448.7 263H456.7V271H448.7Z" fill="#FFFFFF" stroke="#000000" stroke-width="0.5"/>
+	</g>
 	<g data-section="boilers[3].tempOut" transform="translate(85 0)">
 		<text transform="translate(0 0)" style="font-family:'Roboto';font-size:10px;" pointer-events="none" x="505.8" y="105.8" text-anchor="middle">TE4</text>
 		<rect x="478.3" y="108.8" width="55" height="12" data-state="states['spring2-boiler-room'].boilers[3].statusTempOutSensor" style="fill:#FFFFFF;stroke:#000000;stroke-width:0.25;stroke-miterlimit:10;"  id="boilers-3-tempOut-frame" class="reading-frame"/>

@@ -110,6 +110,22 @@ empty popup. The guide contains geometry, wrapping and focused browser checks.
 
 ## Match hover feedback and preserve hit targets
 
+For valves, use the guide's
+[unified valve bodies and three-way valves](../../../.docs/mnemoschema-components.md#unified-valve-bodies-and-three-way-valves).
+Keep all body lobes in one bound path, with the stem and actuator in the same
+`.valve` group. Give a bound group the existing property list and colorizer hint
+`none` so an unbound stem's clicks resolve through it; use `pointer-events="stroke"`
+on the stem. Preserve body-fill and actuator-outline state ownership separately.
+Use the actuator's `stroke` hint with the standard 0.5-unit normal width rather
+than inheriting an enum's stroke-width mapping. Scoped group hover highlights all
+three parts at 1 unit and restores their state styling on leave. Do not add state
+bindings to static valves merely to enable hover or popovers. Check both lobes,
+stem, actuator, popup ownership and phone taps when changing these assemblies.
+If a removed valve frame owned extra status/alarm properties, retain their ordered
+list on the unified body/group and transfer its state-outline logic. Spring-1 РК1
+keeps both status and alarm on every lobe plus its original alarm-icon predicate.
+Nurlat-5 valves retain command-feedback colours rather than Spring's position enum.
+
 Read the user-selected reference's current CSS/SVG. For the Spring-2 appearance approved here,
 use the Muslum-9 CSS as an implemented example: scoped yellow outlines and glow on bound shapes,
 bold bound text, and normal state colours after the pointer leaves. Copy relevant rules, not the

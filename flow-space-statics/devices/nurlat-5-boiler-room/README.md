@@ -1,5 +1,26 @@
 # Нурлат, котельная №5
 
+## Unified valve interaction — 20 November 2026
+
+Applied the latest Spring-2/Tsarevo-1 `.valve` grouping and hover rules to
+**HV1–HV5 and M1/M2**. All body paths, body state expressions, positions, rotations,
+captions and connected pipes are preserved. Each HV stem is now a `valve-stem`
+path with pointer events on its stroke; its square actuator becomes a white path
+of the same **8 × 8** geometry. Hovering either body half, the stem or actuator
+highlights the whole HV assembly. All three lobes of M1/M2 remain in one path.
+
+Every group has its existing ordered body properties and suppresses group
+colorizers, so stem/actuator clicks open the same details as the body. HV details
+still contain one output-feedback field; M1/M2 retain opening command followed by
+closing command. Actuators stay white/black, while the body keeps its original
+blue/grey command-feedback fill. No measured-position or alarm meaning is added.
+Normal body/actuator outlines are **0.5**, stems **1**, with **1-unit** yellow hover
+outlines and state restoration on leave.
+
+See the [shared valve standard](../../../.docs/mnemoschema-components.md#unified-valve-bodies-and-three-way-valves)
+and [before/after and browser checks](../../../.reports/2026-11-20-valve-followup/README.md).
+These are local static changes, not a production deployment.
+
 The `nurlat-5-boiler-room` tab (`93dc403dd0a3e7b1`) is prepared in
 [Node-RED B's flow file](../../../flow-space-nodered-b/flows.json). It follows the existing
 boiler-room pattern: a periodic `modbus-read`, sequential `modbus-getter` nodes, one

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Котельная Царёво-1: redrawn from the old dispatching diagram (.docs/old-tsarevo-1.svg) in the Весна-2 layout and style; only the connection indicator is bound until the controller register map is known -->
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 46 902.5 594.6" style="enable-background:new 0 46 902.5 594.6;" xml:space="preserve">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" class="tsarevo1-mnemoschema" viewBox="0 46 902.5 594.6" style="enable-background:new 0 46 902.5 594.6;" xml:space="preserve">
 	<defs>
 		<g id="infoIcon">
 			<!-- the "i" is a hole in the triangle: this transparent outline makes it clickable too -->
@@ -114,11 +114,11 @@
 	</g>
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="221.8" y1="233.6" x2="211.4" y2="233.6" />
 	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="221.8" cy="233.6" r="1.3" />
-	<g data-section="returnValves[0]">
-		<text transform="matrix(1 0 0 1 205.8 266)" style="font-family:'Roboto'; font-size:10px; text-anchor:end">ЗК1</text>
-		<polygon style="fill:#808080;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="221.8,262 216.55,254 227.05,254" />
-		<polygon style="fill:#808080;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="221.8,262 227.05,270 216.55,270" />
-		<rect x="208.7" y="248.6" width="26.2" height="26.8" rx="2.6" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" />
+	<g data-section="returnValves[0]" id="return-valve-1" class="valve">
+		<text id="return-valve-1-label" x="197.8" y="265.5" text-anchor="end" style="font-family:'Roboto';font-size:10px;" pointer-events="none">ЗК1</text>
+		<path id="return-valve-1-body" class="valve-body" d="M216.8 254L226.8 270H216.8L226.8 254Z" fill="#808080" stroke="#000000" stroke-width="0.5"/>
+		<path class="valve-stem" d="M221.8 262H210.8" fill="none" stroke="#000000" stroke-width="1" pointer-events="stroke"/>
+		<path id="return-valve-1-actuator" class="valve-actuator" d="M202.8 258H210.8V266H202.8Z" fill="#FFFFFF" stroke="#000000" stroke-width="0.5"/>
 		<use href="#emergencyIcon" style="display:none" transform="translate(235.8, 231)" />
 	</g>
 	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="221.8" cy="300" r="1.3" />
@@ -169,11 +169,11 @@
 	</g>
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="393.8" y1="233.6" x2="383.4" y2="233.6" />
 	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="393.8" cy="233.6" r="1.3" />
-	<g data-section="returnValves[1]">
-		<text transform="matrix(1 0 0 1 377.8 266)" style="font-family:'Roboto'; font-size:10px; text-anchor:end">ЗК2</text>
-		<polygon style="fill:#808080;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="393.8,262 388.55,254 399.05,254" />
-		<polygon style="fill:#808080;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="393.8,262 399.05,270 388.55,270" />
-		<rect x="380.7" y="248.6" width="26.2" height="26.8" rx="2.6" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" />
+	<g data-section="returnValves[1]" id="return-valve-2" class="valve">
+		<text id="return-valve-2-label" x="369.8" y="265.5" text-anchor="end" style="font-family:'Roboto';font-size:10px;" pointer-events="none">ЗК2</text>
+		<path id="return-valve-2-body" class="valve-body" d="M388.8 254L398.8 270H388.8L398.8 254Z" fill="#808080" stroke="#000000" stroke-width="0.5"/>
+		<path class="valve-stem" d="M393.8 262H382.8" fill="none" stroke="#000000" stroke-width="1" pointer-events="stroke"/>
+		<path id="return-valve-2-actuator" class="valve-actuator" d="M374.8 258H382.8V266H374.8Z" fill="#FFFFFF" stroke="#000000" stroke-width="0.5"/>
 		<use href="#emergencyIcon" style="display:none" transform="translate(407.8, 231)" />
 	</g>
 	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="393.8" cy="300" r="1.3" />
@@ -224,11 +224,11 @@
 	</g>
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="533.8" y1="233.6" x2="523.4" y2="233.6" />
 	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="533.8" cy="233.6" r="1.3" />
-	<g data-section="returnValves[2]">
-		<text transform="matrix(1 0 0 1 517.8 266)" style="font-family:'Roboto'; font-size:10px; text-anchor:end">ЗК3</text>
-		<polygon style="fill:#808080;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="533.8,262 528.55,254 539.05,254" />
-		<polygon style="fill:#808080;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="533.8,262 539.05,270 528.55,270" />
-		<rect x="520.7" y="248.6" width="26.2" height="26.8" rx="2.6" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" />
+	<g data-section="returnValves[2]" id="return-valve-3" class="valve">
+		<text id="return-valve-3-label" x="509.8" y="265.5" text-anchor="end" style="font-family:'Roboto';font-size:10px;" pointer-events="none">ЗК3</text>
+		<path id="return-valve-3-body" class="valve-body" d="M528.8 254L538.8 270H528.8L538.8 254Z" fill="#808080" stroke="#000000" stroke-width="0.5"/>
+		<path class="valve-stem" d="M533.8 262H522.8" fill="none" stroke="#000000" stroke-width="1" pointer-events="stroke"/>
+		<path id="return-valve-3-actuator" class="valve-actuator" d="M514.8 258H522.8V266H514.8Z" fill="#FFFFFF" stroke="#000000" stroke-width="0.5"/>
 		<use href="#emergencyIcon" style="display:none" transform="translate(547.8, 231)" />
 	</g>
 	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="533.8" cy="300" r="1.3" />
@@ -278,11 +278,11 @@
 	</g>
 	<line style="fill:none;stroke:#000000;stroke-miterlimit:10;" x1="705.8" y1="233.6" x2="695.4" y2="233.6" />
 	<circle style="fill:#000000;stroke:#000000;stroke-miterlimit:10;" cx="705.8" cy="233.6" r="1.3" />
-	<g data-section="returnValves[3]">
-		<text transform="matrix(1 0 0 1 689.8 266)" style="font-family:'Roboto'; font-size:10px; text-anchor:end">ЗК4</text>
-		<polygon style="fill:#808080;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="705.8,262 700.55,254 711.05,254" />
-		<polygon style="fill:#808080;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" points="705.8,262 711.05,270 700.55,270" />
-		<rect x="692.7" y="248.6" width="26.2" height="26.8" rx="2.6" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" />
+	<g data-section="returnValves[3]" id="return-valve-4" class="valve">
+		<text id="return-valve-4-label" x="681.8" y="265.5" text-anchor="end" style="font-family:'Roboto';font-size:10px;" pointer-events="none">ЗК4</text>
+		<path id="return-valve-4-body" class="valve-body" d="M700.8 254L710.8 270H700.8L710.8 254Z" fill="#808080" stroke="#000000" stroke-width="0.5"/>
+		<path class="valve-stem" d="M705.8 262H694.8" fill="none" stroke="#000000" stroke-width="1" pointer-events="stroke"/>
+		<path id="return-valve-4-actuator" class="valve-actuator" d="M686.8 258H694.8V266H686.8Z" fill="#FFFFFF" stroke="#000000" stroke-width="0.5"/>
 		<use href="#emergencyIcon" style="display:none" transform="translate(719.8, 231)" />
 	</g>
 	<!-- supply: the header runs left from boiler 1, down the left edge and along the bottom under the return, sensors there, out to Т1 (as on Весна-2) -->

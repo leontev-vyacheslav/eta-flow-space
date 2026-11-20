@@ -1,5 +1,31 @@
 # Котельная ЖК Весна-1 — mnemoschema
 
+## Unified РК1 — 20 November 2026
+
+`mixing-valve` now uses the shared three-way body as one SVG path, rotated **90°**
+so its third port faces right. The former three separately bound polygons and
+enclosing frame are replaced by the **14 × 16** body. The existing caption and
+alarm icon keep their positions and bindings; no actuator is invented for this symbol.
+
+The body centre is **(68.7, 254.8)**, aligned with the lower network-pump feed.
+Its upper/lower ports are **(68.7, 246.8)** and **(68.7, 262.8)**; the right port
+is **(77.7, 254.8)**. The three connected pipe ends extend to those ports, and the
+upper elbow's x coordinate follows the common 68.7 axis. This removes the gaps
+left by the former enclosing frame. The old lobe centre moves 1.5 units right;
+the valve group's two existing translations and unrelated pipes remain unchanged.
+
+Every lobe now opens the same ordered properties: `threewayValve.status`, then
+`isAlarmThreeWayValve`. Status **0/1/2** retains intermediate/closed/open meaning;
+open is white, intermediate/closed grey. The former frame's black/blue/red state
+outline moves onto the body: black normally, blue when open, red on alarm.
+Normal outlines are **0.5**, alarm and unified yellow hover outlines **1**.
+The existing alarm-icon visibility predicate is unchanged. Pointer leave restores
+the status/alarm appearance; linked-meter selection still resolves to the controller.
+
+See the [shared valve standard](../../../.docs/mnemoschema-components.md#unified-valve-bodies-and-three-way-valves)
+and [before/after and browser checks](../../../.reports/2026-11-20-valve-followup/README.md).
+These are local static changes, not a production deployment.
+
 ## Cached weather — 20 November 2026
 
 Instance A now has one `spring1-weather` instance of the shared `Weather` subflow:
@@ -84,7 +110,8 @@ junction dots and crossing gaps follow the equipment. Sensor stems are vertical
 and centred on their frames and branch dots. The old 4.5-unit gap below boiler 4
 is closed. Both existing makeup pumps connect to the shared inlet and outlet;
 their frames have room for the standard size. The three-way mixing valve retains
-its three ports, artwork, controller feedback and fault interpretation. No two-way
+its three ports, controller feedback and fault interpretation; the 20 November
+update above replaces its split artwork with the standard compound path. No two-way
 valve symbol is substituted for it.
 
 The heat-meter inlet riser is at **x = 330** and the makeup inlet at **x = 250**,

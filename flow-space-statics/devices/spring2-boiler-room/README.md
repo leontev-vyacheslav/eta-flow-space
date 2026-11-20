@@ -1,5 +1,30 @@
 # Котельная ЖК Весна-2 — mnemoschema
 
+## Unified ЗК1–ЗК4 — 20 November 2026
+
+The four `boiler-output-valve-*` groups now follow the
+[shared valve standard](../../../.docs/mnemoschema-components.md#unified-valve-bodies-and-three-way-valves).
+Each vertical bow-tie is one **10 × 16** path, replacing its two separately bound
+polygons. The **11-unit** left stem and white **8 × 8** square actuator remain
+separate paths in the same `.valve` group. Hovering either body half, the stem or
+actuator highlights all three parts together and restores their state colours on leave.
+
+`boilerOutputValves[i].state` still owns each valve: **1 = open**, **2 = closed**.
+The body retains white/grey fills and the actuator blue/black outlines. Its normal
+outline stays **0.5**, with **1-unit** yellow hover outlines. The group has the same
+property and `data-colorizer-hint="none"`; stem clicks therefore open the same
+single-property popover as the body and actuator. The actuator uses the `stroke`
+hint without the enum's unrelated stroke-width mapping.
+
+Body centres in effective root coordinates remain **(118.7, 267.3)**,
+**(263.2, 267.2)**, **(407.7, 267.1)** and **(552.7, 267)**. Existing group
+translations, pipe endpoints and upright captions keep their positions, including
+the five-unit caption-to-actuator gap. Other equipment, bindings, schemas and
+controller/meter ownership are unchanged. The SVG retains CRLF endings.
+
+See [before/after previews and verification](../../../.reports/2026-11-20-unified-valves/README.md).
+These are local static-asset changes; production deployment is not established.
+
 ## Cached weather — 20 November 2026
 
 Instance A now has one `spring2-weather` instance of the shared `Weather` subflow:
