@@ -1,6 +1,6 @@
 ---
 name: diagram-state-binding
-description: Bind device-state properties to Eta Flow Space SVG mnemoschemas, arrange property popovers and alarm panels, and match existing hover feedback. Use for diagram bindings and their visual verification; collected-state changes also require device-state-mapping.
+description: Bind device-state properties to Eta Flow Space SVG mnemoschemas, arrange property popovers, weather readouts and alarm panels, and match existing hover feedback. Use for diagram bindings and their visual verification; collected-state changes also require device-state-mapping.
 ---
 
 # Diagram state binding
@@ -89,6 +89,24 @@ Do not globally deduplicate bindings: a frame and its value text can intentional
 and multiple clickable parts of one boiler can intentionally open the same complete detail list.
 Connection status, operation status and alarms have distinct roles; preserve the requested colour
 ownership rather than applying connection styling to every instrument.
+
+## Preserve weather readouts and popovers
+
+For weather blocks, follow the shared
+[weather station standard](../../../.docs/mnemoschema-components.md#weather-station)
+and Nurlat-5's current SVG/CSS. Preserve the station/hitbox's ordered properties:
+`weather.description`, `weather.temp`, `weather.pressure`, `weather.humidity`,
+`weather.wind.speed`, `weather.wind.deg`, `weather.wind.gust`. The stored provider
+`weather.icon` does not replace the artwork or enter this popover. Shared diagrams
+retain `data-device` for the controller even when a linked meter is selected.
+
+Keep `data-colorizer-hint="none"` on the transparent hitbox and decorative artwork
+non-interactive. The description's bound `foreignObject` receives clicks; its bound
+XHTML `div` uses `textContent`, null/undefined-to-blank handling and no pointer events.
+Keep the schema-formatted temperature above it, blank when missing, and group opacity
+1 / 0.4 for present / absent weather. Preserve valid zero readings, bold description
+hover, full-text details and the seven-property icon popup; absent weather opens no
+empty popup. The guide contains geometry, wrapping and focused browser checks.
 
 ## Match hover feedback and preserve hit targets
 

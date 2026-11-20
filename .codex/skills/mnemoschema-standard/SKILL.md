@@ -1,6 +1,6 @@
 ---
 name: mnemoschema-standard
-description: Apply the shared component standard when creating or changing Eta Flow Space SVG diagram geometry, layout, typography or visual styling, including equipment, instruments and emergency panels.
+description: Apply the shared component standard when creating or changing Eta Flow Space SVG diagram geometry, layout, typography or visual styling, including equipment, instruments, weather icons and emergency panels.
 ---
 
 # Mnemoschema standard
@@ -57,6 +57,7 @@ inheritance, readings/setpoints, emergency-tile captions and multiline spacing. 
 essential typography and initial styles in the SVG so standalone and application
 previews agree. Emergency-panel headings use the general
 text role; numeric readings retain their own role.
+Weather temperature/description use the explicit 8 px exception in `weather.fontSize`.
 
 Apply `strokeWidths`, component/state widths, `hover` and radius settings to initial SVG
 attributes, embedded styles, state expressions and scoped CSS. Check computed styles:
@@ -76,6 +77,24 @@ For bindings, alarm/popover ownership or interactive state styling, also use
 [diagram-state-binding](../diagram-state-binding/SKILL.md). Geometry-only edits preserve
 IDs, ordered `data-state` lists, units, signal polarity and full state expressions;
 requested style edits change appearance without changing signal predicates.
+
+## Reuse the weather station
+
+For weather icons and header placement, read the guide's
+[weather station standard](../../../.docs/mnemoschema-components.md#weather-station)
+and the profile's `weather` section. Reuse Nurlat-5's current fixed station artwork,
+black 0.5-unit strokes and 27 × 27 transparent hitbox. Place the complete block using
+the documented header-relative offsets; measure through all ancestor transforms.
+Temperature comes first with a two-line wrapped description below, both at 8 px.
+Choose description width from available space before the first card, preserving the
+site's layout. The guide records existing site coordinates and the Spring translations.
+Use the latest temperature-first implementation ahead of older report screenshots.
+
+Preserve ordered weather properties, controller ownership, blank missing labels,
+dimmed absent weather and pointer targets through
+[diagram-state-binding](../diagram-state-binding/SKILL.md). Verify long text, popovers,
+hover and phone interaction using the guide's focused weather checks when changing
+the visual result. Record local width/coordinate decisions in the device README.
 
 ## Verify the affected result
 

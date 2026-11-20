@@ -32,8 +32,8 @@ instructions refer to the repository root unless the link or instruction says ot
 | meter-integration | Add, replace, move or rename a meter across components | [SKILL.md](skills/meter-integration/SKILL.md) |
 | device-reader-raw | Implement or rework a protocol reader | [SKILL.md](skills/device-reader-raw/SKILL.md) |
 | device-state-mapping | Change collected state, units, channels or history compatibility | [SKILL.md](skills/device-state-mapping/SKILL.md) |
-| mnemoschema-standard | Create or change SVG component geometry, layout, typography or visual styling | [SKILL.md](skills/mnemoschema-standard/SKILL.md) |
-| diagram-state-binding | Bind SVG diagram properties, arrange popovers and alarm panels, or match hover feedback | [SKILL.md](skills/diagram-state-binding/SKILL.md) |
+| mnemoschema-standard | Create or change SVG component geometry, layout, typography, weather icons or visual styling | [SKILL.md](skills/mnemoschema-standard/SKILL.md) |
+| diagram-state-binding | Bind SVG diagram properties, arrange popovers, weather readouts and alarm panels, or match hover feedback | [SKILL.md](skills/diagram-state-binding/SKILL.md) |
 | project-tools | Render diagrams, regenerate manifests, probe devices or reuse helper scripts | [SKILL.md](skills/project-tools/SKILL.md) |
 | testing-with-playwright | Implement or verify web UI interactions and responsive layout; capture browser evidence | [SKILL.md](skills/testing-with-playwright/SKILL.md) |
 | commit-message | Finish project changes or propose a commit subject | [SKILL.md](skills/commit-message/SKILL.md) |
@@ -53,6 +53,10 @@ instructions refer to the repository root unless the link or instruction says ot
   [component guide](../.docs/mnemoschema-components.md) and
   [numeric profile](../.tools/diagram-renderer/component-standard.json). Preserve unrelated
   existing diagrams and site-specific state semantics.
+- For weather blocks, reuse the established station artwork and header-relative placement
+  from the [weather standard](../.docs/mnemoschema-components.md#weather-station) and the
+  profile's `weather` section. Preserve temperature above the wrapped description, 8 px
+  text, controller ownership and existing popovers; keep local widths in the device README.
 
 - Preserve existing SVG line endings and JSON formatting. After statics changes run
   `bash .tools/diagram-renderer/gen-manifest.sh`; render visual changes with the existing tools.

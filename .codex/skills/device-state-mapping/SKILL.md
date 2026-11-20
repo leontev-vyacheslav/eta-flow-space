@@ -74,6 +74,18 @@ Rules:
   a legacy fallback with a warning; don't write it. Device codes follow the naming conventions in the
   [meter-integration](../meter-integration/SKILL.md) (`<site>-<type code>-<serial>`); renaming a code is described there too.
 
+## Reuse the cached weather contract
+
+For cached weather, reuse the owning Node-RED README and Nurlat-5's current weather
+schema/collector rather than deriving fields from PLC channels. `weather` is an
+optional controller-owned object, separate from `tempOutAir`; preserve history without
+it, valid zeros and PLC persistence when the cache is missing or fails. Keep units,
+first-condition description/icon metadata, hidden editors and chart metadata consistent
+with the [shared weather contract](../../../.docs/mnemoschema-components.md#data-meaning-and-verification).
+For its existing station icon, header placement and popovers, use
+[mnemoschema-standard](../mnemoschema-standard/SKILL.md) and
+[diagram-state-binding](../diagram-state-binding/SKILL.md).
+
 ## Keeping the stored state identical (when reworking)
 
 Use authorized, bounded live reads or existing captures. If hardware access is unavailable, compare

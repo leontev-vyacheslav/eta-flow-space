@@ -38,6 +38,7 @@ its own coordinates, but its instance must occupy the standard component/icon bo
 | Water tank/vessel | **32 × 50**; radius 10; white body with three blue dashed water lines | 1 / 0.5 |
 | Valve body | **16 × 10** bow-tie; **8 × 8** square actuator on an 11-unit stem; no enclosing frame | 0.5 / 1 |
 | Parameter/emergency panel | Radius 10; parameter-panel height 70 | 0.5 |
+| Weather station | Reuse Nurlat-5 artwork; transparent **27 × 27** hitbox, radius 3 | 0.5 (artwork) |
 
 The corrected boiler, burner and pump-frame dimensions were accepted on **16 November
 2026**. When applying them to an existing layout, resize around the component's center
@@ -50,7 +51,7 @@ and hover states. These rules apply to initial SVG attributes, state expressions
 
 Use **10** (`radius` in the JSON profile) for component radii and rounded panel/card/tile
 corners. The exceptions are **burnerRadius = 5**, **junctionRadius = 1.5** and pump
-**frameRadius = 3**. Square
+**frameRadius = 3**, plus the weather hitbox's radius **3**. Square
 sensor frames, boiler bodies and valve actuators remain square; preserve icon artwork.
 
 The default sensor-reading frame width is **55 px**, accepted on **16 November 2026**.
@@ -127,6 +128,7 @@ and when typography is part of the requested work on an existing diagram.
 |---|---:|---|
 | Sensor readings and numeric setpoints | **9 px** | Temperature, pressure, tank level, temperature setpoint |
 | Emergency-tile captions | **7 px** | Связь, Охрана, Пожар, CO, Метан |
+| Weather temperature and description | **8 px** | Dedicated weather readout; see the weather station rules below |
 | All other text | **10 px** | Sensor tags, equipment names, captions, timestamps, statuses, mode text and panel headings |
 
 Use **Roboto, Arial, sans-serif** and set `font-size:10px` on the root `<svg>`. Text
@@ -156,11 +158,106 @@ logical equipment or caption when its presentation changes.
 The canonical machine-readable settings are in `component-standard.json` under `font`:
 `reading: 9`, `emergencyLabel: 7`, `other: 10`, `multilineBaseline: 12`. These values
 replace the earlier Nurlat-only trial; there is no separate `fontTrials` profile.
+The weather readout is an explicit 8 px exception, recorded under `weather.fontSize`.
 
 The earlier Kirov/Gagarin/Komarova reference assets used 9 px status/timestamps,
 8.5 px parameter captions and an 8 px emergency heading. All three now use the
 accepted typography above. Updating the guide does not imply changing every existing
 SVG; preserve unrelated or explicitly excluded site layouts.
+
+## Weather station
+
+The shared weather presentation, established on **20 November 2026**, is implemented in
+[Nurlat-5's SVG](../flow-space-statics/devices/nurlat-5-boiler-room/mnemo-schema.svg)
+and [scoped CSS](../flow-space-statics/devices/nurlat-5-boiler-room/mnemo-schema.css).
+Reuse its existing station paths and circles unchanged: black **0.5-unit** strokes,
+round caps/joins, original white details and non-interactive artwork. The stored
+provider `weather.icon` code does not replace this fixed station symbol.
+Numeric defaults live under `weather` in the component profile.
+
+### Placement and text
+
+Place the station at the left of **«Прочие параметры котельной»**, below its heading
+and before the process-reading cards. Measure the following offsets from the
+header frame's top-left corner, after every ancestor transform:
+
+| Element | Offset from header frame | Geometry |
+|---|---|---|
+| Transparent click target | (+9, +36) | 27 × 27; radius 3; transparent fill/stroke |
+| Station artwork origin | (+11, +37) | Original reference artwork, translated without scaling |
+| Temperature anchor | (+41, +46) | Left-aligned baseline; 8 px |
+| Description box origin | (+41, +49) | 19 units high; site-specific width; 8 px |
+| Readout clip origin | (+38, +35) | 33 units high; right edge matches description box |
+
+Temperature appears **first**, with the description **below**. Use the schema-formatted
+single-property SVG `<text>` for temperature, including its °C unit. Description uses
+an SVG `foreignObject` containing an XHTML `div`: `Roboto,Arial,sans-serif`, **8 px**,
+**9 px** line height, normal whitespace, `overflow-wrap:anywhere`, hidden overflow,
+`display:-webkit-box`, vertical box orientation and a **two-line** clamp. Very long text
+ends with an ellipsis; its complete value remains in the popover. Keep the clip large
+enough for both lines and bold hover text. Do not shrink the agreed font to fit.
+
+Description width follows the space before the first card; it is not a universal
+45- or 50-unit limit. These are the current local layouts, in effective root coordinates:
+
+| Diagrams | Header frame origin | Hitbox origin | Artwork origin | Temperature baseline | Description origin | Description width |
+|---|---|---|---|---|---|---:|
+| Gagarin, Komarova, Kirov | (4, 8) | (13, 44) | (15, 45) | (45, 54) | (45, 57) | 65 |
+| Nurlat-5 | (4, 8) | (13, 44) | (15, 45) | (45, 54) | (45, 57) | 45 |
+| Muslum-7/9 | (13, 7.8) | (22, 43.8) | (24, 44.8) | (54, 53.8) | (54, 56.8) | 47 |
+| Spring-1 | (-92, 12) | (-83, 48) | (-81, 49) | (-51, 58) | (-51, 61) | 180 |
+| Spring-2 | (-92, 12) | (-83, 48) | (-81, 49) | (-51, 58) | (-51, 61) | 82 |
+
+Spring-1's weather group uses `translate(-96 4)`. Spring-2 uses `translate(-26 4)`
+inside the header's `translate(-70 0)`. Preserve these ownership/layout arrangements
+and existing cards, equipment, pipes and canvas bounds when reusing the weather block.
+Record future local coordinates and width choices in the device README.
+
+### Bindings and interaction
+
+Bind `weather-info` and `weather-icon-hitbox` to the controller's weather properties
+in this popover order: **description, temp, pressure, humidity, wind.speed, wind.deg,
+wind.gust**. Use exact `states['<controller-code>'].weather...` paths; keep the provider
+icon code out of this list. Set `data-colorizer-hint="none"` on the hitbox so schema
+colourizers do not recolour the artwork. On shared diagrams such as Spring-1/2, retain
+`data-device="<controller-code>"` on the weather group so selecting a linked meter
+still resolves weather to the controller.
+
+The station artwork uses `pointer-events="none"` so clicks and phone taps reach the
+hitbox. The description `foreignObject` owns pointer interaction (`pointer-events="all"`)
+and its inner HTML text uses `pointer-events:none`. Bind both to `weather.description`,
+assigning the inner text through `element.textContent` with a null/undefined-to-blank
+check. Preserve scoped bold hover for the description, yellow hitbox hover and state
+restoration on pointer leave. The icon opens all seven properties; clicking the
+description opens its full value. The station is the main touch target on fitted phones.
+
+Set group opacity to **1** when the weather object exists and **0.4** when absent.
+Missing temperature/description display blank; zero and negative temperatures remain
+valid readings. Missing weather must not create an empty popup. Preserve the schema's
+units, null formatting and omitted optional wind/gust behavior.
+
+### Data meaning and verification
+
+`weather` is optional cached provider data owned by the controller. Its temperature is
+separate from the PLC's `tempOutAir`. Units are °C, sea-level hPa, %, m/s and wind
+direction in degrees **from**. Description and icon strings come from the provider's
+first condition; the full provider response stays in the separate location cache.
+Reuse Nurlat-5's current `WeatherModel` / `WeatherWindModel` schema definitions,
+hidden read-only editors and chart metadata when adding support. Existing history
+without weather remains valid. For collection/cache changes, also use
+[device-state-mapping](../.codex/skills/device-state-mapping/SKILL.md) and the owning
+Node-RED README; diagram reuse does not require changing the collector.
+
+For weather visual changes, check native offsets, unchanged station artwork, text/card
+clearance, temperature above description and two complete lines. In the real browser,
+check “небольшой дождь”, a longer description, ellipsis with the full value in the
+popover, zero/negative values, missing/partial weather, hover/restoration, icon and
+description clicks, phone tap/scroll/close and linked-meter selection when applicable.
+Label browser fixtures separately from live PLC data. Reuse the
+[latest text-layout evidence](../.reports/2026-11-20-weather-wrap/README.md); the earlier
+[B rollout](../.reports/2026-11-20-b-weather/README.md) and
+[Spring rollout](../.reports/2026-11-20-spring-weather/README.md) describe prior layouts.
+Those reports are historical verification records, not confirmation of deployment.
 
 ## State styling
 

@@ -25,8 +25,8 @@ The [component standard](../../.docs/mnemoschema-components.md) and
 [`component-standard.json`](component-standard.json) record the Kirov/Gagarin/
 Komarova/Spring-2 equipment family and the accepted defaults: readings/setpoints
 **9 px**, emergency-tile captions **7 px**, all other text **10 px**. Set the root SVG
-font size to 10 px and use explicit overrides for the two exceptions. Multiline captions
-use at least 12 units between baselines. The version 2 JSON profile records these values
+font size to 10 px and use explicit overrides for those roles and the weather exception
+below. Multiline captions use at least 12 units between baselines. The version 2 JSON profile records these values
 under `font`; Nurlat-5 is the current typography example. Sensor-reading frames default
 to **55 × 12** (`instrument.width` / `instrument.height`), centered on their value and
 connection stem. Keep the 9 px value font and adjust neighbouring clearances as needed.
@@ -36,6 +36,13 @@ Stroke widths use the nearest of **1 / 0.5 / 0.25**; emergency-tile borders alwa
 **0.5**. Component radii default to **10**, with burner corners **5**, junction dots
 **1.5** and pump-frame corners **3**. Existing reference SVGs retain their current
 values until an update is requested.
+
+Weather uses the existing Nurlat-5 station artwork with black **0.5-unit** strokes,
+a **27 × 27** transparent hitbox and **8 px** text: temperature above a description
+wrapped to two lines. The profile's `weather` section records header-relative offsets,
+hitbox geometry, text/clip dimensions and missing-data opacity. Follow the
+[weather station guide](../../.docs/mnemoschema-components.md#weather-station) for
+site-specific widths, translations, bindings, controller ownership and browser checks.
 
 Water tanks/vessels default to **32 × 50**, radius **10**, with three blue dashed
 water lines. Actuated valves use a **16 × 10** bow-tie, an **11-unit** stem and an
