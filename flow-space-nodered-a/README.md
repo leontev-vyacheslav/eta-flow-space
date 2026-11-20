@@ -24,7 +24,9 @@ direction (degrees from), and first-condition description/icon strings into `dev
 Missing weather is omitted; read errors warn while allowing PLC storage. PLC measurements retain
 their original meanings. Linked heat, gas and electricity meter collectors are unchanged.
 
-The diagrams follow the latest Nurlat-5 station artwork and 8 px two-line labels, blank when missing.
+The diagrams retain the station artwork and show 8 px temperature first, with a description that
+wraps across up to two lines below it. Missing values remain blank; longer descriptions use an
+ellipsis and remain available in full in the popover.
 Weather remains owned by the controller when a linked meter is selected. See each site's README
 and the [verification report](../.reports/2026-11-20-spring-weather/README.md).
 

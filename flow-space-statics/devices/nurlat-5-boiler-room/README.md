@@ -114,12 +114,17 @@ Absent weather dims the icon and opens no empty popover; absent gusts are omitte
 readings display **—** with their units. Hover uses the existing yellow outline and restores the
 normal appearance on pointer leave. Other top-panel cards and bindings remain unchanged.
 
-A column to the right of the icon shows the description at **(45, 54)** and temperature at **(45, 66)**.
-Both lines use **8 px**, following the user's revised weather-label layout. Its 50-unit width ends at
-**x=92**, before the unchanged first card at **x=94**. Long descriptions are clipped to that
-column and remain available in full as the first property in the weather icon's popover.
-Missing values leave these two labels blank; the provider icon code is stored for future use, while the existing
-weather-station artwork is retained. See the [preview and verification](../../../.reports/2026-11-20-nurlat-weather-labels/README.md).
+The weather column now shows **temperature first**, at **(45, 54)**, followed by a
+multiline description in a **45 × 19** box at **(45, 57)**. Both use the user's **8 px**
+font. The description uses 9-unit line spacing and wraps to at most two lines. When it still exceeds
+the available space, an ellipsis indicates the remaining text. Clicking the description or tapping
+the station icon shows the full value in the existing popover. Missing values remain blank.
+
+The description uses an SVG `foreignObject` with an XHTML `div` and the existing `data-state-eval`
+binding, so no UI bundle or backend changes are required. Hover retains bold feedback. The station
+artwork, icon click target, all existing cards and device ownership remain unchanged. The text clip
+now extends to a local y=76 (75.8 for Muslum), keeping both description lines inside the header.
+See [before/after images and browser checks](../../../.reports/2026-11-20-weather-wrap/README.md).
 
 The UI's nested-property traversal retains the complete `weather.wind.*` path. Deploy the UI
 bundle changes as well as the SVG, schema and manifest for these bindings and null formatting.

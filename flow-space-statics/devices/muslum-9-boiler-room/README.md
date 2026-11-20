@@ -241,12 +241,14 @@ Weather editors stay hidden; chart metadata matches Nurlat-5. Missing weather di
 and opens no empty popover. Nullable values display a dash; absent wind/gust fields are omitted.
 See the [verification and deployment notes](../../../.reports/2026-11-20-b-weather/README.md).
 
-The description and temperature column follows the user's latest Nurlat-5 revision: both lines
-use **8 px**, and missing values leave the readout blank. This is a local weather-text exception
-to the general component font sizes. The icon artwork and its hitbox remain unchanged.
-Readout anchors are **(54, 53.8)** and **(54, 65.8)**. The clip extends from **x=51** to **x=101**.
-The outdoor-temperature card now starts at **x=105.3**, is **65** units wide and has text centered
-at **x=137.8**. Its right edge remains **170.3**; every later card retains its geometry and bindings.
-Long descriptions are constrained to the column and shown in full in the weather icon's popover.
-The provider icon code is stored; the station artwork is retained.
-See [metadata and label propagation checks](../../../.reports/2026-11-20-b-weather-metadata/README.md).
+The weather column now shows **temperature first**, at **(54, 53.8)**, followed by a
+multiline description in a **47 × 19** box at **(54, 56.8)**. Both use the user's **8 px**
+font. The description uses 9-unit line spacing and wraps to at most two lines. When it still exceeds
+the available space, an ellipsis indicates the remaining text. Clicking the description or tapping
+the station icon shows the full value in the existing popover. Missing values remain blank.
+
+The description uses an SVG `foreignObject` with an XHTML `div` and the existing `data-state-eval`
+binding, so no UI bundle or backend changes are required. Hover retains bold feedback. The station
+artwork, icon click target, all existing cards and device ownership remain unchanged. The text clip
+now extends to a local y=76 (75.8 for Muslum), keeping both description lines inside the header.
+See [before/after images and browser checks](../../../.reports/2026-11-20-weather-wrap/README.md).

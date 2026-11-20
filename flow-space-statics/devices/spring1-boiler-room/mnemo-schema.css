@@ -3,6 +3,7 @@
   cursor: pointer;
 }
 
+.spring1-mnemoschema #weather-description-box:hover #weather-description,
 .spring1-mnemoschema text[data-state]:hover,
 .spring1-mnemoschema tspan[data-state]:hover {
   font-weight: bold;

@@ -3,6 +3,7 @@
     cursor: pointer;
 }
 
+#gagarin-mnemoschema #weather-description-box:hover #weather-description,
 #gagarin-mnemoschema text[data-state]:hover,
 #gagarin-mnemoschema tspan[data-state]:hover {
     font-weight: bold;

@@ -227,7 +227,7 @@
 			</path>
 		</g>
 		<clipPath id="weather-readout-clip">
-			<rect x="42" y="43" width="50" height="28"/>
+			<rect x="42" y="43" width="85" height="33"/>
 		</clipPath>
 	</defs>
 
@@ -637,8 +637,10 @@
 				<path d="M14.3 5.1A2.5 2.5 0 0 1 16.8 7.6M14.3 3.8A3.8 3.8 0 0 1 18.1 7.6"/>
 			</g>
 			<g id="weather-readout" clip-path="url(#weather-readout-clip)">
-				<text id="weather-description" x="45" y="54" font-size="8px" data-state="states['spring2-boiler-room'].weather.description" data-state-eval="if (value === null || value === undefined) { element.textContent = ''; }"></text>
-				<text id="weather-temperature" x="45" y="66" font-size="8px" data-state="states['spring2-boiler-room'].weather.temp" data-state-eval="if (value === null || value === undefined) { element.textContent = ''; }"></text>
+				<text id="weather-temperature" x="45" y="54" font-size="8px" data-state="states['spring2-boiler-room'].weather.temp" data-state-eval="if (value === null || value === undefined) { element.textContent = ''; }"></text>
+				<foreignObject id="weather-description-box" pointer-events="all" data-state="states['spring2-boiler-room'].weather.description" x="45" y="57" width="82" height="19">
+					<div xmlns="http://www.w3.org/1999/xhtml" id="weather-description" style="font-family:Roboto,Arial,sans-serif;font-size:8px;line-height:9px;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;overflow-wrap:anywhere;white-space:normal;pointer-events:none;" data-state="states['spring2-boiler-room'].weather.description" data-state-eval="element.textContent = value === null || value === undefined ? '' : value;"></div>
+				</foreignObject>
 			</g>
 		</g>
 		<use data-device="spring2-boiler-room" href="#infoIcon"

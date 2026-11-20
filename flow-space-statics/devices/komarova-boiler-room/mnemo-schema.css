@@ -3,6 +3,7 @@
     cursor: pointer;
 }
 
+#komarova-mnemoschema #weather-description-box:hover #weather-description,
 #komarova-mnemoschema text[data-state]:hover,
 #komarova-mnemoschema tspan[data-state]:hover {
     font-weight: bold;

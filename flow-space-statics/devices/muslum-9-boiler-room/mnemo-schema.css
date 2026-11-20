@@ -3,6 +3,7 @@
     cursor: pointer;
 }
 
+#muslum9-mnemoschema #weather-description-box:hover #weather-description,
 #muslum9-mnemoschema text[data-state]:hover,
 #muslum9-mnemoschema tspan[data-state]:hover {
     font-weight: bold;

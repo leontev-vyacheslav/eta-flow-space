@@ -13,9 +13,18 @@ retain their existing meanings and behavior. Weather schema fields are optional 
 
 The icon follows the user's latest Nurlat-5 reference, translated by **(-96, 4)** in this header.
 Its effective hitbox is **(-83, 48)**, size **27 × 27**, with artwork at **(-81, 49)**.
-Description and temperature anchors are **(-51, 58)** and **(-51, 70)**, both **8 px**;
-missing values leave the labels blank. This is the user's weather-text exception to the general font roles.
-The clip is **x=-54…-4**, **y=47…75**. Long descriptions remain available in the icon's popover.
+The weather column now shows **temperature first**, at **(-51, 58)**, followed by a
+multiline description in a **180 × 19** box at **(-51, 61)**. Both use the user's **8 px**
+font. The description uses 9-unit line spacing and wraps to at most two lines. When it still exceeds
+the available space, an ellipsis indicates the remaining text. Clicking the description or tapping
+the station icon shows the full value in the existing popover. Missing values remain blank.
+
+The description uses an SVG `foreignObject` with an XHTML `div` and the existing `data-state-eval`
+binding, so no UI bundle or backend changes are required. Hover retains bold feedback. The station
+artwork, icon click target, all existing cards and device ownership remain unchanged. The text clip
+now extends to a local y=76 (75.8 for Muslum), keeping both description lines inside the header.
+See [before/after images and browser checks](../../../.reports/2026-11-20-weather-wrap/README.md).
+
 The existing cards, timestamp, canvas, topology, linked-device bindings and CRLF endings are preserved.
 The new weather selection target belongs to the controller, including when a linked meter is selected.
 
