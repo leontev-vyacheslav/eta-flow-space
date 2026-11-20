@@ -68,6 +68,10 @@ Missing/expired/malformed weather produces no `weather` object. Read errors warn
 state storage. `tempOutAir` remains the controller's measured outdoor temperature. The API's normal JSON state history now
 includes this optional object in future samples; existing historical states remain valid without it.
 
+Nurlat-5 additionally copies optional `weather.description` and `weather.icon` from the first
+provider condition (`data.weather[0]`). Its diagram shows the description and temperature beside
+the station icon. This metadata extension currently applies only to Nurlat-5.
+
 For this all-room extension, deploy the updated B flow and the five sites' SVG/schema files plus the
 static manifest. The existing `Weather` definition, shared helpers, environment key and Nurlat-5
 assets are reused. No helper reload or UI rebuild is required if the preceding Nurlat-5 weather

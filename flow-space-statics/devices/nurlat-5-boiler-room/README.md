@@ -99,15 +99,27 @@ omit `weather`; read errors warn without preventing PLC state storage. The measu
 remains TE1. New API history samples include weather automatically, while older states without it
 remain schema-valid. No migration or history backfill is needed.
 
+Nurlat-5 also copies optional `weather.description` and `weather.icon` strings from the first
+entry in the provider's `weather` array, for example `"пасмурно"` and `"04d"`.
+Missing, blank or non-string metadata is omitted without discarding numeric weather readings.
+Both fields remain optional in the schema, with hidden read-only text editors.
+
 The top panel's weather-station icon uses black **0.5-unit** strokes and a **27 × 27** click target
 starting at **(13, 44)**, below the clock; its artwork is translated to **(15, 45)**.
 These are the user's revised 20 November coordinates. Its full square is clickable; decorative
-artwork does not intercept clicks. The ordered popover shows temperature, sea-level pressure,
-humidity, wind speed, wind direction and gust speed. Weather schema labels are popover-only
+artwork does not intercept clicks. The ordered popover shows description, temperature, sea-level
+pressure, humidity, wind speed, wind direction and gust speed. Weather schema labels are popover-only
 (`editor.visible: false`), so they add no visible controls to the parameters form.
 Absent weather dims the icon and opens no empty popover; absent gusts are omitted, and nullable
 readings display **—** with their units. Hover uses the existing yellow outline and restores the
 normal appearance on pointer leave. Other top-panel cards and bindings remain unchanged.
+
+A column to the right of the icon shows the description at **(42, 54)** in the standard 10-unit
+text size and temperature at **(42, 66)** in the 9-unit reading size. Its 50-unit width ends at
+**x=92**, before the unchanged first card at **x=94**. Long descriptions are clipped to that
+column and remain available in full as the first property in the weather icon's popover.
+Missing values show a dash; the provider icon code is stored for future use, while the existing
+weather-station artwork is retained. See the [preview and verification](../../../.reports/2026-11-20-nurlat-weather-labels/README.md).
 
 The UI's nested-property traversal retains the complete `weather.wind.*` path. Deploy the UI
 bundle changes as well as the SVG, schema and manifest for these bindings and null formatting.

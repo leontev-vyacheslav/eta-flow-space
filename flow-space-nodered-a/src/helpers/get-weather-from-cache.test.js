@@ -119,6 +119,41 @@ test('collector copies only selected fields before awaited persistence, preservi
     validateState(out.deviceState);
 });
 
+test('Nurlat-5 copies description and icon from the first weather condition', async () => {
+    const fixture = setup();
+    const data = { ...provider, weather: [
+        { id: 804, main: 'Clouds', description: 'пасмурно', icon: '04d' },
+        { id: 500, description: 'небольшой дождь', icon: '10n' },
+    ] };
+    fixture.entries.set('weather:location:15', JSON.stringify({ ...fixture.cached, data }));
+    const state = (await run(fixture)).deviceState;
+    assert.equal(state.weather.description, 'пасмурно');
+    assert.equal(state.weather.icon, '04d');
+    assert.equal(state.weather.temp, 0);
+    assert.equal(state.tempOutAir, 23.5);
+    assert(!Object.hasOwn(state.weather, 'main'));
+    assert(!Object.hasOwn(state.weather, 'id'));
+    assert.deepEqual(fixture.stored[0][2].weather, state.weather);
+    validateState(state);
+});
+
+test('Nurlat-5 keeps malformed or missing condition metadata optional', async () => {
+    const fixture = setup();
+    for (const weather of [undefined, null, {}, [], [null], ['Clouds'], [{ description: 42, icon: false }], [{ description: ' ', icon: '' }]]) {
+        fixture.entries.set('weather:location:15', JSON.stringify({ ...fixture.cached, data: { ...provider, weather } }));
+        const state = (await run(fixture)).deviceState;
+        assert(!Object.hasOwn(state.weather, 'description'));
+        assert(!Object.hasOwn(state.weather, 'icon'));
+        assert.equal(state.weather.temp, 0);
+        validateState(state);
+    }
+    fixture.entries.set('weather:location:15', JSON.stringify({ ...fixture.cached, data: { ...provider, weather: [{ description: 'пасмурно' }] } }));
+    const state = (await run(fixture)).deviceState;
+    assert.equal(state.weather.description, 'пасмурно');
+    assert(!Object.hasOwn(state.weather, 'icon'));
+    validateState(state);
+});
+
 test('each poll rereads weather and omits it after cache expiry without changing PLC fields', async () => {
     const fixture = setup();
     const first = (await run(fixture)).deviceState;
