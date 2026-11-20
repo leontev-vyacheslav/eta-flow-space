@@ -99,7 +99,7 @@ omit `weather`; read errors warn without preventing PLC state storage. The measu
 remains TE1. New API history samples include weather automatically, while older states without it
 remain schema-valid. No migration or history backfill is needed.
 
-The top panel's **24 × 24** sun/cloud weather icon starts at **(12, 46)**, with an **8-unit**
+The top panel's **24 × 24** blue cloud/receiving-dish weather-station icon starts at **(12, 46)**, with an **8-unit**
 inset from its left and bottom edges, below the clock. Its full square is clickable; decorative
 artwork does not intercept clicks. The ordered popover shows temperature, sea-level pressure,
 humidity, wind speed, wind direction and gust speed. Weather schema labels are popover-only
