@@ -975,6 +975,40 @@
       "additionalProperties": false,
       "description": "Погода из Redis-кэша; объект отсутствует, если доступных данных нет.",
       "properties": {
+        "description": {
+          "type": "string",
+          "description": "Описание погоды из первого элемента weather провайдера",
+          "ui": {
+            "group": 1,
+            "editor": {
+              "editorType": "dxTextBox",
+              "label": {
+                "text": "Описание погоды"
+              },
+              "editorOptions": {
+                "readOnly": true
+              },
+              "visible": false
+            }
+          }
+        },
+        "icon": {
+          "type": "string",
+          "description": "Код значка погоды провайдера с признаком дня или ночи, например 04d",
+          "ui": {
+            "group": 1,
+            "editor": {
+              "editorType": "dxTextBox",
+              "label": {
+                "text": "Код значка погоды"
+              },
+              "editorOptions": {
+                "readOnly": true
+              },
+              "visible": false
+            }
+          }
+        },
         "temp": {
           "type": "number",
           "description": "Температура наружного воздуха",

@@ -114,11 +114,11 @@ Absent weather dims the icon and opens no empty popover; absent gusts are omitte
 readings display **—** with their units. Hover uses the existing yellow outline and restores the
 normal appearance on pointer leave. Other top-panel cards and bindings remain unchanged.
 
-A column to the right of the icon shows the description at **(42, 54)** in the standard 10-unit
-text size and temperature at **(42, 66)** in the 9-unit reading size. Its 50-unit width ends at
+A column to the right of the icon shows the description at **(45, 54)** and temperature at **(45, 66)**.
+Both lines use **8 px**, following the user's revised weather-label layout. Its 50-unit width ends at
 **x=92**, before the unchanged first card at **x=94**. Long descriptions are clipped to that
 column and remain available in full as the first property in the weather icon's popover.
-Missing values show a dash; the provider icon code is stored for future use, while the existing
+Missing values leave these two labels blank; the provider icon code is stored for future use, while the existing
 weather-station artwork is retained. See the [preview and verification](../../../.reports/2026-11-20-nurlat-weather-labels/README.md).
 
 The UI's nested-property traversal retains the complete `weather.wind.*` path. Deploy the UI

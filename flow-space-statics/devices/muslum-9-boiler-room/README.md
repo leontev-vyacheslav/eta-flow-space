@@ -229,12 +229,24 @@ full responses are cached at `weather:location:<objectLocationId>` with a 5400-s
 Each PLC poll optionally adds `weather.temp` (°C), `pressure` (sea-level hPa), `humidity` (%)
 and available `wind.speed`/`gust` (m/s) and `wind.deg` (degrees, direction from).
 Missing/expired weather omits the object; Redis errors do not prevent PLC state storage.
+Optional `weather.description` and `weather.icon` strings now come from the first provider condition,
+matching the current Nurlat-5 collector. Missing, blank or non-string metadata is omitted.
 Controller readings, including `tempOutAir`, retain their existing meanings. Historical states
 without weather remain valid; no migration or backfill is required.
 
 The top-panel icon follows the user's revised Nurlat-5 artwork: black 0.5-unit strokes,
 a 27 × 27 hitbox at **(22, 43.8)**, and artwork translated to **(24, 44.8)**.
-The popover order is temperature, pressure, humidity, wind speed, direction and gusts.
+The popover order is description, temperature, pressure, humidity, wind speed, direction and gusts.
 Weather editors stay hidden; chart metadata matches Nurlat-5. Missing weather dims the icon
 and opens no empty popover. Nullable values display a dash; absent wind/gust fields are omitted.
 See the [verification and deployment notes](../../../.reports/2026-11-20-b-weather/README.md).
+
+The description and temperature column follows the user's latest Nurlat-5 revision: both lines
+use **8 px**, and missing values leave the readout blank. This is a local weather-text exception
+to the general component font sizes. The icon artwork and its hitbox remain unchanged.
+Readout anchors are **(54, 53.8)** and **(54, 65.8)**. The clip extends from **x=51** to **x=101**.
+The outdoor-temperature card now starts at **x=105.3**, is **65** units wide and has text centered
+at **x=137.8**. Its right edge remains **170.3**; every later card retains its geometry and bindings.
+Long descriptions are constrained to the column and shown in full in the weather icon's popover.
+The provider icon code is stored; the station artwork is retained.
+See [metadata and label propagation checks](../../../.reports/2026-11-20-b-weather-metadata/README.md).

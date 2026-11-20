@@ -74,14 +74,17 @@
         </g>
     </g>
 </symbol>
+        <clipPath id="weather-readout-clip">
+            <rect x="51" y="42.8" width="50" height="28"/>
+        </clipPath>
     </defs>
 
     <!-- The top parameters panel follows the Гагарина layout. -->
     <g id="other-parameters">
         <rect id="other-parameters-frame" x="13" y="7.8" width="669.5" height="70" rx="10" fill="#FFFFFF" stroke="#808080" stroke-width="0.5" data-state="states['muslum-7-boiler-room'].isConnected;states['muslum-7-boiler-room'].isGeneralAlarm"/>
         <text x="347.75" y="26" text-anchor="middle" font-size="10">Прочие параметры котельной</text>
-        <g id="weather-info" aria-label="Погода" data-state="states['muslum-7-boiler-room'].weather.temp;states['muslum-7-boiler-room'].weather.pressure;states['muslum-7-boiler-room'].weather.humidity;states['muslum-7-boiler-room'].weather.wind.speed;states['muslum-7-boiler-room'].weather.wind.deg;states['muslum-7-boiler-room'].weather.wind.gust" data-state-eval="element.style.opacity = states['muslum-7-boiler-room'].weather ? '1' : '0.4';">
-            <rect id="weather-icon-hitbox" x="22" y="43.8" width="27" height="27" rx="3" fill="transparent" stroke-width="0.5" stroke="transparent" data-state="states['muslum-7-boiler-room'].weather.temp;states['muslum-7-boiler-room'].weather.pressure;states['muslum-7-boiler-room'].weather.humidity;states['muslum-7-boiler-room'].weather.wind.speed;states['muslum-7-boiler-room'].weather.wind.deg;states['muslum-7-boiler-room'].weather.wind.gust" data-colorizer-hint="none"/>
+        <g id="weather-info" aria-label="Погода" data-state="states['muslum-7-boiler-room'].weather.description;states['muslum-7-boiler-room'].weather.temp;states['muslum-7-boiler-room'].weather.pressure;states['muslum-7-boiler-room'].weather.humidity;states['muslum-7-boiler-room'].weather.wind.speed;states['muslum-7-boiler-room'].weather.wind.deg;states['muslum-7-boiler-room'].weather.wind.gust" data-state-eval="element.style.opacity = states['muslum-7-boiler-room'].weather ? '1' : '0.4';">
+            <rect id="weather-icon-hitbox" x="22" y="43.8" width="27" height="27" rx="3" fill="transparent" stroke-width="0.5" stroke="transparent" data-state="states['muslum-7-boiler-room'].weather.description;states['muslum-7-boiler-room'].weather.temp;states['muslum-7-boiler-room'].weather.pressure;states['muslum-7-boiler-room'].weather.humidity;states['muslum-7-boiler-room'].weather.wind.speed;states['muslum-7-boiler-room'].weather.wind.deg;states['muslum-7-boiler-room'].weather.wind.gust" data-colorizer-hint="none"/>
             <g transform="translate(24 44.8)" fill="none" stroke="#000000" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" pointer-events="none">
                 <path d="M6.1 10.8H3.4C1.8 10.8.7 9.7.7 8.2C.7 7 1.5 6.1 2.7 5.9C2.7 3.2 4.8 1.2 7.3 1.2C8.6 1.2 9.8 1.7 10.6 2.6C11.4 1.5 12.5 1 13.8 1C15.3 1 16.6 1.9 17.2 3.1C17.7 2.8 18.2 2.7 18.7 2.7C20.5 2.7 21.7 4 21.7 5.8L21.6 6.5C22.7 6.6 23.3 7.5 23.3 8.6C23.3 9.9 22.4 10.8 21.2 10.8H13.4"/>
                 <path d="M7 15.6L4.9 21.2H11.2L9 15.6M6.1 18H10M5.5 19.6H10.7"/>
@@ -92,15 +95,19 @@
                 <circle cx="14.3" cy="7.6" r="1.1" fill="#FFFFFF"/>
                 <path d="M14.3 5.1A2.5 2.5 0 0 1 16.8 7.6M14.3 3.8A3.8 3.8 0 0 1 18.1 7.6"/>
             </g>
+            <g id="weather-readout" clip-path="url(#weather-readout-clip)">
+                <text id="weather-description" x="54" y="53.8" font-size="8px" data-state="states['muslum-7-boiler-room'].weather.description" data-state-eval="if (value === null || value === undefined) { element.textContent = ''; }"></text>
+                <text id="weather-temperature" x="54" y="65.8" font-size="8px" data-state="states['muslum-7-boiler-room'].weather.temp" data-state-eval="if (value === null || value === undefined) { element.textContent = ''; }"></text>
+            </g>
         </g>
         <g id="timestamp" font-size="10" letter-spacing="1" data-state="states['muslum-7-boiler-room'].timestamp;states['muslum-7-boiler-room'].isConnected" data-state-eval="element.style.fill = states['muslum-7-boiler-room'].isConnected === false ? 'red' : '#000000';">
             <text id="timestamp-date" x="22.1" y="24" data-state="states['muslum-7-boiler-room'].timestamp" data-state-format="date" font-size="10">—.—.——</text>
             <text id="timestamp-time" x="24.7" y="36" data-state="states['muslum-7-boiler-room'].timestamp" data-state-format="time" font-size="10">—:—:—</text>
         </g>
         <g id="outdoor-temperature">
-            <rect x="79.3" y="38" width="91" height="30.4" rx="10" fill="#FFFFFF" stroke="#808080" stroke-width="0.5" id="outdoor-temperature-frame" data-state="states['muslum-7-boiler-room'].tempOutAir;states['muslum-7-boiler-room'].sensors.isTempOutAirSensorError" data-state-eval="element.style.stroke = (states['muslum-7-boiler-room'].sensors.isTempOutAirSensorError === true ? 'red' : '#000000'); element.style.strokeWidth = states['muslum-7-boiler-room'].sensors.isTempOutAirSensorError === true ? '1' : '0.5';"/>
-            <text x="124.8" y="50" font-size="10" text-anchor="middle" pointer-events="none">Тн.в.</text>
-            <text id="outdoor-temperature-value" x="124.8" y="63" font-size="9" text-anchor="middle" data-state="states['muslum-7-boiler-room'].tempOutAir" pointer-events="none">— °C</text>
+            <rect x="105.3" y="38" width="65" height="30.4" rx="10" fill="#FFFFFF" stroke="#808080" stroke-width="0.5" id="outdoor-temperature-frame" data-state="states['muslum-7-boiler-room'].tempOutAir;states['muslum-7-boiler-room'].sensors.isTempOutAirSensorError" data-state-eval="element.style.stroke = (states['muslum-7-boiler-room'].sensors.isTempOutAirSensorError === true ? 'red' : '#000000'); element.style.strokeWidth = states['muslum-7-boiler-room'].sensors.isTempOutAirSensorError === true ? '1' : '0.5';"/>
+            <text x="137.8" y="50" font-size="10" text-anchor="middle" pointer-events="none">Тн.в.</text>
+            <text id="outdoor-temperature-value" x="137.8" y="63" font-size="9" text-anchor="middle" data-state="states['muslum-7-boiler-room'].tempOutAir" pointer-events="none">— °C</text>
         </g>
         <g id="supply-setpoint">
             <rect x="174.2" y="38" width="91" height="30.4" rx="10" fill="#FFFFFF" stroke="#808080" stroke-width="0.5" id="supply-setpoint-frame" data-state="states['muslum-7-boiler-room'].tempOutNetTarget;states['muslum-7-boiler-room'].tempOutNetConfiguredSetpoint;states['muslum-7-boiler-room'].tempOutNetCorrection;states['muslum-7-boiler-room'].tempControlUpperBand;states['muslum-7-boiler-room'].tempControlLowerBand"/>

@@ -231,6 +231,12 @@ for (const tab of flows.filter((node) => node.type === 'tab' && node.label.endsW
             values.t_air = 23.5;
         }
         const fixture = setup(tab.label, tab.id);
+        fixture.entries.set('weather:location:15', JSON.stringify({ ...fixture.cached, data: {
+            ...provider, weather: [
+                { description: 'пасмурно', icon: '04d', main: 'Clouds', id: 804 },
+                { description: 'небольшой дождь', icon: '10n' },
+            ],
+        } }));
         const run = () => collect({ payload: values }, fixture.global, {
             path: `${tab.id}/${mapping.id}`, warn: (message) => fixture.warnings.push(message),
         });
@@ -238,10 +244,10 @@ for (const tab of flows.filter((node) => node.type === 'tab' && node.label.endsW
         const valid = new Ajv2020({ strict: false, allErrors: true }).compile(siteSchema);
         const check = (state) => assert(valid({ isConnected: true, ...state }), JSON.stringify(valid.errors));
         const first = (await run()).deviceState;
-        assert.deepEqual(first.weather, { temp: 0, pressure: 1008, humidity: 94, wind: { speed: 0, deg: 0, gust: 12.47 } });
+        assert.deepEqual(first.weather, { description: 'пасмурно', icon: '04d', temp: 0, pressure: 1008, humidity: 94, wind: { speed: 0, deg: 0, gust: 12.47 } });
         assert.equal(first.tempOutAir, 23.5);
         check(first);
-        fixture.entries.set('weather:location:15', JSON.stringify({ ...fixture.cached, data: { ...provider, main: { temp: -5 }, wind: { speed: null, deg: 0 } } }));
+        fixture.entries.set('weather:location:15', JSON.stringify({ ...fixture.cached, data: { ...provider, weather: [{ description: 42, icon: false }], main: { temp: -5 }, wind: { speed: null, deg: 0 } } }));
         const partial = (await run()).deviceState;
         assert.deepEqual(partial.weather, { temp: -5, pressure: null, humidity: null, wind: { speed: null, deg: 0 } });
         check(partial);

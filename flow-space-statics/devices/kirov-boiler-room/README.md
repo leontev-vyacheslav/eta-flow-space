@@ -193,12 +193,23 @@ full responses are cached at `weather:location:<objectLocationId>` with a 5400-s
 Each PLC poll optionally adds `weather.temp` (°C), `pressure` (sea-level hPa), `humidity` (%)
 and available `wind.speed`/`gust` (m/s) and `wind.deg` (degrees, direction from).
 Missing/expired weather omits the object; Redis errors do not prevent PLC state storage.
+Optional `weather.description` and `weather.icon` strings now come from the first provider condition,
+matching the current Nurlat-5 collector. Missing, blank or non-string metadata is omitted.
 Controller readings, including `tempOutAir`, retain their existing meanings. Historical states
 without weather remain valid; no migration or backfill is required.
 
 The top-panel icon follows the user's revised Nurlat-5 artwork: black 0.5-unit strokes,
 a 27 × 27 hitbox at **(13, 44)**, and artwork translated to **(15, 45)**.
-The popover order is temperature, pressure, humidity, wind speed, direction and gusts.
+The popover order is description, temperature, pressure, humidity, wind speed, direction and gusts.
 Weather editors stay hidden; chart metadata matches Nurlat-5. Missing weather dims the icon
 and opens no empty popover. Nullable values display a dash; absent wind/gust fields are omitted.
 See the [verification and deployment notes](../../../.reports/2026-11-20-b-weather/README.md).
+
+The description and temperature column follows the user's latest Nurlat-5 revision: both lines
+use **8 px**, and missing values leave the readout blank. This is a local weather-text exception
+to the general component font sizes. The icon artwork and its hitbox remain unchanged.
+Readout anchors are **(45, 54)** and **(45, 66)**. The clip extends from **x=42** to **x=92**,
+before the unchanged outdoor-temperature card at **x=114**. Other card geometry is unchanged.
+Long descriptions are constrained to the column and shown in full in the weather icon's popover.
+The provider icon code is stored; the station artwork is retained.
+See [metadata and label propagation checks](../../../.reports/2026-11-20-b-weather-metadata/README.md).
