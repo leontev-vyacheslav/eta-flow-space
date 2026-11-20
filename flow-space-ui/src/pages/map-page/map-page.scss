@@ -9,6 +9,10 @@
 .leaflet-popup-content {
   width: 350px !important;
 }
+.leaflet-tooltip {
+  font-size: 10px !important;
+  padding: 3px !important;
+}
 
 .screen-x-small .leaflet-popup-content {
   width: 225px !important;
@@ -128,3 +132,4 @@
   flex: 1;
   min-height: 0;
 }
+
