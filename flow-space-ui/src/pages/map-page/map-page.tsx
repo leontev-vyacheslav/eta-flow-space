@@ -332,6 +332,7 @@ export const MapPage = () => {
             const flowName = group.devices[0].flow?.name;
             if (flowName) {
                 const label = document.createElement('span');
+                label.style.fontSize = '8px';
                 label.textContent = flowName;
                 marker.bindTooltip(label, {
                     permanent: true,
