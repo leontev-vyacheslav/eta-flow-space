@@ -3,6 +3,11 @@
     cursor: pointer;
 }
 
+#nurlat5-mnemoschema .water-tank:hover {
+    color: #ffeb3b;
+    --water-tank-outline-filter: drop-shadow(0 0 4px rgba(255, 235, 59, 0.5));
+}
+
 #nurlat5-mnemoschema #weather-description-box:hover #weather-description,
 #nurlat5-mnemoschema text[data-state]:hover,
 #nurlat5-mnemoschema tspan[data-state]:hover {

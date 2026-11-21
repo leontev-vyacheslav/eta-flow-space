@@ -81,7 +81,7 @@ and a separate `Date.now()` timestamp. The API supplies `isConnected`.
 | `pressOutNet`, `pressInNet`, `pressGas` | PE9 after network pumps, PE10 network return, PE11 gas |
 | `pressBoilerCircuit` | PE5 boiler-circuit pressure |
 | `heatExchanger` | TE7 after / TE8 before the exchanger and PE8 before the exchanger |
-| `levelBoilerMakeupTank`, `levelNetworkMakeupTank` | PE6 and PE7, respectively, in metres |
+| `levelBoilerMakeupTank`, `levelNetworkMakeupTank` | PE6 and PE7, respectively; current normalized units are percent |
 | `boilerRoomMode`, `boilerRoomState` | `ip_Kot_Mode`, `ip_Kot_State`; enum descriptions match the workbook |
 | `tempOutNetSetpoint`, `tempBoilersSetpoint`, `boilerCircuitTemperatureRise` | `ip_Cascad_SP_TE_C`, `ip_Cascad_SP_TE_K`, `ip_Cascad_IncT` |
 | `boilers[0..1]` | К1.1, К1.2: lock/run/fault, read-only command feedback, alarm-list bit, pump dry-run alarm/input, inlet/outlet temperatures and pressures |
@@ -174,7 +174,7 @@ units from **Кирова, Гагарина, Комарова and Весна-2**
 [shared component standard](../../../.docs/mnemoschema-components.md) and its
 [machine-readable dimensions](../../../.tools/diagram-renderer/component-standard.json).
 
-The canvas is **880 × 456** (`viewBox="0 4 880 456"`). Boilers are 65 × 70, burners
+The canvas is **880 × 486** (`viewBox="0 4 880 486"`). Boilers are 65 × 70, burners
 40 × 30, pump frames 27 × 27, reading boxes 55 × 12 and emergency tiles 43 × 43.
 The font scheme accepted on 16 November uses **9 px** for sensor readings and numeric setpoints,
 **7 px** for emergency-tile captions, and **10 px** for all other text, including sensor
@@ -225,11 +225,12 @@ first gas-junction dot is preserved.
 Below ТО1, the primary-return branch at (546, 258) has a junction dot. The bend below
 ТО2 at (610, 258) has no dot; the crossing bridge between these points is preserved.
 
-PE6 and PE7 connect vertically to the horizontal tank-fill pipes above their reading
-boxes, with their labels below. Each 55-unit frame is centered between its valve body
-and tank with six units of tank clearance. For the wider frames, both tanks move ten
-units right and PE6/PE7 move five units right; connected pipe endpoints and captions
-follow. Their level bindings and units remain unchanged.
+PE6 and PE7 are regular, separate level instruments beside the tanks. Each has
+its original 55 × 12 frame, 9 px percentage reading, stem and junction dot connected
+to the tank-fill pipe, with its tag below. Their frames are at global (104, 398)
+and (544, 398), leaving six units of clearance to the corresponding tank. Sensor
+normal/warning/alarm colours and the original six ordered properties remain on the
+instrument frames. Tanks show only their graphical filling level.
 
 Both makeup assemblies have the same added spacing. Fill headers, HV1/HV3, level
 sensors, sources and upper captions move down 30 units. Tank inlet drops grow from
@@ -283,9 +284,29 @@ warning and alarm flags. Running/stopped pumps do not generate inferred faults. 
 fault/alarm and pump dry-run/input signals remain independent and available in their details.
 Valve blue/grey colouring represents command feedback, not measured valve position.
 
-Pressures retain the existing bar conversion and tank levels retain metres. The supplied
-network level `89.82943` remains **89,83 м**; it is not rescaled as a percentage. Tank water
-artwork is symbolic. Null readings show a dash; zero values remain zero. The ambiguous
+Pressures retain the existing bar conversion. Tank levels use **percent** after the
+21 November normalization: the supplied network level `89.82943` displays as
+**89,83 %**. Both 32 × 80 tank symbols now have rounded upper corners (radius 10),
+square lower corners and a flat bottom, with solid **#0083CD** water rising from
+the bottom. Artwork clamps to 0–100%; numeric readings retain the actual value.
+Missing/non-finite levels leave the tank empty without any numeric text or
+«Нет данных» caption. The nearby PE6/PE7 instruments display numeric percentages
+using the regular 9 px reading style and a dash for unavailable readings. The
+reusable tank artwork is defined once as `nurlat5-water-tank` in SVG `<defs>`;
+each tank instance uses `<use>` and supplies only the normalized water dash length.
+Shared artwork remains unbound, and its background stays opaque. Tank outlines
+stay black and highlight yellow on hover; sensor diagnostic colours belong to the
+separate instrument frames. Tank and instrument each retain their level/diagnostic
+popovers. External pipe connections and surrounding equipment retain their positions.
+The requested 30-unit height increase extends the bodies downward from y = 397 to 477, with the canvas
+height increased by 30 to retain the bottom margin. Hidden outlet drops extend to
+the new bottoms; external pump connections remain at y = 413.
+See the [tank verification report](../../../.reports/2026-11-21-water-tank/README.md).
+Earlier [reuse](../../../.reports/2026-11-21-water-tank-reuse/README.md) and
+[centred-reading](../../../.reports/2026-11-21-water-tank-values/README.md) reports
+record the preceding variants. The latest [separate-instrument report](../../../.reports/2026-11-21-water-tank-instruments/README.md)
+records the restored regular instruments and graphical-only tanks.
+Null numeric readings use a dash; zero readings remain zero. The ambiguous
 `tempBoilersSetpoint` keeps the label **Задание TE_K**. The information icon starts with
 connection and timestamp, followed by measured boiler-circuit temperature rise.
 

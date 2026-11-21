@@ -24,7 +24,7 @@
     "clip": { "offsetX": 38, "offsetY": 35, "height": 33 },
     "missingOpacity": 0.4
   },
-  "tank": { "width": 32, "height": 50, "radius": 10, "strokeWidth": 1, "fillColor": "#FFFFFF", "waterColor": "#0083CD", "waterStrokeWidth": 0.5, "waterInset": 4, "waterLineOffsets": [18, 28, 38], "waterDasharray": "5 3" },
+  "tank": { "reference": "nurlat-5-boiler-room", "width": 32, "height": 80, "topRadius": 10, "bottomRadius": 0, "bodyPath": "M0 80V10A10 10 0 0 1 10 0H22A10 10 0 0 1 32 10V80Z", "strokeWidth": 1, "fillColor": "#FFFFFF", "waterColor": "#0083CD", "levelMin": 0, "levelMax": 100, "waterPath": "M16 80V0", "waterStrokeWidth": 32, "missingLabel": "", "readingPlacement": "separate-instrument" },
   "valve": { "reference": "nurlat-5-boiler-room", "bodyPath": "M-8 -5L8 5V-5L-8 5Z", "width": 16, "height": 10, "strokeWidth": 0.5, "stemLength": 11, "stemStrokeWidth": 1, "actuatorWidth": 8, "actuatorHeight": 8, "actuatorStrokeWidth": 0.5, "labelOffset": 25, "hoverStrokeWidth": 1, "threeWay": { "bodyPath": "M-8 -5L8 5V-5L-8 5Z M-5 -9L0 0L5 -9Z", "width": 16, "height": 14, "thirdPortOffsetY": -9 } },
   "colors": { "stroke": "#000000", "stopped": "#808080", "running": "#0000FF", "burnerRunning": "#808080", "warning": "#FFC107", "alarm": "red", "hover": "#ffeb3b" }
 }

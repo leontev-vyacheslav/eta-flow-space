@@ -797,7 +797,7 @@
       "type": "number",
       "nullable": true,
       "$comment": "payload.ip_PE6_PV_Out → levelBoilerMakeupTank; 400123",
-      "description": "Уровень в емкости подпитки котлового контура (0…10 м)",
+      "description": "Уровень в емкости подпитки котлового контура (0…100 %)",
       "ui": {
         "group": 1,
         "editor": {
@@ -805,7 +805,7 @@
           "label": {
             "location": "top",
             "showColon": true,
-            "text": "Уровень в емкости подпитки котлового контура (0…10 м)"
+            "text": "Уровень в емкости подпитки котлового контура (0…100 %)"
           },
           "editorOptions": {
             "readOnly": true
@@ -819,7 +819,7 @@
       "type": "number",
       "nullable": true,
       "$comment": "payload.ip_PE7_PV_Out → levelNetworkMakeupTank; 400125",
-      "description": "Уровень в емкости подпитки сетевого контура (0…10 м)",
+      "description": "Уровень в емкости подпитки сетевого контура (0…100 %)",
       "ui": {
         "group": 1,
         "editor": {
@@ -827,7 +827,7 @@
           "label": {
             "location": "top",
             "showColon": true,
-            "text": "Уровень в емкости подпитки сетевого контура (0…10 м)"
+            "text": "Уровень в емкости подпитки сетевого контура (0…100 %)"
           },
           "editorOptions": {
             "readOnly": true

@@ -35,7 +35,7 @@ its own coordinates, but its instance must occupy the standard component/icon bo
 | Emergency tile | 43 × 43; radius 10 | 0.5 |
 | Emergency icon instance | 24 × 25, or the reference CO artwork at its existing normalized size | Artwork-specific |
 | Water/gas pipe | Junction radius 1.5 | 1 |
-| Water tank/vessel | **32 × 50**; radius 10; white body with three blue dashed water lines | 1 / 0.5 |
+| Water tank/vessel | **32 × 80**; top radius 10, square bottom; white body with blue level fill | 1 |
 | Valve body | **16 × 10** bow-tie; **8 × 8** square actuator on an 11-unit stem; no enclosing frame | 0.5 / 1 |
 | Parameter/emergency panel | Radius 10; parameter-panel height 70 | 0.5 |
 | Weather station | Reuse Nurlat-5 artwork; transparent **27 × 27** hitbox, radius 3 | 0.5 (artwork) |
@@ -75,13 +75,56 @@ The Nurlat-5 tank and actuated-valve symbols were accepted as shared defaults on
 **16 November 2026**, and applied to the ХПВ vessels and two valves in Kirov,
 Gagarin, Komarova and Muslum-7/9.
 
-Water tanks/vessels use a **32 × 50** white body, radius **10**, black stroke **1**.
-Draw three horizontal blue (`#0083CD`) dashed lines with stroke **0.5**, dash pattern
-**5 3**, and a **4-unit** inset from each side. Their y offsets from the top are
-**18, 28 and 38**, matching Nurlat's makeup tanks. These lines are symbolic water
-artwork, independent of a measured level. Preserve the site's label and process
-meaning, and adapt inlet/outlet ports to its existing topology. Resize around the
-existing vessel center and move connected pipe endpoints to the new body edges.
+The level-capable water tank introduced on **21 November 2026** uses a **32 × 80**
+white body, **10-unit top corner radii**, square lower corners and a flat bottom.
+The outline is black at **1 unit**. Solid **#0083CD** water rises from the bottom,
+clipped to the body, with a horizontal surface. Nurlat-5's two makeup tanks are
+its first instances; other diagrams retain their existing artwork.
+
+Reusable local geometry is stored in `tank.bodyPath` and `tank.waterPath` in the
+profile. Nurlat-5 defines the tank artwork once as `<g id="nurlat5-water-tank">`
+inside SVG `<defs>`: white background, clipped blue water and outline. Each instance
+uses this definition inside its translated, state-bound group. The tank displays
+**only its graphical level**; its nearby level instrument is a separate component
+that owns the numeric reading, tag and sensor warning/alarm colours.
+
+```xml
+<g class="water-tank" transform="translate(155 355)"
+   stroke-dasharray="0 80" color="#000000">
+    <use class="water-tank-artwork" href="#nurlat5-water-tank"/>
+</g>
+```
+
+The water is a 32-unit-wide vertical stroke `d="M16 80V0"`, with butt caps and the
+body clip. It inherits the instance's `stroke-dasharray`:
+**`(clampedPercent × 0.8) 80`** means `0 80` empty, `40 80` half full and `80 80` full.
+Missing/non-finite values leave an empty tank without text, dash or «Нет данных»
+caption. The shared artwork has no state bindings; SVG `<use>` shadow contents are
+not queried by the application's state setup. Bind the instance group with colorizer
+hint `none` and set `style.strokeDasharray` through the existing interpreter.
+Keep the multi-property pass so it also clears stale fill if a level disappears.
+
+Place a regular **55 × 12** level instrument nearby, connected to the process pipe
+with its stem and junction dot, and put its tag below the frame. The instrument uses
+normal **9 px** numeric text, Russian schema formatting, decimal precision and units.
+Nurlat-5 PE6/PE7 have their original six ordered properties, normal/warning/alarm
+predicates and 0.25 / 0.5 / 1-unit frame strokes. Missing numeric readings retain
+the site's standard dash. Artwork clamps to 0–100%; the instrument retains the
+actual numeric value. For levels measured in metres, obtain the confirmed empty/full
+range before normalization.
+
+The tank outline uses `currentColor`, with an undashed **1-unit** black stroke.
+Sensor diagnostic colours belong to the separate instrument frame. Tank hover turns
+only its outline yellow and restores black on leave; the inherited filter affects
+the outline without changing blue water. Tank and instrument remain independent
+pointer targets with their existing ordered level/diagnostic popovers. Equipment
+captions stay with the tank, and PE6/PE7 tags stay with the instruments.
+
+Preserve site labels, dimensions, placement and process topology. Ports stay at
+local top/bottom center **(16, 0)** / **(16, 80)**. Nurlat-5's PE6/PE7 fields use
+percent after the 21 November normalization; their original register descriptions
+in `source-map.json` remain source evidence. The earlier three dashed water lines
+are historical symbolic artwork and should not be used for new level displays.
 
 Use this local geometry for a horizontal actuated valve, with its pipe axis at y = 0:
 

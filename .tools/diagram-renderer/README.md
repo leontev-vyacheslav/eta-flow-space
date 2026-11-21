@@ -44,8 +44,12 @@ hitbox geometry, text/clip dimensions and missing-data opacity. Follow the
 [weather station guide](../../.docs/mnemoschema-components.md#weather-station) for
 site-specific widths, translations, bindings, controller ownership and browser checks.
 
-Water tanks/vessels default to **32 × 50**, radius **10**, with three blue dashed
-water lines. Actuated valves use a **16 × 10** bow-tie, an **11-unit** stem and an
+Water tanks/vessels default to **32 × 80**, with **10-unit top corners**, a flat
+bottom and solid **#0083CD** fill driven by level (0–100%). Nurlat-5 is the first
+implementation; its complete tank artwork is a shared SVG definition instantiated
+with `<use>`. Tanks display graphical fill only; nearby regular instruments own
+numeric readings and sensor diagnostic colours. Missing levels leave tanks empty.
+The component guide documents clipping, inherited level styling and instance bindings. Actuated valves use a **16 × 10** bow-tie, an **11-unit** stem and an
 **8 × 8** square actuator, without an enclosing frame. The `tank` / `valve` profile
 entries and component guide specify their strokes, offsets and rotation conventions.
 Valve bodies use a single path for all lobes, including the third port of a mixing

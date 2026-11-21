@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Нурлат-5. Native component units follow the shared standard; layout groups do not scale equipment. -->
-<svg id="nurlat5-mnemoschema" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 4 880 456" role="img" aria-label="Нурлат — городская котельная №5" aria-describedby="nurlat5-description" style="font-family:Roboto,Arial,sans-serif;font-size:10px;fill:#000000;">
+<svg id="nurlat5-mnemoschema" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 4 880 486" role="img" aria-label="Нурлат — городская котельная №5" aria-describedby="nurlat5-description" style="font-family:Roboto,Arial,sans-serif;font-size:10px;fill:#000000;">
     <desc id="nurlat5-description">Два котла К1.1 и К1.2, два параллельных теплообменника, десять насосов и отдельные контуры подпитки. Размеры оборудования, приборов и линий соответствуют действующим мнемосхемам. Показания и диагностика доступны по нажатию.</desc>
     <style>
         #nurlat5-mnemoschema .pipe { fill:none; stroke:#000000; stroke-width:1; pointer-events:none; }
@@ -12,6 +12,16 @@
         #nurlat5-mnemoschema .card { fill:#FFFFFF; stroke:#666666; stroke-width:0.5; }
     </style>
     <defs>
+        <path id="nurlat5-water-tank-body" d="M0 80V10A10 10 0 0 1 10 0H22A10 10 0 0 1 32 10V80Z"/>
+        <clipPath id="nurlat5-water-tank-clip" clipPathUnits="userSpaceOnUse">
+            <use href="#nurlat5-water-tank-body"/>
+        </clipPath>
+        <!-- Complete reusable tank. Instances inherit water dash length; separate instruments own numeric readings. -->
+        <g id="nurlat5-water-tank">
+            <use href="#nurlat5-water-tank-body" fill="#FFFFFF" fill-opacity="1" stroke="none" pointer-events="all"/>
+            <path class="water-tank-water" d="M16 80V0" fill="none" stroke="#0083CD" stroke-width="32" stroke-linecap="butt" clip-path="url(#nurlat5-water-tank-clip)" pointer-events="none"/>
+            <use class="water-tank-outline" href="#nurlat5-water-tank-body" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="none" style="filter:var(--water-tank-outline-filter, none)" pointer-events="none"/>
+        </g>
 <symbol xmlns="http://www.w3.org/2000/svg" id="infoIcon" viewBox="0 0 24 24">
     <path d="M12 1.67c.955 0 1.845 .467 2.39 1.247l.105 .16l8.114 13.548a2.914 2.914 0 0 1 -2.307 4.363l-.195 .008h-16.225a2.914 2.914 0 0 1 -2.582 -4.2l.099 -.185l8.11 -13.538a2.914 2.914 0 0 1 2.491 -1.403z" style="fill:transparent;" />
     <path d="M12 1.67c.955 0 1.845 .467 2.39 1.247l.105 .16l8.114 13.548a2.914 2.914 0 0 1 -2.307 4.363l-.195 .008h-16.225a2.914 2.914 0 0 1 -2.582 -4.2l.099 -.185l8.11 -13.538a2.914 2.914 0 0 1 2.491 -1.403zm0 9.33h-1l-.117 .007a1 1 0 0 0 0 1.986l.117 .007v3l.007 .117a1 1 0 0 0 .876 .876l.117 .007h1l.117 -.007a1 1 0 0 0 .876 -.876l.007 -.117l-.007 -.117a1 1 0 0 0 -.764 -.857l-.112 -.02l-.117 -.006v-3l-.007 -.117a1 1 0 0 0 -.876 -.876l-.117 -.007zm.01 -3l-.127 .007a1 1 0 0 0 0 1.986l.117 .007l.127 -.007a1 1 0 0 0 0 -1.986l-.117 -.007z">
@@ -143,9 +153,9 @@
         <path d="M566 164V147H605Q610 141 615 147H867 M630 164V147" id="network-supply" class="pipe"/>
         <path d="M566 229V278H724.75 M630 229V278 M724.75 260V296 M724.75 260H737.25 M724.75 296H737.25 M764.25 260H776.75V296H764.25 M776.75 278H867" id="network-return" class="pipe"/>
         <path d="M25 381H181V397" id="boiler-tank-fill" class="pipe"/>
-        <path d="M181 447V413H242 M242 397V429 M242 397H252.5 M242 429H252.5 M279.5 397H290V429H279.5 M290 413H416" id="boiler-makeup" class="pipe"/>
+        <path d="M181 477V413H242 M242 397V429 M242 397H252.5 M242 429H252.5 M279.5 397H290V429H279.5 M290 413H416" id="boiler-makeup" class="pipe"/>
         <path d="M500 381H621V397" id="network-tank-fill" class="pipe"/>
-        <path d="M621 447V413H652 M652 397V429 M652 397H662.5 M652 429H662.5 M689.5 397H700V429H689.5 M700 413H794V278" id="network-makeup" class="pipe"/>
+        <path d="M621 477V413H652 M652 397V429 M652 397H662.5 M652 429H662.5 M689.5 397H700V429H689.5 M700 413H794V278" id="network-makeup" class="pipe"/>
         <circle cx="140" cy="256" r="1.5" fill="#FF9800" pointer-events="none"/>
         <circle cx="430" cy="132" r="1.5" fill="#000000" pointer-events="none"/>
         <circle cx="430" cy="234" r="1.5" fill="#000000" pointer-events="none"/>
@@ -396,18 +406,16 @@
         <text x="836" y="306" id="TE10-value" text-anchor="middle" pointer-events="none" data-state="states['nurlat-5-boiler-room'].tempInNet" data-state-eval="if (value === null || value === undefined) { element.textContent = '—'; }" font-size="9px">—</text>
     </g>
     <g id="boiler-makeup-tank" transform="translate(10 42)">
-        <rect x="155" y="355" width="32" height="50" rx="10" fill="#FFFFFF" stroke="#000000" stroke-width="1"/>
-        <path d="M159 373H183" fill="none" stroke="#0083CD" stroke-width="0.5" stroke-dasharray="5 3" pointer-events="none"/>
-        <path d="M159 383H183" fill="none" stroke="#0083CD" stroke-width="0.5" stroke-dasharray="5 3" pointer-events="none"/>
-        <path d="M159 393H183" fill="none" stroke="#0083CD" stroke-width="0.5" stroke-dasharray="5 3" pointer-events="none"/>
+        <g id="boiler-makeup-tank-symbol" class="water-tank" transform="translate(155 355)" data-state="states['nurlat-5-boiler-room'].levelBoilerMakeupTank;states['nurlat-5-boiler-room'].sensors.isLevelBoilerMakeupTankSensorError;states['nurlat-5-boiler-room'].sensors.isLevelBoilerMakeupTankLowLevel;states['nurlat-5-boiler-room'].sensors.isLevelBoilerMakeupTankHighLevel;states['nurlat-5-boiler-room'].sensors.isLevelBoilerMakeupTankPreLowLevel;states['nurlat-5-boiler-room'].sensors.isLevelBoilerMakeupTankPreHighLevel" data-colorizer-hint="none" stroke-dasharray="0 80" color="#000000" data-state-eval="if (states['nurlat-5-boiler-room'].levelBoilerMakeupTank === null || states['nurlat-5-boiler-room'].levelBoilerMakeupTank === undefined || states['nurlat-5-boiler-room'].levelBoilerMakeupTank !== states['nurlat-5-boiler-room'].levelBoilerMakeupTank || states['nurlat-5-boiler-room'].levelBoilerMakeupTank === 1 / 0 || states['nurlat-5-boiler-room'].levelBoilerMakeupTank === -1 / 0) { element.style.strokeDasharray = '0 80'; } else { element.style.strokeDasharray = ((states['nurlat-5-boiler-room'].levelBoilerMakeupTank &lt; 0 ? 0 : states['nurlat-5-boiler-room'].levelBoilerMakeupTank &gt; 100 ? 100 : states['nurlat-5-boiler-room'].levelBoilerMakeupTank) * 0.8) + ' 80'; }">
+            <use class="water-tank-artwork" href="#nurlat5-water-tank"/>
+        </g>
         <text x="171" y="317" font-size="10px" text-anchor="middle" pointer-events="none">Бак подпитки</text>
         <text x="171" y="329" font-size="10px" text-anchor="middle" pointer-events="none">котлового контура</text>
     </g>
     <g id="network-makeup-tank" transform="translate(10 42)">
-        <rect x="595" y="355" width="32" height="50" rx="10" fill="#FFFFFF" stroke="#000000" stroke-width="1"/>
-        <path d="M599 373H623" fill="none" stroke="#0083CD" stroke-width="0.5" stroke-dasharray="5 3" pointer-events="none"/>
-        <path d="M599 383H623" fill="none" stroke="#0083CD" stroke-width="0.5" stroke-dasharray="5 3" pointer-events="none"/>
-        <path d="M599 393H623" fill="none" stroke="#0083CD" stroke-width="0.5" stroke-dasharray="5 3" pointer-events="none"/>
+        <g id="network-makeup-tank-symbol" class="water-tank" transform="translate(595 355)" data-state="states['nurlat-5-boiler-room'].levelNetworkMakeupTank;states['nurlat-5-boiler-room'].sensors.isLevelNetworkMakeupTankSensorError;states['nurlat-5-boiler-room'].sensors.isLevelNetworkMakeupTankLowLevel;states['nurlat-5-boiler-room'].sensors.isLevelNetworkMakeupTankHighLevel;states['nurlat-5-boiler-room'].sensors.isLevelNetworkMakeupTankPreLowLevel;states['nurlat-5-boiler-room'].sensors.isLevelNetworkMakeupTankPreHighLevel" data-colorizer-hint="none" stroke-dasharray="0 80" color="#000000" data-state-eval="if (states['nurlat-5-boiler-room'].levelNetworkMakeupTank === null || states['nurlat-5-boiler-room'].levelNetworkMakeupTank === undefined || states['nurlat-5-boiler-room'].levelNetworkMakeupTank !== states['nurlat-5-boiler-room'].levelNetworkMakeupTank || states['nurlat-5-boiler-room'].levelNetworkMakeupTank === 1 / 0 || states['nurlat-5-boiler-room'].levelNetworkMakeupTank === -1 / 0) { element.style.strokeDasharray = '0 80'; } else { element.style.strokeDasharray = ((states['nurlat-5-boiler-room'].levelNetworkMakeupTank &lt; 0 ? 0 : states['nurlat-5-boiler-room'].levelNetworkMakeupTank &gt; 100 ? 100 : states['nurlat-5-boiler-room'].levelNetworkMakeupTank) * 0.8) + ' 80'; }">
+            <use class="water-tank-artwork" href="#nurlat5-water-tank"/>
+        </g>
         <text x="611" y="317" font-size="10px" text-anchor="middle" pointer-events="none">Бак подпитки</text>
         <text x="611" y="329" font-size="10px" text-anchor="middle" pointer-events="none">сетевого контура</text>
     </g>
