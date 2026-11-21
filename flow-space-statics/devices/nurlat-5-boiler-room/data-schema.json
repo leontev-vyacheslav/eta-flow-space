@@ -813,7 +813,7 @@
         },
         "chart": {}
       },
-      "unit": "м"
+      "unit": "%"
     },
     "levelNetworkMakeupTank": {
       "type": "number",
@@ -835,7 +835,7 @@
         },
         "chart": {}
       },
-      "unit": "м"
+      "unit": "%"
     },
     "pressOutNet": {
       "type": "number",
