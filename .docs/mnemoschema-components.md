@@ -79,7 +79,15 @@ The level-capable water tank introduced on **21 November 2026** uses a **32 × 8
 white body, **10-unit top corner radii**, square lower corners and a flat bottom.
 The outline is black at **1 unit**. Solid **#0083CD** water rises from the bottom,
 clipped to the body, with a horizontal surface. Nurlat-5's two makeup tanks are
-its first instances; other diagrams retain their existing artwork.
+its first instances. Gagarin, Komarova, Kirov and Muslum-7/9 use the same outline
+as static filled ХПВ vessels from 22 November 2026.
+
+For sites without a measured level, draw a **static fully filled** tank in
+**#0083CD**, using the same `tank.bodyPath` in a site-prefixed definition and a
+`<use>` instance. Do not bind it to unrelated state or add numeric percentages.
+This full fill is symbolic artwork, not measured 100%. Preserve the existing
+centre and side-pipe connections when replacing the older 32 × 50 vessel: expand
+15 units above/below, move its caption with the top and extend the canvas if needed.
 
 Reusable local geometry is stored in `tank.bodyPath` and `tank.waterPath` in the
 profile. Nurlat-5 defines the tank artwork once as `<g id="nurlat5-water-tank">`

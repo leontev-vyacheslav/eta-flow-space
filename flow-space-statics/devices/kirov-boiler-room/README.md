@@ -139,10 +139,10 @@ earlier reference dimensions and proportional boiler-border widths.
 Decorative text passes pointer events through to equipment targets, matching Nurlat-5.
 This prevents the СН1 caption from intercepting the pump frame's upper-edge hover.
 
-The ХПВ vessel and both valves also use the Nurlat-5 symbols, now recorded as
-shared `tank` / `valve` defaults. The vessel is **32 × 50**, radius **10**, centered
-at its original (202.5, 380), with three blue dashed water lines. Its label stays
-ХПВ, six units above the top; horizontal inlet/outlet connections end at
+The Бак подпитки vessel and both valves also use the Nurlat-5 symbols, now recorded as
+shared `tank` / `valve` defaults. The canvas is now `0 4 724 427`. The vessel is **32 × 80**, top radius **10**, square lower corners, centered
+at its original (202.5, 380), with solid **#0083CD** fill (static artwork, no measured level). Its label stays
+Бак подпитки, six units above the top; horizontal inlet/outlet connections end at
 x = 186.5 / 218.5. The water artwork is symbolic and has no level binding.
 
 The КП valve stays at (430, 380) and the drain valve at (675, 300). Both use the
@@ -216,3 +216,32 @@ binding, so no UI bundle or backend changes are required. Hover retains bold fee
 artwork, icon click target, all existing cards and device ownership remain unchanged. The text clip
 now extends to a local y=76 (75.8 for Muslum), keeping both description lines inside the header.
 See [before/after images and browser checks](../../../.reports/2026-11-20-weather-wrap/README.md).
+
+## Filled makeup-water tank — 22 November 2026
+
+The Бак подпитки vessel now uses Nurlat-5's 32 × 80 outline: rounded upper corners,
+flat bottom, black 1-unit stroke and solid **#0083CD** fill. It is a static full
+tank symbol because no level measurement is available, with no numeric reading
+or new state binding. Its existing centre and side-pipe connections are preserved;
+the top/caption move up 15 units and the bottom extends down 15. The canvas grows by 15 units to retain the bottom margin.
+See [previews and verification](../../../.reports/2026-11-22-filled-tanks/README.md).
+
+## Makeup assembly placement — 22 November 2026
+
+The tank and its horizontal inlet/outlet pipe assembly are raised **30 units**.
+The tank centre is now **(202.5, 350)**, with body bounds x = 186.5–218.5,
+y = 310–390 and caption baseline y = 304. КП and its caption move **50 units left**
+within the raised assembly: the valve centre is **(380, 350)** and caption baseline
+y = 325. Pipes meet its body at x = 372 / 388. The vertical connection still meets
+the fixed return pipe at **(510, 270)**. Other equipment and canvas bounds stay fixed.
+See [before/after verification](../../../.reports/2026-11-22-makeup-layout/README.md).
+
+### Further alignment — 22 November 2026
+
+The assembly is raised another 20 units (50 total). КП moves another 30 left:
+its centre is now (350, 330). The tank and complete inlet fragment move 19.3 units
+right to align the inlet arrow's left edge with К1 at x = 149.3. Tank centre is (221.8, 330),
+body y = 290–370, and its Бак подпитки caption baseline is y = 284. The inlet arrow and ХВС
+label move together. The outlet connects tank x = 237.8 to valve x = 342; the
+right valve port x = 358 connects to the unchanged return junction (510, 270).
+See [current previews](../../../.reports/2026-11-22-makeup-align/README.md).

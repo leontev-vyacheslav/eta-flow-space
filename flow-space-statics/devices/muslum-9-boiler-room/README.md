@@ -161,8 +161,8 @@ fonts and alarm tiles. The application's existing fit, zoom and pan remain in us
 - Reading frames **55 × 12**, centered on their tags and values; value baselines
   are top + 9. Horizontal TE11/TE12 stems and their junctions meet frame centers,
   and vertical stems follow the new frame edges.
-- The ХПВ vessel is **32 × 50**, radius **10**, centered at local **(149.5, 347.75)**,
-  with three symbolic blue dashed water lines. Its side ports meet the existing
+- The Бак подпитки vessel is **32 × 80**, top radius **10**, square lower corners, centered at local **(149.5, 347.75)**,
+  with solid **#0083CD** fill (static artwork, no measured level). Its side ports meet the existing
   makeup route. The makeup and drain valves use **16 × 10** bow-ties, **11-unit**
   stems and white **8 × 8** square actuators. The drain actuator remains on the
   left. The distinct check-valve symbol and its direction are retained.
@@ -252,3 +252,21 @@ binding, so no UI bundle or backend changes are required. Hover retains bold fee
 artwork, icon click target, all existing cards and device ownership remain unchanged. The text clip
 now extends to a local y=76 (75.8 for Muslum), keeping both description lines inside the header.
 See [before/after images and browser checks](../../../.reports/2026-11-20-weather-wrap/README.md).
+
+## Filled makeup-water tank — 22 November 2026
+
+The Бак подпитки vessel now uses Nurlat-5's 32 × 80 outline: rounded upper corners,
+flat bottom, black 1-unit stroke and solid **#0083CD** fill. It is a static full
+tank symbol because no level measurement is available, with no numeric reading
+or new state binding. Its existing centre and side-pipe connections are preserved;
+the top/caption move up 15 units and the bottom extends down 15. The existing canvas already contains the taller tank.
+See [previews and verification](../../../.reports/2026-11-22-filled-tanks/README.md).
+
+## Makeup valve block placement — 22 November 2026
+
+The makeup valve and check valve move together 303.5 native units left, retaining
+all artwork, orientation, spacing and static semantics. The valve centre is now
+(203.5, 347.75), leaving **30 units** from the tank's right edge x = 165.5 to
+the valve's left port x = 195.5. The inter-valve pipe spans x = 211.5–223.65;
+the check-valve outlet at x = 236.65 joins the unchanged return connection.
+See [before/after verification](../../../.reports/2026-11-22-muslum-valves/README.md).
