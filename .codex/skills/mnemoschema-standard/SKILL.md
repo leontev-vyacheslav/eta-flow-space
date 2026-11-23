@@ -106,6 +106,13 @@ of a three-way valve. Do not split lobes into separately bound polygons. Keep th
 stem and white square actuator as separate paths in one `.valve` group, with no
 enclosing frame. Translate/rotate the whole symbol and preserve its pipe ports.
 
+Use `valve.fill` in the profile for confirmed positions: **closed grey #808080**,
+**open white #FFFFFF**. Retain the target controller's enum/feedback meanings and
+existing intermediate/fault indications. Auto/manual mode does not establish position;
+mode-only or unmapped bodies stay neutral grey with their existing popovers. Override
+legacy red/green body colourizers in the SVG when needed; preserve actuator/outline
+state ownership and collected values. See the guide's valve-position-colour rule.
+
 Apply scoped group-hover rules so either body half, stem or actuator highlights the
 whole assembly and restores its own state colours afterward. Preserve each site's
 confirmed bindings and signal meanings; static valves stay unbound. Spring-2 and

@@ -6,7 +6,7 @@ and the existing state contract from **Node-RED A**, tab `tsarevo2-boiler-room`,
 
 ## Process layout
 
-The native canvas is **900 × 700**, replacing the first remake’s **980 × 700** canvas
+The native canvas is **905 × 700**, replacing the first remake’s **980 × 700** canvas
 and the older **1282 × 755.4** illustration.
 All equipment is drawn in native units; placement uses translations/rotations without layout scales.
 The additional vertical extent relative to the reference diagrams accommodates four boiler branches,
@@ -25,32 +25,55 @@ The application retains its existing fit, zoom and pan behavior.
   that group: equipment dimensions, pipe endpoints and internal spacing are preserved.
 - Four boiler centers: **100, 270, 440, 610**. Bodies start at **y=185**, **65 × 70**;
   burners **40 × 30**, radius **5**; flame instances **18 × 27**. Gas crosses the supply
-  with a bridge and reaches each burner. The supply header is **y=155**.
-- Each boiler return branch retains its original **unbound circulation pump** at **y=300**,
-  then its mapped outlet valve at **y=335**. The common boiler-return header is **y=350**.
-  These four circulation symbols have no inferred controller signals or popovers.
-- Network return enters at **y=395**. The four network pumps form a compact bank with centers
-  **x=100 / 146 / 192 / 238**, **y=433**, between manifolds **395 / 470**. All four branches
-  have a junction dot at both manifolds. The common outlet ends at **x=238** and returns
-  through **x=25** to the boiler-return header. The bank heading is at **(169,380)**.
-- Source water enters at **y=640**. The compact source-water pair has centers
-  **(100,590) / (146,590)**, between manifolds **535 / 640**, and feeds the symbolic ХВО
-  vessel and tank-filling valve. The common-outlet pressure instrument is at **(225,501)**,
-  with a stem to **(225,535)**; its caption, frame and value move together to clear the pump icons.
-  The ХВО vessel uses the standard **32 × 80** artwork with a static full blue fill;
-  it has no measured level.
-- The reserve-water tank is at **(430,540)**, **32 × 80**. Its outlet feeds two parallel
-  compact makeup pumps at **(540,605) / (586,605)**, between manifolds **550 / 660**,
-  then the network-makeup valve and network return. Both branch junctions are marked;
-  the old **x=650** branch and its junction dots are removed. A junction at **(735,395)**
-  marks the makeup connection to the network return.
-- Emergency panel: **(10,90)**, **112 × 355**, directly below the header at the left,
+  with a bridge and reaches each burner. The supply header at **y=155** runs left to **x=25**,
+  drops to **y=455**, then runs right to the red **Т1** outlet. Four **5.2-unit** crossing gaps
+  keep this supply line separate from the vertical network-pump branches, following Spring-2.
+- Each boiler return branch retains its original **unbound circulation-pump artwork** at **y=300**,
+  then its mapped outlet valve at **y=335**. Captions **НК1–НК4** are above the pumps.
+  Their separate warning icons use only the corresponding boiler's confirmed **512** alarm code;
+  the artwork still has no inferred working/mode state. The boiler-return header at **y=350**
+  descends directly under **ЗК1 at x=100** to the network-pump upper manifold at **y=395**.
+  The former drop at **x=270** is removed; the common return header still serves all four boilers.
+- Network return enters through **Т2 at y=490**. The four network pumps form a compact bank with centers
+  **x=100 / 146 / 192 / 238**, **y=433**, between manifolds **395 / 490**. All four branches
+  have a junction dot at both manifolds. The lower manifold continues right at **y=490** to
+  the blue **Т2** inlet; it is separate from Т1 above it. The bank heading stays at **(169,380)**.
+  Supply instruments move as complete assemblies to **y=421**, with stems to **455**;
+  return instruments sit below Т2 at **(585,505) / (670,505)**, with captions at **y=531**.
+- The source-water block is grouped as **`source-water-assembly`**, translated **(0,30)**
+  from its preceding layout. Effective В1, pressure takeoff and filling-valve centerline is
+  **y=565**. The parallel source pumps are at **(123,542) / (123,588)**; their manifolds span
+  **542–588** at **x=73 / 178**, with midpoint junctions on **y=565**. Captions remain below
+  the pumps; the group heading moves to **(123,640)**. The pressure frame is effectively
+  **(197.5,541)**, value baseline **550**, caption **536**, and stem **553→565**.
+  The filling valve remains at effective **(365,565)** with its caption at **y=540**.
+- Source water now reaches the tank through one **straight horizontal pipe** at **y=565**,
+  from the bank outlet through the pressure takeoff and filling valve to the tank's left side
+  at **(430,565)**. The former stepped/top-center inlet is removed. ХВО remains absent.
+- The complete reserve-water block is grouped as **`reserve-water-assembly`**, translated
+  **(0,−30)** from the preceding layout. Its body is effectively **(430,540)**, still **32 × 80**,
+  with both caption lines and all four switch indications moving with it. The working-maximum
+  caption/indicator receives an additional **8-unit** downward clearance adjustment so the inlet
+  does not cross that label. This changes label placement only, not level thresholds or state.
+- The tank's right-side midpoint is now **(462,580)**. Its straight outlet reaches **(508,580)**;
+  the left makeup manifold extends up by **2 units** to receive it. The first makeup branch stays
+  at **y=582**, the second at **628**. The former midpoint-feed dot at **(508,610)** is removed.
+  Makeup pumps stay **(563,582) / (563,628)**; the right manifold at **x=618** discharges via
+  **(618,605)** to **x=735**, the network-makeup valve at **(735,560)** and Т2 at **(735,490)**.
+  The inlet/outlet side-port positions are user-selected exceptions to the shared top/bottom ports.
+- Emergency panel: **(10,90)**, **112 × 279**, directly below the header at the left,
   following Spring-2's two-column layout. Nine **43 × 43** tiles use **x=18 / 71** and
   **y=114 / 165 / 216 / 267 / 318**, with Spring-2's connection, power, gas and vapour artwork.
-  The extra row retains Tsarevo-2's ninth binary indication. Only the **96 × 37** boiler-alarm
-  summary remains below the tiles at **(18,400)**. Pump summaries `alarm-summary-1/2/3` are
-  replaced by individual pump warning icons; the panel now ends at **y=445**.
+  The extra row retains Tsarevo-2's ninth binary indication. All equipment summaries, including
+  `alarm-summary-0`, are replaced by the corresponding equipment warning icons. The panel
+  now ends at **y=369**.
   The ЩУК cards and all four `boiler-*-link` dots are removed; timestamp now belongs to the header.
+
+External connectors copy Spring-2's **11.1 × 10.8** triangles and **0.5-unit** outlines:
+**Т1** is red and points right at **y=455**, **Т2** is blue and points left at **y=490**,
+and **В1** is blue and points right into the left-side inlet at **y=565**. The pipe/triangle
+separation is preserved. Captions use the general **10 px** role. The canvas gains **5 units**
+on the right to keep the complete Т1/Т2 triangles and labels inside the viewport.
 
 Pump frames are **27 × 27**, radius **3**, rotors radius **10**. Instruments are **55 × 12**.
 Readings use **9 px**, emergency-tile captions **7 px**, and other text **10 px**.
@@ -65,7 +88,17 @@ The SVG retains **96** previously displayed property paths. The four
 separate element later. They remain in Node-RED A and the unchanged schema. The former ЩУК cards,
 boiler-link circles and boiler-popup link rows are removed; no connection colour is reassigned
 to boiler bodies. The information icon lists `isConnected` then `timestamp`.
-Boiler bodies and burners list **status, mode, burner power, alarm**;
+Boiler bodies and burners list **status, mode, burner power**. Each boiler's separate warning
+lists **status, alarm**, appears for **status 6 or any nonzero alarm**, and sits just outside
+its upper-right corner at **(centerX+35,187)**. The removed boiler-summary fields now belong
+on these icons; they remain available in full.
+
+The circulation-pump warning at **(centerX+2,266.4)** lists that boiler's **alarm** and appears
+only for code **512 — Отключение насосов**. This is a boiler-level diagnostic, not independent
+circulation-pump telemetry. The schema and collector expose no per-circulation-pump state.
+No running state or additional fault meaning is inferred for their static artwork.
+
+For boilers,
 this controller does not expose the other sites' `isWorking`, `isLocked` or boiler temperature fields.
 The exact existing flame predicate remains **status in [2,3,4]**. A blue boiler outline indicates
 those operating/startup states; status **6** or a nonzero boiler alarm gives a red outline.
@@ -73,15 +106,20 @@ Other boiler states have black outlines. Burner backgrounds remain grey in every
 The common Spring-2 flame pulse runs over **3 s**, and flame artwork does not intercept clicks.
 
 Network/source-water pumps use **64** for operating and **512** for fault; makeup pumps use
-**8 / 32**. Other states stay grey. Each bank uses **46-unit** center spacing. Captions are end-aligned
-at **(centerX − 4, centerY − 17.5)**, matching Spring-2's placement above the pump. There are no
+**8 / 32**. Other states stay grey. Each bank uses **46-unit** center spacing: horizontal spacing
+for the network bank, vertical spacing for the two newly horizontal pump pairs. Only their bound
+artwork rotates; labels and warning icons remain upright. Captions are end-aligned at
+**(centerX − 4, centerY − 17.5)** for network/makeup pumps. Source-water captions use
+**(centerX − 4, centerY + 30)** beneath the frames, a local clearance choice for the aligned bank. There are no
 standalone pump readings or setpoint labels; those values remain accessible on the equipment.
 
 Frames and rotors open **status, mode, setPower, modeFc, statusFc** for network/source-water pumps,
 or **status, mode** for makeup pumps. All fields remain schema-formatted, with their original units.
 
 The exact Spring-2 `#emergencyIcon` artwork is reused beside all eight mapped pumps, at
-**translate(centerX + 2, centerY − 33.6)**. It is hidden normally, and appears when that pump's
+**translate(centerX + 2, centerY − 33.6)** for network pumps, or
+**translate(centerX + 18, centerY − 9)** beside the horizontal source-water/makeup pumps.
+It is hidden normally, and appears when that pump's
 **status is 512** (makeup: **32**), **alarm is nonzero**, **statusFc is 8**, or **alarmFc is nonzero**.
 Only network/source-water models have the two drive fields. Their warning popovers contain
 **status, alarm, statusFc, alarmFc**; makeup warnings contain **status, alarm**. Status fields
@@ -98,11 +136,16 @@ Gas pipes/junctions remain **#FF9800**. This is a Tsarevo-2 exception to the sha
 profile; it does not change any other diagram. Tank water fill/level indicators remain blue, and
 state-dependent equipment outlines retain their existing colours.
 
-ЗК1–ЗК4 use the unified single-path bow-tie, stem and white square actuator. Their **own** schema
-still maps status **0** to yellow (intermediate), **1** to red (closed) and **2** to green (open).
-Every body lobe, stem and actuator resolves to the same status popup and highlights the assembly.
-The two makeup valves expose **mode only**: green/yellow means auto/manual per this site's schema,
-not an independently measured open/closed position. Diesel valve modes remain in the header.
+ЗК1–ЗК4 use the unified single-path bow-tie, stem and white square actuator. The current
+[shared position-colour rule](../../../.docs/mnemoschema-components.md#valve-position-colours)
+uses **grey #808080 for closed** and **white #FFFFFF for open**. Tsarevo-2's confirmed enum
+codes remain **1 / 2**, and **0** intermediate stays yellow. Each SVG body suppresses the
+legacy schema red/green colourizer and explicitly chooses these standard fills; the schema,
+collector values and enum descriptions are unchanged. Group hover and property popovers remain.
+
+The two makeup valves expose **Auto/Manual mode only**, so their bodies remain **neutral grey**
+for both mode values. This placeholder does not establish a closed position. Their mode popovers
+remain available, and no Auto→Open or Manual→Closed mapping is invented. Diesel modes stay in the header.
 
 **Existing mapping requiring separate confirmation:** Node-RED A assigns `alarmNP_2` to
 `networkPumps[0].alarm` and `alarmNP_1` to `networkPumps[1].alarm`. The diagram preserves that
@@ -125,7 +168,13 @@ absolute-coordinate tank mutation and the old “hide all lower active labels”
 
 ## Verification and status — 23 November 2026
 
-See the [compact pump banks and browser evidence](../../../.reports/2026-11-23-tsarevo2-pump-banks/README.md).
+See the [straight inlet, block alignment and valve colours](../../../.reports/2026-11-23-tsarevo2-straight-inlet/README.md).
+The [preceding water-layout report](../../../.reports/2026-11-23-tsarevo2-water-layout/README.md)
+records the earlier tank position and stepped top inlet.
+The [preceding routing report](../../../.reports/2026-11-23-tsarevo2-routing/README.md) records
+Т1/Т2 connectors and boiler diagnostics before this water-circuit refinement.
+The [compact-bank report](../../../.reports/2026-11-23-tsarevo2-pump-banks/README.md) records
+pump property ownership before this routing and orientation update.
 The [panel-layout follow-up](../../../.reports/2026-11-23-tsarevo2-spring2-layout/README.md) records
 the preceding layout before compact pump banks and equipment warning icons.
 The [22 November draft](../../../.reports/2026-11-22-tsarevo2-remake/README.md) records the earlier layout,
