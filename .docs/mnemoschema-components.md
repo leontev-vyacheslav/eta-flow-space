@@ -183,7 +183,11 @@ Where a schema still supplies legacy red/green body fills, suppress or override
 that fill in the SVG without changing collected values, enum codes or units.
 
 Tsarevo-2's confirmed `ValveStatus` **1 / 2** now displays closed grey / open white;
-its **0** intermediate state remains yellow. Its two auto/manual-only makeup
+its **0** intermediate state remains yellow. From **24 November 2026**, its four boiler-valve
+actuator squares also follow Spring-2: white fill, **blue #0000FF outline for confirmed open**,
+black otherwise, at **0.5 units**. Spring-2 uses open code **1**, Tsarevo-2 code **2**;
+retain the site's own predicate. Whole-symbol yellow hover restores that position indication.
+Tsarevo-2's two auto/manual-only makeup
 valves remain neutral grey. Historical reference colours described below remain
 source evidence; unrelated diagrams are changed only within their requested scope.
 

@@ -24,13 +24,16 @@ The application retains its existing fit, zoom and pan behavior.
   labels retain Tsarevo-2's names rather than importing Spring-2 instrument tags.
   Removing the gas-pressure card lets the first four remaining cards move right **84.3 units**;
   the last four retain their positions. The standard weather block occupies the freed left column.
-- The complete process is inside **`translate(130 0)`**. The coordinates below are local to
-  that group: equipment dimensions, pipe endpoints and internal spacing are preserved.
+- The main process is inside **`translate(130 -20)`**, raised **20 native pixels** from
+  the preceding layout. The coordinates below are process-local unless marked canvas.
+  Equipment dimensions and internal hydraulic spacing are preserved. The gas inlet/header,
+  pressure assembly and inlet caption are compensated vertically to retain their canvas positions;
+  the header and emergency panel stay fixed.
 - Gas enters from the left below the emergency panel, then rises at local **x=10**
-  (canvas **x=140**) to the existing **y=110** header. This puts its riser between the
+  (canvas **x=140**) to the header at local **y=130**, canvas **y=110**. This puts its riser between the
   panel's right edge **x=122** and the supply riser **x=155**, with **18 / 15-unit** clearances.
   Its four existing burner branches and supply-crossing bridges are retained.
-  The header now ends directly at the fourth branch **(562,110)**; the unused **153-unit**
+  The header now ends directly at the fourth branch **(562,130)**; the unused **153-unit**
   continuation and that former branch/end dot are removed. The remaining three header dots are tees.
   Gas pressure is a **55 × 12** instrument beside the inlet: canvas frame **(60.5,387)**,
   value baseline **396**, «Ргаза» baseline **382**, centered at **x=88**. Its black stem reaches
@@ -40,6 +43,8 @@ The application retains its existing fit, zoom and pan behavior.
   with a bridge and reaches each burner. The supply header at **y=155** runs left to **x=25**,
   drops to **y=455**, then runs right to the red **Т1** outlet. Four **5.2-unit** crossing gaps
   keep this supply line separate from the vertical network-pump branches, following Spring-2.
+  In canvas coordinates the gas/supply headers are now **y=110 / 135**, with **25-unit** spacing,
+  reduced **20 units** from 45. The gas bridges follow the moved supply crossing.
 - Each boiler return branch retains its original **unbound circulation-pump artwork** at **y=300**,
   then its mapped outlet valve at **y=335**. Captions **НК1–НК4** are above the pumps.
   Their separate warning icons use only the corresponding boiler's confirmed **512** alarm code;
@@ -55,17 +60,21 @@ The application retains its existing fit, zoom and pan behavior.
   **(146,490) / (192,490) / (238,490)**. The upper-right **(238,395)** and lower-left
   **(100,490)** corners are two-segment elbows without dots. The lower manifold continues right at **y=490** to
   the blue **Т2** inlet; it is separate from Т1 above it. The bank heading is at **(169,385)**.
-  Supply instruments move as complete assemblies to **y=421**, with stems to **455**;
+  Supply instruments use complete translated assemblies at process-local **(585,421) / (670,421)**,
+  with stems to **455**. They move **75 / 65 units right**, putting supply temperature above return
+  temperature and supply pressure above return pressure. Frames, readings, captions, stems and dots
+  move together; all four instruments stay **55 × 12** with **9 px** readings.
   return instruments sit below Т2 at **(585,505) / (670,505)**, with captions at **y=531**.
 - The source-water block is grouped as **`source-water-assembly`**, translated **(0,30)**
   from its preceding layout. The pressure takeoff and filling-valve centerline is **y=565**.
-  В1 enters farther left at canvas **(41,483)**, runs to **(172,483)**, drops to **(172,565)**,
-  then reaches the unchanged left manifold midpoint **(203,565)**. The drop stays **58 units**
+  В1 enters farther left at canvas **(41,463)**, runs to **(172,463)**, drops to **(172,545)**,
+  then reaches the left manifold midpoint **(203,545)**. The drop stays **58 units**
   left of the Т2 line's start, so no crossing/junction is added. The parallel source pumps are
   at **(123,542) / (123,588)**; their manifolds span
   **542–588** at **x=73 / 178**, with midpoint junctions on **y=565**. Captions remain below
   the group heading and above their frames, at effective **y=525 / 571**. The existing group
-  heading is **(123,503)**, raised **12 units** to clear the warning above НВ1. The pressure frame is effectively
+  heading is process-local **(123,513)**, preserving the user's current placement above НВ1.
+  The pressure frame is effectively
   **(197.5,541)**, value baseline **550**, caption **536**, and stem **553→565**.
   The filling valve is at effective **(325,565)**, moved **40 units left** with its caption
   from the preceding layout; the caption stays at **y=540**. The source pipe is unchanged.
@@ -100,10 +109,10 @@ directly at local **(754,455) / (754,490)**.
 
 The left-side **gas / В1** inlets match Nurlat-5: **10 × 10**, right-pointing triangles without
 outlines, orange **#FF9800** and blue **#0083CD**. In canvas coordinates their bases align at
-**x=31**, tips at **x=41**, and centerlines at **y=418 / 483**. These preserve the reference's
+**x=31**, tips at **x=41**, and centerlines at **y=418 / 463**. These preserve the reference's
 **21-unit** inset from the panel's left edge, **49-unit** panel-bottom-to-gas offset and
-**65-unit** gas/water separation. Both pipes meet their triangle tips directly. «Газ» uses
-canvas anchor **(46,435)**; the site-specific «В1» label starts at **(41,501)** instead of
+**45-unit** gas/water separation after raising the hydraulic process. Both pipes meet their triangle tips directly. «Газ» uses
+canvas anchor **(46,435)**; the site-specific «В1» label starts at **(41,481)** instead of
 copying Nurlat's «От ХВО». All connector captions use **10 px**. The canvas retains **5 units**
 on the right to keep the complete Т1/Т2 triangles and labels inside the viewport.
 
@@ -202,7 +211,11 @@ state-dependent equipment outlines retain their existing colours.
 uses **grey #808080 for closed** and **white #FFFFFF for open**. Tsarevo-2's confirmed enum
 codes remain **1 / 2**, and **0** intermediate stays yellow. Each SVG body suppresses the
 legacy schema red/green colourizer and explicitly chooses these standard fills; the schema,
-collector values and enum descriptions are unchanged. Group hover and property popovers remain.
+collector values and enum descriptions are unchanged. Each **white actuator square** now has a
+**blue #0000FF outline for open (2)** and black outline otherwise, matching Spring-2's appearance
+while preserving Tsarevo-2's own enum values. The actuator binds the same status as its body/group,
+keeps a **0.5-unit** outline and suppresses the legacy fill colourizer. Whole-symbol yellow hover
+restores the blue open indication on leave; group and actuator retain the status popup.
 
 The two makeup valves expose **Auto/Manual mode only**, so their bodies remain **neutral grey**
 for both mode values. This placeholder does not establish a closed position. Their mode popovers
@@ -256,6 +269,7 @@ absolute-coordinate tank mutation and the old “hide all lower active labels”
 
 ## Verification and status — 24 November 2026
 
+See the [aligned instruments, Spring-2 actuator feedback and tighter pipe spacing](../../../.reports/2026-11-24-tsarevo2-layout-refinement/README.md).
 See the [ЩУК tile, browser states and prepared emergency rule](../../../.reports/2026-11-24-tsarevo2-shchuk/README.md).
 See the [junction-dot corrections and 20-pixel return-header move](../../../.reports/2026-11-24-tsarevo2-junction-rule/README.md).
 See the [gas-pressure instrument and weather block](../../../.reports/2026-11-24-tsarevo2-weather-pressure/README.md).

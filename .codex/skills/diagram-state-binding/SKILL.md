@@ -62,6 +62,9 @@ Expressions use a restricted interpreter, not unrestricted JavaScript. Use its s
 conditionals, style/text assignments, array `includes` and permitted `element.classList` methods.
 Do not embed functions, DOM queries, event handlers, `new Date` or formatting method calls.
 Use braces for every control-flow body. Escape XML attribute content correctly.
+Inside double-quoted SVG attributes, keep literal apostrophes (`'`) in state paths and
+expressions instead of encoding them as `&#x27;`. Preserve required escaping for ampersands,
+less-than signs and attribute delimiters; parsed expressions must remain unchanged.
 
 A single-property non-text element receives the schema colourizer before its custom expression.
 Changing a multi-property binding into a single-property one can therefore add unexpected fill,
