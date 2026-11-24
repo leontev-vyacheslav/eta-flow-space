@@ -128,40 +128,56 @@
 			</path>
 		</g>
 
+<clipPath id="weather-readout-clip"><rect x="42" y="43" width="158" height="33"/></clipPath>
 </defs>
 <g id="other-parameters">
 <rect id="other-parameters-frame" x="10" y="10" width="880" height="70" rx="10" class="card"/>
 <text x="450" y="25" text-anchor="middle" font-size="10px" id="other-parameters-heading">Прочие параметры котельной</text>
 <use id="controller-info" href="#infoIcon" x="870" y="15" width="13.2" height="13.2" fill="#0072C6" data-state="states['tsarevo2-boiler-room'].isConnected;states['tsarevo2-boiler-room'].timestamp" data-colorizer-hint="none" data-state-eval="element.style.fill = states['tsarevo2-boiler-room'].isConnected === false ? '#F44336' : '#0072C6';"/>
+<g id="weather-info" data-device="tsarevo2-boiler-room" transform="translate(6 2)" aria-label="Погода" data-state="states['tsarevo2-boiler-room'].weather.description;states['tsarevo2-boiler-room'].weather.temp;states['tsarevo2-boiler-room'].weather.pressure;states['tsarevo2-boiler-room'].weather.humidity;states['tsarevo2-boiler-room'].weather.wind.speed;states['tsarevo2-boiler-room'].weather.wind.deg;states['tsarevo2-boiler-room'].weather.wind.gust" data-state-eval="element.style.opacity = states['tsarevo2-boiler-room'].weather ? '1' : '0.4';">
+			<rect id="weather-icon-hitbox" x="13" y="44" width="27" height="27" rx="3" fill="transparent" stroke-width="0.5" stroke="transparent" data-state="states['tsarevo2-boiler-room'].weather.description;states['tsarevo2-boiler-room'].weather.temp;states['tsarevo2-boiler-room'].weather.pressure;states['tsarevo2-boiler-room'].weather.humidity;states['tsarevo2-boiler-room'].weather.wind.speed;states['tsarevo2-boiler-room'].weather.wind.deg;states['tsarevo2-boiler-room'].weather.wind.gust" data-colorizer-hint="none"/>
+			<g transform="translate(15 45)" fill="none" stroke="#000000" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" pointer-events="none">
+				<path d="M6.1 10.8H3.4C1.8 10.8.7 9.7.7 8.2C.7 7 1.5 6.1 2.7 5.9C2.7 3.2 4.8 1.2 7.3 1.2C8.6 1.2 9.8 1.7 10.6 2.6C11.4 1.5 12.5 1 13.8 1C15.3 1 16.6 1.9 17.2 3.1C17.7 2.8 18.2 2.7 18.7 2.7C20.5 2.7 21.7 4 21.7 5.8L21.6 6.5C22.7 6.6 23.3 7.5 23.3 8.6C23.3 9.9 22.4 10.8 21.2 10.8H13.4"/>
+				<path d="M7 15.6L4.9 21.2H11.2L9 15.6M6.1 18H10M5.5 19.6H10.7"/>
+				<path d="M3.7 21.2H12.2A.9.9 0 0 1 13.1 22.1V23.3H2.8V22.1A.9.9 0 0 1 3.7 21.2Z" fill="#FFFFFF"/>
+				<path d="M13.4 12.9V8.4H8.9M11.1 10.7L13.4 8.4"/>
+				<path d="M7.7 7.3L14.5 14.1C12.7 15.9 10.6 15.9 8.7 15.1C5.5 14 5.2 10.1 7.7 7.3Z" fill="#FFFFFF"/>
+				<circle cx="8" cy="14.4" r="1.5" fill="#FFFFFF"/>
+				<circle cx="14.3" cy="7.6" r="1.1" fill="#FFFFFF"/>
+				<path d="M14.3 5.1A2.5 2.5 0 0 1 16.8 7.6M14.3 3.8A3.8 3.8 0 0 1 18.1 7.6"/>
+			</g>
+			<g id="weather-readout" clip-path="url(#weather-readout-clip)">
+				<g id="weather-temperature-slot" data-state="states['tsarevo2-boiler-room'].weather.description;states['tsarevo2-boiler-room'].weather.temp;states['tsarevo2-boiler-room'].weather.pressure;states['tsarevo2-boiler-room'].weather.humidity;states['tsarevo2-boiler-room'].weather.wind.speed;states['tsarevo2-boiler-room'].weather.wind.deg;states['tsarevo2-boiler-room'].weather.wind.gust" data-colorizer-hint="none" data-state-eval="element.style.visibility = states['tsarevo2-boiler-room'].weather ? (states['tsarevo2-boiler-room'].weather.temp === null || states['tsarevo2-boiler-room'].weather.temp === undefined ? 'hidden' : 'visible') : 'hidden';"><text id="weather-temperature" x="45" y="54" font-size="8px" data-state="states['tsarevo2-boiler-room'].weather.temp" data-state-eval="if (value === null || value === undefined) { element.textContent = ''; }"></text></g>
+				<g id="weather-description-slot" data-state="states['tsarevo2-boiler-room'].weather.description;states['tsarevo2-boiler-room'].weather.temp;states['tsarevo2-boiler-room'].weather.pressure;states['tsarevo2-boiler-room'].weather.humidity;states['tsarevo2-boiler-room'].weather.wind.speed;states['tsarevo2-boiler-room'].weather.wind.deg;states['tsarevo2-boiler-room'].weather.wind.gust" data-colorizer-hint="none" data-state-eval="element.style.visibility = states['tsarevo2-boiler-room'].weather ? (states['tsarevo2-boiler-room'].weather.description === null || states['tsarevo2-boiler-room'].weather.description === undefined ? 'hidden' : 'visible') : 'hidden';"><foreignObject id="weather-description-box" pointer-events="all" data-state="states['tsarevo2-boiler-room'].weather.description" x="45" y="57" width="155" height="19">
+					<div xmlns="http://www.w3.org/1999/xhtml" id="weather-description" style="font-family:Roboto,Arial,sans-serif;font-size:8px;line-height:9px;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;overflow-wrap:anywhere;white-space:normal;pointer-events:none;" data-state="states['tsarevo2-boiler-room'].weather.description" data-state-eval="element.textContent = value === null || value === undefined ? '' : value;"></div>
+				</foreignObject></g>
+			</g>
+		</g>
 <g id="timestamp" data-state="states['tsarevo2-boiler-room'].timestamp;states['tsarevo2-boiler-room'].isConnected" data-colorizer-hint="none" data-state-eval="element.style.fill = states['tsarevo2-boiler-room'].isConnected === false ? 'red' : '#000000';">
 <text id="timestamp-date" x="19" y="26" text-anchor="start" font-size="10px" data-state-format="date" data-state="states['tsarevo2-boiler-room'].timestamp" data-colorizer-hint="none">—</text>
 <text id="timestamp-time" x="19" y="39" text-anchor="start" font-size="10px" data-state-format="time" data-state="states['tsarevo2-boiler-room'].timestamp" data-colorizer-hint="none">—</text>
 </g><g id="parameter-cards">
-<g class="parameter-card" id="header-tempRoomAir">
+<g class="parameter-card" id="header-tempRoomAir" transform="translate(84.3 0)">
 <rect id="tempRoomAir-frame" x="130.0" y="41.9" width="76.8" height="30.1" rx="10" fill="#FFFFFF" stroke="#000000" stroke-width="0.25" data-state="states['tsarevo2-boiler-room'].tempRoomAir" data-colorizer-hint="none"/>
 <text x="168.4" y="53" text-anchor="middle" font-size="10px" id="header-tempRoomAir-label">Тпом.</text>
 <text x="168.4" y="66.6" text-anchor="middle" font-size="9px" id="tempRoomAir-value" data-state="states['tsarevo2-boiler-room'].tempRoomAir" data-colorizer-hint="none">—</text>
 </g>
-<g class="parameter-card" id="header-tempOutNet">
+<g class="parameter-card" id="header-tempOutNet" transform="translate(84.3 0)">
 <rect id="header-tempOutNet-frame" x="214.3" y="41.9" width="76.8" height="30.1" rx="10" fill="#FFFFFF" stroke="#000000" stroke-width="0.25" data-state="states['tsarevo2-boiler-room'].tempOutNet" data-colorizer-hint="none"/>
 <text x="252.7" y="53" text-anchor="middle" font-size="10px" id="header-tempOutNet-label">Тподачи</text>
 <text x="252.7" y="66.6" text-anchor="middle" font-size="9px" id="header-tempOutNet-value" data-state="states['tsarevo2-boiler-room'].tempOutNet" data-colorizer-hint="none">—</text>
 </g>
-<g class="parameter-card" id="header-pressOutNet">
+<g class="parameter-card" id="header-pressOutNet" transform="translate(84.3 0)">
 <rect id="header-pressOutNet-frame" x="298.6" y="41.9" width="76.8" height="30.1" rx="10" fill="#FFFFFF" stroke="#000000" stroke-width="0.25" data-state="states['tsarevo2-boiler-room'].pressOutNet" data-colorizer-hint="none"/>
 <text x="337.0" y="53" text-anchor="middle" font-size="10px" id="header-pressOutNet-label">Рподачи</text>
 <text x="337.0" y="66.6" text-anchor="middle" font-size="9px" id="header-pressOutNet-value" data-state="states['tsarevo2-boiler-room'].pressOutNet" data-colorizer-hint="none">—</text>
 </g>
-<g class="parameter-card" id="header-tempOutAir">
+<g class="parameter-card" id="header-tempOutAir" transform="translate(84.3 0)">
 <rect id="tempOutAir-frame" x="382.9" y="41.9" width="76.8" height="30.1" rx="10" fill="#FFFFFF" stroke="#000000" stroke-width="0.25" data-state="states['tsarevo2-boiler-room'].tempOutAir" data-colorizer-hint="none"/>
 <text x="421.3" y="53" text-anchor="middle" font-size="10px" id="header-tempOutAir-label">Тн.в.</text>
 <text x="421.3" y="66.6" text-anchor="middle" font-size="9px" id="tempOutAir-value" data-state="states['tsarevo2-boiler-room'].tempOutAir" data-colorizer-hint="none">—</text>
 </g>
-<g class="parameter-card" id="header-pressGas">
-<rect id="pressGas-frame" x="467.2" y="41.9" width="76.8" height="30.1" rx="10" fill="#FFFFFF" stroke="#000000" stroke-width="0.25" data-state="states['tsarevo2-boiler-room'].pressGas" data-colorizer-hint="none"/>
-<text x="505.6" y="53" text-anchor="middle" font-size="10px" id="header-pressGas-label">Ргаза</text>
-<text x="505.6" y="66.6" text-anchor="middle" font-size="9px" id="pressGas-value" data-state="states['tsarevo2-boiler-room'].pressGas" data-colorizer-hint="none">—</text>
-</g>
+
 <g class="parameter-card" id="header-levelDt1">
 <rect id="levelDt1-frame" x="551.5" y="41.9" width="76.8" height="30.1" rx="10" fill="#FFFFFF" stroke="#000000" stroke-width="0.25" data-state="states['tsarevo2-boiler-room'].levelDt1" data-colorizer-hint="none"/>
 <text x="589.9" y="53" text-anchor="middle" font-size="10px" id="header-levelDt1-label">Уровень ДТ1</text>
@@ -184,8 +200,7 @@
 </g>
 </g></g>
 <g id="process" transform="translate(130 0)">
-<path class="pipe" stroke="#FF9800" d="M45 110H715"/>
-<text x="30" y="113" text-anchor="end" font-size="10px">Газ</text>
+<path class="pipe" stroke="#FF9800" id="gas-inlet" d="M-89 418H10V110H562"/>
 <path class="pipe" stroke="#000000" id="supply-header" d="M610 155H25V455"/>
 
 <path class="pipe" stroke="#000000" id="boiler-return-header" d="M610 350H100V395"/>
@@ -299,7 +314,6 @@
 </g>
 <text x="585" y="338" text-anchor="end" font-size="10px">ЗК4</text>
 <path class="pipe" stroke="#FF9800" d="M562 110V150Q570 155 562 160V235H590"/>
-<circle cx="562" cy="110" r="1.5" fill="#FF9800" pointer-events="none"/>
 <text x="585" y="178" text-anchor="middle" font-size="10px">К4</text>
 <rect x="577.5" y="185" width="65" height="70" rx="0" class="pump-frame" id="boiler-4-frame" data-state="states['tsarevo2-boiler-room'].boilers[3].status;states['tsarevo2-boiler-room'].boilers[3].mode;states['tsarevo2-boiler-room'].boilers[3].powerBurner" data-colorizer-hint="none" data-state-eval="element.style.stroke = (states['tsarevo2-boiler-room'].boilers[3].status === 6 || states['tsarevo2-boiler-room'].boilers[3].alarm !== 0) ? 'red' : ([2,3,4].includes(states['tsarevo2-boiler-room'].boilers[3].status) ? '#0000FF' : '#000000');" />
 <text x="610" y="201" text-anchor="middle" font-size="10px" data-state="states['tsarevo2-boiler-room'].boilers[3].mode" data-colorizer-hint="none">—</text>
@@ -353,7 +367,18 @@
 </g>
 </g>
 <text x="169" y="380" text-anchor="middle" font-size="10px">Сетевые насосы</text>
+<g id="gas-pressure">
+<path class="pipe" stroke="#000000" d="M-42 399V418" />
+<circle cx="-42" cy="418" r="1.5" fill="#FF9800" pointer-events="none" />
+<text id="pressGas-label" x="-42" y="382" text-anchor="middle" font-size="10px" pointer-events="none">Ргаза</text>
+<rect id="pressGas-frame" x="-69.5" y="387" width="55" height="12" rx="0" class="reading-frame" data-state="states['tsarevo2-boiler-room'].pressGas" data-colorizer-hint="none" />
+<text id="pressGas-value" x="-42" y="396" text-anchor="middle" font-size="9px" pointer-events="none" data-state="states['tsarevo2-boiler-room'].pressGas" data-colorizer-hint="none">—</text>
+</g>
 <g id="pipe-connectors" pointer-events="none">
+<polygon id="gas-connector" points="-99 413 -89 418 -99 423" fill="#FF9800" />
+<text id="gas-label" x="-84" y="435" text-anchor="middle" font-size="10px" pointer-events="none">Газ</text>
+<polygon id="B1-connector" points="-99 478 -89 483 -99 488" fill="#0083CD" />
+<text id="B1-label" x="-89" y="501" text-anchor="start" font-size="10px" pointer-events="none">В1</text>
 <polygon id="T1-connector" points="754 449.6 765.1 455 754 460.4" fill="#FF0000" stroke="#FF0000" stroke-width="0.5" />
 <text x="759.55" y="474.5" text-anchor="middle" font-size="10px" pointer-events="none" id="T1-label">Т1</text>
 <polygon id="T2-connector" points="754 490 765.1 484.6 765.1 495.4" fill="#0000FF" stroke="#0000FF" stroke-width="0.5" />
@@ -362,7 +387,7 @@
 <g id="source-water-assembly" transform="translate(0 30)"><text x="123" y="485" text-anchor="middle" font-size="10px">Насосы исходной воды</text>
 <path class="pipe" stroke="#000000" d="M178 535H430" />
 <g id="sourceWaterPumps-bank" class="pump-bank">
-<path class="pipe" stroke="#000000" d="M55.1 535H73 M73 512V558 M178 512V558" />
+<path class="pipe" stroke="#000000" d="M-89 453H42V535H73 M73 512V558 M178 512V558" />
 <circle cx="73" cy="535" r="1.5" fill="#000000" pointer-events="none" />
 <circle cx="178" cy="535" r="1.5" fill="#000000" pointer-events="none" />
 <path class="pipe" stroke="#000000" d="M73 512H178" />
@@ -395,8 +420,6 @@
 <path class="valve-actuator" d="M-4 -19H4V-11H-4Z" fill="#FFFFFF" stroke="#000000" stroke-width="0.5" />
 </g>
 <text x="325" y="510" text-anchor="middle" font-size="10px">Подпитка бака</text>
-<polygon id="B1-connector" points="44 529.6 55.1 535 44 540.4" fill="#0071BC" stroke="#0071BC" stroke-width="0.5" />
-<text x="49.55" y="554.5" text-anchor="middle" font-size="10px" pointer-events="none" id="B1-label">В1</text>
 </g>
 <g id="reserve-water-assembly" transform="translate(0 -30)"><g id="supply-water-tank" class="water-tank" transform="translate(430 570)" color="#000000" stroke-dasharray="0 80" data-state="states['tsarevo2-boiler-room'].isSupplyWaterLevelEmergencyMax;states['tsarevo2-boiler-room'].isSupplyWaterLevelWorkingMax;states['tsarevo2-boiler-room'].isSupplyWaterLevelWorkingMin;states['tsarevo2-boiler-room'].isSupplyWaterLevelEmergencyMin" data-colorizer-hint="none" data-state-eval="element.style.strokeDasharray = states['tsarevo2-boiler-room'].isSupplyWaterLevelEmergencyMax === true ? '80 80' : (states['tsarevo2-boiler-room'].isSupplyWaterLevelWorkingMax === true ? '68 80' : (states['tsarevo2-boiler-room'].isSupplyWaterLevelWorkingMin === true ? '34 80' : (states['tsarevo2-boiler-room'].isSupplyWaterLevelEmergencyMin === true ? '6 80' : '0 80')));"><use href="#tsarevo2-tank" /></g>
 <text x="446" y="548" text-anchor="middle" font-size="10px">Бак запаса</text>
