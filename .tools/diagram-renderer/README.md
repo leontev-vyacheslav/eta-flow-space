@@ -19,6 +19,44 @@ node measure.js tsarevo1-boiler-room
 bash gen-manifest.sh
 ```
 
+## Interactive local web app
+
+Run the normal dashboard with one device's SVG, schema, CSS and optional JavaScript served from
+the workspace. The API and other diagrams continue through the existing tunnel on **3002**.
+This works in an ordinary browser without Playwright request overrides or production deployment.
+
+From the repository root:
+
+```bash
+bash .tools/diagram-renderer/local-app.sh start tsarevo2-boiler-room
+bash .tools/diagram-renderer/local-app.sh status
+bash .tools/diagram-renderer/local-app.sh logs
+bash .tools/diagram-renderer/local-app.sh stop
+```
+
+Use another device code to preview its files instead. Open **http://localhost:3000** and select
+the device normally; Tsarevo-2's direct URL is **http://localhost:3000/#/dashboard/device/4**.
+Only one preview runs at a time. `start` refuses an occupied port or an existing preview;
+it does not stop another app. `stop` is safe to repeat.
+
+Requirements: **Node.js 24+**, installed `flow-space-ui` dependencies, Bash, `curl`, `ss`, Linux
+user systemd, and the existing API tunnel at **http://localhost:3002**. The chosen device directory
+must contain `mnemo-schema.svg` and `data-schema.json`; CSS and JavaScript may be absent.
+The helper sets `VITE_API_HOST` for its own process without editing environment or application files.
+
+`local-app.sh` recreates the transient user service **eta-flow-space-diagram-preview.service**,
+using the current Node executable and absolute checkout paths. The service keeps running after the
+invoking shell/chat ends and restarts on failure. It is not enabled at boot; `stop` removes the
+transient unit, while these source files remain reusable. Startup checks the API manifest and waits
+for the local diagram to respond; a failed readiness check stops only the service it just created.
+
+`local-app.mjs` uses the existing Vite configuration. A development-only transform directs diagram
+static requests to the local app; middleware serves the selected device's files and calculates
+fresh manifest hashes, while a proxy forwards other static requests to the tunnel. Saving selected
+diagram files reloads open previews. It does not modify the tracked manifest, diagram or UI source.
+Logs are available through `logs` or `journalctl --user -u eta-flow-space-diagram-preview.service`.
+To run in the foreground, use `node .tools/diagram-renderer/local-app.mjs <device-code>`.
+
 ## Component dimensions
 
 The [component standard](../../.docs/mnemoschema-components.md) and
