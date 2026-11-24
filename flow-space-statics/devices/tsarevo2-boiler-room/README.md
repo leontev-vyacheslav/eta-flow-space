@@ -60,7 +60,7 @@ The application retains its existing fit, zoom and pan behavior.
   at **(123,542) / (123,588)**; their manifolds span
   **542–588** at **x=73 / 178**, with midpoint junctions on **y=565**. Captions remain below
   the group heading and above their frames, at effective **y=525 / 571**. The existing group
-  heading is **(123,515)**. The pressure frame is effectively
+  heading is **(123,503)**, raised **12 units** to clear the warning above НВ1. The pressure frame is effectively
   **(197.5,541)**, value baseline **550**, caption **536**, and stem **553→565**.
   The filling valve is at effective **(325,565)**, moved **40 units left** with its caption
   from the preceding layout; the caption stays at **y=540**. The source pipe is unchanged.
@@ -173,7 +173,9 @@ or **status, mode** for makeup pumps. All fields remain schema-formatted, with t
 
 The exact Spring-2 `#emergencyIcon` artwork is reused beside all eight mapped pumps, at
 **translate(centerX + 2, centerY − 33.6)** for network pumps, or
-**translate(centerX + 18, centerY − 9)** beside the horizontal source-water/makeup pumps.
+**translate(centerX + 18, centerY − 33.6)** above-right of the horizontal source-water/makeup
+pumps. These four warnings are raised **24.6 units** from their previous pipe-crossing
+positions, giving the same vertical clearance above the pump frame as the network warnings.
 It is hidden normally, and appears when that pump's
 **status is 512** (makeup: **32**), **alarm is nonzero**, **statusFc is 8**, or **alarmFc is nonzero**.
 Only network/source-water models have the two drive fields. Their warning popovers contain
