@@ -46,15 +46,17 @@ The application retains its existing fit, zoom and pan behavior.
   **542–588** at **x=73 / 178**, with midpoint junctions on **y=565**. Captions remain below
   the pumps; the group heading moves to **(123,640)**. The pressure frame is effectively
   **(197.5,541)**, value baseline **550**, caption **536**, and stem **553→565**.
-  The filling valve remains at effective **(365,565)** with its caption at **y=540**.
+  The filling valve is at effective **(325,565)**, moved **40 units left** with its caption
+  from the preceding layout; the caption stays at **y=540**. The source pipe is unchanged.
 - Source water now reaches the tank through one **straight horizontal pipe** at **y=565**,
   from the bank outlet through the pressure takeoff and filling valve to the tank's left side
   at **(430,565)**. The former stepped/top-center inlet is removed. ХВО remains absent.
 - The complete reserve-water block is grouped as **`reserve-water-assembly`**, translated
   **(0,−30)** from the preceding layout. Its body is effectively **(430,540)**, still **32 × 80**,
-  with both caption lines and all four switch indications moving with it. The working-maximum
-  caption/indicator receives an additional **8-unit** downward clearance adjustment so the inlet
-  does not cross that label. This changes label placement only, not level thresholds or state.
+  with both tank caption lines. The four separate switch labels/dots are replaced by one
+  **55 × 12** level instrument to its left: frame **(362.5,584)**, value baseline **593**,
+  «Уровень» caption baseline **607**, centered at **x=390**. Its short horizontal instrument
+  stem reaches the tank's left edge at **(430,590)**, clear of the inlet at **y=565**.
 - The tank's right-side midpoint is now **(462,580)**. Its straight outlet reaches **(508,580)**;
   the left makeup manifold extends up by **2 units** to receive it. The first makeup branch stays
   at **y=582**, the second at **628**. The former midpoint-feed dot at **(508,610)** is removed.
@@ -160,15 +162,23 @@ The highest active switch selects a **symbolic band**, following the original sc
 maximum / working maximum / working minimum / emergency minimum; no active switch leaves it empty.
 The bands use dash lengths **80 / 68 / 34 / 6 / 0**, each against an 80-unit tank height.
 These are display coordinates, not a measured or reported percentage.
-Each switch keeps its own static caption and blue/white indicator, so simultaneous switches remain
-inspectable. The boolean's schema display colorizer is suppressed on this label/indicator artwork.
+The separate **«Уровень»** instrument combines the four switch labels into one reading:
+**«Авар. макс.» / «Раб. макс.» / «Раб. мин.» / «Авар. мин.»**, using that same highest-active
+priority. When no switch is active, the instrument shows **«—»** without asserting a measured zero level.
+Its frame and value bind the same four ordered properties as the tank, so every simultaneous
+switch state remains inspectable in the full popup. The frame has the standard white fill and
+black **0.25-unit** outline, with yellow hover; no sensor tag, percentage or new alarm predicate
+is invented. The four old label/dot pairs are removed. Boolean display colourizers are suppressed
+with `data-colorizer-hint="none"`, so the combined instrument remains visible for all-false states.
 
 `mnemo-schema.js` now returns an empty plugin: the SVG handles all state updates, removing the old
 absolute-coordinate tank mutation and the old “hide all lower active labels” behavior.
 
-## Verification and status — 23 November 2026
+## Verification and status — 24 November 2026
 
-See the [straight inlet, block alignment and valve colours](../../../.reports/2026-11-23-tsarevo2-straight-inlet/README.md).
+See the [combined level instrument and filling-valve move](../../../.reports/2026-11-24-tsarevo2-level-instrument/README.md).
+The [straight inlet, block alignment and valve colours](../../../.reports/2026-11-23-tsarevo2-straight-inlet/README.md)
+records the preceding separate switch labels and filling-valve position.
 The [preceding water-layout report](../../../.reports/2026-11-23-tsarevo2-water-layout/README.md)
 records the earlier tank position and stepped top inlet.
 The [preceding routing report](../../../.reports/2026-11-23-tsarevo2-routing/README.md) records
