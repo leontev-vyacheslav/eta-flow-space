@@ -40,7 +40,7 @@
 			<path d="M104.2,476.8c-1.5-0.3-3-0.5-4.6-0.5c-4.6,0-8.9,1.5-12.3,4c-0.4,0.3-0.4,0.8-0.2,1.1c0,0,0.1,0.1,0.1,0.1 c0.3,0.3,0.8,0.3,1.1,0.1c3.3-2.4,7.2-3.6,11.3-3.6c1.1,0,2.1,0.1,3.1,0.2L104.2,476.8z M99.7,481.3c-3.2,0-6.2,0.9-8.7,2.6 c-0.4,0.2-0.5,0.8-0.2,1.1c0,0,0.1,0.1,0.1,0.1c0.3,0.3,0.8,0.3,1.1,0.1c1.8-1.1,3.8-1.9,5.9-2.1L99.7,481.3z M104,483.7l1.3-1.3 c1.1,0.4,2.1,0.9,3,1.5c0.4,0.3,0.5,0.8,0.2,1.1c0,0-0.1,0.1-0.1,0.1c-0.3,0.3-0.8,0.3-1.1,0.1C106.3,484.6,105.2,484.1,104,483.7 L104,483.7z M99.7,488l1.6-1.6c1.2,0.2,2.3,0.5,3.4,1.1c0.5,0.2,0.5,0.9,0.2,1.3l0,0c-0.3,0.3-0.7,0.3-1,0.2 C102.5,488.4,101.1,488,99.7,488 M107.9,479.8l1.3-1.3c1,0.5,1.9,1.1,2.8,1.7c0.4,0.3,0.4,0.8,0.2,1.1c0,0-0.1,0.1-0.1,0.1 c-0.3,0.3-0.8,0.3-1.1,0.1C110,480.9,109,480.3,107.9,479.8 M101.4,491c0.4,0.2,0.4,0.8,0.1,1.1l-1.2,1.2c-0.3,0.3-0.9,0.3-1.2,0 l-1.2-1.2c-0.3-0.3-0.3-0.9,0.1-1.1c0.5-0.3,1.1-0.5,1.7-0.5C100.3,490.6,100.9,490.7,101.4,491L101.4,491z M108.7,474.4 c0.3-0.3,0.9-0.3,1.3,0c0.3,0.3,0.3,0.9,0,1.3l-18.1,18.1c-0.3,0.3-0.9,0.3-1.3,0c-0.3-0.3-0.3-0.9,0-1.3L108.7,474.4z" />
 		</symbol>
 
-<g xmlns="http://www.w3.org/2000/svg" id="tsarevo2-co-alarm-icon">
+<g id="tsarevo2-co-alarm-icon">
 			<g>
 				<path style="fill:none;" d="M39.2,20.62c0-3.08-2.29-5.63-5.25-6.04c0.65-0.97,1.03-2.13,1.03-3.39   c0-3.37-2.73-6.1-6.1-6.1c-1.27,0-2.45,0.39-3.42,1.05c-1.12-1.44-2.86-2.37-4.83-2.37   c-2.49,0-4.63,1.49-5.58,3.63c-0.66-0.24-1.37-0.38-2.11-0.38c-3.37,0-6.1,2.73-6.1,6.1   c0,0.82,0.16,1.61,0.46,2.33c-1.54,1.11-2.54,2.91-2.54,4.95c0,3.37,2.73,6.1,6.1,6.1   c0.13,0,0.26-0,0.39-0.01c-0.08,0.39-0.12,0.78-0.12,1.19c0,3.37,2.73,6.1,6.1,6.1   c2.45,0,4.56-1.44,5.53-3.52c1.1,1.58,2.93,2.62,5.01,2.62c3.37,0,6.1-2.73,6.1-6.1   c0-0.04-0-0.08-0-0.12C36.87,26.3,39.2,23.74,39.2,20.62z">
 				</path>
@@ -122,7 +122,7 @@
 					<path id="path3489-3_4_" d="M664.3,509.4c-0.4,0-0.8,0.3-0.8,0.7c0,0.4,0.4,0.7,0.8,0.7c0.4,0,0.8-0.3,0.8-0.7     C665.1,509.7,664.8,509.4,664.3,509.4z" />
 				</g>
 </symbol>
-<g xmlns="http://www.w3.org/2000/svg" id="emergencyIcon">
+<g id="emergencyIcon">
 			<rect style="fill:#606060;" width="2" height="10" transform="translate(8, 5)" />
 			<path style="fill:#FFC107;cursor:pointer" transform="scale(0.035)" d="M479 447.77 268.43 56.64a8 8 0 0 0-14.09 0L43.73 447.77a8 8 0 0 0 7.05 11.79H472a8 8 0 0 0 7-11.79zm-197.62-36.29h-40v-40h40zm-4-63.92h-32l-6-160h44z">
 			</path>
@@ -192,22 +192,22 @@
 <path class="pipe" stroke="#000000" id="network-pump-inlet-header" d="M100 395H238"/>
 
 <text x="510" y="416" text-anchor="middle" font-size="10px" pointer-events="none">Тподачи</text>
-<rect xmlns="http://www.w3.org/2000/svg" x="482.5" y="421" width="55" height="12" rx="0" class="reading-frame" id="tempOutNet-frame" data-state="states['tsarevo2-boiler-room'].tempOutNet" data-colorizer-hint="none" />
+<rect x="482.5" y="421" width="55" height="12" rx="0" class="reading-frame" id="tempOutNet-frame" data-state="states['tsarevo2-boiler-room'].tempOutNet" data-colorizer-hint="none" />
 <text xmlns="http://www.w3.org/2000/svg" x="510" y="430" text-anchor="middle" font-size="9px" id="tempOutNet-value" data-state="states['tsarevo2-boiler-room'].tempOutNet" data-colorizer-hint="none">—</text>
 <path class="pipe" stroke="#000000" d="M510 433V455"/>
 <circle cx="510" cy="455" r="1.5" fill="#000000" pointer-events="none"/>
 <text x="605" y="416" text-anchor="middle" font-size="10px" pointer-events="none">Рподачи</text>
-<rect xmlns="http://www.w3.org/2000/svg" x="577.5" y="421" width="55" height="12" rx="0" class="reading-frame" id="pressOutNet-frame" data-state="states['tsarevo2-boiler-room'].pressOutNet" data-colorizer-hint="none" />
+<rect x="577.5" y="421" width="55" height="12" rx="0" class="reading-frame" id="pressOutNet-frame" data-state="states['tsarevo2-boiler-room'].pressOutNet" data-colorizer-hint="none" />
 <text xmlns="http://www.w3.org/2000/svg" x="605" y="430" text-anchor="middle" font-size="9px" id="pressOutNet-value" data-state="states['tsarevo2-boiler-room'].pressOutNet" data-colorizer-hint="none">—</text>
 <path class="pipe" stroke="#000000" d="M605 433V455"/>
 <circle cx="605" cy="455" r="1.5" fill="#000000" pointer-events="none"/>
 <text x="585" y="531" text-anchor="middle" font-size="10px" pointer-events="none">Тобратки</text>
-<rect xmlns="http://www.w3.org/2000/svg" x="557.5" y="505" width="55" height="12" rx="0" class="reading-frame" id="tempInNet-frame" data-state="states['tsarevo2-boiler-room'].tempInNet" data-colorizer-hint="none" />
+<rect x="557.5" y="505" width="55" height="12" rx="0" class="reading-frame" id="tempInNet-frame" data-state="states['tsarevo2-boiler-room'].tempInNet" data-colorizer-hint="none" />
 <text xmlns="http://www.w3.org/2000/svg" x="585" y="514" text-anchor="middle" font-size="9px" id="tempInNet-value" data-state="states['tsarevo2-boiler-room'].tempInNet" data-colorizer-hint="none">—</text>
 <path class="pipe" stroke="#000000" d="M585 490V505"/>
 <circle cx="585" cy="490" r="1.5" fill="#000000" pointer-events="none"/>
 <text x="670" y="531" text-anchor="middle" font-size="10px" pointer-events="none">Робратки</text>
-<rect xmlns="http://www.w3.org/2000/svg" x="642.5" y="505" width="55" height="12" rx="0" class="reading-frame" id="pressInNet-frame" data-state="states['tsarevo2-boiler-room'].pressInNet" data-colorizer-hint="none" />
+<rect x="642.5" y="505" width="55" height="12" rx="0" class="reading-frame" id="pressInNet-frame" data-state="states['tsarevo2-boiler-room'].pressInNet" data-colorizer-hint="none" />
 <text xmlns="http://www.w3.org/2000/svg" x="670" y="514" text-anchor="middle" font-size="9px" id="pressInNet-value" data-state="states['tsarevo2-boiler-room'].pressInNet" data-colorizer-hint="none">—</text>
 <path class="pipe" stroke="#000000" d="M670 490V505"/>
 <circle cx="670" cy="490" r="1.5" fill="#000000" pointer-events="none"/>
@@ -215,13 +215,13 @@
 <circle cx="100" cy="155" r="1.5" fill="#000000" pointer-events="none"/>
 <path class="pipe" stroke="#000000" d="M100 255V350"/>
 <circle cx="100" cy="350" r="1.5" fill="#000000" pointer-events="none"/>
-<g xmlns="http://www.w3.org/2000/svg" id="circulation-100" class="pump">
+<g id="circulation-100" class="pump">
 <rect x="86.5" y="286.5" width="27" height="27" rx="3" class="pump-frame" />
 <circle cx="100" cy="300" r="10" fill="#808080" stroke="#000000" stroke-width="1" />
 <circle cx="100" cy="300" r="10" fill="none" stroke="#000000" stroke-width="0.25" pointer-events="none" /><path d="M95 304L100 295L105 304Z" fill="#000000" pointer-events="none" />
 <text x="96" y="282.5" text-anchor="end" font-size="10px" pointer-events="none">НК1</text><use id="circulation-1-emergency" href="#emergencyIcon" transform="translate(102 266.4)" style="display:none" data-state="states['tsarevo2-boiler-room'].boilers[0].alarm" data-colorizer-hint="none" data-state-eval="element.style.display = value === 512 ? 'initial' : 'none';" /></g>
 <g class="valve" id="boilerValves-0-status" transform="translate(100 335) rotate(-90)" data-state="states['tsarevo2-boiler-room'].boilerValves[0].status" data-colorizer-hint="none">
-<path xmlns="http://www.w3.org/2000/svg" class="valve-body" d="M-8 -5L8 5V-5L-8 5Z" fill="#808080" stroke="#000000" stroke-width="0.5" data-state="states['tsarevo2-boiler-room'].boilerValves[0].status" data-colorizer-hint="none" data-state-eval="element.style.fill = value === 2 ? '#FFFFFF' : (value === 1 ? '#808080' : 'yellow');" />
+<path class="valve-body" d="M-8 -5L8 5V-5L-8 5Z" fill="#808080" stroke="#000000" stroke-width="0.5" data-state="states['tsarevo2-boiler-room'].boilerValves[0].status" data-colorizer-hint="none" data-state-eval="element.style.fill = value === 2 ? '#FFFFFF' : (value === 1 ? '#808080' : 'yellow');" />
 <path class="valve-stem" d="M0 0V-11" fill="none" stroke="#000000" stroke-width="1" pointer-events="stroke"/>
 <path class="valve-actuator" d="M-4 -19H4V-11H-4Z" fill="#FFFFFF" stroke="#000000" stroke-width="0.5"/>
 </g>
@@ -229,23 +229,23 @@
 <path class="pipe" stroke="#FF9800" d="M52 110V150Q60 155 52 160V235H80"/>
 <circle cx="52" cy="110" r="1.5" fill="#FF9800" pointer-events="none"/>
 <text x="75" y="178" text-anchor="middle" font-size="10px">К1</text>
-<rect xmlns="http://www.w3.org/2000/svg" x="67.5" y="185" width="65" height="70" rx="0" class="pump-frame" id="boiler-1-frame" data-state="states['tsarevo2-boiler-room'].boilers[0].status;states['tsarevo2-boiler-room'].boilers[0].mode;states['tsarevo2-boiler-room'].boilers[0].powerBurner" data-colorizer-hint="none" data-state-eval="element.style.stroke = (states['tsarevo2-boiler-room'].boilers[0].status === 6 || states['tsarevo2-boiler-room'].boilers[0].alarm !== 0) ? 'red' : ([2,3,4].includes(states['tsarevo2-boiler-room'].boilers[0].status) ? '#0000FF' : '#000000');" />
+<rect x="67.5" y="185" width="65" height="70" rx="0" class="pump-frame" id="boiler-1-frame" data-state="states['tsarevo2-boiler-room'].boilers[0].status;states['tsarevo2-boiler-room'].boilers[0].mode;states['tsarevo2-boiler-room'].boilers[0].powerBurner" data-colorizer-hint="none" data-state-eval="element.style.stroke = (states['tsarevo2-boiler-room'].boilers[0].status === 6 || states['tsarevo2-boiler-room'].boilers[0].alarm !== 0) ? 'red' : ([2,3,4].includes(states['tsarevo2-boiler-room'].boilers[0].status) ? '#0000FF' : '#000000');" />
 <text x="100" y="201" text-anchor="middle" font-size="10px" data-state="states['tsarevo2-boiler-room'].boilers[0].mode" data-colorizer-hint="none">—</text>
 <text x="100" y="215" text-anchor="middle" font-size="9px" data-state="states['tsarevo2-boiler-room'].boilers[0].powerBurner" data-colorizer-hint="none">—</text>
-<rect xmlns="http://www.w3.org/2000/svg" x="80" y="220" width="40" height="30" rx="5" class="burner" id="boiler-1-burner" data-state="states['tsarevo2-boiler-room'].boilers[0].status;states['tsarevo2-boiler-room'].boilers[0].mode;states['tsarevo2-boiler-room'].boilers[0].powerBurner" data-colorizer-hint="none" data-state-eval="element.style.fill = '#808080';" />
+<rect x="80" y="220" width="40" height="30" rx="5" class="burner" id="boiler-1-burner" data-state="states['tsarevo2-boiler-room'].boilers[0].status;states['tsarevo2-boiler-room'].boilers[0].mode;states['tsarevo2-boiler-room'].boilers[0].powerBurner" data-colorizer-hint="none" data-state-eval="element.style.fill = '#808080';" />
 <use id="boiler-1-flame" class="boiler-flame-animation" href="#boilerFlame" x="91" y="221" width="18" height="27" data-state="states['tsarevo2-boiler-room'].boilers[0].status" data-colorizer-hint="none" data-state-eval="element.style.display = [2,3,4].includes(value) ? 'initial' : 'none';" pointer-events="none"/>
 <use id="boiler-1-emergency" href="#emergencyIcon" transform="translate(135 187)" style="display:none" data-state="states[&#x27;tsarevo2-boiler-room&#x27;].boilers[0].status;states[&#x27;tsarevo2-boiler-room&#x27;].boilers[0].alarm" data-colorizer-hint="none" data-state-eval="element.style.display = (states[&#x27;tsarevo2-boiler-room&#x27;].boilers[0].status === 6 || states[&#x27;tsarevo2-boiler-room&#x27;].boilers[0].alarm !== 0) ? &#x27;initial&#x27; : &#x27;none&#x27;;"/>
 <path class="pipe" stroke="#000000" d="M270 155V185"/>
 <circle cx="270" cy="155" r="1.5" fill="#000000" pointer-events="none"/>
 <path class="pipe" stroke="#000000" d="M270 255V350"/>
 <circle cx="270" cy="350" r="1.5"  pointer-events="none"/>
-<g xmlns="http://www.w3.org/2000/svg" id="circulation-270" class="pump">
+<g id="circulation-270" class="pump">
 <rect x="256.5" y="286.5" width="27" height="27" rx="3" class="pump-frame" />
 <circle cx="270" cy="300" r="10" fill="#808080" stroke="#000000" stroke-width="1" />
 <circle cx="270" cy="300" r="10" fill="none" stroke="#000000" stroke-width="0.25" pointer-events="none" /><path d="M265 304L270 295L275 304Z" fill="#000000" pointer-events="none" />
 <text x="266" y="282.5" text-anchor="end" font-size="10px" pointer-events="none">НК2</text><use id="circulation-2-emergency" href="#emergencyIcon" transform="translate(272 266.4)" style="display:none" data-state="states['tsarevo2-boiler-room'].boilers[1].alarm" data-colorizer-hint="none" data-state-eval="element.style.display = value === 512 ? 'initial' : 'none';" /></g>
 <g class="valve" id="boilerValves-1-status" transform="translate(270 335) rotate(-90)" data-state="states['tsarevo2-boiler-room'].boilerValves[1].status" data-colorizer-hint="none">
-<path xmlns="http://www.w3.org/2000/svg" class="valve-body" d="M-8 -5L8 5V-5L-8 5Z" fill="#808080" stroke="#000000" stroke-width="0.5" data-state="states['tsarevo2-boiler-room'].boilerValves[1].status" data-colorizer-hint="none" data-state-eval="element.style.fill = value === 2 ? '#FFFFFF' : (value === 1 ? '#808080' : 'yellow');" />
+<path class="valve-body" d="M-8 -5L8 5V-5L-8 5Z" fill="#808080" stroke="#000000" stroke-width="0.5" data-state="states['tsarevo2-boiler-room'].boilerValves[1].status" data-colorizer-hint="none" data-state-eval="element.style.fill = value === 2 ? '#FFFFFF' : (value === 1 ? '#808080' : 'yellow');" />
 <path class="valve-stem" d="M0 0V-11" fill="none" stroke="#000000" stroke-width="1" pointer-events="stroke"/>
 <path class="valve-actuator" d="M-4 -19H4V-11H-4Z" fill="#FFFFFF" stroke="#000000" stroke-width="0.5"/>
 </g>
@@ -253,23 +253,23 @@
 <path class="pipe" stroke="#FF9800" d="M222 110V150Q230 155 222 160V235H250"/>
 <circle cx="222" cy="110" r="1.5" fill="#FF9800" pointer-events="none"/>
 <text x="245" y="178" text-anchor="middle" font-size="10px">К2</text>
-<rect xmlns="http://www.w3.org/2000/svg" x="237.5" y="185" width="65" height="70" rx="0" class="pump-frame" id="boiler-2-frame" data-state="states['tsarevo2-boiler-room'].boilers[1].status;states['tsarevo2-boiler-room'].boilers[1].mode;states['tsarevo2-boiler-room'].boilers[1].powerBurner" data-colorizer-hint="none" data-state-eval="element.style.stroke = (states['tsarevo2-boiler-room'].boilers[1].status === 6 || states['tsarevo2-boiler-room'].boilers[1].alarm !== 0) ? 'red' : ([2,3,4].includes(states['tsarevo2-boiler-room'].boilers[1].status) ? '#0000FF' : '#000000');" />
+<rect x="237.5" y="185" width="65" height="70" rx="0" class="pump-frame" id="boiler-2-frame" data-state="states['tsarevo2-boiler-room'].boilers[1].status;states['tsarevo2-boiler-room'].boilers[1].mode;states['tsarevo2-boiler-room'].boilers[1].powerBurner" data-colorizer-hint="none" data-state-eval="element.style.stroke = (states['tsarevo2-boiler-room'].boilers[1].status === 6 || states['tsarevo2-boiler-room'].boilers[1].alarm !== 0) ? 'red' : ([2,3,4].includes(states['tsarevo2-boiler-room'].boilers[1].status) ? '#0000FF' : '#000000');" />
 <text x="270" y="201" text-anchor="middle" font-size="10px" data-state="states['tsarevo2-boiler-room'].boilers[1].mode" data-colorizer-hint="none">—</text>
 <text x="270" y="215" text-anchor="middle" font-size="9px" data-state="states['tsarevo2-boiler-room'].boilers[1].powerBurner" data-colorizer-hint="none">—</text>
-<rect xmlns="http://www.w3.org/2000/svg" x="250" y="220" width="40" height="30" rx="5" class="burner" id="boiler-2-burner" data-state="states['tsarevo2-boiler-room'].boilers[1].status;states['tsarevo2-boiler-room'].boilers[1].mode;states['tsarevo2-boiler-room'].boilers[1].powerBurner" data-colorizer-hint="none" data-state-eval="element.style.fill = '#808080';" />
+<rect x="250" y="220" width="40" height="30" rx="5" class="burner" id="boiler-2-burner" data-state="states['tsarevo2-boiler-room'].boilers[1].status;states['tsarevo2-boiler-room'].boilers[1].mode;states['tsarevo2-boiler-room'].boilers[1].powerBurner" data-colorizer-hint="none" data-state-eval="element.style.fill = '#808080';" />
 <use id="boiler-2-flame" class="boiler-flame-animation" href="#boilerFlame" x="261" y="221" width="18" height="27" data-state="states['tsarevo2-boiler-room'].boilers[1].status" data-colorizer-hint="none" data-state-eval="element.style.display = [2,3,4].includes(value) ? 'initial' : 'none';" pointer-events="none"/>
 <use id="boiler-2-emergency" href="#emergencyIcon" transform="translate(305 187)" style="display:none" data-state="states[&#x27;tsarevo2-boiler-room&#x27;].boilers[1].status;states[&#x27;tsarevo2-boiler-room&#x27;].boilers[1].alarm" data-colorizer-hint="none" data-state-eval="element.style.display = (states[&#x27;tsarevo2-boiler-room&#x27;].boilers[1].status === 6 || states[&#x27;tsarevo2-boiler-room&#x27;].boilers[1].alarm !== 0) ? &#x27;initial&#x27; : &#x27;none&#x27;;"/>
 <path class="pipe" stroke="#000000" d="M440 155V185"/>
 <circle cx="440" cy="155" r="1.5" fill="#000000" pointer-events="none"/>
 <path class="pipe" stroke="#000000" d="M440 255V350"/>
 <circle cx="440" cy="350" r="1.5" fill="#000000" pointer-events="none"/>
-<g xmlns="http://www.w3.org/2000/svg" id="circulation-440" class="pump">
+<g id="circulation-440" class="pump">
 <rect x="426.5" y="286.5" width="27" height="27" rx="3" class="pump-frame" />
 <circle cx="440" cy="300" r="10" fill="#808080" stroke="#000000" stroke-width="1" />
 <circle cx="440" cy="300" r="10" fill="none" stroke="#000000" stroke-width="0.25" pointer-events="none" /><path d="M435 304L440 295L445 304Z" fill="#000000" pointer-events="none" />
 <text x="436" y="282.5" text-anchor="end" font-size="10px" pointer-events="none">НК3</text><use id="circulation-3-emergency" href="#emergencyIcon" transform="translate(442 266.4)" style="display:none" data-state="states['tsarevo2-boiler-room'].boilers[2].alarm" data-colorizer-hint="none" data-state-eval="element.style.display = value === 512 ? 'initial' : 'none';" /></g>
 <g class="valve" id="boilerValves-2-status" transform="translate(440 335) rotate(-90)" data-state="states['tsarevo2-boiler-room'].boilerValves[2].status" data-colorizer-hint="none">
-<path xmlns="http://www.w3.org/2000/svg" class="valve-body" d="M-8 -5L8 5V-5L-8 5Z" fill="#808080" stroke="#000000" stroke-width="0.5" data-state="states['tsarevo2-boiler-room'].boilerValves[2].status" data-colorizer-hint="none" data-state-eval="element.style.fill = value === 2 ? '#FFFFFF' : (value === 1 ? '#808080' : 'yellow');" />
+<path class="valve-body" d="M-8 -5L8 5V-5L-8 5Z" fill="#808080" stroke="#000000" stroke-width="0.5" data-state="states['tsarevo2-boiler-room'].boilerValves[2].status" data-colorizer-hint="none" data-state-eval="element.style.fill = value === 2 ? '#FFFFFF' : (value === 1 ? '#808080' : 'yellow');" />
 <path class="valve-stem" d="M0 0V-11" fill="none" stroke="#000000" stroke-width="1" pointer-events="stroke"/>
 <path class="valve-actuator" d="M-4 -19H4V-11H-4Z" fill="#FFFFFF" stroke="#000000" stroke-width="0.5"/>
 </g>
@@ -277,23 +277,23 @@
 <path class="pipe" stroke="#FF9800" d="M392 110V150Q400 155 392 160V235H420"/>
 <circle cx="392" cy="110" r="1.5" fill="#FF9800" pointer-events="none"/>
 <text x="415" y="178" text-anchor="middle" font-size="10px">К3</text>
-<rect xmlns="http://www.w3.org/2000/svg" x="407.5" y="185" width="65" height="70" rx="0" class="pump-frame" id="boiler-3-frame" data-state="states['tsarevo2-boiler-room'].boilers[2].status;states['tsarevo2-boiler-room'].boilers[2].mode;states['tsarevo2-boiler-room'].boilers[2].powerBurner" data-colorizer-hint="none" data-state-eval="element.style.stroke = (states['tsarevo2-boiler-room'].boilers[2].status === 6 || states['tsarevo2-boiler-room'].boilers[2].alarm !== 0) ? 'red' : ([2,3,4].includes(states['tsarevo2-boiler-room'].boilers[2].status) ? '#0000FF' : '#000000');" />
+<rect x="407.5" y="185" width="65" height="70" rx="0" class="pump-frame" id="boiler-3-frame" data-state="states['tsarevo2-boiler-room'].boilers[2].status;states['tsarevo2-boiler-room'].boilers[2].mode;states['tsarevo2-boiler-room'].boilers[2].powerBurner" data-colorizer-hint="none" data-state-eval="element.style.stroke = (states['tsarevo2-boiler-room'].boilers[2].status === 6 || states['tsarevo2-boiler-room'].boilers[2].alarm !== 0) ? 'red' : ([2,3,4].includes(states['tsarevo2-boiler-room'].boilers[2].status) ? '#0000FF' : '#000000');" />
 <text x="440" y="201" text-anchor="middle" font-size="10px" data-state="states['tsarevo2-boiler-room'].boilers[2].mode" data-colorizer-hint="none">—</text>
 <text x="440" y="215" text-anchor="middle" font-size="9px" data-state="states['tsarevo2-boiler-room'].boilers[2].powerBurner" data-colorizer-hint="none">—</text>
-<rect xmlns="http://www.w3.org/2000/svg" x="420" y="220" width="40" height="30" rx="5" class="burner" id="boiler-3-burner" data-state="states['tsarevo2-boiler-room'].boilers[2].status;states['tsarevo2-boiler-room'].boilers[2].mode;states['tsarevo2-boiler-room'].boilers[2].powerBurner" data-colorizer-hint="none" data-state-eval="element.style.fill = '#808080';" />
+<rect x="420" y="220" width="40" height="30" rx="5" class="burner" id="boiler-3-burner" data-state="states['tsarevo2-boiler-room'].boilers[2].status;states['tsarevo2-boiler-room'].boilers[2].mode;states['tsarevo2-boiler-room'].boilers[2].powerBurner" data-colorizer-hint="none" data-state-eval="element.style.fill = '#808080';" />
 <use id="boiler-3-flame" class="boiler-flame-animation" href="#boilerFlame" x="431" y="221" width="18" height="27" data-state="states['tsarevo2-boiler-room'].boilers[2].status" data-colorizer-hint="none" data-state-eval="element.style.display = [2,3,4].includes(value) ? 'initial' : 'none';" pointer-events="none"/>
 <use id="boiler-3-emergency" href="#emergencyIcon" transform="translate(475 187)" style="display:none" data-state="states[&#x27;tsarevo2-boiler-room&#x27;].boilers[2].status;states[&#x27;tsarevo2-boiler-room&#x27;].boilers[2].alarm" data-colorizer-hint="none" data-state-eval="element.style.display = (states[&#x27;tsarevo2-boiler-room&#x27;].boilers[2].status === 6 || states[&#x27;tsarevo2-boiler-room&#x27;].boilers[2].alarm !== 0) ? &#x27;initial&#x27; : &#x27;none&#x27;;"/>
 <path class="pipe" stroke="#000000" d="M610 155V185"/>
 <circle cx="610" cy="155" r="1.5" fill="#000000" pointer-events="none"/>
 <path class="pipe" stroke="#000000" d="M610 255V350"/>
 <circle cx="610" cy="350" r="1.5" fill="#000000" pointer-events="none"/>
-<g xmlns="http://www.w3.org/2000/svg" id="circulation-610" class="pump">
+<g id="circulation-610" class="pump">
 <rect x="596.5" y="286.5" width="27" height="27" rx="3" class="pump-frame" />
 <circle cx="610" cy="300" r="10" fill="#808080" stroke="#000000" stroke-width="1" />
 <circle cx="610" cy="300" r="10" fill="none" stroke="#000000" stroke-width="0.25" pointer-events="none" /><path d="M605 304L610 295L615 304Z" fill="#000000" pointer-events="none" />
 <text x="606" y="282.5" text-anchor="end" font-size="10px" pointer-events="none">НК4</text><use id="circulation-4-emergency" href="#emergencyIcon" transform="translate(612 266.4)" style="display:none" data-state="states['tsarevo2-boiler-room'].boilers[3].alarm" data-colorizer-hint="none" data-state-eval="element.style.display = value === 512 ? 'initial' : 'none';" /></g>
 <g class="valve" id="boilerValves-3-status" transform="translate(610 335) rotate(-90)" data-state="states['tsarevo2-boiler-room'].boilerValves[3].status" data-colorizer-hint="none">
-<path xmlns="http://www.w3.org/2000/svg" class="valve-body" d="M-8 -5L8 5V-5L-8 5Z" fill="#808080" stroke="#000000" stroke-width="0.5" data-state="states['tsarevo2-boiler-room'].boilerValves[3].status" data-colorizer-hint="none" data-state-eval="element.style.fill = value === 2 ? '#FFFFFF' : (value === 1 ? '#808080' : 'yellow');" />
+<path class="valve-body" d="M-8 -5L8 5V-5L-8 5Z" fill="#808080" stroke="#000000" stroke-width="0.5" data-state="states['tsarevo2-boiler-room'].boilerValves[3].status" data-colorizer-hint="none" data-state-eval="element.style.fill = value === 2 ? '#FFFFFF' : (value === 1 ? '#808080' : 'yellow');" />
 <path class="valve-stem" d="M0 0V-11" fill="none" stroke="#000000" stroke-width="1" pointer-events="stroke"/>
 <path class="valve-actuator" d="M-4 -19H4V-11H-4Z" fill="#FFFFFF" stroke="#000000" stroke-width="0.5"/>
 </g>
@@ -301,15 +301,15 @@
 <path class="pipe" stroke="#FF9800" d="M562 110V150Q570 155 562 160V235H590"/>
 <circle cx="562" cy="110" r="1.5" fill="#FF9800" pointer-events="none"/>
 <text x="585" y="178" text-anchor="middle" font-size="10px">К4</text>
-<rect xmlns="http://www.w3.org/2000/svg" x="577.5" y="185" width="65" height="70" rx="0" class="pump-frame" id="boiler-4-frame" data-state="states['tsarevo2-boiler-room'].boilers[3].status;states['tsarevo2-boiler-room'].boilers[3].mode;states['tsarevo2-boiler-room'].boilers[3].powerBurner" data-colorizer-hint="none" data-state-eval="element.style.stroke = (states['tsarevo2-boiler-room'].boilers[3].status === 6 || states['tsarevo2-boiler-room'].boilers[3].alarm !== 0) ? 'red' : ([2,3,4].includes(states['tsarevo2-boiler-room'].boilers[3].status) ? '#0000FF' : '#000000');" />
+<rect x="577.5" y="185" width="65" height="70" rx="0" class="pump-frame" id="boiler-4-frame" data-state="states['tsarevo2-boiler-room'].boilers[3].status;states['tsarevo2-boiler-room'].boilers[3].mode;states['tsarevo2-boiler-room'].boilers[3].powerBurner" data-colorizer-hint="none" data-state-eval="element.style.stroke = (states['tsarevo2-boiler-room'].boilers[3].status === 6 || states['tsarevo2-boiler-room'].boilers[3].alarm !== 0) ? 'red' : ([2,3,4].includes(states['tsarevo2-boiler-room'].boilers[3].status) ? '#0000FF' : '#000000');" />
 <text x="610" y="201" text-anchor="middle" font-size="10px" data-state="states['tsarevo2-boiler-room'].boilers[3].mode" data-colorizer-hint="none">—</text>
 <text x="610" y="215" text-anchor="middle" font-size="9px" data-state="states['tsarevo2-boiler-room'].boilers[3].powerBurner" data-colorizer-hint="none">—</text>
-<rect xmlns="http://www.w3.org/2000/svg" x="590" y="220" width="40" height="30" rx="5" class="burner" id="boiler-4-burner" data-state="states['tsarevo2-boiler-room'].boilers[3].status;states['tsarevo2-boiler-room'].boilers[3].mode;states['tsarevo2-boiler-room'].boilers[3].powerBurner" data-colorizer-hint="none" data-state-eval="element.style.fill = '#808080';" />
+<rect x="590" y="220" width="40" height="30" rx="5" class="burner" id="boiler-4-burner" data-state="states['tsarevo2-boiler-room'].boilers[3].status;states['tsarevo2-boiler-room'].boilers[3].mode;states['tsarevo2-boiler-room'].boilers[3].powerBurner" data-colorizer-hint="none" data-state-eval="element.style.fill = '#808080';" />
 <use id="boiler-4-flame" class="boiler-flame-animation" href="#boilerFlame" x="601" y="221" width="18" height="27" data-state="states['tsarevo2-boiler-room'].boilers[3].status" data-colorizer-hint="none" data-state-eval="element.style.display = [2,3,4].includes(value) ? 'initial' : 'none';" pointer-events="none"/>
 <use id="boiler-4-emergency" href="#emergencyIcon" transform="translate(645 187)" style="display:none" data-state="states[&#x27;tsarevo2-boiler-room&#x27;].boilers[3].status;states[&#x27;tsarevo2-boiler-room&#x27;].boilers[3].alarm" data-colorizer-hint="none" data-state-eval="element.style.display = (states[&#x27;tsarevo2-boiler-room&#x27;].boilers[3].status === 6 || states[&#x27;tsarevo2-boiler-room&#x27;].boilers[3].alarm !== 0) ? &#x27;initial&#x27; : &#x27;none&#x27;;"/>
 <path class="pipe" stroke="#000000" id="supply-outlet" d="M25 455H97.4 M102.6 455H143.4 M148.6 455H189.4 M194.6 455H235.4 M240.6 455H750"/>
 <path class="pipe" stroke="#000000" id="return-outlet" d="M100 490H750"/>
-<g xmlns="http://www.w3.org/2000/svg" id="networkPumps-bank" class="pump-bank">
+<g id="networkPumps-bank" class="pump-bank">
 <path class="pipe" stroke="#000000" d="M100 395V490" />
 <circle cx="100" cy="490" r="1.5" fill="#000000" pointer-events="none" />
 <g id="networkPumps-0" class="pump">
@@ -354,13 +354,13 @@
 </g>
 </g>
 <text x="169" y="380" text-anchor="middle" font-size="10px">Сетевые насосы</text>
-<g xmlns="http://www.w3.org/2000/svg" id="pipe-connectors" pointer-events="none">
+<g id="pipe-connectors" pointer-events="none">
 <polygon id="T1-connector" points="754 449.6 765.1 455 754 460.4" fill="#FF0000" stroke="#FF0000" stroke-width="0.5" />
 <text x="759.55" y="474.5" text-anchor="middle" font-size="10px" pointer-events="none" id="T1-label">Т1</text>
 <polygon id="T2-connector" points="754 490 765.1 484.6 765.1 495.4" fill="#0000FF" stroke="#0000FF" stroke-width="0.5" />
 <text x="759.55" y="509.5" text-anchor="middle" font-size="10px" pointer-events="none" id="T2-label">Т2</text>
 </g>
-<g xmlns="http://www.w3.org/2000/svg" id="source-water-assembly" transform="translate(0 30)"><text x="123" y="610" text-anchor="middle" font-size="10px">Насосы исходной воды</text>
+<g id="source-water-assembly" transform="translate(0 30)"><text x="123" y="610" text-anchor="middle" font-size="10px">Насосы исходной воды</text>
 <path class="pipe" stroke="#000000" d="M178 535H430" />
 <g id="sourceWaterPumps-bank" class="pump-bank">
 <path class="pipe" stroke="#000000" d="M60 535H73 M73 512V558 M178 512V558" />
@@ -395,7 +395,7 @@
 <path class="pipe" stroke="#000000" d="M225 523V535" />
 <circle cx="225" cy="535" r="1.5" fill="#000000" pointer-events="none" />
 <g class="valve" id="flapHt-mode" transform="translate(325 535)" data-state="states['tsarevo2-boiler-room'].flapHt.mode" data-colorizer-hint="none">
-<path xmlns="http://www.w3.org/2000/svg" class="valve-body" d="M-8 -5L8 5V-5L-8 5Z" fill="#808080" stroke="#000000" stroke-width="0.5" data-state="states['tsarevo2-boiler-room'].flapHt.mode" data-colorizer-hint="none" />
+<path class="valve-body" d="M-8 -5L8 5V-5L-8 5Z" fill="#808080" stroke="#000000" stroke-width="0.5" data-state="states['tsarevo2-boiler-room'].flapHt.mode" data-colorizer-hint="none" />
 <path class="valve-stem" d="M0 0V-11" fill="none" stroke="#000000" stroke-width="1" pointer-events="stroke" />
 <path class="valve-actuator" d="M-4 -19H4V-11H-4Z" fill="#FFFFFF" stroke="#000000" stroke-width="0.5" />
 </g>
@@ -403,7 +403,7 @@
 <polygon id="B1-connector" points="44 529.6 55.1 535 44 540.4" fill="#0071BC" stroke="#0071BC" stroke-width="0.5" />
 <text x="49.55" y="554.5" text-anchor="middle" font-size="10px" pointer-events="none" id="B1-label">В1</text>
 </g>
-<g xmlns="http://www.w3.org/2000/svg" id="reserve-water-assembly" transform="translate(0 -30)"><g id="supply-water-tank" class="water-tank" transform="translate(430 570)" color="#000000" stroke-dasharray="0 80" data-state="states['tsarevo2-boiler-room'].isSupplyWaterLevelEmergencyMax;states['tsarevo2-boiler-room'].isSupplyWaterLevelWorkingMax;states['tsarevo2-boiler-room'].isSupplyWaterLevelWorkingMin;states['tsarevo2-boiler-room'].isSupplyWaterLevelEmergencyMin" data-colorizer-hint="none" data-state-eval="element.style.strokeDasharray = states['tsarevo2-boiler-room'].isSupplyWaterLevelEmergencyMax === true ? '80 80' : (states['tsarevo2-boiler-room'].isSupplyWaterLevelWorkingMax === true ? '68 80' : (states['tsarevo2-boiler-room'].isSupplyWaterLevelWorkingMin === true ? '34 80' : (states['tsarevo2-boiler-room'].isSupplyWaterLevelEmergencyMin === true ? '6 80' : '0 80')));"><use href="#tsarevo2-tank" /></g>
+<g id="reserve-water-assembly" transform="translate(0 -30)"><g id="supply-water-tank" class="water-tank" transform="translate(430 570)" color="#000000" stroke-dasharray="0 80" data-state="states['tsarevo2-boiler-room'].isSupplyWaterLevelEmergencyMax;states['tsarevo2-boiler-room'].isSupplyWaterLevelWorkingMax;states['tsarevo2-boiler-room'].isSupplyWaterLevelWorkingMin;states['tsarevo2-boiler-room'].isSupplyWaterLevelEmergencyMin" data-colorizer-hint="none" data-state-eval="element.style.strokeDasharray = states['tsarevo2-boiler-room'].isSupplyWaterLevelEmergencyMax === true ? '80 80' : (states['tsarevo2-boiler-room'].isSupplyWaterLevelWorkingMax === true ? '68 80' : (states['tsarevo2-boiler-room'].isSupplyWaterLevelWorkingMin === true ? '34 80' : (states['tsarevo2-boiler-room'].isSupplyWaterLevelEmergencyMin === true ? '6 80' : '0 80')));"><use href="#tsarevo2-tank" /></g>
 <text x="446" y="548" text-anchor="middle" font-size="10px">Бак запаса</text>
 <text x="446" y="560" text-anchor="middle" font-size="10px">питательной воды</text>
 <g id="supply-water-level" transform="translate(390 620)" aria-label="Уровень воды в баке">
@@ -415,7 +415,7 @@
 </g>
 <path class="pipe" stroke="#000000" d="M462 580H508 M618 605H735V490"/>
 <g class="valve" id="flapHn-mode" transform="translate(735 560) rotate(-90)" data-state="states['tsarevo2-boiler-room'].flapHn.mode" data-colorizer-hint="none">
-<path xmlns="http://www.w3.org/2000/svg" class="valve-body" d="M-8 -5L8 5V-5L-8 5Z" fill="#808080" stroke="#000000" stroke-width="0.5" data-state="states['tsarevo2-boiler-room'].flapHn.mode" data-colorizer-hint="none" />
+<path class="valve-body" d="M-8 -5L8 5V-5L-8 5Z" fill="#808080" stroke="#000000" stroke-width="0.5" data-state="states['tsarevo2-boiler-room'].flapHn.mode" data-colorizer-hint="none" />
 <path class="valve-stem" d="M0 0V-11" fill="none" stroke="#000000" stroke-width="1" pointer-events="stroke"/>
 <path class="valve-actuator" d="M-4 -19H4V-11H-4Z" fill="#FFFFFF" stroke="#000000" stroke-width="0.5"/>
 </g>
@@ -426,7 +426,7 @@
 <path class="pipe" stroke="#000000" d="M508 582H618"/>
 <circle cx="508" cy="582" r="1.5" fill="#000000" pointer-events="none"/>
 <circle cx="618" cy="582" r="1.5" fill="#000000" pointer-events="none"/>
-<g xmlns="http://www.w3.org/2000/svg" id="supplyPumps-0" class="pump">
+<g id="supplyPumps-0" class="pump">
 <text id="supplyPumps-0-label" x="559" y="564.5" text-anchor="end" font-size="10px" pointer-events="none">ПН1</text>
 <g transform="translate(23 -23) rotate(90 540 605)" class="horizontal-pump-artwork"><rect id="supplyPumps-0-frame" x="526.5" y="591.5" width="27" height="27" rx="3" class="pump-frame" data-state="states['tsarevo2-boiler-room'].supplyPumps[0].status;states['tsarevo2-boiler-room'].supplyPumps[0].mode" data-colorizer-hint="none" data-state-eval="element.style.stroke = (states['tsarevo2-boiler-room'].supplyPumps[0].status === 32 || states['tsarevo2-boiler-room'].supplyPumps[0].alarm !== 0) ? 'red' : (states['tsarevo2-boiler-room'].supplyPumps[0].status === 8 ? '#0000FF' : '#000000');" />
 <circle id="supplyPumps-0-state" cx="540" cy="605" r="10" fill="#808080" stroke="#000000" stroke-width="1" data-state="states['tsarevo2-boiler-room'].supplyPumps[0].status;states['tsarevo2-boiler-room'].supplyPumps[0].mode" data-colorizer-hint="none" data-state-eval="element.style.stroke = (states['tsarevo2-boiler-room'].supplyPumps[0].status === 32 || states['tsarevo2-boiler-room'].supplyPumps[0].alarm !== 0) ? 'red' : (states['tsarevo2-boiler-room'].supplyPumps[0].status === 8 ? '#0000FF' : '#000000'); element.style.fill = states['tsarevo2-boiler-room'].supplyPumps[0].status === 8 ? '#FFFFFF' : '#808080';" />
@@ -437,7 +437,7 @@
 <path class="pipe" stroke="#000000" d="M508 628H618"/>
 <circle cx="508" cy="628" r="1.5" fill="#000000" pointer-events="none"/>
 <circle cx="618" cy="628" r="1.5" fill="#000000" pointer-events="none"/>
-<g xmlns="http://www.w3.org/2000/svg" id="supplyPumps-1" class="pump">
+<g id="supplyPumps-1" class="pump">
 <text id="supplyPumps-1-label" x="559" y="610.5" text-anchor="end" font-size="10px" pointer-events="none">ПН2</text>
 <g transform="translate(-23 23) rotate(90 586 605)" class="horizontal-pump-artwork"><rect id="supplyPumps-1-frame" x="572.5" y="591.5" width="27" height="27" rx="3" class="pump-frame" data-state="states['tsarevo2-boiler-room'].supplyPumps[1].status;states['tsarevo2-boiler-room'].supplyPumps[1].mode" data-colorizer-hint="none" data-state-eval="element.style.stroke = (states['tsarevo2-boiler-room'].supplyPumps[1].status === 32 || states['tsarevo2-boiler-room'].supplyPumps[1].alarm !== 0) ? 'red' : (states['tsarevo2-boiler-room'].supplyPumps[1].status === 8 ? '#0000FF' : '#000000');" />
 <circle id="supplyPumps-1-state" cx="586" cy="605" r="10" fill="#808080" stroke="#000000" stroke-width="1" data-state="states['tsarevo2-boiler-room'].supplyPumps[1].status;states['tsarevo2-boiler-room'].supplyPumps[1].mode" data-colorizer-hint="none" data-state-eval="element.style.stroke = (states['tsarevo2-boiler-room'].supplyPumps[1].status === 32 || states['tsarevo2-boiler-room'].supplyPumps[1].alarm !== 0) ? 'red' : (states['tsarevo2-boiler-room'].supplyPumps[1].status === 8 ? '#0000FF' : '#000000'); element.style.fill = states['tsarevo2-boiler-room'].supplyPumps[1].status === 8 ? '#FFFFFF' : '#808080';" />
