@@ -93,6 +93,15 @@ stop/start commands, and limitations.
 | `2026-11-17-add-nurlat-boiler-watcher.sql` | yes (applied and verified 2026-11-17; user 8, 10-character password, Nurlat-5 access for both watcher accounts; sign-in and access isolation checked) |
 | `2026-11-17-add-nurlat-5-emergency-rules.sql` | yes (applied and verified 2026-11-17; emergency 25, 80 reasons covering 93 PLC flags, three-minute history interval; live API and stored emergency history checked; 124 evaluator and 12 isolated PostgreSQL checks passed) |
 | `2026-11-18-spring2-sensor-status-emergencies.sql` | not yet; all 22 SensorStatus fields, seven existing rules extended and 15 added; 141 evaluator and 25 isolated PostgreSQL checks passed |
+| `2026-11-24-tsarevo2-boiler-control-link-emergency.sql` | not yet; combined ЩУК reason 33 when any of four links is exactly false; 30 UI/API evaluator cases and 13 isolated PostgreSQL checks passed |
+
+The Tsarevo-2 ЩУК migration appends one combined connection-loss rule to the existing
+32-reason registration. It uses `boilerControlLinkStatuses[0..3].isActive === false`, with
+guards for missing historical fields, matching the new diagram tile. Existing rules,
+the three-minute history interval, registration metadata and other devices are preserved.
+Identical reruns change no timestamps; conflicting IDs, duplicate link rules, malformed
+lists and missing/duplicate registrations abort. No schema, ORM or collector change is needed.
+Production was inspected read-only; the migration is prepared, tested and **not applied**.
 
 The Spring-2 SensorStatus migration covers all boiler outlet/flue temperatures,
 diesel levels, boiler-pump current sensors and common temperature/pressure sensors.

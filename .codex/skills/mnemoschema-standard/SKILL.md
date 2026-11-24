@@ -42,7 +42,11 @@ README; a local layout adjustment does not establish a new universal default.
 - Resize around existing centers where the requested placement permits. Move companion
   burners, flames, status/value text, captions and hit targets with the equipment. Update
   connected pipe endpoints and junction dots together. Preserve gas-inlet centering,
-  boiler supply/return clearances, crossing bridges and both pump-manifold junctions.
+  boiler supply/return clearances and crossing bridges. Put a junction dot only where
+  three connected pipe segments meet, following the guide's pipe-junction rule and
+  `pipe.junctionSegmentCount`. Check both ends of each pump branch: a tee needs a dot;
+  a two-segment elbow, straight run or endpoint does not. Count actual pipe directions
+  after transforms, rather than SVG path elements; a bridge/gap is not a connection.
 - Keep each sensor frame, label, value anchor and stem aligned. Match the corresponding
   upper/lower sensor layout when requested. Maintain value/unit clearance at the agreed
   font size; use wider frames where real values need them, as allowed by the guide.

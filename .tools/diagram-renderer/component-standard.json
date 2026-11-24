@@ -7,7 +7,7 @@
   "strokeWidths": [1, 0.5, 0.25],
   "radius": 10,
   "hover": { "strokeWidth": 1, "emergencyStrokeWidth": 0.5 },
-  "pipe": { "strokeWidth": 1, "junctionRadius": 1.5, "gasColor": "#FF9800", "supplyColor": "#FF0000", "returnColor": "#0000FF", "waterColor": "#0083CD" },
+  "pipe": { "strokeWidth": 1, "junctionRadius": 1.5, "junctionSegmentCount": 3, "gasColor": "#FF9800", "supplyColor": "#FF0000", "returnColor": "#0000FF", "waterColor": "#0083CD" },
   "boiler": { "width": 65, "height": 70, "strokeWidth": 1, "activeStrokeWidth": 1, "burnerWidth": 40, "burnerHeight": 30, "burnerRadius": 5, "flameWidth": 18, "flameHeight": 27 },
   "flameGlow": { "reference": "spring2-boiler-room", "durationSeconds": 3, "easing": "ease-in-out", "iterations": "infinite" },
   "pump": { "frameWidth": 27, "frameHeight": 27, "frameRadius": 3, "radius": 10, "innerRadius": 10, "strokeWidth": 1, "activeStrokeWidth": 1, "innerStrokeWidth": 0.25 },

@@ -43,13 +43,18 @@ The application retains its existing fit, zoom and pan behavior.
 - Each boiler return branch retains its original **unbound circulation-pump artwork** at **y=300**,
   then its mapped outlet valve at **y=335**. Captions **НК1–НК4** are above the pumps.
   Their separate warning icons use only the corresponding boiler's confirmed **512** alarm code;
-  the artwork still has no inferred working/mode state. The boiler-return header at **y=350**
+  the artwork still has no inferred working/mode state. The boiler-return header at **y=370**
   descends directly under **ЗК1 at x=100** to the network-pump upper manifold at **y=395**.
   The former drop at **x=270** is removed; the common return header still serves all four boilers.
+  The header and its three tee dots at **x=100 / 270 / 440** are lowered **20 units**
+  from the preceding **y=350** layout. All four boiler return tails extend to **y=370**;
+  the first-boiler drop shortens to **25 units** before the unchanged network manifold.
 - Network return enters through **Т2 at y=490**. The four network pumps form a compact bank with centers
-  **x=100 / 146 / 192 / 238**, **y=433**, between manifolds **395 / 490**. All four branches
-  have a junction dot at both manifolds. The lower manifold continues right at **y=490** to
-  the blue **Т2** inlet; it is separate from Т1 above it. The bank heading stays at **(169,380)**.
+  **x=100 / 146 / 192 / 238**, **y=433**, between manifolds **395 / 490**. Only tees have
+  junction dots: upper **(100,395) / (146,395) / (192,395)** and lower
+  **(146,490) / (192,490) / (238,490)**. The upper-right **(238,395)** and lower-left
+  **(100,490)** corners are two-segment elbows without dots. The lower manifold continues right at **y=490** to
+  the blue **Т2** inlet; it is separate from Т1 above it. The bank heading is at **(169,385)**.
   Supply instruments move as complete assemblies to **y=421**, with stems to **455**;
   return instruments sit below Т2 at **(585,505) / (670,505)**, with captions at **y=531**.
 - The source-water block is grouped as **`source-water-assembly`**, translated **(0,30)**
@@ -82,9 +87,9 @@ The application retains its existing fit, zoom and pan behavior.
   elbow dots are removed. Captions and warning icons move with their pumps.
   The inlet/outlet side-port positions are user-selected exceptions to the shared top/bottom ports.
 - Emergency panel: **(10,90)**, **112 × 279**, directly below the header at the left,
-  following Spring-2's two-column layout. Nine **43 × 43** tiles use **x=18 / 71** and
+  following Spring-2's two-column layout. Ten **43 × 43** tiles use **x=18 / 71** and
   **y=114 / 165 / 216 / 267 / 318**, with Spring-2's connection, power, gas and vapour artwork.
-  The extra row retains Tsarevo-2's ninth binary indication. All equipment summaries, including
+  The fifth row contains «Пары ДТ2» and the combined «ЩУК» connection tile. All equipment summaries, including
   `alarm-summary-0`, are replaced by the corresponding equipment warning icons. The panel
   now ends at **y=369**.
   The ЩУК cards and all four `boiler-*-link` dots are removed; timestamp now belongs to the header.
@@ -137,12 +142,11 @@ response fixtures only; no provider request, Node-RED deployment, restart or pro
 
 ## State meanings and property ownership
 
-The SVG retains all **96** previously displayed property paths and adds **seven** weather paths.
-The four
-`boilerControlLinkStatuses[i].isActive` paths are deliberately unbound for now: the user plans a
-separate element later. They remain in Node-RED A and the unchanged schema. The former ЩУК cards,
-boiler-link circles and boiler-popup link rows are removed; no connection colour is reassigned
-to boiler bodies. The information icon lists `isConnected` then `timestamp`.
+The SVG displays **107** unique property paths: the preceding **96**, **seven** weather paths
+and the four `boilerControlLinkStatuses[i].isActive` paths now bound to the combined «ЩУК»
+emergency tile. The former separate ЩУК cards, boiler-link circles and boiler-popup link rows
+remain removed; no connection colour is reassigned to boiler bodies. The information icon
+lists `isConnected` then `timestamp`.
 Boiler bodies and burners list **status, mode, burner power**. Each boiler's separate warning
 lists **status, alarm**, appears for **status 6 or any nonzero alarm**, and sits just outside
 its upper-right corner at **(centerX+35,187)**. The removed boiler-summary fields now belong
@@ -208,6 +212,27 @@ remain available, and no Auto→Open or Manual→Closed mapping is invented. Die
 `networkPumps[0].alarm` and `alarmNP_1` to `networkPumps[1].alarm`. The diagram preserves that
 collector contract. No claim is made that the swapped physical associations are correct.
 
+## ЩУК connection tile and emergency
+
+The tenth emergency tile occupies the free bottom-right slot **(71,318)** without resizing
+the panel. It uses the shared **43 × 43**, radius **10**, **0.5-unit** border and **7 px** caption
+«ЩУК». The **24 × 25** icon reproduces the user's three-slider reference as native vector
+artwork with black strokes and transparent openings, leaving the alarm background visible.
+
+`boilerControlLinks-alarm` binds `boilerControlLinkStatuses[0..3].isActive`, in boiler order
+1–4. Any value **strictly equal to false** makes its background **red**; otherwise it is white.
+Missing/null properties do not create an inferred failure and clear stale red when no false
+remains. The tile's frame, icon and caption open the same four-property popup. Hover retains
+the standard 0.5-unit emergency outline and restores the current alarm fill on pointer leave.
+The collector already provides these booleans with true meaning active communication;
+the collector and schema are unchanged.
+
+The [prepared migration](../../../database/migrations/2026-11-24-tsarevo2-boiler-control-link-emergency.sql)
+adds one combined **reason 33**, «Нет связи с ЩУК», with the same strict-false condition.
+Production was inspected read-only: **32** existing reasons, no ЩУК rule, and a **three-minute**
+history interval. The migration preserves existing rules and intervals, rejects conflicts and
+does nothing on identical reruns. It is validated locally and **not applied to production**.
+
 ## Discrete reserve-water level
 
 The tank has four boolean switches, not an analogue percentage. Its ordered popup is:
@@ -231,6 +256,8 @@ absolute-coordinate tank mutation and the old “hide all lower active labels”
 
 ## Verification and status — 24 November 2026
 
+See the [ЩУК tile, browser states and prepared emergency rule](../../../.reports/2026-11-24-tsarevo2-shchuk/README.md).
+See the [junction-dot corrections and 20-pixel return-header move](../../../.reports/2026-11-24-tsarevo2-junction-rule/README.md).
 See the [gas-pressure instrument and weather block](../../../.reports/2026-11-24-tsarevo2-weather-pressure/README.md).
 The [left gas route and Nurlat-style inlets](../../../.reports/2026-11-24-tsarevo2-left-inlets/README.md)
 records the preceding header card, gas tail and weather-free header.

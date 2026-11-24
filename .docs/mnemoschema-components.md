@@ -69,6 +69,19 @@ take precedence for new diagrams and component updates. Reference SVGs retain th
 historical values until their update is requested; Kirov, Gagarin and Komarova now
 follow the accepted defaults, as do Muslum-7/9 and Spring-2.
 
+## Pipe junctions
+
+Place a **radius-1.5 dot only where three connected pipe segments meet**, forming a tee.
+Count the incident pipe directions, including a pipe that continues through the point,
+rather than the number of SVG path elements. A straight run has two segments, as does
+an elbow; neither gets a dot. Pipe endpoints and equipment ports also have no dot unless
+a third pipe segment joins there. Crossings separated by a bridge or gap are not junctions.
+
+Check both ends of every pump branch against the actual header routing. In Tsarevo-2,
+the СН1 upper tee and СН4 lower tee carry dots; the СН1 lower elbow and СН4 upper elbow
+do not. The bends above the fourth boiler and below ЗК4 also have no dots.
+The numeric profile records this rule as `pipe.junctionSegmentCount: 3`.
+
 ## Water tanks and valves
 
 The Nurlat-5 tank and actuated-valve symbols were accepted as shared defaults on
