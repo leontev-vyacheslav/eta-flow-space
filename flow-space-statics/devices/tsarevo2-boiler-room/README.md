@@ -57,11 +57,13 @@ The application retains its existing fit, zoom and pan behavior.
   **55 × 12** level instrument to its left: frame **(362.5,584)**, value baseline **593**,
   «Уровень» caption baseline **607**, centered at **x=390**. Its short horizontal instrument
   stem reaches the tank's left edge at **(430,590)**, clear of the inlet at **y=565**.
-- The tank's right-side midpoint is now **(462,580)**. Its straight outlet reaches **(508,580)**;
-  the left makeup manifold extends up by **2 units** to receive it. The first makeup branch stays
-  at **y=582**, the second at **628**. The former midpoint-feed dot at **(508,610)** is removed.
-  Makeup pumps stay **(563,582) / (563,628)**; the right manifold at **x=618** discharges via
-  **(618,605)** to **x=735**, the network-makeup valve at **(735,560)** and Т2 at **(735,490)**.
+- The tank's right-side midpoint is **(462,580)**. Its outlet continues straight through
+  **(508,580)** onto the first makeup branch, with no vertical step. The complete makeup bank
+  and its heading move **2 units up**: pump centers **(563,580) / (563,626)** retain **46-unit**
+  spacing, and both manifolds span **580–626**. The right manifold at **x=618** discharges via
+  **(618,603)** to **x=735**, the network-makeup valve at **(735,560)** and Т2 at **(735,490)**.
+  Only the true branch junctions at **(508,580)** and **(618,603)** carry dots; the three plain
+  elbow dots are removed. Captions and warning icons move with their pumps.
   The inlet/outlet side-port positions are user-selected exceptions to the shared top/bottom ports.
 - Emergency panel: **(10,90)**, **112 × 279**, directly below the header at the left,
   following Spring-2's two-column layout. Nine **43 × 43** tiles use **x=18 / 71** and
@@ -73,8 +75,10 @@ The application retains its existing fit, zoom and pan behavior.
 
 External connectors copy Spring-2's **11.1 × 10.8** triangles and **0.5-unit** outlines:
 **Т1** is red and points right at **y=455**, **Т2** is blue and points left at **y=490**,
-and **В1** is blue and points right into the left-side inlet at **y=565**. The pipe/triangle
-separation is preserved. Captions use the general **10 px** role. The canvas gains **5 units**
+and **В1** is blue and points right into the left-side inlet at **y=565**. The black pipe joins
+each triangle directly: Т1 at its base **(754,455)**, Т2 at its tip **(754,490)**, and В1 at its
+tip **(55.1,565)**, without the former **4 / 4 / 4.9-unit** gaps. Triangle sizes, colours,
+directions and captions are unchanged. Captions use the general **10 px** role. The canvas gains **5 units**
 on the right to keep the complete Т1/Т2 triangles and labels inside the viewport.
 
 Pump frames are **27 × 27**, radius **3**, rotors radius **10**. Instruments are **55 × 12**.
@@ -176,7 +180,9 @@ absolute-coordinate tank mutation and the old “hide all lower active labels”
 
 ## Verification and status — 24 November 2026
 
-See the [combined level instrument and filling-valve move](../../../.reports/2026-11-24-tsarevo2-level-instrument/README.md).
+See the [straight makeup inlet and joined connectors](../../../.reports/2026-11-24-tsarevo2-pipe-junctions/README.md).
+The [combined level instrument and filling-valve move](../../../.reports/2026-11-24-tsarevo2-level-instrument/README.md)
+records the preceding makeup-bank position and separated connector triangles.
 The [straight inlet, block alignment and valve colours](../../../.reports/2026-11-23-tsarevo2-straight-inlet/README.md)
 records the preceding separate switch labels and filling-valve position.
 The [preceding water-layout report](../../../.reports/2026-11-23-tsarevo2-water-layout/README.md)
