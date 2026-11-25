@@ -1,32 +1,53 @@
-[data-state] {
-  transition: fill 0.25s ease, stroke 0.25s ease !important;
-  cursor: pointer;
+#statum-mnemoschema [data-state] {
+    transition: fill 0.25s ease, stroke 0.25s ease !important;
+    cursor: pointer;
 }
 
-text[data-state]:hover,
-svg tspan[data-state]:hover {
-  /* fill: #ffeb3b !important; */
-  font-weight: bold;
-  stroke-width: 2px !important;
+#statum-mnemoschema .water-tank:hover {
+    color: #ffeb3b;
+    --water-tank-outline-filter: drop-shadow(0 0 4px rgba(255, 235, 59, 0.5));
 }
 
-
-circle[data-state]:hover,
-path[data-state]:hover,
-rect[data-state]:hover,
-polygon[data-state]:hover {
-  stroke: #ffeb3b !important;
-  stroke-width: 2px !important;
-  filter: drop-shadow(0 0 4px rgba(255, 235, 59, 0.5));
-  opacity: 0.9 !important;
+#statum-mnemoschema #weather-description-box:hover #weather-description,
+#statum-mnemoschema text[data-state]:hover,
+#statum-mnemoschema tspan[data-state]:hover {
+    font-weight: bold;
+    stroke-width: 1px !important;
 }
 
-g#boilerFlame>path:hover {
-  stroke: #ffeb3b !important;
-  stroke-width: 15px;
+#statum-mnemoschema circle[data-state]:hover,
+#statum-mnemoschema path[data-state]:hover,
+#statum-mnemoschema rect[data-state]:hover,
+#statum-mnemoschema polygon[data-state]:hover,
+#statum-mnemoschema use[data-state]:hover,
+#statum-mnemoschema .alarm-summary:hover > rect[data-state],
+#statum-mnemoschema #alarm-panel g[data-state]:hover > rect[data-state] {
+    stroke: #ffeb3b !important;
+    stroke-width: 1px !important;
+    filter: drop-shadow(0 0 4px rgba(255, 235, 59, 0.5));
+    opacity: 0.9 !important;
 }
 
-@keyframes intenseGlow {
+@media (max-width: 599px) {
+    body:has(#statum-mnemoschema) .mnemoschema-popover .dx-overlay-content {
+        max-width: calc(100vw - 20px);
+    }
+
+    body:has(#statum-mnemoschema) .mnemoschema-popover td:first-child {
+        overflow-wrap: anywhere;
+    }
+}
+
+#statum-mnemoschema text:not([data-state]) {
+    pointer-events: none;
+}
+
+#statum-mnemoschema #alarm-panel rect[data-state]:hover,
+#statum-mnemoschema #alarm-panel g[data-state]:hover > rect[data-state] {
+    stroke-width: 0.5px !important;
+}
+
+@keyframes statum_mnemoschema_burner_glow {
   0% {
     filter:
       drop-shadow(0 0 10px rgba(255, 100, 0, 0.8)) drop-shadow(0 0 20px rgba(255, 60, 0, 0.6)) drop-shadow(0 0 30px rgba(255, 30, 0, 0.4)) brightness(1);
@@ -53,7 +74,23 @@ g#boilerFlame>path:hover {
   }
 }
 
-.boiler-flame-animation {
-  animation:
-    intenseGlow 3s ease-in-out infinite;
+#statum-mnemoschema .boiler-flame-animation {
+    animation: statum_mnemoschema_burner_glow 3s ease-in-out infinite;
+    pointer-events: none;
 }
+
+/* The body lobes, stem and actuator highlight as one valve assembly. */
+#statum-mnemoschema .valve:hover > .valve-body,
+#statum-mnemoschema .valve:hover > .valve-stem,
+#statum-mnemoschema .valve:hover > .valve-actuator {
+  stroke: #ffeb3b !important;
+  stroke-width: 1px !important;
+  filter: drop-shadow(0 0 4px rgba(255, 235, 59, 0.5));
+  opacity: 0.9 !important;
+}
+
+#statum-mnemoschema .burner {fill:#808080;stroke:none;}
+#statum-mnemoschema .alarm-tile {fill:#FFFFFF;stroke:#000000;stroke-width:0.5;}
+#statum-mnemoschema #alarm-panel .alarm-tile:hover {stroke-width:0.5px !important;}
+#statum-mnemoschema .water-tank:hover {color:#ffeb3b;}
+#statum-mnemoschema .water-tank:hover .tank-outline {filter:drop-shadow(0 0 4px rgba(255,235,59,0.5));}
