@@ -63,6 +63,38 @@ const DashboardPageInner = () => {
     const [ControlTabContent, setControlTabContent] = useState<ComponentType<any> | null>(null);
     const [MnemoschemaTabContent, setMnemoschemaTabContent] = useState<ComponentType<any> | null>(null);
 
+    // DevExtreme 23.1 retains dxremove subscriptions when its React templates are rendered again.
+    // Keep the tab configuration stable during polls; context consumers inside it still receive live states.
+    const dashboardTabs = useMemo(() => (
+        <TabPanel
+            ref={tabPanelRef}
+            swipeEnabled={false}
+            animationEnabled={false}
+            width={'100%'}
+            height={'calc(100vh - 210px)'}
+            loop
+            className='dashboard-tabs'
+            deferRendering
+            onSelectedIndexChange={setTabIndex}>
+
+            <TabPanelItem title='Мнемосхема' tabRender={(e) => <IconTab tab={e} icon={<CircuitIcon size={18} />} />}>
+                {
+                    MnemoschemaTabContent && tabIndex === 0 ?
+                        <MnemoschemaTabContent />
+                        : <NoData />
+                }
+            </TabPanelItem>
+
+            <TabPanelItem title='Параметры' tabRender={(e) => <IconTab tab={e} icon={<ParamsIcon size={18} />} />}>
+                {
+                    ControlTabContent && tabIndex === 1
+                        ? <ControlTabContent />
+                        : <NoData />
+                }
+            </TabPanelItem>
+        </TabPanel>
+    ), [ControlTabContent, MnemoschemaTabContent, tabIndex]);
+
     const menuItems = useMemo(() => {
 
         const menuItems = [
@@ -234,35 +266,7 @@ const DashboardPageInner = () => {
             {!isWideScreen ?
                 <div className={'content-block'}>
                     <div className={'dx-card responsive-paddings dashboard-page-content'}>
-                        <TabPanel
-                            ref={tabPanelRef}
-                            swipeEnabled={false}
-                            animationEnabled={false}
-                            width={'100%'}
-                            height={'calc(100vh - 210px)'}
-                            loop
-                            className='dashboard-tabs'
-                            deferRendering
-                            onSelectedIndexChange={(value: number) => {
-                                setTabIndex(value);
-                            }}>
-
-                            <TabPanelItem title='Мнемосхема' tabRender={(e) => <IconTab tab={e} icon={<CircuitIcon size={18} />} />}>
-                                {
-                                    MnemoschemaTabContent && tabIndex === 0 ?
-                                        <MnemoschemaTabContent />
-                                        : <NoData />
-                                }
-                            </TabPanelItem>
-
-                            <TabPanelItem title='Параметры' tabRender={(e) => <IconTab tab={e} icon={<ParamsIcon size={18} />} />}>
-                                {
-                                    ControlTabContent && tabIndex === 1
-                                        ? <ControlTabContent />
-                                        : <NoData />
-                                }
-                            </TabPanelItem>
-                        </TabPanel>
+                        {dashboardTabs}
                     </div>
                 </div>
                 : <div style={{ backgroundColor: 'white', height: 'calc(99% - 70px)', width: '99%' }} className={'content-block'}>

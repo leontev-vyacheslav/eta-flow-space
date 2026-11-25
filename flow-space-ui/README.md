@@ -85,6 +85,12 @@ The submenu regression checks in `e2e/menu.spec.ts` use the Весна-2 dashboa
 linked meters. Set `E2E_MENU_PATH` to another dashboard with linked meters if the test account does
 not have access to that object. Run them with `npx playwright test --project=smoke menu.spec.ts`.
 
+The opt-in memory regression check replays cached dashboard responses for 100 accelerated updates
+and compares DevExtreme event-handler counts in Chromium heap snapshots. It signs into its own
+session, signs out afterward, and keeps raw snapshots in memory. Run it with
+`E2E_MEMORY_AUDIT=1 npx playwright test --project=memory`. This checks retained template handlers;
+it does not replace a long-running test on an affected user's browser and hardware.
+
 ## Build and deployment
 
 The production image (`Dockerfile.ui`) builds the app and serves `dist/` with nginx (`nginx.conf`).
