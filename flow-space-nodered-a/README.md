@@ -50,6 +50,25 @@ The existing cache-reader test suite has eight baseline failures because its old
 assertions still expect `INTERVAL=1800`; the saved A/B flow instances already use `600`. No existing
 polling interval was changed for Tsarevo-2. The focused Tsarevo-2 mapping checks pass.
 
+## Statum weather — prepared 25 November 2026
+
+`statum-weather` (`737e52d73da1bd97`) reuses the same Weather subflow on tab
+`7ada8f3f5d804ee5`, with `DEVICE_CODE=statum-boiler-room` and `INTERVAL=600` seconds.
+It sits at editor coordinates **(230,760)**, separately from PLC polling, and uses the existing
+registered-location lookup and inherited provider credential. The cache TTL is **1800 seconds**.
+No shared subflow, existing node interval or reader/converter wiring changes.
+
+Statum's collector `cfb112985e31021b` now copies the same optional cached-weather fields as
+Tsarevo-2 before its awaited state-storage call. Missing weather or lookup errors still allow
+the unchanged PLC state to be stored. The optional display schema and diagram were already
+prepared in the preceding Statum change; no additional static-asset update is needed.
+
+All 13 focused offline mapping/request/timer/TTL checks pass. The cache-writer suite passes
+all seven checks; the cache-reader suite retains the same eight pre-existing interval-assertion
+failures (11 passes), reproduced before and after this change. No provider request, production
+cache write, flow deployment or restart was performed. See the
+[verification and decoded function diff](../.reports/2026-11-25-statum-weather/README.md).
+
 ## Verification and deployment
 
 From the repository root:

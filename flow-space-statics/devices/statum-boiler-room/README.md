@@ -65,11 +65,18 @@ temperature, pressure, humidity, wind speed, direction and gust.
 
 Only optional `WeatherModel` / `WeatherWindModel` display definitions are added to Statum's
 schema. Existing fields, required lists, units, enum values and array bounds are preserved.
-The current Statum collector does not attach cached weather. Until it does, the station is
-dimmed and weather readouts remain blank; controller `tempOutAir` remains independent.
-This diagram change does not enable a provider poller or change collection or alarm rules.
+The follow-up flow change adds `statum-weather` to Node-RED A and optional cached-weather
+enrichment to the existing collector, matching Tsarevo-2. Its interval is **600 seconds** and
+its location cache expires after **1800 seconds**. It uses registered coordinates and the
+existing inherited provider credential; neither is embedded in this diagram or the flow export.
+Controller `tempOutAir` remains independent, and missing/failed weather still permits PLC storage.
+The station stays dimmed with blank readouts whenever no cached weather is available.
+The flow change is prepared locally; live weather requires deployment and successful weather/PLC polls.
+Existing collection fields and alarm rules are unchanged.
 
 ## Verification and status — 25 November 2026
 
 See the [before/after previews and browser checks](../../../.reports/2026-11-25-statum-diagram/README.md).
-The changes are local; no production deployment, database migration or Node-RED change is included.
+The diagram change was committed separately. See the
+[weather-flow follow-up and offline checks](../../../.reports/2026-11-25-statum-weather/README.md).
+The weather-flow change is local; no production deployment or database migration was performed.
