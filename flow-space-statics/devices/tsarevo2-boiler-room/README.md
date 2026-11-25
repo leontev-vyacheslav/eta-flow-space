@@ -3,48 +3,53 @@
 The remade diagram uses the [shared component standard](../../../.docs/mnemoschema-components.md)
 and the existing state contract from **Node-RED A**, tab `tsarevo2-boiler-room`,
 `collect-device-state`. PLC fields and alarm rules are preserved. Optional cached-weather
-collection/schema support is prepared locally alongside the diagram; these changes are not deployed.
+collection/schema support is documented below. This layout change is prepared locally and is not deployed.
 
 ## Process layout
 
-The native canvas is **905 × 700**, replacing the first remake’s **980 × 700** canvas
-and the older **1282 × 755.4** illustration.
+The native canvas is **805 × 610**, cropped from the preceding **905 × 700** layout.
+The header and lower-right circuit now fit the four-boiler footprint, following Spring-2.
 All equipment is drawn in native units; placement uses translations/rotations without layout scales.
-The additional vertical extent relative to the reference diagrams accommodates four boiler branches,
-four network-pump branches and the separate source-water/tank/makeup circuit.
+The canvas includes four boiler branches, four network-pump branches and the separate
+source-water/tank/makeup circuit. Cropping changes the dashboard fit scale, not native component sizes.
 The application retains its existing fit, zoom and pan behavior.
 
-- Header: `(10,10)`, **880 × 70**, «Прочие параметры котельной». It follows Spring-2:
-  date/time at the left, centered heading, a **13.2 × 13.2** information icon at **(870,15)**,
-  and rounded parameter cards at **y=41.9**, height **30.1**, width **76.8**, radius **10**.
-  The eight card starts are **x=214.3 + i×84.3**, with 7.5-unit gaps; labels/value baselines are
+- Header: `(10,10)`, **785 × 70**, «Прочие параметры котельной». It follows Spring-2:
+  date/time at the left, centered heading, a **13.2 × 13.2** information icon at **(775,15)**,
+  and rounded parameter cards at **y=41.9**, height **30.1**, radius **10**.
+  The first seven cards are **76.8** wide; «Заполнение ДТ» (`flapDtFill.mode`) is **96.8** wide,
+  widened **20 units** with its label and value recentered. The complete card row uses
+  **`translate(-20 0)`**, with starts **x=116.8 + i×81.8**, **5-unit** gaps and an **8.8-unit**
+  inset from the panel’s right edge. The heading is centered at **x=402.5**. Labels/value baselines are
   **53 / 66.6**, using **10 / 9 px** (mode values remain **10 px**). They show room temperature,
   supply temperature/pressure, controller outdoor temperature, both diesel levels and the
   two diesel-valve modes. Supply readings intentionally mirror their process instruments;
   labels retain Tsarevo-2's names rather than importing Spring-2 instrument tags.
-  Removing the gas-pressure card lets the first four remaining cards move right **84.3 units**;
-  the last four retain their positions. The standard weather block occupies the freed left column.
-- The main process is inside **`translate(130 -20)`**, raised **20 native pixels** from
-  the preceding layout. The coordinates below are process-local unless marked canvas.
-  Equipment dimensions and internal hydraulic spacing are preserved. The gas inlet/header,
-  pressure assembly and inlet caption are compensated vertically to retain their canvas positions;
-  the header and emergency panel stay fixed.
+  The widened final card retains the preceding right edge at **x=786.2**.
+  The weather description uses a **62-unit** column to keep clear of the shifted first card.
+- The main process is inside **`translate(130 -40)`**, raised another **20 native pixels**
+  from the preceding layout. The coordinates below are process-local unless marked canvas.
+  Equipment dimensions and the boiler/network/source-water bank spacing are preserved. The gas and В1 inlets,
+  gas-pressure assembly and inlet captions first move **82 units down** within the process,
+  followed by the **20-unit** overall lift: their net canvas movement is **62 units down**.
+  The top parameter header and emergency panel stay fixed.
 - Gas enters from the left below the emergency panel, then rises at local **x=10**
-  (canvas **x=140**) to the header at local **y=130**, canvas **y=110**. This puts its riser between the
+  (canvas **x=140**) to the header at local **y=130**, canvas **y=90**. This puts its riser between the
   panel's right edge **x=122** and the supply riser **x=155**, with **18 / 15-unit** clearances.
   Its four existing burner branches and supply-crossing bridges are retained.
   The header now ends directly at the fourth branch **(562,130)**; the unused **153-unit**
   continuation and that former branch/end dot are removed. The remaining three header dots are tees.
-  Gas pressure is a **55 × 12** instrument beside the inlet: canvas frame **(60.5,387)**,
-  value baseline **396**, «Ргаза» baseline **382**, centered at **x=88**. Its black stem reaches
-  the orange takeoff dot at **(88,418)**. It retains `pressGas`, its **кПа** unit and popup.
+  Gas pressure is a **55 × 12** instrument beside the inlet: canvas frame **(60.5,449)**,
+  value baseline **458**, «Ргаза» baseline **444**, centered at **x=88**. Its black stem reaches
+  the orange takeoff dot at **(88,480)**. It retains `pressGas`, its **кПа** unit and popup.
 - Four boiler centers: **100, 270, 440, 610**. Bodies start at **y=185**, **65 × 70**;
   burners **40 × 30**, radius **5**; flame instances **18 × 27**. Gas crosses the supply
   with a bridge and reaches each burner. The supply header at **y=155** runs left to **x=25**,
   drops to **y=455**, then runs right to the red **Т1** outlet. Four **5.2-unit** crossing gaps
   keep this supply line separate from the vertical network-pump branches, following Spring-2.
-  In canvas coordinates the gas/supply headers are now **y=110 / 135**, with **25-unit** spacing,
-  reduced **20 units** from 45. The gas bridges follow the moved supply crossing.
+  In canvas coordinates the gas/supply headers are now **y=90 / 115**, retaining **25-unit**
+  spacing. The top parameter panel ends at **y=80**: its gap to the gas header decreases
+  **30 → 10 units**. The gas bridges follow the moved supply crossing.
 - Each boiler return branch retains its original **unbound circulation-pump artwork** at **y=300**,
   then its mapped outlet valve at **y=335**. Captions **НК1–НК4** are above the pumps.
   Their separate warning icons use only the corresponding boiler's confirmed **512** alarm code;
@@ -60,16 +65,17 @@ The application retains its existing fit, zoom and pan behavior.
   **(146,490) / (192,490) / (238,490)**. The upper-right **(238,395)** and lower-left
   **(100,490)** corners are two-segment elbows without dots. The lower manifold continues right at **y=490** to
   the blue **Т2** inlet; it is separate from Т1 above it. The bank heading is at **(169,385)**.
-  Supply instruments use complete translated assemblies at process-local **(585,421) / (670,421)**,
-  with stems to **455**. They move **75 / 65 units right**, putting supply temperature above return
-  temperature and supply pressure above return pressure. Frames, readings, captions, stems and dots
-  move together; all four instruments stay **55 × 12** with **9 px** readings.
-  return instruments sit below Т2 at **(585,505) / (670,505)**, with captions at **y=531**.
+  All four supply/return instruments move **85 units left** as complete assemblies.
+  Supply centers are process-local **(500,421) / (585,421)** with stems to **455**;
+  return centers are **(500,505) / (585,505)**, with captions at **y=531**.
+  Temperature and pressure remain in matching columns at canvas **x=630 / 715**.
+  Frames, readings, captions, stems and dots move together; all four instruments remain
+  **55 × 12** with **9 px** readings.
 - The source-water block is grouped as **`source-water-assembly`**, translated **(0,30)**
   from its preceding layout. The pressure takeoff and filling-valve centerline is **y=565**.
-  В1 enters farther left at canvas **(41,463)**, runs to **(172,463)**, drops to **(172,545)**,
-  then reaches the left manifold midpoint **(203,545)**. The drop stays **58 units**
-  left of the Т2 line's start, so no crossing/junction is added. The parallel source pumps are
+  В1 now runs straight from canvas **(41,525)** to the left manifold midpoint **(203,525)**.
+  Its former intermediate drop at **x=172** is removed; the pipe keeps its existing manifold
+  tee without adding any crossing or junction. The parallel source pumps are
   at **(123,542) / (123,588)**; their manifolds span
   **542–588** at **x=73 / 178**, with midpoint junctions on **y=565**. Captions remain below
   the group heading and above their frames, at effective **y=525 / 571**. The existing group
@@ -77,24 +83,31 @@ The application retains its existing fit, zoom and pan behavior.
   The pressure frame is effectively
   **(197.5,541)**, value baseline **550**, caption **536**, and stem **553→565**.
   The filling valve is at effective **(325,565)**, moved **40 units left** with its caption
-  from the preceding layout; the caption stays at **y=540**. The source pipe is unchanged.
+  from the preceding layout; the caption stays at **y=540**. The outlet pipe shortens to meet
+  the tank’s new position without changing the filling valve or pressure takeoff.
 - Source water now reaches the tank through one **straight horizontal pipe** at **y=565**,
   from the bank outlet through the pressure takeoff and filling valve to the tank's left side
-  at **(430,565)**. The former stepped/top-center inlet is removed. ХВО remains absent.
+  at **(390,565)**, canvas **(520,525)**. The former stepped/top-center inlet is removed. ХВО remains absent.
 - The complete reserve-water block is grouped as **`reserve-water-assembly`**, translated
-  **(0,−30)** from the preceding layout. Its body is effectively **(430,540)**, still **32 × 80**,
+  **(−40,−30)**: the complete tank, level instrument and both caption lines move **40 units left**
+  in the final compact layout. Its body is effectively **(390,540)**, still **32 × 80**,
   with both tank caption lines. The four separate switch labels/dots are replaced by one
-  **55 × 12** level instrument to its left: frame **(362.5,584)**, value baseline **593**,
-  «Уровень» caption baseline **607**, centered at **x=390**. Its short horizontal instrument
-  stem reaches the tank's left edge at **(430,590)**, clear of the inlet at **y=565**.
-- The tank's right-side midpoint is **(462,580)**. Its outlet continues straight through
-  **(508,580)** onto the first makeup branch, with no vertical step. The complete makeup bank
-  and its heading move **2 units up**: pump centers **(563,580) / (563,626)** retain **46-unit**
-  spacing, and both manifolds span **580–626**. The right manifold at **x=618** discharges via
-  **(618,603)** to **x=735**, the network-makeup valve at **(735,560)** and Т2 at **(735,490)**.
-  Only the true branch junctions at **(508,580)** and **(618,603)** carry dots; the three plain
-  elbow dots are removed. Captions and warning icons move with their pumps.
-  The inlet/outlet side-port positions are user-selected exceptions to the shared top/bottom ports.
+  **55 × 12** level instrument to its left: frame **(322.5,584)**, value baseline **593**,
+  «Уровень» caption baseline **607**, centered at **x=350**. Its short horizontal instrument
+  stem reaches the tank's left edge at **(390,590)**, clear of the inlet at **y=565**.
+- The tank's right-side midpoint is **(422,580)**, canvas **(552,540)**. Its outlet runs
+  straight to the makeup inlet tee **(476,580)**, without a step. The makeup bank uses
+  **`translate(-60 -2)`**, moving **60 units left** while retaining its preceding vertical position.
+  Pump centers are **(503,580) / (503,626)**, canvas **(633,540) / (633,586)**.
+  The **27 × 27** frames and **46-unit** vertical spacing remain unchanged. Manifolds move
+  inward **28 units each**, reducing branch width **110 → 54**; each side port retains **13.5 units**
+  of straight pipe. Effective manifolds are **x=476 / 530**, spanning **y=580–626**.
+  The right manifold discharges via **(530,603)** to **x=630**, the network-makeup valve at
+  **(630,585)** and Т2 tee **(630,490)**. The valve is at canvas **(760,545)**; its caption
+  is end-aligned at local **(605,588)**. This clears the return-pressure frame by **17.5 units**
+  and the makeup manifold by **6.1 units**. The bank heading is at **(503,548)**.
+  Only the true branch junctions **(476,580) / (530,603)** carry dots; elbows have none.
+  The inlet/outlet side-port positions remain the user-selected exception to shared top/bottom ports.
 - Emergency panel: **(10,90)**, **112 × 279**, directly below the header at the left,
   following Spring-2's two-column layout. Ten **43 × 43** tiles use **x=18 / 71** and
   **y=114 / 165 / 216 / 267 / 318**, with Spring-2's connection, power, gas and vapour artwork.
@@ -105,31 +118,33 @@ The application retains its existing fit, zoom and pan behavior.
 
 **Т1 / Т2** retain Spring-2's **11.1 × 10.8** triangles and **0.5-unit** outlines. Т1 is red
 and points right at **y=455**; Т2 is blue and points left at **y=490**. Their black pipes join
-directly at local **(754,455) / (754,490)**.
+directly at local **(644,455) / (644,490)** after a **110-unit** leftward shift of the complete
+connector assemblies. Their rightmost extent is canvas **x=785.1**, leaving about **20 units**
+to the canvas edge. The fourth boiler’s warning remains inside with **13.2 units** of clearance.
 
 The left-side **gas / В1** inlets match Nurlat-5: **10 × 10**, right-pointing triangles without
 outlines, orange **#FF9800** and blue **#0083CD**. In canvas coordinates their bases align at
-**x=31**, tips at **x=41**, and centerlines at **y=418 / 463**. These preserve the reference's
-**21-unit** inset from the panel's left edge, **49-unit** panel-bottom-to-gas offset and
-**45-unit** gas/water separation after raising the hydraulic process. Both pipes meet their triangle tips directly. «Газ» uses
-canvas anchor **(46,435)**; the site-specific «В1» label starts at **(41,481)** instead of
-copying Nurlat's «От ХВО». All connector captions use **10 px**. The canvas retains **5 units**
-on the right to keep the complete Т1/Т2 triangles and labels inside the viewport.
+**x=31**, tips at **x=41**, and centerlines at **y=480 / 525**. These preserve the reference's
+**21-unit** inset from the panel's left edge and retain **45-unit** gas/water separation.
+The user-selected lower inlet position gives **111 units** from the panel bottom to the gas line.
+Both pipes meet their triangle tips directly. «Газ» uses canvas anchor **(46,497)**;
+the site-specific «В1» label starts at **(41,543)** instead of
+copying Nurlat's «От ХВО». All connector captions use **10 px**.
 
 Pump frames are **27 × 27**, radius **3**, rotors radius **10**. Instruments are **55 × 12**.
 Readings use **9 px**, emergency-tile captions **7 px**, and other text **10 px**.
 Panels and emergency tiles use radius **10**; strokes use **1 / 0.5 / 0.25**.
 The outdoor controller temperature remains `tempOutAir`, separate from cached `weather.temp`.
 
-## Standard weather block — prepared locally
+## Standard weather block
 
 The station reuses Spring-2's exact Nurlat-style artwork, black **0.5-unit** strokes and
 non-interactive decorations. The **27 × 27** transparent hitbox is at canvas **(19,46)**,
 artwork at **(21,47)**, temperature anchor **(51,56)**, and description box **(51,59)**,
-**155 × 19**. These are the shared offsets from the header's **(10,10)** origin.
-The description width follows the available space before the first card at **x=214.3**;
+**62 × 19**, narrowed **20 units** alongside the card row’s leftward shift. These are the shared offsets
+from the header's **(10,10)** origin. The first card at **x=116.8** leaves **3.8 units** after the text box;
 both temperature and description use **8 px**, with **9-unit** line height and two-line clamping.
-The clip starts at **(48,45)** and ends at **(206,78)**, clearing the first card and panel edge.
+The clip starts at **(48,45)** and ends at **(113,78)**, clearing the first card and panel edge.
 
 The icon lists **description, temp, pressure, humidity, wind.speed, wind.deg, wind.gust**;
 the description opens its full text. Weather is owned by **tsarevo2-boiler-room**. Missing weather
@@ -145,9 +160,9 @@ cache TTL. It uses registered location coordinates and the inherited provider cr
 or secret is embedded in the diagram/flow. Missing cache or read failures still allow PLC storage.
 No existing PLC field, enum, unit, wiring or shared subflow changes.
 
-Current live controller state has no weather object. The block stays dim/blank until these local
-flow/schema changes are deployed and a weather/PLC poll succeeds. Browser weather previews use
-response fixtures only; no provider request, Node-RED deployment, restart or production device-state write was made.
+The latest read-only live preview includes cached weather. Long-description and negative-temperature
+checks use browser response fixtures. This layout work makes no provider request, Node-RED deployment,
+restart or production device-state write; flow deployment status is independent of the SVG preview.
 
 ## State meanings and property ownership
 
@@ -184,12 +199,13 @@ standalone pump readings or setpoint labels; those values remain accessible on t
 Frames and rotors open **status, mode, setPower, modeFc, statusFc** for network/source-water pumps,
 or **status, mode** for makeup pumps. All fields remain schema-formatted, with their original units.
 
-The exact Spring-2 `#emergencyIcon` artwork is reused beside all eight mapped pumps, at
-**translate(centerX + 2, centerY − 33.6)** for network pumps, or
-**translate(centerX + 18, centerY − 33.6)** above-right of the horizontal source-water/makeup
-pumps. These four warnings are raised **24.6 units** from their previous pipe-crossing
-positions, giving the same vertical clearance above the pump frame as the network warnings.
-It is hidden normally, and appears when that pump's
+The exact Spring-2 `#emergencyIcon` artwork is reused beside all eight mapped pumps.
+Network/source-water warnings retain their existing positions. In the compact makeup bank,
+ПН1/ПН2 warning transforms are **(595,557) / (595,603)** inside `supplyPumps-bank`:
+**16 units right and 4 units up** relative to their preceding pump-local placement.
+This gives **6.5 units** of clearance from the narrowed right manifold while keeping the
+«Подпитка сети» caption between the two warning rows. Pump captions remain above their frames.
+Each warning is hidden normally, and appears when that pump's
 **status is 512** (makeup: **32**), **alarm is nonzero**, **statusFc is 8**, or **alarmFc is nonzero**.
 Only network/source-water models have the two drive fields. Their warning popovers contain
 **status, alarm, statusFc, alarmFc**; makeup warnings contain **status, alarm**. Status fields
@@ -267,8 +283,12 @@ with `data-colorizer-hint="none"`, so the combined instrument remains visible fo
 `mnemo-schema.js` now returns an empty plugin: the SVG handles all state updates, removing the old
 absolute-coordinate tank mutation and the old “hide all lower active labels” behavior.
 
-## Verification and status — 24 November 2026
+## Verification and status — 25 November 2026
 
+See the [wider filling-mode card and shifted row](../../../.reports/2026-11-25-tsarevo2-header-card-width/README.md).
+See the [final compact layout, desktop/phone previews and checks](../../../.reports/2026-11-25-tsarevo2-final-layout/README.md).
+
+See the [straight left inlets and reduced top-panel gap](../../../.reports/2026-11-25-tsarevo2-straight-inlets/README.md).
 See the [aligned instruments, Spring-2 actuator feedback and tighter pipe spacing](../../../.reports/2026-11-24-tsarevo2-layout-refinement/README.md).
 See the [ЩУК tile, browser states and prepared emergency rule](../../../.reports/2026-11-24-tsarevo2-shchuk/README.md).
 See the [junction-dot corrections and 20-pixel return-header move](../../../.reports/2026-11-24-tsarevo2-junction-rule/README.md).
