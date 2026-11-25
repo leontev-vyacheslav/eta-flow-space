@@ -2184,6 +2184,29 @@
         "wires": []
     },
     {
+        "id": "66f2b3f6a7c68f1c",
+        "type": "subflow:00a0617d2752349c",
+        "z": "30c8a42fdf53c9ea",
+        "name": "tsarevo2-weather",
+        "env": [
+            {
+                "name": "INTERVAL",
+                "value": "600",
+                "type": "num"
+            },
+            {
+                "name": "DEVICE_CODE",
+                "value": "tsarevo2-boiler-room",
+                "type": "str"
+            }
+        ],
+        "x": 230,
+        "y": 800,
+        "wires": [
+            []
+        ]
+    },
+    {
         "id": "541e40da0fbab5bd",
         "type": "function",
         "z": "a03807f6777b0746",
@@ -2234,7 +2257,7 @@
         "dataType": "HoldingRegister",
         "adr": "44",
         "quantity": "6",
-        "rate": "10",
+        "rate": "60",
         "rateUnit": "s",
         "delayOnStart": false,
         "enableDeformedMessages": false,
@@ -2915,7 +2938,7 @@
                 "vt": "str"
             }
         ],
-        "repeat": "60",
+        "repeat": "180",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
@@ -4610,28 +4633,5 @@
         "x": 190,
         "y": 60,
         "wires": []
-    },
-    {
-        "id": "66f2b3f6a7c68f1c",
-        "type": "subflow:00a0617d2752349c",
-        "z": "30c8a42fdf53c9ea",
-        "name": "tsarevo2-weather",
-        "env": [
-            {
-                "name": "INTERVAL",
-                "value": "600",
-                "type": "num"
-            },
-            {
-                "name": "DEVICE_CODE",
-                "value": "tsarevo2-boiler-room",
-                "type": "str"
-            }
-        ],
-        "x": 230,
-        "y": 800,
-        "wires": [
-            []
-        ]
     }
 ]
