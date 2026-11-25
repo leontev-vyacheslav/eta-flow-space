@@ -69,6 +69,19 @@ take precedence for new diagrams and component updates. Reference SVGs retain th
 historical values until their update is requested; Kirov, Gagarin and Komarova now
 follow the accepted defaults, as do Muslum-7/9 and Spring-2.
 
+## Pipe junctions
+
+Place a **radius-1.5 dot only where three connected pipe segments meet**, forming a tee.
+Count the incident pipe directions, including a pipe that continues through the point,
+rather than the number of SVG path elements. A straight run has two segments, as does
+an elbow; neither gets a dot. Pipe endpoints and equipment ports also have no dot unless
+a third pipe segment joins there. Crossings separated by a bridge or gap are not junctions.
+
+Check both ends of every pump branch against the actual header routing. In Tsarevo-2,
+the СН1 upper tee and СН4 lower tee carry dots; the СН1 lower elbow and СН4 upper elbow
+do not. The bends above the fourth boiler and below ЗК4 also have no dots.
+The numeric profile records this rule as `pipe.junctionSegmentCount: 3`.
+
 ## Water tanks and valves
 
 The Nurlat-5 tank and actuated-valve symbols were accepted as shared defaults on
@@ -154,6 +167,30 @@ and clear of the actuator. Nurlat HV5 and Kirov's drain valve use **−90°** fo
 vertical pipe with the actuator on the left. Preserve existing names and any
 confirmed state bindings; static valves without a state channel keep the grey fill.
 
+### Valve position colours
+
+The shared body-fill convention, confirmed on **23 November 2026**, is **grey
+`#808080` for closed** and **white `#FFFFFF` for open**. It applies to all lobes of
+both two-way and three-way valve bodies. Numeric defaults are in `valve.fill` in
+the component profile. Keep the site's actual enum/feedback meanings; do not copy
+another controller's numeric codes. Preserve established intermediate, fault and
+unknown-state indications rather than treating them as confirmed open or closed.
+
+Auto/manual mode is not position feedback. A static, unmapped or mode-only valve
+keeps a neutral grey body; that placeholder does not establish a closed position.
+Keep any existing mode popover, actuator/outline diagnostics and unified hover.
+Where a schema still supplies legacy red/green body fills, suppress or override
+that fill in the SVG without changing collected values, enum codes or units.
+
+Tsarevo-2's confirmed `ValveStatus` **1 / 2** now displays closed grey / open white;
+its **0** intermediate state remains yellow. From **24 November 2026**, its four boiler-valve
+actuator squares also follow Spring-2: white fill, **blue #0000FF outline for confirmed open**,
+black otherwise, at **0.5 units**. Spring-2 uses open code **1**, Tsarevo-2 code **2**;
+retain the site's own predicate. Whole-symbol yellow hover restores that position indication.
+Tsarevo-2's two auto/manual-only makeup
+valves remain neutral grey. Historical reference colours described below remain
+source evidence; unrelated diagrams are changed only within their requested scope.
+
 ### Unified valve bodies and three-way valves
 
 Use **one SVG `<path>` for every valve body's lobes**, following Nurlat-5's
@@ -187,7 +224,8 @@ caption with a **5-unit gap** before the actuator; do not enclose the symbol in 
 
 For a bound assembly, give its group the existing ordered `data-state` list and
 `data-colorizer-hint="none"`; the group lets stem clicks resolve to the same popover.
-Bind the body once with its existing fill semantics. Where the actuator already
+Bind the body once to the site's confirmed position/feedback meanings and the
+position-colour rule above. Where the actuator already
 shows state, retain the same property with the `stroke` hint and a **0.5-unit**
 normal outline; do not import an enum's unrelated stroke-width mapping. Keep the
 stem unbound with `pointer-events="stroke"` so the group receives its clicks.

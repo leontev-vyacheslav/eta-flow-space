@@ -42,7 +42,11 @@ README; a local layout adjustment does not establish a new universal default.
 - Resize around existing centers where the requested placement permits. Move companion
   burners, flames, status/value text, captions and hit targets with the equipment. Update
   connected pipe endpoints and junction dots together. Preserve gas-inlet centering,
-  boiler supply/return clearances, crossing bridges and both pump-manifold junctions.
+  boiler supply/return clearances and crossing bridges. Put a junction dot only where
+  three connected pipe segments meet, following the guide's pipe-junction rule and
+  `pipe.junctionSegmentCount`. Check both ends of each pump branch: a tee needs a dot;
+  a two-segment elbow, straight run or endpoint does not. Count actual pipe directions
+  after transforms, rather than SVG path elements; a bridge/gap is not a connection.
 - Keep each sensor frame, label, value anchor and stem aligned. Match the corresponding
   upper/lower sensor layout when requested. Maintain value/unit clearance at the agreed
   font size; use wider frames where real values need them, as allowed by the guide.
@@ -105,6 +109,13 @@ are the references: one path contains every body lobe, including the third trian
 of a three-way valve. Do not split lobes into separately bound polygons. Keep the
 stem and white square actuator as separate paths in one `.valve` group, with no
 enclosing frame. Translate/rotate the whole symbol and preserve its pipe ports.
+
+Use `valve.fill` in the profile for confirmed positions: **closed grey #808080**,
+**open white #FFFFFF**. Retain the target controller's enum/feedback meanings and
+existing intermediate/fault indications. Auto/manual mode does not establish position;
+mode-only or unmapped bodies stay neutral grey with their existing popovers. Override
+legacy red/green body colourizers in the SVG when needed; preserve actuator/outline
+state ownership and collected values. See the guide's valve-position-colour rule.
 
 Apply scoped group-hover rules so either body half, stem or actuator highlights the
 whole assembly and restores its own state colours afterward. Preserve each site's

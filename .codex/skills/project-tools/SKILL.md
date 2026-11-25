@@ -11,6 +11,7 @@ an individual tool README specifies otherwise. Inspect an existing tool before i
 | Task | Existing tool and documentation |
 |---|---|
 | Diagram preview, real state, info-icon geometry and native component dimensions | `.tools/diagram-renderer/README.md`; `fetch_states.py`, `render.js`, `measure.js`, `measure-components.mjs`, `component-standard.json` |
+| Interactive local app with workspace diagrams | `.tools/diagram-renderer/README.md` (Interactive local web app); `bash .tools/diagram-renderer/local-app.sh start <device-code>`; `stop`, `status`, `logs` |
 | Manifest hashes for devices and quick-help | `bash .tools/diagram-renderer/gen-manifest.sh` |
 | Meter probes, subflows, GPRS and meter emulators | `.tools/device-probes/README.md`; `subflow_run.js`, `reader_via_emulator.js`, `spt_meter_emulator.js` |
 | Offline stock Modbus converter/join/mapping chain | `.tools/flow-chain/README.md`; `run_modbus_tab.js` |
@@ -22,6 +23,9 @@ an individual tool README specifies otherwise. Inspect an existing tool before i
 
 ## Operational details
 
+- For a user-operated web preview of local diagram files, use `local-app.sh`. It runs a transient
+  user service on port 3000, serves the selected device locally and keeps API/other diagrams on
+  the existing 3002 tunnel. It refuses occupied ports; stop it through the same helper when done.
 - The root statics generator hard-codes a server path. Use the wrapper above: it runs the current
   generator against this checkout and preserves quick-help entries. Never fork a private copy.
 - Render diagram changes with representative states and inspect the preview. Put user-facing output
