@@ -31,6 +31,7 @@ export default defineConfig({
         { name: 'sign-in', testMatch: /auth\.setup\.ts/ },
         { name: 'smoke', testMatch: /(?:smoke|menu)\.spec\.ts/, dependencies: ['sign-in'], use: { storageState: authFile } },
         { name: 'memory', testMatch: /memory\.spec\.ts/ },
+        { name: 'alarms', testMatch: /alarm-polling\.spec\.ts/ },
         // last: signing out ends the session on the server
         { name: 'sign-out', testMatch: /sign-out\.spec\.ts/, dependencies: ['smoke'] },
     ],

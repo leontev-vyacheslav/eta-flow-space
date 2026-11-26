@@ -1,11 +1,12 @@
 import { useCallback } from 'react';
-import { AxiosError, type AxiosRequestConfig, type AxiosResponse } from 'axios';
+import { AxiosError, isCancel, type AxiosRequestConfig, type AxiosResponse } from 'axios';
 import { HttpConstants } from '../../constants/app-http-constants';
 import { useSharedArea } from '../shared-area';
 import type { SharedAreaContextModel } from '../../models/shared-area-context';
 import { httpClientBase } from './http-client-base';
 import { proclaim, proclaimError } from '../../utils/proclaim';
 import { useAuthStore } from '../auth-store';
+import { waitForRequest } from './request-cancellation';
 
 export type AxiosWithCredentialsFunc = (
     config: AxiosRequestConfig,
@@ -23,6 +24,9 @@ export const useAuthHttpRequest = () => {
     const axiosWithCredentials = useCallback<AxiosWithCredentialsFunc>(
 
         async (config: AxiosRequestConfig, suppressLoader: boolean = false, suppressShowUnauthorized: boolean = false, suppressShowError: boolean = false) => {
+            if (config.signal?.aborted) {
+                return undefined;
+            }
             let response: AxiosResponse<any, any> | null | AxiosResponse<unknown, any> | undefined;
             const userAuthData = getUserAuthDataFromStorage();
             if (!userAuthData) {
@@ -42,16 +46,33 @@ export const useAuthHttpRequest = () => {
 
                 response = await httpClientBase.request(config) as AxiosResponse;
             } catch (error) {
+                if (isCancel(error) || config.signal?.aborted) {
+                    return undefined;
+                }
                 const axiosError = error as AxiosError;
                 response = axiosError.response;
 
                 if (response?.status === HttpConstants.StatusCodes.Unauthorized) {
-                    const refreshResult = await refreshAccessToken();
+                    let refreshResult;
+                    try {
+                        refreshResult = await waitForRequest(refreshAccessToken(), config.signal);
+                    } catch (refreshError) {
+                        if (!isCancel(refreshError) && !suppressShowError) {
+                            await proclaimError(refreshError);
+                        }
+                        return undefined;
+                    }
+                    if (config.signal?.aborted) {
+                        return undefined;
+                    }
                     if (refreshResult.status === 'refreshed') {
                         config.headers.Authorization = `Bearer ${refreshResult.accessToken}`;
                         try {
                             response = await httpClientBase.request(config) as AxiosResponse;
                         } catch (retryError) {
+                            if (isCancel(retryError) || config.signal?.aborted) {
+                                return undefined;
+                            }
                             response = (retryError as AxiosError).response;
                             // only a repeated 401 means the session is gone; other errors keep the user signed in
                             if (response?.status === HttpConstants.StatusCodes.Unauthorized) {
@@ -70,7 +91,7 @@ export const useAuthHttpRequest = () => {
                     } else if (refreshResult.status === 'unavailable') {
                         // the refresh could not be done right now (network, rate limit, server error):
                         // keep the session, the next request tries the refresh again
-                        if (!suppressShowError) {
+                        if (!isCancel(refreshResult.error) && !suppressShowError) {
                             await proclaimError(refreshResult.error);
                         }
                         return response;

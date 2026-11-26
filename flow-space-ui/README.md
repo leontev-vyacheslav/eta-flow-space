@@ -91,6 +91,25 @@ session, signs out afterward, and keeps raw snapshots in memory. Run it with
 `E2E_MEMORY_AUDIT=1 npx playwright test --project=memory`. This checks retained template handlers;
 it does not replace a long-running test on an affected user's browser and hardware.
 
+Alarm polling permits one refresh at a time. It runs immediately and schedules the next read
+30 seconds after completion. Each alarm read has a 10-second deadline covering authentication
+and retry; token refresh has its own shared 10-second limit. Logout/provider cleanup cancels
+pending work. During an outage the UI keeps the last received alarms and shows one warning;
+a successful read resets that warning suppression. History/report request limits are separate.
+
+The alarm polling regression suite uses the real provider and HTTP/authentication code with
+synthetic responses. It needs a local Vite server (`npm run dev`); it sends no API requests to
+production and does not require credentials:
+
+```bash
+E2E_ALARM_POLLING=1 npx playwright test --project=alarms
+node --test --test-isolation=none e2e/request-cancellation.test.ts e2e/data-helper.test.ts
+```
+
+The browser cases cover delayed/stalled requests, shared refreshes, network recovery, provider
+cleanup, logout, token-refresh deadlines and authenticated retries. Raw failure scenarios run
+only against browser fixtures; the `alarms` project is skipped unless explicitly enabled.
+
 ## Build and deployment
 
 The production image (`Dockerfile.ui`) builds the app and serves `dist/` with nginx (`nginx.conf`).

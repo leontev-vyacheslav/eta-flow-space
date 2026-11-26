@@ -1,4 +1,8 @@
 export const HttpConstants = {
+    Timeouts: {
+        EmergencyRead: 10_000,
+        AuthRefresh: 10_000,
+    },
     Headers: {
         ContentTypeJson: {
             'Content-Type': 'application/json',

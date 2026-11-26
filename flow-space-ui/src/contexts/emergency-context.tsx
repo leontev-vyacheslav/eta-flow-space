@@ -9,6 +9,7 @@ import { emergencyMuteManager } from "../services/emergency-mute-manager";
 import type { EmergencyModel } from "../models/flows/emergency-model";
 import AppConstants from "../constants/app-constants";
 import { useAppSettingsStore } from "./app-settings-store";
+import { proclaim } from "../utils/proclaim";
 
 import "./emergency-popover.scss";
 
@@ -38,6 +39,10 @@ function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
     }, [flows, appSettingsData]);
     const hasFlows = !!flows && flows.length > 0;
     const lastEmergencyStatesRef = useRef<EmergencyModel[] | null>(null);
+    const pollingRef = useRef(false);
+    const pollTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+    const activeRefreshRef = useRef<{ controller: AbortController; promise: Promise<void> } | null>(null);
+    const pollFailedRef = useRef(false);
     const popoverContentContainerRef = useRef<HTMLDivElement>(null);
     const popoverContentReactRootRef = useRef<ReturnType<typeof createRoot> | null>(null);
     const popoverContainerRef = useRef<HTMLDivElement>(null);
@@ -193,21 +198,61 @@ function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
             });
     }, [emergencyIconClickHandler]);
 
-    const refreshEmergencyStates = useCallback(async () => {
-        if (!flowsRef.current) {
-            return;
+    const refreshEmergencyStates = useCallback(function refreshEmergencyStates(): Promise<void> {
+        if (!pollingRef.current || !flowsRef.current) {
+            return Promise.resolve();
         }
-
-        const emergencyStates = await getEmergencyStatesAsync();
-        if (!emergencyStates) {
-            return;
+        if (activeRefreshRef.current) {
+            return activeRefreshRef.current.promise;
         }
+        clearTimeout(pollTimerRef.current);
+        pollTimerRef.current = undefined;
+        const controller = new AbortController();
 
-        const appSettingsData = appSettingsDataRef.current;
-        emergencyMuteManager.processEmergencyStates(emergencyStates, appSettingsData?.userSettings?.notifications?.web.enabled, appSettingsData?.userSettings?.notifications?.web.soundType);
+        const warnOnce = () => {
+            if (!pollFailedRef.current) {
+                pollFailedRef.current = true;
+                proclaim({
+                    type: 'warning',
+                    message: lastEmergencyStatesRef.current
+                        ? 'Не удалось обновить аварийные события. Отображаются последние полученные данные.'
+                        : 'Не удалось обновить аварийные события. Данные пока недоступны.',
+                });
+            }
+        };
+        // Defer the request until its shared promise is registered, including synchronous failures.
+        const promise = Promise.resolve().then(async () => {
+            try {
+                const emergencyStates = await getEmergencyStatesAsync({ signal: controller.signal, suppressShowError: true });
+                if (controller.signal.aborted || !pollingRef.current) {
+                    return;
+                }
+                if (!emergencyStates) {
+                    warnOnce();
+                    return;
+                }
 
-        lastEmergencyStatesRef.current = emergencyStates;
-        drawEmergencyIcons();
+                const appSettingsData = appSettingsDataRef.current;
+                emergencyMuteManager.processEmergencyStates(emergencyStates, appSettingsData?.userSettings?.notifications?.web.enabled, appSettingsData?.userSettings?.notifications?.web.soundType);
+
+                lastEmergencyStatesRef.current = emergencyStates;
+                drawEmergencyIcons();
+                pollFailedRef.current = false;
+            } catch {
+                if (!controller.signal.aborted && pollingRef.current) {
+                    warnOnce();
+                }
+            } finally {
+                if (activeRefreshRef.current?.controller === controller) {
+                    activeRefreshRef.current = null;
+                    if (pollingRef.current && !controller.signal.aborted) {
+                        pollTimerRef.current = setTimeout(() => { void refreshEmergencyStates(); }, AppConstants.pollInterval);
+                    }
+                }
+            }
+        });
+        activeRefreshRef.current = { controller, promise };
+        return promise;
     }, [drawEmergencyIcons, getEmergencyStatesAsync]);
 
     useEffect(() => {
@@ -215,16 +260,16 @@ function EmergencyContextProvider({ children }: EmergencyContextProviderProps) {
             return;
         }
 
-        (async () => {
-            await refreshEmergencyStates();
-        })();
-
-        const timer = setInterval(async () => {
-            await refreshEmergencyStates();
-        }, AppConstants.pollInterval);
+        pollingRef.current = true;
+        pollFailedRef.current = false;
+        void refreshEmergencyStates();
 
         return () => {
-            clearInterval(timer);
+            pollingRef.current = false;
+            clearTimeout(pollTimerRef.current);
+            pollTimerRef.current = undefined;
+            activeRefreshRef.current?.controller.abort();
+            activeRefreshRef.current = null;
         };
     }, [hasFlows, refreshEmergencyStates]);
 

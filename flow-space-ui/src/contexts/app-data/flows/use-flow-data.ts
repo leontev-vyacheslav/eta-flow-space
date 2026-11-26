@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import type { Method } from "axios";
+import { isCancel, type Method } from "axios";
 import { HttpConstants } from "../../../constants/app-http-constants";
 import routes from "../../../constants/app-api-routes";
 import { useAuthHttpRequest } from "../use-auth-http-request";
@@ -12,6 +12,7 @@ import type {
 import type { EmergencyStateModel } from "../../../models/flows/emergency-state-model";
 import type { EmergencyModel } from "../../../models/flows/emergency-model";
 import type { UserSettingsModel } from "../../../models/flows/user-settings-model";
+import { createRequestDeadline, waitForRequest } from "../request-cancellation";
 
 export type GetFlowListAsyncFunc = () => Promise<FlowModel[] | undefined>;
 export type GetDeviceListAsyncFunc = () => Promise<DeviceModel[] | undefined>;
@@ -19,7 +20,11 @@ export type GetDeviceStatesAsyncFunc = (
   deviceId: number,
   suppressShowError?: boolean,
 ) => Promise<Record<string, DeviceStateModel> | undefined>;
-export type GetEmergencyStateAsyncFunc = () => Promise<
+export type EmergencyRequestOptions = {
+  signal?: AbortSignal;
+  suppressShowError?: boolean;
+};
+export type GetEmergencyStateAsyncFunc = (options?: EmergencyRequestOptions) => Promise<
   EmergencyModel[] | undefined
 >;
 export type GetMnemoschemaAsyncFunc = (
@@ -202,17 +207,30 @@ export const useFlowData = () => {
     [authHttpRequest],
   );
 
-  const getEmergencyStatesAsync = useCallback(async () => {
-    const response = await authHttpRequest(
-      {
-        url: `${routes.host}${routes.emergencyStates}`,
-        method: HttpConstants.Methods.Get as Method,
-      },
-      true,
-    );
+  const getEmergencyStatesAsync = useCallback<GetEmergencyStateAsyncFunc>(async (options = {}) => {
+    const deadline = createRequestDeadline(HttpConstants.Timeouts.EmergencyRead, options.signal);
+    try {
+      const response = await waitForRequest(authHttpRequest(
+        {
+          url: `${routes.host}${routes.emergencyStates}`,
+          method: HttpConstants.Methods.Get as Method,
+          signal: deadline.signal,
+          timeout: HttpConstants.Timeouts.EmergencyRead,
+        },
+        true,
+        false,
+        options.suppressShowError,
+      ), deadline.signal);
 
-    if (response && response.status === HttpConstants.StatusCodes.Ok) {
-      return response.data as EmergencyModel[];
+      if (response && response.status === HttpConstants.StatusCodes.Ok) {
+        return response.data as EmergencyModel[];
+      }
+    } catch (error) {
+      if (!isCancel(error)) {
+        throw error;
+      }
+    } finally {
+      deadline.dispose();
     }
   }, [authHttpRequest]);
 

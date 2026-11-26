@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Alarm polling fixture</title></head>
+<body>
+<h1>Alarm polling fixture</h1>
+<p>Local synthetic data; no equipment access.</p>
+<p>Processed responses: <output id="processed-count">0</output></p>
+<p>Outage warnings: <output id="warning-count">0</output></p>
+<div id="root"></div>
+<script type="module">
+    import React, { useState } from 'react';
+    import { createRoot } from 'react-dom/client';
+    import 'devextreme/dist/css/dx.common.css';
+    import 'devextreme/dist/css/dx.light.css';
+    import { SharedAreaProvider } from '../../src/contexts/shared-area.tsx';
+    import { AppDataProvider, useAppData } from '../../src/contexts/app-data/app-data.tsx';
+    import { EmergencyContextProvider, useEmergency } from '../../src/contexts/emergency-context.tsx';
+    import { useAppSettingsStore } from '../../src/contexts/app-settings-store.tsx';
+    import { useAuthStore } from '../../src/contexts/auth-store.tsx';
+    import { emergencyMuteManager } from '../../src/services/emergency-mute-manager.ts';
+
+    useAppSettingsStore.setState({ flows: [{ id: 1, code: 'test-flow', devices: [{ id: 1, code: 'test-device' }] }] });
+    const processStates = emergencyMuteManager.processEmergencyStates.bind(emergencyMuteManager);
+    let processed = 0;
+    emergencyMuteManager.processEmergencyStates = (...args) => {
+        document.getElementById('processed-count').textContent = String(++processed);
+        processStates(...args);
+    };
+    const seenWarnings = new WeakSet();
+    let warnings = 0;
+    new MutationObserver(() => {
+        for (const message of document.querySelectorAll('.dx-toast-message')) {
+            if (message.textContent.includes('Не удалось обновить аварийные события') && !seenWarnings.has(message)) {
+                seenWarnings.add(message);
+                document.getElementById('warning-count').textContent = String(++warnings);
+            }
+        }
+    }).observe(document.body, { childList: true, subtree: true });
+
+    function Controls() {
+        const { refreshEmergencyStates } = useEmergency();
+        const { getHealthCheckDataAsync } = useAppData();
+        const [samePromise, setSamePromise] = useState('');
+        const [health, setHealth] = useState('');
+        return React.createElement('section', null,
+            React.createElement('button', { onClick: () => {
+                const first = refreshEmergencyStates();
+                const second = refreshEmergencyStates();
+                const third = refreshEmergencyStates();
+                setSamePromise(String(first === second && second === third));
+            } }, 'Refresh three times'),
+            React.createElement('output', { 'data-testid': 'same-promise' }, samePromise),
+            React.createElement('button', { onClick: async () => {
+                setHealth('pending');
+                const result = await getHealthCheckDataAsync();
+                setHealth(result?.message ?? 'unavailable');
+            } }, 'Read health'),
+            React.createElement('output', { 'data-testid': 'health' }, health),
+            React.createElement('button', { onClick: () => { void useAuthStore.getState().signOut(); } }, 'Sign out'),
+            React.createElement('div', { 'data-emergency-icon-container': '1', style: { width: 30, height: 30 } }),
+        );
+    }
+    function Fixture() {
+        const user = useAuthStore(state => state.user);
+        const [mounted, setMounted] = useState(false);
+        if (!user) {
+            return React.createElement(React.Fragment, null,
+                React.createElement('p', { 'data-testid': 'signed-out' }, 'Signed out'),
+                React.createElement('button', { onClick: () => {
+                    void useAuthStore.getState().signIn({ login: 'fixture-again', password: 'synthetic-password' });
+                } }, 'Sign in again'),
+            );
+        }
+        return React.createElement(React.Fragment, null,
+            React.createElement('p', { 'data-testid': 'current-login' }, user.login),
+            React.createElement('button', { onClick: () => { setMounted(value => !value); } }, mounted ? 'Stop provider' : 'Start provider'),
+            mounted ? React.createElement(EmergencyContextProvider, null, React.createElement(Controls)) : null,
+        );
+    }
+    createRoot(document.getElementById('root')).render(
+        React.createElement(SharedAreaProvider, null, React.createElement(AppDataProvider, null, React.createElement(Fixture))),
+    );
+</script>
+</body>
+</html>
