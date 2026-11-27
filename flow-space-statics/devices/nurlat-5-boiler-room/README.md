@@ -184,6 +184,11 @@ overlap. Component groups have no compensating scale. Equipment dimensions, read
 frames, fonts, strokes and radii follow the current shared standard for further work.
 The parameter-panel heading is **«Прочие параметры котельной»**, following
 `labels.otherParameters` in the shared profile.
+All six top-panel cards are **112 × 30** with **6-unit** gaps, at x =
+**158, 276, 394, 512, 630, 748** and y = **40**. Their captions and values are
+centered; the row's right edge remains **860**. On 27 November 2026, the final
+«Состояние» and «Режим работы» cards were narrowed from 144 to 112 units and
+the row was repositioned to preserve its spacing and right alignment.
 The taller canvas accommodates the lowered makeup assemblies. Native component sizes
 stay fixed; the application's responsive fit, pan, pinch and zoom behaviour remains available.
 
