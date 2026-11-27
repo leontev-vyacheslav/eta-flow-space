@@ -1,6 +1,6 @@
 import L from "leaflet";
 import { SelectBox } from "devextreme-react/select-box";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { startTransition, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { MapContainer, TileLayer } from "react-leaflet";
 import PageHeader from "../../components/page-header/page-header";
@@ -441,8 +441,15 @@ export const MapPage = () => {
                         searchEnabled
                         inputAttr={{ 'aria-label': 'Населённый пункт' }}
                         onValueChanged={e => {
-                            setSelectedLocality(e.value ?? null);
-                            navigate('/map');
+                            if (!e.event) {
+                                return;
+                            }
+                            // The router transitions its state; keep the filter in the same update
+                            // so the previous device route cannot reset the newly chosen locality.
+                            startTransition(() => {
+                                setSelectedLocality(e.value ?? null);
+                                navigate('/map');
+                            });
                             const item = document.querySelector('li[data-item-id="/map"]');
                             if (item) {
                                 treeViewRef.current?.instance.selectItem(item);

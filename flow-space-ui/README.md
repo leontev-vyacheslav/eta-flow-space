@@ -85,6 +85,12 @@ The submenu regression checks in `e2e/menu.spec.ts` use the Весна-2 dashboa
 linked meters. Set `E2E_MENU_PATH` to another dashboard with linked meters if the test account does
 not have access to that object. Run them with `npx playwright test --project=smoke menu.spec.ts`.
 
+The map regression checks in `e2e/map.spec.ts` cover changing locality with a device popup open,
+browser Back, saved selections, removed localities and keyboard selection on desktop, plus the
+same popup/filter workflow on a phone. The account needs access to the Кирова boiler room in
+Камское Устье and the Kazan objects. Run `npx playwright test --project=map`; each check creates
+and signs out its own session.
+
 The opt-in memory regression check replays cached dashboard responses for 100 accelerated updates
 and compares DevExtreme event-handler counts in Chromium heap snapshots. It signs into its own
 session, signs out afterward, and keeps raw snapshots in memory. Run it with
