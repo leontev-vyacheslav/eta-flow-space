@@ -252,7 +252,7 @@
 <g class="valve" id="boilerValves-0-status" transform="translate(100 335) rotate(-90)" data-state="states['statum-boiler-room'].boilerValves[0].status" data-colorizer-hint="none">
 <path class="valve-body" d="M-8 -5L8 5V-5L-8 5Z" fill="#808080" stroke="#000000" stroke-width="0.5" data-state="states['statum-boiler-room'].boilerValves[0].status" data-colorizer-hint="none" data-state-eval="element.style.fill = value === 2 ? '#FFFFFF' : (value === 1 ? '#808080' : 'yellow');" />
 <path class="valve-stem" d="M0 0V-11" fill="none" stroke="#000000" stroke-width="1" pointer-events="stroke"/>
-<path class="valve-actuator" id="boilerValves-0-actuator" d="M-4 -19H4V-11H-4Z" fill="#FFFFFF" stroke="#000000" stroke-width="0.5" data-state="states['statum-boiler-room'].boilerValves[0].status" data-colorizer-hint="none" data-state-eval="element.style.stroke = value === 2 ? '#0000FF' : '#000000';"/>
+<rect class="valve-actuator" id="boilerValves-0-actuator" x="-4" y="-19" width="8" height="8" fill="#FFFFFF" stroke="#000000" stroke-width="0.5" data-state="states['statum-boiler-room'].boilerValves[0].status" data-colorizer-hint="none" data-state-eval="element.style.stroke = value === 2 ? '#0000FF' : '#000000';"/>
 </g>
 <text x="75" y="338" text-anchor="end" font-size="10px">ЗК1</text>
 <path class="pipe" stroke="#FF9800" d="M52 130V150Q60 155 52 160V235H80"/>
@@ -276,7 +276,7 @@
 <g class="valve" id="boilerValves-1-status" transform="translate(270 335) rotate(-90)" data-state="states['statum-boiler-room'].boilerValves[1].status" data-colorizer-hint="none">
 <path class="valve-body" d="M-8 -5L8 5V-5L-8 5Z" fill="#808080" stroke="#000000" stroke-width="0.5" data-state="states['statum-boiler-room'].boilerValves[1].status" data-colorizer-hint="none" data-state-eval="element.style.fill = value === 2 ? '#FFFFFF' : (value === 1 ? '#808080' : 'yellow');" />
 <path class="valve-stem" d="M0 0V-11" fill="none" stroke="#000000" stroke-width="1" pointer-events="stroke"/>
-<path class="valve-actuator" id="boilerValves-1-actuator" d="M-4 -19H4V-11H-4Z" fill="#FFFFFF" stroke="#000000" stroke-width="0.5" data-state="states['statum-boiler-room'].boilerValves[1].status" data-colorizer-hint="none" data-state-eval="element.style.stroke = value === 2 ? '#0000FF' : '#000000';"/>
+<rect class="valve-actuator" id="boilerValves-1-actuator" x="-4" y="-19" width="8" height="8" fill="#FFFFFF" stroke="#000000" stroke-width="0.5" data-state="states['statum-boiler-room'].boilerValves[1].status" data-colorizer-hint="none" data-state-eval="element.style.stroke = value === 2 ? '#0000FF' : '#000000';"/>
 </g>
 <text x="245" y="338" text-anchor="end" font-size="10px">ЗК2</text>
 <path class="pipe" stroke="#FF9800" d="M222 130V150Q230 155 222 160V235H250"/>
@@ -298,7 +298,7 @@
 <g class="valve" id="boilerValves-2-status" transform="translate(440 335) rotate(-90)" data-state="states['statum-boiler-room'].boilerValves[2].status" data-colorizer-hint="none">
 <path class="valve-body" d="M-8 -5L8 5V-5L-8 5Z" fill="#808080" stroke="#000000" stroke-width="0.5" data-state="states['statum-boiler-room'].boilerValves[2].status" data-colorizer-hint="none" data-state-eval="element.style.fill = value === 2 ? '#FFFFFF' : (value === 1 ? '#808080' : 'yellow');" />
 <path class="valve-stem" d="M0 0V-11" fill="none" stroke="#000000" stroke-width="1" pointer-events="stroke"/>
-<path class="valve-actuator" id="boilerValves-2-actuator" d="M-4 -19H4V-11H-4Z" fill="#FFFFFF" stroke="#000000" stroke-width="0.5" data-state="states['statum-boiler-room'].boilerValves[2].status" data-colorizer-hint="none" data-state-eval="element.style.stroke = value === 2 ? '#0000FF' : '#000000';"/>
+<rect class="valve-actuator" id="boilerValves-2-actuator" x="-4" y="-19" width="8" height="8" fill="#FFFFFF" stroke="#000000" stroke-width="0.5" data-state="states['statum-boiler-room'].boilerValves[2].status" data-colorizer-hint="none" data-state-eval="element.style.stroke = value === 2 ? '#0000FF' : '#000000';"/>
 </g>
 <text x="415" y="338" text-anchor="end" font-size="10px">ЗК3</text>
 <path class="pipe" stroke="#FF9800" d="M392 130V150Q400 155 392 160V235H420"/>
@@ -410,7 +410,7 @@
 <g class="valve" id="flapHt-mode" transform="translate(325 535)" data-state="states['statum-boiler-room'].flapHt.mode" data-colorizer-hint="none">
 <path class="valve-body" d="M-8 -5L8 5V-5L-8 5Z" fill="#808080" stroke="#000000" stroke-width="0.5" data-state="states['statum-boiler-room'].flapHt.mode" data-colorizer-hint="none" />
 <path class="valve-stem" d="M0 0V-11" fill="none" stroke="#000000" stroke-width="1" pointer-events="stroke" />
-<path class="valve-actuator" d="M-4 -19H4V-11H-4Z" fill="#FFFFFF" stroke="#000000" stroke-width="0.5" />
+<rect class="valve-actuator" x="-4" y="-19" width="8" height="8" fill="#FFFFFF" stroke="#000000" stroke-width="0.5" />
 </g>
 <text x="325" y="510" text-anchor="middle" font-size="10px">Подпитка бака</text>
 </g>
@@ -428,7 +428,7 @@
 <g class="valve" id="flapHn-mode" transform="translate(630 585) rotate(-90)" data-state="states['statum-boiler-room'].flapHn.mode" data-colorizer-hint="none">
 <path class="valve-body" d="M-8 -5L8 5V-5L-8 5Z" fill="#808080" stroke="#000000" stroke-width="0.5" data-state="states['statum-boiler-room'].flapHn.mode" data-colorizer-hint="none" />
 <path class="valve-stem" d="M0 0V-11" fill="none" stroke="#000000" stroke-width="1" pointer-events="stroke"/>
-<path class="valve-actuator" d="M-4 -19H4V-11H-4Z" fill="#FFFFFF" stroke="#000000" stroke-width="0.5"/>
+<rect class="valve-actuator" x="-4" y="-19" width="8" height="8" fill="#FFFFFF" stroke="#000000" stroke-width="0.5"/>
 </g>
 <text x="605" y="588" text-anchor="end" font-size="10px">Подпитка сети</text>
 <circle cx="630" cy="490" r="1.5" fill="#000000" pointer-events="none"/>

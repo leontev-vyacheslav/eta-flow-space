@@ -69,6 +69,24 @@ take precedence for new diagrams and component updates. Reference SVGs retain th
 historical values until their update is requested; Kirov, Gagarin and Komarova now
 follow the accepted defaults, as do Muslum-7/9 and Spring-2.
 
+## SVG markup
+
+**Always depict rectangles with SVG `<rect>` wherever their exact geometry permits.**
+This applies throughout the diagrams, including frames, panels, burners, actuator
+squares and hit targets. Use `x`, `y`, `width`, `height` and optional `rx`/`ry` for
+rounded corners. When converting a path, preserve its exact outline, transforms,
+styles, IDs and state bindings. Mixed-corner tanks, compound symbols and hand-drawn
+Bézier outlines remain paths when a single rect cannot reproduce their geometry exactly.
+
+**Avoid redundant namespace declarations.** Declare `xmlns="http://www.w3.org/2000/svg"`
+on the root SVG and let ordinary SVG descendants inherit it. Omit descendant declarations
+that repeat the same inherited namespace binding. Preserve necessary namespace switches,
+such as `xmlns="http://www.w3.org/1999/xhtml"` on HTML content inside `foreignObject`,
+and any prefix declarations needed by qualified names. A fragment parsed independently
+needs its own applicable namespace declaration.
+
+The component profile's `svg` section records these markup rules.
+
 ## Pipe junctions
 
 Place a **radius-1.5 dot only where three connected pipe segments meet**, forming a tee.
@@ -153,7 +171,7 @@ Use this local geometry for a horizontal actuated valve, with its pipe axis at y
 <g class="valve" transform="translate(430 380)">
     <path class="valve-body" d="M-8 -5L8 5V-5L-8 5Z" fill="#808080" stroke="#000000" stroke-width="0.5"/>
     <path class="valve-stem" d="M0 0V-11" fill="none" stroke="#000000" stroke-width="1" pointer-events="stroke"/>
-    <path class="valve-actuator" d="M-4 -19H4V-11H-4Z" fill="#FFFFFF" stroke="#000000" stroke-width="0.5"/>
+    <rect class="valve-actuator" x="-4" y="-19" width="8" height="8" fill="#FFFFFF" stroke="#000000" stroke-width="0.5"/>
 </g>
 ```
 
@@ -213,7 +231,7 @@ record the canonical local paths, measured at the body centre. These are geometr
 defaults; Nurlat-5's command-feedback colours do not establish another site's state meanings.
 
 Keep an actuated valve's body, stem and square actuator in one `.valve` group.
-Separate paths preserve the body's state fill and the actuator's white fill.
+Separate body/stem paths and an actuator rect preserve their individual fills.
 Use scoped `.valve:hover > .valve-body`, `.valve:hover > .valve-stem` and
 `.valve:hover > .valve-actuator` rules to highlight the complete assembly in yellow
 (`#ffeb3b`), with **1-unit** outlines and the established glow. Hovering either

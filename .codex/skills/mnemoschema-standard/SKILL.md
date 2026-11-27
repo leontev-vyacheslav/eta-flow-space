@@ -32,6 +32,13 @@ README; a local layout adjustment does not establish a new universal default.
 
 ## Apply dimensions and layout
 
+- Always depict rectangles with SVG `<rect>` wherever their exact geometry permits,
+  including rounded rectangles with `rx`/`ry`. Preserve geometry when converting existing
+  paths; keep custom outlines that a rect cannot reproduce exactly. Follow the profile's
+  `svg` markup rules and the guide's [SVG markup](../../../.docs/mnemoschema-components.md#svg-markup).
+- Declare the default SVG namespace on the root and omit redundant descendant declarations
+  that repeat the inherited binding. Preserve necessary namespace changes, such as XHTML
+  inside `foreignObject`, and declarations needed by independently parsed fragments.
 - Measure equipment, fonts and strokes after every element and ancestor transform.
   Place equipment with translations/rotations. Internal symbol artwork may use its own
   coordinates when its instance fits the standard icon box.
@@ -107,7 +114,7 @@ Follow the guide's
 and the profile's `valve` paths. Nurlat-5's `HV*-state` and `mixing-valve-*-state`
 are the references: one path contains every body lobe, including the third triangle
 of a three-way valve. Do not split lobes into separately bound polygons. Keep the
-stem and white square actuator as separate paths in one `.valve` group, with no
+stem path and white square actuator rect in one `.valve` group, with no
 enclosing frame. Translate/rotate the whole symbol and preserve its pipe ports.
 
 Use `valve.fill` in the profile for confirmed positions: **closed grey #808080**,

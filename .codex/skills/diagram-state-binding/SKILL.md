@@ -139,6 +139,10 @@ underlying bound shapes. If a burner becomes clickable, retain the boiler frame'
 property list there rather than reducing its popover to `isWorking`. Use CSS hover rules to restore
 state colours naturally on pointer leave; verify their interaction with inline colourizer styles.
 
+Use `<rect>` for rectangular frames and hit targets wherever the exact geometry permits.
+Avoid redundant inherited namespace declarations; retain necessary namespace switches.
+Follow the shared [SVG markup rules](../../../.docs/mnemoschema-components.md#svg-markup).
+
 Make surgical SVG edits and preserve line endings. When changing geometry, match actual XML
 attribute boundaries: a regex such as `\bwidth=` also matches `stroke-width=`. Inspect stroke widths,
 corner radii, text fit and nearby geometry after edits instead of trusting a successful replacement.

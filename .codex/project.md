@@ -53,6 +53,10 @@ instructions refer to the repository root unless the link or instruction says ot
   [component guide](../.docs/mnemoschema-components.md) and
   [numeric profile](../.tools/diagram-renderer/component-standard.json). Preserve unrelated
   existing diagrams and site-specific state semantics.
+- In diagram SVGs, always use `<rect>` for rectangles wherever the exact geometry permits,
+  including rounded rectangles via `rx`/`ry`. Declare the SVG namespace on the root and
+  avoid repeating inherited namespace declarations on descendants; preserve necessary
+  namespace switches such as XHTML inside `foreignObject`.
 - For valves and three-way valves, follow the component guide's
   [unified valve bodies](../.docs/mnemoschema-components.md#unified-valve-bodies-and-three-way-valves):
   one path for all body lobes, Nurlat-5 geometry, grouped stem/actuator hover and the
