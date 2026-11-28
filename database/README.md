@@ -94,6 +94,17 @@ stop/start commands, and limitations.
 | `2026-11-17-add-nurlat-5-emergency-rules.sql` | yes (applied and verified 2026-11-17; emergency 25, 80 reasons covering 93 PLC flags, three-minute history interval; live API and stored emergency history checked; 124 evaluator and 12 isolated PostgreSQL checks passed) |
 | `2026-11-18-spring2-sensor-status-emergencies.sql` | not yet; all 22 SensorStatus fields, seven existing rules extended and 15 added; 141 evaluator and 25 isolated PostgreSQL checks passed |
 | `2026-11-24-tsarevo2-boiler-control-link-emergency.sql` | not yet; combined ЩУК reason 33 when any of four links is exactly false; 30 UI/API evaluator cases and 13 isolated PostgreSQL checks passed |
+| `2026-11-28-constrain-object-location-coordinates.sql` | yes (applied and verified 2026-11-28; both range checks validated, all 13 locations unchanged; 33 disposable PostgreSQL checks passed) |
+
+The coordinate migration adds `object_location_latitude_range_check` for latitude in `[-90, 90]`
+and `object_location_longitude_range_check` for longitude in `[-180, 180]`. Existing `NOT NULL`
+constraints and eight-decimal precision are preserved. Production preflight found no invalid
+coordinates; the before/after row fingerprints matched after application. A private SQL backup
+was restored and verified before the change. Disposable PostgreSQL 17.11 checks covered boundaries,
+zero, NaN, NULL, invalid inserts/updates, pre-existing invalid rows, transaction rollback and a
+fresh schema restore. This migration is applied once; a repeated application fails safely without
+changing existing rows or constraints. The ORM now reflects the existing non-nullable columns,
+and the weather collector relies on the database for coordinate ranges.
 
 The Tsarevo-2 ЩУК migration appends one combined connection-loss rule to the existing
 32-reason registration. It uses `boilerControlLinkStatuses[0..3].isActive === false`, with

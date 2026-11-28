@@ -11,5 +11,7 @@
   "DEVICE_NOT_FOUND": "Устройство с ID {deviceId} не найдено",
   "DEVICE_STATE_NOT_EXISTS": "Состояние устройства с ID {deviceId} не существует",
   "USERS_SETTINGS_NOT_FOUND": "Настройки пользователя не найдены",
-  "USER_NOT_FOUND": "Пользователь не найден"
+  "USER_NOT_FOUND": "Пользователь не найден",
+  "WEATHER_OBJECT_LOCATION_NOT_FOUND": "Местоположение объекта не найдено или недоступно пользователю",
+  "WEATHER_FORECAST_UNAVAILABLE": "Для этого местоположения объекта нет сохранённого прогноза погоды"
 }

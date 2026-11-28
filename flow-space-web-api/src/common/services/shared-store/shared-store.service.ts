@@ -115,4 +115,9 @@ export class SharedStoreService implements OnModuleInit, OnModuleDestroy {
             this.logger.error('Failed to delete refresh token', error);
         }
     }
+
+    /** Reserves a scheduled job slot across API instances. */
+    async claimJobSlot(jobName: string, ttlSeconds: number): Promise<boolean> {
+        return (await this.client.set(`job:${jobName}:slot`, '1', 'EX', ttlSeconds, 'NX')) === 'OK';
+    }
 }

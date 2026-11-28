@@ -342,7 +342,9 @@ CREATE TABLE public.object_location (
     address character varying(128),
     "createdAt" timestamp with time zone NOT NULL,
     "updatedAt" timestamp with time zone NOT NULL,
-    locality character varying(128)
+    locality character varying(128),
+    CONSTRAINT object_location_latitude_range_check CHECK (((latitude >= ('-90'::integer)::numeric) AND (latitude <= (90)::numeric))),
+    CONSTRAINT object_location_longitude_range_check CHECK (((longitude >= ('-180'::integer)::numeric) AND (longitude <= (180)::numeric)))
 );
 
 

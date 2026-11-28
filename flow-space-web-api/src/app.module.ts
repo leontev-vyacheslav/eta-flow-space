@@ -17,6 +17,7 @@ import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { AcceptLanguageResolver, HeaderResolver, I18nModule, QueryResolver } from 'nestjs-i18n';
 import { CacheModule } from '@nestjs/cache-manager';
 import { ThrottlerModule, seconds } from '@nestjs/throttler';
+import { WeatherModule } from './weather/weather.module';
 
 import KeyvRedis from '@keyv/redis';
 import * as path from 'path';
@@ -72,6 +73,7 @@ import * as path from 'path';
         EmergencyStateModule,
         FlowModule,
         DeviceModule,
+        WeatherModule,
     ],
     controllers: [AppController],
 })

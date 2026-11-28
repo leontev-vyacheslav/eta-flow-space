@@ -24,15 +24,17 @@ export class ObjectLocationDataModel extends Model {
     })
     declare locality: string | null;
 
+    // PostgreSQL restricts latitude to [-90, 90].
     @Column({
         type: DataType.DECIMAL(10, 8),
-        allowNull: true,
+        allowNull: false,
     })
     declare latitude: number;
 
+    // PostgreSQL restricts longitude to [-180, 180].
     @Column({
         type: DataType.DECIMAL(11, 8),
-        allowNull: true,
+        allowNull: false,
     })
     declare longitude: number;
 
