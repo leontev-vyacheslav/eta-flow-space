@@ -11,6 +11,7 @@ export { IoInformationCircleOutline as AboutIcon } from 'react-icons/io5';
 export { IoExitOutline as ExitIcon } from 'react-icons/io5';
 export { IoWarningSharp as WarningIcon } from 'react-icons/io5';
 export { IoWarningOutline as WarningLogIcon } from 'react-icons/io5';
+export { IoPartlySunnyOutline as WeatherForecastIcon } from 'react-icons/io5';
 export { IoCloseOutline as CloseIcon } from 'react-icons/io5';
 
 export { MdErrorOutline as ErrorIcon } from 'react-icons/md';

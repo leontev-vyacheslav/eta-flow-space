@@ -78,10 +78,10 @@ on 28 November 2026; no API deployment, environment activation or service restar
 
 ### Dashboard forecast
 
-`GET /api/weather/forecast?objectId=123` returns the cached forecast for the selected boiler room.
-Pass its existing `objectLocationId` (`object_location.id`) as `objectId`. The route requires the
+`GET /api/weather/forecast?objectLocationId=123` returns the cached forecast for the selected boiler room.
+Pass its existing `objectLocationId` (`object_location.id`). The route requires the
 existing Bearer access token and checks access to that exact location through the user's devices.
-The service looks up the requested location directly and reads `weather:forecast:location:<objectId>`.
+The service looks up the requested location directly and reads `weather:forecast:location:<objectLocationId>`.
 The request needs no locality name or locality list and never loads all locations.
 
 For example, against an API with this change deployed:
@@ -89,7 +89,7 @@ For example, against an API with this change deployed:
 ```bash
 curl --get 'http://localhost:3002/api/weather/forecast' \
   --header "Authorization: Bearer $ACCESS_TOKEN" \
-  --data-urlencode 'objectId=123'
+  --data-urlencode 'objectLocationId=123'
 ```
 
 The forecast response contains `objectLocationId`, `fetchedAt`, `stale` and `data`.
@@ -98,7 +98,7 @@ including all forecast periods and city metadata. Provider timestamps remain UTC
 is the locality's UTC offset in seconds. GET requests read cache and registration/permission data;
 they never trigger an OpenWeather request or cache write.
 
-Missing or invalid `objectId` parameters return 400; IDs must be positive PostgreSQL
+Missing or invalid `objectLocationId` parameters return 400; IDs must be positive PostgreSQL
 32-bit integers. Unknown or inaccessible object locations return 404. An accessible location
 without a matching cached forecast returns 503. An older snapshot returns 200 with
 `stale: true` until refreshed.

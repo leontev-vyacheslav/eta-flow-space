@@ -88,7 +88,7 @@ describe('Weather HTTP endpoints', () => {
     });
 
     it('requires an access token for the forecast endpoint', async () => {
-        const path = '/api/weather/forecast?objectId=1';
+        const path = '/api/weather/forecast?objectLocationId=1';
         await request(app.getHttpServer()).get(path).expect(401);
         const refreshToken = jwt.sign({ userId: 7, roleId: 1, type: 'refresh' });
         await request(app.getHttpServer()).get(path).auth(refreshToken, { type: 'bearer' }).expect(401);
@@ -101,13 +101,17 @@ describe('Weather HTTP endpoints', () => {
     });
 
     it('returns 503 for a cold cache without fetching weather on demand', async () => {
-        await request(app.getHttpServer()).get('/api/weather/forecast').query({ objectId: 1 }).auth(token, { type: 'bearer' }).expect(503);
+        await request(app.getHttpServer()).get('/api/weather/forecast').query({ objectLocationId: 1 }).auth(token, { type: 'bearer' }).expect(503);
         expect(fetchMock).not.toHaveBeenCalled();
     });
 
     it('returns the entire cached provider payload and freshness metadata', async () => {
         await service.collectNextForecast();
-        const response = await request(app.getHttpServer()).get('/api/weather/forecast').query({ objectId: 1 }).auth(token, { type: 'bearer' }).expect(200);
+        const response = await request(app.getHttpServer())
+            .get('/api/weather/forecast')
+            .query({ objectLocationId: 1 })
+            .auth(token, { type: 'bearer' })
+            .expect(200);
         const body = response.body as WeatherForecastResponse;
         expect(body).toMatchObject({ objectLocationId: 1, stale: false, data: payload });
         expect(Date.parse(body.fetchedAt)).toBeGreaterThan(0);
@@ -116,34 +120,37 @@ describe('Weather HTTP endpoints', () => {
 
     it('does not reuse another object location forecast, even when the locality name matches', async () => {
         await service.collectNextForecast();
-        await request(app.getHttpServer()).get('/api/weather/forecast').query({ objectId: 4 }).auth(token, { type: 'bearer' }).expect(503);
+        await request(app.getHttpServer()).get('/api/weather/forecast').query({ objectLocationId: 4 }).auth(token, { type: 'bearer' }).expect(503);
         expect(fetchMock).toHaveBeenCalledTimes(1);
     });
 
-    it.each([2, 3, 999])('returns 404 for an unknown or inaccessible object location (%s), including another site in the same locality', async (objectId) => {
-        await service.collectNextForecast();
-        await request(app.getHttpServer()).get('/api/weather/forecast').query({ objectId }).auth(token, { type: 'bearer' }).expect(404);
-        expect(fetchMock).toHaveBeenCalledTimes(1);
-    });
+    it.each([2, 3, 999])(
+        'returns 404 for an unknown or inaccessible object location (%s), including another site in the same locality',
+        async (objectLocationId) => {
+            await service.collectNextForecast();
+            await request(app.getHttpServer()).get('/api/weather/forecast').query({ objectLocationId }).auth(token, { type: 'bearer' }).expect(404);
+            expect(fetchMock).toHaveBeenCalledTimes(1);
+        },
+    );
 
     it('returns 503 for a location whose forecast has not been collected', async () => {
-        await request(app.getHttpServer()).get('/api/weather/forecast').query({ objectId: 5 }).auth(token, { type: 'bearer' }).expect(503);
+        await request(app.getHttpServer()).get('/api/weather/forecast').query({ objectLocationId: 5 }).auth(token, { type: 'bearer' }).expect(503);
         expect(fetchMock).not.toHaveBeenCalled();
     });
 
     it.each([
         '',
         '?locality=г.%20Казань',
-        '?objectLocationId=1',
-        '?objectId=',
-        '?objectId=one',
-        '?objectId=1&objectId=4',
-        '?objectId=0',
-        '?objectId=-1',
-        '?objectId=1.5',
-        '?objectId=2147483648',
-        '?objectId=9007199254740993',
-    ])('returns 400 for a missing or invalid object ID (%s)', async (query) => {
+        '?objectId=1',
+        '?objectLocationId=',
+        '?objectLocationId=one',
+        '?objectLocationId=1&objectLocationId=4',
+        '?objectLocationId=0',
+        '?objectLocationId=-1',
+        '?objectLocationId=1.5',
+        '?objectLocationId=2147483648',
+        '?objectLocationId=9007199254740993',
+    ])('returns 400 for a missing or invalid object location ID (%s)', async (query) => {
         await request(app.getHttpServer()).get(`/api/weather/forecast${query}`).auth(token, { type: 'bearer' }).expect(400);
         expect(fetchMock).not.toHaveBeenCalled();
     });

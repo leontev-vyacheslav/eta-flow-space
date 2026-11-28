@@ -2,7 +2,7 @@ import { Item as TabPanelItem, TabPanel } from 'devextreme-react/tab-panel';
 import { useEffect, useMemo, useRef, useState, type ComponentType } from "react";
 import PageHeader from "../../components/page-header/page-header";
 import AppConstants from "../../constants/app-constants";
-import { AdditionalMenuIcon, CircuitIcon, DashboardIcon, WideScreenIcon, GraphIcon, DataschemaIcon, HelpIcon, JsonIcon, ParamsIcon, RefreshIcon, ReportIcon, WarningLogIcon, WideScreenExitIcon } from "../../constants/app-icons";
+import { AdditionalMenuIcon, CircuitIcon, DashboardIcon, WideScreenIcon, GraphIcon, DataschemaIcon, HelpIcon, JsonIcon, ParamsIcon, RefreshIcon, ReportIcon, WarningLogIcon, WeatherForecastIcon, WideScreenExitIcon } from "../../constants/app-icons";
 import type { MenuItemModel } from "../../models/menu-item-model";
 import { IconTab } from '../../components/tab-utils/icon-tab';
 import { useNavigate, useParams } from 'react-router';
@@ -14,6 +14,7 @@ import { MenuItemWithSubMenu } from '../../components/menu/menu-item/menu-item';
 import { quickHelpReferenceService } from '../../components/dialogs/quick-reference-help-dialog/quick-reference-help-service';
 import { graphService } from '../../components/dialogs/graph-dialog/graph-dialog.tsx';
 import { emergencyLogService } from '../../components/dialogs/emergency-log-dialog/emergency-log-dialog.tsx';
+import { weatherForecastService } from '../../components/dialogs/weather-forecast-dialog/weather-forecast-dialog.tsx';
 import { jsonViewService } from '../../components/dialogs/json-view-dialog/json-view-service.ts';
 import type { JsonViewKind } from '../../components/dialogs/json-view-dialog/json-view-dialog.tsx';
 import { useAuthStore } from '../../contexts/auth-store.tsx';
@@ -182,6 +183,16 @@ const DashboardPageInner = () => {
                             }
                         }
                     ]),
+                    {
+                        icon: () => <WeatherForecastIcon size={20} />,
+                        text: 'Прогноз погоды',
+                        disabled: !device?.objectLocation,
+                        onClick: () => {
+                            if (device?.objectLocation) {
+                                weatherForecastService.show({ objectLocationId: device.objectLocation.id });
+                            }
+                        }
+                    },
                     // admins only: the latest state and the data schema of each device of the diagram as JSON text
                     ...(isAdmin && device && deviceStates ? [
                         jsonViewMenuItem('state', 'Состояние...', JsonIcon, device, Object.keys(deviceStates)),

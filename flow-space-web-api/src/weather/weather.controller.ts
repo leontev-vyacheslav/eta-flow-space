@@ -16,11 +16,11 @@ export class WeatherController {
 
     /** Returns the cached forecast for the boiler room's object location. */
     @Get('forecast')
-    async getForecast(@User() user: RequestUserModel, @Query('objectId', ParseIntPipe) objectId: number): Promise<WeatherForecastResponse> {
-        if (!Number.isSafeInteger(objectId) || objectId <= 0 || objectId > 2_147_483_647) {
+    async getForecast(@User() user: RequestUserModel, @Query('objectLocationId', ParseIntPipe) objectLocationId: number): Promise<WeatherForecastResponse> {
+        if (!Number.isSafeInteger(objectLocationId) || objectLocationId <= 0 || objectLocationId > 2_147_483_647) {
             throw new BadRequestException(this.i18n.t('errors.INVALID_QUERY_PARAMETER'));
         }
-        const forecast = await this.forecasts.getForecast(user.userId, objectId);
+        const forecast = await this.forecasts.getForecast(user.userId, objectLocationId);
         if (forecast === undefined) {
             throw new NotFoundException(this.i18n.t('errors.WEATHER_OBJECT_LOCATION_NOT_FOUND'));
         }

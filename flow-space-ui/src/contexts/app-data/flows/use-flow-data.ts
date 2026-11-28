@@ -12,6 +12,7 @@ import type {
 import type { EmergencyStateModel } from "../../../models/flows/emergency-state-model";
 import type { EmergencyModel } from "../../../models/flows/emergency-model";
 import type { UserSettingsModel } from "../../../models/flows/user-settings-model";
+import type { WeatherForecastModel } from "../../../models/weather-forecast-model";
 
 export type GetFlowListAsyncFunc = () => Promise<FlowModel[] | undefined>;
 export type GetDeviceListAsyncFunc = () => Promise<DeviceModel[] | undefined>;
@@ -45,6 +46,9 @@ export type GetEmergencyStatesByDatesAsyncFunc = (
 export type GetMnemoschemaStylesheetsAsyncFunc = (
   flowCode: string,
 ) => Promise<string | null | undefined>;
+export type GetWeatherForecastAsyncFunc = (
+  objectLocationId: number,
+) => Promise<WeatherForecastModel | undefined>;
 
 export type AppDataContextFlowEndpointsModel = {
   getStaticFilesManifest: () => Promise<any>;
@@ -60,6 +64,7 @@ export type AppDataContextFlowEndpointsModel = {
   getDeviceStatesByDatesAsync: GetDeviceStatesByDatesAsyncFunc;
   getEmergencyStatesAsync: GetEmergencyStateAsyncFunc;
   getEmergencyStatesByDatesAsync: GetEmergencyStatesByDatesAsyncFunc;
+  getWeatherForecastAsync: GetWeatherForecastAsyncFunc;
   getReportAsync: (url: string, params: any) => Promise<Blob | undefined>;
   getReportDefinitionAsync: (reportId: number) => Promise<any | undefined>;
   getMnemoschemaStylesheetsAsync: GetMnemoschemaStylesheetsAsyncFunc;
@@ -234,6 +239,24 @@ export const useFlowData = () => {
     [authHttpRequest],
   );
 
+  const getWeatherForecastAsync = useCallback<GetWeatherForecastAsyncFunc>(
+    async (objectLocationId: number) => {
+      const response = await authHttpRequest(
+        {
+          url: `${routes.host}${routes.weatherForecast}`,
+          method: HttpConstants.Methods.Get as Method,
+          params: { objectLocationId },
+        },
+        true,
+      );
+
+      if (response && response.status === HttpConstants.StatusCodes.Ok) {
+        return response.data as WeatherForecastModel;
+      }
+    },
+    [authHttpRequest],
+  );
+
   const getReportDefinitionAsync = useCallback(
     async (reportId: number) => {
       const response = await authHttpRequest({
@@ -309,6 +332,7 @@ export const useFlowData = () => {
     getDeviceStatesByDatesAsync,
     getEmergencyStatesAsync,
     getEmergencyStatesByDatesAsync,
+    getWeatherForecastAsync,
     getReportAsync,
     getReportDefinitionAsync,
     getUserSettingsAsync,
